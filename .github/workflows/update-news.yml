@@ -34,11 +34,13 @@ jobs:
             git commit -m "Update News dataset"
             git push
           fi
-      - name: Stage only public News data (never the app)
+      - name: Stage public News data (preserve isolated beta files when present)
         run: |
           mkdir -p news-site/news
           cp public/news/feed.json news-site/news/feed.json
-          printf '%s\n' '<!doctype html><title>Doomscroller News data</title><a href="news/feed.json">News JSON</a>' > news-site/index.html
+          if [ -f public/news/beta-feed.json ]; then cp public/news/beta-feed.json news-site/news/beta-feed.json; fi
+          if [ -f public/news/beta-control.json ]; then cp public/news/beta-control.json news-site/news/beta-control.json; fi
+          printf '%s\n' '<!doctype html><title>Doomscroller News data</title><a href="news/feed.json">Stage 1 JSON</a>' > news-site/index.html
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
