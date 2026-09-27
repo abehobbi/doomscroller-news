@@ -1,0 +1,3221 @@
+{
+  "schema": "doomscroller.news-beta-diagnostics",
+  "schemaVersion": 1,
+  "batchId": "news-beta-2026-09-27T04-45-22-032Z",
+  "startedAt": "2026-09-27T04:44:32.498Z",
+  "finishedAt": "2026-09-27T04:45:22.032Z",
+  "durationMs": 49534,
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1024,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "discovery": {
+    "discoveredArticles": 315,
+    "freshArticles": 264,
+    "uniqueArticles": 262,
+    "eventCandidates": 249,
+    "evidencePoolArticles": 63,
+    "preparedEvents": 35,
+    "selectedEvents": 15,
+    "evidenceFailures": 20,
+    "sourceFailures": 4
+  },
+  "sourceStatus": [
+    {
+      "id": "sana-en",
+      "name": "SANA English",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "north-press-en",
+      "name": "North Press Agency",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "enab-baladi-en",
+      "name": "Enab Baladi English",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "dhaka-tribune",
+      "name": "Dhaka Tribune",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "daily-star-bangladesh",
+      "name": "The Daily Star — Bangladesh",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "No valid feed items"
+    },
+    {
+      "id": "daily-star-business",
+      "name": "The Daily Star — Business",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "No valid feed items"
+    },
+    {
+      "id": "myjoyonline",
+      "name": "MyJoyOnline",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "graphic-ghana",
+      "name": "Graphic Online",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "ghanaweb",
+      "name": "GhanaWeb",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 404"
+    },
+    {
+      "id": "toronto-city",
+      "name": "City of Toronto News",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "cbc-toronto",
+      "name": "CBC Toronto",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "cbc-canada",
+      "name": "CBC Canada",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "aljazeera-all",
+      "name": "Al Jazeera",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "bbc-world",
+      "name": "BBC World",
+      "status": "ok",
+      "itemCount": 27
+    },
+    {
+      "id": "bbc-technology",
+      "name": "BBC Technology",
+      "status": "ok",
+      "itemCount": 21
+    },
+    {
+      "id": "guardian-world",
+      "name": "The Guardian World",
+      "status": "ok",
+      "itemCount": 45
+    },
+    {
+      "id": "guardian-science",
+      "name": "The Guardian Science",
+      "status": "ok",
+      "itemCount": 27
+    },
+    {
+      "id": "npr-world",
+      "name": "NPR World",
+      "status": "ok",
+      "itemCount": 10
+    }
+  ],
+  "knownSourceFailures": [
+    {
+      "name": "Bangladesh Sangbad Sangstha",
+      "url": "https://www.bssnews.net/feed",
+      "status": "blocked",
+      "detail": "Cloudflare challenge returned HTTP 403 to the bounded collector."
+    },
+    {
+      "name": "The Daily Star front page",
+      "url": "https://www.thedailystar.net/frontpage/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "Feed served old 2022 items; current section feeds replaced it."
+    },
+    {
+      "name": "The Business Standard",
+      "url": "https://www.tbsnews.net/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "Feed served 2019–2021 items."
+    },
+    {
+      "name": "Ontario Newsroom",
+      "url": "https://news.ontario.ca/en/rss",
+      "status": "retired_from_registry",
+      "detail": "URL returns an HTML application shell, not RSS."
+    }
+  ],
+  "reranker": {
+    "adjustments": [
+      {
+        "eventId": "event:a23b047f15635b89",
+        "baseScore": 63.21,
+        "adjustment": 2,
+        "adjustedScore": 65.21000000000001,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ]
+      },
+      {
+        "eventId": "event:9d985c5ac521ca3d",
+        "baseScore": 55.25,
+        "adjustment": 0,
+        "adjustedScore": 55.25,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ]
+      },
+      {
+        "eventId": "event:e0c65a574a791692",
+        "baseScore": 52.81,
+        "adjustment": 2,
+        "adjustedScore": 54.81,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ]
+      },
+      {
+        "eventId": "event:b3a231702c3e7281",
+        "baseScore": 48.33,
+        "adjustment": 2,
+        "adjustedScore": 50.33,
+        "contentType": "conflict",
+        "regions": [
+          "GTA",
+          "Canada"
+        ]
+      },
+      {
+        "eventId": "event:385df26a5ddac26f",
+        "baseScore": 46.43,
+        "adjustment": 0,
+        "adjustedScore": 46.43,
+        "contentType": "conflict",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ]
+      },
+      {
+        "eventId": "event:f0d4a811589497e2",
+        "baseScore": 45.19,
+        "adjustment": 0,
+        "adjustedScore": 45.19,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Canada"
+        ]
+      },
+      {
+        "eventId": "event:fcba2b457d8aad98",
+        "baseScore": 49.15,
+        "adjustment": -7.5,
+        "adjustedScore": 41.65,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ]
+      },
+      {
+        "eventId": "event:fb7fee7954de1035",
+        "baseScore": 45.42,
+        "adjustment": -7.5,
+        "adjustedScore": 37.92,
+        "contentType": "conflict",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ]
+      },
+      {
+        "eventId": "event:444c86651e57da42",
+        "baseScore": 38.87,
+        "adjustment": -4,
+        "adjustedScore": 34.87,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Ghana"
+        ]
+      },
+      {
+        "eventId": "event:bf8ab994110d0c7e",
+        "baseScore": 38.41,
+        "adjustment": -6.5,
+        "adjustedScore": 31.909999999999997,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ]
+      },
+      {
+        "eventId": "event:19b997f02d0ab023",
+        "baseScore": 45.61,
+        "adjustment": -17,
+        "adjustedScore": 28.61,
+        "contentType": "general",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ]
+      },
+      {
+        "eventId": "event:c43c3df0638f8de4",
+        "baseScore": 38.01,
+        "adjustment": -12,
+        "adjustedScore": 26.009999999999998,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana"
+        ]
+      },
+      {
+        "eventId": "event:da344afbb7375b9f",
+        "baseScore": 45.46,
+        "adjustment": -24.5,
+        "adjustedScore": 20.96,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ]
+      },
+      {
+        "eventId": "event:c4cd41ff97b6cff9",
+        "baseScore": 40.65,
+        "adjustment": -22,
+        "adjustedScore": 18.65,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ]
+      },
+      {
+        "eventId": "event:0eae323227f1a835",
+        "baseScore": 39.46,
+        "adjustment": -27,
+        "adjustedScore": 12.46,
+        "contentType": "conflict",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ]
+      }
+    ],
+    "distribution": {
+      "regions": {
+        "Ghana": 6,
+        "Syria": 6,
+        "Middle East": 7,
+        "GTA": 1,
+        "Canada": 2
+      },
+      "contentTypes": {
+        "general": 5,
+        "diplomacy-or-speech": 4,
+        "conflict": 4,
+        "economy-or-public-life": 2
+      },
+      "publishers": {
+        "MyJoyOnline": 5,
+        "North Press Agency": 6,
+        "CBC Toronto": 1,
+        "CBC Canada": 1,
+        "Graphic Online": 1,
+        "The Guardian World": 1
+      }
+    }
+  },
+  "selectedEvents": [
+    {
+      "eventId": "event:a23b047f15635b89",
+      "title": "No France cocaine suspect linked to Mahama, Vice President’s security details – NACOC",
+      "score": 63.21,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.21,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:9d985c5ac521ca3d",
+      "title": "Ghana’s Charles Amofah Elected Vice President of African Bowling Federation",
+      "score": 55.25,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 16.25,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:e0c65a574a791692",
+      "title": "U.S., China agree AI, military crisis communication channels",
+      "score": 52.81,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 15.81,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:b3a231702c3e7281",
+      "title": "Family of man killed in police-involved shooting calls for answers in protest at Toronto police headquarters",
+      "score": 48.33,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 18.33,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:385df26a5ddac26f",
+      "title": "Sere Kaniye IDPs face mine threats in Syria’s Hasakah",
+      "score": 46.43,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 15.43,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:f0d4a811589497e2",
+      "title": "Supporters from both sides of border demand better Canada-U.S. relations as B.C. election heats up",
+      "score": 45.19,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 19.19,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:fcba2b457d8aad98",
+      "title": "‘I never said I’ll declare a state of emergency’ – President Mahama on galamsey",
+      "score": 49.15,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 16.15,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:fb7fee7954de1035",
+      "title": "Syria reconstruction could take decades, aid chief says",
+      "score": 45.42,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 14.42,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:444c86651e57da42",
+      "title": "AMA calls for science-led action to protect Accra communities",
+      "score": 38.87,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.87,
+        "importance": 0,
+        "interestingness": 8,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:bf8ab994110d0c7e",
+      "title": "Protests erupt as Netanyahu gives inflammatory UN speech - The Latest",
+      "score": 38.41,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 11.41,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:19b997f02d0ab023",
+      "title": "Iran offers 7-day plan to reopen Strait of Hormuz",
+      "score": 45.61,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 14.61,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:c43c3df0638f8de4",
+      "title": "Sylvester Mensah urges Latenu FM to promote trade, export opportunities in Ga",
+      "score": 38.01,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.01,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:da344afbb7375b9f",
+      "title": "White House bars CNN from travelling with Trump on Air Force One",
+      "score": 45.46,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.46,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:c4cd41ff97b6cff9",
+      "title": "Bill Gates urges governments to impose safeguards on AI",
+      "score": 40.65,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 15.65,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:0eae323227f1a835",
+      "title": "Millions in Syria still struggle to access safe water – Medical charity",
+      "score": 39.46,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 14.46,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    }
+  ],
+  "invalidPreviousCardsRemoved": [],
+  "crossEventOverlap": [],
+  "generation": [
+    {
+      "eventId": "event:a23b047f15635b89",
+      "title": "No France cocaine suspect linked to Mahama, Vice President’s security details – NACOC",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "ff87336660419d305cc2a5377333f30accbea44d16929a92c4568ec24e1df3a6",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 190,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:myjoyonline:c44ac073f3ddce03ee6a1208",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:myjoyonline:c44ac073f3ddce03ee6a1208",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:myjoyonline:c44ac073f3ddce03ee6a1208",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:myjoyonline:c44ac073f3ddce03ee6a1208",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:myjoyonline:c44ac073f3ddce03ee6a1208",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:myjoyonline:c44ac073f3ddce03ee6a1208",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:myjoyonline:c44ac073f3ddce03ee6a1208",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:myjoyonline:c44ac073f3ddce03ee6a1208",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:myjoyonline:c44ac073f3ddce03ee6a1208",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:myjoyonline:c44ac073f3ddce03ee6a1208",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:myjoyonline:c44ac073f3ddce03ee6a1208",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:myjoyonline:c44ac073f3ddce03ee6a1208",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:myjoyonline:c44ac073f3ddce03ee6a1208",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/no-france-cocaine-suspect-linked-to-mahama-vice-presidents-security-details-nacoc",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.youtube.com/embed/eAxyJ4FDRgM",
+        "alt": "nacoc",
+        "status": "event-specific",
+        "source_url": "https://myjoyonline.com/no-france-cocaine-suspect-linked-to-mahama-vice-presidents-security-details-nacoc",
+        "attribution": "MyJoyOnline",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-09-27T04:44:38.196Z",
+          "finishedAt": "2026-09-27T04:44:41.021Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"NACOC finds no link between cocaine seizure suspects and presidential security details\",\n  \"pages\": [\n    {\n      \"text\": \"The Narcotics Control Commission (NACOC) stated that background checks on suspects arrested in connection with the Dunkirk cocaine seizure found no evidence linking any individual to the security details of President John Dramani Mahama or Vice President Professor Naana Jane Opoku-Agyemang. Alexander Twum-Barimah, Deputy Director-General of NACOC, provided this clarification on JoyNews’ Newsfile on Saturday, following claims that suspect Musah Attah, also known as “Kromo,” had worked with presidential security. Twum-Barimah stated that NACOC information identifies Attah as a farmer rather than a member of the presidential security staff, noting that the commission has found nothing to prove he is with the presidency. This follows previous clarifications by NACOC that preliminary background checks had not established any suspects as presidential escorts. The controversy arose after Old Tafo Member of Parliament Vincent Ekow Assafuah claimed Attah was linked to the security details of both the President and Vice President. Addressing social media photographs purportedly showing Attah with the President and Vice President, Twum-Barimah noted that presidential security details for the President and Vice President operate in separate sections or groups and that a single officer is not assigned to both simultaneously.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "NACOC finds no link between cocaine seizure suspects and presidential security details",
+            "pages": [
+              {
+                "text": "The Narcotics Control Commission (NACOC) stated that background checks on suspects arrested in connection with the Dunkirk cocaine seizure found no evidence linking any individual to the security details of President John Dramani Mahama or Vice President Professor Naana Jane Opoku-Agyemang. Alexander Twum-Barimah, Deputy Director-General of NACOC, provided this clarification on JoyNews’ Newsfile on Saturday, following claims that suspect Musah Attah, also known as “Kromo,” had worked with presidential security. Twum-Barimah stated that NACOC information identifies Attah as a farmer rather than a member of the presidential security staff, noting that the commission has found nothing to prove he is with the presidency. This follows previous clarifications by NACOC that preliminary background checks had not established any suspects as presidential escorts. The controversy arose after Old Tafo Member of Parliament Vincent Ekow Assafuah claimed Attah was linked to the security details of both the President and Vice President. Addressing social media photographs purportedly showing Attah with the President and Vice President, Twum-Barimah noted that presidential security details for the President and Vice President operate in separate sections or groups and that a single officer is not assigned to both simultaneously."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1744,
+            "completion_tokens": 294,
+            "total_tokens": 2038,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 23.872726440429688
+          },
+          "latencyMs": 2824,
+          "safeHeaders": {
+            "cf-ray": "a417dab30dbee80c-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:9d985c5ac521ca3d",
+      "title": "Ghana’s Charles Amofah Elected Vice President of African Bowling Federation",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "db38d16912ced905874adee07bf7e45b0d0145b1f54959bf139963b96a81be82",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 161,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:myjoyonline:af64ab318a263e9a350051a5",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:myjoyonline:af64ab318a263e9a350051a5",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:myjoyonline:af64ab318a263e9a350051a5",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:myjoyonline:af64ab318a263e9a350051a5",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:myjoyonline:af64ab318a263e9a350051a5",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:myjoyonline:af64ab318a263e9a350051a5",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:myjoyonline:af64ab318a263e9a350051a5",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:myjoyonline:af64ab318a263e9a350051a5",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:myjoyonline:af64ab318a263e9a350051a5",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:myjoyonline:af64ab318a263e9a350051a5",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:myjoyonline:af64ab318a263e9a350051a5",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:myjoyonline:af64ab318a263e9a350051a5",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/ghanas-charles-amofah-elected-vice-president-of-african-bowling-federation",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.myjoyonline.com/wp-content/uploads/2026/09/IMG-20260926-WA0039-1024x768.jpg",
+        "alt": "Ghana’s Charles Amofah Elected Vice President of African Bowling Federation",
+        "status": "event-specific",
+        "source_url": "https://myjoyonline.com/ghanas-charles-amofah-elected-vice-president-of-african-bowling-federation",
+        "attribution": "MyJoyOnline",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-09-27T04:44:41.022Z",
+          "finishedAt": "2026-09-27T04:44:44.996Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Charles Amofah elected Vice President of African Bowling Federation\",\n  \"pages\": [\n    {\n      \"text\": \"Ghanaian bowling administrator Charles O. Amofah has been elected Vice President of the African Bowling Federation (BFA) following the federation’s 2026 General Assembly. According to MyJoyOnline, Amofah’s election places him in the leadership of the continental body alongside newly elected President General Ahmed Nasr of Egypt. The General Assembly also elected Ahmed Abdelhamid Gamal of Egypt as Secretary General. Amofah will serve alongside three elected board members: Sherif Abdel Moneim of Egypt, Khaled Meziou of Tunisia, and Babou Ponde of the Democratic Republic of the Congo.\"\n    },\n    {\n      \"text\": \"The General Assembly recognized the participation of Elvis Kargbo, President of the Sierra Leone Bowling Federation and a member of the General Assembly, while Mashoud Said, President of the Mauritius Bowling Federation, attended as a distinguished guest. The newly constituted BFA leadership is expected to work collectively on strengthening, developing, and promoting bowling across Africa. The federation expressed appreciation to the participating national federations, delegates, members, and guests for their contributions to the General Assembly.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Charles Amofah elected Vice President of African Bowling Federation",
+            "pages": [
+              {
+                "text": "Ghanaian bowling administrator Charles O. Amofah has been elected Vice President of the African Bowling Federation (BFA) following the federation’s 2026 General Assembly. According to MyJoyOnline, Amofah’s election places him in the leadership of the continental body alongside newly elected President General Ahmed Nasr of Egypt. The General Assembly also elected Ahmed Abdelhamid Gamal of Egypt as Secretary General. Amofah will serve alongside three elected board members: Sherif Abdel Moneim of Egypt, Khaled Meziou of Tunisia, and Babou Ponde of the Democratic Republic of the Congo."
+              },
+              {
+                "text": "The General Assembly recognized the participation of Elvis Kargbo, President of the Sierra Leone Bowling Federation and a member of the General Assembly, while Mashoud Said, President of the Mauritius Bowling Federation, attended as a distinguished guest. The newly constituted BFA leadership is expected to work collectively on strengthening, developing, and promoting bowling across Africa. The federation expressed appreciation to the participating national federations, delegates, members, and guests for their contributions to the General Assembly."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1358,
+            "completion_tokens": 268,
+            "total_tokens": 1626,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 19.654544830322266
+          },
+          "latencyMs": 3975,
+          "safeHeaders": {
+            "cf-ray": "a417dac46961e80c-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:e0c65a574a791692",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "summary is too thin for a self-contained beta card"
+        ],
+        "wordCount": 61,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-09-27T04:44:44.997Z",
+          "finishedAt": "2026-09-27T04:44:46.485Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"United States and China agree to establish AI incident channel and accelerate military crisis communications\",\n  \"pages\": [\n    {\n      \"text\": \"Following a three-day summit between President Donald Trump and Chinese President Xi Jinping, the United States and China agreed on Saturday to establish a channel for handling artificial intelligence-related incidents and to accelerate work on military crisis communications, according to the North Press Agency. China’s Foreign Ministry stated that the two sides would sign a memorandum of understanding regarding these developments.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "United States and China agree to establish AI incident channel and accelerate military crisis communications",
+            "pages": [
+              {
+                "text": "Following a three-day summit between President Donald Trump and Chinese President Xi Jinping, the United States and China agreed on Saturday to establish a channel for handling artificial intelligence-related incidents and to accelerate work on military crisis communications, according to the North Press Agency. China’s Foreign Ministry stated that the two sides would sign a memorandum of understanding regarding these developments."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 942,
+            "completion_tokens": 120,
+            "total_tokens": 1062,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 11.836362838745117
+          },
+          "latencyMs": 1489,
+          "safeHeaders": {
+            "cf-ray": "a417dadd498ee80c-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:b3a231702c3e7281",
+      "title": "Family of man killed in police-involved shooting calls for answers in protest at Toronto police headquarters",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "3772fc43f46be0d50eecf46ec348f2f4462589a06db152298d9a8017ed8fb179",
+      "allowedExactDates": [
+        "2026-09-21",
+        "2026-09-25"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [
+          "2026-09-21",
+          "2026-09-25"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 189,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:cbc:97a0c5604a0293ac79130da7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:cbc:97a0c5604a0293ac79130da7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:cbc:97a0c5604a0293ac79130da7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:cbc:97a0c5604a0293ac79130da7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:cbc:97a0c5604a0293ac79130da7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:cbc:97a0c5604a0293ac79130da7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:cbc:97a0c5604a0293ac79130da7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:cbc:97a0c5604a0293ac79130da7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:cbc:97a0c5604a0293ac79130da7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:cbc:97a0c5604a0293ac79130da7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:cbc:97a0c5604a0293ac79130da7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:cbc:97a0c5604a0293ac79130da7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:cbc:4b4ed7cc1ff0419c797f7e91",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:cbc:4b4ed7cc1ff0419c797f7e91",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F15",
+            "sourceId": "news:cbc:4b4ed7cc1ff0419c797f7e91",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F16",
+            "sourceId": "news:cbc:4b4ed7cc1ff0419c797f7e91",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F17",
+            "sourceId": "news:cbc:4b4ed7cc1ff0419c797f7e91",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F18",
+            "sourceId": "news:cbc:4b4ed7cc1ff0419c797f7e91",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F19",
+            "sourceId": "news:cbc:4b4ed7cc1ff0419c797f7e91",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F20",
+            "sourceId": "news:cbc:4b4ed7cc1ff0419c797f7e91",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F21",
+            "sourceId": "news:cbc:4b4ed7cc1ff0419c797f7e91",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F22",
+            "sourceId": "news:cbc:4b4ed7cc1ff0419c797f7e91",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F23",
+            "sourceId": "news:cbc:4b4ed7cc1ff0419c797f7e91",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F24",
+            "sourceId": "news:cbc:4b4ed7cc1ff0419c797f7e91",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F25",
+            "sourceId": "news:cbc:a4b629bf1db145722329d291",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F26",
+            "sourceId": "news:cbc:a4b629bf1db145722329d291",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F27",
+            "sourceId": "news:cbc:a4b629bf1db145722329d291",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F28",
+            "sourceId": "news:cbc:a4b629bf1db145722329d291",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F29",
+            "sourceId": "news:cbc:a4b629bf1db145722329d291",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F30",
+            "sourceId": "news:cbc:a4b629bf1db145722329d291",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F31",
+            "sourceId": "news:cbc:a4b629bf1db145722329d291",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F32",
+            "sourceId": "news:cbc:a4b629bf1db145722329d291",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F33",
+            "sourceId": "news:cbc:a4b629bf1db145722329d291",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F34",
+            "sourceId": "news:cbc:a4b629bf1db145722329d291",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:cbc:97a0c5604a0293ac79130da7",
+          "publisher": "CBC Toronto",
+          "url": "https://cbc.ca/news/canada/toronto/family-calls-for-answers-man-killed-police-involved-shooting-9.7359914?cmp=rss",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:cbc:4b4ed7cc1ff0419c797f7e91",
+          "publisher": "CBC Toronto",
+          "url": "https://cbc.ca/news/canada/toronto/two-burning-vehicles-victims-tps-9.7358553?cmp=rss",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:cbc:a4b629bf1db145722329d291",
+          "publisher": "CBC Toronto",
+          "url": "https://cbc.ca/news/canada/toronto/homicide-victim-scarborough-hospital-parking-lot-9.7358871?cmp=rss",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.cbc.ca/ais/dd509d59-16c9-4031-89dc-5cba0cdca5a0,1790456733738/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C350%2C1057%2C594%29%3B",
+        "alt": "Family of man killed in police-involved shooting calls for answers in protest at Toronto police headquarters",
+        "status": "event-specific",
+        "source_url": "https://cbc.ca/news/canada/toronto/family-calls-for-answers-man-killed-police-involved-shooting-9.7359914?cmp=rss",
+        "attribution": "CBC Toronto",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-09-27T04:44:46.485Z",
+          "finishedAt": "2026-09-27T04:44:49.286Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Family of man killed in police-involved shooting protests for answers at Toronto police headquarters\", \"pages\": \n[\n  {\n    \"text\": \"The family of 19-year-old Kaleym Davy protested outside Toronto police headquarters on Saturday, calling for answers regarding the circumstances of his death in August. Davy was killed during a police-involved shooting in Mississauga, near Council Ring Road and The Collegeway. His aunts, Kellise and Janelle Davy, stated the family has been left in the dark and expressed concerns regarding the use of force. Janelle Davy told CBC Toronto that the family wants to know why excessive force was used and why he was treated as a notorious gang member. 19-year-old Davy's death is currently being investigated by Ontario’s police watchdog, the Special Investigations Unit (SIU). According to SIU spokesperson Monica Hudon, the incident involved five unmarked Toronto police vehicles, three of which crashed into a Mercedes. The Toronto Police Service had been tracking the vehicle in connection with a firearms investigation. While the Mercedes had been reported stolen the day prior, the SIU stated they received updated information indicating the vehicle was not stolen. Hudon previously stated that an officer shot at least once into the vehicle and hit the driver, who was later pronounced dead at the scene.\"\n  }\n]\n}",
+          "parsed": {
+            "headline": "Family of man killed in police-involved shooting protests for answers at Toronto police headquarters",
+            "pages": [
+              {
+                "text": "The family of 19-year-old Kaleym Davy protested outside Toronto police headquarters on Saturday, calling for answers regarding the circumstances of his death in August. Davy was killed during a police-involved shooting in Mississauga, near Council Ring Road and The Collegeway. His aunts, Kellise and Janelle Davy, stated the family has been left in the dark and expressed concerns regarding the use of force. Janelle Davy told CBC Toronto that the family wants to know why excessive force was used and why he was treated as a notorious gang member. 19-year-old Davy's death is currently being investigated by Ontario’s police watchdog, the Special Investigations Unit (SIU). According to SIU spokesperson Monica Hudon, the incident involved five unmarked Toronto police vehicles, three of which crashed into a Mercedes. The Toronto Police Service had been tracking the vehicle in connection with a firearms investigation. While the Mercedes had been reported stolen the day prior, the SIU stated they received updated information indicating the vehicle was not stolen. Hudon previously stated that an officer shot at least once into the vehicle and hit the driver, who was later pronounced dead at the scene."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2519,
+            "completion_tokens": 283,
+            "total_tokens": 2802,
+            "prompt_tokens_details": {
+              "cached_tokens": 64
+            },
+            "neurons": 30.618181228637695
+          },
+          "latencyMs": 2800,
+          "safeHeaders": {
+            "cf-ray": "a417dae69c45e80c-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:385df26a5ddac26f",
+      "title": "Sere Kaniye IDPs face mine threats in Syria’s Hasakah",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "0ef62a920d8a95cc0f501fbe4528a3bea497054abe9628609f547b7351efbda1",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 258,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:north-press:8107783f70b9be760c5874ba",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:north-press:8107783f70b9be760c5874ba",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:north-press:8107783f70b9be760c5874ba",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:north-press:8107783f70b9be760c5874ba",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:north-press:8107783f70b9be760c5874ba",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:north-press:8107783f70b9be760c5874ba",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:north-press:8107783f70b9be760c5874ba",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:north-press:8107783f70b9be760c5874ba",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:north-press:8107783f70b9be760c5874ba",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:north-press:8107783f70b9be760c5874ba",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:north-press:8107783f70b9be760c5874ba",
+          "publisher": "North Press Agency",
+          "url": "https://npasyria.com/en/141966",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://npasyria.com/en/wp-content/uploads/2026/09/%D8%A7%D9%84%D8%B9%D9%84%D8%A7%D9%85%D8%A9-%D8%A7%D9%84%D9%85%D8%A7%D8%A6%D9%8A%D8%A9.jpg-12-750x430-1.jpeg",
+        "alt": "Sere Kaniye IDPs face mine threats in Syria’s Hasakah",
+        "status": "event-specific",
+        "source_url": "https://npasyria.com/en/141966",
+        "attribution": "North Press Agency",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-09-27T04:44:49.286Z",
+          "finishedAt": "2026-09-27T04:44:54.004Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Landmine risks and slow clearance operations affect displaced residents in Hasakah countryside\",\n  \"pages\": [\n    {\n      \"text\": \"Villages in the countryside of Hasakah, northeastern Syria, face risks from landmines and unexploded remnants of war due to slow clearance operations and delays in the organized return of displaced families, according to residents. Displaced residents from Sere Kaniye (Ras al-Ain) told North Press that delays in organized returns are prompting individuals to return to their villages on their own. Farhan Mohammad, a displaced resident from al-Qasimiya village, stated that while three mine-clearance teams are operating in the area, the number is insufficient for the size of the territory requiring survey and clearance. Mohammad noted that most homes in the area are constructed of mud, while concrete houses have sustained extensive damage. Residents expressed a desire to return before winter to facilitate home repairs. Additionally, Mohammad reported that residents opened the road to their villages several days ago as the planting season approaches, following nearly seven years of being denied access to agricultural land. He stated that previous promises to return groups of displaced people every few days have not materialized on the ground. Mohammad added that residents of several villages are voluntarily returning almost daily due to difficult conditions in camps and schools, despite landmines remaining the primary concern for a safe return. He noted that while security conditions and landmines previously prevented returns, prolonged displacement has pushed many to return regardless of the risks. Last week, the Sere Kaniye Displaced Persons Committee called on Syrian government authorities to resume return operations and disclose obstacles hindering the return of displaced people following the suspension of organized returns.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Landmine risks and slow clearance operations affect displaced residents in Hasakah countryside",
+            "pages": [
+              {
+                "text": "Villages in the countryside of Hasakah, northeastern Syria, face risks from landmines and unexploded remnants of war due to slow clearance operations and delays in the organized return of displaced families, according to residents. Displaced residents from Sere Kaniye (Ras al-Ain) told North Press that delays in organized returns are prompting individuals to return to their villages on their own. Farhan Mohammad, a displaced resident from al-Qasimiya village, stated that while three mine-clearance teams are operating in the area, the number is insufficient for the size of the territory requiring survey and clearance. Mohammad noted that most homes in the area are constructed of mud, while concrete houses have sustained extensive damage. Residents expressed a desire to return before winter to facilitate home repairs. Additionally, Mohammad reported that residents opened the road to their villages several days ago as the planting season approaches, following nearly seven years of being denied access to agricultural land. He stated that previous promises to return groups of displaced people every few days have not materialized on the ground. Mohammad added that residents of several villages are voluntarily returning almost daily due to difficult conditions in camps and schools, despite landmines remaining the primary concern for a safe return. He noted that while security conditions and landmines previously prevented returns, prolonged displacement has pushed many to return regardless of the risks. Last week, the Sere Kaniye Displaced Persons Committee called on Syrian government authorities to resume return operations and disclose obstacles hindering the return of displaced people following the suspension of organized returns."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1476,
+            "completion_tokens": 352,
+            "total_tokens": 1828,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 23.01818084716797
+          },
+          "latencyMs": 4718,
+          "safeHeaders": {
+            "cf-ray": "a417daf8189ae80c-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:f0d4a811589497e2",
+      "title": "Supporters from both sides of border demand better Canada-U.S. relations as B.C. election heats up",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "e3dfc4e8f68f0dd0ffd90728d3e41e6a96ef98b681b9a250d561599607cd7878",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 135,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:cbc:a421ba95651204fbaa48dc98",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:cbc:a421ba95651204fbaa48dc98",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:cbc:a421ba95651204fbaa48dc98",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:cbc:a421ba95651204fbaa48dc98",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:cbc:a421ba95651204fbaa48dc98",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:cbc:a421ba95651204fbaa48dc98",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:cbc:a421ba95651204fbaa48dc98",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:cbc:a421ba95651204fbaa48dc98",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:cbc:a421ba95651204fbaa48dc98",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:cbc:a421ba95651204fbaa48dc98",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:cbc:a421ba95651204fbaa48dc98",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:cbc:a421ba95651204fbaa48dc98",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:cbc:a421ba95651204fbaa48dc98",
+          "publisher": "CBC Canada",
+          "url": "https://cbc.ca/news/canada/british-columbia/american-canadian-supporters-peace-arch-9.7360021?cmp=rss",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.cbc.ca/ais/705750fb-e2ad-4c68-bd86-359b01a82e10,1790470065411/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C0%2C1920%2C1080%29%3B",
+        "alt": "Supporters from both sides of border demand better Canada-U.S. relations as B.C. election heats up",
+        "status": "event-specific",
+        "source_url": "https://cbc.ca/news/canada/british-columbia/american-canadian-supporters-peace-arch-9.7360021?cmp=rss",
+        "attribution": "CBC Canada",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-09-27T04:44:54.004Z",
+          "finishedAt": "2026-09-27T04:44:57.019Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Cross-border supporters gather at Peace Arch to call for improved Canada-U.S. relations\", \"pages\": [{\"text\": \"Canadians, Americans, and dual citizens gathered at the Peace Arch border on a Saturday to call for improved relations between Canada and the United States. The gathering occurred as Canada-U.S. trade tensions remain a central issue in the British Columbia election campaign. Participants stated the meetings are intended to build cross-border relationships and provide mutual support. According to CBC Canada, the group has met every two weeks since March 2025, amid strained relations resulting from U.S. President Donald Trump’s trade policies and 51st-state rhetoric. Janice Young, a British Columbia resident and church minister, noted the idea for the gatherings arose as tensions increased and she sought to connect with neighbors in Washington state. Peter Andrews, a resident of Ferndale, Washington, since 2003, reported attending the inaugural event last spring and has attended every subsequent meeting.\"}]}",
+          "parsed": {
+            "headline": "Cross-border supporters gather at Peace Arch to call for improved Canada-U.S. relations",
+            "pages": [
+              {
+                "text": "Canadians, Americans, and dual citizens gathered at the Peace Arch border on a Saturday to call for improved relations between Canada and the United States. The gathering occurred as Canada-U.S. trade tensions remain a central issue in the British Columbia election campaign. Participants stated the meetings are intended to build cross-border relationships and provide mutual support. According to CBC Canada, the group has met every two weeks since March 2025, amid strained relations resulting from U.S. President Donald Trump’s trade policies and 51st-state rhetoric. Janice Young, a British Columbia resident and church minister, noted the idea for the gatherings arose as tensions increased and she sought to connect with neighbors in Washington state. Peter Andrews, a resident of Ferndale, Washington, since 2003, reported attending the inaugural event last spring and has attended every subsequent meeting."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1559,
+            "completion_tokens": 213,
+            "total_tokens": 1772,
+            "prompt_tokens_details": {
+              "cached_tokens": 64
+            },
+            "neurons": 19.9818172454834
+          },
+          "latencyMs": 3015,
+          "safeHeaders": {
+            "cf-ray": "a417db159d98e80c-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:fcba2b457d8aad98",
+      "title": "‘I never said I’ll declare a state of emergency’ – President Mahama on galamsey",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "2a1edd9bee2a304a2bd934c2e7f3b414c77903808c3b0c706df574114d305947",
+      "allowedExactDates": [
+        "2026-09-25"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "September 25, 2026",
+            "date": "2026-09-25"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-09-25"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 106,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:myjoyonline:6fca2ff8d37db069d512b46f",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:myjoyonline:6fca2ff8d37db069d512b46f",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:myjoyonline:6fca2ff8d37db069d512b46f",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:myjoyonline:6fca2ff8d37db069d512b46f",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:myjoyonline:6fca2ff8d37db069d512b46f",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:myjoyonline:6fca2ff8d37db069d512b46f",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/i-never-said-ill-declare-a-state-of-emergency-president-mahama-on-galamsey",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.myjoyonline.com/wp-content/uploads/2026/09/Mahama-4.jpg",
+        "alt": "Mahama",
+        "status": "event-specific",
+        "source_url": "https://myjoyonline.com/i-never-said-ill-declare-a-state-of-emergency-president-mahama-on-galamsey",
+        "attribution": "MyJoyOnline",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-09-27T04:44:57.020Z",
+          "finishedAt": "2026-09-27T04:44:59.383Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"President Mahama denies plans to declare state of emergency over illegal mining\",\n  \"pages\": [\n    {\n      \"text\": \"President John Dramani Mahama has dismissed reports claiming he intends to declare a state of emergency to address illegal mining, known as galamsey. Speaking to Ghanaians in New York on September 25, 2026, Mahama stated he had never announced plans to invoke such a measure, asserting that a state of emergency should only be considered as a last resort. He noted that while such measures can address serious national challenges, they are generally intended to be temporary and targeted at specific areas. Mahama also questioned the practicality of using a state of emergency to tackle illegal mining, which he said is affecting 10 regions across Ghana.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "President Mahama denies plans to declare state of emergency over illegal mining",
+            "pages": [
+              {
+                "text": "President John Dramani Mahama has dismissed reports claiming he intends to declare a state of emergency to address illegal mining, known as galamsey. Speaking to Ghanaians in New York on September 25, 2026, Mahama stated he had never announced plans to invoke such a measure, asserting that a state of emergency should only be considered as a last resort. He noted that while such measures can address serious national challenges, they are generally intended to be temporary and targeted at specific areas. Mahama also questioned the practicality of using a state of emergency to tackle illegal mining, which he said is affecting 10 regions across Ghana."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1173,
+            "completion_tokens": 173,
+            "total_tokens": 1346,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 15.381817817687988
+          },
+          "latencyMs": 2363,
+          "safeHeaders": {
+            "cf-ray": "a417db286d5ee80c-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:fb7fee7954de1035",
+      "title": "Syria reconstruction could take decades, aid chief says",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "d5eefc6e29e080fa5c2a3cb8c41f83c34f20293624e4df44f406c949be883432",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 230,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:north-press:596e9ce35e41caf356975f6c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:north-press:596e9ce35e41caf356975f6c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:north-press:596e9ce35e41caf356975f6c",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:north-press:596e9ce35e41caf356975f6c",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:north-press:596e9ce35e41caf356975f6c",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:north-press:596e9ce35e41caf356975f6c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:north-press:596e9ce35e41caf356975f6c",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:north-press:596e9ce35e41caf356975f6c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:north-press:596e9ce35e41caf356975f6c",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:north-press:596e9ce35e41caf356975f6c",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:north-press:596e9ce35e41caf356975f6c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:north-press:596e9ce35e41caf356975f6c",
+          "publisher": "North Press Agency",
+          "url": "https://npasyria.com/en/141944",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://npasyria.com/en/wp-content/uploads/2026/09/58b8fe07-4966-4ed7-9ff9-13caa157181a_cx0_cy8_cw0_w1023_r1_s.avif",
+        "alt": "Syria reconstruction could take decades, aid chief says",
+        "status": "event-specific",
+        "source_url": "https://npasyria.com/en/141944",
+        "attribution": "North Press Agency",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-09-27T04:44:59.383Z",
+          "finishedAt": "2026-09-27T04:45:02.779Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Syria reconstruction estimated to take decades as aid remains insufficient\",\n  \"pages\": [\n    {\n      \"text\": \"Tjada McKenna, chief executive of Prosper Global, stated that Syria faces a “multi-decade” recovery process due to widespread destruction of homes and essential infrastructure. Speaking in New York on the sidelines of the UN General Assembly, McKenna told The National that international assistance reaching the country remains “woefully insufficient” relative to the scale of reconstruction required. The World Bank estimates Syria’s reconstruction needs at approximately $216 billion. While millions of Syrians remain displaced, there have been increasing returns following the fall of Bashar al-Assad in December 2024. McKenna, who traveled through Aleppo, Idlib, and Damascus several weeks prior to her remarks, identified the restoration of water and electricity networks, roads, hospitals, and schools as immediate priorities, alongside the creation of jobs and livelihoods for returning families.\"\n    },\n    {\n      \"text\": \"McKenna warned that Syria’s recovery is occurring during a global funding crisis where humanitarian aid budgets are declining while needs increase across multiple conflict zones. She noted that the transition from emergency relief to economic recovery will take time due to the scale of reconstruction, competing crises, and reduced international aid. Prosper Global is currently providing emergency assistance to displaced Syrians while shifting toward long-term recovery efforts, such as supporting agriculture and restoring water infrastructure. McKenna also noted that the lifting of Western sanctions has raised hopes for increased foreign investment, which could potentially allow more companies and suppliers to operate within the country.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Syria reconstruction estimated to take decades as aid remains insufficient",
+            "pages": [
+              {
+                "text": "Tjada McKenna, chief executive of Prosper Global, stated that Syria faces a “multi-decade” recovery process due to widespread destruction of homes and essential infrastructure. Speaking in New York on the sidelines of the UN General Assembly, McKenna told The National that international assistance reaching the country remains “woefully insufficient” relative to the scale of reconstruction required. The World Bank estimates Syria’s reconstruction needs at approximately $216 billion. While millions of Syrians remain displaced, there have been increasing returns following the fall of Bashar al-Assad in December 2024. McKenna, who traveled through Aleppo, Idlib, and Damascus several weeks prior to her remarks, identified the restoration of water and electricity networks, roads, hospitals, and schools as immediate priorities, alongside the creation of jobs and livelihoods for returning families."
+              },
+              {
+                "text": "McKenna warned that Syria’s recovery is occurring during a global funding crisis where humanitarian aid budgets are declining while needs increase across multiple conflict zones. She noted that the transition from emergency relief to economic recovery will take time due to the scale of reconstruction, competing crises, and reduced international aid. Prosper Global is currently providing emergency assistance to displaced Syrians while shifting toward long-term recovery efforts, such as supporting agriculture and restoring water infrastructure. McKenna also noted that the lifting of Western sanctions has raised hopes for increased foreign investment, which could potentially allow more companies and suppliers to operate within the country."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1451,
+            "completion_tokens": 342,
+            "total_tokens": 1793,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 22.51818084716797
+          },
+          "latencyMs": 3396,
+          "safeHeaders": {
+            "cf-ray": "a417db37293ce80c-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:444c86651e57da42",
+      "title": "AMA calls for science-led action to protect Accra communities",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "b2cd080a25a663ffc0840bb217d2e24b05755fc1c0f38af948a372950b29b014",
+      "allowedExactDates": [
+        "2026-09-26"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "September 26, 2026",
+            "date": "2026-09-26"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-09-26"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 89,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:graphic-ghana:f368af45ebb2d42f4cf7750c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:graphic-ghana:f368af45ebb2d42f4cf7750c",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:graphic-ghana:f368af45ebb2d42f4cf7750c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:graphic-ghana:f368af45ebb2d42f4cf7750c",
+          "publisher": "Graphic Online",
+          "url": "https://graphic.com.gh/news/general-news/ama-calls-for-science-led-action-to-protect-accra-communities.html",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.graphic.com.gh/",
+        "alt": "AMA calls for science-led action to protect Accra communities",
+        "status": "event-specific",
+        "source_url": "https://graphic.com.gh/news/general-news/ama-calls-for-science-led-action-to-protect-accra-communities.html",
+        "attribution": "Graphic Online",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-09-27T04:45:02.779Z",
+          "finishedAt": "2026-09-27T04:45:04.745Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Accra Metropolitan Assembly calls for science-led action to address environmental health challenges\",\n  \"pages\": [\n    {\n      \"text\": \"The Accra Metropolitan Assembly (AMA) has called for an increased use of scientific evidence to address environmental health challenges within the metropolis. According to Graphic Online, the Assembly stated that evidence-based approaches are critical for protecting communities from preventable diseases and health risks, including air pollution, flooding, rising heat risks, waste pollution, unsafe food handling, and poor sanitation. This call was part of activities marking the 2026 World Environmental Health Day on September 26, 2026, which is held under the theme: “Environmental Health: Standing with Science to Protect Communities.”\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Accra Metropolitan Assembly calls for science-led action to address environmental health challenges",
+            "pages": [
+              {
+                "text": "The Accra Metropolitan Assembly (AMA) has called for an increased use of scientific evidence to address environmental health challenges within the metropolis. According to Graphic Online, the Assembly stated that evidence-based approaches are critical for protecting communities from preventable diseases and health risks, including air pollution, flooding, rising heat risks, waste pollution, unsafe food handling, and poor sanitation. This call was part of activities marking the 2026 World Environmental Health Day on September 26, 2026, which is held under the theme: “Environmental Health: Standing with Science to Protect Communities.”"
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1053,
+            "completion_tokens": 168,
+            "total_tokens": 1221,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 14.154544830322266
+          },
+          "latencyMs": 1966,
+          "safeHeaders": {
+            "cf-ray": "a417db4c6a33e80c-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:bf8ab994110d0c7e",
+      "title": "Protests erupt as Netanyahu gives inflammatory UN speech - The Latest",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "3ab272c5c16d0822b509cba249a5daec848a71372a27b5a6cf3c86b4e2e22b11",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 80,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:guardian:f3914563d5914de38cd90013",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:guardian:f3914563d5914de38cd90013",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:guardian:f3914563d5914de38cd90013",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:guardian:f3914563d5914de38cd90013",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:guardian:f3914563d5914de38cd90013",
+          "publisher": "The Guardian World",
+          "url": "https://theguardian.com/news/audio/2026/sep/25/protests-erupt-as-netanyahu-gives-inflammatory-un-speech-the-latest",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.guim.co.uk/img/media/5ef3fdd2c88cae476889c6b5216fc69ae425f999/1127_0_4942_3954/master/4942.jpg?width=140&quality=85&auto=format&fit=max&s=7fa847ab97bce6ab6e323d3e955fe7e4",
+        "alt": "Protests erupt as Netanyahu gives inflammatory UN speech - The Latest",
+        "status": "event-specific",
+        "source_url": "https://theguardian.com/news/audio/2026/sep/25/protests-erupt-as-netanyahu-gives-inflammatory-un-speech-the-latest",
+        "attribution": "The Guardian World",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-09-27T04:45:04.746Z",
+          "finishedAt": "2026-09-27T04:45:06.273Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Protests and walkouts occur during Benjamin Netanyahu’s UN General Assembly address\",\n  \"pages\": [\n    {\n      \"text\": \"According to reporting from The Guardian World, more than 100 people were arrested during large protests directed at Israeli Prime Minister Benjamin Netanyahu’s address to the UN General Assembly. Among those arrested were Susan Sarandon, Chelsea Manning, and Caleb Hearon. Inside the assembly hall, Netanyahu faced a mass walkout as he took to the stage. During his address, Netanyahu claimed that Israel’s war in Gaza was the ‘opposite of a genocide’ and labeled New York Mayor Zohran Mamdani as antisemitic.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Protests and walkouts occur during Benjamin Netanyahu’s UN General Assembly address",
+            "pages": [
+              {
+                "text": "According to reporting from The Guardian World, more than 100 people were arrested during large protests directed at Israeli Prime Minister Benjamin Netanyahu’s address to the UN General Assembly. Among those arrested were Susan Sarandon, Chelsea Manning, and Caleb Hearon. Inside the assembly hall, Netanyahu faced a mass walkout as he took to the stage. During his address, Netanyahu claimed that Israel’s war in Gaza was the ‘opposite of a genocide’ and labeled New York Mayor Zohran Mamdani as antisemitic."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 935,
+            "completion_tokens": 155,
+            "total_tokens": 1090,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 12.727272033691406
+          },
+          "latencyMs": 1527,
+          "safeHeaders": {
+            "cf-ray": "a417db58b873e80c-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:19b997f02d0ab023",
+      "title": "Iran offers 7-day plan to reopen Strait of Hormuz",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "1c6b4fb4165e0962d495c0d69f87949520807c3fa498864ce107d52136d562fa",
+      "allowedExactDates": [
+        "2026-09-25"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "September 25, 2026",
+            "date": "2026-09-25"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-09-25"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 198,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:north-press:1ba66177dd53fb1de33427f3",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:north-press:1ba66177dd53fb1de33427f3",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:north-press:1ba66177dd53fb1de33427f3",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:north-press:1ba66177dd53fb1de33427f3",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:north-press:1ba66177dd53fb1de33427f3",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:north-press:1ba66177dd53fb1de33427f3",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:north-press:1ba66177dd53fb1de33427f3",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:north-press:1ba66177dd53fb1de33427f3",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:north-press:1ba66177dd53fb1de33427f3",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:north-press:1ba66177dd53fb1de33427f3",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:north-press:1ba66177dd53fb1de33427f3",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:north-press:1ba66177dd53fb1de33427f3",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:north-press:1ba66177dd53fb1de33427f3",
+          "publisher": "North Press Agency",
+          "url": "https://npasyria.com/en/141954",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://npasyria.com/en/wp-content/uploads/2026/07/1-1878908-750x430-1.jpg",
+        "alt": "Iran offers 7-day plan to reopen Strait of Hormuz",
+        "status": "event-specific",
+        "source_url": "https://npasyria.com/en/141954",
+        "attribution": "North Press Agency",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-09-27T04:45:06.273Z",
+          "finishedAt": "2026-09-27T04:45:10.212Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Iran proposes seven-day plan to reopen Strait of Hormuz\",\n  \"pages\": [\n    {\n      \"text\": \"Iranian Foreign Minister Abbas Araghchi stated on September 25, 2026, that Tehran has conveyed a seven-day plan to Washington via Qatar to end hostilities and restore normal maritime passage through the Strait of Hormuz. According to Araghchi, the waterway would reopen on the seventh day if specific required conditions are met. Iranian President Masoud Pezeshkian noted that the ceasefire process could begin once Washington accepts the proposal, though Araghchi emphasized that Iran would not accept coercion or threats. The proposal reportedly includes a seven-day cessation of hostilities across the Middle East, including Lebanon, the release of at least $12 billion in frozen Iranian assets, an easing of U.S. sanctions on Iranian oil, and an end to the U.S. naval blockade of Iranian ports. This plan builds upon a memorandum of understanding reached between Washington and Tehran in June that aimed to end the conflict, reopen the strait, and restart nuclear program negotiations, though that agreement later collapsed. While The Wall Street Journal reported that U.S. President Donald Trump rejected the proposal, citing U.S. officials, Reuters reported that Iran was still awaiting an official U.S. response. The Strait of Hormuz has been central to a nearly seven-month U.S.-Iran conflict.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Iran proposes seven-day plan to reopen Strait of Hormuz",
+            "pages": [
+              {
+                "text": "Iranian Foreign Minister Abbas Araghchi stated on September 25, 2026, that Tehran has conveyed a seven-day plan to Washington via Qatar to end hostilities and restore normal maritime passage through the Strait of Hormuz. According to Araghchi, the waterway would reopen on the seventh day if specific required conditions are met. Iranian President Masoud Pezeshkian noted that the ceasefire process could begin once Washington accepts the proposal, though Araghchi emphasized that Iran would not accept coercion or threats. The proposal reportedly includes a seven-day cessation of hostilities across the Middle East, including Lebanon, the release of at least $12 billion in frozen Iranian assets, an easing of U.S. sanctions on Iranian oil, and an end to the U.S. naval blockade of Iranian ports. This plan builds upon a memorandum of understanding reached between Washington and Tehran in June that aimed to end the conflict, reopen the strait, and restart nuclear program negotiations, though that agreement later collapsed. While The Wall Street Journal reported that U.S. President Donald Trump rejected the proposal, citing U.S. officials, Reuters reported that Iran was still awaiting an official U.S. response. The Strait of Hormuz has been central to a nearly seven-month U.S.-Iran conflict."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1500,
+            "completion_tokens": 310,
+            "total_tokens": 1810,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 22.09090805053711
+          },
+          "latencyMs": 3939,
+          "safeHeaders": {
+            "cf-ray": "a417db623e67e80c-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:c43c3df0638f8de4",
+      "title": "Sylvester Mensah urges Latenu FM to promote trade, export opportunities in Ga",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "1f659da0adbb9f617ae275db4fb6138b8c31bdf3057555474a392f927b7228fc",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 188,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:myjoyonline:7774a26cdfeb9ef5c8ea53b0",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:myjoyonline:7774a26cdfeb9ef5c8ea53b0",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:myjoyonline:7774a26cdfeb9ef5c8ea53b0",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:myjoyonline:7774a26cdfeb9ef5c8ea53b0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:myjoyonline:7774a26cdfeb9ef5c8ea53b0",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:myjoyonline:7774a26cdfeb9ef5c8ea53b0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:myjoyonline:7774a26cdfeb9ef5c8ea53b0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:myjoyonline:7774a26cdfeb9ef5c8ea53b0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:myjoyonline:7774a26cdfeb9ef5c8ea53b0",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/sylvester-mensah-urges-latenu-fm-to-promote-trade-export-opportunities-in-ga",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.myjoyonline.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-08-28-at-2.37.01-PM-1-1024x683.jpeg",
+        "alt": "Ga",
+        "status": "event-specific",
+        "source_url": "https://myjoyonline.com/sylvester-mensah-urges-latenu-fm-to-promote-trade-export-opportunities-in-ga",
+        "attribution": "MyJoyOnline",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-09-27T04:45:10.212Z",
+          "finishedAt": "2026-09-27T04:45:13.626Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Sylvester Mensah urges Latenu FM to promote trade and export opportunities in Ga\",\n  \"pages\": [\n    {\n      \"text\": \"Sylvester Adinam Mensah, the Chief Executive Officer of Ghana EXIM Bank, has proposed collaborating with Latenu FM, a community radio station in La, to provide information regarding business growth, trade, and export opportunities in the Ga language. Speaking as the Special Guest of Honour at the station's 10th anniversary celebration on Saturday, Mr. Mensah urged the station to utilize its platform to highlight local entrepreneurs and assist listeners in understanding available business and financing opportunities. He stated that the station should use its platform to celebrate local entrepreneurs, explain financing and trade opportunities, and inspire young people to create rather than only seek jobs. Mr. Mensah, a former MP for La Dadekotopon, expressed a willingness to explore how the station and institutions such as Ghana EXIM Bank could work together to make business information more accessible to local communities. He noted that the initiative could be extended beyond the Ga language to other Ghanaian languages to help disseminate national information to a wider audience. The anniversary ceremony included the presentation of awards to individuals recognized for their contributions to communities in La and the wider Ga traditional area.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Sylvester Mensah urges Latenu FM to promote trade and export opportunities in Ga",
+            "pages": [
+              {
+                "text": "Sylvester Adinam Mensah, the Chief Executive Officer of Ghana EXIM Bank, has proposed collaborating with Latenu FM, a community radio station in La, to provide information regarding business growth, trade, and export opportunities in the Ga language. Speaking as the Special Guest of Honour at the station's 10th anniversary celebration on Saturday, Mr. Mensah urged the station to utilize its platform to highlight local entrepreneurs and assist listeners in understanding available business and financing opportunities. He stated that the station should use its platform to celebrate local entrepreneurs, explain financing and trade opportunities, and inspire young people to create rather than only seek jobs. Mr. Mensah, a former MP for La Dadekotopon, expressed a willingness to explore how the station and institutions such as Ghana EXIM Bank could work together to make business information more accessible to local communities. He noted that the initiative could be extended beyond the Ga language to other Ghanaian languages to help disseminate national information to a wider audience. The anniversary ceremony included the presentation of awards to individuals recognized for their contributions to communities in La and the wider Ga traditional area."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1420,
+            "completion_tokens": 273,
+            "total_tokens": 1693,
+            "prompt_tokens_details": {
+              "cached_tokens": 64
+            },
+            "neurons": 20.35454559326172
+          },
+          "latencyMs": 3413,
+          "safeHeaders": {
+            "cf-ray": "a417db7adcf4e80c-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:da344afbb7375b9f",
+      "title": "White House bars CNN from travelling with Trump on Air Force One",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "b1a3973e613f646c36b2017f8d34810942f401d1fb8357f9e50df204c7f07242",
+      "allowedExactDates": [
+        "2026-09-25",
+        "2026-09-24"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "September 25, 2026",
+            "date": "2026-09-25"
+          },
+          {
+            "raw": "September 24, 2026",
+            "date": "2026-09-24"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-09-25",
+          "2026-09-24"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 141,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:myjoyonline:d53bf87bb29de5e32d751267",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:myjoyonline:d53bf87bb29de5e32d751267",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:myjoyonline:d53bf87bb29de5e32d751267",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:myjoyonline:d53bf87bb29de5e32d751267",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:myjoyonline:d53bf87bb29de5e32d751267",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:myjoyonline:d53bf87bb29de5e32d751267",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:myjoyonline:d53bf87bb29de5e32d751267",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:myjoyonline:d53bf87bb29de5e32d751267",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:myjoyonline:d53bf87bb29de5e32d751267",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:myjoyonline:d53bf87bb29de5e32d751267",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:myjoyonline:d53bf87bb29de5e32d751267",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:myjoyonline:d53bf87bb29de5e32d751267",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:myjoyonline:d53bf87bb29de5e32d751267",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/white-house-bars-cnn-from-travelling-with-trump-on-air-force-one",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.myjoyonline.com/wp-content/uploads/2026/09/87b5fae0-b962-11f1-b1d1-571ed4d7ff2c.jpg-1024x576.webp",
+        "alt": "trump",
+        "status": "event-specific",
+        "source_url": "https://myjoyonline.com/white-house-bars-cnn-from-travelling-with-trump-on-air-force-one",
+        "attribution": "MyJoyOnline",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-09-27T04:45:13.626Z",
+          "finishedAt": "2026-09-27T04:45:15.773Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"White House excludes CNN from Air Force One travel to Tennessee\",\n  \"pages\": [\n    {\n      \"text\": \"According to MyJoyOnline, the White House has barred the broadcaster CNN from traveling with President Donald Trump on Air Force One for a trip to Tennessee scheduled for Saturday. While CNN was previously scheduled to fly with the president for the trip to attend a college American football game, a note released by the White House on the night of September 25, 2026, omitted the broadcaster from the media schedule. CNN reported that no other outlet was listed as a replacement in the president's tentative schedule. On Saturday, Trump criticized CNN and other media outlets in a series of online posts, referring to them as 'fake news.' This development follows a September 24, 2026, incident where the White House denied entry to some CNN and MS NOW reporters assigned to cover arrivals for a state dinner for Chinese leader Xi Jinping.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "White House excludes CNN from Air Force One travel to Tennessee",
+            "pages": [
+              {
+                "text": "According to MyJoyOnline, the White House has barred the broadcaster CNN from traveling with President Donald Trump on Air Force One for a trip to Tennessee scheduled for Saturday. While CNN was previously scheduled to fly with the president for the trip to attend a college American football game, a note released by the White House on the night of September 25, 2026, omitted the broadcaster from the media schedule. CNN reported that no other outlet was listed as a replacement in the president's tentative schedule. On Saturday, Trump criticized CNN and other media outlets in a series of online posts, referring to them as 'fake news.' This development follows a September 24, 2026, incident where the White House denied entry to some CNN and MS NOW reporters assigned to cover arrivals for a state dinner for Chinese leader Xi Jinping."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1689,
+            "completion_tokens": 216,
+            "total_tokens": 1905,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 21.245452880859375
+          },
+          "latencyMs": 2147,
+          "safeHeaders": {
+            "cf-ray": "a417db903dc6e80c-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:c4cd41ff97b6cff9",
+      "title": "Bill Gates urges governments to impose safeguards on AI",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "331a45b56d615fb83925214fca3d9936c3ac53954af7826f6176eff61f638a93",
+      "allowedExactDates": [
+        "2026-09-25"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "September 25, 2026",
+            "date": "2026-09-25"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-09-25"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 146,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:north-press:40992182fadf3a249134ed93",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:north-press:40992182fadf3a249134ed93",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:north-press:40992182fadf3a249134ed93",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:north-press:40992182fadf3a249134ed93",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:north-press:40992182fadf3a249134ed93",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:north-press:40992182fadf3a249134ed93",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:north-press:40992182fadf3a249134ed93",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:north-press:40992182fadf3a249134ed93",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:north-press:40992182fadf3a249134ed93",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:north-press:40992182fadf3a249134ed93",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:north-press:40992182fadf3a249134ed93",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:north-press:40992182fadf3a249134ed93",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:north-press:40992182fadf3a249134ed93",
+          "publisher": "North Press Agency",
+          "url": "https://npasyria.com/en/141969",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://npasyria.com/en/wp-content/uploads/2026/09/0x0.webp",
+        "alt": "Bill Gates urges governments to impose safeguards on AI",
+        "status": "event-specific",
+        "source_url": "https://npasyria.com/en/141969",
+        "attribution": "North Press Agency",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-09-27T04:45:15.773Z",
+          "finishedAt": "2026-09-27T04:45:18.329Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Bill Gates calls for government safeguards and monitoring of artificial intelligence\",\n  \"pages\": [\n    {\n      \"text\": \"On September 25, 2026, Microsoft co-founder Bill Gates called for government safeguards and the monitoring of artificial intelligence, warning that increasingly powerful AI tools could be used by individuals with malicious intent to cause catastrophic harm. During an interview with NBC News’ “Meet the Press,” Gates stated that AI is “certainly powerful enough to drive events” that could result in a billion deaths, arguing that the combination of advanced technology and people seeking to cause harm presents an unprecedented risk. He described the combination of people with ill intent using the latest AI tools as a weapon more powerful than anything previously seen. Gates urged politicians and law enforcement agencies to be involved in determining required safeguards and how AI systems should be monitored, noting that while such oversight would create “a little bit of overhead for the industry,” it should not dramatically slow AI development.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Bill Gates calls for government safeguards and monitoring of artificial intelligence",
+            "pages": [
+              {
+                "text": "On September 25, 2026, Microsoft co-founder Bill Gates called for government safeguards and the monitoring of artificial intelligence, warning that increasingly powerful AI tools could be used by individuals with malicious intent to cause catastrophic harm. During an interview with NBC News’ “Meet the Press,” Gates stated that AI is “certainly powerful enough to drive events” that could result in a billion deaths, arguing that the combination of advanced technology and people seeking to cause harm presents an unprecedented risk. He described the combination of people with ill intent using the latest AI tools as a weapon more powerful than anything previously seen. Gates urged politicians and law enforcement agencies to be involved in determining required safeguards and how AI systems should be monitored, noting that while such oversight would create “a little bit of overhead for the industry,” it should not dramatically slow AI development."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1510,
+            "completion_tokens": 216,
+            "total_tokens": 1726,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 19.618181228637695
+          },
+          "latencyMs": 2556,
+          "safeHeaders": {
+            "cf-ray": "a417db9d9f54e80c-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:0eae323227f1a835",
+      "title": "Millions in Syria still struggle to access safe water – Medical charity",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "522c49b314c73e5c24f7fc87dd9a2f8983cebc40e3008b2faae772bfd95742bb",
+      "allowedExactDates": [
+        "2026-09-24"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "September 24, 2026",
+            "date": "2026-09-24"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-09-24"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 205,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:north-press:5a87f82034453af5743aab81",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:north-press:5a87f82034453af5743aab81",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:north-press:5a87f82034453af5743aab81",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:north-press:5a87f82034453af5743aab81",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:north-press:5a87f82034453af5743aab81",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:north-press:5a87f82034453af5743aab81",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:north-press:5a87f82034453af5743aab81",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:north-press:5a87f82034453af5743aab81",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:north-press:5a87f82034453af5743aab81",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:north-press:5a87f82034453af5743aab81",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:north-press:5a87f82034453af5743aab81",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:north-press:5a87f82034453af5743aab81",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:north-press:5a87f82034453af5743aab81",
+          "publisher": "North Press Agency",
+          "url": "https://npasyria.com/en/141947",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://npasyria.com/en/wp-content/uploads/2026/06/5-32-750x430-1.jpg",
+        "alt": "Millions in Syria still struggle to access safe water – Medical charity",
+        "status": "event-specific",
+        "source_url": "https://npasyria.com/en/141947",
+        "attribution": "North Press Agency",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-09-27T04:45:18.329Z",
+          "finishedAt": "2026-09-27T04:45:22.032Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Millions in Syria struggle to access safe water and sanitation, MSF reports\",\n  \"pages\": [\n    {\n      \"text\": \"Médecins Sans Frontières (MSF) stated on September 24, 2026, that millions of people in Syria continue to struggle to access safe water and sanitation following 14 years of conflict, displacement, and damage to essential infrastructure. MSF water and sanitation coordinator Charlie Hardstone warned that unreliable water supplies increase the risk of waterborne diseases and complicate healthcare delivery, noting that water appearing clean may contain harmful bacteria and contaminants. This situation affects people returning to communities where basic infrastructure remains damaged. According to the UN High Commissioner for Refugees, approximately 3.8 million Syrians displaced within the country or abroad have returned since December 2024. The UN Office for the Coordination of Humanitarian Affairs estimates that 15.6 million people in Syria still require humanitarian assistance.\"\n    },\n    {\n      \"text\": \"Flooding in northeastern Syria has placed additional pressure on water infrastructure. MSF reported that floods in May and August damaged dozens of water stations in Raqqa and Deir ez-Zor. In response, the organization rehabilitated several facilities, including the Al-Hari water station in Deir ez-Zor, which improved water access for approximately 11,000 people. In Hasakah, MSF supplied more than 3.5 million liters of water to displaced populations and donated a desalination plant with a daily production capacity of 800,000 liters of drinking water.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Millions in Syria struggle to access safe water and sanitation, MSF reports",
+            "pages": [
+              {
+                "text": "Médecins Sans Frontières (MSF) stated on September 24, 2026, that millions of people in Syria continue to struggle to access safe water and sanitation following 14 years of conflict, displacement, and damage to essential infrastructure. MSF water and sanitation coordinator Charlie Hardstone warned that unreliable water supplies increase the risk of waterborne diseases and complicate healthcare delivery, noting that water appearing clean may contain harmful bacteria and contaminants. This situation affects people returning to communities where basic infrastructure remains damaged. According to the UN High Commissioner for Refugees, approximately 3.8 million Syrians displaced within the country or abroad have returned since December 2024. The UN Office for the Coordination of Humanitarian Affairs estimates that 15.6 million people in Syria still require humanitarian assistance."
+              },
+              {
+                "text": "Flooding in northeastern Syria has placed additional pressure on water infrastructure. MSF reported that floods in May and August damaged dozens of water stations in Raqqa and Deir ez-Zor. In response, the organization rehabilitated several facilities, including the Al-Hari water station in Deir ez-Zor, which improved water access for approximately 11,000 people. In Hasakah, MSF supplied more than 3.5 million liters of water to displaced populations and donated a desalination plant with a daily production capacity of 800,000 liters of drinking water."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1665,
+            "completion_tokens": 344,
+            "total_tokens": 2009,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 24.51818084716797
+          },
+          "latencyMs": 3703,
+          "safeHeaders": {
+            "cf-ray": "a417dbad9e69e80c-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "stage": "evidence",
+      "eventId": "event:7a3f6158af01a474",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:69f4fa148597383d",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:7ffe529eb9e0e934",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e20628867369be1b",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:ec3069725e8cb081",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:3f4e75e9fb050be6",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:9a34f7e98a270d2b",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:989a74523603cd46",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:05edd452a7081303",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:33debb23a36f3782",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:9e75a10119636790",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f471448560270731",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:66a1db7cd8f71006",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:5779dbc52af535d7",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:a80062fa7cb4ff2d",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:2eab29f2917b1770",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:5c5604835952ab7c",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:2287e9f1147a6be7",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:122b398e3566bdf7",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:47d986acbe41ab78",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "eventId": "event:e0c65a574a791692",
+      "title": "U.S., China agree AI, military crisis communication channels",
+      "stage": "content-structure",
+      "reason": "summary is too thin for a self-contained beta card"
+    }
+  ],
+  "outcome": {
+    "writerRequests": 15,
+    "retries": 0,
+    "acceptedCards": 14,
+    "retainedCards": 9,
+    "skippedCards": 21,
+    "totalNeurons": 301.59089756011963,
+    "inputTokens": 21994,
+    "outputTokens": 3727,
+    "meanNeuronsPerAcceptedCard": 21.54,
+    "datasetBytes": 54608,
+    "thirdPartyCostUsd": 0,
+    "imageStatus": {
+      "event-specific": 23
+    },
+    "geographicDistribution": {
+      "Syria": 7,
+      "Middle East": 9,
+      "Ghana": 9,
+      "Canada": 3,
+      "GTA": 2
+    }
+  },
+  "integrity": {
+    "datasetSha256": "f32da8e2965b094adb82aa02ce48a2139ee6f3fbd3e920f342f27b6baf260046"
+  }
+}
