@@ -158,7 +158,7 @@ export function classifyPriorityRegions(event) {
     if (local.length && !FOREIGN_STORY_CUE.test(article.title || '')) local.forEach(region => regions.add(region))
   }
   if (/\b(?:syria|syrian|damascus|aleppo|daraa|idlib|homs|latakia)\b/i.test(titles)) { regions.add('Syria'); regions.add('Middle East') }
-  if (/\b(?:bangladesh|bangladeshi|dhaka|chattogram|chittagong)\b/i.test(titles)) regions.add('Bangladesh')
+  if (/\b(?:bangladesh|bangladeshi|dhaka|chattogram|chittagong|sheikh hasina|muhammad yunus|khaleda zia|awami league|bangladesh nationalist party|\bBNP\b)\b/i.test(titles)) regions.add('Bangladesh')
   if (/\b(?:ghana|ghanaian|accra|kumasi|mahama)\b/i.test(titles)) regions.add('Ghana')
   if (/\b(?:toronto|mississauga|brampton|markham|vaughan|peel region|york region|durham region|halton region)\b/i.test(titles)) { regions.add('GTA'); regions.add('Canada') }
   else if (/\b(?:canada|canadian|ontario|quebec|alberta|british columbia|ottawa|montreal|vancouver)\b/i.test(titles)) regions.add('Canada')
@@ -191,7 +191,7 @@ export function classifyCardRegions(card) {
   const primarySource = SOURCES.find(source => source.name === card?.sources?.[0]?.name)
   return classifyPriorityRegions({
     primary: { provenance: { feedId: primarySource?.id || null } },
-    articles: [{ title: String(card?.headline || '') }],
+    articles: [{ title: String(card?.headline || ''), provenance: { feedId: primarySource?.id || null } }],
   })
 }
 
