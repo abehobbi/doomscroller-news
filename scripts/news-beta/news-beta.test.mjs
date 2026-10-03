@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { validateNewsBetaDataset, articlesForFeed } from '../../src/news/schema.js'
-import { applyBetaSelectionPolicy, classifyCardRegions, classifyPriorityRegions, diversityRerank, isEditoriallyEligibleTitle, selectActiveFeedCards } from './pipeline.mjs'
+import { applyBetaSelectionPolicy, classifyCardRegions, classifyPriorityRegions, diversityRerank, htmlListingItems, isEditoriallyEligibleTitle, selectActiveFeedCards } from './pipeline.mjs'
 import { validateCardContent } from './content-validation.mjs'
 import { displayStoryPages } from '../../src/news/pagination.js'
 import { compareEvents } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/lib.mjs'
@@ -12,6 +12,16 @@ const card = (id, overrides = {}) => ({
   sources: [{ name: 'Publisher', url: `https://example.com/${id}`, role: 'primary', publishedAt: '2026-09-25T10:00:00Z' }],
   geography: ['World'], topics: [], first_seen: '2026-09-25T10:00:00Z', updated_at: '2026-09-25T10:00:00Z',
   generated_at: '2026-09-25T10:01:00Z', evidence_fingerprint: 'a'.repeat(64), content_version: 1, ...overrides,
+})
+
+test('public HTML listings yield dated publisher articles and original images', () => {
+  const html = `<article><a href="/health/dengue-update"><img src="/_next/image?url=https%3A%2F%2Fcdn.example.com%2Fdengue.jpg&amp;w=1200&amp;q=75"></a><time dateTime="2026-10-03T13:47:54+00:00">5 hours ago</time><h3><a href="/health/dengue-update">Six more die of dengue; 1,608 hospitalised</a></h3></article>`
+  const items = htmlListingItems(html, 'https://publisher.example/')
+  assert.equal(items.length, 1)
+  assert.equal(items[0].title, 'Six more die of dengue; 1,608 hospitalised')
+  assert.equal(items[0].link, 'https://publisher.example/health/dengue-update')
+  assert.equal(items[0].pubDate, '2026-10-03T13:47:54+00:00')
+  assert.equal(items[0].enclosure['@_url'], 'https://cdn.example.com/dengue.jpg')
 })
 
 test('beta schema preserves event cards, pages, sources and stable ids', () => {

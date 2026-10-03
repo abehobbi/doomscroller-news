@@ -12,7 +12,7 @@ const parser = new XMLParser({ ignoreAttributes: false, trimValues: true, parseT
 const PRIORITY = ['Syria', 'GTA', 'Bangladesh', 'Ghana', 'Middle East', 'Canada']
 const LOCAL_FEED_REGIONS = new Map([
   ['sana-en', ['Syria', 'Middle East']], ['north-press-en', ['Syria', 'Middle East']], ['enab-baladi-en', ['Syria', 'Middle East']],
-  ['dhaka-tribune', ['Bangladesh']], ['bd24live-en', ['Bangladesh']], ['prothom-alo-en', ['Bangladesh']],
+  ['dhaka-tribune', ['Bangladesh']], ['bd24live-en', ['Bangladesh']], ['prothom-alo-en', ['Bangladesh']], ['financial-express-bd', ['Bangladesh']],
   ['myjoyonline', ['Ghana']], ['graphic-ghana', ['Ghana']], ['ghanaweb', ['Ghana']],
   ['toronto-city', ['GTA', 'Canada']], ['cbc-toronto', ['GTA', 'Canada']], ['cbc-canada', ['Canada']],
 ])
@@ -79,8 +79,10 @@ function pageBody(html) {
 
 async function discover(source, retrievedAt) {
   try {
-    const response = await fetchText(source.feedUrl, 'application/rss+xml, application/atom+xml, application/xml, text/xml')
-    const items = feedItems(parser.parse(response.text))
+    const response = await fetchText(source.feedUrl, source.format === 'html-listing'
+      ? 'text/html,application/xhtml+xml'
+      : 'application/rss+xml, application/atom+xml, application/xml, text/xml')
+    const items = source.format === 'html-listing' ? htmlListingItems(response.text, response.finalUrl) : feedItems(parser.parse(response.text))
     const articles = items.map(item => normalizeFeedItem(item, {
       ...source, regions: source.coverage, topics: source.coverage,
     }, retrievedAt)).filter(Boolean)
@@ -89,6 +91,30 @@ async function discover(source, retrievedAt) {
   } catch (error) {
     return { status: { id: source.id, name: source.name, status: 'failed', itemCount: 0, error: safeError(error) }, articles: [] }
   }
+}
+
+export function htmlListingItems(html, baseUrl) {
+  const items = []
+  for (const match of String(html || '').matchAll(/<article\b[^>]*>([\s\S]*?)<\/article>/gi)) {
+    const block = match[1]
+    const headline = block.match(/<h[2-4]\b[^>]*>[\s\S]*?<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>[\s\S]*?<\/h[2-4]>/i)
+    const published = block.match(/<time\b[^>]*datetime=["']([^"']+)["']/i)
+    if (!headline || !published) continue
+    let link
+    try { link = new URL(headline[1], baseUrl).href } catch { continue }
+    const image = block.match(/<img\b[^>]*\bsrc=["']([^"']+)["']/i)
+    let imageUrl = image?.[1]?.replace(/&amp;/g, '&') || null
+    if (imageUrl?.startsWith('/_next/image?')) {
+      try { imageUrl = new URL(imageUrl, baseUrl).searchParams.get('url') || imageUrl } catch { /* keep publisher proxy URL */ }
+    } else if (imageUrl) {
+      try { imageUrl = new URL(imageUrl, baseUrl).href } catch { imageUrl = null }
+    }
+    items.push({
+      title: plain(headline[2]), link, pubDate: published[1],
+      guid: link, enclosure: imageUrl ? { '@_url': imageUrl, '@_type': 'image/jpeg' } : undefined,
+    })
+  }
+  return items
 }
 
 async function snapshot(article) {
