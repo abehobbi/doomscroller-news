@@ -131,7 +131,9 @@ function contentType(event) {
 }
 
 export function classifyPriorityRegions(event) {
-  const regions = new Set(LOCAL_FEED_REGIONS.get(event.primary?.provenance?.feedId) || [])
+  // Publisher location is not event location. A Syrian outlet can report on
+  // Washington, and that must not turn a US story into a Syria card.
+  const regions = new Set()
   const titles = event.articles.map(article => article.title).join(' ')
   if (/\b(?:syria|syrian|damascus|aleppo|daraa|idlib|homs|latakia)\b/i.test(titles)) { regions.add('Syria'); regions.add('Middle East') }
   if (/\b(?:bangladesh|bangladeshi|dhaka|chattogram|chittagong)\b/i.test(titles)) regions.add('Bangladesh')
@@ -165,6 +167,7 @@ export function applyBetaSelectionPolicy(event) {
   let editorialPenalty = 0
   if (/\b(?:football|soccer|basketball|nba|nhl|mlb|nfl|trade for (?:veteran|forward|guard)|match|tournament)\b/i.test(title) && event.scoreParts.importance < 18) editorialPenalty -= 18
   if (/^(?:how|why)\b/i.test(title) && event.scoreParts.importance < 18) editorialPenalty -= 12
+  if (/\b(?:tourism invites?|light(?:ing)? display|fellowship|selected for .*fellowship|appointed|appointment|joins? the .*team|award ceremony|announces? partnership)\b/i.test(title) && event.scoreParts.importance < 24) editorialPenalty -= 24
   return {
     ...event, regions,
     score: Number((event.score - event.scoreParts.region + correctedRegion + editorialPenalty).toFixed(2)),
@@ -230,7 +233,8 @@ export async function buildEvidenceBatch({ now = Date.now() } = {}) {
       limitations: [source.sourceLimitations, source.previewOnly ? 'Only a feed/metadata preview was accessible.' : null].filter(Boolean),
     }))
     const timeEvidence = facts[0].completeFactualPropositions.filter(text => /\b(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|January|February|March|April|May|June|July|August|September|October|November|December|\d{4})\b/i.test(text)).slice(0, 3)
-    prepared.push({ event, assessment, image: { url: primary.imageUrl || null, alt: primary.imageAlt || event.primary.title, sourceUrl: primary.url, attribution: primary.sourceName }, packet: {
+    const imageSource = ranked.find(source => source.imageUrl) || primary
+    prepared.push({ event, assessment, image: { url: imageSource.imageUrl || null, alt: imageSource.imageAlt || event.primary.title, sourceUrl: imageSource.url, attribution: imageSource.sourceName }, packet: {
       eventId: event.id, primaryNarrativeSource: facts[0], sourcePublicationTime: facts[0].publishedAt,
       sourceUpdateTime: facts[0].updatedAt, eventTimeOrWindow: timeEvidence,
       coreFactualPropositions: facts[0].completeFactualPropositions, secondarySourceAdditions: facts.slice(1),
