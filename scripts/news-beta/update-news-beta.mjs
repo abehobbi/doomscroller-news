@@ -1,7 +1,7 @@
 import crypto from 'node:crypto'
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { buildEvidenceBatch, classifyCardRegions, evidenceFingerprint, isEditoriallyEligibleTitle } from './pipeline.mjs'
+import { buildEvidenceBatch, classifyCardRegions, evidenceFingerprint, isEditoriallyEligibleTitle, selectActiveFeedCards } from './pipeline.mjs'
 import { writeCard, WRITER_CONFIGURATION } from './writer.mjs'
 import { buildBoundPacket, detectCrossPacketOverlap } from '../../artifacts/summary-feasibility/date-scope-reliability-fix/scope.mjs'
 import { validateGeneratedDates } from '../../artifacts/summary-feasibility/date-scope-reliability-fix/temporal.mjs'
@@ -119,6 +119,7 @@ async function main() {
   }
   const accepted = [], generation = []
   for (const candidate of candidates) {
+    if (accepted.length >= 20) break
     if (conflicted.has(candidate.eventId)) {
       rejected.push({ eventId: candidate.eventId, title: candidate.item.event.primary.title, stage: 'event-scope', reason: 'included evidence overlaps another selected central event' })
       continue
@@ -169,12 +170,13 @@ async function main() {
     .filter(card => isEditoriallyEligibleTitle(card.headline))
     .map(card => ({ ...card, geography: classifyCardRegions(card) }))
   const cards = [...accepted, ...retained].sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at)).slice(0, 120)
+  const activeCards = selectActiveFeedCards(cards)
   if (!cards.length) throw new Error('No accepted or previously published beta cards; refusing to publish an empty dataset')
   const generatedAt = new Date().toISOString(), batchId = `news-beta-${generatedAt.replace(/[:.]/g, '-')}`
   const dataset = {
     schema: 'doomscroller.news-beta-dataset', schemaVersion: 1, generatedAt, batchId,
-    feed: { eventIds: cards.slice(0, 20).map(card => card.event_id) }, cards,
-    policy: { activeFeedSize: 20, targetNewOrUpdatedPerDay: 20, maximumNewOrUpdatedPerDay: 20, retentionDays: 45, model: WRITER_CONFIGURATION.model, thinking: false, temperature: 0.2 },
+    feed: { eventIds: activeCards.map(card => card.event_id) }, cards,
+    policy: { activeFeedSize: 20, candidateReserveSize: 30, targetNewOrUpdatedPerDay: 20, maximumNewOrUpdatedPerDay: 20, retentionDays: 45, model: WRITER_CONFIGURATION.model, thinking: false, temperature: 0.2 },
   }
   const attempts = generation.flatMap(item => item.attempts)
   const diagnostics = {
