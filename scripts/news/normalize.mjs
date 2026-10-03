@@ -139,6 +139,8 @@ export function normalizeFeedItem(item, source, retrievedAt) {
 export function feedItems(parsed) {
   const rssItems = parsed?.rss?.channel?.item ?? parsed?.channel?.item
   if (rssItems) return array(rssItems)
+  const rdfItems = parsed?.['rdf:RDF']?.item ?? parsed?.RDF?.item
+  if (rdfItems) return array(rdfItems)
   const atomItems = parsed?.feed?.entry
   return array(atomItems)
 }

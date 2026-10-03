@@ -63,7 +63,7 @@ export function compareEvents(a,b){
   const actionA=A.headlineAction||A.action,actionB=B.headlineAction||B.action,sameActionSet=actionA.length===actionB.length&&actionA.every(x=>actionB.includes(x));
   if(hours<=168&&actors>=1&&places>=1&&legalA&&legalB&&!sameActionSet)return {relation:'material-update',score:actors*3+places*2+terms,reason:'same principal actor and place in a later legal/procedural development'};
   const score=actors*3+places*2+actions*3+Math.min(terms,5)+numbers;
-  if(hours<=72&&places>=1&&((terms>=2&&actions>=1)||terms>=4)&&score>=6)return {relation:'same-event',score,reason:`shared headline actors (${actors}), headline actions (${actions}), places (${places}) and specific title terms (${terms})`};
+  if(hours<=72&&((places>=1&&((terms>=2&&actions>=1)||terms>=4)&&score>=6)||(places===0&&terms>=4&&actions>=1)))return {relation:'same-event',score,reason:`shared headline actors (${actors}), headline actions (${actions}), places (${places}) and specific title terms (${terms})`};
   return {relation:'distinct-or-uncertain',score,reason:'insufficient shared event signals for conservative merge'};
 }
 export function clusterArticles(articles,sourcesById=new Map()){
