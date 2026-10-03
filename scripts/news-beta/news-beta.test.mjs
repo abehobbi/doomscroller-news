@@ -59,6 +59,7 @@ test('beta selection uses event geography instead of publisher location', () => 
   assert.equal(applyBetaSelectionPolicy(base('US and China extend a trade truce', 'aljazeera-all')).scoreParts.region, 0)
   assert.deepEqual(classifyCardRegions({ headline: 'US and China extend a trade truce', sources: [{ name: 'Al Jazeera' }] }), [])
   assert.deepEqual(classifyCardRegions({ headline: 'Toronto city budget is approved', sources: [{ name: 'CBC Toronto' }] }), ['GTA', 'Canada'])
+  assert.deepEqual(classifyCardRegions({ headline: 'Indian official discusses Sheikh Hasina landing in Delhi', sources: [{ name: 'Prothom Alo English' }] }), ['Bangladesh'])
   assert.deepEqual(classifyPriorityRegions(base('Trump orders US government to rename an AI program', 'sana-en')), [])
   assert.deepEqual(classifyPriorityRegions({
     primary: { title: 'Election Commission announces new polling timetable' },
