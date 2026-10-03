@@ -47,7 +47,7 @@ test('diversity reranker only adjusts already-qualified events and records adjus
   assert.ok(result.adjustments.some(value => value.eventId === 'event:ghana1' && value.adjustment > 0))
 })
 
-test('beta selection uses headline and local-feed geography instead of a broad publisher region', () => {
+test('beta selection uses event geography instead of publisher location', () => {
   const base = (title, feedId, regions = ['Middle East']) => ({
     primary: { title, provenance: { feedId } }, articles: [{ title }], regions, score: 45,
     scoreParts: { region: 15, importance: 18 },
@@ -57,13 +57,15 @@ test('beta selection uses headline and local-feed geography instead of a broad p
   assert.deepEqual(classifyPriorityRegions(base('Mahama addresses parliament', 'myjoyonline')), ['Ghana'])
   assert.equal(applyBetaSelectionPolicy(base('US and China extend a trade truce', 'aljazeera-all')).scoreParts.region, 0)
   assert.deepEqual(classifyCardRegions({ headline: 'US and China extend a trade truce', sources: [{ name: 'Al Jazeera' }] }), [])
-  assert.deepEqual(classifyCardRegions({ headline: 'City budget is approved', sources: [{ name: 'CBC Toronto' }] }), ['GTA', 'Canada'])
+  assert.deepEqual(classifyCardRegions({ headline: 'Toronto city budget is approved', sources: [{ name: 'CBC Toronto' }] }), ['GTA', 'Canada'])
+  assert.deepEqual(classifyPriorityRegions(base('Trump orders US government to rename an AI program', 'sana-en')), [])
 })
 
 test('beta selection demotes routine sports and generic explainer cards', () => {
   const make = title => ({ primary: { title, provenance: { feedId: 'cbc-toronto' } }, articles: [{ title }], regions: ['GTA'], score: 40, scoreParts: { region: 18, importance: 6 } })
   assert.equal(applyBetaSelectionPolicy(make('Raptors GM discusses basketball trade')).scoreParts.editorialPenalty, -18)
   assert.equal(applyBetaSelectionPolicy(make('How an unchanged policy may affect households')).scoreParts.editorialPenalty, -12)
+  assert.equal(applyBetaSelectionPolicy(make('Two local journalists selected for UK fellowship')).scoreParts.editorialPenalty, -24)
 })
 
 test('content gate rejects thin, truncated, and exposed citation-marker prose', () => {
