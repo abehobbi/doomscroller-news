@@ -220,7 +220,7 @@ export function applyBetaSelectionPolicy(event) {
   }
 }
 
-export function diversityRerank(candidates, { target = 20, maximum = 20, minimumScore = 38 } = {}) {
+export function diversityRerank(candidates, { target = 30, maximum = 30, minimumScore = 38 } = {}) {
   const remaining = candidates.filter(item => item.event.score >= minimumScore).map(item => ({ ...item }))
   const selected = [], regionCounts = new Map(), countryCounts = new Map(), typeCounts = new Map(), publisherCounts = new Map(), adjustments = []
   while (remaining.length && selected.length < maximum) {
@@ -251,6 +251,37 @@ export function diversityRerank(candidates, { target = 20, maximum = 20, minimum
     adjustments.push({ eventId: choice.item.event.id, baseScore: choice.item.event.score, adjustment: choice.delta, adjustedScore: choice.adjusted, contentType: choice.type, regions: choice.regions, country: choice.country })
   }
   return { selected, adjustments, distribution: { regions: Object.fromEntries(regionCounts), countries: Object.fromEntries(countryCounts), contentTypes: Object.fromEntries(typeCounts), publishers: Object.fromEntries(publisherCounts) } }
+}
+
+export function selectActiveFeedCards(cards, { maximum = 20, now = Date.now() } = {}) {
+  const sorted = cards.filter(card => isEditoriallyEligibleTitle(card.headline))
+    .sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at))
+  const recent = sorted.filter(card => now - Date.parse(card.updated_at) <= 7 * 86_400_000)
+  const pool = recent.length >= maximum ? recent : sorted
+  const selected = [], used = new Set(), counts = new Map()
+  const add = card => {
+    if (!card || used.has(card.event_id) || selected.length >= maximum) return false
+    selected.push(card); used.add(card.event_id)
+    for (const region of card.geography || []) counts.set(region, (counts.get(region) || 0) + 1)
+    return true
+  }
+  for (const [region, minimum] of REGION_MINIMUMS) {
+    for (const card of pool) {
+      if ((counts.get(region) || 0) >= minimum) break
+      if ((card.geography || []).includes(region)) add(card)
+    }
+  }
+  while (selected.length < maximum) {
+    const choices = pool.filter(card => !used.has(card.event_id)).map(card => {
+      const regions = card.geography?.length ? card.geography : ['World']
+      const repetition = Math.max(...regions.map(region => counts.get(region) || 0))
+      const ageHours = Math.max(0, (now - Date.parse(card.updated_at)) / 3_600_000)
+      return { card, score: 20 - ageHours / 12 - repetition * 4 }
+    }).sort((a, b) => b.score - a.score || Date.parse(b.card.updated_at) - Date.parse(a.card.updated_at))
+    if (!choices.length) break
+    add(choices[0].card)
+  }
+  return selected
 }
 
 export async function buildEvidenceBatch({ now = Date.now() } = {}) {

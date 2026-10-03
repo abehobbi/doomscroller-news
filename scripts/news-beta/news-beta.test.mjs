@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { validateNewsBetaDataset, articlesForFeed } from '../../src/news/schema.js'
-import { applyBetaSelectionPolicy, classifyCardRegions, classifyPriorityRegions, diversityRerank, isEditoriallyEligibleTitle } from './pipeline.mjs'
+import { applyBetaSelectionPolicy, classifyCardRegions, classifyPriorityRegions, diversityRerank, isEditoriallyEligibleTitle, selectActiveFeedCards } from './pipeline.mjs'
 import { validateCardContent } from './content-validation.mjs'
 import { displayStoryPages } from '../../src/news/pagination.js'
 import { compareEvents } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/lib.mjs'
@@ -80,7 +80,7 @@ test('beta selection demotes routine sports and generic explainer cards', () => 
   assert.equal(isEditoriallyEligibleTitle('Zambia holds its closest election in decades'), true)
 })
 
-test('twenty-card reranker reserves meaningful space for priority and world discovery', () => {
+test('reranker reserves meaningful space for priority and world discovery', () => {
   const item = (id, score, regions, title, discovery = 0) => ({
     event: { id, score, regions, scoreParts: { discovery }, primary: { title, description: '', url: 'https://example.com' }, articles: [{ title, description: '' }] },
     packet: { primaryNarrativeSource: { publisher: `Publisher ${id}` } },
@@ -92,7 +92,7 @@ test('twenty-card reranker reserves meaningful space for priority and world disc
     item('zambia', 42, [], 'Zambia conservation researchers discover new species', 10),
     ...Array.from({ length: 20 }, (_, index) => item(`world-${index}`, 60 - index, [], `Major world event ${index}`)),
   ]
-  const result = diversityRerank(candidates)
+  const result = diversityRerank(candidates, { target: 20, maximum: 20 })
   assert.equal(result.selected.length, 20)
   assert.equal(result.selected.filter(value => value.event.regions.includes('Bangladesh')).length, 2)
   assert.ok(result.selected.some(value => value.event.id === 'lithuania'))
@@ -109,6 +109,22 @@ test('near-identical international headlines cluster even before a country is in
     article('Latvians vote in parliamentary election amid rising cost concerns', 7),
   )
   assert.equal(result.relation, 'same-event')
+})
+
+test('active feed keeps twenty cards while preserving priority coverage and world space', () => {
+  const now = Date.parse('2026-10-03T12:00:00Z')
+  const activeCard = (id, geography, hoursAgo) => card(id, { headline: `Material development ${id}`, geography, updated_at: new Date(now - hoursAgo * 3_600_000).toISOString() })
+  const cards = [
+    activeCard('syria-1', ['Syria', 'Middle East'], 1), activeCard('syria-2', ['Syria', 'Middle East'], 2),
+    activeCard('bangladesh-1', ['Bangladesh'], 3), activeCard('bangladesh-2', ['Bangladesh'], 4),
+    activeCard('ghana-1', ['Ghana'], 5), activeCard('ghana-2', ['Ghana'], 6),
+    activeCard('canada-1', ['Canada'], 7), activeCard('gta-1', ['GTA', 'Canada'], 8),
+    ...Array.from({ length: 18 }, (_, index) => activeCard(`world-${index}`, [], 9 + index)),
+  ]
+  const selected = selectActiveFeedCards(cards, { now })
+  assert.equal(selected.length, 20)
+  assert.equal(selected.filter(value => value.geography.includes('Bangladesh')).length, 2)
+  assert.ok(selected.filter(value => !value.geography.length).length >= 8)
 })
 
 test('content gate rejects thin, truncated, and exposed citation-marker prose', () => {
