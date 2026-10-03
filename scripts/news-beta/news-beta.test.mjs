@@ -1,9 +1,10 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { validateNewsBetaDataset, articlesForFeed } from '../../src/news/schema.js'
-import { applyBetaSelectionPolicy, classifyCardRegions, classifyPriorityRegions, diversityRerank } from './pipeline.mjs'
+import { applyBetaSelectionPolicy, classifyCardRegions, classifyPriorityRegions, diversityRerank, isEditoriallyEligibleTitle } from './pipeline.mjs'
 import { validateCardContent } from './content-validation.mjs'
 import { displayStoryPages } from '../../src/news/pagination.js'
+import { compareEvents } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/lib.mjs'
 
 const card = (id, overrides = {}) => ({
   event_id: id, headline: `Headline for ${id}`, pages: [{ text: 'A complete source-grounded explanation.' }],
@@ -59,13 +60,55 @@ test('beta selection uses event geography instead of publisher location', () => 
   assert.deepEqual(classifyCardRegions({ headline: 'US and China extend a trade truce', sources: [{ name: 'Al Jazeera' }] }), [])
   assert.deepEqual(classifyCardRegions({ headline: 'Toronto city budget is approved', sources: [{ name: 'CBC Toronto' }] }), ['GTA', 'Canada'])
   assert.deepEqual(classifyPriorityRegions(base('Trump orders US government to rename an AI program', 'sana-en')), [])
+  assert.deepEqual(classifyPriorityRegions({
+    primary: { title: 'Election Commission announces new polling timetable' },
+    articles: [{ title: 'Election Commission announces new polling timetable', provenance: { feedId: 'dhaka-tribune' } }],
+  }), ['Bangladesh'])
+  assert.deepEqual(classifyPriorityRegions({
+    primary: { title: 'Trump announces a new US technology program' },
+    articles: [{ title: 'Trump announces a new US technology program', provenance: { feedId: 'dhaka-tribune' } }],
+  }), [])
 })
 
 test('beta selection demotes routine sports and generic explainer cards', () => {
   const make = title => ({ primary: { title, provenance: { feedId: 'cbc-toronto' } }, articles: [{ title }], regions: ['GTA'], score: 40, scoreParts: { region: 18, importance: 6 } })
   assert.equal(applyBetaSelectionPolicy(make('Raptors GM discusses basketball trade')).scoreParts.editorialPenalty, -18)
   assert.equal(applyBetaSelectionPolicy(make('How an unchanged policy may affect households')).scoreParts.editorialPenalty, -12)
-  assert.equal(applyBetaSelectionPolicy(make('Two local journalists selected for UK fellowship')).scoreParts.editorialPenalty, -24)
+  assert.equal(applyBetaSelectionPolicy(make('Two local journalists selected for UK fellowship')).scoreParts.editorialPenalty, -30)
+  assert.equal(isEditoriallyEligibleTitle('Sydney Hushie appointed Chief of a digital centre'), false)
+  assert.equal(isEditoriallyEligibleTitle('Niagara invites neighbours to a red-white-blue falls display'), false)
+  assert.equal(isEditoriallyEligibleTitle('Zambia holds its closest election in decades'), true)
+})
+
+test('twenty-card reranker reserves meaningful space for priority and world discovery', () => {
+  const item = (id, score, regions, title, discovery = 0) => ({
+    event: { id, score, regions, scoreParts: { discovery }, primary: { title, description: '', url: 'https://example.com' }, articles: [{ title, description: '' }] },
+    packet: { primaryNarrativeSource: { publisher: `Publisher ${id}` } },
+  })
+  const candidates = [
+    item('bangladesh-1', 45, ['Bangladesh'], 'Election Commission sets national vote timetable'),
+    item('bangladesh-2', 44, ['Bangladesh'], 'Court issues major constitutional ruling in Dhaka'),
+    item('lithuania', 43, [], 'Lithuania reports first archaeological discovery', 10),
+    item('zambia', 42, [], 'Zambia conservation researchers discover new species', 10),
+    ...Array.from({ length: 20 }, (_, index) => item(`world-${index}`, 60 - index, [], `Major world event ${index}`)),
+  ]
+  const result = diversityRerank(candidates)
+  assert.equal(result.selected.length, 20)
+  assert.equal(result.selected.filter(value => value.event.regions.includes('Bangladesh')).length, 2)
+  assert.ok(result.selected.some(value => value.event.id === 'lithuania'))
+  assert.ok(result.selected.some(value => value.event.id === 'zambia'))
+})
+
+test('near-identical international headlines cluster even before a country is in the place dictionary', () => {
+  const article = (title, hour) => ({
+    title, description: '', publishedAt: `2026-10-03T0${hour}:00:00Z`,
+    signals: { actor: [], place: [], headlineAction: ['elect'], action: ['elect'], numbers: [], terms: title.toLowerCase().replace(/[^a-z ]/g, '').split(/\s+/) },
+  })
+  const result = compareEvents(
+    article('Latvia votes in parliamentary election amid rising costs', 8),
+    article('Latvians vote in parliamentary election amid rising cost concerns', 7),
+  )
+  assert.equal(result.relation, 'same-event')
 })
 
 test('content gate rejects thin, truncated, and exposed citation-marker prose', () => {

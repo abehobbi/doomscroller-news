@@ -1,7 +1,7 @@
 import crypto from 'node:crypto'
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { buildEvidenceBatch, classifyCardRegions, evidenceFingerprint } from './pipeline.mjs'
+import { buildEvidenceBatch, classifyCardRegions, evidenceFingerprint, isEditoriallyEligibleTitle } from './pipeline.mjs'
 import { writeCard, WRITER_CONFIGURATION } from './writer.mjs'
 import { buildBoundPacket, detectCrossPacketOverlap } from '../../artifacts/summary-feasibility/date-scope-reliability-fix/scope.mjs'
 import { validateGeneratedDates } from '../../artifacts/summary-feasibility/date-scope-reliability-fix/temporal.mjs'
@@ -14,9 +14,10 @@ const controlPath = path.resolve(root, process.env.NEWS_BETA_CONTROL_PATH || 'pu
 const diagnosticsDir = path.resolve(root, process.env.NEWS_BETA_DIAGNOSTICS_DIR || 'artifacts/news-beta')
 const TIMEZONES = new Map([
   ['MyJoyOnline', 'Africa/Accra'], ['Graphic Online', 'Africa/Accra'], ['GhanaWeb', 'Africa/Accra'],
-  ['Dhaka Tribune', 'Asia/Dhaka'], ['The Daily Star — Bangladesh', 'Asia/Dhaka'], ['The Daily Star — Business', 'Asia/Dhaka'],
+  ['Dhaka Tribune', 'Asia/Dhaka'], ['BD24Live English', 'Asia/Dhaka'], ['Prothom Alo English', 'Asia/Dhaka'],
   ['Al Jazeera', 'Asia/Qatar'], ['The Guardian World', 'Europe/London'], ['BBC World', 'Europe/London'],
   ['BBC Technology', 'Europe/London'], ['CBC Canada', 'America/Toronto'], ['CBC Toronto', 'America/Toronto'],
+  ['DW World', 'Europe/Berlin'], ['Africanews', 'Europe/Paris'], ['Euronews', 'Europe/Paris'], ['Global Voices', 'UTC'],
   ['City of Toronto News', 'America/Toronto'], ['SANA English', 'Asia/Damascus'], ['North Press Agency', 'Asia/Damascus'],
   ['Enab Baladi English', 'Asia/Damascus'],
 ])
@@ -165,14 +166,15 @@ async function main() {
 
   const acceptedIds = new Set(accepted.map(card => card.event_id))
   const retained = previousCards.filter(card => !acceptedIds.has(card.event_id)).filter(card => Date.now() - Date.parse(card.updated_at) < 45 * 86_400_000)
+    .filter(card => isEditoriallyEligibleTitle(card.headline))
     .map(card => ({ ...card, geography: classifyCardRegions(card) }))
   const cards = [...accepted, ...retained].sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at)).slice(0, 120)
   if (!cards.length) throw new Error('No accepted or previously published beta cards; refusing to publish an empty dataset')
   const generatedAt = new Date().toISOString(), batchId = `news-beta-${generatedAt.replace(/[:.]/g, '-')}`
   const dataset = {
     schema: 'doomscroller.news-beta-dataset', schemaVersion: 1, generatedAt, batchId,
-    feed: { eventIds: cards.map(card => card.event_id) }, cards,
-    policy: { targetNewOrUpdatedPerDay: 15, maximumNewOrUpdatedPerDay: 18, retentionDays: 45, model: WRITER_CONFIGURATION.model, thinking: false, temperature: 0.2 },
+    feed: { eventIds: cards.slice(0, 20).map(card => card.event_id) }, cards,
+    policy: { activeFeedSize: 20, targetNewOrUpdatedPerDay: 20, maximumNewOrUpdatedPerDay: 20, retentionDays: 45, model: WRITER_CONFIGURATION.model, thinking: false, temperature: 0.2 },
   }
   const attempts = generation.flatMap(item => item.attempts)
   const diagnostics = {
