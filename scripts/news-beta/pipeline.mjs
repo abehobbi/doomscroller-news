@@ -12,6 +12,7 @@ const parser = new XMLParser({ ignoreAttributes: false, trimValues: true, parseT
 const PRIORITY = ['Syria', 'GTA', 'Bangladesh', 'Ghana', 'Middle East', 'Canada']
 export const ACTIVE_FEED_MINIMUM = 20
 export const ACTIVE_FEED_MAXIMUM = 30
+export const ACTIVE_FEED_MAX_AGE_HOURS = 48
 export const GENERATION_SCORE_FLOOR = 30
 const LOCAL_FEED_REGIONS = new Map([
   ['sana-en', ['Syria', 'Middle East']], ['north-press-en', ['Syria', 'Middle East']], ['enab-baladi-en', ['Syria', 'Middle East']], ['syria-direct-en', ['Syria', 'Middle East']],
@@ -406,10 +407,22 @@ export function consolidatePublishedCards(cards) {
 }
 
 export function selectActiveFeedCards(cards, { minimum = ACTIVE_FEED_MINIMUM, maximum = ACTIVE_FEED_MAXIMUM, now = Date.now() } = {}) {
+  const sourceTime = card => {
+    const timestamps = (card.sources || [])
+      .map(source => Date.parse(source.updatedAt || source.publishedAt))
+      .filter(Number.isFinite)
+    return timestamps.length ? Math.max(...timestamps) : Number.NaN
+  }
   const sorted = cards.filter(card => isEditoriallyEligibleTitle(card.headline))
-    .sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at))
-  const recent = sorted.filter(card => now - Date.parse(card.updated_at) <= 7 * 86_400_000)
-  const pool = recent.length >= minimum ? recent : sorted
+    .sort((a, b) => sourceTime(b) - sourceTime(a))
+  // The minimum is a planning target, never permission to pad the feed with
+  // stale stories. Source publication/update time—not Doomscroller generation
+  // time—defines whether a card is still current.
+  const pool = sorted.filter(card => {
+    const timestamp = sourceTime(card)
+    const ageHours = (now - timestamp) / 3_600_000
+    return Number.isFinite(timestamp) && ageHours >= -12 && ageHours <= ACTIVE_FEED_MAX_AGE_HOURS
+  })
   const selected = [], used = new Set(), regionCounts = new Map(), publisherCounts = new Map()
   const add = card => {
     if (!card || used.has(card.event_id) || selected.length >= maximum) return false
@@ -425,15 +438,14 @@ export function selectActiveFeedCards(cards, { minimum = ACTIVE_FEED_MINIMUM, ma
       const repetition = Math.max(...regions.map(region => regionCounts.get(region) || 0))
       const priorityGap = Math.max(0, ...regions.map(region => Math.max(0, (REGION_MINIMUMS.get(region) || 0) - (regionCounts.get(region) || 0))))
       const publisherCount = publisherCounts.get(cardPublisher(card)) || 0
-      const ageHours = Math.max(0, (now - Date.parse(card.updated_at)) / 3_600_000)
+      const ageHours = Math.max(0, (now - sourceTime(card)) / 3_600_000)
       const quality = Number(card.selection_score || 48)
       return { card, quality, ageHours, score: quality + priorityGap * 7 - ageHours / 18 - repetition * 3 - publisherCount * 7 }
     }).sort((a, b) => b.score - a.score || Date.parse(b.card.updated_at) - Date.parse(a.card.updated_at))
     if (!choices.length) break
     let choice = choices.find(value => (publisherCounts.get(cardPublisher(value.card)) || 0) < 3)
-    if (!choice && selected.length < minimum) choice = choices[0]
     if (!choice) break
-    if (selected.length >= minimum && (choice.quality < 46 || choice.ageHours > 96)) break
+    if (choice.quality < 46) break
     add(choice.card)
   }
   return selected

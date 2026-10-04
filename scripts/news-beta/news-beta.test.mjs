@@ -206,7 +206,11 @@ test('retained cards shed unrelated sources from a previously contaminated clust
 
 test('active feed keeps twenty cards while preserving priority coverage and world space', () => {
   const now = Date.parse('2026-10-03T12:00:00Z')
-  const activeCard = (id, geography, hoursAgo) => card(id, { headline: `Material development ${id}`, geography, updated_at: new Date(now - hoursAgo * 3_600_000).toISOString() })
+  const activeCard = (id, geography, hoursAgo) => card(id, {
+    headline: `Material development ${id}`, geography, selection_score: hoursAgo <= 20 ? 55 : 40,
+    sources: [{ name: `Publisher ${id}`, url: `https://example.com/${id}`, role: 'primary', publishedAt: new Date(now - hoursAgo * 3_600_000).toISOString() }],
+    updated_at: new Date(now - hoursAgo * 3_600_000).toISOString(),
+  })
   const cards = [
     activeCard('syria-1', ['Syria', 'Middle East'], 1), activeCard('syria-2', ['Syria', 'Middle East'], 2),
     activeCard('bangladesh-1', ['Bangladesh'], 3), activeCard('bangladesh-2', ['Bangladesh'], 4),
@@ -218,6 +222,24 @@ test('active feed keeps twenty cards while preserving priority coverage and worl
   assert.equal(selected.length, 20)
   assert.equal(selected.filter(value => value.geography.includes('Bangladesh')).length, 2)
   assert.ok(selected.filter(value => !value.geography.length).length >= 8)
+})
+
+test('active feed freshness overrides the twenty-card target and uses publisher time', () => {
+  const now = Date.parse('2026-10-04T16:00:00Z')
+  const item = (id, sourceHoursAgo, generatedHoursAgo = 1) => card(id, {
+    headline: `Qualified material event ${id}`,
+    selection_score: 55,
+    sources: [{ name: `Publisher ${id}`, url: `https://example.com/${id}`, role: 'primary', publishedAt: new Date(now - sourceHoursAgo * 3_600_000).toISOString() }],
+    updated_at: new Date(now - generatedHoursAgo * 3_600_000).toISOString(),
+  })
+  const cards = [
+    ...Array.from({ length: 18 }, (_, index) => item(`fresh-${index}`, index + 1)),
+    item('stale-regenerated', 96, 0),
+    item('stale-retained', 120, 120),
+  ]
+  const selected = selectActiveFeedCards(cards, { now })
+  assert.equal(selected.length, 18)
+  assert.ok(!selected.some(value => value.event_id.startsWith('stale-')))
 })
 
 test('shared protest language cannot merge events in two explicitly different countries', () => {
