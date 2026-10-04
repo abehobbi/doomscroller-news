@@ -23,6 +23,23 @@ const PLACES=[
   ['United States',/\b(united states|u\.s\.|american|washington|new york)\b/i,'North America'],
   ['Ukraine',/\b(ukraine|ukrainian|kyiv)\b/i,'Europe'],
   ['Russia',/\b(russia|russian|moscow)\b/i,'Europe'],
+  ['France',/\b(france|french|paris)\b/i,'Europe'],
+  ['Brazil',/\b(brazil|brazilian|brasilia|rio de janeiro|sao paulo)\b/i,'South America'],
+  ['India',/\b(india|indian|new delhi|delhi|mumbai|jaisalmer)\b/i,'Asia'],
+  ['China',/\b(china|chinese|beijing|shanghai)\b/i,'Asia'],
+  ['Japan',/\b(japan|japanese|tokyo|hokkaido|toyama)\b/i,'Asia'],
+  ['Australia',/\b(australia|australian|sydney|melbourne|victoria)\b/i,'Oceania'],
+  ['Algeria',/\b(algeria|algerian|algiers)\b/i,'Africa'],
+  ['Niger',/\b(niger|nigerien|niamey)\b/i,'Africa'],
+  ['Mexico',/\b(mexico|mexican|mexico city)\b/i,'North America'],
+  ['South Korea',/\b(south korea|south korean|seoul)\b/i,'Asia'],
+  ['North Korea',/\b(north korea|north korean|pyongyang)\b/i,'Asia'],
+  ['Eritrea',/\b(eritrea|eritrean|asmara)\b/i,'Africa'],
+  ['Somalia',/\b(somalia|somali|mogadishu)\b/i,'Africa'],
+  ['New Zealand',/\b(new zealand|marlborough|wellington|auckland)\b/i,'Oceania'],
+  ['Iceland',/\b(iceland|icelandic|reykjavik|hornafjordur|hornafjörður)\b/i,'Europe'],
+  ['Sweden',/\b(sweden|swedish|stockholm|svedala)\b/i,'Europe'],
+  ['Italy',/\b(italy|italian|rome|milan|rho)\b/i,'Europe'],
 ];
 const ACTIONS=/\b(attack|strike|kill|ceasefire|offensive|invad|elect|appoint|resign|approve|ban|launch|arrest|charg|convict|sentence|bail|appeal|sign|agree|announce|open|close|evacuat|flood|earthquake|outbreak|discover|raise|cut|release|freeze|sanction|vote|protest|investigat|collapse|fire)\w*/gi;
 const HIGH_RISK=/\b(killed|dead|casualt|alleged|accused|war crime|disputed|denied|claimed|reportedly)\b/i;
@@ -61,6 +78,7 @@ export function compareEvents(a,b){
   const actors=overlap(A.actor,B.actor),places=overlap(A.place,B.place),actions=overlap(A.headlineAction||A.action,B.headlineAction||B.action),terms=overlap(A.terms,B.terms),numbers=overlap(A.numbers,B.numbers);
   const updateChain=/\b(arrest|charg|bail|appeal|trial|convict|sentence)\b/;const legalA=(A.headlineAction||A.action).some(x=>updateChain.test(x)),legalB=(B.headlineAction||B.action).some(x=>updateChain.test(x));
   const actionA=A.headlineAction||A.action,actionB=B.headlineAction||B.action,sameActionSet=actionA.length===actionB.length&&actionA.every(x=>actionB.includes(x));
+  if(A.place.length&&B.place.length&&places===0)return {relation:'distinct-or-uncertain',score:0,reason:'explicit event locations conflict'};
   if(hours<=168&&actors>=1&&places>=1&&legalA&&legalB&&!sameActionSet)return {relation:'material-update',score:actors*3+places*2+terms,reason:'same principal actor and place in a later legal/procedural development'};
   const score=actors*3+places*2+actions*3+Math.min(terms,5)+numbers;
   if(hours<=72&&((places>=1&&((terms>=2&&actions>=1)||terms>=4)&&score>=6)||(places===0&&terms>=4&&actions>=1)))return {relation:'same-event',score,reason:`shared headline actors (${actors}), headline actions (${actions}), places (${places}) and specific title terms (${terms})`};

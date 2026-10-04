@@ -1,7 +1,10 @@
 import crypto from 'node:crypto'
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { buildEvidenceBatch, classifyCardRegions, evidenceFingerprint, isEditoriallyEligibleTitle, selectActiveFeedCards } from './pipeline.mjs'
+import {
+  ACTIVE_FEED_MAXIMUM, ACTIVE_FEED_MINIMUM, buildEvidenceBatch, classifyCardRegions,
+  consolidatePublishedCards, evidenceFingerprint, isEditoriallyEligibleTitle, selectActiveFeedCards,
+} from './pipeline.mjs'
 import { writeCard, WRITER_CONFIGURATION } from './writer.mjs'
 import { buildBoundPacket, detectCrossPacketOverlap } from '../../artifacts/summary-feasibility/date-scope-reliability-fix/scope.mjs'
 import { validateGeneratedDates } from '../../artifacts/summary-feasibility/date-scope-reliability-fix/temporal.mjs'
@@ -19,7 +22,10 @@ const TIMEZONES = new Map([
   ['BBC Technology', 'Europe/London'], ['CBC Canada', 'America/Toronto'], ['CBC Toronto', 'America/Toronto'],
   ['DW World', 'Europe/Berlin'], ['Africanews', 'Europe/Paris'], ['Euronews', 'Europe/Paris'], ['Global Voices', 'UTC'],
   ['City of Toronto News', 'America/Toronto'], ['SANA English', 'Asia/Damascus'], ['North Press Agency', 'Asia/Damascus'],
-  ['Enab Baladi English', 'Asia/Damascus'],
+  ['Enab Baladi English', 'Asia/Damascus'], ['Syria Direct', 'Asia/Damascus'],
+  ['Ghana News Agency', 'Africa/Accra'], ['Arab News', 'Asia/Riyadh'], ['The Japan Times', 'Asia/Tokyo'],
+  ['The Indian Express Bangladesh', 'Asia/Kolkata'], ['The Indian Express World', 'Asia/Kolkata'],
+  ['The Indian Express Science', 'Asia/Kolkata'], ['The Indian Express Research', 'Asia/Kolkata'],
 ])
 
 const words = value => new Set(String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').split(/\s+/).filter(word => word.length > 3))
@@ -77,6 +83,12 @@ function makeCard({ eventId, item, generated, fingerprint, now, previous }) {
     first_seen: previous?.first_seen || previous?.firstSeen || now,
     updated_at: now, generated_at: now, evidence_fingerprint: fingerprint,
     content_version: Math.max(1, Number(previous?.content_version || previous?.contentVersion || 0) + 1),
+    selection_score: item.event.score,
+    editorial_facets: {
+      consequence: Number(item.event.scoreParts?.consequence || 0),
+      discovery: Number(item.event.scoreParts?.discovery || item.event.scoreParts?.interestingness || 0),
+      local_texture: Number(item.event.scoreParts?.localTexture || 0),
+    },
   }
 }
 
@@ -114,12 +126,22 @@ async function main() {
   const overlaps = detectCrossPacketOverlap(overlapPackets, { includedOnly: true })
   const conflicted = new Set(overlaps.flatMap(value => [value.packet_event_id, value.other_event_id]))
   if (process.env.NEWS_BETA_PREFLIGHT_ONLY === 'yes') {
-    console.log(JSON.stringify({ discovery: batch.counts, candidateCount: candidates.length, rejected, overlaps, conflicted: [...conflicted] }, null, 2))
+    console.log(JSON.stringify({
+      discovery: batch.counts, sourceStatus: batch.sourceStatus,
+      selected: batch.selected.map(value => ({
+        eventId: value.event.id, title: value.event.primary.title, publisher: value.packet.primaryNarrativeSource.publisher,
+        score: value.event.score, scoreParts: value.event.scoreParts, regions: value.event.regions,
+      })),
+      reranker: batch.reranker, candidateCount: candidates.length, rejected, overlaps, conflicted: [...conflicted],
+    }, null, 2))
     return
   }
   const accepted = [], generation = []
+  // Two daily checks share the free inference allowance. Once the rolling feed
+  // exists, each check may add/update at most ten cards rather than replacing it.
+  const generationLimit = previousCards.length >= ACTIVE_FEED_MINIMUM ? 10 : ACTIVE_FEED_MINIMUM
   for (const candidate of candidates) {
-    if (accepted.length >= 20) break
+    if (accepted.length >= generationLimit) break
     if (conflicted.has(candidate.eventId)) {
       rejected.push({ eventId: candidate.eventId, title: candidate.item.event.primary.title, stage: 'event-scope', reason: 'included evidence overlaps another selected central event' })
       continue
@@ -169,14 +191,21 @@ async function main() {
   const retained = previousCards.filter(card => !acceptedIds.has(card.event_id)).filter(card => Date.now() - Date.parse(card.updated_at) < 45 * 86_400_000)
     .filter(card => isEditoriallyEligibleTitle(card.headline))
     .map(card => ({ ...card, geography: classifyCardRegions(card) }))
-  const cards = [...accepted, ...retained].sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at)).slice(0, 120)
+  const cards = consolidatePublishedCards([...accepted, ...retained])
+    .sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at)).slice(0, 120)
   const activeCards = selectActiveFeedCards(cards)
   if (!cards.length) throw new Error('No accepted or previously published beta cards; refusing to publish an empty dataset')
   const generatedAt = new Date().toISOString(), batchId = `news-beta-${generatedAt.replace(/[:.]/g, '-')}`
   const dataset = {
     schema: 'doomscroller.news-beta-dataset', schemaVersion: 1, generatedAt, batchId,
     feed: { eventIds: activeCards.map(card => card.event_id) }, cards,
-    policy: { activeFeedSize: 20, candidateReserveSize: 30, targetNewOrUpdatedPerDay: 20, maximumNewOrUpdatedPerDay: 20, retentionDays: 45, model: WRITER_CONFIGURATION.model, thinking: false, temperature: 0.2 },
+    policy: {
+      activeFeedMinimum: ACTIVE_FEED_MINIMUM, activeFeedMaximum: ACTIVE_FEED_MAXIMUM,
+      activeFeedSize: activeCards.length, candidateReserveSize: 90,
+      checksPerDay: 2, maximumNewOrUpdatedPerRun: generationLimit,
+      targetNewOrUpdatedPerDay: 12, maximumNewOrUpdatedPerDay: 20,
+      retentionDays: 45, model: WRITER_CONFIGURATION.model, thinking: false, temperature: 0.2,
+    },
   }
   const attempts = generation.flatMap(item => item.attempts)
   const diagnostics = {

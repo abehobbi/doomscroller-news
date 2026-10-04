@@ -10,14 +10,20 @@ import {
 
 const parser = new XMLParser({ ignoreAttributes: false, trimValues: true, parseTagValue: false })
 const PRIORITY = ['Syria', 'GTA', 'Bangladesh', 'Ghana', 'Middle East', 'Canada']
+export const ACTIVE_FEED_MINIMUM = 20
+export const ACTIVE_FEED_MAXIMUM = 30
 const LOCAL_FEED_REGIONS = new Map([
-  ['sana-en', ['Syria', 'Middle East']], ['north-press-en', ['Syria', 'Middle East']], ['enab-baladi-en', ['Syria', 'Middle East']],
-  ['dhaka-tribune', ['Bangladesh']], ['bd24live-en', ['Bangladesh']], ['prothom-alo-en', ['Bangladesh']], ['financial-express-bd', ['Bangladesh']],
-  ['myjoyonline', ['Ghana']], ['graphic-ghana', ['Ghana']], ['ghanaweb', ['Ghana']],
+  ['sana-en', ['Syria', 'Middle East']], ['north-press-en', ['Syria', 'Middle East']], ['enab-baladi-en', ['Syria', 'Middle East']], ['syria-direct-en', ['Syria', 'Middle East']],
+  ['dhaka-tribune', ['Bangladesh']], ['bd24live-en', ['Bangladesh']], ['prothom-alo-en', ['Bangladesh']], ['financial-express-bd', ['Bangladesh']], ['indian-express-bangladesh', ['Bangladesh']],
+  ['myjoyonline', ['Ghana']], ['graphic-ghana', ['Ghana']], ['ghanaweb', ['Ghana']], ['ghana-news-agency', ['Ghana']],
   ['toronto-city', ['GTA', 'Canada']], ['cbc-toronto', ['GTA', 'Canada']], ['cbc-canada', ['Canada']],
 ])
 const FOREIGN_STORY_CUE = /\b(?:syria|syrian|bangladesh|bangladeshi|ghana|ghanaian|canada|canadian|iran|iranian|iraq|iraqi|israel|israeli|palestin|gaza|lebanon|lebanese|jordan|yemen|houthi|qatar|saudi|uae|emirat|dubai|oman|omani|bahrain|kuwait|afghanistan|albania|algeria|angola|argentina|australia|austria|belarus|belgium|bolivia|bosnia|botswana|brazil|bulgaria|burkina faso|burundi|cambodia|cameroon|chad|chile|china|chinese|colombia|congo|croatia|cyprus|czech|denmark|djibouti|ecuador|egypt|eritrea|estonia|eswatini|finland|france|french|gabon|gambia|georgia|germany|german|greece|guatemala|guinea|haiti|honduras|hungary|iceland|india|indian|indonesia|ireland|italy|italian|ivory coast|japan|japanese|kazakhstan|kenya|kosovo|kyrgyzstan|laos|latvia|liberia|libya|lithuania|madagascar|malawi|malaysia|mali|mauritania|mexico|moldova|mongolia|morocco|mozambique|myanmar|namibia|nepal|netherlands|new zealand|niger|nigeria|north korea|norway|pakistan|panama|peru|philippines|poland|portugal|romania|russia|russian|rwanda|senegal|serbia|sierra leone|singapore|slovakia|slovenia|somalia|south africa|south korea|south sudan|spain|sri lanka|sudan|sweden|switzerland|taiwan|tajikistan|tanzania|thailand|togo|tunisia|turkey|turkish|turkmenistan|uganda|ukraine|ukrainian|united kingdom|britain|british|united states|u\.s\.|american|uruguay|uzbekistan|venezuela|vietnam|zambia|zimbabwe|trump|putin|zelensky|xi jinping|netanyahu)\b/i
 const WORLD_COUNTRIES = [
+  ['United Arab Emirates', /\b(?:united arab emirates|uae|emirati|dubai|abu dhabi|flydubai)\b/i], ['Jordan', /\b(?:jordan|jordanian|amman|wadi rum)\b/i],
+  ['Lebanon', /\b(?:lebanon|lebanese|beirut|rashaya)\b/i], ['Iran', /\b(?:iran|iranian|tehran)\b/i],
+  ['Israel', /\b(?:israel|israeli|jerusalem|tel aviv)\b/i], ['Palestinian territories', /\b(?:palestin|gaza|west bank)\b/i],
+  ['Iraq', /\b(?:iraq|iraqi|baghdad|erbil)\b/i], ['Yemen', /\b(?:yemen|yemeni|sanaa|houthi)\b/i],
   ['Ethiopia', /\b(?:ethiopia|ethiopian|tigray|amhara)\b/i], ['Zambia', /\b(?:zambia|zambian|lusaka)\b/i],
   ['Lithuania', /\b(?:lithuania|lithuanian|vilnius)\b/i], ['Ukraine', /\b(?:ukraine|ukrainian|kyiv|zelensky)\b/i],
   ['Russia', /\b(?:russia|russian|moscow|putin)\b/i], ['United States', /\b(?:united states|u\.s\.|american|washington|trump)\b/i],
@@ -33,6 +39,7 @@ const WORLD_COUNTRIES = [
 const REGION_MINIMUMS = new Map([['Syria', 2], ['Bangladesh', 2], ['Ghana', 2], ['Middle East', 2], ['Canada', 2], ['GTA', 1]])
 
 const safeError = error => String(error?.message || error || 'unknown').replace(/https?:\/\/\S+/g, '[url]').slice(0, 240)
+const safeHttpsUrl = value => { try { const url = new URL(value); return url.protocol === 'https:' ? url.href : null } catch { return null } }
 const fetchText = async (url, accept, maxBytes = 3_000_000) => {
   const response = await fetch(url, {
     signal: AbortSignal.timeout(20_000),
@@ -81,8 +88,14 @@ async function discover(source, retrievedAt) {
   try {
     const response = await fetchText(source.feedUrl, source.format === 'html-listing'
       ? 'text/html,application/xhtml+xml'
-      : 'application/rss+xml, application/atom+xml, application/xml, text/xml')
-    const items = source.format === 'html-listing' ? htmlListingItems(response.text, response.finalUrl) : feedItems(parser.parse(response.text))
+      : source.format === 'wordpress-json'
+        ? 'application/json'
+        : 'application/rss+xml, application/atom+xml, application/xml, text/xml')
+    const items = source.format === 'html-listing'
+      ? htmlListingItems(response.text, response.finalUrl)
+      : source.format === 'wordpress-json'
+        ? wordpressJsonItems(response.text)
+        : feedItems(parser.parse(response.text))
     const articles = items.map(item => normalizeFeedItem(item, {
       ...source, regions: source.coverage, topics: source.coverage,
     }, retrievedAt)).filter(Boolean)
@@ -115,6 +128,25 @@ export function htmlListingItems(html, baseUrl) {
     })
   }
   return items
+}
+
+export function wordpressJsonItems(json) {
+  let posts
+  try { posts = JSON.parse(String(json || '')) } catch { return [] }
+  if (!Array.isArray(posts)) return []
+  return posts.map(post => {
+    const link = safeHttpsUrl(post?.link)
+    const title = plain(post?.title?.rendered || post?.title)
+    const published = String(post?.date_gmt || post?.date || '')
+    if (!link || !title || !Number.isFinite(Date.parse(published))) return null
+    const imageUrl = safeHttpsUrl(post?.jetpack_featured_media_url)
+    return {
+      title, link, guid: link,
+      pubDate: /(?:Z|[+-]\d\d:\d\d)$/i.test(published) ? published : `${published}Z`,
+      description: plain(post?.excerpt?.rendered || post?.excerpt || ''),
+      enclosure: imageUrl ? { '@_url': imageUrl, '@_type': 'image/jpeg' } : undefined,
+    }
+  }).filter(Boolean)
 }
 
 async function snapshot(article) {
@@ -180,8 +212,12 @@ export function classifyPriorityRegions(event) {
     for (const region of article.geography?.priorityRegions || []) regions.add(region)
     const local = LOCAL_FEED_REGIONS.get(article.provenance?.feedId) || []
     // Local headlines often omit their own country. Inherit a local feed's
-    // region only when the headline does not plainly point abroad.
-    if (local.length && !FOREIGN_STORY_CUE.test(article.title || '')) local.forEach(region => regions.add(region))
+    // region only when the headline does not plainly point abroad. An explicit
+    // non-local place detected by geography is stronger than publisher origin.
+    const explicitLocations = article.geography?.eventLocations || []
+    const explicitlyLocal = local.some(region => (article.geography?.priorityRegions || []).includes(region))
+    const mayInheritLocal = explicitlyLocal || (!explicitLocations.length && !FOREIGN_STORY_CUE.test(article.title || ''))
+    if (local.length && mayInheritLocal) local.forEach(region => regions.add(region))
   }
   if (/\b(?:syria|syrian|damascus|aleppo|daraa|idlib|homs|latakia)\b/i.test(titles)) { regions.add('Syria'); regions.add('Middle East') }
   if (/\b(?:bangladesh|bangladeshi|dhaka|chattogram|chittagong|sheikh hasina|muhammad yunus|khaleda zia|awami league|bangladesh nationalist party|\bBNP\b)\b/i.test(titles)) regions.add('Bangladesh')
@@ -194,6 +230,11 @@ export function classifyPriorityRegions(event) {
 
 function countryBucket(event) {
   const articles = event.articles?.length ? event.articles : [event.primary]
+  const priorityCountry = ['Syria', 'Bangladesh', 'Ghana', 'GTA', 'Canada'].find(region => event.regions.includes(region))
+  if (priorityCountry) return priorityCountry
+  const title = articles.map(article => article?.title || '').join(' ')
+  const titleMatch = WORLD_COUNTRIES.find(([, pattern]) => pattern.test(title))
+  if (titleMatch) return titleMatch[0]
   const text = articles.map(article => `${article?.title || ''} ${article?.description || ''}`).join(' ')
   const match = WORLD_COUNTRIES.find(([, pattern]) => pattern.test(text))
   return match?.[0] || (event.regions[0] ?? 'World')
@@ -203,14 +244,16 @@ function editorialSignals(event) {
   const text = event.articles.map(article => `${article.title} ${article.description || ''}`).join(' ')
   const consequenceHits = (text.match(/\b(?:election|referendum|peace agreement|ceasefire|coup|government collapses?|resigns?|constitutional|supreme court|court rules?|parliament (?:passes|approves|rejects)|central bank|interest rates?|inflation|sanction|earthquake|eruption|flood|wildfire|outbreak|epidemic|evacuation|war|invasion|attack|killed|mass arrest|protest|energy crisis|power grid|food security|humanitarian|major reform|treaty)\b/gi) || []).length
   const discoveryHits = (text.match(/\b(?:first[- ]ever|for the first time|discov(?:er|ery)|breakthrough|archaeolog|ancient|new species|extinct|conservation|restored|spacecraft|telescope|researchers? find|scientists? (?:find|discover)|medical advance|record[- ]breaking|unprecedented)\b/gi) || []).length
+  const textureHits = (text.match(/\b(?:bird sanctuary|wildlife corridor|habitat restoration|restoration project|traditional festival|new yam|harvest|heritage|census|municipal|local council|public space|bird village|community-owned|cultural tradition|rare species|marine reserve|national park|archaeological site|historic site|craft revival|language revival)\b/gi) || []).length
   return {
     consequence: Math.min(12, consequenceHits * 4),
     discovery: Math.min(10, discoveryHits * 5),
+    localTexture: Math.min(14, textureHits * 7),
   }
 }
 
 export function isEditoriallyEligibleTitle(title) {
-  return !/\b(?:tourism invites?|invite[^.]{0,60}(?:falls|light|colour|color).*display|(?:falls|light|lighting|colour|color) display|selected for .*fellowship|fellowship|appointed (?:chief|director|head|ceo)|appointment of (?:a |the )?(?:chief|director|head|ceo)|joins? the .*team|award ceremony|announces? partnership|signs? memorandum|memorandum of understanding|courtesy call|stakeholder engagement|workshop held|anniversary celebration|election signs?)\b/i.test(String(title || ''))
+  return !/\b(?:tourism invites?|invite[^.]{0,60}(?:falls|light|colour|color).*display|(?:falls|light|lighting|colour|color) display|selected for .*fellowship|fellowship|appointed (?:chief|director|head|ceo)|appointment of (?:a |the )?(?:chief|director|head|ceo)|joins? the .*team|award ceremony|announces? partnership|signs? memorandum|memorandum of understanding|mou|courtesy call|stakeholder engagement|workshop held|anniversary celebration|election signs?|in pictures)\b/i.test(String(title || ''))
 }
 
 export function classifyCardRegions(card) {
@@ -238,15 +281,17 @@ export function applyBetaSelectionPolicy(event) {
   if (/\b(?:football|soccer|basketball|hockey|nba|nhl|mlb|nfl|trade for (?:veteran|forward|guard)|match|tournament)\b/i.test(title) && event.scoreParts.importance < 24) editorialPenalty -= 18
   if (/^(?:how|why|who)\b/i.test(title) && event.scoreParts.importance < 18) editorialPenalty -= 12
   if (!isEditoriallyEligibleTitle(title)) editorialPenalty -= 30
-  const editorialBonus = signals.consequence + signals.discovery
+  const routineInstitutional = /\b(?:partners? with|partnership with|urges? stakeholders?|calls? for collaboration|must drive|working to build|takes? part in .*simulation|holds? (?:a )?(?:meeting|workshop|conference)|reaffirms? commitment)\b/i.test(title)
+  if (routineInstitutional && signals.consequence + signals.discovery + signals.localTexture === 0) editorialPenalty -= 18
+  const editorialBonus = signals.consequence + signals.discovery + signals.localTexture
   return {
     ...event, regions,
     score: Number((event.score - event.scoreParts.region + correctedRegion + editorialPenalty + editorialBonus).toFixed(2)),
-    scoreParts: { ...event.scoreParts, region: correctedRegion, consequence: signals.consequence, discovery: signals.discovery, editorialBonus, editorialPenalty },
+    scoreParts: { ...event.scoreParts, region: correctedRegion, consequence: signals.consequence, discovery: signals.discovery, localTexture: signals.localTexture, editorialBonus, editorialPenalty },
   }
 }
 
-export function diversityRerank(candidates, { target = 30, maximum = 30, minimumScore = 38 } = {}) {
+export function diversityRerank(candidates, { target = 30, maximum = 36, minimumScore = 34 } = {}) {
   const remaining = candidates.filter(item => item.event.score >= minimumScore).map(item => ({ ...item }))
   const selected = [], regionCounts = new Map(), countryCounts = new Map(), typeCounts = new Map(), publisherCounts = new Map(), adjustments = []
   while (remaining.length && selected.length < maximum) {
@@ -257,12 +302,14 @@ export function diversityRerank(candidates, { target = 30, maximum = 30, minimum
         const minimum = REGION_MINIMUMS.get(region) || 0
         return minimum > (regionCounts.get(region) || 0) ? 14 : 0
       }))
-      const regionPenalty = Math.max(...regions.map(region => Math.max(0, (regionCounts.get(region) || 0) - 1) * 5), 0)
-      const countryPenalty = (countryCounts.get(country) || 0) * 6
-      const typePenalty = Math.max(0, (typeCounts.get(type) || 0) - 1) * 2.5
-      const publisherPenalty = (publisherCounts.get(publisher) || 0) * 4
-      const discoverySignal = Math.max(item.event.scoreParts?.discovery || 0, item.event.scoreParts?.interestingness || 0)
-      const worldDiscovery = !regions.some(region => PRIORITY.includes(region)) && discoverySignal > 0 && selected.filter(value => Math.max(value.event.scoreParts?.discovery || 0, value.event.scoreParts?.interestingness || 0) > 0 && !value.event.regions.some(region => PRIORITY.includes(region))).length < 4 ? 7 : 0
+      const regionPenalty = Math.max(...regions.map(region => Math.max(0, (regionCounts.get(region) || 0) - 1) * 7), 0)
+      const countryPenalty = (countryCounts.get(country) || 0) * 8
+      const typeCount = typeCounts.get(type) || 0
+      const typePenalty = Math.max(0, typeCount - 1) * 4 + (type === 'conflict' ? Math.max(0, typeCount - 4) * 5 : 0)
+      const publisherCount = publisherCounts.get(publisher) || 0
+      const publisherPenalty = publisherCount * 6 + Math.max(0, publisherCount - 2) * 10
+      const discoverySignal = Math.max(item.event.scoreParts?.discovery || 0, item.event.scoreParts?.interestingness || 0, item.event.scoreParts?.localTexture || 0)
+      const worldDiscovery = !regions.some(region => PRIORITY.includes(region)) && discoverySignal > 0 && selected.filter(value => Math.max(value.event.scoreParts?.discovery || 0, value.event.scoreParts?.interestingness || 0, value.event.scoreParts?.localTexture || 0) > 0 && !value.event.regions.some(region => PRIORITY.includes(region))).length < 6 ? 18 : 0
       const delta = uncovered + worldDiscovery - regionPenalty - countryPenalty - typePenalty - publisherPenalty
       return { item, adjusted: item.event.score + delta, delta, type, regions, country, publisher }
     }).sort((a, b) => b.adjusted - a.adjusted || b.item.event.score - a.item.event.score)
@@ -279,34 +326,101 @@ export function diversityRerank(candidates, { target = 30, maximum = 30, minimum
   return { selected, adjustments, distribution: { regions: Object.fromEntries(regionCounts), countries: Object.fromEntries(countryCounts), contentTypes: Object.fromEntries(typeCounts), publishers: Object.fromEntries(publisherCounts) } }
 }
 
-export function selectActiveFeedCards(cards, { maximum = 20, now = Date.now() } = {}) {
+const cardPublisher = card => card?.sources?.find(source => source.role === 'primary')?.name || card?.sources?.[0]?.name || 'Unknown'
+const headlineTokens = value => new Set(String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').split(/\s+/).filter(token => token.length > 3 && !['about', 'after', 'amid', 'from', 'into', 'over', 'says', 'said', 'that', 'their', 'this', 'with'].includes(token)))
+const sharedCount = (left, right) => [...left].filter(value => right.has(value)).length
+const GENERIC_EVENT_TOKENS = new Set(['attack', 'bangladesh', 'canada', 'charged', 'court', 'election', 'flight', 'ghana', 'government', 'israel', 'middle', 'minister', 'pilot', 'police', 'president', 'reports', 'syria', 'united', 'world'])
+
+function cardsDescribeSameEvent(left, right) {
+  const leftUrls = new Set((left.sources || []).map(source => source.url).filter(Boolean))
+  if ((right.sources || []).some(source => leftUrls.has(source.url))) return true
+  const leftWords = headlineTokens(left.headline), rightWords = headlineTokens(right.headline)
+  const shared = sharedCount(leftWords, rightWords)
+  const union = new Set([...leftWords, ...rightWords]).size || 1
+  const smaller = Math.max(1, Math.min(leftWords.size, rightWords.size))
+  const sharedSignature = [...leftWords].some(token => rightWords.has(token) && token.length >= 7 && !GENERIC_EVENT_TOKENS.has(token))
+  const geographyOverlap = sharedCount(new Set(left.geography || []), new Set(right.geography || [])) > 0
+  const hours = Math.abs(Date.parse(left.updated_at) - Date.parse(right.updated_at)) / 3_600_000
+  const strongHeadlineMatch = shared >= 4 && shared / union >= 0.42
+  const signatureMatch = shared >= 3 && shared / smaller >= 0.4 && sharedSignature
+  return hours <= 168 && (strongHeadlineMatch || signatureMatch) && (geographyOverlap || !(left.geography || []).length || !(right.geography || []).length)
+}
+
+function mergeCardSources(preferred, duplicate) {
+  const sources = [], seen = new Set()
+  for (const source of [...(preferred.sources || []), ...(duplicate.sources || [])]) {
+    if (!source?.url || seen.has(source.url)) continue
+    seen.add(source.url)
+    sources.push({ ...source, role: sources.length ? 'additional' : 'primary' })
+  }
+  return sources
+}
+
+export function consolidatePublishedCards(cards) {
+  const consolidated = []
+  for (const card of [...cards].sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at))) {
+    const duplicate = consolidated.find(existing => cardsDescribeSameEvent(existing, card))
+    if (!duplicate) { consolidated.push(card); continue }
+    duplicate.sources = mergeCardSources(duplicate, card)
+    duplicate.uncertainties = [...new Set([...(duplicate.uncertainties || []), ...(card.uncertainties || [])])]
+    if (!duplicate.image?.url && card.image?.url) duplicate.image = card.image
+    duplicate.first_seen = [duplicate.first_seen, card.first_seen].filter(Boolean).sort()[0] || duplicate.first_seen
+    duplicate.selection_score = Math.max(Number(duplicate.selection_score || 0), Number(card.selection_score || 0)) || undefined
+  }
+  return consolidated
+}
+
+export function selectActiveFeedCards(cards, { minimum = ACTIVE_FEED_MINIMUM, maximum = ACTIVE_FEED_MAXIMUM, now = Date.now() } = {}) {
   const sorted = cards.filter(card => isEditoriallyEligibleTitle(card.headline))
     .sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at))
   const recent = sorted.filter(card => now - Date.parse(card.updated_at) <= 7 * 86_400_000)
-  const pool = recent.length >= maximum ? recent : sorted
-  const selected = [], used = new Set(), counts = new Map()
+  const pool = recent.length >= minimum ? recent : sorted
+  const selected = [], used = new Set(), regionCounts = new Map(), publisherCounts = new Map()
   const add = card => {
     if (!card || used.has(card.event_id) || selected.length >= maximum) return false
     selected.push(card); used.add(card.event_id)
-    for (const region of card.geography || []) counts.set(region, (counts.get(region) || 0) + 1)
+    for (const region of card.geography || []) regionCounts.set(region, (regionCounts.get(region) || 0) + 1)
+    const publisher = cardPublisher(card)
+    publisherCounts.set(publisher, (publisherCounts.get(publisher) || 0) + 1)
     return true
-  }
-  for (const [region, minimum] of REGION_MINIMUMS) {
-    for (const card of pool) {
-      if ((counts.get(region) || 0) >= minimum) break
-      if ((card.geography || []).includes(region)) add(card)
-    }
   }
   while (selected.length < maximum) {
     const choices = pool.filter(card => !used.has(card.event_id)).map(card => {
       const regions = card.geography?.length ? card.geography : ['World']
-      const repetition = Math.max(...regions.map(region => counts.get(region) || 0))
+      const repetition = Math.max(...regions.map(region => regionCounts.get(region) || 0))
+      const priorityGap = Math.max(0, ...regions.map(region => Math.max(0, (REGION_MINIMUMS.get(region) || 0) - (regionCounts.get(region) || 0))))
+      const publisherCount = publisherCounts.get(cardPublisher(card)) || 0
       const ageHours = Math.max(0, (now - Date.parse(card.updated_at)) / 3_600_000)
-      return { card, score: 20 - ageHours / 12 - repetition * 4 }
+      const quality = Number(card.selection_score || 48)
+      return { card, quality, ageHours, score: quality + priorityGap * 7 - ageHours / 18 - repetition * 3 - publisherCount * 7 }
     }).sort((a, b) => b.score - a.score || Date.parse(b.card.updated_at) - Date.parse(a.card.updated_at))
     if (!choices.length) break
-    add(choices[0].card)
+    let choice = choices.find(value => (publisherCounts.get(cardPublisher(value.card)) || 0) < 3)
+    if (!choice && selected.length < minimum) choice = choices[0]
+    if (!choice) break
+    if (selected.length >= minimum && (choice.quality < 46 || choice.ageHours > 96)) break
+    add(choice.card)
   }
+  return selected
+}
+
+export function buildDiscoveryPool(events, { maximum = 160, perFeed = 4 } = {}) {
+  const selected = [], selectedIds = new Set(), feedCounts = new Map()
+  const add = event => {
+    if (!event || selectedIds.has(event.id) || selected.length >= maximum) return false
+    selected.push(event); selectedIds.add(event.id)
+    for (const feedId of new Set(event.articles.map(article => article.provenance?.feedId).filter(Boolean))) {
+      feedCounts.set(feedId, (feedCounts.get(feedId) || 0) + 1)
+    }
+    return true
+  }
+  // Give every publisher path a chance before high-volume feeds fill the
+  // evidence-snapshot budget, then use the remaining slots by score.
+  for (const event of events) {
+    const feeds = [...new Set(event.articles.map(article => article.provenance?.feedId).filter(Boolean))]
+    if (feeds.some(feed => (feedCounts.get(feed) || 0) < perFeed)) add(event)
+  }
+  for (const event of events) add(event)
   return selected
 }
 
@@ -322,7 +436,7 @@ export async function buildEvidenceBatch({ now = Date.now() } = {}) {
   const unique = deduplicateArticles(fresh)
   const sourceMap = new Map(SOURCES.map(source => [source.id, source]))
   const events = clusterArticles(unique, sourceMap).map(event => applyBetaSelectionPolicy(scoreEvent(event, now))).sort((a, b) => b.score - a.score)
-  const evidencePool = events.slice(0, 80)
+  const evidencePool = buildDiscoveryPool(events)
   const poolArticles = [...new Map(evidencePool.flatMap(event => event.articles).map(article => [article.id, article])).values()]
   const snapshots = await mapLimit(poolArticles, 5, snapshot)
   const snapshotMap = new Map(snapshots.map(value => [value.articleId, value]))

@@ -1,7 +1,10 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { validateNewsBetaDataset, articlesForFeed } from '../../src/news/schema.js'
-import { applyBetaSelectionPolicy, classifyCardRegions, classifyPriorityRegions, diversityRerank, htmlListingItems, isEditoriallyEligibleTitle, selectActiveFeedCards } from './pipeline.mjs'
+import {
+  applyBetaSelectionPolicy, buildDiscoveryPool, classifyCardRegions, classifyPriorityRegions, consolidatePublishedCards,
+  diversityRerank, htmlListingItems, isEditoriallyEligibleTitle, selectActiveFeedCards, wordpressJsonItems,
+} from './pipeline.mjs'
 import { validateCardContent } from './content-validation.mjs'
 import { displayStoryPages } from '../../src/news/pagination.js'
 import { compareEvents } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/lib.mjs'
@@ -22,6 +25,19 @@ test('public HTML listings yield dated publisher articles and original images', 
   assert.equal(items[0].link, 'https://publisher.example/health/dengue-update')
   assert.equal(items[0].pubDate, '2026-10-03T13:47:54+00:00')
   assert.equal(items[0].enclosure['@_url'], 'https://cdn.example.com/dengue.jpg')
+})
+
+test('public WordPress JSON yields Ghana agency stories without scraping private data', () => {
+  const items = wordpressJsonItems(JSON.stringify([{
+    date_gmt: '2026-10-03T22:14:54', link: 'https://gna.org.gh/2026/10/example/',
+    title: { rendered: 'District assemblies begin broadcasting meetings in local languages' },
+    excerpt: { rendered: '<p>A public-interest local government development.</p>' },
+    jetpack_featured_media_url: 'https://gna.org.gh/example.jpg',
+  }]))
+  assert.equal(items.length, 1)
+  assert.equal(items[0].pubDate, '2026-10-03T22:14:54Z')
+  assert.equal(items[0].description, 'A public-interest local government development.')
+  assert.equal(items[0].enclosure['@_url'], 'https://gna.org.gh/example.jpg')
 })
 
 test('beta schema preserves event cards, pages, sources and stable ids', () => {
@@ -72,6 +88,13 @@ test('beta selection uses event geography instead of publisher location', () => 
   assert.deepEqual(classifyCardRegions({ headline: 'Indian official discusses Sheikh Hasina landing in Delhi', sources: [{ name: 'Prothom Alo English' }] }), ['Bangladesh'])
   assert.deepEqual(classifyPriorityRegions(base('Trump orders US government to rename an AI program', 'sana-en')), [])
   assert.deepEqual(classifyPriorityRegions({
+    primary: { title: 'Paris police respond to student protests' },
+    articles: [{
+      title: 'Paris police respond to student protests', provenance: { feedId: 'north-press-en' },
+      geography: { eventLocations: [{ name: 'France', region: 'Europe' }], priorityRegions: [] },
+    }],
+  }), [])
+  assert.deepEqual(classifyPriorityRegions({
     primary: { title: 'Election Commission announces new polling timetable' },
     articles: [{ title: 'Election Commission announces new polling timetable', provenance: { feedId: 'dhaka-tribune' } }],
   }), ['Bangladesh'])
@@ -88,7 +111,10 @@ test('beta selection demotes routine sports and generic explainer cards', () => 
   assert.equal(applyBetaSelectionPolicy(make('Two local journalists selected for UK fellowship')).scoreParts.editorialPenalty, -30)
   assert.equal(isEditoriallyEligibleTitle('Sydney Hushie appointed Chief of a digital centre'), false)
   assert.equal(isEditoriallyEligibleTitle('Niagara invites neighbours to a red-white-blue falls display'), false)
+  assert.equal(isEditoriallyEligibleTitle('Australia’s best home gardens – in pictures'), false)
+  assert.equal(isEditoriallyEligibleTitle('Library Authority signs MoU with youth federation'), false)
   assert.equal(isEditoriallyEligibleTitle('Zambia holds its closest election in decades'), true)
+  assert.ok(applyBetaSelectionPolicy(make('Library Authority partners with youth federation')).scoreParts.editorialPenalty <= -18)
 })
 
 test('reranker reserves meaningful space for priority and world discovery', () => {
@@ -136,6 +162,73 @@ test('active feed keeps twenty cards while preserving priority coverage and worl
   assert.equal(selected.length, 20)
   assert.equal(selected.filter(value => value.geography.includes('Bangladesh')).length, 2)
   assert.ok(selected.filter(value => !value.geography.length).length >= 8)
+})
+
+test('shared protest language cannot merge events in two explicitly different countries', () => {
+  const article = (title, publishedAt) => ({ title, description: '', publishedAt })
+  const result = compareEvents(
+    article('Police respond as student protests spread across Paris, France', '2026-10-03T08:00:00Z'),
+    article('Police respond as student protests spread across Damascus, Syria', '2026-10-03T07:00:00Z'),
+  )
+  assert.equal(result.relation, 'distinct-or-uncertain')
+  assert.equal(result.reason, 'explicit event locations conflict')
+})
+
+test('evidence discovery gives low-volume feeds a chance before large feeds fill the pool', () => {
+  const event = (id, feedId) => ({ id, articles: [{ provenance: { feedId } }] })
+  const events = [
+    ...Array.from({ length: 20 }, (_, index) => event(`large-${index}`, 'large-feed')),
+    event('ghana-agency', 'ghana-news-agency'), event('japan-local', 'japan-times'), event('conservation', 'mongabay'),
+  ]
+  const pool = buildDiscoveryPool(events, { maximum: 8, perFeed: 2 })
+  assert.ok(pool.some(value => value.id === 'ghana-agency'))
+  assert.ok(pool.some(value => value.id === 'japan-local'))
+  assert.ok(pool.some(value => value.id === 'conservation'))
+})
+
+test('active feed expands above twenty only for fresh qualified cards and stops at thirty', () => {
+  const now = Date.parse('2026-10-03T12:00:00Z')
+  const cards = Array.from({ length: 34 }, (_, index) => card(`quality-${index}`, {
+    headline: `Distinct material development number ${index} changes public policy`,
+    geography: index % 6 === 0 ? ['Bangladesh'] : [], selection_score: 55,
+    sources: [{ name: `Publisher ${index % 12}`, url: `https://example.com/quality-${index}`, role: 'primary', publishedAt: '2026-10-03T10:00:00Z' }],
+    updated_at: new Date(now - index * 20 * 60_000).toISOString(),
+  }))
+  assert.equal(selectActiveFeedCards(cards, { now }).length, 30)
+  cards.slice(20).forEach(value => { value.selection_score = 40 })
+  assert.equal(selectActiveFeedCards(cards, { now }).length, 20)
+})
+
+test('retained cross-run duplicates become one multi-source event card', () => {
+  const left = card('manchester-a', {
+    headline: 'Two Iranian men charged in alleged Manchester synagogue plot', geography: ['Middle East'],
+    updated_at: '2026-10-03T10:00:00Z',
+    sources: [{ name: 'Source A', url: 'https://example.com/a', role: 'primary', publishedAt: '2026-10-03T08:00:00Z' }],
+  })
+  const right = card('manchester-b', {
+    headline: 'Two Iranians charged over alleged Manchester synagogue attack plot', geography: ['Middle East'],
+    updated_at: '2026-10-03T11:00:00Z',
+    sources: [{ name: 'Source B', url: 'https://example.com/b', role: 'primary', publishedAt: '2026-10-03T09:00:00Z' }],
+  })
+  const result = consolidatePublishedCards([left, right])
+  assert.equal(result.length, 1)
+  assert.equal(result[0].sources.length, 2)
+  assert.deepEqual(result[0].sources.map(source => source.role), ['primary', 'additional'])
+})
+
+test('same named incident consolidates despite different headline wording', () => {
+  const incident = (id, headline, hour) => card(id, {
+    headline, geography: id === 'flydubai-b' ? [] : ['Middle East'],
+    updated_at: `2026-10-03T${hour}:00:00Z`,
+    sources: [{ name: `Source ${id}`, url: `https://example.com/${id}`, role: 'primary', publishedAt: `2026-10-03T${hour}:00:00Z` }],
+  })
+  const result = consolidatePublishedCards([
+    incident('flydubai-a', 'Co-pilot attack on Flydubai flight leads to emergency landing in Saudi Arabia', '10'),
+    incident('flydubai-b', 'Pilot describes cockpit attack by co-pilot on Flydubai flight', '11'),
+    incident('flydubai-c', 'Flydubai pilot allegedly stabs co-pilot during flight from UAE to Israel', '12'),
+  ])
+  assert.equal(result.length, 1)
+  assert.equal(result[0].sources.length, 3)
 })
 
 test('content gate rejects thin, truncated, and exposed citation-marker prose', () => {
