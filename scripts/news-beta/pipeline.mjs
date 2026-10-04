@@ -254,7 +254,7 @@ function editorialSignals(event) {
 }
 
 export function isEditoriallyEligibleTitle(title) {
-  return !/\b(?:tourism invites?|invite[^.]{0,60}(?:falls|light|colour|color).*display|(?:falls|light|lighting|colour|color) display|selected for .*fellowship|fellowship|appointed (?:chief|director|head|ceo)|appointment of (?:a |the )?(?:chief|director|head|ceo)|joins? the .*team|award ceremony|announces? partnership|signs? memorandum|memorandum of understanding|mou|courtesy call|stakeholder engagement|workshop held|anniversary celebration|election signs?|in pictures)\b/i.test(String(title || ''))
+  return !/\b(?:tourism invites?|invite[^.]{0,60}(?:falls|light|colour|color).*display|(?:falls|light|lighting|colour|color) display|selected for .*fellowship|fellowship|appointed (?:chief|director|head|ceo)|appointment of (?:a |the )?(?:chief|director|head|ceo)|joins? the .*team|award ceremony|announces? partnership|signs? memorandum|memorandum of understanding|mou|courtesy call|stakeholder engagement|workshop held|anniversary celebration|election signs?|in pictures|condemns?|denounces?|firefighters? deployed to contain (?:a )?blaze|minister calls? for|urges? (?:journalists?|stakeholders?))\b/i.test(String(title || ''))
 }
 
 export function classifyCardRegions(card) {
@@ -355,9 +355,14 @@ export function clearsGenerationQualityFloor(item) {
 }
 
 const cardPublisher = card => card?.sources?.find(source => source.role === 'primary')?.name || card?.sources?.[0]?.name || 'Unknown'
-const headlineTokens = value => new Set(String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').split(/\s+/).filter(token => token.length > 3 && !['about', 'after', 'amid', 'from', 'into', 'over', 'says', 'said', 'that', 'their', 'this', 'with'].includes(token)))
+const HEADLINE_NORMALIZATION = new Map([
+  ['brazilian', 'brazil'], ['bangladeshi', 'bangladesh'], ['canadian', 'canada'], ['ghanaian', 'ghana'],
+  ['iranian', 'iran'], ['israeli', 'israel'], ['russian', 'russia'], ['syrian', 'syria'], ['ukrainian', 'ukraine'],
+])
+const headlineTokens = value => new Set(String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').split(/\s+/).map(token => HEADLINE_NORMALIZATION.get(token) || token).filter(token => token.length > 3 && !['about', 'after', 'amid', 'from', 'into', 'over', 'says', 'said', 'that', 'their', 'this', 'with'].includes(token)))
 const sharedCount = (left, right) => [...left].filter(value => right.has(value)).length
 const GENERIC_EVENT_TOKENS = new Set(['attack', 'bangladesh', 'canada', 'charged', 'court', 'election', 'flight', 'ghana', 'government', 'israel', 'middle', 'minister', 'pilot', 'police', 'president', 'reports', 'syria', 'united', 'world'])
+const COUNTRY_EVENT_TOKENS = new Set(['bangladesh', 'brazil', 'canada', 'china', 'france', 'ghana', 'india', 'iran', 'israel', 'russia', 'syria', 'ukraine'])
 
 function cardsDescribeSameEvent(left, right) {
   const leftUrls = new Set((left.sources || []).map(source => source.url).filter(Boolean))
@@ -371,7 +376,9 @@ function cardsDescribeSameEvent(left, right) {
   const hours = Math.abs(Date.parse(left.updated_at) - Date.parse(right.updated_at)) / 3_600_000
   const strongHeadlineMatch = shared >= 4 && shared / union >= 0.42
   const signatureMatch = shared >= 3 && shared / smaller >= 0.4 && sharedSignature
-  return hours <= 168 && (strongHeadlineMatch || signatureMatch) && (geographyOverlap || !(left.geography || []).length || !(right.geography || []).length)
+  const sameNamedElection = leftWords.has('presidential') && rightWords.has('presidential') && leftWords.has('election') && rightWords.has('election')
+    && [...COUNTRY_EVENT_TOKENS].some(country => leftWords.has(country) && rightWords.has(country))
+  return hours <= 168 && (strongHeadlineMatch || signatureMatch || sameNamedElection) && (geographyOverlap || !(left.geography || []).length || !(right.geography || []).length)
 }
 
 function mergeCardSources(preferred, duplicate) {

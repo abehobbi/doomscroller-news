@@ -116,6 +116,10 @@ test('beta selection demotes routine sports and generic explainer cards', () => 
   assert.equal(isEditoriallyEligibleTitle('Niagara invites neighbours to a red-white-blue falls display'), false)
   assert.equal(isEditoriallyEligibleTitle('Australia’s best home gardens – in pictures'), false)
   assert.equal(isEditoriallyEligibleTitle('Library Authority signs MoU with youth federation'), false)
+  assert.equal(isEditoriallyEligibleTitle('Syria and Bangladesh condemn an attack on a power station'), false)
+  assert.equal(isEditoriallyEligibleTitle('Firefighters deployed to contain blaze behind a shopping centre'), false)
+  assert.equal(isEditoriallyEligibleTitle('Ghanaian Minister calls for research commercialisation'), false)
+  assert.equal(isEditoriallyEligibleTitle('GJA Vice-President urges journalists to drive reform'), false)
   assert.equal(isEditoriallyEligibleTitle('Zambia holds its closest election in decades'), true)
   assert.ok(applyBetaSelectionPolicy(make('Library Authority partners with youth federation')).scoreParts.editorialPenalty <= -18)
 })
@@ -281,6 +285,14 @@ test('same named incident consolidates despite different headline wording', () =
   ])
   assert.equal(result.length, 1)
   assert.equal(result[0].sources.length, 3)
+})
+
+test('two angles on the same named national election consolidate into one event card', () => {
+  const cards = [
+    card('brazil-election-1', { headline: 'Brazil presidential election pits incumbent Lula against Flávio Bolsonaro', geography: [] }),
+    card('brazil-election-2', { headline: 'Brazilian presidential election presents potential shift in Amazon policies', geography: [] }),
+  ]
+  assert.equal(consolidatePublishedCards(cards).length, 1)
 })
 
 test('content gate rejects thin, truncated, and exposed citation-marker prose', () => {
