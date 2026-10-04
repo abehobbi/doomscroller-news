@@ -265,6 +265,26 @@ export function classifyCardRegions(card) {
   })
 }
 
+const SOURCE_MATCH_GENERIC = new Set([
+  'about', 'after', 'attack', 'australia', 'before', 'canada', 'china', 'from', 'ghana', 'government',
+  'india', 'iran', 'israel', 'middle', 'news', 'people', 'report', 'reports', 'says', 'syria', 'united', 'world',
+])
+const sourceMatchTokens = value => new Set(String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').split(/\s+/).filter(token => token.length >= 5 && !SOURCE_MATCH_GENERIC.has(token)))
+
+export function sanitizeRetainedCard(card) {
+  if (!Array.isArray(card?.sources) || card.sources.length < 4) return { ...card, geography: classifyCardRegions(card) }
+  const primary = card.sources.find(source => source.role === 'primary') || card.sources[0]
+  const headlineTokens = sourceMatchTokens(card.headline)
+  const keep = card.sources.filter(source => {
+    if (source === primary) return true
+    let path = ''
+    try { path = new URL(source.url).pathname } catch { return false }
+    return [...sourceMatchTokens(path)].some(token => headlineTokens.has(token))
+  })
+  const sources = keep.map((source, index) => ({ ...source, role: index === 0 ? 'primary' : 'additional' }))
+  return { ...card, sources, geography: classifyCardRegions({ ...card, sources }) }
+}
+
 function regionScore(regions) {
   if (regions.includes('Syria')) return 25
   if (regions.includes('GTA')) return 18

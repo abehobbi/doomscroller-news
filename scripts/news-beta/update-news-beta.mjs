@@ -2,9 +2,9 @@ import crypto from 'node:crypto'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import {
-  ACTIVE_FEED_MAXIMUM, ACTIVE_FEED_MINIMUM, buildEvidenceBatch, classifyCardRegions,
+  ACTIVE_FEED_MAXIMUM, ACTIVE_FEED_MINIMUM, buildEvidenceBatch,
   clearsGenerationQualityFloor, consolidatePublishedCards, evidenceFingerprint, GENERATION_SCORE_FLOOR,
-  isEditoriallyEligibleTitle, selectActiveFeedCards,
+  isEditoriallyEligibleTitle, sanitizeRetainedCard, selectActiveFeedCards,
 } from './pipeline.mjs'
 import { writeCard, WRITER_CONFIGURATION } from './writer.mjs'
 import { buildBoundPacket, detectCrossPacketOverlap } from '../../artifacts/summary-feasibility/date-scope-reliability-fix/scope.mjs'
@@ -195,7 +195,7 @@ async function main() {
   const acceptedIds = new Set(accepted.map(card => card.event_id))
   const retained = previousCards.filter(card => !acceptedIds.has(card.event_id)).filter(card => Date.now() - Date.parse(card.updated_at) < 45 * 86_400_000)
     .filter(card => isEditoriallyEligibleTitle(card.headline))
-    .map(card => ({ ...card, geography: classifyCardRegions(card) }))
+    .map(sanitizeRetainedCard)
   const cards = consolidatePublishedCards([...accepted, ...retained])
     .sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at)).slice(0, 120)
   const activeCards = selectActiveFeedCards(cards)

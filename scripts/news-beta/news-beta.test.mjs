@@ -3,7 +3,8 @@ import assert from 'node:assert/strict'
 import { validateNewsBetaDataset, articlesForFeed } from '../../src/news/schema.js'
 import {
   applyBetaSelectionPolicy, buildDiscoveryPool, classifyCardRegions, classifyPriorityRegions, clearsGenerationQualityFloor,
-  consolidatePublishedCards, diversityRerank, htmlListingItems, isEditoriallyEligibleTitle, selectActiveFeedCards, wordpressJsonItems,
+  consolidatePublishedCards, diversityRerank, htmlListingItems, isEditoriallyEligibleTitle, sanitizeRetainedCard,
+  selectActiveFeedCards, wordpressJsonItems,
 } from './pipeline.mjs'
 import { normalizeFeedItem } from '../news/normalize.mjs'
 import { validateCardContent } from './content-validation.mjs'
@@ -170,6 +171,33 @@ test('near-identical international headlines cluster even before a country is in
     article('Latvians vote in parliamentary election amid rising cost concerns', 7),
   )
   assert.equal(result.relation, 'same-event')
+})
+
+test('a shared country and generic attack word cannot merge unrelated events', () => {
+  const article = (title, publishedAt) => ({ title, description: '', publishedAt })
+  const result = compareEvents(
+    article('OpenAI Medicare attack exposes Australia tech debt', '2026-10-03T01:00:00Z'),
+    article('Flydubai co-pilot investigated in Australia after cockpit attack', '2026-10-04T01:00:00Z'),
+  )
+  assert.equal(result.relation, 'distinct-or-uncertain')
+})
+
+test('retained cards shed unrelated sources from a previously contaminated cluster', () => {
+  const cleaned = sanitizeRetainedCard(card('mixed-event', {
+    headline: 'OpenAI Medicare breach prompts Australian legacy technology review',
+    geography: ['Middle East'],
+    sources: [
+      { name: 'Guardian', url: 'https://example.com/openai-medicare-australia-legacy-technology', role: 'primary' },
+      { name: 'Guardian', url: 'https://example.com/flydubai-pilot-australia-cockpit-attack', role: 'additional' },
+      { name: 'BBC', url: 'https://example.com/flydubai-copilot-crash-axe', role: 'additional' },
+      { name: 'Other', url: 'https://example.com/openai-medicare-breach-review', role: 'additional' },
+    ],
+  }))
+  assert.deepEqual(cleaned.sources.map(source => source.url), [
+    'https://example.com/openai-medicare-australia-legacy-technology',
+    'https://example.com/openai-medicare-breach-review',
+  ])
+  assert.deepEqual(cleaned.geography, [])
 })
 
 test('active feed keeps twenty cards while preserving priority coverage and world space', () => {
