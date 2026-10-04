@@ -19,7 +19,15 @@ function decodeEntities(value) {
 }
 
 export function plainText(value, maxLength = 700) {
-  const input = typeof value === 'object' && value !== null ? value['#text'] : value
+  // Some valid RSS feeds wrap a headline in an HTML <a> element instead of
+  // exposing it as direct text. fast-xml-parser preserves that as title.a.
+  const nestedText = candidate => {
+    if (candidate == null || typeof candidate !== 'object') return candidate
+    if (candidate['#text'] != null) return candidate['#text']
+    if (candidate.a != null) return nestedText(candidate.a)
+    return candidate._ ?? ''
+  }
+  const input = nestedText(value)
   return decodeEntities(String(input || ''))
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ' ')
     .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ' ')

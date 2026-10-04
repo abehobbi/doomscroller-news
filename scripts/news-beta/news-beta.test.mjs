@@ -2,9 +2,10 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { validateNewsBetaDataset, articlesForFeed } from '../../src/news/schema.js'
 import {
-  applyBetaSelectionPolicy, buildDiscoveryPool, classifyCardRegions, classifyPriorityRegions, consolidatePublishedCards,
-  diversityRerank, htmlListingItems, isEditoriallyEligibleTitle, selectActiveFeedCards, wordpressJsonItems,
+  applyBetaSelectionPolicy, buildDiscoveryPool, classifyCardRegions, classifyPriorityRegions, clearsGenerationQualityFloor,
+  consolidatePublishedCards, diversityRerank, htmlListingItems, isEditoriallyEligibleTitle, selectActiveFeedCards, wordpressJsonItems,
 } from './pipeline.mjs'
+import { normalizeFeedItem } from '../news/normalize.mjs'
 import { validateCardContent } from './content-validation.mjs'
 import { displayStoryPages } from '../../src/news/pagination.js'
 import { compareEvents } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/lib.mjs'
@@ -107,7 +108,8 @@ test('beta selection uses event geography instead of publisher location', () => 
 test('beta selection demotes routine sports and generic explainer cards', () => {
   const make = title => ({ primary: { title, provenance: { feedId: 'cbc-toronto' } }, articles: [{ title }], regions: ['GTA'], score: 40, scoreParts: { region: 18, importance: 6 } })
   assert.equal(applyBetaSelectionPolicy(make('Raptors GM discusses basketball trade')).scoreParts.editorialPenalty, -18)
-  assert.equal(applyBetaSelectionPolicy(make('How an unchanged policy may affect households')).scoreParts.editorialPenalty, -12)
+  assert.equal(applyBetaSelectionPolicy(make('How an unchanged policy may affect households')).scoreParts.editorialPenalty, -18)
+  assert.equal(applyBetaSelectionPolicy(make('Trump the environmentalist? How a policy changed')).scoreParts.editorialPenalty, -18)
   assert.equal(applyBetaSelectionPolicy(make('Two local journalists selected for UK fellowship')).scoreParts.editorialPenalty, -30)
   assert.equal(isEditoriallyEligibleTitle('Sydney Hushie appointed Chief of a digital centre'), false)
   assert.equal(isEditoriallyEligibleTitle('Niagara invites neighbours to a red-white-blue falls display'), false)
@@ -134,6 +136,28 @@ test('reranker reserves meaningful space for priority and world discovery', () =
   assert.equal(result.selected.filter(value => value.event.regions.includes('Bangladesh')).length, 2)
   assert.ok(result.selected.some(value => value.event.id === 'lithuania'))
   assert.ok(result.selected.some(value => value.event.id === 'zambia'))
+  assert.deepEqual(result.selected.map(value => value.selection.rank), Array.from({ length: 20 }, (_, index) => index + 1))
+  assert.ok(result.selected.every(value => Number.isFinite(value.selection.adjustedScore)))
+})
+
+test('generation quality is a floor rather than a per-run quota', () => {
+  assert.equal(clearsGenerationQualityFloor({ selection: { adjustedScore: 30 } }), true)
+  assert.equal(clearsGenerationQualityFloor({ selection: { adjustedScore: 29.99 } }), false)
+  assert.equal(clearsGenerationQualityFloor({}), false)
+})
+
+test('RSS headlines wrapped in an anchor remain valid discoverable articles', () => {
+  const article = normalizeFeedItem({
+    title: { a: { '#text': 'Six more die of dengue, 1,608 get hospitalised', '@_href': '/story' } },
+    link: 'https://www.thedailystar.net/news/bangladesh/news/dengue',
+    pubDate: 'Sun, 04 Oct 26 00:00:00 +0600',
+    guid: 'daily-star-dengue',
+  }, {
+    id: 'daily-star-bd', publisherId: 'daily-star-bd', name: 'The Daily Star Bangladesh',
+    sourceUrl: 'https://www.thedailystar.net/', feedUrl: 'https://www.thedailystar.net/news/bangladesh/rss.xml',
+    topics: ['Bangladesh'], regions: ['Bangladesh'], language: 'en',
+  }, '2026-10-04T02:00:00Z')
+  assert.equal(article.title, 'Six more die of dengue, 1,608 get hospitalised')
 })
 
 test('near-identical international headlines cluster even before a country is in the place dictionary', () => {

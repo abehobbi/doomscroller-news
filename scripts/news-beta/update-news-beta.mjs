@@ -3,7 +3,8 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import {
   ACTIVE_FEED_MAXIMUM, ACTIVE_FEED_MINIMUM, buildEvidenceBatch, classifyCardRegions,
-  consolidatePublishedCards, evidenceFingerprint, isEditoriallyEligibleTitle, selectActiveFeedCards,
+  clearsGenerationQualityFloor, consolidatePublishedCards, evidenceFingerprint, GENERATION_SCORE_FLOOR,
+  isEditoriallyEligibleTitle, selectActiveFeedCards,
 } from './pipeline.mjs'
 import { writeCard, WRITER_CONFIGURATION } from './writer.mjs'
 import { buildBoundPacket, detectCrossPacketOverlap } from '../../artifacts/summary-feasibility/date-scope-reliability-fix/scope.mjs'
@@ -24,8 +25,7 @@ const TIMEZONES = new Map([
   ['City of Toronto News', 'America/Toronto'], ['SANA English', 'Asia/Damascus'], ['North Press Agency', 'Asia/Damascus'],
   ['Enab Baladi English', 'Asia/Damascus'], ['Syria Direct', 'Asia/Damascus'],
   ['Ghana News Agency', 'Africa/Accra'], ['Arab News', 'Asia/Riyadh'], ['The Japan Times', 'Asia/Tokyo'],
-  ['The Indian Express Bangladesh', 'Asia/Kolkata'], ['The Indian Express World', 'Asia/Kolkata'],
-  ['The Indian Express Science', 'Asia/Kolkata'], ['The Indian Express Research', 'Asia/Kolkata'],
+  ['The Daily Star Bangladesh', 'Asia/Dhaka'],
 ])
 
 const words = value => new Set(String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').split(/\s+/).filter(word => word.length > 3))
@@ -103,6 +103,10 @@ async function main() {
   const rejected = [...batch.evidenceRejected.map(value => ({ stage: 'evidence', ...value }))]
 
   for (const item of batch.selected) {
+    if (!clearsGenerationQualityFloor(item)) {
+      rejected.push({ eventId: item.event.id, title: item.event.primary.title, stage: 'editorial-quality', reason: `adjusted selection score ${item.selection?.adjustedScore ?? 'missing'} is below the ${GENERATION_SCORE_FLOOR}-point generation floor` })
+      continue
+    }
     const previousMatch = matchPrevious(item, previousCards)
     const eventId = previousMatch?.card?.event_id || item.event.id
     const fingerprint = evidenceFingerprint(item.packet)
@@ -130,7 +134,8 @@ async function main() {
       discovery: batch.counts, sourceStatus: batch.sourceStatus,
       selected: batch.selected.map(value => ({
         eventId: value.event.id, title: value.event.primary.title, publisher: value.packet.primaryNarrativeSource.publisher,
-        score: value.event.score, scoreParts: value.event.scoreParts, regions: value.event.regions,
+        score: value.event.score, adjustedScore: value.selection?.adjustedScore, rank: value.selection?.rank,
+        scoreParts: value.event.scoreParts, regions: value.event.regions,
       })),
       reranker: batch.reranker, candidateCount: candidates.length, rejected, overlaps, conflicted: [...conflicted],
     }, null, 2))
@@ -212,7 +217,7 @@ async function main() {
     schema: 'doomscroller.news-beta-diagnostics', schemaVersion: 1, batchId, startedAt, finishedAt: generatedAt,
     durationMs: Math.round(performance.now() - started), writerConfiguration: WRITER_CONFIGURATION,
     discovery: batch.counts, sourceStatus: batch.sourceStatus, knownSourceFailures: batch.knownSourceFailures,
-    reranker: batch.reranker, selectedEvents: batch.selected.map(item => ({ eventId: item.event.id, title: item.event.primary.title, score: item.event.score, scoreParts: item.event.scoreParts, regions: item.event.regions })),
+    reranker: batch.reranker, selectedEvents: batch.selected.map(item => ({ eventId: item.event.id, title: item.event.primary.title, score: item.event.score, adjustedScore: item.selection?.adjustedScore, rank: item.selection?.rank, scoreParts: item.event.scoreParts, regions: item.event.regions })),
     invalidPreviousCardsRemoved: previousCardAudits.filter(value => !value.audit.valid).map(value => ({ eventId: value.card.event_id, headline: value.card.headline, audit: value.audit })),
     crossEventOverlap: overlaps, generation, rejections: rejected,
     outcome: {

@@ -12,9 +12,10 @@ const parser = new XMLParser({ ignoreAttributes: false, trimValues: true, parseT
 const PRIORITY = ['Syria', 'GTA', 'Bangladesh', 'Ghana', 'Middle East', 'Canada']
 export const ACTIVE_FEED_MINIMUM = 20
 export const ACTIVE_FEED_MAXIMUM = 30
+export const GENERATION_SCORE_FLOOR = 30
 const LOCAL_FEED_REGIONS = new Map([
   ['sana-en', ['Syria', 'Middle East']], ['north-press-en', ['Syria', 'Middle East']], ['enab-baladi-en', ['Syria', 'Middle East']], ['syria-direct-en', ['Syria', 'Middle East']],
-  ['dhaka-tribune', ['Bangladesh']], ['bd24live-en', ['Bangladesh']], ['prothom-alo-en', ['Bangladesh']], ['financial-express-bd', ['Bangladesh']], ['indian-express-bangladesh', ['Bangladesh']],
+  ['dhaka-tribune', ['Bangladesh']], ['bd24live-en', ['Bangladesh']], ['prothom-alo-en', ['Bangladesh']], ['financial-express-bd', ['Bangladesh']], ['daily-star-bd', ['Bangladesh']],
   ['myjoyonline', ['Ghana']], ['graphic-ghana', ['Ghana']], ['ghanaweb', ['Ghana']], ['ghana-news-agency', ['Ghana']],
   ['toronto-city', ['GTA', 'Canada']], ['cbc-toronto', ['GTA', 'Canada']], ['cbc-canada', ['Canada']],
 ])
@@ -279,7 +280,7 @@ export function applyBetaSelectionPolicy(event) {
   const signals = editorialSignals(event)
   let editorialPenalty = 0
   if (/\b(?:football|soccer|basketball|hockey|nba|nhl|mlb|nfl|trade for (?:veteran|forward|guard)|match|tournament)\b/i.test(title) && event.scoreParts.importance < 24) editorialPenalty -= 18
-  if (/^(?:how|why|who)\b/i.test(title) && event.scoreParts.importance < 18) editorialPenalty -= 12
+  if (/(?:^(?:how|why|who)\b|\?\s*(?:how|why|who)\b)/i.test(title) && event.scoreParts.importance < 24) editorialPenalty -= 18
   if (!isEditoriallyEligibleTitle(title)) editorialPenalty -= 30
   const routineInstitutional = /\b(?:partners? with|partnership with|urges? stakeholders?|calls? for collaboration|must drive|working to build|takes? part in .*simulation|holds? (?:a )?(?:meeting|workshop|conference)|reaffirms? commitment)\b/i.test(title)
   if (routineInstitutional && signals.consequence + signals.discovery + signals.localTexture === 0) editorialPenalty -= 18
@@ -315,7 +316,10 @@ export function diversityRerank(candidates, { target = 30, maximum = 36, minimum
     }).sort((a, b) => b.adjusted - a.adjusted || b.item.event.score - a.item.event.score)
     const choice = ranked[0]
     if (selected.length >= target && choice.item.event.score < 60) break
-    selected.push(choice.item)
+    selected.push({
+      ...choice.item,
+      selection: { rank: selected.length + 1, adjustedScore: Number(choice.adjusted.toFixed(2)), adjustment: choice.delta },
+    })
     remaining.splice(remaining.indexOf(choice.item), 1)
     choice.regions.forEach(region => regionCounts.set(region, (regionCounts.get(region) || 0) + 1))
     countryCounts.set(choice.country, (countryCounts.get(choice.country) || 0) + 1)
@@ -324,6 +328,10 @@ export function diversityRerank(candidates, { target = 30, maximum = 36, minimum
     adjustments.push({ eventId: choice.item.event.id, baseScore: choice.item.event.score, adjustment: choice.delta, adjustedScore: choice.adjusted, contentType: choice.type, regions: choice.regions, country: choice.country })
   }
   return { selected, adjustments, distribution: { regions: Object.fromEntries(regionCounts), countries: Object.fromEntries(countryCounts), contentTypes: Object.fromEntries(typeCounts), publishers: Object.fromEntries(publisherCounts) } }
+}
+
+export function clearsGenerationQualityFloor(item) {
+  return Number(item?.selection?.adjustedScore ?? -Infinity) >= GENERATION_SCORE_FLOOR
 }
 
 const cardPublisher = card => card?.sources?.find(source => source.role === 'primary')?.name || card?.sources?.[0]?.name || 'Unknown'
