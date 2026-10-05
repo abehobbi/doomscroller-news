@@ -146,8 +146,8 @@ test('reranker reserves meaningful space for priority and world discovery', () =
 })
 
 test('generation quality is a floor rather than a per-run quota', () => {
-  assert.equal(clearsGenerationQualityFloor({ selection: { adjustedScore: 30 } }), true)
-  assert.equal(clearsGenerationQualityFloor({ selection: { adjustedScore: 29.99 } }), false)
+  assert.equal(clearsGenerationQualityFloor({ event: { score: 34 }, selection: { adjustedScore: -20 } }), true)
+  assert.equal(clearsGenerationQualityFloor({ event: { score: 33.99 }, selection: { adjustedScore: 80 } }), false)
   assert.equal(clearsGenerationQualityFloor({}), false)
 })
 
@@ -277,6 +277,29 @@ test('active feed expands above twenty only for fresh qualified cards and stops 
   assert.equal(selectActiveFeedCards(cards, { now }).length, 20)
 })
 
+test('a boosted low-score candidate cannot collapse a qualified fresh feed', () => {
+  const now = Date.parse('2026-10-05T19:22:36Z')
+  const cards = [
+    ...Array.from({ length: 5 }, (_, index) => card(`strong-${index}`, {
+      headline: `Strong material development ${index}`,
+      geography: [], selection_score: 65,
+      sources: [{ name: `World Publisher ${index}`, url: `https://example.com/strong-${index}`, role: 'primary', publishedAt: new Date(now - index * 3_600_000).toISOString() }],
+    })),
+    card('priority-low', {
+      headline: 'Material priority-region development', geography: ['GTA', 'Canada'], selection_score: 34,
+      sources: [{ name: 'Priority Publisher', url: 'https://example.com/priority-low', role: 'primary', publishedAt: new Date(now - 6 * 3_600_000).toISOString() }],
+    }),
+    ...Array.from({ length: 19 }, (_, index) => card(`qualified-${index}`, {
+      headline: `Qualified material development ${index}`,
+      geography: index % 4 === 0 ? ['Bangladesh'] : [], selection_score: 45,
+      sources: [{ name: `Qualified Publisher ${index}`, url: `https://example.com/qualified-${index}`, role: 'primary', publishedAt: new Date(now - (7 + index) * 3_600_000).toISOString() }],
+    })),
+  ]
+  const selected = selectActiveFeedCards(cards, { now })
+  assert.equal(selected.length, 20)
+  assert.ok(selected.some(value => value.event_id === 'priority-low'))
+})
+
 test('retained cross-run duplicates become one multi-source event card', () => {
   const left = card('manchester-a', {
     headline: 'Two Iranian men charged in alleged Manchester synagogue plot', geography: ['Middle East'],
@@ -315,6 +338,28 @@ test('two angles on the same named national election consolidate into one event 
     card('brazil-election-2', { headline: 'Brazilian presidential election presents potential shift in Amazon policies', geography: [] }),
   ]
   assert.equal(consolidatePublishedCards(cards).length, 1)
+})
+
+test('a Syrian publisher does not make an explicitly Yemeni event a Syria card', () => {
+  const event = {
+    articles: [{
+      title: 'Yemen launches military operation against Houthi-held areas',
+      provenance: { feedId: 'north-press-en' },
+      geography: {
+        priorityRegions: ['Syria', 'Middle East'],
+        eventLocations: [{ name: 'Yemen', region: 'Middle East', confidence: 'high' }],
+      },
+    }],
+  }
+  assert.deepEqual(classifyPriorityRegions(event), ['Middle East'])
+})
+
+test('routine congratulations, awareness campaigns, movement alignment and traffic deaths stay out', () => {
+  assert.equal(isEditoriallyEligibleTitle('Former ambassador congratulates party leaders on election result'), false)
+  assert.equal(isEditoriallyEligibleTitle('Toronto launches Fire Prevention Week focusing on safe charging'), false)
+  assert.equal(isEditoriallyEligibleTitle('Vice-president aligns with national health movement'), false)
+  assert.equal(isEditoriallyEligibleTitle('31-year-old man dies after being struck by vehicle in Toronto'), false)
+  assert.equal(isEditoriallyEligibleTitle('Central bank cuts interest rates after inflation declines'), true)
 })
 
 test('content gate rejects thin, truncated, and exposed citation-marker prose', () => {

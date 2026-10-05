@@ -13,7 +13,9 @@ const PRIORITY = ['Syria', 'GTA', 'Bangladesh', 'Ghana', 'Middle East', 'Canada'
 export const ACTIVE_FEED_MINIMUM = 20
 export const ACTIVE_FEED_MAXIMUM = 30
 export const ACTIVE_FEED_MAX_AGE_HOURS = 48
-export const GENERATION_SCORE_FLOOR = 30
+export const GENERATION_SCORE_FLOOR = 34
+export const ACTIVE_FEED_MINIMUM_SCORE = 34
+export const ACTIVE_FEED_EXPANSION_SCORE = 46
 const LOCAL_FEED_REGIONS = new Map([
   ['sana-en', ['Syria', 'Middle East']], ['north-press-en', ['Syria', 'Middle East']], ['enab-baladi-en', ['Syria', 'Middle East']], ['syria-direct-en', ['Syria', 'Middle East']],
   ['dhaka-tribune', ['Bangladesh']], ['bd24live-en', ['Bangladesh']], ['prothom-alo-en', ['Bangladesh']], ['financial-express-bd', ['Bangladesh']], ['daily-star-bd', ['Bangladesh']],
@@ -211,13 +213,28 @@ export function classifyPriorityRegions(event) {
   const regions = new Set()
   const titles = event.articles.map(article => article.title).join(' ')
   for (const article of event.articles) {
-    for (const region of article.geography?.priorityRegions || []) regions.add(region)
+    // Only trust locations found in the headline at this stage. A publisher's
+    // lead or boilerplate can mention its home country even when the actual
+    // event is elsewhere (for example, a Syrian outlet reporting on Yemen).
+    // Local-feed inheritance below handles genuinely local headlines that
+    // omit their country name.
+    const detectedLocations = article.geography?.eventLocations || []
+    const headlineLocations = detectedLocations
+      .filter(location => location.confidence === 'high' || location.evidence === 'title')
+    for (const location of headlineLocations) {
+      if (location.name === 'Syria') { regions.add('Syria'); regions.add('Middle East') }
+      if (location.name === 'Bangladesh') regions.add('Bangladesh')
+      if (location.name === 'Ghana') regions.add('Ghana')
+      if (location.name === 'GTA') { regions.add('GTA'); regions.add('Canada') }
+      if (location.name === 'Canada') regions.add('Canada')
+      if (location.region === 'Middle East') regions.add('Middle East')
+    }
     const local = LOCAL_FEED_REGIONS.get(article.provenance?.feedId) || []
     // Local headlines often omit their own country. Inherit a local feed's
     // region only when the headline does not plainly point abroad. An explicit
     // non-local place detected by geography is stronger than publisher origin.
-    const explicitLocations = article.geography?.eventLocations || []
-    const explicitlyLocal = local.some(region => (article.geography?.priorityRegions || []).includes(region))
+    const explicitLocations = detectedLocations
+    const explicitlyLocal = Boolean(local[0] && regions.has(local[0]))
     const mayInheritLocal = explicitlyLocal || (!explicitLocations.length && !FOREIGN_STORY_CUE.test(article.title || ''))
     if (local.length && mayInheritLocal) local.forEach(region => regions.add(region))
   }
@@ -255,7 +272,8 @@ function editorialSignals(event) {
 }
 
 export function isEditoriallyEligibleTitle(title) {
-  return !/\b(?:tourism invites?|invite[^.]{0,60}(?:falls|light|colour|color).*display|(?:falls|light|lighting|colour|color) display|selected for .*fellowship|fellowship|appointed (?:chief|director|head|ceo)|appointment of (?:a |the )?(?:chief|director|head|ceo)|joins? the .*team|award ceremony|announces? partnership|signs? memorandum|memorandum of understanding|mou|courtesy call|stakeholder engagement|workshop held|anniversary celebration|election signs?|in pictures|condemns?|denounces?|firefighters? deployed to contain (?:a )?blaze|minister calls? for|urges? (?:journalists?|stakeholders?))\b/i.test(String(title || ''))
+  return !/\b(?:tourism invites?|invite[^.]{0,60}(?:falls|light|colour|color).*display|(?:falls|light|lighting|colour|color) display|selected for .*fellowship|fellowship|appointed (?:chief|director|head|ceo)|appointment of (?:a |the )?(?:chief|director|head|ceo)|joins? the .*team|award ceremony|announces? partnership|signs? memorandum|memorandum of understanding|mou|courtesy call|stakeholder engagement|workshop held|anniversary celebration|election signs?|in pictures|congratulates?|congratulations|condemns?|denounces?|firefighters? deployed to contain (?:a )?blaze|(?:fire prevention|awareness) week|aligns? with .* movement|minister calls? for|urges? (?:journalists?|stakeholders?))\b/i.test(String(title || '')) &&
+    !/\b(?:man|woman|person|student|child|\d{1,3}-year-old)\b.{0,45}\b(?:dies?|killed)\b.{0,30}\b(?:struck|hit) by (?:a )?(?:vehicle|car|truck)\b/i.test(String(title || ''))
 }
 
 export function classifyCardRegions(card) {
@@ -352,7 +370,10 @@ export function diversityRerank(candidates, { target = 30, maximum = 36, minimum
 }
 
 export function clearsGenerationQualityFloor(item) {
-  return Number(item?.selection?.adjustedScore ?? -Infinity) >= GENERATION_SCORE_FLOOR
+  // Diversity adjustments decide ordering; they are not an editorial-quality
+  // verdict. A strong Yemen story should not become “low quality” merely
+  // because several other Middle East cards ranked ahead of it.
+  return Number(item?.event?.score ?? -Infinity) >= GENERATION_SCORE_FLOOR
 }
 
 const cardPublisher = card => card?.sources?.find(source => source.role === 'primary')?.name || card?.sources?.[0]?.name || 'Unknown'
@@ -443,9 +464,20 @@ export function selectActiveFeedCards(cards, { minimum = ACTIVE_FEED_MINIMUM, ma
       return { card, quality, ageHours, score: quality + priorityGap * 7 - ageHours / 18 - repetition * 3 - publisherCount * 7 }
     }).sort((a, b) => b.score - a.score || Date.parse(b.card.updated_at) - Date.parse(a.card.updated_at))
     if (!choices.length) break
-    let choice = choices.find(value => (publisherCounts.get(cardPublisher(value.card)) || 0) < 3)
+    // The first `minimum` slots use the same baseline quality floor as the
+    // discovery reranker. Once the feed is healthy, only stronger cards may
+    // expand it toward thirty. Previously we ranked all candidates first and
+    // then stopped whenever the single best adjusted candidate happened to
+    // have quality below 46. A low-scoring priority-region candidate could
+    // therefore hide many qualified candidates behind it and collapse a
+    // 24-card fresh pool to only five visible cards.
+    const qualityFloor = selected.length < minimum
+      ? ACTIVE_FEED_MINIMUM_SCORE
+      : ACTIVE_FEED_EXPANSION_SCORE
+    const choice = choices.find(value =>
+      value.quality >= qualityFloor &&
+      (publisherCounts.get(cardPublisher(value.card)) || 0) < 3)
     if (!choice) break
-    if (choice.quality < 46) break
     add(choice.card)
   }
   return selected

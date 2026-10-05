@@ -104,7 +104,7 @@ async function main() {
 
   for (const item of batch.selected) {
     if (!clearsGenerationQualityFloor(item)) {
-      rejected.push({ eventId: item.event.id, title: item.event.primary.title, stage: 'editorial-quality', reason: `adjusted selection score ${item.selection?.adjustedScore ?? 'missing'} is below the ${GENERATION_SCORE_FLOOR}-point generation floor` })
+      rejected.push({ eventId: item.event.id, title: item.event.primary.title, stage: 'editorial-quality', reason: `base editorial score ${item.event.score ?? 'missing'} is below the ${GENERATION_SCORE_FLOOR}-point generation floor` })
       continue
     }
     const previousMatch = matchPrevious(item, previousCards)
@@ -200,6 +200,9 @@ async function main() {
     .sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at)).slice(0, 120)
   const activeCards = selectActiveFeedCards(cards)
   if (!cards.length) throw new Error('No accepted or previously published beta cards; refusing to publish an empty dataset')
+  if (activeCards.length < ACTIVE_FEED_MINIMUM) {
+    throw new Error(`Only ${activeCards.length} fresh qualified News cards are available; refusing to replace the last good ${ACTIVE_FEED_MINIMUM}–${ACTIVE_FEED_MAXIMUM}-card feed`)
+  }
   const generatedAt = new Date().toISOString(), batchId = `news-beta-${generatedAt.replace(/[:.]/g, '-')}`
   const dataset = {
     schema: 'doomscroller.news-beta-dataset', schemaVersion: 1, generatedAt, batchId,
