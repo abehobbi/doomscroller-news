@@ -2,14 +2,14 @@ import fs from 'node:fs/promises'
 
 const API_URL = 'https://api.tavily.com/search'
 const SEARCH_FAMILIES = [
-  ['local-change', 'recent local reporting from anywhere in the world about a small community, village, neighbourhood, or municipality experiencing a distinctive change or solving an unusual problem'],
-  ['living-traditions', 'recent original local reporting anywhere in the world about a living tradition, harvest, livelihood, food practice, craft, or community celebration with distinctive concrete details'],
-  ['community-nature', 'recent local reporting worldwide about residents or volunteers restoring a wetland, forest, river, habitat, historic place, or protecting unusual wildlife'],
-  ['municipal-surprise', 'recent local news anywhere in the world about an unexpected municipal error, infrastructure problem, civic dispute, or unusual public response'],
-  ['ordinary-life', 'recent deeply local journalism that gives a vivid surprising window into ordinary life in an underreported place outside the United States'],
-  ['local-experiment', 'recent local news worldwide about a small town community school farm or conservation group trying something genuinely novel or remarkable'],
-  ['regional-original', 'recent original reporting by a regional or community news outlet about a fascinating event that would normally be missed by international news'],
-  ['culture-place', 'recent reporting about a highly specific local cultural event or practice that reveals how people live in a particular place, excluding tourism promotion and generic event listings'],
+  ['local-change', 'village community distinctive change local news'],
+  ['living-traditions', 'local tradition harvest livelihood craft community news'],
+  ['community-nature', 'community restores wildlife habitat river forest local news'],
+  ['municipal-surprise', 'unusual municipal problem public response local news'],
+  ['ordinary-life', 'underreported place ordinary life original local reporting'],
+  ['local-experiment', 'small town community novel project local news'],
+  ['regional-original', 'fascinating regional community original reporting world'],
+  ['culture-place', 'distinctive local cultural practice community news'],
 ].map(([id, query]) => ({ id, query }))
 
 const NOISE = /\b(?:preview|tickets?|sponsored|press release|pr newswire|stock|earnings|podcast|opinion|newsletter|sports?|football|basketball|celebrity|shopping|travel deals?)\b/i
@@ -31,7 +31,7 @@ function parseArgs(argv) {
 
 async function search(apiKey, family, options) {
   const body = {
-    query: family.query, search_depth: 'basic', max_results: 20, topic: 'general',
+    query: family.query, search_depth: 'basic', max_results: 20, topic: 'news',
     include_answer: false, include_raw_content: false, include_images: false,
     include_published_date: true, filter_by_published_date: true,
     include_usage: true, safe_search: true,
@@ -119,4 +119,3 @@ async function main() {
 }
 
 main().catch(error => { console.error(error.message); process.exitCode = 1 })
-
