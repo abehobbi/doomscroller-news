@@ -20,3 +20,21 @@ node experiments/news-global-discovery/tavily-discovery.mjs --mode fresh --days 
 Set `TAVILY_API_KEY` outside the repository. Reports retain URLs, reported
 publication times, query provenance, provider scores, and exact credit usage.
 No candidate is treated as publishable without source verification.
+
+## Exa comparison
+
+Exa provides recurring free dollar credits rather than a fixed query count.
+The comparison uses eight auto-quality searches with ten results each, the
+news category, publication-date bounds, and no paid summaries or page-content
+extraction.
+
+```powershell
+node experiments/news-global-discovery/exa-discovery.mjs --mode historical --start 2026-09-29 --end 2026-10-04 --output experiments/news-global-discovery/results/exa-historical.json
+```
+
+```powershell
+node experiments/news-global-discovery/exa-discovery.mjs --mode fresh --days 3 --output experiments/news-global-discovery/results/exa-fresh.json
+```
+
+Set `EXA_API_KEY` outside the repository. The report retains Exa's returned
+request cost so the free-tier consumption is auditable.
