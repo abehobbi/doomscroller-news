@@ -5,7 +5,7 @@ import { ordinary } from '../../artifacts/summary-feasibility/round-9/prompts.mj
 export const MODEL = '@cf/google/gemma-4-26b-a4b-it'
 export const DATE_RETRY_REMINDER = 'Use only the permitted exact event dates supplied in the evidence. Do not infer or calculate another calendar date.'
 export const WRITER_CONFIGURATION = Object.freeze({
-  model: MODEL, temperature: 0.2, maxCompletionTokens: 1024,
+  model: MODEL, temperature: 0.2, maxCompletionTokens: 1536,
   responseFormat: 'json_schema', thinking: false, retries: 'date-only; maximum one', repair: false,
 })
 
@@ -24,7 +24,7 @@ export async function writeCard(packet, { dateRetry = false } = {}) {
   const request = {
     messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: JSON.stringify({ source_led_packet: packet }) }],
     temperature: 0.2,
-    max_completion_tokens: 1024,
+    max_completion_tokens: 1536,
     response_format: { type: 'json_schema', json_schema: cardSchema },
     chat_template_kwargs: { enable_thinking: false },
     store: false,
