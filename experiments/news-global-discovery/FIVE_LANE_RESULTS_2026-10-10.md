@@ -223,9 +223,15 @@ value, intrinsic interest, distinctiveness, clarity, and fresh specificity.
 - Qualified reserves: 24
 - Cloudflare calls: nine batches, sequential, with thinking disabled
 - Complete structured evaluations: 67 of 67
-- Total Cloudflare neuron usage: 465.51
+- Cloudflare neurons represented by the retained complete score set: 465.51
 - Automatic retries: none
 - News cards generated or published: none
+
+The first GitHub bootstrap attempt stopped at the same evidence-empty candidate,
+but GitHub skipped its artifact before failure-preserving upload was added. Its
+exact provider usage is therefore unavailable and is not included in 465.51;
+it may have duplicated up to approximately the first seven batches. The later
+resume logic prevents that waste in future interrupted runs.
 
 The initial pass completed 63 usable evaluations before correctly stopping on
 the evidence-empty reserve. A resume path reused those 63 evaluations and made
