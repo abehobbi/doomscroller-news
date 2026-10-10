@@ -106,3 +106,29 @@ the larger backup pool as the correct foundation. It does not yet establish
 that all 65 candidates meet final editorial or summary quality: source-family
 corroboration, richer event clustering, final ranking, and generated-card review
 remain before production integration.
+
+## Corroboration and editorial-ranking pass
+
+The qualified pool was reprocessed with source-family detection and stronger
+event comparison. Wire copies count as one family; separate publishers count as
+independent only when no wire origin is detected. High-risk single-source
+stories must retain explicit attribution, and unattributed high-risk clusters
+are excluded before final selection.
+
+The selected 65-card diagnostic edition contains seven multi-source events and
+no unattributed high-risk single-source event. Verified examples include the
+Toronto bike-lane removal, the EU–China vehicle trade agreement, the Iraq–Syria
+oil route, the Bangladesh DP World port concession, and Ghana's BRICS bid.
+
+The pass also found and fixed two clustering failures:
+
+- differently worded reports about the same Jurassic mammal fossil are now one
+  event; and
+- shared port background no longer merges Bangladesh's DP World concession
+  with separate PSA terminal negotiations.
+
+Editorial ranking now rewards concrete major-news actions and understandable
+human/local reporting while demoting publicity, vague initiatives, technical
+jargon, incomplete headlines, and weaker derivative publishers. This remains
+a deterministic pre-writer ranking. Generated headline, summary, image, and
+claim-fidelity review is the next milestone.

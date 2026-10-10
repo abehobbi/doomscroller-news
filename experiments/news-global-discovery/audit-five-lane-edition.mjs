@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { classifyGeography, compareEvents } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/lib.mjs'
+import { classifyGeography } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/lib.mjs'
+import { clusterCorroboratedEvents } from './event-corroboration.mjs'
 
 const LABELS = {
   'world-interesting': 'Interesting world',
@@ -24,6 +25,12 @@ const LOCAL_REGION_DOMAINS = {
   Canada: ['cbc.ca', 'globalnews.ca', 'ctvnews.ca'],
   GTA: ['toronto.ca', 'toronto.com', 'thestar.com', 'cp24.com', 'gtaconstructionreport.com'],
 }
+const PROMOTIONAL = /\b(?:announces? landmark|launches? (?:new )?(?:initiative|construction)|open for business|wooing partnerships?|makes? giant strides?|fresh face|join us|award|selected for .* fellowship|invites?|guidelines on developing|plans? to)\b/i
+const WEAK_MAJOR = /\b(?:analysis|anniversary|why |how |ready to|set to|could|may|report says|calls? for|urges?)\b/i
+const CONCRETE_MAJOR = /\b(?:approves?|rejects?|passes?|clears?|signs?|bans?|halts?|removes?|begins?|takes? control|strikes?|attacks?|kills?|dies?|arrests?|convicts?|fines?|rises?|falls?|outbreak|earthquake|hurricane|flood|sanctions?|agreement|deal|court|election|troops?|ceasefire|law|rules?)\b/i
+const STRONG_PUBLISHER = /^(?:reuters\.com|apnews\.com|bbc\.(?:com|co\.uk)|cbc\.ca|aljazeera\.com|theguardian\.com|nature\.com|npr\.org|globalnews\.ca|hrw\.org|abc\.net\.au|asia\.nikkei\.com)$/
+const WEAK_PUBLISHER = /^(?:torontosun\.com|timesofindia\.indiatimes\.com|economictimes\.indiatimes\.com|scienmag\.com)$/
+const DISCOVERY_JARGON = /\b(?:single-nucleus|transcriptomic|genomic pipeline|known and unknown genomes|cortical dynamics|fractal dimension|productive forces)\b/i
 
 function parseArgs(argv) {
   const options = { edition: null, enrichment: null, outputDir: null, count: 65 }
@@ -43,6 +50,7 @@ function qualify(selection, snapshot) {
   if (!snapshot || snapshot.status !== 'ok') reasons.push('article page inaccessible')
   if (!snapshot || snapshot.evidenceChars < 180) reasons.push('insufficient source evidence')
   if (!snapshot?.imageUrl) reasons.push('no publisher image found')
+  if (!snapshot?.title || snapshot.title.length < 24 || /\b(?:and|or|the|a|to|of|for|with|they|he|she|it|its|their)\s*$/i.test(snapshot.title)) reasons.push('headline is incomplete or not self-contained')
   const expectedRegions = selection.representative.priorityRegions || []
   let detectedRegions = []
   if (snapshot && expectedRegions.length) {
@@ -61,44 +69,22 @@ function qualify(selection, snapshot) {
   return { selection, snapshot, detectedRegions, eligible: reasons.length === 0, rejectionReasons: reasons }
 }
 
-function asArticle(item) {
-  return {
-    id: item.selection.id,
-    title: item.snapshot.title || item.selection.representative.title,
-    description: item.snapshot.evidenceText.slice(0, 1800),
-    url: item.snapshot.finalUrl || item.snapshot.sourceUrl,
-    publishedAt: item.snapshot.publishedAt || item.selection.representative.publishedAt,
+function editorialAdjustment(cluster) {
+  const item = cluster.representative
+  const title = item.snapshot.title || item.selection.representative.title
+  const lane = item.selection.assignedLane
+  let score = 0
+  if (STRONG_PUBLISHER.test(String(item.snapshot.publisher || '').replace(/^www\./, ''))) score += 8
+  if (WEAK_PUBLISHER.test(String(item.snapshot.publisher || '').replace(/^www\./, ''))) score -= 22
+  if (PROMOTIONAL.test(title)) score -= 32
+  if (lane.includes('major')) {
+    if (CONCRETE_MAJOR.test(title)) score += 10
+    else score -= 15
+    if (WEAK_MAJOR.test(title)) score -= 12
   }
-}
-
-function related(left, right) {
-  try { return compareEvents(asArticle(left), asArticle(right)) } catch { return { relation: 'distinct-or-uncertain', score: 0, reason: 'comparison failed safely' } }
-}
-
-function clusterEligible(items) {
-  const clusters = []
-  for (const item of items) {
-    let best = null
-    for (const cluster of clusters) {
-      for (const member of cluster.members) {
-        const comparison = related(item, member)
-        if (comparison.relation !== 'distinct-or-uncertain' && (!best || comparison.score > best.comparison.score)) best = { cluster, comparison }
-      }
-    }
-    if (best) {
-      best.cluster.members.push(item)
-      best.cluster.relations.push({ left: item.selection.id, right: best.cluster.members[0].selection.id, ...best.comparison })
-    } else clusters.push({ id: `qualified-event-${String(clusters.length + 1).padStart(3, '0')}`, members: [item], relations: [] })
-  }
-  return clusters.map(cluster => {
-    const representative = [...cluster.members].sort((a, b) => {
-      const time = Date.parse(b.snapshot.publishedAt || '') - Date.parse(a.snapshot.publishedAt || '')
-      if (Number.isFinite(time) && time !== 0) return time
-      return b.snapshot.evidenceChars - a.snapshot.evidenceChars
-    })[0]
-    const lanes = [...new Set(cluster.members.map(member => member.selection.assignedLane))]
-    return { ...cluster, representative, lanes }
-  })
+  if (lane.includes('interesting') && /\b(?:village|community|family|residents?|workers?|farmers?|fishers?|tradition|livelihood|school|wildlife|forest|river|island|craft|human rights|detention|water)\b/i.test(`${title} ${item.snapshot.evidenceText.slice(0, 500)}`)) score += 8
+  if (lane === 'discovery' && DISCOVERY_JARGON.test(title)) score -= 28
+  return score
 }
 
 function selectQualified(clusters, maximum) {
@@ -115,11 +101,13 @@ function selectQualified(clusters, maximum) {
       const regionGap = Math.max(0, ...regions.map(region => Math.max(0, (REGION_MINIMUMS[region] || 0) - (regionCounts.get(region) || 0))))
       const publisherPenalty = Math.max(0, (domainCounts.get(item.snapshot.publisher) || 0) - 1) * 10
       const base = Number(item.selection.poolScore ?? item.selection.adjustedScore ?? 50)
-      return { cluster, score: base + laneGap + regionGap * 14 + Math.min(6, item.snapshot.evidenceChars / 3000) - publisherPenalty }
+      const corroborationBonus = Math.min(12, Math.max(0, cluster.independentSourceCount - 1) * 6)
+      const riskPenalty = cluster.corroborationStatus === 'single-source-unattributed' ? 30 : 0
+      return { cluster, score: base + laneGap + regionGap * 14 + Math.min(6, item.snapshot.evidenceChars / 3000) + corroborationBonus + editorialAdjustment(cluster) - riskPenalty - publisherPenalty }
     }).sort((a, b) => b.score - a.score)
     if (!ranked.length || !Number.isFinite(ranked[0].score)) break
     const choice = ranked[0].cluster
-    selected.push(choice)
+    selected.push({ ...choice, selectionScore: Number(ranked[0].score.toFixed(2)) })
     remaining.splice(remaining.indexOf(choice), 1)
     const item = choice.representative
     laneCounts[item.selection.assignedLane] += 1
@@ -149,6 +137,8 @@ function render(report) {
       `- Evidence: ${item.snapshot.evidenceChars.toLocaleString()} extracted characters`,
       `- Image: ${item.snapshot.imageUrl}`,
       `- Sources/pages in event cluster: ${event.members.length}`,
+      `- Independent source families: ${event.independentSourceCount}`,
+      `- Corroboration: ${event.corroborationStatus}`,
       `- Link: ${item.snapshot.finalUrl || item.snapshot.sourceUrl}`,
       '',
     )
@@ -168,8 +158,9 @@ async function main() {
   const snapshots = new Map(enrichment.items.map(item => [item.eventClusterId, item]))
   const audited = edition.selections.map(selection => qualify(selection, snapshots.get(selection.id)))
   const rejected = audited.filter(item => !item.eligible)
-  const clusters = clusterEligible(audited.filter(item => item.eligible))
-  const finalSelection = selectQualified(clusters, options.count)
+  const clusters = clusterCorroboratedEvents(audited.filter(item => item.eligible))
+  const corroborationRejected = clusters.filter(cluster => cluster.corroborationStatus === 'single-source-unattributed')
+  const finalSelection = selectQualified(clusters.filter(cluster => cluster.corroborationStatus !== 'single-source-unattributed'), options.count)
   const laneCounts = finalSelection.laneCounts
   const report = {
     schemaVersion: 1, createdAt: new Date().toISOString(),
@@ -177,9 +168,11 @@ async function main() {
     requestedCandidates: edition.selections.length,
     rejectedCandidates: rejected.length,
     qualifiedPoolEvents: clusters.length,
+    corroborationRejectedEvents: corroborationRejected.length,
     qualifiedEvents: finalSelection.selected.length,
     laneCounts, events: finalSelection.selected, rejected,
     qualifiedButNotSelected: finalSelection.remaining,
+    corroborationRejected,
     priorityRegionCounts: finalSelection.regionCounts,
   }
   await fs.mkdir(options.outputDir, { recursive: true })

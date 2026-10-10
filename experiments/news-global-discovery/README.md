@@ -86,3 +86,9 @@ material-update chains into one prospective card.
 ```powershell
 node experiments/news-global-discovery/audit-five-lane-edition.mjs --edition experiments/news-global-discovery/results/five-lane-pool.json --enrichment experiments/news-global-discovery/results/five-lane-enriched.json --output-dir experiments/news-global-discovery/review-output-five-lane --count 65
 ```
+
+The audit treats wire copies as one source family, rewards genuinely
+independent corroboration, retains explicit single-source status, and rejects
+unattributed high-risk single-source events before selection. Conservative
+headline/evidence matching can join differently worded reports while explicit
+place or named-organization conflicts prevent unsafe merges.
