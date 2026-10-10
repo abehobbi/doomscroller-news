@@ -74,3 +74,35 @@ The next iteration must use this order:
 
 The 65-card number is a ceiling, not a quota. No candidate should be published
 merely to reach it.
+
+## Evidence-first rerun
+
+The corrected order was then tested with a 160-candidate evidence pool that
+preserved up to five candidates from each query before filling unused space.
+
+- Public pages accessible: 142 of 160
+- Evidence-ready: 138
+- Publisher images found: 139
+- Rejected for evidence, image, or priority-centrality failures: 32
+- Qualified event pool after conservative clustering: 125
+- Final selected edition: 65
+
+Final lane mix:
+
+- 12 major world
+- 13 major priority-region
+- 20 interesting world
+- 13 interesting priority-region
+- 7 Discovery
+
+Priority-query provenance in the selected edition included five Syria, five
+wider Middle East, three Bangladesh, two Ghana, eight Canada, and four GTA
+candidates. Query provenance is retained only for auditing; the centrality gate
+still checks the fetched title and lead before a candidate qualifies.
+
+The evidence-first order recovered five central Syria candidates instead of the
+zero produced when the final shortlist was created too early. This validates
+the larger backup pool as the correct foundation. It does not yet establish
+that all 65 candidates meet final editorial or summary quality: source-family
+corroboration, richer event clustering, final ranking, and generated-card review
+remain before production integration.

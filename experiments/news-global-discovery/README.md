@@ -63,13 +63,20 @@ quota.
 node experiments/news-global-discovery/select-five-lane-edition.mjs --input experiments/news-global-discovery/results/five-lane-full.json --output-dir experiments/news-global-discovery/review-output-five-lane --count 65
 ```
 
+The production-shaped experiment does not select the final 65 before evidence
+checks. It first preserves up to five results from each query in a larger pool:
+
+```powershell
+node experiments/news-global-discovery/build-five-lane-evidence-pool.mjs --input experiments/news-global-discovery/results/five-lane-full.json --output experiments/news-global-discovery/results/five-lane-pool.json --maximum 160 --per-query 5
+```
+
 Before any candidate reaches a writer, the enrichment diagnostic fetches the
 public article page, extracts source text and publisher metadata, and records
 whether an event-specific image is available. It stores links and text for
 testing only; it does not download or republish image bytes.
 
 ```powershell
-node experiments/news-global-discovery/enrich-five-lane-candidates.mjs --input experiments/news-global-discovery/review-output-five-lane/ANSWER_KEY.json --output experiments/news-global-discovery/results/five-lane-enriched.json
+node experiments/news-global-discovery/enrich-five-lane-candidates.mjs --input experiments/news-global-discovery/results/five-lane-pool.json --output experiments/news-global-discovery/results/five-lane-enriched.json
 ```
 
 The final audit excludes inaccessible/unsupported/image-less candidates and
@@ -77,5 +84,5 @@ uses the existing conservative event comparison to collapse duplicates and
 material-update chains into one prospective card.
 
 ```powershell
-node experiments/news-global-discovery/audit-five-lane-edition.mjs --edition experiments/news-global-discovery/review-output-five-lane/ANSWER_KEY.json --enrichment experiments/news-global-discovery/results/five-lane-enriched.json --output-dir experiments/news-global-discovery/review-output-five-lane
+node experiments/news-global-discovery/audit-five-lane-edition.mjs --edition experiments/news-global-discovery/results/five-lane-pool.json --enrichment experiments/news-global-discovery/results/five-lane-enriched.json --output-dir experiments/news-global-discovery/review-output-five-lane --count 65
 ```

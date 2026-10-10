@@ -9,6 +9,14 @@ const LABELS = {
   'priority-major': 'Major priority region',
   discovery: 'Discovery',
 }
+const LANE_LIMITS = {
+  'world-interesting': { minimum: 10, preferred: 15, maximum: 20 },
+  'priority-interesting': { minimum: 6, preferred: 10, maximum: 15 },
+  'world-major': { minimum: 10, preferred: 12, maximum: 15 },
+  'priority-major': { minimum: 8, preferred: 12, maximum: 15 },
+  discovery: { minimum: 4, preferred: 6, maximum: 8 },
+}
+const REGION_MINIMUMS = { Syria: 2, 'Middle East': 2, Bangladesh: 2, Ghana: 2, Canada: 2, GTA: 1 }
 const LOCAL_REGION_DOMAINS = {
   Bangladesh: ['thedailystar.net', 'tbsnews.net', 'dhakatribune.com', 'prothomalo.com', 'bdnews24.com', 'agronewstoday.com'],
   Ghana: ['myjoyonline.com', 'citinewsroom.com', 'graphic.com.gh', 'ghanaweb.com', 'gna.org.gh', 'chale.news'],
@@ -18,13 +26,15 @@ const LOCAL_REGION_DOMAINS = {
 }
 
 function parseArgs(argv) {
-  const options = { edition: null, enrichment: null, outputDir: null }
+  const options = { edition: null, enrichment: null, outputDir: null, count: 65 }
   for (let index = 0; index < argv.length; index += 1) {
     if (argv[index] === '--edition') options.edition = argv[++index]
     else if (argv[index] === '--enrichment') options.enrichment = argv[++index]
     else if (argv[index] === '--output-dir') options.outputDir = argv[++index]
+    else if (argv[index] === '--count') options.count = Number(argv[++index])
   }
   if (!options.edition || !options.enrichment || !options.outputDir) throw new Error('--edition, --enrichment, and --output-dir are required')
+  if (!Number.isInteger(options.count) || options.count < 1 || options.count > 65) throw new Error('--count must be from 1 to 65')
   return options
 }
 
@@ -91,6 +101,34 @@ function clusterEligible(items) {
   })
 }
 
+function selectQualified(clusters, maximum) {
+  const selected = [], remaining = [...clusters]
+  const laneCounts = Object.fromEntries(Object.keys(LANE_LIMITS).map(lane => [lane, 0]))
+  const regionCounts = new Map(), domainCounts = new Map()
+  while (remaining.length && selected.length < maximum) {
+    const ranked = remaining.map(cluster => {
+      const item = cluster.representative
+      const lane = item.selection.assignedLane
+      if (!LANE_LIMITS[lane] || laneCounts[lane] >= LANE_LIMITS[lane].maximum) return { cluster, score: -Infinity }
+      const regions = item.selection.representative.priorityRegions || []
+      const laneGap = laneCounts[lane] < LANE_LIMITS[lane].minimum ? 24 : laneCounts[lane] < LANE_LIMITS[lane].preferred ? 9 : 0
+      const regionGap = Math.max(0, ...regions.map(region => Math.max(0, (REGION_MINIMUMS[region] || 0) - (regionCounts.get(region) || 0))))
+      const publisherPenalty = Math.max(0, (domainCounts.get(item.snapshot.publisher) || 0) - 1) * 10
+      const base = Number(item.selection.poolScore ?? item.selection.adjustedScore ?? 50)
+      return { cluster, score: base + laneGap + regionGap * 14 + Math.min(6, item.snapshot.evidenceChars / 3000) - publisherPenalty }
+    }).sort((a, b) => b.score - a.score)
+    if (!ranked.length || !Number.isFinite(ranked[0].score)) break
+    const choice = ranked[0].cluster
+    selected.push(choice)
+    remaining.splice(remaining.indexOf(choice), 1)
+    const item = choice.representative
+    laneCounts[item.selection.assignedLane] += 1
+    domainCounts.set(item.snapshot.publisher, (domainCounts.get(item.snapshot.publisher) || 0) + 1)
+    for (const region of item.selection.representative.priorityRegions || []) regionCounts.set(region, (regionCounts.get(region) || 0) + 1)
+  }
+  return { selected, remaining, laneCounts, regionCounts: Object.fromEntries(regionCounts) }
+}
+
 function render(report) {
   const lines = [
     '# Evidence-qualified five-lane edition', '',
@@ -131,19 +169,18 @@ async function main() {
   const audited = edition.selections.map(selection => qualify(selection, snapshots.get(selection.id)))
   const rejected = audited.filter(item => !item.eligible)
   const clusters = clusterEligible(audited.filter(item => item.eligible))
-  const laneCounts = {}
-  for (const cluster of clusters) {
-    const lane = cluster.representative.selection.assignedLane
-    laneCounts[lane] = (laneCounts[lane] || 0) + 1
-  }
+  const finalSelection = selectQualified(clusters, options.count)
+  const laneCounts = finalSelection.laneCounts
   const report = {
     schemaVersion: 1, createdAt: new Date().toISOString(),
     sourceEdition: options.edition, sourceEnrichment: options.enrichment,
     requestedCandidates: edition.selections.length,
     rejectedCandidates: rejected.length,
-    qualifiedEvents: clusters.length,
-    laneCounts, events: clusters, rejected,
-    priorityRegionCounts: Object.fromEntries([...new Set(clusters.flatMap(cluster => cluster.representative.selection.representative.priorityRegions || []))].map(region => [region, clusters.filter(cluster => (cluster.representative.selection.representative.priorityRegions || []).includes(region)).length])),
+    qualifiedPoolEvents: clusters.length,
+    qualifiedEvents: finalSelection.selected.length,
+    laneCounts, events: finalSelection.selected, rejected,
+    qualifiedButNotSelected: finalSelection.remaining,
+    priorityRegionCounts: finalSelection.regionCounts,
   }
   await fs.mkdir(options.outputDir, { recursive: true })
   await Promise.all([
