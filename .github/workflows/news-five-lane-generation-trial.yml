@@ -2,15 +2,6 @@ name: Run isolated five-lane News generation trial
 
 on:
   workflow_dispatch:
-  # Isolated feature-branch comparison run. Remove after its artifact is saved.
-  push:
-    branches:
-      - codex/news-global-discovery-test
-    paths:
-      - .github/workflows/news-five-lane-generation-trial.yml
-      - artifacts/summary-feasibility/round-9/prompts.mjs
-      - scripts/news-beta/writer.mjs
-      - experiments/news-global-discovery/fixtures/five-lane-generation-trial-context-2026-10-10.json
 
 concurrency:
   group: news-five-lane-generation-trial
