@@ -125,6 +125,11 @@ function headlineAudit(card, packet) {
   return { valid: shared.length >= Math.min(3, headline.size), sharedTerms: shared }
 }
 
+function displayedSources(item) {
+  const sources = [...item.sources, ...(item.contextEnrichment?.additions || []).map(source => ({ publisher: source.publisher, url: source.url }))]
+  return [...new Map(sources.map(source => [source.url, source])).values()]
+}
+
 function reviewMarkdown(report) {
   const lines = ['# Five-lane generated-card trial', '', `Generated: ${report.createdAt}`, '', `Model: ${report.writerConfiguration.model}; thinking disabled.`, '']
   report.results.forEach((result, index) => {
@@ -173,7 +178,7 @@ async function main() {
     results.push({
       eventId: item.eventId, lane: item.lane,
       sourceTitle: item.sourceTitle,
-      sources: item.sources,
+      sources: displayedSources(item),
       corroborationStatus: item.corroborationStatus,
       status: valid ? 'accepted' : 'rejected', card,
       audits: { content, dates, numbers, headline, writerExposure: auditWriterTemporalExposure(item.temporalPacket) },

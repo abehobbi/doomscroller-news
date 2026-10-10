@@ -166,3 +166,40 @@ including the cultural-burn candidate, while still filling the 65-card ceiling
 from qualified alternatives. The expanded News test suite now has 38 passing
 tests. The seven mechanically accepted generations remain review material, not
 editorially approved production cards.
+
+## Context-enriched generation comparison
+
+A second isolated ten-card run tested trusted contextual evidence and tighter
+writer shaping. Exa searched once per event. The trusted-source gate retained
+13 useful additions from primary institutions, established publishers,
+universities, and recognized specialist or local outlets. Obscure search-result
+sites were excluded. The intended operational cost was $0.07; the development
+session spent $0.14 because the search was repeated once after adding the
+trusted-source gate.
+
+The writer now prefers one or two compact pages, uses three only for genuinely
+complex stories, and has a 1,536-token emergency ceiling. The higher ceiling is
+not a length target. It prevents otherwise valid JSON from being cut off after
+the prompt has already required concise, non-repetitive prose.
+
+- Complete generated cards: 10 of 10
+- Cards accepted by every current automated gate: 9 of 10
+- Total Cloudflare neuron usage: 467.57
+- Input tokens: 40,839
+- Output tokens: 3,574
+- Total model latency: 70.45 seconds
+
+Bill C-39 expanded from 239 to 330 words. The additional prose explains the
+single-review mechanism, one-year goal, parliamentary committee stage, and the
+main labour, environmental, and Indigenous-consultation objections. This is
+approximately 90 additional words woven into the card rather than a separate
+generic explainer.
+
+The Jurassic mammal card, previously truncated at the 1,024-token ceiling,
+completed as a 258-word, three-page card. The sole rejection remained the kelp
+card: Gemma again introduced an unsupported C$250,000 cost and also exposed
+numbered-list formatting. Both problems were caught deterministically.
+
+This improves context completeness and structural reliability. It does not by
+itself solve the separate editorial problem that the Interesting and Discovery
+lanes must consistently find more compelling stories.
