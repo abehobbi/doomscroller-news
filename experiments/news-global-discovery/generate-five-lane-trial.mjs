@@ -6,6 +6,7 @@ import { validateGeneratedDates } from '../../artifacts/summary-feasibility/date
 import { auditWriterTemporalExposure, buildWriterSafeTemporalPacket } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
 import { validateCardContent } from '../../scripts/news-beta/content-validation.mjs'
 import { writeCard, WRITER_CONFIGURATION } from '../../scripts/news-beta/writer.mjs'
+import { assessExtractedEvidence } from './evidence-quality.mjs'
 
 const LANES = ['world-major', 'priority-major', 'world-interesting', 'priority-interesting', 'discovery']
 const LABELS = { 'world-major': 'Major world', 'priority-major': 'Major priority region', 'world-interesting': 'Interesting world', 'priority-interesting': 'Interesting priority region', discovery: 'Discovery' }
@@ -43,7 +44,9 @@ function choosePrepared(events, count) {
   for (const lane of LANES) {
     const candidates = events.filter(event => event.representative.selection.assignedLane === lane)
       .map(event => ({ event, packet: buildPacket(event) }))
-      .filter(item => auditWriterTemporalExposure(item.packet.temporal).passes && item.packet.temporal.writer_facing.coreFactualPropositions.length >= 2)
+      .filter(item => auditWriterTemporalExposure(item.packet.temporal).passes
+        && item.packet.temporal.writer_facing.coreFactualPropositions.length >= 2
+        && assessExtractedEvidence(item.event.representative.snapshot.evidenceText).adequate)
     if (!candidates.length) continue
     chosen.push(candidates[0])
     const firstRegions = new Set(candidates[0].event.representative.selection.representative.priorityRegions || [])

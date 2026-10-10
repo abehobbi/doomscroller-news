@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises'
+import { assessExtractedEvidence } from './evidence-quality.mjs'
 
 function parseArgs(argv) {
   const options = { input: null, output: null, concurrency: 6 }
@@ -82,6 +83,7 @@ async function fetchCandidate(selection) {
     const body = articleText(html)
     const description = meta(html, 'og:description') || meta(html, 'description') || ''
     const evidenceText = body.text.length >= 180 ? body.text : description
+    const evidenceQuality = assessExtractedEvidence(evidenceText)
     const imageUrl = safeUrl(meta(html, 'og:image') || meta(html, 'twitter:image'), response.url)
     return {
       eventClusterId: selection.id, assignedLane: selection.assignedLane,
@@ -90,6 +92,7 @@ async function fetchCandidate(selection) {
       status: 'ok', httpStatus: response.status, latencyMs: Math.round(performance.now() - started),
       extractionMethod: body.text.length >= 180 ? body.method : 'metadata description',
       evidenceText, evidenceChars: evidenceText.length,
+      evidenceQuality,
       imageUrl, imageAlt: meta(html, 'og:image:alt'),
     }
   } catch (error) {
@@ -99,6 +102,7 @@ async function fetchCandidate(selection) {
       publisher: candidate.domain, publishedAt: candidate.publishedAt,
       status: 'failed', httpStatus: null, latencyMs: Math.round(performance.now() - started),
       extractionMethod: null, evidenceText: '', evidenceChars: 0,
+      evidenceQuality: assessExtractedEvidence(''),
       imageUrl: null, imageAlt: null,
       error: String(error?.message || error).replace(/https?:\/\/\S+/g, '[url]').slice(0, 240),
     }
@@ -125,12 +129,12 @@ async function main() {
   const report = {
     schemaVersion: 1, createdAt: new Date().toISOString(), sourceEdition: options.input,
     requested: items.length, accessible: items.filter(item => item.status === 'ok').length,
-    evidenceReady: items.filter(item => item.status === 'ok' && item.evidenceChars >= 180).length,
+    evidenceReady: items.filter(item => item.status === 'ok' && item.evidenceChars >= 180 && item.evidenceQuality.adequate).length,
     imagesFound: items.filter(item => item.imageUrl).length,
     failures: items.filter(item => item.status === 'failed').length,
     laneCounts: Object.fromEntries([...new Set(items.map(item => item.assignedLane))].map(lane => [lane, {
       requested: items.filter(item => item.assignedLane === lane).length,
-      evidenceReady: items.filter(item => item.assignedLane === lane && item.evidenceChars >= 180).length,
+      evidenceReady: items.filter(item => item.assignedLane === lane && item.evidenceChars >= 180 && item.evidenceQuality.adequate).length,
       imagesFound: items.filter(item => item.assignedLane === lane && item.imageUrl).length,
     }])),
     items,

@@ -132,3 +132,37 @@ human/local reporting while demoting publicity, vague initiatives, technical
 jargon, incomplete headlines, and weaker derivative publishers. This remains
 a deterministic pre-writer ranking. Generated headline, summary, image, and
 claim-fidelity review is the next milestone.
+
+## Controlled generation trial
+
+Ten saved evidence packets, two from each lane, were sent sequentially to the
+established Gemma 4 26B writer with thinking disabled. This was an isolated
+feature-branch run: it did not write to the app dataset, Beta, Pages, or main.
+
+- Complete generated cards: 9 of 10
+- Cards accepted by every current automated gate: 7 of 10
+- Total Cloudflare neuron usage: 387.89
+- Input tokens: 31,753
+- Output tokens: 3,681
+- Total model latency: 63.12 seconds
+
+The three rejected cards exposed three different problems:
+
+1. The kelp-restoration card introduced an unsupported C$250,000 cost. The
+   deterministic number check caught it, so this was a useful writer-fidelity
+   rejection rather than a validator false positive.
+2. The Osoyoos cultural-burn packet contained repeated reader comments and site
+   boilerplate instead of the article body. The writer returned only a thin
+   33-word card rather than inventing details. A new general evidence-quality
+   gate now rejects known comment/navigation markers and repeated page blocks
+   before ranking or generation.
+3. The two-source Jurassic mammal card reached the 1,024-token completion limit
+   and returned malformed, incomplete JSON. Thinking was off, so this is an
+   output-shaping/packet-size problem, not hidden reasoning consumption. The
+   completion ceiling has not been raised automatically.
+
+An offline rerun of the 160-candidate audit rejected four contaminated pages,
+including the cultural-burn candidate, while still filling the 65-card ceiling
+from qualified alternatives. The expanded News test suite now has 38 passing
+tests. The seven mechanically accepted generations remain review material, not
+editorially approved production cards.

@@ -2,6 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { classifyGeography } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/lib.mjs'
 import { clusterCorroboratedEvents } from './event-corroboration.mjs'
+import { assessExtractedEvidence } from './evidence-quality.mjs'
 
 const LABELS = {
   'world-interesting': 'Interesting world',
@@ -49,6 +50,8 @@ function qualify(selection, snapshot) {
   const reasons = []
   if (!snapshot || snapshot.status !== 'ok') reasons.push('article page inaccessible')
   if (!snapshot || snapshot.evidenceChars < 180) reasons.push('insufficient source evidence')
+  const evidenceQuality = snapshot?.evidenceQuality || assessExtractedEvidence(snapshot?.evidenceText)
+  if (snapshot && !evidenceQuality.adequate) reasons.push(...evidenceQuality.reasons)
   if (!snapshot?.imageUrl) reasons.push('no publisher image found')
   if (!snapshot?.title || snapshot.title.length < 24 || /\b(?:and|or|the|a|to|of|for|with|they|he|she|it|its|their)\s*$/i.test(snapshot.title)) reasons.push('headline is incomplete or not self-contained')
   const expectedRegions = selection.representative.priorityRegions || []
@@ -66,7 +69,7 @@ function qualify(selection, snapshot) {
       && geography.eventLocations.length === 0
     if (!directMatch && !localMatch) reasons.push(`priority-region centrality not established (expected ${expectedRegions.join('/') || 'none'})`)
   }
-  return { selection, snapshot, detectedRegions, eligible: reasons.length === 0, rejectionReasons: reasons }
+  return { selection, snapshot, detectedRegions, evidenceQuality, eligible: reasons.length === 0, rejectionReasons: reasons }
 }
 
 function editorialAdjustment(cluster) {
