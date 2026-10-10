@@ -40,11 +40,14 @@ jobs:
           test -n "$CLOUDFLARE_ACCOUNT_ID"
           test -n "$CLOUDFLARE_API_TOKEN"
       - name: Score the isolated Interesting and Discovery candidates
+        id: score
+        continue-on-error: true
         run: >-
           node experiments/news-global-discovery/editorial-selector.mjs
           --fixture experiments/news-global-discovery/fixtures/editorial-selector-candidates-2026-10-10.json
           --output-dir experiments/news-global-discovery/review-output-five-lane/editorial-selector-trial
       - name: Upload blind review, answer key and diagnostics
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: news-editorial-selector-trial-${{ github.run_id }}
