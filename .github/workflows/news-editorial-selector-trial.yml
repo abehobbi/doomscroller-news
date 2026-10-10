@@ -1,0 +1,53 @@
+name: Run isolated News editorial selector trial
+
+on:
+  workflow_dispatch:
+  # Bootstrap only: workflow_dispatch cannot see a brand-new workflow until it
+  # exists on GitHub. Remove this exact-branch trigger after the first run.
+  push:
+    branches:
+      - codex/news-editorial-selection
+    paths:
+      - .github/workflows/news-editorial-selector-trial.yml
+      - experiments/news-global-discovery/editorial-selector.mjs
+      - experiments/news-global-discovery/fixtures/editorial-selector-candidates-2026-10-10.json
+
+concurrency:
+  group: news-editorial-selector-trial
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  score-candidates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      FREE_PLAN_CONFIRMED: 'yes'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Verify saved Cloudflare credentials are available
+        shell: bash
+        run: |
+          test -n "$CLOUDFLARE_ACCOUNT_ID"
+          test -n "$CLOUDFLARE_API_TOKEN"
+      - name: Score the isolated Interesting and Discovery candidates
+        run: >-
+          node experiments/news-global-discovery/editorial-selector.mjs
+          --fixture experiments/news-global-discovery/fixtures/editorial-selector-candidates-2026-10-10.json
+          --output-dir experiments/news-global-discovery/review-output-five-lane/editorial-selector-trial
+      - name: Upload blind review, answer key and diagnostics
+        uses: actions/upload-artifact@v4
+        with:
+          name: news-editorial-selector-trial-${{ github.run_id }}
+          path: experiments/news-global-discovery/review-output-five-lane/editorial-selector-trial
+          retention-days: 30
+          if-no-files-found: error
