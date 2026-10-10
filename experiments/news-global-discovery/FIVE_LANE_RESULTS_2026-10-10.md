@@ -203,3 +203,54 @@ numbered-list formatting. Both problems were caught deterministically.
 This improves context completeness and structural reliability. It does not by
 itself solve the separate editorial problem that the Interesting and Discovery
 lanes must consistently find more compelling stories.
+
+## Editorial selector experiment
+
+The next isolated experiment moved model judgment before full-card writing.
+It scored every evidence-qualified Interesting and Discovery candidate, rather
+than spending writer tokens on whichever stories happened to rank highest by
+keywords. Publisher identity was hidden from the model because source trust is
+a separate gate.
+
+The comparison pool contained the 43 previously selected non-major stories and
+25 qualified reserves. One reserve was excluded before scoring because fewer
+than 180 characters of usable evidence remained after CSS and boilerplate were
+removed. The remaining 67 candidates were scored for lane fit, substantive
+value, intrinsic interest, distinctiveness, clarity, and fresh specificity.
+
+- Candidates scored: 67
+- Existing selections: 43
+- Qualified reserves: 24
+- Cloudflare calls: nine batches, sequential, with thinking disabled
+- Complete structured evaluations: 67 of 67
+- Total Cloudflare neuron usage: 465.51
+- Automatic retries: none
+- News cards generated or published: none
+
+The initial pass completed 63 usable evaluations before correctly stopping on
+the evidence-empty reserve. A resume path reused those 63 evaluations and made
+one additional four-candidate call, rather than repeating the earlier model
+work. All 46 News tests pass after adding the evidence preflight and resume
+coverage.
+
+The selector found meaningful replacements. Eleven qualified reserves received
+a strong recommendation, including a Hittite tablet archive, a room-temperature
+nuclear clock, a 23-million-year-old plant fossil, a Ghanaian community response
+to illegal mining, an Indigenous Canadian seawater-to-jet-fuel venture, and
+investigative reporting from Malaysia. Seven previously selected stories were
+rejected, including a routine bartender profile, a generic wetland success item,
+and an Odisha craft feature with too little fresh development.
+
+This validates model-assisted story-idea triage as a cheap step before writing,
+but not yet as an automatic production decision. Two boundaries still need
+deterministic or separately tested enforcement:
+
+1. some high-scoring investigative war and geopolitical stories fit Major News
+   better than the Interesting lane; and
+2. a compelling idea can still originate from a source that needs stronger
+   corroboration or replacement before card generation.
+
+The blind ranking, source-bearing answer key, exact calls, latency, token usage,
+and neuron usage are saved under
+`review-output-five-lane/editorial-selector-trial/`. The app feed, Stage 1
+pipeline, main branch, Beta, deployment, and billing were not changed.

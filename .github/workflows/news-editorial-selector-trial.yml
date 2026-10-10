@@ -2,15 +2,6 @@ name: Run isolated News editorial selector trial
 
 on:
   workflow_dispatch:
-  # Bootstrap only: workflow_dispatch cannot see a brand-new workflow until it
-  # exists on GitHub. Remove this exact-branch trigger after the first run.
-  push:
-    branches:
-      - codex/news-editorial-selection
-    paths:
-      - .github/workflows/news-editorial-selector-trial.yml
-      - experiments/news-global-discovery/editorial-selector.mjs
-      - experiments/news-global-discovery/fixtures/editorial-selector-candidates-2026-10-10.json
 
 concurrency:
   group: news-editorial-selector-trial
@@ -45,7 +36,6 @@ jobs:
         run: >-
           node experiments/news-global-discovery/editorial-selector.mjs
           --fixture experiments/news-global-discovery/fixtures/editorial-selector-candidates-2026-10-10.json
-          --resume experiments/news-global-discovery/review-output-five-lane/editorial-selector-trial/EDITORIAL_SCORES.json
           --output-dir experiments/news-global-discovery/review-output-five-lane/editorial-selector-trial
       - name: Upload blind review, answer key and diagnostics
         if: always()
@@ -55,3 +45,6 @@ jobs:
           path: experiments/news-global-discovery/review-output-five-lane/editorial-selector-trial
           retention-days: 30
           if-no-files-found: error
+      - name: Preserve a failed selector result as a failed workflow
+        if: steps.score.outcome == 'failure'
+        run: exit 1
