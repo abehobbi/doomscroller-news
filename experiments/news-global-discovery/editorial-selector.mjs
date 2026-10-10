@@ -19,12 +19,13 @@ const HIGH_SIGNAL = /\b(?:killed?|deaths?|died|injured?|missing|displaced|detain
 const EXTRACTION_JUNK = /(?:\{\s*(?:font|margin|padding|display|width|border|color)|\b(?:font-size|padding-top|margin-bottom|cursor|stylesheet|javascript|cookies? not supported|thank you for visiting|browser version with limited support|compatibility mode in internet explorer)\b|\b\d+(?:\.\d+)?(?:rem|px)\b|^\s*[.#][\w-]+\s)/i
 
 function parseArgs(argv) {
-  const options = { edition: null, fixture: null, prepareFixture: null, outputDir: null, batchSize: SELECTOR_CONFIGURATION.batchSize }
+  const options = { edition: null, fixture: null, prepareFixture: null, outputDir: null, resume: null, batchSize: SELECTOR_CONFIGURATION.batchSize }
   for (let index = 0; index < argv.length; index += 1) {
     if (argv[index] === '--edition') options.edition = argv[++index]
     else if (argv[index] === '--fixture') options.fixture = argv[++index]
     else if (argv[index] === '--prepare-fixture') options.prepareFixture = argv[++index]
     else if (argv[index] === '--output-dir') options.outputDir = argv[++index]
+    else if (argv[index] === '--resume') options.resume = argv[++index]
     else if (argv[index] === '--batch-size') options.batchSize = Number(argv[++index])
   }
   if (options.prepareFixture && !options.edition) throw new Error('--edition is required with --prepare-fixture')
@@ -62,28 +63,35 @@ export function prepareEditorialFixture(edition) {
   const selected = edition.events.filter(event => INCLUDED_LANES.has(event.representative.selection.assignedLane))
   const reserve = (edition.qualifiedButNotSelected || []).filter(event => INCLUDED_LANES.has(event.representative.selection.assignedLane))
   const events = [...selected, ...reserve]
+  const prepared = events.map((event, index) => {
+    const item = event.representative
+    return {
+      blindId: `E${String(index + 1).padStart(3, '0')}`,
+      eventId: event.id,
+      lane: item.selection.assignedLane,
+      priorityRegions: item.selection.representative.priorityRegions || [],
+      headline: item.snapshot.title,
+      evidence: compactEvidence(item.snapshot.evidenceText),
+      publishedAt: item.snapshot.publishedAt,
+      baselineSelected: selected.includes(event),
+      baselineRank: selected.includes(event) ? edition.events.indexOf(event) + 1 : null,
+      source: {
+        publisher: item.snapshot.publisher,
+        url: item.snapshot.finalUrl || item.snapshot.sourceUrl,
+      },
+    }
+  })
+  const candidates = prepared.filter(value => value.evidence.length >= 180)
+  const excluded = prepared.filter(value => value.evidence.length < 180).map(value => ({
+    blindId: value.blindId, eventId: value.eventId, headline: value.headline,
+    reason: 'less than 180 characters of usable evidence remained after boilerplate removal',
+  }))
   return {
     schemaVersion: 1,
     createdAt: new Date().toISOString(),
     purpose: 'Blind editorial-selection experiment; publisher identity is withheld from the model.',
-    candidates: events.map((event, index) => {
-      const item = event.representative
-      return {
-        blindId: `E${String(index + 1).padStart(3, '0')}`,
-        eventId: event.id,
-        lane: item.selection.assignedLane,
-        priorityRegions: item.selection.representative.priorityRegions || [],
-        headline: item.snapshot.title,
-        evidence: compactEvidence(item.snapshot.evidenceText),
-        publishedAt: item.snapshot.publishedAt,
-        baselineSelected: selected.includes(event),
-        baselineRank: selected.includes(event) ? edition.events.indexOf(event) + 1 : null,
-        source: {
-          publisher: item.snapshot.publisher,
-          url: item.snapshot.finalUrl || item.snapshot.sourceUrl,
-        },
-      }
-    }),
+    candidates,
+    excluded,
   }
 }
 
@@ -245,26 +253,41 @@ async function main() {
     const fixture = prepareEditorialFixture(edition)
     await fs.mkdir(path.dirname(options.prepareFixture), { recursive: true })
     await fs.writeFile(options.prepareFixture, `${JSON.stringify(fixture, null, 2)}\n`, 'utf8')
-    process.stdout.write(`${JSON.stringify({ candidates: fixture.candidates.length, lanes: Object.fromEntries([...INCLUDED_LANES].map(lane => [lane, fixture.candidates.filter(value => value.lane === lane).length])), output: options.prepareFixture }, null, 2)}\n`)
+    process.stdout.write(`${JSON.stringify({ candidates: fixture.candidates.length, excluded: fixture.excluded.length, lanes: Object.fromEntries([...INCLUDED_LANES].map(lane => [lane, fixture.candidates.filter(value => value.lane === lane).length])), output: options.prepareFixture }, null, 2)}\n`)
     return
   }
   const fixture = JSON.parse(await fs.readFile(options.fixture, 'utf8'))
+  let priorReport = null
+  if (options.resume) priorReport = JSON.parse(await fs.readFile(options.resume, 'utf8'))
+  const candidateIds = new Set(fixture.candidates.map(value => value.blindId))
+  const resumedEvaluations = (priorReport?.calls || []).flatMap(call => call.evaluations || [])
+    .filter(value => candidateIds.has(value.id) && auditBatch({ evaluations: [value] }, [value.id]).valid)
+  const resumedById = new Map(resumedEvaluations.map(value => [value.id, value]))
+  const pending = fixture.candidates.filter(value => !resumedById.has(value.blindId))
   const calls = []
-  for (const [index, batch] of chunks(fixture.candidates, options.batchSize).entries()) {
+  for (const [index, batch] of chunks(pending, options.batchSize).entries()) {
     const result = await scoreBatch(batch, index + 1)
     calls.push(result)
     if (!result.complete) break
   }
-  const complete = calls.length === Math.ceil(fixture.candidates.length / options.batchSize) && calls.every(value => value.complete)
-  const results = complete ? combineScores(fixture, calls) : []
+  const evaluations = [...resumedById.values(), ...calls.flatMap(value => value.evaluations || [])]
+  const complete = fixture.candidates.every(value => evaluations.some(evaluation => evaluation.id === value.blindId)) && calls.every(value => value.complete)
+  const results = complete ? combineScores(fixture, [{ evaluations }]) : []
+  const priorNeurons = Number(priorReport?.totalNeurons || 0)
+  const priorInputTokens = Number(priorReport?.inputTokens || 0)
+  const priorOutputTokens = Number(priorReport?.outputTokens || 0)
+  const thisRunNeurons = calls.reduce((sum, value) => sum + Number(value.usage?.neurons || 0), 0)
+  const thisRunInputTokens = calls.reduce((sum, value) => sum + Number(value.usage?.prompt_tokens || value.usage?.input_tokens || 0), 0)
+  const thisRunOutputTokens = calls.reduce((sum, value) => sum + Number(value.usage?.completion_tokens || value.usage?.output_tokens || 0), 0)
   const report = {
     schemaVersion: 1, createdAt: new Date().toISOString(), sourceFixture: options.fixture,
     configuration: { ...SELECTOR_CONFIGURATION, batchSize: options.batchSize }, complete,
-    candidateCount: fixture.candidates.length, completedBatches: calls.filter(value => value.complete).length,
-    totalBatches: Math.ceil(fixture.candidates.length / options.batchSize),
-    totalNeurons: calls.reduce((sum, value) => sum + Number(value.usage?.neurons || 0), 0),
-    inputTokens: calls.reduce((sum, value) => sum + Number(value.usage?.prompt_tokens || value.usage?.input_tokens || 0), 0),
-    outputTokens: calls.reduce((sum, value) => sum + Number(value.usage?.completion_tokens || value.usage?.output_tokens || 0), 0),
+    candidateCount: fixture.candidates.length, excludedBeforeScoring: fixture.excluded || [],
+    resumedFrom: options.resume, resumedEvaluations: resumedById.size, pendingCandidates: pending.length,
+    completedBatches: calls.filter(value => value.complete).length, totalBatches: Math.ceil(pending.length / options.batchSize),
+    thisRunNeurons, inputTokens: thisRunInputTokens, outputTokens: thisRunOutputTokens,
+    priorUsage: priorReport ? { neurons: priorNeurons, inputTokens: priorInputTokens, outputTokens: priorOutputTokens } : null,
+    experimentNeurons: priorNeurons + thisRunNeurons, totalNeurons: priorNeurons + thisRunNeurons,
     totalLatencyMs: calls.reduce((sum, value) => sum + Number(value.latencyMs || 0), 0),
     calls, results,
   }
@@ -275,7 +298,7 @@ async function main() {
     fs.writeFile(path.join(options.outputDir, 'EDITORIAL_ANSWER_KEY.md'), reviewMarkdown(report, true), 'utf8'),
   )
   await Promise.all(writes)
-  process.stdout.write(`${JSON.stringify({ complete, candidateCount: report.candidateCount, completedBatches: report.completedBatches, totalBatches: report.totalBatches, totalNeurons: report.totalNeurons, inputTokens: report.inputTokens, outputTokens: report.outputTokens, totalLatencyMs: report.totalLatencyMs }, null, 2)}\n`)
+  process.stdout.write(`${JSON.stringify({ complete, candidateCount: report.candidateCount, resumedEvaluations: report.resumedEvaluations, pendingCandidates: report.pendingCandidates, completedBatches: report.completedBatches, totalBatches: report.totalBatches, thisRunNeurons: report.thisRunNeurons, experimentNeurons: report.experimentNeurons, inputTokens: report.inputTokens, outputTokens: report.outputTokens, totalLatencyMs: report.totalLatencyMs }, null, 2)}\n`)
   if (!complete) process.exitCode = 1
 }
 

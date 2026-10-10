@@ -11,11 +11,18 @@ test('compact evidence preserves opening context and later consequential facts',
 })
 
 test('fixture preparation excludes major lanes and includes qualified reserves', () => {
-  const make = (id, lane) => ({ id, representative: { selection: { assignedLane: lane, representative: { priorityRegions: ['Ghana'] } }, snapshot: { title: `Title ${id} contains enough words`, evidenceText: 'Evidence sentence one. Evidence sentence two.', publishedAt: '2026-10-10T00:00:00Z', publisher: 'example.com', finalUrl: `https://example.com/${id}` } } })
+  const make = (id, lane) => ({ id, representative: { selection: { assignedLane: lane, representative: { priorityRegions: ['Ghana'] } }, snapshot: { title: `Title ${id} contains enough words`, evidenceText: 'The first evidence sentence explains a concrete event involving local residents. A second sentence provides enough specific background for an editorial decision. A third sentence explains why the development matters to people in the affected place.', publishedAt: '2026-10-10T00:00:00Z', publisher: 'example.com', finalUrl: `https://example.com/${id}` } } })
   const fixture = prepareEditorialFixture({ events: [make('a', 'world-major'), make('b', 'world-interesting'), make('c', 'discovery')], qualifiedButNotSelected: [make('d', 'priority-interesting')] })
   assert.deepEqual(fixture.candidates.map(value => value.eventId), ['b', 'c', 'd'])
   assert.equal(fixture.candidates[0].source.publisher, 'example.com')
   assert.equal(fixture.candidates[2].baselineSelected, false)
+})
+
+test('fixture preparation excludes candidates emptied by boilerplate cleanup', () => {
+  const event = { id: 'empty', representative: { selection: { assignedLane: 'world-interesting', representative: { priorityRegions: [] } }, snapshot: { title: 'A headline that is long enough for the gate', evidenceText: '.box { font-size: 2rem; }', publishedAt: '2026-10-10T00:00:00Z', publisher: 'example.com', finalUrl: 'https://example.com/empty' } } }
+  const fixture = prepareEditorialFixture({ events: [event], qualifiedButNotSelected: [] })
+  assert.equal(fixture.candidates.length, 0)
+  assert.equal(fixture.excluded[0].eventId, 'empty')
 })
 
 test('batch helper is deterministic', () => {
