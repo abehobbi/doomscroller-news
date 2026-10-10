@@ -2,6 +2,15 @@ name: Run isolated five-lane News generation trial
 
 on:
   workflow_dispatch:
+  # One isolated feature-branch run is needed before this new manual workflow
+  # exists on the default branch. Remove this trigger after collecting it.
+  push:
+    branches:
+      - codex/news-global-discovery-test
+    paths:
+      - .github/workflows/news-five-lane-generation-trial.yml
+      - experiments/news-global-discovery/generate-five-lane-trial.mjs
+      - experiments/news-global-discovery/fixtures/five-lane-generation-trial-2026-10-10.json
 
 concurrency:
   group: news-five-lane-generation-trial
