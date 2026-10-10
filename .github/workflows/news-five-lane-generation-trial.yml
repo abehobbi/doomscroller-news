@@ -1,0 +1,45 @@
+name: Run isolated five-lane News generation trial
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: news-five-lane-generation-trial
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  generate-trial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      FREE_PLAN_CONFIRMED: 'yes'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Verify saved Cloudflare credentials are available
+        shell: bash
+        run: |
+          test -n "$CLOUDFLARE_ACCOUNT_ID"
+          test -n "$CLOUDFLARE_API_TOKEN"
+      - name: Generate ten isolated cards from the saved evidence packets
+        run: >-
+          node experiments/news-global-discovery/generate-five-lane-trial.mjs
+          --packets experiments/news-global-discovery/fixtures/five-lane-generation-trial-2026-10-10.json
+          --output-dir experiments/news-global-discovery/review-output-five-lane/generated-trial
+          --count 10
+      - name: Upload the review and exact diagnostics
+        uses: actions/upload-artifact@v4
+        with:
+          name: news-five-lane-generation-trial-${{ github.run_id }}
+          path: experiments/news-global-discovery/review-output-five-lane/generated-trial
+          retention-days: 30
+          if-no-files-found: error
