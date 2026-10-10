@@ -1,0 +1,34 @@
+name: Retrieve isolated News editorial selector artifact
+
+on:
+  push:
+    branches:
+      - codex/news-editorial-selection
+    paths:
+      - .github/workflows/retrieve-news-editorial-selector.yml
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  retrieve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/news-editorial-selection
+      - uses: actions/download-artifact@v5
+        with:
+          name: news-editorial-selector-trial-38081164896
+          path: experiments/news-global-discovery/review-output-five-lane/editorial-selector-trial
+          github-token: ${{ github.token }}
+          run-id: 38081164896
+      - name: Commit the safe review artifact to the feature branch
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f experiments/news-global-discovery/review-output-five-lane/editorial-selector-trial
+          git commit -m "Record isolated editorial selector diagnostics"
+          git push origin HEAD:codex/news-editorial-selection
