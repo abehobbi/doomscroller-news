@@ -1,6 +1,6 @@
 # Withheld writer candidates
 
-Created: 2026-10-11T00:23:23.021Z
+Created: 2026-10-11T00:26:53.553Z
 
 Offline selection artifact only. This does not generate cards or change the app feed.
 
@@ -102,7 +102,7 @@ Primary source: [thenarwhal.ca](https://thenarwhal.ca/winnipeg-zoo-churchill-pol
 
 ## world-major
 
-12 withheld.
+11 withheld.
 
 ### 1. ICE has quietly used this warehouse as a detention facility all summer, neighbors say
 
@@ -144,15 +144,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [vanityfair.com](https://www.vanityfair.com/story/kevin-roose-agi-chronicles-excerpt)
 
-### 6. Hurricane Isaias downgraded after making landfall in Florida
-
-Event: qualified-event-060 · Origin: qualified-major-pool
-
-Source decision: needs-independent-corroboration. contested claim still lacks a second independent source family.
-
-Primary source: [bbc.com](https://www.bbc.com/news/articles/c3vgx4450v2lo)
-
-### 7. Putin tells Trump peace talks are unlikely, cites Ukraine drone attacks
+### 6. Putin tells Trump peace talks are unlikely, cites Ukraine drone attacks
 
 Event: qualified-event-052 · Origin: qualified-major-pool
 
@@ -160,7 +152,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [aljazeera.com](https://www.aljazeera.com/news/2026/10/10/putin-tells-trump-peace-talks-are-unlikely-cites-ukraine-drone-attacks)
 
-### 8. China Unveils First Nationwide Labor Rules to Protect Gig Economy Workers
+### 7. China Unveils First Nationwide Labor Rules to Protect Gig Economy Workers
 
 Event: qualified-event-057 · Origin: qualified-major-pool
 
@@ -168,7 +160,7 @@ Source decision: needs-source-review. publisher remains unverified and unsupport
 
 Primary source: [caixinglobal.com](https://www.caixinglobal.com/2026-10-09/china-unveils-first-nationwide-labor-rules-to-protect-gig-economy-workers-102491464.html)
 
-### 9. Gaza: Ceasefire Anniversary Marks Year of Failed Promises
+### 8. Gaza: Ceasefire Anniversary Marks Year of Failed Promises
 
 Event: qualified-event-053 · Origin: qualified-major-pool
 
@@ -176,7 +168,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [hrw.org](https://www.hrw.org/news/2026/10/10/gaza-ceasefire-anniversary-marks-year-of-failed-promises)
 
-### 10. US hosts ‘productive’ trilateral talks to end Russia-Ukraine war
+### 9. US hosts ‘productive’ trilateral talks to end Russia-Ukraine war
 
 Event: qualified-event-051 · Origin: qualified-major-pool
 
@@ -184,7 +176,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [aljazeera.com](https://www.aljazeera.com/news/2026/10/10/us-hosts-productive-trilateral-talks-to-end-russia-ukraine-war)
 
-### 11. UNICEF Warns Impending El Niño Threatens Education, Health, and Safety for Millions
+### 10. UNICEF Warns Impending El Niño Threatens Education, Health, and Safety for Millions
 
 Event: qualified-event-061 · Origin: qualified-major-pool
 
@@ -192,7 +184,7 @@ Source decision: needs-source-review. publisher remains unverified and unsupport
 
 Primary source: [ipsnews.net](https://www.ipsnews.net/2026/10/unicef-warns-impending-el-nino-threatens-education-health-and-safety-for-millions/)
 
-### 12. Major quake hits Panama, no deaths reported
+### 11. Major quake hits Panama, no deaths reported
 
 Event: qualified-event-065 · Origin: qualified-major-pool
 
@@ -202,7 +194,7 @@ Primary source: [afp.com](https://www.afp.com/en/major-quake-hits-panama-no-deat
 
 ## priority-major
 
-12 withheld.
+11 withheld.
 
 ### 1. Oscars: Syria Selects Doc ‘The Other Side of the Sun’ for International Feature Race, Marking First Entry Since Fall of Assad Regime
 
@@ -268,15 +260,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [aljazeera.com](https://www.aljazeera.com/news/2026/10/7/us-sets-new-demands-for-iran-deal-what-are-they)
 
-### 9. Syrian army takes control of al-Shaddadi base after coordination with U.S.
-
-Event: qualified-event-068 · Origin: qualified-major-pool
-
-Source decision: needs-independent-corroboration. contested claim still lacks a second independent source family.
-
-Primary source: [ilkha.com](https://ilkha.com/english/world/syrian-army-takes-control-of-al-shaddadi-base-after-coordination-with-us-512010)
-
-### 10. Trump’s tariffs give Carney cover to fast-track Canadian building push | Financial Post
+### 9. Trump’s tariffs give Carney cover to fast-track Canadian building push | Financial Post
 
 Event: qualified-event-081 · Origin: qualified-major-pool
 
@@ -284,7 +268,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [financialpost.com](https://financialpost.com/news/economy/trumps-tariffs-carney-fast-track-canada-push)
 
-### 11. Rooppur Unit 1 gets nod to start first controlled nuclear reaction
+### 10. Rooppur Unit 1 gets nod to start first controlled nuclear reaction
 
 Event: qualified-event-076 · Origin: qualified-major-pool
 
@@ -292,7 +276,7 @@ Source decision: needs-source-review. publisher remains unverified and unsupport
 
 Primary source: [tbsnews.net](https://www.tbsnews.net/economy/energy/rooppur-nuclear-plants-first-unit-gets-final-approval-power-generation-1566571)
 
-### 12. Metrolinx Launches Woodbine GO Construction in Toronto - Railway News
+### 11. Metrolinx Launches Woodbine GO Construction in Toronto - Railway News
 
 Event: qualified-event-085 · Origin: qualified-major-pool
 

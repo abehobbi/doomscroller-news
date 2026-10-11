@@ -1,6 +1,6 @@
 # Writer-ready News shortlist
 
-Created: 2026-10-11T00:23:23.021Z
+Created: 2026-10-11T00:26:53.553Z
 
 Offline selection artifact only. This does not generate cards or change the app feed.
 
@@ -138,7 +138,7 @@ Primary source: [paherald.sk.ca](https://paherald.sk.ca/logging-took-the-trees-t
 
 ## world-major
 
-8 ready; target 10–15.
+9 ready; target 10–15.
 
 ### 1. Nord Stream trial: How German police followed the evidence - to Ukraine
 
@@ -204,7 +204,17 @@ Primary source: [theguardian.com](https://www.theguardian.com/business/2026/oct/
 
 Additional sources: [seattletimes.com](https://www.seattletimes.com/business/china-and-eu-trade-envoys-seek-ways-to-ease-tensions-over-growing-imbalances/)
 
-### 8. Kenya's first Ebola case: Questions remain after man travelled across three nations undetected
+### 8. Hurricane Isaias downgraded after making landfall in Florida
+
+Event: qualified-event-060 · Origin: qualified-major-pool
+
+Source decision: needs-independent-corroboration. contested claim has at least two independent source families.
+
+Primary source: [bbc.com](https://www.bbc.com/news/articles/c3vgx4450v2lo)
+
+Additional sources: [nhc.noaa.gov](https://www.nhc.noaa.gov/mobile/text/refresh/MIATCPAT4%2Bhtml/091453.shtml)
+
+### 9. Kenya's first Ebola case: Questions remain after man travelled across three nations undetected
 
 Event: qualified-event-058 · Origin: qualified-major-pool
 
@@ -216,7 +226,7 @@ Additional sources: [aljazeera.com](https://www.aljazeera.com/news/2026/10/8/why
 
 ## priority-major
 
-7 ready; target 8–15.
+8 ready; target 8–15.
 
 ### 1. Mississauga mayoral candidates talk redeveloping Living Arts Centre, platform policy planks
 
@@ -266,7 +276,17 @@ Primary source: [asia.nikkei.com](https://asia.nikkei.com/business/business-deal
 
 Additional sources: [publisher.tbsnews.net](https://publisher.tbsnews.net/economy/ctg-port-authority-dp-world-sign-15-yr-new-mooring-terminal-deal-1566291)
 
-### 6. Ghana Cabinet clears BRICS bid as Jaishankar visits Accra
+### 6. Syrian army takes control of al-Shaddadi base after coordination with U.S.
+
+Event: qualified-event-068 · Origin: qualified-major-pool
+
+Source decision: needs-independent-corroboration. contested claim has at least two independent source families.
+
+Primary source: [ilkha.com](https://ilkha.com/english/world/syrian-army-takes-control-of-al-shaddadi-base-after-coordination-with-us-512010)
+
+Additional sources: [aljazeera.com](https://www.aljazeera.com/news/2026/2/15/syrian-army-takes-over-al-shaddadi-base-after-us-withdrawal)
+
+### 7. Ghana Cabinet clears BRICS bid as Jaishankar visits Accra
 
 Event: qualified-event-078 · Origin: qualified-major-pool
 
@@ -276,7 +296,7 @@ Primary source: [economictimes.indiatimes.com](https://economictimes.indiatimes.
 
 Additional sources: [3news.com](https://3news.com/news/application-for-brics-membership-govt-of-ghana-is-determined-to-position-ghana-as-a-reliable-friend-of-all-ablakwa)
 
-### 7. Iraq expects to start transporting crude oil by lorry to Syria from mid-October | The National
+### 8. Iraq expects to start transporting crude oil by lorry to Syria from mid-October | The National
 
 Event: qualified-event-069 · Origin: qualified-major-pool
 

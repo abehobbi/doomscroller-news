@@ -399,3 +399,31 @@ short, Priority Major one short, and World Interesting one short. Those gaps are
 preserved rather than filled with unsupported or merely `possible` stories.
 All 61 News tests pass. No News card was generated, and the app, main branch,
 Beta, deployment, and billing remain unchanged.
+
+## Exact gap-recovery pass
+
+A deterministic gap selector calculated the remaining deficit in every lane,
+excluded every event already sent to source verification, and requested only
+enough new candidates to fill the four outstanding positions. It selected one
+World Interesting candidate, two World Major candidates, and one Priority Major
+candidate. This prevented an open-ended search loop and prevented unresolved
+stories from being retried automatically.
+
+The four Exa searches cost exactly $0.028. Hurricane Isaias gained supporting
+National Hurricane Center evidence, and the Syrian army's takeover of the
+al-Shaddadi base gained supporting Al Jazeera coverage. The Putin–Trump talks
+story and the Korean bamboo-weir anchovy story remained unresolved under the
+strict automated checks and were not advanced.
+
+The final manifest for this milestone contains 37 writer-ready stories:
+
+- world-interesting: 9 (one below minimum)
+- priority-interesting: 6 (minimum met)
+- world-major: 9 (one below minimum)
+- priority-major: 8 (minimum met)
+- discovery: 5 (minimum met)
+
+The remaining two gaps are intentionally preserved. Continuing to spend search
+credits merely to make the counters turn green would weaken the evidence-first
+policy. All 63 News tests pass. No card was generated, and the app, main branch,
+Beta, deployment, and billing remain unchanged.

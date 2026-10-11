@@ -42,8 +42,8 @@ export function normalizeVerificationResult(result) {
 export function verificationCandidates(report, maximum = 15) {
   if (Array.isArray(report.withheld)) {
     const rank = value => value === 'strong' ? 0 : value === 'baseline-qualified' ? 1 : 2
-    return report.withheld.filter(value => value.lane?.endsWith('major')
-      && ['strong', 'baseline-qualified'].includes(value.editorialRecommendation)
+    return report.withheld.filter(value => (value.gapRecoveryRequested || (value.lane?.endsWith('major')
+      && ['strong', 'baseline-qualified'].includes(value.editorialRecommendation)))
       && ['needs-independent-corroboration', 'needs-source-review', 'needs-independent-context', 'replace-source'].includes(value.sourceAssessment?.decision))
       .map(value => ({
         ...value,

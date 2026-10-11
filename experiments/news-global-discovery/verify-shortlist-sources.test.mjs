@@ -25,6 +25,11 @@ test('writer shortlist verification prioritizes strong then baseline Major stori
   assert.equal(verificationCandidates(report)[0].source.publisher, 'bbc.com')
 })
 
+test('an explicitly requested gap candidate may be possible and non-major', () => {
+  const report = { withheld: [{ eventId: 'gap', lane: 'world-interesting', gapRecoveryRequested: true, headline: 'Gap story', evidence: 'A concrete local development.', editorialRecommendation: 'possible', primarySource: { publisher: 'example.com', url: 'https://example.com/gap' }, sourceAssessment: { decision: 'needs-source-review' } }] }
+  assert.deepEqual(verificationCandidates(report).map(value => value.eventId), ['gap'])
+})
+
 test('source relevance requires multiple overlapping event terms', () => {
   const story = { headline: 'Ancient tablet archive found in Hittite palace', evaluation: { strongest_fact: 'Archaeologists found 184 cuneiform tablets.' } }
   const matching = relevantCandidate(story, { title: 'Archaeologists uncover Hittite cuneiform tablet archive', evidenceText: 'The palace archive contains 184 tablets.' })
