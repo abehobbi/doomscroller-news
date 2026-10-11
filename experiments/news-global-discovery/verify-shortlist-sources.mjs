@@ -19,7 +19,7 @@ function parseArgs(argv) {
     else if (argv[index] === '--dry-run') options.dryRun = true
   }
   if (!options.input || !options.output) throw new Error('--input and --output are required')
-  if (!Number.isInteger(options.maximum) || options.maximum < 1 || options.maximum > 20) throw new Error('--maximum must be from 1 to 20')
+  if (!Number.isInteger(options.maximum) || options.maximum < 1 || options.maximum > 65) throw new Error('--maximum must be from 1 to 65')
   return options
 }
 
@@ -116,14 +116,15 @@ async function verifyStory(apiKey, story) {
       if (!trustedContextDomain(domain)) reasons.push('domain is not in the trusted context registry')
       if (propositions.length < 2) reasons.push('insufficient complete propositions')
       if (publisherFamily(domain) === originalFamily) reasons.push('same publisher family as the original source')
-      if (!verificationSourceIsFresh(story.publishedAt, result.publishedDate)) reasons.push('supporting report is stale or has no verifiable publication time')
+      const publishedAt = result.publishedDate || article.publishedAt
+      if (!verificationSourceIsFresh(story.publishedAt, publishedAt)) reasons.push('supporting report is stale or has no verifiable publication time')
       if (reasons.length) {
         rejected.push({ url: finalUrl, title: article.title || result.title, domain, reasons })
         continue
       }
       accepted.push({
         title: article.title || result.title, domain, url: finalUrl,
-        publishedAt: result.publishedDate || null, sharedTerms: relevance.sharedTerms,
+        publishedAt: publishedAt || null, sharedTerms: relevance.sharedTerms,
         propositions,
       })
     } catch (error) {

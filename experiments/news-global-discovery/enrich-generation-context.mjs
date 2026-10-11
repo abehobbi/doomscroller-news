@@ -13,6 +13,10 @@ const TRUSTED_CONTEXT_DOMAINS = new Set([
   'news.mongabay.com', 'automotiveworld.com', 'thedailystar.net', 'tbsnews.net', 'dhakatribune.com',
   'thefinancialexpress.com.bd', 'myjoyonline.com', 'citinewsroom.com', 'graphic.com.gh', 'gna.org.gh',
   'chale.news', 'icc-cpi.int', 'who.int', 'un.org', 'canada.ca', 'parl.ca',
+  'france24.com', 'seattletimes.com', 'theglobeandmail.com', 'citynews.ca', 'toronto.ca',
+  'abc.net.au', 'channelnewsasia.com', 'newindianexpress.com', 'indiatoday.in', 'business-standard.com',
+  'malaysiakini.com', 'nationthailand.com', 'theconversation.com', 'livescience.com', 'phys.org',
+  'eurekalert.org', 'sciencedaily.com', 'news.cn', 'chinanews.com.cn', 'yicaiglobal.com',
 ])
 
 function parseArgs(argv) {
@@ -100,7 +104,7 @@ async function enrichItem(apiKey, item, maxSources) {
       }
       additions.push({
         sourceId: `context:${item.eventId}:${additions.length + 1}`, publisher, url: finalUrl,
-        publishedAt: result.publishedDate || null, updatedAt: null, access: 'ok', wireOrigin: null,
+        publishedAt: result.publishedDate || article.publishedAt || null, updatedAt: null, access: 'ok', wireOrigin: null,
         sourceType: 'context source', completeFactualPropositions: propositions,
         limitations: ['Use this source only for supported orientation, mechanism, significance, status, or disagreement. Do not treat it as independent confirmation of the central event unless it directly reports that event.'],
       })

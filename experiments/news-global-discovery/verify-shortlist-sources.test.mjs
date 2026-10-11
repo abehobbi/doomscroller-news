@@ -61,3 +61,17 @@ test('source verification rejects stale or undated support', () => {
   assert.equal(verificationSourceIsFresh('2026-10-10T00:00:00Z', '2025-10-08T00:00:00Z'), false)
   assert.equal(verificationSourceIsFresh('2026-10-10T00:00:00Z', null), false)
 })
+
+test('verification queue can retain a full daily edition rather than truncating at the old trial size', () => {
+  const withheld = Array.from({ length: 29 }, (_, index) => ({
+    eventId: `event-${index}`,
+    lane: 'world-major',
+    gapRecoveryRequested: true,
+    editorialRecommendation: 'baseline-qualified',
+    sourceAssessment: { decision: 'needs-independent-corroboration' },
+    headline: `Event ${index}`,
+    evidence: 'Concrete evidence.',
+    primarySource: { publisher: 'example.com', url: `https://example.com/${index}` },
+  }))
+  assert.equal(verificationCandidates({ withheld }, 29).length, 29)
+})

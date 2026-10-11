@@ -16,11 +16,19 @@ test('public article extraction prefers structured article body and publisher im
     <html><head>
       <meta property="og:title" content="A clear event headline">
       <meta property="og:image" content="/photo.jpg">
-      <script type="application/ld+json">{"@type":"NewsArticle","articleBody":"Officials approved the project after a public review. The plan coordinates several permits through one decision. Critics remain concerned about environmental oversight. The committee will hear expert testimony before recommending any final amendments to Parliament."}</script>
+      <script type="application/ld+json">{"@type":"NewsArticle","datePublished":"2026-10-10T14:30:00Z","articleBody":"Officials approved the project after a public review. The plan coordinates several permits through one decision. Critics remain concerned about environmental oversight. The committee will hear expert testimony before recommending any final amendments to Parliament."}</script>
     </head><body><p>Please read our Commenting Policy first.</p></body></html>`
   const result = extractPublicArticle(html, 'https://publisher.example/story')
   assert.equal(result.title, 'A clear event headline')
   assert.equal(result.extractionMethod, 'JSON-LD articleBody')
   assert.match(result.evidenceText, /coordinates several permits/)
   assert.equal(result.imageUrl, 'https://publisher.example/photo.jpg')
+  assert.equal(result.publishedAt, '2026-10-10T14:30:00Z')
+})
+
+test('recognized independent and institutional publishers are accepted without opening the registry to arbitrary sites', () => {
+  assert.equal(trustedContextDomain('france24.com'), true)
+  assert.equal(trustedContextDomain('toronto.ca'), true)
+  assert.equal(trustedContextDomain('malaysiakini.com'), true)
+  assert.equal(trustedContextDomain('unknown-content-farm.example'), false)
 })

@@ -22,25 +22,31 @@ function meta(html, key) {
 }
 
 function jsonLd(html) {
-  const found = []
+  const found = { bodies: [], dates: [] }
   for (const match of String(html || '').matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
     try {
       const visit = value => {
         if (Array.isArray(value)) value.forEach(visit)
         else if (value && typeof value === 'object') {
-          if (typeof value.articleBody === 'string') found.push(value.articleBody)
+          if (typeof value.articleBody === 'string') found.bodies.push(value.articleBody)
+          for (const key of ['datePublished', 'dateCreated', 'dateModified']) {
+            if (typeof value[key] === 'string') found.dates.push(value[key])
+          }
           Object.values(value).forEach(visit)
         }
       }
       visit(JSON.parse(match[1]))
     } catch { /* Ignore malformed publisher metadata. */ }
   }
-  return found.map(plain).filter(value => value.length >= 180).sort((a, b) => b.length - a.length)[0] || null
+  return {
+    body: found.bodies.map(plain).filter(value => value.length >= 180).sort((a, b) => b.length - a.length)[0] || null,
+    publishedAt: found.dates.map(value => plain(value)).find(value => Number.isFinite(Date.parse(value))) || null,
+  }
 }
 
 function articleText(html) {
   const structured = jsonLd(html)
-  if (structured) return { method: 'JSON-LD articleBody', text: structured.slice(0, 20_000) }
+  if (structured.body) return { method: 'JSON-LD articleBody', text: structured.body.slice(0, 20_000) }
   const paragraphs = [...String(html || '').matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)]
     .map(match => plain(match[1]))
     .filter(value => value.length >= 45 && !/cookie|newsletter|sign up|advertisement|all rights reserved/i.test(value))
@@ -56,6 +62,7 @@ function safeUrl(value, base) {
 
 export function extractPublicArticle(html, finalUrl) {
   const body = articleText(html)
+  const structured = jsonLd(html)
   const description = meta(html, 'og:description') || meta(html, 'description') || ''
   const evidenceText = body.text.length >= 180 ? body.text : description
   return {
@@ -66,6 +73,10 @@ export function extractPublicArticle(html, finalUrl) {
     evidenceChars: evidenceText.length,
     imageUrl: safeUrl(meta(html, 'og:image') || meta(html, 'twitter:image'), finalUrl),
     imageAlt: meta(html, 'og:image:alt'),
+    publishedAt: [
+      meta(html, 'article:published_time'), meta(html, 'og:published_time'), meta(html, 'datePublished'),
+      structured.publishedAt, String(html || '').match(/<time[^>]+datetime=["']([^"']+)["']/i)?.[1],
+    ].map(value => plain(value || '')).find(value => Number.isFinite(Date.parse(value))) || null,
   }
 }
 
