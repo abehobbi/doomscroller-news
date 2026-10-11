@@ -13,6 +13,18 @@ test('verification candidates are strong non-major stories that still need sourc
   assert.deepEqual(verificationCandidates(report).map(value => value.blindId), ['keep'])
 })
 
+test('writer shortlist verification prioritizes strong then baseline Major stories', () => {
+  const item = (eventId, lane, recommendation, score) => ({ eventId, lane, headline: eventId, evidence: 'A concrete fact happened.', editorialRecommendation: recommendation, editorialScore: score, baselineRank: 1, primarySource: { publisher: 'bbc.com', url: `https://bbc.com/${eventId}` }, sourceAssessment: { decision: 'needs-independent-corroboration' } })
+  const report = { withheld: [
+    item('possible', 'world-major', 'possible', 100),
+    item('baseline', 'priority-major', 'baseline-qualified', null),
+    item('strong', 'world-major', 'strong', 80),
+    item('interesting', 'world-interesting', 'strong', 99),
+  ] }
+  assert.deepEqual(verificationCandidates(report).map(value => value.eventId), ['strong', 'baseline'])
+  assert.equal(verificationCandidates(report)[0].source.publisher, 'bbc.com')
+})
+
 test('source relevance requires multiple overlapping event terms', () => {
   const story = { headline: 'Ancient tablet archive found in Hittite palace', evaluation: { strongest_fact: 'Archaeologists found 184 cuneiform tablets.' } }
   const matching = relevantCandidate(story, { title: 'Archaeologists uncover Hittite cuneiform tablet archive', evidenceText: 'The palace archive contains 184 tablets.' })

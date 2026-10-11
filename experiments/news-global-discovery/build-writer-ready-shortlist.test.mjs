@@ -42,3 +42,11 @@ test('possible stories fill a shortfall but do not pad a lane after its minimum'
   assert.deepEqual(result.selected.map(value => value.eventId), ['s1', 's2', 'p1'])
   assert.match(result.overflow[0].readiness.reason, /minimum was met/)
 })
+
+test('major-pool source verification can satisfy an original event gate', () => {
+  const fixture = { events: [{ eventId: 'major-1', lane: 'world-major', baselineRank: 1, headline: 'A contested court allegation', evidence: 'Police faced an allegation.', primarySource: { publisher: 'bbc.com', url: 'https://bbc.com/a' }, sources: [], independentSourceCount: 1 }] }
+  const verification = { results: [{ blindId: 'major-1', eventId: 'major-1', accepted: [{ domain: 'reuters.com', url: 'https://reuters.com/a' }] }] }
+  const result = buildShortlist(fixture, { results: [] }, verification)
+  assert.equal(result.selected.length, 1)
+  assert.equal(result.selected[0].verificationStatus, 'one-supporting-source-family-found')
+})

@@ -361,3 +361,41 @@ should therefore improve source acquisition for the best withheld Major stories
 before spending writer tokens. The exact ready and withheld lists are saved in
 `review-output-five-lane/writer-ready-shortlist/`. The app, main branch, Beta,
 deployment, and billing remain unchanged.
+
+## Targeted Major News source acquisition
+
+The verifier was extended to consume the withheld writer-shortlist candidates,
+retain their stable event IDs, prioritize strong rerouted Major stories before
+the baseline Major pool, and checkpoint after every search. Existing completed
+verification can now be combined with a later verification batch without
+repeating searches.
+
+Twelve Major candidates received one Exa search each. The exact reported cost
+was $0.084. No automatic retries were made.
+
+- three candidates found two trusted supporting source families;
+- two candidates found one trusted supporting source family; and
+- seven remained unresolved.
+
+The successfully advanced events were the Nord Stream investigation, the false
+Anthropic homicide tip, Syria's destruction of chemical-weapons remnants,
+Bangladesh flooding, and United States sanctions on the International Criminal
+Court. Examples of useful additional sources included BBC, The Guardian, the
+United Nations, The Business Standard, the ICC, and Al Jazeera. An unresolved
+search still means only that the strict automated search did not find adequate
+support; it is not a factual rejection.
+
+Rebuilding the deterministic manifest increased the writer-ready pool from 30
+to 35 stories:
+
+- world-interesting: 9
+- priority-interesting: 6
+- world-major: 8
+- priority-major: 7
+- discovery: 5
+
+Priority Interesting and Discovery meet their minimums. World Major is now two
+short, Priority Major one short, and World Interesting one short. Those gaps are
+preserved rather than filled with unsupported or merely `possible` stories.
+All 61 News tests pass. No News card was generated, and the app, main branch,
+Beta, deployment, and billing remain unchanged.

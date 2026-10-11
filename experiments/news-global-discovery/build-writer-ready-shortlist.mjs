@@ -14,15 +14,15 @@ export const LANE_POLICY = Object.freeze({
 export const HARD_CAP = 65
 
 function parseArgs(argv) {
-  const options = { majorFixture: null, edition: null, safeguards: null, verification: null, outputDir: null }
+  const options = { majorFixture: null, edition: null, safeguards: null, verification: [], outputDir: null }
   for (let index = 0; index < argv.length; index += 1) {
     if (argv[index] === '--major-fixture') options.majorFixture = argv[++index]
     else if (argv[index] === '--edition') options.edition = argv[++index]
     else if (argv[index] === '--safeguards') options.safeguards = argv[++index]
-    else if (argv[index] === '--verification') options.verification = argv[++index]
+    else if (argv[index] === '--verification') options.verification.push(argv[++index])
     else if (argv[index] === '--output-dir') options.outputDir = argv[++index]
   }
-  if ((!options.majorFixture && !options.edition) || !options.safeguards || !options.verification || !options.outputDir) {
+  if ((!options.majorFixture && !options.edition) || !options.safeguards || !options.verification.length || !options.outputDir) {
     throw new Error('Provide --major-fixture or --edition, plus --safeguards, --verification, and --output-dir')
   }
   return options
@@ -112,6 +112,21 @@ function majorCandidate(event) {
   }
 }
 
+function applyVerification(candidate, verification) {
+  const supportingFamilies = verificationFamilies(verification)
+  const readiness = readinessForAssessment(candidate.sourceAssessment, supportingFamilies, candidate.independentSourceCount)
+  const verificationStatus = verification?.status || (supportingFamilies >= 2
+    ? 'two-supporting-source-families-found'
+    : supportingFamilies === 1 ? 'one-supporting-source-family-found' : candidate.verificationStatus || 'not-requested')
+  return {
+    ...candidate,
+    sources: [...candidate.sources, ...(verification?.accepted || []).map(value => ({ publisher: value.domain, url: value.url }))],
+    independentSourceCount: readiness.totalFamilies,
+    verificationStatus,
+    readiness,
+  }
+}
+
 function safeguardCandidate(item, verificationByBlindId) {
   const verification = verificationByBlindId.get(item.blindId) || null
   const supportingFamilies = verificationFamilies(verification)
@@ -174,9 +189,14 @@ export function selectLane(candidates, policy) {
 }
 
 export function buildShortlist(majorFixture, safeguards, verification) {
-  const verificationByBlindId = new Map(verification.results.map(value => [value.blindId, value]))
+  const verificationResults = Array.isArray(verification) ? verification.flatMap(value => value.results || []) : (verification.results || [])
+  const verificationByBlindId = new Map(verificationResults.map(value => [value.blindId, value]))
+  const verificationByEventId = new Map(verificationResults.filter(value => value.eventId).map(value => [value.eventId, value]))
   const byEventId = new Map()
-  for (const event of majorFixture.events) byEventId.set(event.eventId, majorCandidate(event))
+  for (const event of majorFixture.events) {
+    const candidate = majorCandidate(event)
+    byEventId.set(event.eventId, applyVerification(candidate, verificationByEventId.get(event.eventId)))
+  }
   for (const item of safeguards.results) {
     if (item.destination === 'reject' || item.evaluation.recommendation === 'reject') continue
     const candidate = safeguardCandidate(item, verificationByBlindId)
@@ -228,7 +248,7 @@ async function main() {
   if (options.edition) majorFixture = prepareMajorFixture(JSON.parse(await fs.readFile(options.edition, 'utf8')))
   else majorFixture = JSON.parse(await fs.readFile(options.majorFixture, 'utf8'))
   const safeguards = JSON.parse(await fs.readFile(options.safeguards, 'utf8'))
-  const verification = JSON.parse(await fs.readFile(options.verification, 'utf8'))
+  const verification = await Promise.all(options.verification.map(async file => JSON.parse(await fs.readFile(file, 'utf8'))))
   const shortlist = buildShortlist(majorFixture, safeguards, verification)
   const report = {
     schemaVersion: 1, createdAt: new Date().toISOString(), lanePolicy: LANE_POLICY, hardCap: HARD_CAP,

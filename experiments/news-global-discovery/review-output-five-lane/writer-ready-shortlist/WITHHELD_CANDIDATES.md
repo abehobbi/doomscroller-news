@@ -1,6 +1,6 @@
 # Withheld writer candidates
 
-Created: 2026-10-11T00:15:58.252Z
+Created: 2026-10-11T00:23:23.021Z
 
 Offline selection artifact only. This does not generate cards or change the app feed.
 
@@ -102,25 +102,9 @@ Primary source: [thenarwhal.ca](https://thenarwhal.ca/winnipeg-zoo-churchill-pol
 
 ## world-major
 
-15 withheld.
+12 withheld.
 
-### 1. Nord Stream trial: How German police followed the evidence - to Ukraine
-
-Event: qualified-event-029 · Origin: rerouted-to-major
-
-Source decision: needs-independent-corroboration. contested claim still lacks a second independent source family.
-
-Primary source: [bbc.com](https://www.bbc.com/news/articles/c317ke5ngrq7o)
-
-### 2. Anthropic AI model submits false homicide tip to Philadelphia police
-
-Event: qualified-event-006 · Origin: rerouted-to-major
-
-Source decision: needs-independent-corroboration. contested claim still lacks a second independent source family.
-
-Primary source: [aljazeera.com](https://www.aljazeera.com/news/2026/10/10/anthropic-ai-model-submits-false-homicide-tip-to-philadelphia-police)
-
-### 3. ICE has quietly used this warehouse as a detention facility all summer, neighbors say
+### 1. ICE has quietly used this warehouse as a detention facility all summer, neighbors say
 
 Event: qualified-event-021 · Origin: rerouted-to-major
 
@@ -128,7 +112,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [npr.org](https://www.npr.org/2026/10/08/nx-s1-5983441/ice-warehouses-new-jersey-roxbury)
 
-### 4. Phantom land, false signature: How agents allegedly duped migrant worker quota system | Malaysiakini
+### 2. Phantom land, false signature: How agents allegedly duped migrant worker quota system | Malaysiakini
 
 Event: qualified-event-102 · Origin: rerouted-to-major
 
@@ -136,7 +120,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [malaysiakini.com](https://www.malaysiakini.com/news/886653-phantom-land-false-signature-how-agents-allegedly-duped-migrant-worker-quota-system)
 
-### 5. Inside Operation Vivaldi, Ukraine’s push to recapture Donetsk Oblast territory
+### 3. Inside Operation Vivaldi, Ukraine’s push to recapture Donetsk Oblast territory
 
 Event: qualified-event-104 · Origin: rerouted-to-major
 
@@ -144,7 +128,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [kyivindependent.com](https://kyivindependent.com/inside-operation-vivaldi-how-ukraine-uses-drones-robots-to-liberate-territory-in-donetsk-oblast/)
 
-### 6. After US Intervention, Crime Still Controls Venezuelan Mines (Part I) – CONVEN.ORG | HOME
+### 4. After US Intervention, Crime Still Controls Venezuelan Mines (Part I) – CONVEN.ORG | HOME
 
 Event: qualified-event-022 · Origin: rerouted-to-major
 
@@ -152,7 +136,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [conven.org](https://conven.org/venezuela/news/after-us-intervention-crime-still-controls-venezuelan-mines-part-i/)
 
-### 7. “Sabotage, Lying, and Manipulation”: What One AI-Safety Company Found in the Dark Mind of a Rogue Chatbot
+### 5. “Sabotage, Lying, and Manipulation”: What One AI-Safety Company Found in the Dark Mind of a Rogue Chatbot
 
 Event: qualified-event-031 · Origin: rerouted-to-major
 
@@ -160,15 +144,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [vanityfair.com](https://www.vanityfair.com/story/kevin-roose-agi-chronicles-excerpt)
 
-### 8. US unveils sanctions on ICC in move court condemns as 'assault on rule of law'
-
-Event: qualified-event-054 · Origin: qualified-major-pool
-
-Source decision: needs-independent-corroboration. contested claim still lacks a second independent source family.
-
-Primary source: [bbc.com](https://www.bbc.com/news/articles/cj20vkkx3rdvo)
-
-### 9. Hurricane Isaias downgraded after making landfall in Florida
+### 6. Hurricane Isaias downgraded after making landfall in Florida
 
 Event: qualified-event-060 · Origin: qualified-major-pool
 
@@ -176,7 +152,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [bbc.com](https://www.bbc.com/news/articles/c3vgx4450v2lo)
 
-### 10. Putin tells Trump peace talks are unlikely, cites Ukraine drone attacks
+### 7. Putin tells Trump peace talks are unlikely, cites Ukraine drone attacks
 
 Event: qualified-event-052 · Origin: qualified-major-pool
 
@@ -184,7 +160,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [aljazeera.com](https://www.aljazeera.com/news/2026/10/10/putin-tells-trump-peace-talks-are-unlikely-cites-ukraine-drone-attacks)
 
-### 11. China Unveils First Nationwide Labor Rules to Protect Gig Economy Workers
+### 8. China Unveils First Nationwide Labor Rules to Protect Gig Economy Workers
 
 Event: qualified-event-057 · Origin: qualified-major-pool
 
@@ -192,7 +168,7 @@ Source decision: needs-source-review. publisher remains unverified and unsupport
 
 Primary source: [caixinglobal.com](https://www.caixinglobal.com/2026-10-09/china-unveils-first-nationwide-labor-rules-to-protect-gig-economy-workers-102491464.html)
 
-### 12. Gaza: Ceasefire Anniversary Marks Year of Failed Promises
+### 9. Gaza: Ceasefire Anniversary Marks Year of Failed Promises
 
 Event: qualified-event-053 · Origin: qualified-major-pool
 
@@ -200,7 +176,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [hrw.org](https://www.hrw.org/news/2026/10/10/gaza-ceasefire-anniversary-marks-year-of-failed-promises)
 
-### 13. US hosts ‘productive’ trilateral talks to end Russia-Ukraine war
+### 10. US hosts ‘productive’ trilateral talks to end Russia-Ukraine war
 
 Event: qualified-event-051 · Origin: qualified-major-pool
 
@@ -208,7 +184,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [aljazeera.com](https://www.aljazeera.com/news/2026/10/10/us-hosts-productive-trilateral-talks-to-end-russia-ukraine-war)
 
-### 14. UNICEF Warns Impending El Niño Threatens Education, Health, and Safety for Millions
+### 11. UNICEF Warns Impending El Niño Threatens Education, Health, and Safety for Millions
 
 Event: qualified-event-061 · Origin: qualified-major-pool
 
@@ -216,7 +192,7 @@ Source decision: needs-source-review. publisher remains unverified and unsupport
 
 Primary source: [ipsnews.net](https://www.ipsnews.net/2026/10/unicef-warns-impending-el-nino-threatens-education-health-and-safety-for-millions/)
 
-### 15. Major quake hits Panama, no deaths reported
+### 12. Major quake hits Panama, no deaths reported
 
 Event: qualified-event-065 · Origin: qualified-major-pool
 
@@ -226,7 +202,7 @@ Primary source: [afp.com](https://www.afp.com/en/major-quake-hits-panama-no-deat
 
 ## priority-major
 
-14 withheld.
+12 withheld.
 
 ### 1. Oscars: Syria Selects Doc ‘The Other Side of the Sun’ for International Feature Race, Marking First Entry Since Fall of Assad Regime
 
@@ -284,23 +260,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [cbc.ca](https://www.cbc.ca/news/politics/bill-c-39-passes-second-reading-9.7374815)
 
-### 8. Syria Begins Destroying Chemical Weapons Remnants
-
-Event: qualified-event-067 · Origin: qualified-major-pool
-
-Source decision: needs-source-review. publisher remains unverified and unsupported.
-
-Primary source: [sypnow.com](https://sypnow.com/en/news/syria-destroys-assad-chemical-weapons-remnants)
-
-### 9. Bangladesh flood death toll rises to 44 as more than one million people affected
-
-Event: qualified-event-077 · Origin: qualified-major-pool
-
-Source decision: needs-independent-corroboration. contested claim still lacks a second independent source family.
-
-Primary source: [ilkha.com](https://ilkha.com/english/world/bangladesh-flood-death-toll-rises-to-44-as-more-than-one-million-people-affected-546859)
-
-### 10. US sets new demands for Iran deal: What are they?
+### 8. US sets new demands for Iran deal: What are they?
 
 Event: qualified-event-073 · Origin: qualified-major-pool
 
@@ -308,7 +268,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [aljazeera.com](https://www.aljazeera.com/news/2026/10/7/us-sets-new-demands-for-iran-deal-what-are-they)
 
-### 11. Syrian army takes control of al-Shaddadi base after coordination with U.S.
+### 9. Syrian army takes control of al-Shaddadi base after coordination with U.S.
 
 Event: qualified-event-068 · Origin: qualified-major-pool
 
@@ -316,7 +276,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [ilkha.com](https://ilkha.com/english/world/syrian-army-takes-control-of-al-shaddadi-base-after-coordination-with-us-512010)
 
-### 12. Trump’s tariffs give Carney cover to fast-track Canadian building push | Financial Post
+### 10. Trump’s tariffs give Carney cover to fast-track Canadian building push | Financial Post
 
 Event: qualified-event-081 · Origin: qualified-major-pool
 
@@ -324,7 +284,7 @@ Source decision: needs-independent-corroboration. contested claim still lacks a 
 
 Primary source: [financialpost.com](https://financialpost.com/news/economy/trumps-tariffs-carney-fast-track-canada-push)
 
-### 13. Rooppur Unit 1 gets nod to start first controlled nuclear reaction
+### 11. Rooppur Unit 1 gets nod to start first controlled nuclear reaction
 
 Event: qualified-event-076 · Origin: qualified-major-pool
 
@@ -332,7 +292,7 @@ Source decision: needs-source-review. publisher remains unverified and unsupport
 
 Primary source: [tbsnews.net](https://www.tbsnews.net/economy/energy/rooppur-nuclear-plants-first-unit-gets-final-approval-power-generation-1566571)
 
-### 14. Metrolinx Launches Woodbine GO Construction in Toronto - Railway News
+### 12. Metrolinx Launches Woodbine GO Construction in Toronto - Railway News
 
 Event: qualified-event-085 · Origin: qualified-major-pool
 

@@ -40,6 +40,23 @@ export function normalizeVerificationResult(result) {
 }
 
 export function verificationCandidates(report, maximum = 15) {
+  if (Array.isArray(report.withheld)) {
+    const rank = value => value === 'strong' ? 0 : value === 'baseline-qualified' ? 1 : 2
+    return report.withheld.filter(value => value.lane?.endsWith('major')
+      && ['strong', 'baseline-qualified'].includes(value.editorialRecommendation)
+      && ['needs-independent-corroboration', 'needs-source-review', 'needs-independent-context', 'replace-source'].includes(value.sourceAssessment?.decision))
+      .map(value => ({
+        ...value,
+        blindId: value.blindId || value.eventId,
+        destination: value.lane,
+        source: value.primarySource,
+        evaluation: { recommendation: value.editorialRecommendation, strongest_fact: value.evidence },
+      }))
+      .sort((a, b) => rank(a.editorialRecommendation) - rank(b.editorialRecommendation)
+        || Number(b.editorialScore || 0) - Number(a.editorialScore || 0)
+        || Number(a.baselineRank || 9999) - Number(b.baselineRank || 9999))
+      .slice(0, maximum)
+  }
   return report.results.filter(value => value.evaluation.recommendation === 'strong'
     && /(?:interesting|discovery)$/.test(value.destination)
     && value.sourceAssessment.decision !== 'provisionally-usable')
@@ -103,7 +120,7 @@ async function verifyStory(apiKey, story) {
     }
   }
   return normalizeVerificationResult({
-    blindId: story.blindId, headline: story.headline, destination: story.destination,
+    blindId: story.blindId, eventId: story.eventId || null, headline: story.headline, destination: story.destination,
     originalSource: story.source, originalSourceAssessment: story.sourceAssessment,
     status: 'unresolved', accepted, rejected, requestId: found.requestId,
     costDollars: found.costDollars, latencyMs: found.latencyMs,
@@ -156,7 +173,7 @@ async function main() {
       results.push({ ...(await verifyStory(apiKey, story)), requestAttempted: true })
     } catch (error) {
       results.push({
-        blindId: story.blindId, headline: story.headline, destination: story.destination,
+        blindId: story.blindId, eventId: story.eventId || null, headline: story.headline, destination: story.destination,
         originalSource: story.source, originalSourceAssessment: story.sourceAssessment,
         status: 'search-failed', accepted: [], rejected: [], requestAttempted: true,
         costDollars: 0, latencyMs: 0, error: String(error?.message || error).replace(/https?:\/\/\S+/g, '[url]').slice(0, 240),

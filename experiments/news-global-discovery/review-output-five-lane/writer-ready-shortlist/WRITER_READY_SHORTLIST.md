@@ -1,6 +1,6 @@
 # Writer-ready News shortlist
 
-Created: 2026-10-11T00:15:58.252Z
+Created: 2026-10-11T00:23:23.021Z
 
 Offline selection artifact only. This does not generate cards or change the app feed.
 
@@ -138,9 +138,29 @@ Primary source: [paherald.sk.ca](https://paherald.sk.ca/logging-took-the-trees-t
 
 ## world-major
 
-5 ready; target 10–15.
+8 ready; target 10–15.
 
-### 1. ‘Like a drill going into my eye’: why the mystery over Havana syndrome refuses to die
+### 1. Nord Stream trial: How German police followed the evidence - to Ukraine
+
+Event: qualified-event-029 · Origin: rerouted-to-major
+
+Source decision: needs-independent-corroboration. contested claim has at least two independent source families.
+
+Primary source: [bbc.com](https://www.bbc.com/news/articles/c317ke5ngrq7o)
+
+Additional sources: [bbc.co.uk](https://www.bbc.co.uk/news/articles/c317ke5ngrq7o) · [theguardian.com](https://www.theguardian.com/world/2026/jul/02/german-prosecutors-accuse-kyiv-of-ordering-2022-nord-stream-sabotage)
+
+### 2. Anthropic AI model submits false homicide tip to Philadelphia police
+
+Event: qualified-event-006 · Origin: rerouted-to-major
+
+Source decision: needs-independent-corroboration. contested claim has at least two independent source families.
+
+Primary source: [aljazeera.com](https://www.aljazeera.com/news/2026/10/10/anthropic-ai-model-submits-false-homicide-tip-to-philadelphia-police)
+
+Additional sources: [bbc.com](https://www.bbc.com/news/articles/cqkg50j1yd5lo)
+
+### 3. ‘Like a drill going into my eye’: why the mystery over Havana syndrome refuses to die
 
 Event: qualified-event-028 · Origin: rerouted-to-major
 
@@ -148,7 +168,7 @@ Source decision: provisionally-usable. established low-risk source is provisiona
 
 Primary source: [theguardian.com](https://www.theguardian.com/us-news/ng-interactive/2026/oct/10/havana-syndrome-mystery-cia-russia)
 
-### 2. Hunger and malnutrition stalk Gazans, a year on from ceasefire
+### 4. Hunger and malnutrition stalk Gazans, a year on from ceasefire
 
 Event: qualified-event-002 · Origin: rerouted-to-major
 
@@ -156,7 +176,7 @@ Source decision: provisionally-usable. established low-risk source is provisiona
 
 Primary source: [al-monitor.com](https://www.al-monitor.com/originals/2026/10/hunger-and-malnutrition-stalk-gazans-year-ceasefire)
 
-### 3. Inside Thailand’s cyanide murders and the search for its ‘most prolific serial killer’ in history
+### 5. Inside Thailand’s cyanide murders and the search for its ‘most prolific serial killer’ in history
 
 Event: qualified-event-027 · Origin: rerouted-to-major
 
@@ -164,7 +184,17 @@ Source decision: provisionally-usable. established low-risk source is provisiona
 
 Primary source: [channelnewsasia.com](https://www.channelnewsasia.com/cna-insider/insider/death-loans-thailand-aem-cyanide-murders-serial-killer-sararat-6445911)
 
-### 4. China agrees to ‘halve’ hybrid car exports to EU in landmark deal
+### 6. US unveils sanctions on ICC in move court condemns as 'assault on rule of law'
+
+Event: qualified-event-054 · Origin: qualified-major-pool
+
+Source decision: needs-independent-corroboration. contested claim has at least two independent source families.
+
+Primary source: [bbc.com](https://www.bbc.com/news/articles/cj20vkkx3rdvo)
+
+Additional sources: [icc-cpi.int](https://www.icc-cpi.int/news/icc-strongly-rejects-us-sanctions-against-institution) · [bbc.co.uk](https://www.bbc.co.uk/news/articles/cj20vkkx3rdvo)
+
+### 7. China agrees to ‘halve’ hybrid car exports to EU in landmark deal
 
 Event: qualified-event-056 · Origin: qualified-major-pool
 
@@ -174,7 +204,7 @@ Primary source: [theguardian.com](https://www.theguardian.com/business/2026/oct/
 
 Additional sources: [seattletimes.com](https://www.seattletimes.com/business/china-and-eu-trade-envoys-seek-ways-to-ease-tensions-over-growing-imbalances/)
 
-### 5. Kenya's first Ebola case: Questions remain after man travelled across three nations undetected
+### 8. Kenya's first Ebola case: Questions remain after man travelled across three nations undetected
 
 Event: qualified-event-058 · Origin: qualified-major-pool
 
@@ -186,7 +216,7 @@ Additional sources: [aljazeera.com](https://www.aljazeera.com/news/2026/10/8/why
 
 ## priority-major
 
-5 ready; target 8–15.
+7 ready; target 8–15.
 
 ### 1. Mississauga mayoral candidates talk redeveloping Living Arts Centre, platform policy planks
 
@@ -206,7 +236,27 @@ Primary source: [cbc.ca](https://www.cbc.ca/news/canada/toronto/bike-lane-remova
 
 Additional sources: [toronto.citynews.ca](https://toronto.citynews.ca/2026/10/08/province-to-begin-removing-bloor-west-bike-lanes-on-tuesday-chows-calls-move-outrageous/) · [canada.constructconnect.com](https://canada.constructconnect.com/dcn/news/infrastructure/2026/10/province-to-begin-removing-stretch-of-toronto-bike-lanes-next-week-after-court-win)
 
-### 3. Bangladesh hands UAE's DP World key port contract after years of delay
+### 3. Syria Begins Destroying Chemical Weapons Remnants
+
+Event: qualified-event-067 · Origin: qualified-major-pool
+
+Source decision: needs-source-review. unregistered primary source is supported by another independent source family.
+
+Primary source: [sypnow.com](https://sypnow.com/en/news/syria-destroys-assad-chemical-weapons-remnants)
+
+Additional sources: [aljazeera.com](https://www.aljazeera.com/news/2026/9/3/syria-begins-destroying-al-assad-era-chemical-weapons-materials) · [media.un.org](https://media.un.org/unifeed/en/asset/d362/d3623492)
+
+### 4. Bangladesh flood death toll rises to 44 as more than one million people affected
+
+Event: qualified-event-077 · Origin: qualified-major-pool
+
+Source decision: needs-independent-corroboration. contested claim has at least two independent source families.
+
+Primary source: [ilkha.com](https://ilkha.com/english/world/bangladesh-flood-death-toll-rises-to-44-as-more-than-one-million-people-affected-546859)
+
+Additional sources: [tbsnews.net](https://www.tbsnews.net/bangladesh/flood-death-toll-reaches-44-over-10-lakh-people-affected-7-districts-1485791)
+
+### 5. Bangladesh hands UAE's DP World key port contract after years of delay
 
 Event: qualified-event-075 · Origin: qualified-major-pool
 
@@ -216,7 +266,7 @@ Primary source: [asia.nikkei.com](https://asia.nikkei.com/business/business-deal
 
 Additional sources: [publisher.tbsnews.net](https://publisher.tbsnews.net/economy/ctg-port-authority-dp-world-sign-15-yr-new-mooring-terminal-deal-1566291)
 
-### 4. Ghana Cabinet clears BRICS bid as Jaishankar visits Accra
+### 6. Ghana Cabinet clears BRICS bid as Jaishankar visits Accra
 
 Event: qualified-event-078 · Origin: qualified-major-pool
 
@@ -226,7 +276,7 @@ Primary source: [economictimes.indiatimes.com](https://economictimes.indiatimes.
 
 Additional sources: [3news.com](https://3news.com/news/application-for-brics-membership-govt-of-ghana-is-determined-to-position-ghana-as-a-reliable-friend-of-all-ablakwa)
 
-### 5. Iraq expects to start transporting crude oil by lorry to Syria from mid-October | The National
+### 7. Iraq expects to start transporting crude oil by lorry to Syria from mid-October | The National
 
 Event: qualified-event-069 · Origin: qualified-major-pool
 
