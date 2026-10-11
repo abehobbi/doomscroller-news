@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-11T06:27:48.035Z",
+  "sourceShortlist": "experiments/news-global-discovery/review-output-shadow-2026-10-11/shortlist-complete/WRITER_READY_SHORTLIST.json",
+  "sourceVerification": [
+    "experiments/news-global-discovery/review-output-shadow-2026-10-11/verification/TARGETED_VERIFICATION.json",
+    "experiments/news-global-discovery/review-output-shadow-2026-10-11/verification/GAP_RECOVERY_VERIFICATION.json",
+    "experiments/news-global-discovery/review-output-shadow-2026-10-11/verification/REGION_RECOVERY_VERIFICATION.json"
+  ],
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1536,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "complete": true,
+  "expected": 1,
+  "resultCount": 1,
+  "accepted": 1,
+  "rejected": 0,
+  "totalNeurons": 30.418180465698242,
+  "inputTokens": 2305,
+  "outputTokens": 347,
+  "totalLatencyMs": 9384,
+  "results": [
+    {
+      "eventId": "qualified-event-025",
+      "lane": "world-interesting",
+      "sourceTitle": "How a retired Navajo Nation doctor earned a MacArthur 'genius' grant for public art",
+      "sources": [
+        {
+          "publisher": "npr.org",
+          "url": "https://www.npr.org/2026/10/10/nx-s1-5779751/how-a-retired-navajo-nation-doctor-earned-a-macarthur-genius-grant-for-public-art"
+        }
+      ],
+      "status": "accepted",
+      "card": {
+        "headline": "Retired Navajo Nation physician Chip Thomas receives MacArthur 'genius' grant for public art",
+        "pages": [
+          {
+            "text": "Chip Thomas, a retired physician on the Navajo Reservation, has been awarded a MacArthur Fellowship, often referred to as a 'genius' grant, for his work as a public artist. The MacArthur Foundation selected Thomas as part of its 2026 class of 20 fellows. Each fellow in the 2026 class receives $800,000 over five years to use as they choose. The fellowship selection process is based on recommendations gathered over several years, and individuals do not apply for the award."
+          },
+          {
+            "text": "Thomas's artistic practice involves installing large-scale, black-and-white photographic murals on abandoned buildings, grain silos, and roadside structures across the Navajo Nation. These works are created in collaboration with Diné communities and portray Diné people, animals, and landscapes. By using neglected structures, Thomas turns them into sites of cultural memory and affirmation. He began this artistic work during a 36-year career as a primary care physician on the Navajo Nation."
+          },
+          {
+            "text": "Some of Thomas's murals address environmental damage and colonial violence, specifically the ongoing health effects that abandoned uranium mines have on Diné families. One of his images depicts Kee John, who died at a young age from cancer related to work in a uranium mine. Thomas has worked on these projects since 2009, and at one point, he worked in secret."
+          }
+        ]
+      },
+      "audits": {
+        "content": {
+          "valid": true,
+          "reasons": [],
+          "wordCount": 209,
+          "pageCount": 3
+        },
+        "dates": {
+          "valid": true,
+          "generated_exact_dates": [],
+          "allowed_exact_dates": [],
+          "unsupported_exact_dates": [],
+          "weekday_date_pairs": [],
+          "invalid_weekday_date_pairs": [],
+          "status": "pass"
+        },
+        "numbers": {
+          "valid": true,
+          "generatedNumbers": [
+            "2026",
+            "20",
+            "800,000",
+            "36",
+            "2009"
+          ],
+          "unsupportedNumbers": [],
+          "qualifierMismatches": []
+        },
+        "relativeTime": {
+          "valid": true,
+          "generatedExpressions": [],
+          "allowedExpressions": [],
+          "unsupportedExpressions": []
+        },
+        "headline": {
+          "valid": true,
+          "sharedTerms": [
+            "retired",
+            "navajo",
+            "nation",
+            "physician",
+            "chip",
+            "thomas",
+            "receives",
+            "macarthur",
+            "genius",
+            "grant",
+            "public"
+          ]
+        },
+        "geography": {
+          "valid": true,
+          "forbidden": []
+        },
+        "metadata": {
+          "valid": true,
+          "exposed": []
+        },
+        "writerExposure": {
+          "raw_publication_timestamp_exposed": false,
+          "raw_update_timestamp_exposed": false,
+          "resolved_relative_expressions_exposed": [],
+          "unresolved_relative_expressions_exposed": [],
+          "normalized_event_date_exposed": false,
+          "passes": true
+        }
+      },
+      "provider": {
+        "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+        "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+        "httpStatus": 200,
+        "internalErrors": [],
+        "latencyMs": 9384,
+        "finishReason": "stop",
+        "usage": {
+          "prompt_tokens": 2305,
+          "completion_tokens": 347,
+          "total_tokens": 2652,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "neurons": 30.418180465698242
+        },
+        "safeHeaders": {
+          "cf-ray": "a48bccd7ba8c6ac2-SEA"
+        },
+        "complete": true,
+        "structuralStatus": "valid_card"
+      }
+    }
+  ]
+}
