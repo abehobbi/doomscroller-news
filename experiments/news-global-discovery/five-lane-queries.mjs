@@ -24,8 +24,12 @@ export const FIVE_LANE_QUERIES = [
   q('priority-interesting', 'gta-interesting', 'The strongest interesting, revealing, surprising, human, neighbourhood, or municipal recent story from Toronto, Mississauga, Brampton, Markham, Vaughan, Durham, Halton, Peel, or York Region.', INTERESTING_PRIORITY_OBJECTIVE, 'GTA'),
 
   q('world-major', 'world-major-politics-security', 'The most consequential new global political, diplomatic, conflict, security, election, or government development reported recently.', MAJOR_WORLD_OBJECTIVE),
+  q('world-major', 'world-major-interstate-escalation', 'The most consequential newly reported interstate military escalation, troop movement, invasion warning, cross-border attack, or serious risk of a wider war anywhere in the world.', MAJOR_WORLD_OBJECTIVE),
+  q('world-major', 'world-major-civilian-harm', 'The most consequential newly reported attack, strike, atrocity, displacement, or mass-casualty event affecting civilians anywhere in the world.', MAJOR_WORLD_OBJECTIVE),
+  q('world-major', 'world-major-institutions-rights', 'The most consequential new development affecting international courts, democratic institutions, elections, civil liberties, human rights, sanctions, or international law.', MAJOR_WORLD_OBJECTIVE),
   q('world-major', 'world-major-economy-law', 'The most consequential new global economic, legal, regulatory, labour, infrastructure, or technology-policy development reported recently.', MAJOR_WORLD_OBJECTIVE),
   q('world-major', 'world-major-health-disaster', 'The most consequential new worldwide public-health, disaster, climate, food-security, displacement, or humanitarian development reported recently.', MAJOR_WORLD_OBJECTIVE),
+  q('world-major', 'world-major-emergency-impact', 'The most consequential newly reported earthquake, hurricane, flood, wildfire, outbreak, infrastructure failure, or emergency with verified deaths, displacement, outages, or widespread disruption.', MAJOR_WORLD_OBJECTIVE),
   q('world-major', 'world-major-open', 'The most important concrete news development anywhere in the world reported recently that an informed person should know.', MAJOR_WORLD_OBJECTIVE),
 
   q('priority-major', 'syria-major', 'The most consequential concrete new development affecting Syria reported recently.', MAJOR_PRIORITY_OBJECTIVE, 'Syria'),
