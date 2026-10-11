@@ -196,7 +196,7 @@ function reportFor(items, results, options, complete) {
 }
 
 function markdown(report) {
-  const lines = ['# Writer-ready five-card trial', '', `Generated: ${report.createdAt}`, '', `Model: ${report.writerConfiguration.model}; thinking disabled; no automatic retries.`, '']
+  const lines = ['# Writer-ready focused trial', '', `Generated: ${report.createdAt}`, '', `Model: ${report.writerConfiguration.model}; thinking disabled; no automatic retries.`, '']
   for (const [index, result] of report.results.entries()) {
     lines.push(`## ${index + 1}. ${LABELS[result.lane]}`, '', `Source event: ${result.sourceTitle}`, '', `Status: ${result.status}`, '')
     if (result.card) {
