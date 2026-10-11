@@ -1,4 +1,4 @@
-name: Run isolated five-lane News generation trial
+name: Generate fresh 20-card News shadow edition
 
 on:
   workflow_dispatch:
@@ -32,20 +32,38 @@ jobs:
         run: |
           test -n "$CLOUDFLARE_ACCOUNT_ID"
           test -n "$CLOUDFLARE_API_TOKEN"
-      - name: Regenerate only the remaining temporal failure
+      - name: Generate the isolated 20-card shadow edition
         run: >-
           node experiments/news-global-discovery/writer-shortlist-trial.mjs
-          --shortlist experiments/news-global-discovery/review-output-five-lane/writer-ready-shortlist/WRITER_READY_SHORTLIST.json
-          --verification experiments/news-global-discovery/review-output-five-lane/selection-safeguards-trial/SOURCE_VERIFICATION.json
-          --verification experiments/news-global-discovery/review-output-five-lane/writer-ready-shortlist/MAJOR_SOURCE_VERIFICATION.json
-          --verification experiments/news-global-discovery/review-output-five-lane/writer-ready-shortlist/GAP_RECOVERY_VERIFICATION.json
-          --context experiments/news-global-discovery/writer-context-additions.json
+          --shortlist experiments/news-global-discovery/review-output-shadow-2026-10-11/shortlist-complete/WRITER_READY_SHORTLIST.json
+          --verification experiments/news-global-discovery/review-output-shadow-2026-10-11/verification/TARGETED_VERIFICATION.json
+          --verification experiments/news-global-discovery/review-output-shadow-2026-10-11/verification/GAP_RECOVERY_VERIFICATION.json
+          --verification experiments/news-global-discovery/review-output-shadow-2026-10-11/verification/REGION_RECOVERY_VERIFICATION.json
+          --event-id qualified-event-001
           --event-id qualified-event-029
-          --output-dir experiments/news-global-discovery/review-output-five-lane/writer-coreference-revision-trial
+          --event-id qualified-event-051
+          --event-id qualified-event-053
+          --event-id qualified-event-055
+          --event-id qualified-event-087
+          --event-id qualified-event-078
+          --event-id qualified-event-068
+          --event-id qualified-event-066
+          --event-id qualified-event-024
+          --event-id qualified-event-105
+          --event-id qualified-event-016
+          --event-id qualified-event-010
+          --event-id qualified-event-014
+          --event-id qualified-event-037
+          --event-id qualified-event-042
+          --event-id qualified-event-113
+          --event-id qualified-event-039
+          --event-id qualified-event-100
+          --event-id qualified-event-107
+          --output-dir experiments/news-global-discovery/review-output-shadow-2026-10-11/writing/generated
       - name: Upload the review and exact diagnostics
         uses: actions/upload-artifact@v4
         with:
-          name: news-writer-coreference-revision-trial-${{ github.run_id }}
-          path: experiments/news-global-discovery/review-output-five-lane/writer-coreference-revision-trial
+          name: news-shadow-20-card-edition-${{ github.run_id }}
+          path: experiments/news-global-discovery/review-output-shadow-2026-10-11/writing/generated
           retention-days: 14
           if-no-files-found: error

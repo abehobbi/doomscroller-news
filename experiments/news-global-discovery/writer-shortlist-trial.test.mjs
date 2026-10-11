@@ -1,6 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { normalizeTemporalFact } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
+import { buildWriterSafeTemporalPacket } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
 import { bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, LANES, numericAudit, relativeTimeAudit } from './writer-shortlist-trial.mjs'
 
 test('trial chooses one multi-source candidate from every lane and prefers Syria in a priority tie', () => {
@@ -50,6 +51,19 @@ test('leading pronoun propositions stay bound to the named antecedent', () => {
     'Volodymyr Zhuravlyov is fighting extradition from Croatia. He was arrested in Warsaw on a German warrant.',
     'A Polish judge refused extradition.',
   ])
+})
+
+test('writer-safe packet normalizes relative timing in the central story title', () => {
+  const result = buildWriterSafeTemporalPacket({
+    sourcePublicationTime: '2026-10-11T12:00:00Z', sourceUpdateTime: null,
+    central_event_to_explain: { selected_story: 'Ontario will remove bike lanes on Tuesday', time_window: [] },
+    writer_focus_instructions: ['CENTRAL EVENT TO EXPLAIN: Ontario will remove bike lanes on Tuesday'],
+    primaryNarrativeSource: { sourceId: 'p1', completeFactualPropositions: [] },
+    coreFactualPropositions: [], secondarySourceAdditions: [], curatorInstructions: [],
+  }, { sourceTimezone: 'America/Toronto' })
+  assert.equal(result.writer_facing.central_event_to_explain.selected_story, 'Ontario will remove bike lanes on October 6, 2026')
+  assert.equal(result.writer_facing.writer_focus_instructions[0], 'CENTRAL EVENT TO EXPLAIN: Ontario will remove bike lanes on October 6, 2026')
+  assert.equal(result.internal_audit.original_relative_expressions.some(value => value.raw_expression.toLowerCase() === 'on tuesday'), false)
 })
 
 test('trial packet adds only explicit source-backed context propositions', () => {
