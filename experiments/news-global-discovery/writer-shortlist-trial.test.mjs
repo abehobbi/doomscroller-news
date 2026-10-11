@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { normalizeTemporalFact } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
 import { buildWriterSafeTemporalPacket } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
-import { bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, LANES, numericAudit, relativeTimeAudit } from './writer-shortlist-trial.mjs'
+import { bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, geographyAudit, LANES, numericAudit, relativeTimeAudit } from './writer-shortlist-trial.mjs'
 
 test('trial chooses one multi-source candidate from every lane and prefers Syria in a priority tie', () => {
   const item = (eventId, lane, sources, regions = []) => ({ eventId, lane, headline: eventId, evidence: 'A complete factual sentence explains the event. Another complete sentence explains why it matters.', publishedAt: '2026-10-10T00:00:00Z', priorityRegions: regions, editorialRecommendation: 'strong', editorialScore: 90, independentSourceCount: sources, primarySource: { publisher: 'bbc.com', url: `https://bbc.com/${eventId}` }, sources: [{ publisher: 'bbc.com', url: `https://bbc.com/${eventId}` }] })
@@ -59,6 +59,12 @@ test('relative-time audit rejects a next-week claim absent from the packet', () 
   const packet = { temporal_facts_writer_may_state: { unresolved_relative_time: [] } }
   const card = { headline: 'Trial update', pages: [{ text: 'The trial is scheduled to begin next week.' }] }
   assert.deepEqual(relativeTimeAudit(card, packet).unsupportedExpressions, ['next week'])
+})
+
+test('geography audit rejects province terminology for a Syrian governorate', () => {
+  const item = { temporalPacket: { writer_facing: { geographicClassification: { priorityRegions: ['Syria'] } } } }
+  assert.equal(geographyAudit({ headline: 'Base transferred', pages: [{ text: 'The base is in Hasakah province.' }] }, item).valid, false)
+  assert.equal(geographyAudit({ headline: 'Base transferred', pages: [{ text: 'The base is in Hasakah Governorate.' }] }, item).valid, true)
 })
 
 test('writer-safe temporal normalization removes relative timing that cannot be resolved exactly', () => {

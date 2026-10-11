@@ -39,21 +39,14 @@ jobs:
           --verification experiments/news-global-discovery/review-output-shadow-2026-10-11/verification/TARGETED_VERIFICATION.json
           --verification experiments/news-global-discovery/review-output-shadow-2026-10-11/verification/GAP_RECOVERY_VERIFICATION.json
           --verification experiments/news-global-discovery/review-output-shadow-2026-10-11/verification/REGION_RECOVERY_VERIFICATION.json
-          --event-id qualified-event-001
-          --event-id qualified-event-078
+          --context experiments/news-global-discovery/review-output-shadow-2026-10-11/corrections/TARGETED_CONTEXT.json
           --event-id qualified-event-068
-          --event-id qualified-event-024
-          --event-id qualified-event-014
-          --event-id qualified-event-042
-          --event-id qualified-event-074
           --event-id qualified-event-025
-          --event-id qualified-event-019
-          --event-id qualified-event-008
-          --output-dir experiments/news-global-discovery/review-output-shadow-2026-10-11/writing/corrected-targeted
+          --output-dir experiments/news-global-discovery/review-output-shadow-2026-10-11/writing/final-targeted
       - name: Upload the review and exact diagnostics
         uses: actions/upload-artifact@v4
         with:
-          name: news-targeted-correction-${{ github.run_id }}
-          path: experiments/news-global-discovery/review-output-shadow-2026-10-11/writing/corrected-targeted
+          name: news-final-targeted-${{ github.run_id }}
+          path: experiments/news-global-discovery/review-output-shadow-2026-10-11/writing/final-targeted
           retention-days: 14
           if-no-files-found: error

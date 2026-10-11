@@ -130,6 +130,7 @@ export function buildTrialItem(candidate, verificationIndex, contextIndex = new 
       'Preserve attribution, negation, dates, numeric units and scope.',
       'Do not infer motives, causation, independent confirmation or missing sentence endings.',
       'Explain unfamiliar institutions, policies, places or scientific concepts only when the supplied propositions support the explanation.',
+      ...(regions.includes('Syria') ? ['For Syrian first-level administrative divisions, always use the term Governorate; never write province.'] : []),
     ],
   }
   const selected = { eventId: candidate.eventId, title: candidate.headline, memberArticles: candidate.sources.map(source => ({ title: source.publisher })) }
@@ -232,14 +233,23 @@ function headlineAudit(card, packet) {
   return { valid: shared.length >= Math.min(3, headline.size), sharedTerms: shared }
 }
 
+export function geographyAudit(card, item) {
+  const generated = [card?.headline, ...(card?.pages || []).map(page => page.text), ...(card?.uncertainties || [])].join(' ')
+  const priorityRegions = item?.temporalPacket?.writer_facing?.geographicClassification?.priorityRegions || []
+  const forbidden = []
+  if (priorityRegions.includes('Syria') && /\bprovince\b/i.test(generated)) forbidden.push('province used for a Syrian first-level administrative division')
+  return { valid: forbidden.length === 0, forbidden }
+}
+
 function auditCard(item, card) {
   const content = validateCardContent(card)
   const dates = validateGeneratedDates(card, { allowed_exact_dates: item.temporalPacket.allowed_exact_dates.map(date => ({ date })) })
   const numbers = numericAudit(card, item.temporalPacket.writer_facing)
   const relativeTime = relativeTimeAudit(card, item.temporalPacket.writer_facing)
   const headline = headlineAudit(card, item.temporalPacket.writer_facing)
-  const audits = { content, dates, numbers, relativeTime, headline, writerExposure: auditWriterTemporalExposure(item.temporalPacket) }
-  return { audits, valid: content.valid && dates.valid && numbers.valid && relativeTime.valid && headline.valid }
+  const geography = geographyAudit(card, item)
+  const audits = { content, dates, numbers, relativeTime, headline, geography, writerExposure: auditWriterTemporalExposure(item.temporalPacket) }
+  return { audits, valid: content.valid && dates.valid && numbers.valid && relativeTime.valid && headline.valid && geography.valid }
 }
 
 function reportFor(items, results, options, complete) {
@@ -267,7 +277,7 @@ function markdown(report) {
       if (result.card.uncertainties?.length) lines.push(`Uncertainties: ${result.card.uncertainties.join(' · ')}`, '')
     }
     lines.push(`Sources: ${result.sources.map(source => `[${source.publisher}](${source.url})`).join(' · ')}`, '')
-    lines.push(`Checks: structure=${result.audits.content.valid}; dates=${result.audits.dates.valid}; relative-time=${result.audits.relativeTime.valid}; numbers=${result.audits.numbers.valid}; headline=${result.audits.headline.valid}`, '')
+    lines.push(`Checks: structure=${result.audits.content.valid}; dates=${result.audits.dates.valid}; relative-time=${result.audits.relativeTime.valid}; numbers=${result.audits.numbers.valid}; headline=${result.audits.headline.valid}; geography=${result.audits.geography?.valid ?? true}`, '')
   }
   return `${lines.join('\n')}\n`
 }
