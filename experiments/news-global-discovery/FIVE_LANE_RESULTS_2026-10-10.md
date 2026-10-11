@@ -260,3 +260,61 @@ The blind ranking, source-bearing answer key, exact calls, latency, token usage,
 and neuron usage are saved under
 `review-output-five-lane/editorial-selector-trial/`. The app feed, Stage 1
 pipeline, main branch, Beta, deployment, and billing were not changed.
+
+## Lane-boundary and source-readiness safeguards
+
+A separate isolated pass evaluated the 43 non-rejected Interesting candidates
+against an explicit Major News versus Interesting boundary. It used the saved
+evidence, not model memory, and did not regenerate any card.
+
+- Candidates classified: 43
+- Complete structured decisions: 43 of 43
+- Cloudflare batches: 6
+- Cloudflare neurons: 278.30
+- Input tokens: 21,709
+- Output tokens: 2,968
+- Automatic retries: none
+
+Seventeen stories were reassigned from Interesting to their corresponding Major
+News lane. These included the Nord Stream investigation, the false Anthropic
+homicide tip, the ICE detention investigation, Operation Vivaldi, the Syrian
+Oscar selection, attacks and protests in Syria, Ghanaian mining damage, and a
+Brampton election-integrity dispute. Twenty-six retained their Interesting
+classification because their central value was a grounded human, place,
+livelihood, cultural, or unusual-local-solution perspective.
+
+The same pass attached a deterministic source state to all 67 scored stories:
+
+- provisionally usable: 26
+- needs independent corroboration: 14
+- needs independent context: 9
+- needs publisher review: 14
+- replace the current source: 4
+
+These labels are gates, not quality scores. A fascinating story does not bypass
+source verification, and a reputable publisher does not make a contested
+single-source allegation independently confirmed.
+
+Fifteen strong non-major stories requiring source work then received one
+targeted Exa search each. The run cost exactly $0.105 according to Exa. After
+collapsing duplicate URLs from the same domain into one source family:
+
+- five found one trusted supporting source family;
+- one found two trusted supporting source families; and
+- nine remained unresolved under the strict relevance, evidence, and trusted-
+  domain rules.
+
+Useful results included NASA support for the distant fast-radio-burst story,
+NOIRLab support for the gravitational-lens map, University of Chicago support
+for the Jurassic mammal, Yale support for the uncertainty study, two Ghanaian
+outlets covering the community arrest of suspected illegal miners, and Mongabay
+coverage of the Canadian kelp-restoration work. Unresolved does not mean false;
+it means the automated path did not find adequate support and the story must not
+advance automatically.
+
+The first local verification attempt terminated before it wrote a checkpoint,
+so its exact credit use is unavailable and may include some partial duplicate
+searches. The verifier now checkpoints after every story, resumes completed
+work, isolates individual search failures, and counts source families rather
+than raw URLs. All 54 News tests pass. The app, main, Beta, deployment, and
+billing remain unchanged.
