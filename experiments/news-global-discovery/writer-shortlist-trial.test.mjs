@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { buildTrialItem, buildVerificationIndex, chooseTrialCandidates, LANES, numericAudit, relativeTimeAudit } from './writer-shortlist-trial.mjs'
+import { buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, LANES, numericAudit, relativeTimeAudit } from './writer-shortlist-trial.mjs'
 
 test('trial chooses one multi-source candidate from every lane and prefers Syria in a priority tie', () => {
   const item = (eventId, lane, sources, regions = []) => ({ eventId, lane, headline: eventId, evidence: 'A complete factual sentence explains the event. Another complete sentence explains why it matters.', publishedAt: '2026-10-10T00:00:00Z', priorityRegions: regions, editorialRecommendation: 'strong', editorialScore: 90, independentSourceCount: sources, primarySource: { publisher: 'bbc.com', url: `https://bbc.com/${eventId}` }, sources: [{ publisher: 'bbc.com', url: `https://bbc.com/${eventId}` }] })
@@ -32,4 +32,12 @@ test('relative-time audit rejects a next-week claim absent from the packet', () 
   const packet = { temporal_facts_writer_may_state: { unresolved_relative_time: [] } }
   const card = { headline: 'Trial update', pages: [{ text: 'The trial is scheduled to begin next week.' }] }
   assert.deepEqual(relativeTimeAudit(card, packet).unsupportedExpressions, ['next week'])
+})
+
+test('trial packet adds only explicit source-backed context propositions', () => {
+  const candidate = { eventId: 'e1', lane: 'priority-interesting', headline: 'Headline', evidence: 'A complete factual sentence explains the event.', publishedAt: '2026-10-10T00:00:00Z', priorityRegions: ['Ghana'], independentSourceCount: 1, primarySource: { publisher: 'example.com', url: 'https://example.com/a' }, sources: [{ publisher: 'example.com', url: 'https://example.com/a' }] }
+  const contexts = [{ additions: [{ eventId: 'e1', publisher: 'gna.org.gh', url: 'https://gna.org.gh/context', propositions: ['Jema is in Aowin in Ghana’s Western North Region.'] }] }]
+  const item = buildTrialItem(candidate, new Map(), buildContextIndex(contexts))
+  assert.equal(item.temporalPacket.writer_facing.secondarySourceAdditions.length, 1)
+  assert.deepEqual(item.temporalPacket.writer_facing.secondarySourceAdditions[0].completeFactualPropositions, ['Jema is in Aowin in Ghana’s Western North Region.'])
 })

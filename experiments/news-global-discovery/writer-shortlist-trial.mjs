@@ -14,10 +14,12 @@ const REGION_TIMEZONE = { Syria: 'Asia/Damascus', 'Middle East': 'Asia/Qatar', B
 const REGION_PRIORITY = { Syria: 5, 'Middle East': 4, Bangladesh: 3, Ghana: 2, Canada: 1, GTA: 1 }
 
 function parseArgs(argv) {
-  const options = { shortlist: null, verification: [], outputDir: null, dryRun: false }
+  const options = { shortlist: null, verification: [], context: [], eventIds: [], outputDir: null, dryRun: false }
   for (let index = 0; index < argv.length; index += 1) {
     if (argv[index] === '--shortlist') options.shortlist = argv[++index]
     else if (argv[index] === '--verification') options.verification.push(argv[++index])
+    else if (argv[index] === '--context') options.context.push(argv[++index])
+    else if (argv[index] === '--event-id') options.eventIds.push(argv[++index])
     else if (argv[index] === '--output-dir') options.outputDir = argv[++index]
     else if (argv[index] === '--dry-run') options.dryRun = true
   }
@@ -33,6 +35,17 @@ export function buildVerificationIndex(reports) {
   const index = new Map()
   for (const report of reports) for (const result of report.results || []) {
     for (const source of result.accepted || []) index.set(canonicalUrl(source.url), source)
+  }
+  return index
+}
+
+export function buildContextIndex(contextFiles) {
+  const index = new Map()
+  for (const file of contextFiles) for (const addition of file.additions || []) {
+    if (!addition.eventId || !addition.url || !addition.publisher || !addition.propositions?.length) continue
+    const existing = index.get(addition.eventId) || []
+    existing.push(addition)
+    index.set(addition.eventId, existing)
   }
   return index
 }
@@ -58,7 +71,7 @@ function facts(value, maxChars = 4200) {
   return completeSentences(String(value || ''), { maxChars, maxSentences: 12 })
 }
 
-export function buildTrialItem(candidate, verificationIndex) {
+export function buildTrialItem(candidate, verificationIndex, contextIndex = new Map()) {
   const primaryFacts = facts(candidate.evidence)
   const primaryUrl = canonicalUrl(candidate.primarySource.url)
   const secondary = candidate.sources.filter(source => canonicalUrl(source.url) !== primaryUrl).map((source, index) => {
@@ -71,6 +84,12 @@ export function buildTrialItem(candidate, verificationIndex) {
       completeFactualPropositions: verified.propositions, limitations: [],
     }
   }).filter(Boolean)
+  const context = (contextIndex.get(candidate.eventId) || []).map((source, index) => ({
+    sourceId: `context:${candidate.eventId}:${index + 1}`, publisher: source.publisher,
+    url: source.url, publishedAt: source.publishedAt || null, updatedAt: source.updatedAt || null,
+    access: 'ok', wireOrigin: null, sourceType: source.sourceType || 'verified geographic context',
+    completeFactualPropositions: source.propositions, limitations: source.limitations || [],
+  }))
   const regions = candidate.priorityRegions || []
   const raw = {
     eventId: candidate.eventId,
@@ -84,8 +103,8 @@ export function buildTrialItem(candidate, verificationIndex) {
     sourceUpdateTime: null,
     eventTimeOrWindow: [],
     coreFactualPropositions: primaryFacts,
-    secondarySourceAdditions: secondary,
-    provenance: [candidate.primarySource, ...secondary].map((source, index) => ({
+    secondarySourceAdditions: [...secondary, ...context],
+    provenance: [candidate.primarySource, ...secondary, ...context].map((source, index) => ({
       sourceId: source.sourceId || `primary:${candidate.eventId}:${index}`, publisher: source.publisher,
       url: source.url, wireOrigin: null, sourceType: source.sourceType || 'publisher page',
     })),
@@ -206,9 +225,15 @@ async function main() {
   const options = parseArgs(process.argv.slice(2))
   const shortlist = JSON.parse(await fs.readFile(options.shortlist, 'utf8'))
   const verificationReports = await Promise.all(options.verification.map(async file => JSON.parse(await fs.readFile(file, 'utf8'))))
+  const contextFiles = await Promise.all(options.context.map(async file => JSON.parse(await fs.readFile(file, 'utf8'))))
   const verificationIndex = buildVerificationIndex(verificationReports)
-  const items = chooseTrialCandidates(shortlist).map(candidate => buildTrialItem(candidate, verificationIndex))
-  if (items.length !== LANES.length) throw new Error(`Expected one candidate in each of ${LANES.length} lanes; found ${items.length}`)
+  const contextIndex = buildContextIndex(contextFiles)
+  const chosen = options.eventIds.length
+    ? options.eventIds.map(eventId => shortlist.selected.find(candidate => candidate.eventId === eventId)).filter(Boolean)
+    : chooseTrialCandidates(shortlist)
+  if (options.eventIds.length && chosen.length !== options.eventIds.length) throw new Error(`Could not find every requested event ID; requested ${options.eventIds.length}, found ${chosen.length}`)
+  const items = chosen.map(candidate => buildTrialItem(candidate, verificationIndex, contextIndex))
+  if (!options.eventIds.length && items.length !== LANES.length) throw new Error(`Expected one candidate in each of ${LANES.length} lanes; found ${items.length}`)
   if (options.dryRun) {
     process.stdout.write(`${JSON.stringify({ selected: items.map(item => ({ eventId: item.eventId, lane: item.lane, title: item.sourceTitle, displayedSources: item.sources.length, evidenceBackedSecondarySources: item.temporalPacket.writer_facing.secondarySourceAdditions.length, writerExposure: auditWriterTemporalExposure(item.temporalPacket) })) }, null, 2)}\n`)
     return

@@ -32,18 +32,23 @@ jobs:
         run: |
           test -n "$CLOUDFLARE_ACCOUNT_ID"
           test -n "$CLOUDFLARE_API_TOKEN"
-      - name: Generate exactly five cards from the writer-ready shortlist
+      - name: Regenerate only the four affected cards
         run: >-
           node experiments/news-global-discovery/writer-shortlist-trial.mjs
           --shortlist experiments/news-global-discovery/review-output-five-lane/writer-ready-shortlist/WRITER_READY_SHORTLIST.json
           --verification experiments/news-global-discovery/review-output-five-lane/selection-safeguards-trial/SOURCE_VERIFICATION.json
           --verification experiments/news-global-discovery/review-output-five-lane/writer-ready-shortlist/MAJOR_SOURCE_VERIFICATION.json
           --verification experiments/news-global-discovery/review-output-five-lane/writer-ready-shortlist/GAP_RECOVERY_VERIFICATION.json
-          --output-dir experiments/news-global-discovery/review-output-five-lane/writer-trial
+          --context experiments/news-global-discovery/writer-context-additions.json
+          --event-id qualified-event-029
+          --event-id qualified-event-067
+          --event-id qualified-event-106
+          --event-id qualified-event-095
+          --output-dir experiments/news-global-discovery/review-output-five-lane/writer-revision-trial
       - name: Upload the review and exact diagnostics
         uses: actions/upload-artifact@v4
         with:
-          name: news-writer-shortlist-trial-${{ github.run_id }}
-          path: experiments/news-global-discovery/review-output-five-lane/writer-trial
+          name: news-writer-revision-trial-${{ github.run_id }}
+          path: experiments/news-global-discovery/review-output-five-lane/writer-revision-trial
           retention-days: 14
           if-no-files-found: error
