@@ -41,11 +41,11 @@ jobs:
           --verification experiments/news-global-discovery/review-output-five-lane/writer-ready-shortlist/GAP_RECOVERY_VERIFICATION.json
           --context experiments/news-global-discovery/writer-context-additions.json
           --event-id qualified-event-029
-          --output-dir experiments/news-global-discovery/review-output-five-lane/writer-temporal-revision-trial
+          --output-dir experiments/news-global-discovery/review-output-five-lane/writer-coreference-revision-trial
       - name: Upload the review and exact diagnostics
         uses: actions/upload-artifact@v4
         with:
-          name: news-writer-temporal-revision-trial-${{ github.run_id }}
-          path: experiments/news-global-discovery/review-output-five-lane/writer-temporal-revision-trial
+          name: news-writer-coreference-revision-trial-${{ github.run_id }}
+          path: experiments/news-global-discovery/review-output-five-lane/writer-coreference-revision-trial
           retention-days: 14
           if-no-files-found: error
