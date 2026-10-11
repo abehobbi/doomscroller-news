@@ -318,3 +318,46 @@ searches. The verifier now checkpoints after every story, resumes completed
 work, isolates individual search failures, and counts source families rather
 than raw URLs. All 54 News tests pass. The app, main, Beta, deployment, and
 billing remain unchanged.
+
+## Deterministic writer-ready shortlist
+
+The qualified Major pool, editorially scored candidates, lane-boundary results,
+and targeted source-verification results were then combined by stable event ID.
+This was an offline deterministic step: it made no model or search calls and
+did not generate any News card.
+
+A candidate can advance only when its source state is satisfied. Established
+low-risk reporting may advance provisionally. Contested claims need at least
+two independent source families. Specialist or research reporting needs an
+independent contextual source. An unregistered publisher needs independent
+support, and a weak or derivative publisher needs a trusted replacement.
+Unresolved candidates are withheld with an explicit reason rather than quietly
+entering the writer.
+
+The selector keeps all ready strong recommendations, preserves the already
+qualified Major pool when its source gate passes, and uses `possible` stories
+only when required to approach a lane minimum. It does not pad a lane after the
+minimum has been met. Lane maximums and the 65-card daily hard cap are enforced.
+
+The current writer-ready manifest contains 30 stories:
+
+- world-interesting: 9 (minimum 10 not met)
+- priority-interesting: 6 (minimum 6 met)
+- world-major: 5 (minimum 10 not met)
+- priority-major: 5 (minimum 8 not met)
+- discovery: 5 (minimum 4 met)
+
+Forty-eight candidates are withheld or held as unnecessary `possible` reserve
+stories. The source blockers include 24 contested claims without a second
+independent source family, 14 unverified publishers without support, four
+specialist stories without independent context, and three weak sources without
+a trusted replacement. The remaining three are ready `possible` stories that
+were not needed after their lane minimum was reached.
+
+The underfilled lanes are intentional evidence, not a failure to count. This
+trial pool cannot safely produce the requested full daily range without more
+source retrieval, especially for Major News. The next production experiment
+should therefore improve source acquisition for the best withheld Major stories
+before spending writer tokens. The exact ready and withheld lists are saved in
+`review-output-five-lane/writer-ready-shortlist/`. The app, main branch, Beta,
+deployment, and billing remain unchanged.
