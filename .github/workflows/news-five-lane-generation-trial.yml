@@ -13,7 +13,7 @@ permissions:
 jobs:
   generate-trial:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
     env:
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -22,24 +22,28 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
       - run: npm ci
+      - name: Verify isolated News tests
+        run: npm run news:test
       - name: Verify saved Cloudflare credentials are available
         shell: bash
         run: |
           test -n "$CLOUDFLARE_ACCOUNT_ID"
           test -n "$CLOUDFLARE_API_TOKEN"
-      - name: Generate ten isolated cards from the saved evidence packets
+      - name: Generate exactly five cards from the writer-ready shortlist
         run: >-
-          node experiments/news-global-discovery/generate-five-lane-trial.mjs
-          --packets experiments/news-global-discovery/fixtures/five-lane-generation-trial-context-2026-10-10.json
-          --output-dir experiments/news-global-discovery/review-output-five-lane/generated-trial
-          --count 10
+          node experiments/news-global-discovery/writer-shortlist-trial.mjs
+          --shortlist experiments/news-global-discovery/review-output-five-lane/writer-ready-shortlist/WRITER_READY_SHORTLIST.json
+          --verification experiments/news-global-discovery/review-output-five-lane/selection-safeguards-trial/SOURCE_VERIFICATION.json
+          --verification experiments/news-global-discovery/review-output-five-lane/writer-ready-shortlist/MAJOR_SOURCE_VERIFICATION.json
+          --verification experiments/news-global-discovery/review-output-five-lane/writer-ready-shortlist/GAP_RECOVERY_VERIFICATION.json
+          --output-dir experiments/news-global-discovery/review-output-five-lane/writer-trial
       - name: Upload the review and exact diagnostics
         uses: actions/upload-artifact@v4
         with:
-          name: news-five-lane-generation-trial-${{ github.run_id }}
-          path: experiments/news-global-discovery/review-output-five-lane/generated-trial
-          retention-days: 30
+          name: news-writer-shortlist-trial-${{ github.run_id }}
+          path: experiments/news-global-discovery/review-output-five-lane/writer-trial
+          retention-days: 14
           if-no-files-found: error
