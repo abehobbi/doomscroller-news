@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import { pathToFileURL } from 'node:url'
 import { classifyGeography } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/lib.mjs'
 import { clusterCorroboratedEvents } from './event-corroboration.mjs'
 import { assessExtractedEvidence } from './evidence-quality.mjs'
@@ -32,6 +33,19 @@ const CONCRETE_MAJOR = /\b(?:approves?|rejects?|passes?|clears?|signs?|bans?|hal
 const STRONG_PUBLISHER = /^(?:reuters\.com|apnews\.com|bbc\.(?:com|co\.uk)|cbc\.ca|aljazeera\.com|theguardian\.com|nature\.com|npr\.org|globalnews\.ca|hrw\.org|abc\.net\.au|asia\.nikkei\.com)$/
 const WEAK_PUBLISHER = /^(?:torontosun\.com|timesofindia\.indiatimes\.com|economictimes\.indiatimes\.com|scienmag\.com)$/
 const DISCOVERY_JARGON = /\b(?:single-nucleus|transcriptomic|genomic pipeline|known and unknown genomes|cortical dynamics|fractal dimension|productive forces)\b/i
+const TOPIC_STOPWORDS = new Set('about after amid and are been before being between could from have into more near news newsroom offline mission platform over says than that their them there these they this those through under were where which while with would'.split(' '))
+
+function topicTokens(value) {
+  return [...new Set(String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').split(/\s+/)
+    .filter(token => token.length >= 4 && !TOPIC_STOPWORDS.has(token) && !/^\d+$/.test(token)))]
+}
+
+export function evidenceMatchesDiscoveredTopic(selection, snapshot) {
+  const expected = topicTokens(selection?.representative?.title)
+  if (expected.length < 2) return false
+  const actual = new Set(topicTokens(`${snapshot?.title || ''} ${snapshot?.evidenceText || ''}`))
+  return expected.filter(token => actual.has(token)).length >= 2
+}
 
 function parseArgs(argv) {
   const options = { edition: null, enrichment: null, outputDir: null, count: 65 }
@@ -52,6 +66,7 @@ function qualify(selection, snapshot) {
   if (!snapshot || snapshot.evidenceChars < 180) reasons.push('insufficient source evidence')
   const evidenceQuality = snapshot?.evidenceQuality || assessExtractedEvidence(snapshot?.evidenceText)
   if (snapshot && !evidenceQuality.adequate) reasons.push(...evidenceQuality.reasons)
+  if (snapshot && !evidenceMatchesDiscoveredTopic(selection, snapshot)) reasons.push('extracted page does not match discovered story topic')
   if (!snapshot?.imageUrl) reasons.push('no publisher image found')
   if (!snapshot?.title || snapshot.title.length < 24 || /\b(?:and|or|the|a|to|of|for|with|they|he|she|it|its|their)\s*$/i.test(snapshot.title)) reasons.push('headline is incomplete or not self-contained')
   const expectedRegions = selection.representative.priorityRegions || []
@@ -186,4 +201,6 @@ async function main() {
   process.stdout.write(`${JSON.stringify({ requestedCandidates: report.requestedCandidates, rejectedCandidates: report.rejectedCandidates, qualifiedEvents: report.qualifiedEvents, laneCounts }, null, 2)}\n`)
 }
 
-main().catch(error => { console.error(error); process.exitCode = 1 })
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+  main().catch(error => { console.error(error); process.exitCode = 1 })
+}
