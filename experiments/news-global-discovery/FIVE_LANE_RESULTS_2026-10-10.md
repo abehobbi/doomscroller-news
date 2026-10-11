@@ -427,3 +427,53 @@ The remaining two gaps are intentionally preserved. Continuing to spend search
 credits merely to make the counters turn green would weaken the evidence-first
 policy. All 63 News tests pass. No card was generated, and the app, main branch,
 Beta, deployment, and billing remain unchanged.
+
+## Writer-ready five-card trial
+
+One evidence-backed candidate from each lane was selected for a controlled
+writer trial. Multi-source candidates were preferred, and Syria received the
+highest priority when the priority-Major candidates were otherwise tied. The
+five packets covered Nord Stream, Syria's chemical-weapons cleanup, Canadian
+kelp restoration, Ghanaian community action against illegal mining, and the
+most distant identified fast-radio-burst host galaxy.
+
+The trial ran through the existing manual GitHub workflow because the saved
+free Cloudflare credentials remain repository secrets rather than local files.
+It used Gemma 4 26B with thinking explicitly disabled, a 1,536-token completion
+ceiling, structured JSON output, sequential calls, per-card checkpoints, and no
+automatic retries.
+
+- cards generated: 5
+- structurally complete cards: 5
+- accepted after the corrected deterministic audits: 4
+- rejected: 1
+- total neurons: 154.68
+- input tokens: 11,482
+- output tokens: 1,887
+- provider latency: 41.40 seconds
+
+The Syria, kelp, Ghana and fast-radio-burst cards passed the structure, exact-
+date, relative-time, number and headline gates. They ranged from 198 to 315
+words and used two or three pages.
+
+The first audit initially rejected the kelp card because its evidence said
+"almost a quarter of a million Canadian dollars" while the card said "nearly
+250,000 Canadian dollars." This was a deterministic false positive: the amount
+and approximation are equivalent. The numeric gate now recognizes the narrow
+quarter-, half-, and three-quarter-million equivalences only when both the
+source and generated prose preserve approximation. It still rejects an
+unqualified exact amount.
+
+The Nord Stream card was correctly rejected after a new relative-time audit
+found the unsupported phrase "next week." That schedule was absent from the
+writer packet and would also age badly in an installed feed. The relative-time
+gate now rejects unsupported tomorrow/tonight and next/last/this week, month or
+year wording. No retry was made.
+
+This result supports the five-lane writer configuration but does not yet justify
+full-edition generation. The next writer improvement should explicitly suppress
+unsupported relative timing, then repeat only a small targeted case rather than
+regenerating the five accepted/reviewed cards. The complete writer packets,
+provider diagnostics, generated prose and audits are stored under
+`review-output-five-lane/writer-trial/`. The app, main branch, Beta, deployment,
+and billing remain unchanged.

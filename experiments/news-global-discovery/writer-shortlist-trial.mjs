@@ -114,12 +114,34 @@ export function buildTrialItem(candidate, verificationIndex) {
   }
 }
 
-function numericAudit(card, packet) {
+function supportedApproximateFraction(value, generated, evidence) {
+  const normalized = Number(String(value).replace(/,/g, '').match(/\d+(?:\.\d+)?/)?.[0])
+  const mappings = new Map([
+    [250000, /\b(?:almost|nearly|about|approximately)\s+(?:a|one)\s+quarter\s+of\s+(?:a|one)\s+million\b/i],
+    [500000, /\b(?:almost|nearly|about|approximately)\s+(?:a|one)\s+half\s+of\s+(?:a|one)\s+million\b/i],
+    [750000, /\b(?:almost|nearly|about|approximately)\s+three\s+quarters?\s+of\s+(?:a|one)\s+million\b/i],
+  ])
+  const phrase = mappings.get(normalized)
+  if (!phrase?.test(evidence)) return false
+  const escaped = String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  return new RegExp(`\\b(?:almost|nearly|about|approximately)\\s+(?:C\\$|\\$)?${escaped}\\b`, 'i').test(generated)
+}
+
+export function numericAudit(card, packet) {
   const generated = [card?.headline, ...(card?.pages || []).map(page => page.text), ...(card?.uncertainties || [])].join(' ')
   const evidence = JSON.stringify(packet)
   const numbers = [...new Set(generated.match(/\b\d[\d,.]*(?:%|\s*(?:million|billion|trillion|people|years?|days?|hours?|km|kilometres?|miles?|tonnes?|dollars?))?\b/gi) || [])]
-  const unsupported = numbers.filter(value => !evidence.toLowerCase().includes(value.toLowerCase()))
+  const unsupported = numbers.filter(value => !evidence.toLowerCase().includes(value.toLowerCase())
+    && !supportedApproximateFraction(value, generated, evidence))
   return { valid: unsupported.length === 0, generatedNumbers: numbers, unsupportedNumbers: unsupported }
+}
+
+export function relativeTimeAudit(card, packet) {
+  const generated = [card?.headline, ...(card?.pages || []).map(page => page.text), ...(card?.uncertainties || [])].join(' ')
+  const expressions = [...new Set([...generated.matchAll(/\b(?:tomorrow|tonight|next\s+(?:week|month|year)|last\s+(?:week|month|year)|this\s+(?:week|month|year))\b/gi)].map(match => match[0].toLowerCase()))]
+  const allowed = new Set((packet?.temporal_facts_writer_may_state?.unresolved_relative_time || []).map(value => String(value.wording || '').toLowerCase()))
+  const unsupported = expressions.filter(value => !allowed.has(value))
+  return { valid: unsupported.length === 0, generatedExpressions: expressions, allowedExpressions: [...allowed], unsupportedExpressions: unsupported }
 }
 
 function headlineAudit(card, packet) {
@@ -127,6 +149,16 @@ function headlineAudit(card, packet) {
   const headline = terms(card?.headline), evidence = terms(JSON.stringify(packet))
   const shared = [...headline].filter(term => evidence.has(term))
   return { valid: shared.length >= Math.min(3, headline.size), sharedTerms: shared }
+}
+
+function auditCard(item, card) {
+  const content = validateCardContent(card)
+  const dates = validateGeneratedDates(card, { allowed_exact_dates: item.temporalPacket.allowed_exact_dates.map(date => ({ date })) })
+  const numbers = numericAudit(card, item.temporalPacket.writer_facing)
+  const relativeTime = relativeTimeAudit(card, item.temporalPacket.writer_facing)
+  const headline = headlineAudit(card, item.temporalPacket.writer_facing)
+  const audits = { content, dates, numbers, relativeTime, headline, writerExposure: auditWriterTemporalExposure(item.temporalPacket) }
+  return { audits, valid: content.valid && dates.valid && numbers.valid && relativeTime.valid && headline.valid }
 }
 
 function reportFor(items, results, options, complete) {
@@ -154,7 +186,7 @@ function markdown(report) {
       if (result.card.uncertainties?.length) lines.push(`Uncertainties: ${result.card.uncertainties.join(' · ')}`, '')
     }
     lines.push(`Sources: ${result.sources.map(source => `[${source.publisher}](${source.url})`).join(' · ')}`, '')
-    lines.push(`Checks: structure=${result.audits.content.valid}; dates=${result.audits.dates.valid}; numbers=${result.audits.numbers.valid}; headline=${result.audits.headline.valid}`, '')
+    lines.push(`Checks: structure=${result.audits.content.valid}; dates=${result.audits.dates.valid}; relative-time=${result.audits.relativeTime.valid}; numbers=${result.audits.numbers.valid}; headline=${result.audits.headline.valid}`, '')
   }
   return `${lines.join('\n')}\n`
 }
@@ -165,6 +197,7 @@ async function save(outputDir, items, results, options, complete) {
   await Promise.all([
     fs.writeFile(path.join(outputDir, 'TRIAL_REPORT.json'), `${JSON.stringify(report, null, 2)}\n`, 'utf8'),
     fs.writeFile(path.join(outputDir, 'TRIAL_REVIEW.md'), markdown(report), 'utf8'),
+    fs.writeFile(path.join(outputDir, 'TRIAL_INPUT.json'), `${JSON.stringify({ schemaVersion: 1, createdAt: report.createdAt, items }, null, 2)}\n`, 'utf8'),
   ])
   return report
 }
@@ -182,19 +215,23 @@ async function main() {
   }
   let results = []
   try { results = JSON.parse(await fs.readFile(path.join(options.outputDir, 'TRIAL_REPORT.json'), 'utf8')).results || [] } catch {}
+  const itemById = new Map(items.map(value => [value.eventId, value]))
+  results = results.map(result => {
+    const item = itemById.get(result.eventId)
+    if (!item || !result.card) return result
+    const { audits, valid } = auditCard(item, result.card)
+    return { ...result, status: result.provider.complete && valid ? 'accepted' : 'rejected', audits }
+  })
   const completed = new Set(results.map(value => value.eventId))
   for (const item of items.filter(value => !completed.has(value.eventId))) {
     const attempt = await writeCard(item.temporalPacket.writer_facing)
     const card = attempt.complete ? attempt.parsed : null
-    const content = card ? validateCardContent(card) : { valid: false, reasons: ['writer output incomplete'], wordCount: 0, pageCount: 0 }
-    const dates = card ? validateGeneratedDates(card, { allowed_exact_dates: item.temporalPacket.allowed_exact_dates.map(date => ({ date })) }) : { valid: false }
-    const numbers = card ? numericAudit(card, item.temporalPacket.writer_facing) : { valid: false, generatedNumbers: [], unsupportedNumbers: [] }
-    const headline = card ? headlineAudit(card, item.temporalPacket.writer_facing) : { valid: false, sharedTerms: [] }
-    const valid = attempt.complete && content.valid && dates.valid && numbers.valid && headline.valid
+    const audited = card ? auditCard(item, card) : { valid: false, audits: { content: { valid: false, reasons: ['writer output incomplete'], wordCount: 0, pageCount: 0 }, dates: { valid: false }, numbers: { valid: false, generatedNumbers: [], unsupportedNumbers: [] }, relativeTime: { valid: false, generatedExpressions: [], allowedExpressions: [], unsupportedExpressions: [] }, headline: { valid: false, sharedTerms: [] }, writerExposure: auditWriterTemporalExposure(item.temporalPacket) } }
+    const valid = attempt.complete && audited.valid
     results.push({
       eventId: item.eventId, lane: item.lane, sourceTitle: item.sourceTitle, sources: item.sources,
       status: valid ? 'accepted' : 'rejected', card,
-      audits: { content, dates, numbers, headline, writerExposure: auditWriterTemporalExposure(item.temporalPacket) },
+      audits: audited.audits,
       provider: { requestedModel: attempt.requestedModel, returnedModel: attempt.returnedModel, httpStatus: attempt.httpStatus, internalErrors: attempt.internalErrors, latencyMs: attempt.latencyMs, finishReason: attempt.finishReason, usage: attempt.usage, safeHeaders: attempt.safeHeaders, complete: attempt.complete, structuralStatus: attempt.structuralStatus },
     })
     await save(options.outputDir, items, results, options, false)
