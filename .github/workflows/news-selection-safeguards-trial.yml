@@ -1,4 +1,4 @@
-name: Run isolated News selection safeguards trial
+name: Run fresh News shadow-edition safeguards
 
 on:
   workflow_dispatch:
@@ -35,15 +35,15 @@ jobs:
         continue-on-error: true
         run: >-
           node experiments/news-global-discovery/selection-safeguards.mjs
-          --fixture experiments/news-global-discovery/fixtures/editorial-selector-candidates-2026-10-10.json
-          --scores experiments/news-global-discovery/review-output-five-lane/editorial-selector-trial/EDITORIAL_SCORES.json
-          --output-dir experiments/news-global-discovery/review-output-five-lane/selection-safeguards-trial
+          --fixture experiments/news-global-discovery/review-output-shadow-2026-10-11/editorial/EDITORIAL_FIXTURE.json
+          --scores experiments/news-global-discovery/review-output-shadow-2026-10-11/editorial/scored/EDITORIAL_SCORES.json
+          --output-dir experiments/news-global-discovery/review-output-shadow-2026-10-11/safeguards
       - name: Upload the review and diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: news-selection-safeguards-trial-${{ github.run_id }}
-          path: experiments/news-global-discovery/review-output-five-lane/selection-safeguards-trial
+          name: news-shadow-selection-safeguards-${{ github.run_id }}
+          path: experiments/news-global-discovery/review-output-shadow-2026-10-11/safeguards
           retention-days: 30
           if-no-files-found: error
       - name: Preserve failed classification as failed workflow
