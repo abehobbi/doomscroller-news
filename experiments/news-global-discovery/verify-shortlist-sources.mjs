@@ -5,6 +5,7 @@ import { completeSentences, tokens } from '../../artifacts/summary-feasibility/d
 import { trustedContextDomain } from './enrich-generation-context.mjs'
 import { assessExtractedEvidence } from './evidence-quality.mjs'
 import { fetchPublicArticle } from './public-article.mjs'
+import { publisherFamily } from './event-corroboration.mjs'
 
 const API_URL = 'https://api.exa.ai/search'
 const EXCLUDED_DOMAINS = ['facebook.com', 'instagram.com', 'linkedin.com', 'pinterest.com', 'tiktok.com', 'youtube.com', 'x.com']
@@ -32,11 +33,18 @@ function canonicalUrl(value) {
 }
 
 export function normalizeVerificationResult(result) {
-  const accepted = [...new Map((result.accepted || []).map(source => [String(source.domain || '').toLowerCase(), source])).values()]
+  const accepted = [...new Map((result.accepted || []).map(source => [publisherFamily(source.domain), source])).values()]
   const status = result.status === 'search-failed' ? result.status
     : accepted.length >= 2 ? 'two-supporting-source-families-found'
       : accepted.length === 1 ? 'one-supporting-source-family-found' : 'unresolved'
   return { ...result, accepted, status }
+}
+
+export function verificationSourceIsFresh(storyPublishedAt, candidatePublishedAt, maximumAgeDays = 7) {
+  const storyTime = Date.parse(storyPublishedAt || '')
+  const candidateTime = Date.parse(candidatePublishedAt || '')
+  if (!Number.isFinite(storyTime) || !Number.isFinite(candidateTime)) return false
+  return candidateTime >= storyTime - maximumAgeDays * 86_400_000
 }
 
 export function verificationCandidates(report, maximum = 15) {
@@ -89,6 +97,7 @@ async function search(apiKey, story) {
 async function verifyStory(apiKey, story) {
   const found = await search(apiKey, story)
   const originalUrl = canonicalUrl(story.source.url)
+  const originalFamily = publisherFamily(story.source.publisher || (() => { try { return new URL(originalUrl).hostname } catch { return '' } })())
   const accepted = [], rejected = []
   for (const result of found.results) {
     if (accepted.length >= 2) break
@@ -106,6 +115,8 @@ async function verifyStory(apiKey, story) {
       if (!relevance.passes) reasons.push('insufficient event overlap')
       if (!trustedContextDomain(domain)) reasons.push('domain is not in the trusted context registry')
       if (propositions.length < 2) reasons.push('insufficient complete propositions')
+      if (publisherFamily(domain) === originalFamily) reasons.push('same publisher family as the original source')
+      if (!verificationSourceIsFresh(story.publishedAt, result.publishedDate)) reasons.push('supporting report is stale or has no verifiable publication time')
       if (reasons.length) {
         rejected.push({ url: finalUrl, title: article.title || result.title, domain, reasons })
         continue

@@ -61,13 +61,17 @@ function normalizedPublisher(value) {
   return String(value || '').toLowerCase().replace(/^www\./, '').replace(/^edition\./, '')
 }
 
+export function publisherFamily(value) {
+  const publisher = normalizedPublisher(value)
+  if (publisher === 'bbc.co.uk') return 'bbc.com'
+  return publisher
+}
+
 export function sourceFamily(item) {
   const evidence = item.snapshot.evidenceText || ''
   const detected = detectWireOrigin(evidence) || evidence.slice(0, 1200).match(/\b(?:Reuters|Associated Press|Canadian Press|Agence France-Presse|AFP)\b|\(AP\)/i)?.[0]
   if (detected) return `wire:${detected.toLowerCase().replace('(ap)', 'ap').replace('associated press', 'ap').replace('canadian press', 'cp').replace('agence france-presse', 'afp')}`
-  const publisher = normalizedPublisher(item.snapshot.publisher)
-  if (publisher === 'bbc.co.uk') return 'publisher:bbc.com'
-  return `publisher:${publisher}`
+  return `publisher:${publisherFamily(item.snapshot.publisher)}`
 }
 
 export function clusterCorroboratedEvents(items) {

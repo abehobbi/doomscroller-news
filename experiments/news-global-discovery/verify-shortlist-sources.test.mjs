@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { normalizeVerificationResult, relevantCandidate, verificationCandidates } from './verify-shortlist-sources.mjs'
+import { normalizeVerificationResult, relevantCandidate, verificationCandidates, verificationSourceIsFresh } from './verify-shortlist-sources.mjs'
 
 test('verification candidates are strong non-major stories that still need source work', () => {
   const item = (id, recommendation, destination, decision, score) => ({ blindId: id, editorialScore: score, headline: id, destination, sourceAssessment: { decision }, evaluation: { recommendation, strongest_fact: 'fact' } })
@@ -45,4 +45,19 @@ test('supporting URLs from one publisher count as one source family', () => {
   ] })
   assert.equal(normalized.accepted.length, 1)
   assert.equal(normalized.status, 'one-supporting-source-family-found')
+})
+
+test('BBC mirrors count as one source family', () => {
+  const normalized = normalizeVerificationResult({ status: 'unresolved', accepted: [
+    { domain: 'bbc.com', url: 'https://bbc.com/story' },
+    { domain: 'bbc.co.uk', url: 'https://bbc.co.uk/story' },
+  ] })
+  assert.equal(normalized.accepted.length, 1)
+  assert.equal(normalized.status, 'one-supporting-source-family-found')
+})
+
+test('source verification rejects stale or undated support', () => {
+  assert.equal(verificationSourceIsFresh('2026-10-10T00:00:00Z', '2026-10-08T00:00:00Z'), true)
+  assert.equal(verificationSourceIsFresh('2026-10-10T00:00:00Z', '2025-10-08T00:00:00Z'), false)
+  assert.equal(verificationSourceIsFresh('2026-10-10T00:00:00Z', null), false)
 })
