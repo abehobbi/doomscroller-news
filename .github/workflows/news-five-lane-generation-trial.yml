@@ -40,13 +40,12 @@ jobs:
           --verification experiments/news-global-discovery/review-output-shadow-2026-10-11/verification/GAP_RECOVERY_VERIFICATION.json
           --verification experiments/news-global-discovery/review-output-shadow-2026-10-11/verification/REGION_RECOVERY_VERIFICATION.json
           --context experiments/news-global-discovery/review-output-shadow-2026-10-11/corrections/TARGETED_CONTEXT.json
-          --event-id qualified-event-068
           --event-id qualified-event-025
-          --output-dir experiments/news-global-discovery/review-output-shadow-2026-10-11/writing/final-targeted
+          --output-dir experiments/news-global-discovery/review-output-shadow-2026-10-11/writing/final-navajo
       - name: Upload the review and exact diagnostics
         uses: actions/upload-artifact@v4
         with:
-          name: news-final-targeted-${{ github.run_id }}
-          path: experiments/news-global-discovery/review-output-shadow-2026-10-11/writing/final-targeted
+          name: news-final-navajo-${{ github.run_id }}
+          path: experiments/news-global-discovery/review-output-shadow-2026-10-11/writing/final-navajo
           retention-days: 14
           if-no-files-found: error

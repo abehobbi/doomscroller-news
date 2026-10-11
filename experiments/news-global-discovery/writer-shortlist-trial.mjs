@@ -119,7 +119,6 @@ export function buildTrialItem(candidate, verificationIndex, contextIndex = new 
       url: source.url, wireOrigin: null, sourceType: source.sourceType || 'publisher page',
     })),
     attributionAndUncertainty: [
-      `${candidate.independentSourceCount || 1} independent source families are represented by the selection gate.`,
       'Publication time is not assumed to be event time.',
     ],
     geographicClassification: { eventLocations: regions.map(name => ({ name })), priorityRegions: regions },
@@ -241,6 +240,19 @@ export function geographyAudit(card, item) {
   return { valid: forbidden.length === 0, forbidden }
 }
 
+export function writerMetadataAudit(card) {
+  const generated = [card?.headline, ...(card?.pages || []).map(page => page.text), ...(card?.uncertainties || [])].join(' ')
+  const patterns = [
+    /\bselection gate\b/i,
+    /\bsource-led packet\b/i,
+    /\bindependent source families?\b/i,
+    /\bcurator instructions?\b/i,
+    /\bwriter(?:-facing)? (?:input|packet|instructions?)\b/i,
+  ]
+  const exposed = patterns.filter(pattern => pattern.test(generated)).map(pattern => pattern.source)
+  return { valid: exposed.length === 0, exposed }
+}
+
 function auditCard(item, card) {
   const content = validateCardContent(card)
   const dates = validateGeneratedDates(card, { allowed_exact_dates: item.temporalPacket.allowed_exact_dates.map(date => ({ date })) })
@@ -248,8 +260,9 @@ function auditCard(item, card) {
   const relativeTime = relativeTimeAudit(card, item.temporalPacket.writer_facing)
   const headline = headlineAudit(card, item.temporalPacket.writer_facing)
   const geography = geographyAudit(card, item)
-  const audits = { content, dates, numbers, relativeTime, headline, geography, writerExposure: auditWriterTemporalExposure(item.temporalPacket) }
-  return { audits, valid: content.valid && dates.valid && numbers.valid && relativeTime.valid && headline.valid && geography.valid }
+  const metadata = writerMetadataAudit(card)
+  const audits = { content, dates, numbers, relativeTime, headline, geography, metadata, writerExposure: auditWriterTemporalExposure(item.temporalPacket) }
+  return { audits, valid: content.valid && dates.valid && numbers.valid && relativeTime.valid && headline.valid && geography.valid && metadata.valid }
 }
 
 function reportFor(items, results, options, complete) {
@@ -277,7 +290,7 @@ function markdown(report) {
       if (result.card.uncertainties?.length) lines.push(`Uncertainties: ${result.card.uncertainties.join(' · ')}`, '')
     }
     lines.push(`Sources: ${result.sources.map(source => `[${source.publisher}](${source.url})`).join(' · ')}`, '')
-    lines.push(`Checks: structure=${result.audits.content.valid}; dates=${result.audits.dates.valid}; relative-time=${result.audits.relativeTime.valid}; numbers=${result.audits.numbers.valid}; headline=${result.audits.headline.valid}; geography=${result.audits.geography?.valid ?? true}`, '')
+    lines.push(`Checks: structure=${result.audits.content.valid}; dates=${result.audits.dates.valid}; relative-time=${result.audits.relativeTime.valid}; numbers=${result.audits.numbers.valid}; headline=${result.audits.headline.valid}; geography=${result.audits.geography?.valid ?? true}; metadata=${result.audits.metadata?.valid ?? true}`, '')
   }
   return `${lines.join('\n')}\n`
 }
