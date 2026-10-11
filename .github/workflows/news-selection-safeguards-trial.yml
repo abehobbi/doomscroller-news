@@ -1,0 +1,57 @@
+name: Run isolated News selection safeguards trial
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - codex/news-editorial-selection
+    paths:
+      - .github/workflows/news-selection-safeguards-trial.yml
+      - experiments/news-global-discovery/selection-safeguards.mjs
+
+concurrency:
+  group: news-selection-safeguards-trial
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  classify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      FREE_PLAN_CONFIRMED: 'yes'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Verify saved Cloudflare credentials are available
+        shell: bash
+        run: |
+          test -n "$CLOUDFLARE_ACCOUNT_ID"
+          test -n "$CLOUDFLARE_API_TOKEN"
+      - name: Classify lane boundaries and source readiness
+        id: classify
+        continue-on-error: true
+        run: >-
+          node experiments/news-global-discovery/selection-safeguards.mjs
+          --fixture experiments/news-global-discovery/fixtures/editorial-selector-candidates-2026-10-10.json
+          --scores experiments/news-global-discovery/review-output-five-lane/editorial-selector-trial/EDITORIAL_SCORES.json
+          --output-dir experiments/news-global-discovery/review-output-five-lane/selection-safeguards-trial
+      - name: Upload the review and diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: news-selection-safeguards-trial-${{ github.run_id }}
+          path: experiments/news-global-discovery/review-output-five-lane/selection-safeguards-trial
+          retention-days: 30
+          if-no-files-found: error
+      - name: Preserve failed classification as failed workflow
+        if: steps.classify.outcome == 'failure'
+        run: exit 1
