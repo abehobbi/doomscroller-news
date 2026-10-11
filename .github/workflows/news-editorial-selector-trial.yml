@@ -30,19 +30,25 @@ jobs:
         run: |
           test -n "$CLOUDFLARE_ACCOUNT_ID"
           test -n "$CLOUDFLARE_API_TOKEN"
-      - name: Score the fresh Interesting and Discovery candidates
+      - name: Prepare the corrected selected-pool fixture
+        run: >-
+          node experiments/news-global-discovery/editorial-selector.mjs
+          --edition experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/combined/COMBINED_QUALIFIED_EDITION.json
+          --prepare-fixture experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/EDITORIAL_FIXTURE.json
+          --selected-only
+      - name: Score the corrected Interesting and Discovery candidates
         id: score
         continue-on-error: true
         run: >-
           node experiments/news-global-discovery/editorial-selector.mjs
-          --fixture experiments/news-global-discovery/review-output-shadow-2026-10-11/editorial/EDITORIAL_FIXTURE.json
-          --output-dir experiments/news-global-discovery/review-output-shadow-2026-10-11/editorial/scored
+          --fixture experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/EDITORIAL_FIXTURE.json
+          --output-dir experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/scored
       - name: Upload blind review, answer key and diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: news-shadow-editorial-selector-${{ github.run_id }}
-          path: experiments/news-global-discovery/review-output-shadow-2026-10-11/editorial/scored
+          path: experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/scored
           retention-days: 30
           if-no-files-found: error
       - name: Preserve a failed selector result as a failed workflow

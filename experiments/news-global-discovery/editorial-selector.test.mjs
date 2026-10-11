@@ -25,6 +25,12 @@ test('fixture preparation excludes candidates emptied by boilerplate cleanup', (
   assert.equal(fixture.excluded[0].eventId, 'empty')
 })
 
+test('selected-only fixture omits qualified reserves for a bounded final-edition review', () => {
+  const make = (id, lane) => ({ id, representative: { selection: { assignedLane: lane, representative: { priorityRegions: [] } }, snapshot: { title: `Title ${id} contains enough words`, evidenceText: 'This evidence describes a specific recent event with enough context for a bounded editorial review. It identifies the people and place involved. It also explains why the development matters and supplies a concrete consequence for affected residents.', publishedAt: '2026-10-10T00:00:00Z', publisher: 'example.com', finalUrl: `https://example.com/${id}` } } })
+  const fixture = prepareEditorialFixture({ events: [make('selected', 'world-interesting')], qualifiedButNotSelected: [make('reserve', 'world-interesting')] }, { includeReserves: false })
+  assert.deepEqual(fixture.candidates.map(value => value.eventId), ['selected'])
+})
+
 test('batch helper is deterministic', () => {
   assert.deepEqual(chunks([1, 2, 3, 4, 5], 2), [[1, 2], [3, 4], [5]])
 })

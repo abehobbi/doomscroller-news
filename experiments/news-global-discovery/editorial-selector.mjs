@@ -19,7 +19,7 @@ const HIGH_SIGNAL = /\b(?:killed?|deaths?|died|injured?|missing|displaced|detain
 const EXTRACTION_JUNK = /(?:\{\s*(?:font|margin|padding|display|width|border|color)|\b(?:font-size|padding-top|margin-bottom|cursor|stylesheet|javascript|cookies? not supported|thank you for visiting|browser version with limited support|compatibility mode in internet explorer)\b|\b\d+(?:\.\d+)?(?:rem|px)\b|^\s*[.#][\w-]+\s)/i
 
 function parseArgs(argv) {
-  const options = { edition: null, fixture: null, prepareFixture: null, outputDir: null, resume: null, batchSize: SELECTOR_CONFIGURATION.batchSize }
+  const options = { edition: null, fixture: null, prepareFixture: null, outputDir: null, resume: null, batchSize: SELECTOR_CONFIGURATION.batchSize, selectedOnly: false }
   for (let index = 0; index < argv.length; index += 1) {
     if (argv[index] === '--edition') options.edition = argv[++index]
     else if (argv[index] === '--fixture') options.fixture = argv[++index]
@@ -27,6 +27,7 @@ function parseArgs(argv) {
     else if (argv[index] === '--output-dir') options.outputDir = argv[++index]
     else if (argv[index] === '--resume') options.resume = argv[++index]
     else if (argv[index] === '--batch-size') options.batchSize = Number(argv[++index])
+    else if (argv[index] === '--selected-only') options.selectedOnly = true
   }
   if (options.prepareFixture && !options.edition) throw new Error('--edition is required with --prepare-fixture')
   if (!options.prepareFixture && (!options.fixture || !options.outputDir)) throw new Error('Use --fixture and --output-dir to run scoring')
@@ -59,9 +60,9 @@ export function compactEvidence(text, { maxChars = 3200 } = {}) {
   return output.join(' ')
 }
 
-export function prepareEditorialFixture(edition) {
+export function prepareEditorialFixture(edition, { includeReserves = true } = {}) {
   const selected = edition.events.filter(event => INCLUDED_LANES.has(event.representative.selection.assignedLane))
-  const reserve = (edition.qualifiedButNotSelected || []).filter(event => INCLUDED_LANES.has(event.representative.selection.assignedLane))
+  const reserve = includeReserves ? (edition.qualifiedButNotSelected || []).filter(event => INCLUDED_LANES.has(event.representative.selection.assignedLane)) : []
   const events = [...selected, ...reserve]
   const prepared = events.map((event, index) => {
     const item = event.representative
@@ -250,7 +251,7 @@ async function main() {
   const options = parseArgs(process.argv.slice(2))
   if (options.prepareFixture) {
     const edition = JSON.parse(await fs.readFile(options.edition, 'utf8'))
-    const fixture = prepareEditorialFixture(edition)
+    const fixture = prepareEditorialFixture(edition, { includeReserves: !options.selectedOnly })
     await fs.mkdir(path.dirname(options.prepareFixture), { recursive: true })
     await fs.writeFile(options.prepareFixture, `${JSON.stringify(fixture, null, 2)}\n`, 'utf8')
     process.stdout.write(`${JSON.stringify({ candidates: fixture.candidates.length, excluded: fixture.excluded.length, lanes: Object.fromEntries([...INCLUDED_LANES].map(lane => [lane, fixture.candidates.filter(value => value.lane === lane).length])), output: options.prepareFixture }, null, 2)}\n`)
