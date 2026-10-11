@@ -162,13 +162,59 @@ function supportedApproximateFraction(value, generated, evidence) {
   return new RegExp(`\\b(?:almost|nearly|about|approximately)\\s+(?:C\\$|\\$)?${escaped}\\b`, 'i').test(generated)
 }
 
+const NUMBER_WORDS = new Map([
+  ['zero', 0], ['one', 1], ['two', 2], ['three', 3], ['four', 4], ['five', 5],
+  ['six', 6], ['seven', 7], ['eight', 8], ['nine', 9], ['ten', 10],
+  ['eleven', 11], ['twelve', 12], ['thirteen', 13], ['fourteen', 14], ['fifteen', 15],
+  ['sixteen', 16], ['seventeen', 17], ['eighteen', 18], ['nineteen', 19],
+  ['twenty', 20], ['thirty', 30], ['forty', 40], ['fifty', 50],
+  ['sixty', 60], ['seventy', 70], ['eighty', 80], ['ninety', 90],
+])
+
+function normalizeNumberWords(value) {
+  return String(value)
+    .toLowerCase()
+    .replace(/\b(?:a|one)\s+decade\b/g, '10 years')
+    .replace(/\btwo\s+decades\b/g, '20 years')
+    .replace(/\bthree\s+decades\b/g, '30 years')
+    .replace(/\bfour\s+decades\b/g, '40 years')
+    .replace(/\b(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)[- ](one|two|three|four|five|six|seven|eight|nine)\b/g,
+      (_match, tens, units) => String(NUMBER_WORDS.get(tens) + NUMBER_WORDS.get(units)))
+    .replace(/\b(zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)\b/g,
+      match => String(NUMBER_WORDS.get(match)))
+    .replace(/\b(\d+)\s+percent\b/g, '$1%')
+    .replace(/(?<=\d),(?=\d{3}\b)/g, '')
+}
+
 export function numericAudit(card, packet) {
   const generated = [card?.headline, ...(card?.pages || []).map(page => page.text), ...(card?.uncertainties || [])].join(' ')
   const evidence = JSON.stringify(packet)
-  const numbers = [...new Set(generated.match(/\b\d[\d,.]*(?:%|\s*(?:million|billion|trillion|people|years?|days?|hours?|km|kilometres?|miles?|tonnes?|dollars?))?\b/gi) || [])]
-  const unsupported = numbers.filter(value => !evidence.toLowerCase().includes(value.toLowerCase())
+  const normalizedEvidence = normalizeNumberWords(evidence)
+  const numbers = [...new Set((generated.match(/\b\d[\d,.]*(?:(?:%)(?!\w)|\s*(?:million|billion|trillion|people|years?|days?|hours?|km|kilometres?|miles?|tonnes?|dollars?)\b)?/gi) || [])
+    .map(value => value.replace(/[,.]+$/, '')))]
+  const supported = value => {
+    const normalized = normalizeNumberWords(value)
+    if (normalizedEvidence.includes(normalized)) return true
+    const numericCore = normalized.match(/^\d+(?:\.\d+)?(?:%|\s+(?:million|billion|trillion))?/)?.[0]
+    return Boolean(numericCore && new RegExp(`\\b${numericCore.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(normalizedEvidence))
+  }
+  const unsupported = numbers.filter(value => !supported(value)
     && !supportedApproximateFraction(value, generated, evidence))
-  return { valid: unsupported.length === 0, generatedNumbers: numbers, unsupportedNumbers: unsupported }
+  const qualifierMismatches = numbers.filter(value => {
+    const core = normalizeNumberWords(value).match(/^\d+(?:\.\d+)?(?:%|\s+(?:million|billion|trillion))?/)?.[0]
+    if (!core) return false
+    const escaped = core.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const occurrenceKinds = text => [...text.matchAll(new RegExp(`\\b${escaped}\\b`, 'gi'))].map(match => {
+      const prefix = text.slice(Math.max(0, match.index - 24), match.index)
+      return /(?:more than|over|at least)\s*$/i.test(prefix) ? 'lower-bound' : 'unqualified'
+    })
+    const evidenceKinds = occurrenceKinds(normalizedEvidence)
+    const generatedKinds = occurrenceKinds(normalizeNumberWords(generated))
+    return evidenceKinds.length > 0
+      && evidenceKinds.every(kind => kind === 'lower-bound')
+      && generatedKinds.some(kind => kind === 'unqualified')
+  })
+  return { valid: unsupported.length === 0 && qualifierMismatches.length === 0, generatedNumbers: numbers, unsupportedNumbers: unsupported, qualifierMismatches }
 }
 
 export function relativeTimeAudit(card, packet) {

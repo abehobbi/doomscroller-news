@@ -30,6 +30,31 @@ test('numeric audit recognizes a preserved approximate quarter-million expressio
   assert.equal(numericAudit(overstated, packet).valid, false)
 })
 
+test('numeric audit recognizes supported written-number and punctuation equivalents', () => {
+  const packet = {
+    facts: [
+      'Ninety-four percent of residents lack adequate shelter.',
+      'The shelter houses 44,457 people.',
+      'Seventeen years ago, a river island emerged.',
+      'The craftsperson has worked for three decades.',
+    ],
+  }
+  const card = {
+    headline: '94% lack shelter',
+    pages: [{ text: 'The shelter houses 44,457 people. The island emerged 17 years ago, and the craftsperson has worked for 30 years.' }],
+  }
+  assert.equal(numericAudit(card, packet).valid, true)
+})
+
+test('numeric audit rejects a lower-bound figure stated as an exact count', () => {
+  const packet = { fact: 'More than one million people were affected.' }
+  const preserved = { headline: 'More than 1 million affected', pages: [] }
+  const collapsed = { headline: '1 million affected', pages: [] }
+  assert.equal(numericAudit(preserved, packet).valid, true)
+  assert.deepEqual(numericAudit(collapsed, packet).qualifierMismatches, ['1 million'])
+  assert.equal(numericAudit(collapsed, packet).valid, false)
+})
+
 test('relative-time audit rejects a next-week claim absent from the packet', () => {
   const packet = { temporal_facts_writer_may_state: { unresolved_relative_time: [] } }
   const card = { headline: 'Trial update', pages: [{ text: 'The trial is scheduled to begin next week.' }] }
