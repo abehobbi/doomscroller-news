@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-11T00:57:38.369Z",
+  "sourceShortlist": "experiments/news-global-discovery/review-output-five-lane/writer-ready-shortlist/WRITER_READY_SHORTLIST.json",
+  "sourceVerification": [
+    "experiments/news-global-discovery/review-output-five-lane/selection-safeguards-trial/SOURCE_VERIFICATION.json",
+    "experiments/news-global-discovery/review-output-five-lane/writer-ready-shortlist/MAJOR_SOURCE_VERIFICATION.json",
+    "experiments/news-global-discovery/review-output-five-lane/writer-ready-shortlist/GAP_RECOVERY_VERIFICATION.json"
+  ],
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1536,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "complete": true,
+  "expected": 1,
+  "resultCount": 1,
+  "accepted": 1,
+  "rejected": 0,
+  "totalNeurons": 34.554542541503906,
+  "inputTokens": 2517,
+  "outputTokens": 428,
+  "totalLatencyMs": 4116,
+  "results": [
+    {
+      "eventId": "qualified-event-029",
+      "lane": "world-major",
+      "sourceTitle": "Nord Stream trial: How German police followed the evidence - to Ukraine",
+      "sources": [
+        {
+          "publisher": "bbc.com",
+          "url": "https://www.bbc.com/news/articles/c317ke5ngrq7o"
+        },
+        {
+          "publisher": "bbc.co.uk",
+          "url": "https://www.bbc.co.uk/news/articles/c317ke5ngrq7o"
+        },
+        {
+          "publisher": "theguardian.com",
+          "url": "https://www.theguardian.com/world/2026/jul/02/german-prosecutors-accuse-kyiv-of-ordering-2022-nord-stream-sabotage"
+        }
+      ],
+      "status": "accepted",
+      "card": {
+        "headline": "Former Ukrainian officer to face trial in Germany for Nord Stream sabotage",
+        "pages": [
+          {
+            "text": "German prosecutors have indicted Serhii K, a former Ukrainian Special Forces soldier, for his alleged role in the September 2022 explosions that ruptured the Nord Stream gas pipelines. The pipelines, which linked Russia to Europe, were located deep beneath the Baltic Sea. The sabotage almost entirely destroyed the seafloor infrastructure, disrupting the supply of Russian gas to Germany. Following his extradition to Germany and months in isolation in a high-security prison, Serhii K will go on trial in Hamburg. He is charged with causing an explosion and a war crime for attacking civilian infrastructure, allegedly acting on behalf of state agencies of Ukraine."
+          },
+          {
+            "text": "German federal prosecutors allege that Serhii K, then an officer in the Ukrainian army, worked with other military members to devise the plan to destroy Nord Stream pipelines 1 and 2. The indictment claims the operation was carried out on the orders of Ukrainian state authorities following the start of Russia’s full-scale invasion in February 2022. Both Serhii K and the Ukrainian government have denied any involvement in the sabotage. The case involves allegations of attacking a civilian site and disrupting public services."
+          },
+          {
+            "text": "The investigation into the September 2022 blasts, which began at 02:03 am on 26 September 2022, led German police to identify DNA evidence allegedly left on a boat used by the saboteurs. While Serhii K is set for trial, other suspects remain in different legal stages. Volodymyr Zhuravlyov is currently fighting extradition from Croatia, where he was arrested in August. Another individual was arrested in Warsaw on a German warrant, but a Polish judge refused to extradite him. In Germany, the far-right AfD party has used the Nord Stream case to argue that support for Kyiv should end."
+          }
+        ]
+      },
+      "audits": {
+        "content": {
+          "valid": true,
+          "reasons": [],
+          "wordCount": 284,
+          "pageCount": 3
+        },
+        "dates": {
+          "valid": true,
+          "generated_exact_dates": [],
+          "allowed_exact_dates": [],
+          "unsupported_exact_dates": [],
+          "weekday_date_pairs": [],
+          "invalid_weekday_date_pairs": [],
+          "status": "pass"
+        },
+        "numbers": {
+          "valid": true,
+          "generatedNumbers": [
+            "2022",
+            "1",
+            "2",
+            "02",
+            "03",
+            "26"
+          ],
+          "unsupportedNumbers": []
+        },
+        "relativeTime": {
+          "valid": true,
+          "generatedExpressions": [],
+          "allowedExpressions": [],
+          "unsupportedExpressions": []
+        },
+        "headline": {
+          "valid": true,
+          "sharedTerms": [
+            "former",
+            "ukrainian",
+            "officer",
+            "trial",
+            "germany",
+            "nord",
+            "stream",
+            "sabotage"
+          ]
+        },
+        "writerExposure": {
+          "raw_publication_timestamp_exposed": false,
+          "raw_update_timestamp_exposed": false,
+          "resolved_relative_expressions_exposed": [],
+          "unresolved_relative_expressions_exposed": [],
+          "normalized_event_date_exposed": false,
+          "passes": true
+        }
+      },
+      "provider": {
+        "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+        "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+        "httpStatus": 200,
+        "internalErrors": [],
+        "latencyMs": 4116,
+        "finishReason": "stop",
+        "usage": {
+          "prompt_tokens": 2517,
+          "completion_tokens": 428,
+          "total_tokens": 2945,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "neurons": 34.554542541503906
+        },
+        "safeHeaders": {
+          "cf-ray": "a489e9559ed5add9-IAD"
+        },
+        "complete": true,
+        "structuralStatus": "valid_card"
+      }
+    }
+  ]
+}

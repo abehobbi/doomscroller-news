@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { normalizeTemporalFact } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
-import { buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, LANES, numericAudit, relativeTimeAudit } from './writer-shortlist-trial.mjs'
+import { bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, LANES, numericAudit, relativeTimeAudit } from './writer-shortlist-trial.mjs'
 
 test('trial chooses one multi-source candidate from every lane and prefers Syria in a priority tie', () => {
   const item = (eventId, lane, sources, regions = []) => ({ eventId, lane, headline: eventId, evidence: 'A complete factual sentence explains the event. Another complete sentence explains why it matters.', publishedAt: '2026-10-10T00:00:00Z', priorityRegions: regions, editorialRecommendation: 'strong', editorialScore: 90, independentSourceCount: sources, primarySource: { publisher: 'bbc.com', url: `https://bbc.com/${eventId}` }, sources: [{ publisher: 'bbc.com', url: `https://bbc.com/${eventId}` }] })
@@ -39,6 +39,17 @@ test('writer-safe temporal normalization removes relative timing that cannot be 
   const result = normalizeTemporalFact('Next week, K will go on trial in Hamburg. A judge refused to extradite him last year.', { publicationTime: '2026-10-10T12:00:00Z', timeZone: 'Europe/Berlin' })
   assert.equal(result.normalized_fact, 'K will go on trial in Hamburg. A judge refused to extradite him.')
   assert.deepEqual(result.resolutions.map(value => value.resolution_status), ['unresolved', 'unresolved'])
+})
+
+test('leading pronoun propositions stay bound to the named antecedent', () => {
+  assert.deepEqual(bindLeadingCoreferences([
+    'Volodymyr Zhuravlyov is fighting extradition from Croatia.',
+    'He was arrested in Warsaw on a German warrant.',
+    'A Polish judge refused extradition.',
+  ]), [
+    'Volodymyr Zhuravlyov is fighting extradition from Croatia. He was arrested in Warsaw on a German warrant.',
+    'A Polish judge refused extradition.',
+  ])
 })
 
 test('trial packet adds only explicit source-backed context propositions', () => {

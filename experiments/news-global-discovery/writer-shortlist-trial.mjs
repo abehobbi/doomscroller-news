@@ -71,6 +71,16 @@ function facts(value, maxChars = 4200) {
   return completeSentences(String(value || ''), { maxChars, maxSentences: 12 })
 }
 
+export function bindLeadingCoreferences(propositions) {
+  const result = []
+  for (const proposition of propositions || []) {
+    const text = String(proposition || '').trim()
+    if (/^(?:he|she|they|it|his|her|their|its)\b/i.test(text) && result.length) result[result.length - 1] = `${result[result.length - 1]} ${text}`
+    else if (text) result.push(text)
+  }
+  return result
+}
+
 export function buildTrialItem(candidate, verificationIndex, contextIndex = new Map()) {
   const primaryFacts = facts(candidate.evidence)
   const primaryUrl = canonicalUrl(candidate.primarySource.url)
@@ -123,7 +133,13 @@ export function buildTrialItem(candidate, verificationIndex, contextIndex = new 
     ],
   }
   const selected = { eventId: candidate.eventId, title: candidate.headline, memberArticles: candidate.sources.map(source => ({ title: source.publisher })) }
-  const bound = buildBoundPacket(selected, raw, { temporal: { allowed_exact_dates: [] } })
+  const scoped = buildBoundPacket(selected, raw, { temporal: { allowed_exact_dates: [] } })
+  const bound = {
+    ...scoped,
+    coreFactualPropositions: bindLeadingCoreferences(scoped.coreFactualPropositions),
+    primaryNarrativeSource: { ...scoped.primaryNarrativeSource, completeFactualPropositions: bindLeadingCoreferences(scoped.primaryNarrativeSource.completeFactualPropositions) },
+    secondarySourceAdditions: scoped.secondarySourceAdditions.map(source => ({ ...source, completeFactualPropositions: bindLeadingCoreferences(source.completeFactualPropositions) })),
+  }
   const timezone = regions.map(region => REGION_TIMEZONE[region]).find(Boolean) || 'UTC'
   const temporalPacket = buildWriterSafeTemporalPacket(bound, { sourceTimezone: timezone })
   return {
