@@ -40,6 +40,20 @@ function article(item) {
 }
 
 export function compareCandidateEvents(left, right) {
+  const recoveryKey = value => String(value || '').match(/^gap-(.+)-[0-9a-f]{10}$/)?.[1] || null
+  const leftRecoveryKey = recoveryKey(left?.selection?.id)
+  const rightRecoveryKey = recoveryKey(right?.selection?.id)
+  if (leftRecoveryKey && leftRecoveryKey === rightRecoveryKey) {
+    const keyTokens = [...lexicalTokens(leftRecoveryKey)]
+    const topicMatches = value => {
+      const tokens = lexicalTokens(`${article(value).title} ${article(value).description}`)
+      return keyTokens.filter(token => [...tokens].some(candidate => candidate === token || (Math.min(candidate.length, token.length) >= 7 && (candidate.startsWith(token) || token.startsWith(candidate))))).length
+    }
+    const required = Math.min(2, keyTokens.length)
+    if (topicMatches(left) >= required && topicMatches(right) >= required) {
+      return { relation: 'same-event', score: 100, reason: `same targeted recovery event (${leftRecoveryKey})` }
+    }
+  }
   const deterministic = compareEvents(article(left), article(right))
   if (deterministic.reason === 'explicit event locations conflict') return deterministic
   const leftAcronyms = headlineAcronyms(article(left).title), rightAcronyms = headlineAcronyms(article(right).title)

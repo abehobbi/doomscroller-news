@@ -42,6 +42,20 @@ test('different headlines about the same distinctive fossil cluster from evidenc
   assert.equal(compareCandidateEvents(a, b).relation, 'same-event')
 })
 
+test('pages collected for one targeted recovery story remain one event despite headline wording', () => {
+  const left = item('gap-panama-earthquake-1be9b353f3', 'Major earthquake hits Panama, injures at least 27', 'A magnitude 7.7 earthquake struck Panama and damaged buildings and roads.', 'example-one.com')
+  const right = item('gap-panama-earthquake-03d7602d04', 'Two powerful earthquakes and multiple aftershocks rock Panama', 'Panama reported aftershocks and evacuations following two strong tremors.', 'example-two.com')
+  const comparison = compareCandidateEvents(left, right)
+  assert.equal(comparison.relation, 'same-event')
+  assert.match(comparison.reason, /same targeted recovery event/)
+})
+
+test('a false-positive page from a targeted recovery query remains a separate event', () => {
+  const target = item('gap-bangladesh-pirojpur-corruption-e87392ed87', 'Eight firms, one family, Tk 1,200cr embezzled', 'The Daily Star investigated alleged public-works corruption in Pirojpur, Bangladesh.', 'example-one.com')
+  const unrelated = item('gap-bangladesh-pirojpur-corruption-f1634f6b91', 'Money allegedly withdrawn for unfinished municipal projects', 'The allegations concern roads in Shariatpur and Naria municipality.', 'example-two.com')
+  assert.equal(compareCandidateEvents(target, unrelated).relation, 'distinct-or-uncertain')
+})
+
 test('shared background about one port does not merge different operator negotiations', () => {
   const dp = item('dp', 'DP World gets 15-year concession to operate New Mooring Container Terminal', 'Bangladesh signed a concession with DP World for the New Mooring Container Terminal. The government is reforming Chattogram port operations.', 'one.test')
   const psa = item('psa', 'Govt in talks with Singapore PSA to operate more Ctg Port terminals', 'The government is negotiating with PSA about different Chattogram port terminals while reforms continue across the port.', 'two.test')

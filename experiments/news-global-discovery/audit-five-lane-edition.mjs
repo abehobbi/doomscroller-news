@@ -105,7 +105,7 @@ function editorialAdjustment(cluster) {
   return score
 }
 
-function selectQualified(clusters, maximum) {
+export function selectQualified(clusters, maximum) {
   const selected = [], remaining = [...clusters]
   const laneCounts = Object.fromEntries(Object.keys(LANE_LIMITS).map(lane => [lane, 0]))
   const regionCounts = new Map(), domainCounts = new Map()
