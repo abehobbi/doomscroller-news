@@ -207,7 +207,7 @@ export function numericAudit(card, packet) {
   const generated = [card?.headline, ...(card?.pages || []).map(page => page.text), ...(card?.uncertainties || [])].join(' ')
   const evidence = JSON.stringify(packet)
   const normalizedEvidence = normalizeNumberWords(evidence)
-  const numbers = [...new Set((generated.match(/\b\d[\d,.]*(?:(?:%)(?!\w)|\s*(?:million|billion|trillion|people|years?|days?|hours?|km|kilometres?|miles?|tonnes?|dollars?)\b)?/gi) || [])
+  const numbers = [...new Set((generated.match(/\b\d[\d,.]*(?:(?:%)(?!\w)|\s*(?:million|billion|trillion|people|years?|days?|hours?|km|kilometres?|met(?:re|er)s?|miles?|ft|feet|foot|tonnes?|dollars?)\b)?/gi) || [])
     .map(value => value.replace(/[,.]+$/, '')))]
   const supported = value => {
     const normalized = normalizeNumberWords(value)

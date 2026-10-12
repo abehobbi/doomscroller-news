@@ -54,6 +54,12 @@ test('numeric audit recognizes supported written-number and punctuation equivale
   assert.equal(numericAudit(card, packet).valid, true)
 })
 
+test('numeric audit preserves source-backed metric and imperial length units', () => {
+  const card = { headline: 'Fort found', pages: [{ text: 'The 395-metre summit is 1,300ft high and lies 2 miles away.' }], uncertainties: [] }
+  const packet = { fact: 'The 395-metre (1,300ft) summit lies approximately 2 miles away.' }
+  assert.equal(numericAudit(card, packet).valid, true)
+})
+
 test('numeric audit rejects a lower-bound figure stated as an exact count', () => {
   const packet = { fact: 'More than one million people were affected.' }
   const preserved = { headline: 'More than 1 million affected', pages: [] }
