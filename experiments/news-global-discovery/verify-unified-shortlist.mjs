@@ -8,6 +8,7 @@ import { assessExtractedEvidence } from './evidence-quality.mjs'
 import { publisherFamily } from './event-corroboration.mjs'
 import { fetchPublicArticle } from './public-article.mjs'
 import { trustedContextDomain } from './enrich-generation-context.mjs'
+import { establishedPublisherDomain } from './selection-safeguards.mjs'
 
 const HIGH_RISK = /\b(?:attack|killed|killing|war|military|troops?|sanctions?|election|protest|corrupt|crime|court|police|detain|alleg|accus|strike|missile|drone|ceasefire)\b/i
 const MONTHS = new Map('january february march april may june july august september october november december'.split(' ').map((month, index) => [month, index]))
@@ -19,8 +20,9 @@ function domainOf(value) {
   try { return new URL(value).hostname.replace(/^www\./, '') } catch { return '' }
 }
 
-function isTrustedDomain(domain) {
-  return trustedContextDomain(domain) || [...REGISTERED_DOMAINS].some(value => domain === value || domain.endsWith(`.${value}`))
+export function isTrustedDomain(domain) {
+  return trustedContextDomain(domain) || establishedPublisherDomain(domain)
+    || [...REGISTERED_DOMAINS].some(value => domain === value || domain.endsWith(`.${value}`))
 }
 
 function articleUrl(member) {
@@ -91,7 +93,7 @@ function uniqueMembers(selection) {
   return members
 }
 
-async function inspectSource(selection, member, context) {
+export async function inspectSource(selection, member, context) {
   const url = articleUrl(member)
   const domain = domainOf(url)
   try {

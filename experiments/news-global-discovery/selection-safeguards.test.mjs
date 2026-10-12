@@ -1,6 +1,12 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { auditDecisions, combineSafeguards, prepareBoundaryCandidates, sourceAssessment } from './selection-safeguards.mjs'
+import { auditDecisions, combineSafeguards, establishedPublisherDomain, prepareBoundaryCandidates, sourceAssessment } from './selection-safeguards.mjs'
+
+test('vetted local and national publishers share one registry', () => {
+  assert.equal(establishedPublisherDomain('www.mbcradio.com'), true)
+  assert.equal(establishedPublisherDomain('washingtonpost.com'), true)
+  assert.equal(establishedPublisherDomain('unknown-example.invalid'), false)
+})
 
 test('boundary candidates include non-rejected interesting stories only', () => {
   const fixture = { candidates: [{ blindId: 'E001', evidence: 'x'.repeat(200) }, { blindId: 'E002', evidence: 'y'.repeat(200) }] }

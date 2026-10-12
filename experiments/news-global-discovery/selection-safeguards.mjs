@@ -13,6 +13,7 @@ const ESTABLISHED = new Set([
   'mainichi.jp', 'malaysiakini.com', 'myjoyonline.com', 'npr.org', 'paherald.sk.ca', 'seattletimes.com',
   'straitstimes.com', 'thedailystar.net', 'thefinancialexpress.com.bd', 'theguardian.com', 'thenarwhal.ca',
   'thenationalnews.com', 'thepointer.com', 'toronto.citynews.ca', 'vanityfair.com', 'wired.com',
+  'abcnews.com', 'independent.co.uk', 'mbcradio.com', 'washingtonpost.com',
 ])
 const RESEARCH_OR_INSTITUTIONAL = new Set([
   'nature.com', 'news.uchicago.edu', 'phys.org', 'medicalxpress.com', 'researchmatters.in',
@@ -23,6 +24,11 @@ const HIGH_RISK = /\b(?:alleg(?:e|ed|es|ation)|accus(?:e|ed|es|ation)|attack|kil
 
 function normalizeDomain(value) {
   return String(value || '').trim().toLowerCase().replace(/^www\./, '')
+}
+
+export function establishedPublisherDomain(value) {
+  const domain = normalizeDomain(value)
+  return ESTABLISHED.has(domain) || RESEARCH_OR_INSTITUTIONAL.has(domain)
 }
 
 export function sourceAssessment(candidate) {

@@ -1,8 +1,8 @@
 # Unified shortlist evidence verification
 
-Created: 2026-10-12T05:09:07.388Z
+Created: 2026-10-12T05:12:07.645Z
 
-20 ready · 43 need repair · 2 rejected.
+21 ready · 42 need repair · 2 rejected.
 
 No summaries were generated and no app data was changed.
 
@@ -116,13 +116,19 @@ Lane: world-interesting
 
 Source families: 1; trusted: 1; image: yes.
 
-### 19. Ghana open for fresh evacuation of Ghanaians if South Africa situation worsens - Ablakwa
+### 19. Falling catches threaten Ho Chi Minh City’s oldest fishing village | DTiNews
+
+Lane: world-interesting
+
+Source families: 1; trusted: 1; image: yes.
+
+### 20. Ghana open for fresh evacuation of Ghanaians if South Africa situation worsens - Ablakwa
 
 Lane: priority-major
 
 Source families: 1; trusted: 1; image: yes.
 
-### 20. UK revokes refugee status of Syrian surgeon, raising deportation fears
+### 21. UK revokes refugee status of Syrian surgeon, raising deportation fears
 
 Lane: priority-interesting
 
@@ -142,9 +148,9 @@ Reasons: no trusted or registered publisher source.
 
 Lane: priority-interesting
 
-Source families: 1; trusted: 0; image: yes.
+Source families: 1; trusted: 1; image: yes.
 
-Reasons: no trusted or registered publisher source; high-risk event lacks two independent source families.
+Reasons: high-risk event lacks two independent source families.
 
 ### 3. Egypt unveils restored Roman-era mummy portrait, lends several to Rome exhibition
 
@@ -166,15 +172,15 @@ Reasons: no accessible, relevant and fresh source evidence; no trusted or regist
 
 Lane: world-interesting
 
-Source families: 1; trusted: 0; image: yes.
+Source families: 1; trusted: 1; image: yes.
 
-Reasons: no trusted or registered publisher source; high-risk event lacks two independent source families.
+Reasons: high-risk event lacks two independent source families.
 
 ### 6. Nigeria’s debt interest soars 124% above revenue – World Ban
 
 Lane: world-interesting
 
-Source families: 3; trusted: 0; image: yes.
+Source families: 4; trusted: 0; image: yes.
 
 Reasons: no trusted or registered publisher source.
 
@@ -330,15 +336,7 @@ Source families: 0; trusted: 0; image: no.
 
 Reasons: no accessible, relevant and fresh source evidence; no trusted or registered publisher source; no verified publisher image recovered.
 
-### 26. Falling catches threaten Ho Chi Minh City’s oldest fishing village | DTiNews
-
-Lane: world-interesting
-
-Source families: 1; trusted: 0; image: yes.
-
-Reasons: no trusted or registered publisher source.
-
-### 27. Tangail handloom industry fights for survival
+### 26. Tangail handloom industry fights for survival
 
 Lane: world-interesting
 
@@ -346,7 +344,7 @@ Source families: 0; trusted: 0; image: no.
 
 Reasons: no accessible, relevant and fresh source evidence; no trusted or registered publisher source; no verified publisher image recovered.
 
-### 28. Ghana Cabinet approves Host Country Agreement with Holy See – Ghanaguardian.com
+### 27. Ghana Cabinet approves Host Country Agreement with Holy See – Ghanaguardian.com
 
 Lane: priority-major
 
@@ -354,7 +352,7 @@ Source families: 1; trusted: 0; image: no.
 
 Reasons: no trusted or registered publisher source; no verified publisher image recovered.
 
-### 29. Superconductivity's Left Flank Explained By Nuclear Quantum Effects
+### 28. Superconductivity's Left Flank Explained By Nuclear Quantum Effects
 
 Lane: discovery
 
@@ -362,7 +360,7 @@ Source families: 1; trusted: 0; image: yes.
 
 Reasons: no trusted or registered publisher source.
 
-### 30. New large docodont fossil sheds light on Jurassic mammaliaform diversity
+### 29. New large docodont fossil sheds light on Jurassic mammaliaform diversity
 
 Lane: discovery
 
@@ -370,7 +368,7 @@ Source families: 1; trusted: 1; image: no.
 
 Reasons: no verified publisher image recovered.
 
-### 31. Top NATO commander set to issue warning to Russia over any attack
+### 30. Top NATO commander set to issue warning to Russia over any attack
 
 Lane: world-major
 
@@ -378,7 +376,7 @@ Source families: 1; trusted: 1; image: yes.
 
 Reasons: high-risk event lacks two independent source families.
 
-### 32. Opposition rejects ‘takeover’ of KP, vows to fight by all means - Newspaper - DAWN.COM
+### 31. Opposition rejects ‘takeover’ of KP, vows to fight by all means - Newspaper - DAWN.COM
 
 Lane: world-major
 
@@ -386,7 +384,7 @@ Source families: 0; trusted: 0; image: no.
 
 Reasons: no accessible, relevant and fresh source evidence; no trusted or registered publisher source; no verified publisher image recovered.
 
-### 33. Fear and uncertainty for civilians as Yemen’s capital comes under attack | Houthis
+### 32. Fear and uncertainty for civilians as Yemen’s capital comes under attack | Houthis
 
 Lane: priority-major
 
@@ -394,7 +392,7 @@ Source families: 1; trusted: 1; image: yes.
 
 Reasons: high-risk event lacks two independent source families.
 
-### 34. Education Minister commends teacher unions for suspending nationwide strike
+### 33. Education Minister commends teacher unions for suspending nationwide strike
 
 Lane: priority-interesting
 
@@ -402,7 +400,7 @@ Source families: 1; trusted: 1; image: yes.
 
 Reasons: high-risk event lacks two independent source families.
 
-### 35. “Miniatures” at Tartus Theatre: Exploring Identity and Memory - Syria Focus
+### 34. “Miniatures” at Tartus Theatre: Exploring Identity and Memory - Syria Focus
 
 Lane: priority-interesting
 
@@ -410,7 +408,7 @@ Source families: 1; trusted: 0; image: yes.
 
 Reasons: no trusted or registered publisher source.
 
-### 36. Snakes, Rats, Mosquitoes After Isaias | South AL News
+### 35. Snakes, Rats, Mosquitoes After Isaias | South AL News
 
 Lane: world-interesting
 
@@ -418,7 +416,7 @@ Source families: 1; trusted: 0; image: yes.
 
 Reasons: no trusted or registered publisher source.
 
-### 37. Muslim artisans weave Durga’s hair, crafting a unique story of harmony in West Bengal - The Hindu
+### 36. Muslim artisans weave Durga’s hair, crafting a unique story of harmony in West Bengal - The Hindu
 
 Lane: world-interesting
 
@@ -426,7 +424,7 @@ Source families: 1; trusted: 0; image: yes.
 
 Reasons: no trusted or registered publisher source.
 
-### 38. In One Historically Black Florida Community, the Drinking Water Is Brown - Inside Climate News
+### 37. In One Historically Black Florida Community, the Drinking Water Is Brown - Inside Climate News
 
 Lane: world-interesting
 
@@ -434,7 +432,7 @@ Source families: 0; trusted: 0; image: no.
 
 Reasons: no accessible, relevant and fresh source evidence; no trusted or registered publisher source; no verified publisher image recovered.
 
-### 39. In backroom ‘sewing’ classes, Afghan women stitch together an education in secret - CSMonitor.com
+### 38. In backroom ‘sewing’ classes, Afghan women stitch together an education in secret - CSMonitor.com
 
 Lane: priority-interesting
 
@@ -442,7 +440,7 @@ Source families: 1; trusted: 0; image: yes.
 
 Reasons: no trusted or registered publisher source.
 
-### 40. DU Teacher Tasnim Siraj Says Student Left Class After She Expressed Discomfort | The Daily Campus
+### 39. DU Teacher Tasnim Siraj Says Student Left Class After She Expressed Discomfort | The Daily Campus
 
 Lane: priority-interesting
 
@@ -450,7 +448,7 @@ Source families: 1; trusted: 0; image: yes.
 
 Reasons: no trusted or registered publisher source.
 
-### 41. The Race for Lithium Is Becoming a Race for Water - NCIJ Network
+### 40. The Race for Lithium Is Becoming a Race for Water - NCIJ Network
 
 Lane: world-interesting
 
@@ -458,7 +456,7 @@ Source families: 1; trusted: 0; image: yes.
 
 Reasons: no trusted or registered publisher source.
 
-### 42. AI Displacement Hits Low-Income Workers Hardest, Demanding New Policy & Employer Action — The Wire
+### 41. AI Displacement Hits Low-Income Workers Hardest, Demanding New Policy & Employer Action — The Wire
 
 Lane: world-interesting
 
@@ -466,7 +464,7 @@ Source families: 0; trusted: 0; image: no.
 
 Reasons: no accessible, relevant and fresh source evidence; no trusted or registered publisher source; no verified publisher image recovered.
 
-### 43. Syrian President Ahmad al-Sharaa Opens Newly Elected Parliament to Advance Political Transition - CNNBC
+### 42. Syrian President Ahmad al-Sharaa Opens Newly Elected Parliament to Advance Political Transition - CNNBC
 
 Lane: priority-major
 
