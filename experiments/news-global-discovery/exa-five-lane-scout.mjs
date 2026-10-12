@@ -7,24 +7,29 @@ const API_URL = 'https://api.exa.ai/search'
 const EXCLUDE_DOMAINS = ['facebook.com', 'instagram.com', 'linkedin.com', 'pinterest.com', 'tiktok.com', 'tripadvisor.com', 'youtube.com', 'x.com']
 
 function parseArgs(argv) {
-  const options = { scan: 'full', days: 3, resultsPerQuery: 10, output: null, dryRun: false }
+  const options = { scan: 'full', lanes: [], days: 3, resultsPerQuery: 10, output: null, dryRun: false }
   for (let i = 0; i < argv.length; i += 1) {
     if (argv[i] === '--scan') options.scan = argv[++i]
+    else if (argv[i] === '--lanes') options.lanes = argv[++i].split(',').map(value => value.trim()).filter(Boolean)
     else if (argv[i] === '--days') options.days = Number(argv[++i])
     else if (argv[i] === '--results-per-query') options.resultsPerQuery = Number(argv[++i])
     else if (argv[i] === '--output') options.output = argv[++i]
     else if (argv[i] === '--dry-run') options.dryRun = true
   }
   if (!['all', 'full', 'major', 'update', 'depth'].includes(options.scan)) throw new Error('--scan must be all, major, or depth')
+  const knownLanes = new Set(FIVE_LANE_QUERIES.map(query => query.lane))
+  if (options.lanes.some(lane => !knownLanes.has(lane))) throw new Error('--lanes contains an unknown editorial lane')
   if (!Number.isFinite(options.days) || options.days < 1) throw new Error('--days must be at least 1')
   if (!Number.isInteger(options.resultsPerQuery) || options.resultsPerQuery < 1 || options.resultsPerQuery > 100) throw new Error('--results-per-query must be an integer from 1 to 100')
   return options
 }
 
-export function selectedQueries(scan) {
-  if (scan === 'major' || scan === 'update') return FIVE_LANE_QUERIES.filter(query => UPDATE_LANES.has(query.lane))
-  if (scan === 'depth') return FIVE_LANE_QUERIES.filter(query => !UPDATE_LANES.has(query.lane))
-  return FIVE_LANE_QUERIES
+export function selectedQueries(scan, lanes = []) {
+  let selected
+  if (scan === 'major' || scan === 'update') selected = FIVE_LANE_QUERIES.filter(query => UPDATE_LANES.has(query.lane))
+  else if (scan === 'depth') selected = FIVE_LANE_QUERIES.filter(query => !UPDATE_LANES.has(query.lane))
+  else selected = FIVE_LANE_QUERIES
+  return lanes.length ? selected.filter(query => lanes.includes(query.lane)) : selected
 }
 
 function normalizeUrl(value) {
@@ -92,10 +97,11 @@ function mergeResults(searches) {
 
 async function main() {
   const options = parseArgs(process.argv.slice(2))
-  const queries = selectedQueries(options.scan)
+  const queries = selectedQueries(options.scan, options.lanes)
+  if (!queries.length) throw new Error('No queries match the requested scan and lanes')
   const estimatedCost = Number((queries.length * 0.007).toFixed(3))
   if (options.dryRun) {
-    process.stdout.write(`${JSON.stringify({ scan: options.scan, queryCount: queries.length, resultsPerQuery: options.resultsPerQuery, estimatedCostDollars: estimatedCost, queries }, null, 2)}\n`)
+    process.stdout.write(`${JSON.stringify({ scan: options.scan, lanes: options.lanes, queryCount: queries.length, resultsPerQuery: options.resultsPerQuery, estimatedCostDollars: estimatedCost, queries }, null, 2)}\n`)
     return
   }
   const apiKey = process.env.EXA_API_KEY
