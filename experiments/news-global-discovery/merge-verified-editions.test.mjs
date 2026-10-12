@@ -29,3 +29,11 @@ test('retains event aliases when a stronger representative replaces the first ca
   assert.equal(result.cards.length, 1)
   assert.equal(result.cards[0].eventId, 'broader')
 })
+
+test('does not treat pass-local event ids as global story identities', () => {
+  const result = mergeVerifiedEditions([
+    { cards: [card('event-005', 'Ghana school receives new digital education equipment', 'https://ghana.test/story')] },
+    { cards: [card('event-005', 'New species of deep-sea coral identified', 'https://science.test/story')] },
+  ])
+  assert.equal(result.cards.length, 2)
+})

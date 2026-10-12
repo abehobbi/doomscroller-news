@@ -10,7 +10,6 @@ const sourceCount = card => new Set((card.acceptedSources || []).map(source => s
 const normalizedHeadline = value => String(value || '').toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, ' ').trim()
 
 function sameEvent(left, right) {
-  if (left.eventId === right.eventId) return true
   if (canonical(left.primaryUrl) && canonical(left.primaryUrl) === canonical(right.primaryUrl)) return true
   if (normalizedHeadline(left.headline) && normalizedHeadline(left.headline) === normalizedHeadline(right.headline)) return true
   if (headlinesExplicitlyConflict({ title: left.headline }, { title: right.headline })) return false
