@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { normalizeTemporalFact } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
 import { buildWriterSafeTemporalPacket } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
-import { bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, geographyAudit, LANES, normalizeExplicitToday, numericAudit, relativeTimeAudit, writerMetadataAudit } from './writer-shortlist-trial.mjs'
+import { bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, geographyAudit, LANES, normalizeExplicitToday, numericAudit, partitionWriterExposure, relativeTimeAudit, writerMetadataAudit } from './writer-shortlist-trial.mjs'
 
 test('trial chooses one multi-source candidate from every lane and prefers Syria in a priority tie', () => {
   const item = (eventId, lane, sources, regions = []) => ({ eventId, lane, headline: eventId, evidence: 'A complete factual sentence explains the event. Another complete sentence explains why it matters.', publishedAt: '2026-10-10T00:00:00Z', priorityRegions: regions, editorialRecommendation: 'strong', editorialScore: 90, independentSourceCount: sources, primarySource: { publisher: 'bbc.com', url: `https://bbc.com/${eventId}` }, sources: [{ publisher: 'bbc.com', url: `https://bbc.com/${eventId}` }] })
@@ -28,6 +28,22 @@ test('source-repair additions enter the writer only through their verified propo
   const item = buildTrialItem(candidate, buildVerificationIndex([{ results: [{ accepted: [supporting] }] }]))
   assert.equal(item.sources.length, 2)
   assert.equal(item.temporalPacket.writer_facing.secondarySourceAdditions[0].publisher, 'reuters.com')
+})
+
+test('temporal preflight separates safe writer packets from unresolved relative timing', () => {
+  const packet = (writerText, expressions = []) => ({
+    writer_facing: { fact: writerText },
+    internal_audit: {
+      publication_timestamp: null, article_updated_timestamp: null,
+      original_relative_expressions: expressions,
+      deterministic_temporal_context: { event_date: null },
+    },
+  })
+  const safe = { eventId: 'safe', temporalPacket: packet('The community completed the project.') }
+  const blocked = { eventId: 'blocked', temporalPacket: packet('The community expects to complete the project this year.', [{ raw_expression: 'this year', resolution_status: 'unresolved' }]) }
+  const partition = partitionWriterExposure([safe, blocked])
+  assert.deepEqual(partition.ready.map(value => value.item.eventId), ['safe'])
+  assert.deepEqual(partition.blocked.map(value => value.item.eventId), ['blocked'])
 })
 
 test('numeric audit recognizes a preserved approximate quarter-million expression', () => {

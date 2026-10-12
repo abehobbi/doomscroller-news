@@ -1,13 +1,23 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import { createHash } from 'node:crypto'
 import { pathToFileURL } from 'node:url'
 import { auditEdition } from './assemble-verified-edition.mjs'
 import { rankFrontPage } from './final-edition-ranker.mjs'
 import { candidatesDescribeSameThread, headlinesExplicitlyConflict } from './select-five-lane-edition.mjs'
 
-const canonical = value => { try { const url = new URL(value); url.hash = ''; return url.toString() } catch { return String(value || '') } }
+const canonical = value => {
+  try {
+    const url = new URL(value)
+    url.hostname = url.hostname.replace(/^www\./, '')
+    url.hash = ''
+    for (const key of [...url.searchParams.keys()]) if (/^(?:utm_|fbclid|gclid|at_medium|at_campaign)/i.test(key)) url.searchParams.delete(key)
+    return url.toString()
+  } catch { return String(value || '') }
+}
 const sourceCount = card => new Set((card.acceptedSources || []).map(source => source.family || source.domain)).size
 const normalizedHeadline = value => String(value || '').toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, ' ').trim()
+const mergedEventId = card => `merged-${createHash('sha256').update(canonical(card.primaryUrl) || normalizedHeadline(card.headline)).digest('hex').slice(0, 16)}`
 
 function sameEvent(left, right) {
   if (canonical(left.primaryUrl) && canonical(left.primaryUrl) === canonical(right.primaryUrl)) return true
@@ -26,7 +36,11 @@ export function mergeVerifiedEditions(editions) {
       if (sourceCount(card) > sourceCount(cluster.representative) || Date.parse(card.publishedAt || 0) > Date.parse(cluster.representative.publishedAt || 0)) cluster.representative = card
     }
   }
-  const cards = clusters.map(cluster => cluster.representative)
+  const cards = clusters.map(cluster => ({
+    ...cluster.representative,
+    eventId: mergedEventId(cluster.representative),
+    sourceEventIds: [...new Set(cluster.members.map(member => member.eventId).filter(Boolean))],
+  }))
   const ranked = rankFrontPage(cards), audit = auditEdition(ranked)
   return { schemaVersion: 1, createdAt: new Date().toISOString(), sourceEditionCount: editions.length, cards: ranked, audit }
 }

@@ -67,7 +67,12 @@ export function assembleVerifiedCards(shortlist, verification, repairs) {
       image,
       primaryUrl: image?.sourceUrl || acceptedSources[0]?.url || selection.representative.url,
       pages: [{ text: evidence }],
-      acceptedSources: acceptedSources.map(source => ({ domain: source.domain, family: source.family, url: source.url, publishedAt: source.publishedAt })),
+      acceptedSources: acceptedSources.map(source => ({
+        domain: source.domain, family: source.family, url: source.url,
+        title: source.title || selection.representative.title,
+        publishedAt: source.publishedAt,
+        evidenceText: source.evidenceText || '',
+      })),
       shortlistOrder: index + 1,
       selectionScore: selection.adjustedScore,
     }]

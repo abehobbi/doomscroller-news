@@ -7,8 +7,8 @@ const card = (eventId, headline, url, sources = 1) => ({ eventId, headline, lane
 test('merges recovered cards without duplicating an existing event thread', () => {
   const result = mergeVerifiedEditions([{ cards: [card('old', 'Riyadh airport hit after missile attack', 'https://one.test/a')] }, { cards: [card('new', 'Missile attack hits Riyadh airport', 'https://two.test/b', 2), card('other', 'Roman fort found in Wales', 'https://three.test/c')] }])
   assert.equal(result.cards.length, 2)
-  assert.ok(result.cards.some(item => item.eventId === 'new'))
-  assert.ok(result.cards.some(item => item.eventId === 'other'))
+  assert.ok(result.cards.some(item => item.sourceEventIds.includes('new')))
+  assert.ok(result.cards.some(item => item.sourceEventIds.includes('other')))
 })
 
 test('deduplicates an identical headline discovered through different URLs', () => {
@@ -18,7 +18,7 @@ test('deduplicates an identical headline discovered through different URLs', () 
     { cards: [card('recovery', headline, 'https://npr.test/story', 2)] },
   ])
   assert.equal(result.cards.length, 1)
-  assert.equal(result.cards[0].eventId, 'recovery')
+  assert.deepEqual(result.cards[0].sourceEventIds, ['initial', 'recovery'])
 })
 
 test('retains event aliases when a stronger representative replaces the first card', () => {
@@ -27,7 +27,7 @@ test('retains event aliases when a stronger representative replaces the first ca
   const repeated = card('repeated', original.headline, 'https://three.test/c', 2)
   const result = mergeVerifiedEditions([{ cards: [original, broader, repeated] }, { cards: [] }])
   assert.equal(result.cards.length, 1)
-  assert.equal(result.cards[0].eventId, 'broader')
+  assert.deepEqual(result.cards[0].sourceEventIds, ['original', 'broader', 'repeated'])
 })
 
 test('does not treat pass-local event ids as global story identities', () => {
@@ -36,4 +36,12 @@ test('does not treat pass-local event ids as global story identities', () => {
     { cards: [card('event-005', 'New species of deep-sea coral identified', 'https://science.test/story')] },
   ])
   assert.equal(result.cards.length, 2)
+  assert.equal(new Set(result.cards.map(item => item.eventId)).size, 2)
+})
+
+test('merged event ids are deterministic for the retained canonical source', () => {
+  const input = [{ cards: [card('pass-local', 'A distinct retained story', 'https://www.example.test/story?utm_source=feed')] }, { cards: [] }]
+  const clean = [{ cards: [card('another-pass', 'A distinct retained story', 'https://example.test/story')] }, { cards: [] }]
+  assert.equal(mergeVerifiedEditions(input).cards[0].eventId, mergeVerifiedEditions(clean).cards[0].eventId)
+  assert.match(mergeVerifiedEditions(input).cards[0].eventId, /^merged-[a-f0-9]{16}$/)
 })

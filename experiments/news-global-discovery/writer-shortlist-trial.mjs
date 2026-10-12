@@ -166,6 +166,30 @@ export function buildTrialItem(candidate, verificationIndex, contextIndex = new 
   }
 }
 
+export function partitionWriterExposure(items) {
+  const ready = [], blocked = []
+  for (const item of items) {
+    const exposure = auditWriterTemporalExposure(item.temporalPacket)
+    ;(exposure.passes ? ready : blocked).push({ item, exposure })
+  }
+  return { ready, blocked }
+}
+
+function preflightRejectedResult(item, exposure) {
+  return {
+    eventId: item.eventId, lane: item.lane, sourceTitle: item.sourceTitle, sources: item.sources,
+    status: 'rejected', card: null,
+    audits: {
+      content: { valid: false, reasons: ['writer input failed temporal preflight'], wordCount: 0, pageCount: 0 },
+      dates: { valid: false }, numbers: { valid: false, generatedNumbers: [], unsupportedNumbers: [] },
+      relativeTime: { valid: false, generatedExpressions: [], allowedExpressions: [], unsupportedExpressions: exposure.unresolved_relative_expressions_exposed || [] },
+      headline: { valid: false, sharedTerms: [] }, geography: { valid: false, forbidden: [] }, metadata: { valid: false, exposed: [] },
+      writerExposure: exposure,
+    },
+    provider: { requestedModel: null, returnedModel: null, httpStatus: null, internalErrors: [], latencyMs: 0, finishReason: null, usage: null, safeHeaders: {}, complete: false, structuralStatus: 'writer_input_preflight_failure' },
+  }
+}
+
 function supportedApproximateFraction(value, generated, evidence) {
   const normalized = Number(String(value).replace(/,/g, '').match(/\d+(?:\.\d+)?/)?.[0])
   const mappings = new Map([
@@ -340,6 +364,7 @@ async function main() {
     process.stdout.write(`${JSON.stringify({ selected: items.map(item => ({ eventId: item.eventId, lane: item.lane, title: item.sourceTitle, displayedSources: item.sources.length, evidenceBackedSecondarySources: item.temporalPacket.writer_facing.secondarySourceAdditions.length, writerExposure: auditWriterTemporalExposure(item.temporalPacket) })) }, null, 2)}\n`)
     return
   }
+  const exposurePartition = partitionWriterExposure(items)
   let results = []
   try { results = JSON.parse(await fs.readFile(path.join(options.outputDir, 'TRIAL_REPORT.json'), 'utf8')).results || [] } catch {}
   const itemById = new Map(items.map(value => [value.eventId, value]))
@@ -349,8 +374,10 @@ async function main() {
     const { audits, valid } = auditCard(item, result.card)
     return { ...result, status: result.provider.complete && valid ? 'accepted' : 'rejected', audits }
   })
+  const existingIds = new Set(results.map(result => result.eventId))
+  for (const { item, exposure } of exposurePartition.blocked) if (!existingIds.has(item.eventId)) results.push(preflightRejectedResult(item, exposure))
   const completed = new Set(results.map(value => value.eventId))
-  for (const item of items.filter(value => !completed.has(value.eventId))) {
+  for (const item of exposurePartition.ready.map(value => value.item).filter(value => !completed.has(value.eventId))) {
     const attempt = await writeCard(item.temporalPacket.writer_facing)
     const card = attempt.complete ? attempt.parsed : null
     const audited = card ? auditCard(item, card) : { valid: false, audits: { content: { valid: false, reasons: ['writer output incomplete'], wordCount: 0, pageCount: 0 }, dates: { valid: false }, numbers: { valid: false, generatedNumbers: [], unsupportedNumbers: [] }, relativeTime: { valid: false, generatedExpressions: [], allowedExpressions: [], unsupportedExpressions: [] }, headline: { valid: false, sharedTerms: [] }, writerExposure: auditWriterTemporalExposure(item.temporalPacket) } }
