@@ -35,6 +35,11 @@ jobs:
         run: |
           test -n "$CLOUDFLARE_ACCOUNT_ID"
           test -n "$CLOUDFLARE_API_TOKEN"
+      - name: Restore the accepted-card checkpoint
+        shell: bash
+        run: |
+          mkdir -p "$OUTPUT_ROOT"
+          cp "$BATCH_ROOT/RECOVERY_CHECKPOINT.json" "$OUTPUT_ROOT/TRIAL_REPORT.json"
       - name: Generate only source-and-image-cleared finalists
         id: generation
         continue-on-error: true
@@ -43,6 +48,7 @@ jobs:
           --shortlist $BATCH_ROOT/WRITER_SHORTLIST.json
           --verification $BATCH_ROOT/WRITER_VERIFICATION.json
           --all-selected
+          --retry-rejected
           --output-dir $OUTPUT_ROOT
       - name: Upload exact cards, progress and diagnostics
         if: always()

@@ -1,7 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { normalizeTemporalFact } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
-import { buildWriterSafeTemporalPacket } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
+import { auditWriterTemporalExposure, buildWriterSafeTemporalPacket, normalizeTemporalFact } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
 import { bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, geographyAudit, LANES, normalizeExplicitToday, numericAudit, partitionWriterExposure, relativeTimeAudit, writerMetadataAudit } from './writer-shortlist-trial.mjs'
 
 test('trial chooses one multi-source candidate from every lane and prefers Syria in a priority tie', () => {
@@ -44,6 +43,20 @@ test('temporal preflight separates safe writer packets from unresolved relative 
   const partition = partitionWriterExposure([safe, blocked])
   assert.deepEqual(partition.ready.map(value => value.item.eventId), ['safe'])
   assert.deepEqual(partition.blocked.map(value => value.item.eventId), ['blocked'])
+})
+
+test('writer packet drops quoted propositions whose unresolved timing survives normalization', () => {
+  const source = '“One day later, on Monday at 4 p.m., we received the news.”'
+  const companion = 'The report was published on Monday.'
+  const packet = buildWriterSafeTemporalPacket({
+    sourcePublicationTime: '2026-10-12T12:00:00Z', sourceUpdateTime: null,
+    eventTimeOrWindow: [], coreFactualPropositions: [source, companion], secondarySourceAdditions: [],
+    primaryNarrativeSource: { sourceId: 'primary:test', completeFactualPropositions: [source, companion] },
+    curatorInstructions: [],
+  }, { sourceTimezone: 'UTC' })
+  assert.equal(packet.writer_facing.coreFactualPropositions.some(value => value.includes('received the news')), false)
+  assert.equal(packet.writer_facing.primaryNarrativeSource.completeFactualPropositions.some(value => value.includes('received the news')), false)
+  assert.equal(auditWriterTemporalExposure(packet).passes, true)
 })
 
 test('numeric audit recognizes a preserved approximate quarter-million expression', () => {

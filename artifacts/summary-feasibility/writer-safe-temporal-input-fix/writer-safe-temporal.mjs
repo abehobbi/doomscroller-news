@@ -11,6 +11,7 @@ export function normalizeTemporalFact(sourceText,{publicationTime,timeZone}={}){
   return {source_text:String(sourceText),normalized_fact:normalized,changed:normalized!==String(sourceText),resolutions,explicit_dates:extractExplicitDates(sourceText)};
 }
 function withoutTiming(source,facts){if(!source)return source;const {publishedAt,updatedAt,completeFactualPropositions,...safe}=source;return {...safe,completeFactualPropositions:facts};}
+function retainsUnresolvedRelative(proposition,unresolvedExpressions=[]){const normalized=String(proposition.normalized_fact).toLowerCase();return unresolvedExpressions.some(expression=>normalized.includes(String(expression).toLowerCase()));}
 export function buildWriterSafeTemporalPacket(packet,{sourceTimezone,publicationTimingRelevant=false}={}){
   const temporal=buildTemporalContext(packet,{sourceTimezone});
   const primaryId=packet.primaryNarrativeSource?.sourceId||packet.primary_source_id;
@@ -20,7 +21,8 @@ export function buildWriterSafeTemporalPacket(packet,{sourceTimezone,publication
   const unresolved=all.flatMap(x=>x.resolutions.filter(r=>r.resolution_status==='unresolved').map(r=>({source_id:x.source_id,source_text:x.source_text,...r})));
   const publicationLocal=dateInTimezone(packet.sourcePublicationTime,sourceTimezone);
   const internal={publication_timestamp:packet.sourcePublicationTime||null,article_updated_timestamp:packet.sourceUpdateTime||null,source_timezone:sourceTimezone||null,publication_local_timestamp:localTimestamp(packet.sourcePublicationTime,sourceTimezone),publication_local_calendar_date:publicationLocal?.date||null,original_relative_expressions:all.flatMap(x=>x.resolutions),explicit_source_dates:all.flatMap(x=>x.explicit_dates),deterministic_temporal_context:temporal,normalized_temporal_facts:normalizedTemporalFacts,source_propositions:all.map(x=>({source_id:x.source_id,source_role:x.source_role,source_text:x.source_text}))};
-  const primaryFacts=primary.map(x=>x.normalized_fact),secondarySafe=secondary.map(({source,propositions})=>withoutTiming(source,propositions.map(x=>x.normalized_fact))).filter(x=>x.completeFactualPropositions.length);
+  const unresolvedExpressions=[...new Set(unresolved.map(x=>x.raw_expression))];
+  const primaryFacts=primary.filter(x=>!retainsUnresolvedRelative(x,unresolvedExpressions)).map(x=>x.normalized_fact),secondarySafe=secondary.map(({source,propositions})=>withoutTiming(source,propositions.filter(x=>!retainsUnresolvedRelative(x,unresolvedExpressions)).map(x=>x.normalized_fact))).filter(x=>x.completeFactualPropositions.length);
   const safeTemporal={event_date:temporal.event_date,exact_event_date_status:temporal.event_date?'deterministically_resolved':'not_established',allowed_exact_dates:temporal.allowed_exact_dates.map(x=>x.date),unresolved_relative_time:[]};
   if(publicationTimingRelevant&&publicationLocal)safeTemporal.article_publication_date={date:publicationLocal.date,display:formatDate(publicationLocal.date),role:'article publication date — NOT the event date'};
   const {sourcePublicationTime,sourceUpdateTime,eventTimeOrWindow,evidence_fragments,temporal_context,allowed_exact_dates,primaryNarrativeSource,secondarySourceAdditions,coreFactualPropositions,curatorInstructions,writer_focus_instructions,...rest}=packet;

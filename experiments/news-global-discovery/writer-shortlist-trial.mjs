@@ -14,7 +14,7 @@ const REGION_TIMEZONE = { Syria: 'Asia/Damascus', 'Middle East': 'Asia/Qatar', B
 const REGION_PRIORITY = { Syria: 5, 'Middle East': 4, Bangladesh: 3, Ghana: 2, Canada: 1, GTA: 1 }
 
 function parseArgs(argv) {
-  const options = { shortlist: null, verification: [], context: [], eventIds: [], outputDir: null, dryRun: false, allSelected: false }
+  const options = { shortlist: null, verification: [], context: [], eventIds: [], outputDir: null, dryRun: false, allSelected: false, retryRejected: false }
   for (let index = 0; index < argv.length; index += 1) {
     if (argv[index] === '--shortlist') options.shortlist = argv[++index]
     else if (argv[index] === '--verification') options.verification.push(argv[++index])
@@ -23,6 +23,7 @@ function parseArgs(argv) {
     else if (argv[index] === '--output-dir') options.outputDir = argv[++index]
     else if (argv[index] === '--dry-run') options.dryRun = true
     else if (argv[index] === '--all-selected') options.allSelected = true
+    else if (argv[index] === '--retry-rejected') options.retryRejected = true
   }
   if (!options.shortlist || !options.outputDir) throw new Error('--shortlist and --output-dir are required')
   return options
@@ -367,6 +368,7 @@ async function main() {
   const exposurePartition = partitionWriterExposure(items)
   let results = []
   try { results = JSON.parse(await fs.readFile(path.join(options.outputDir, 'TRIAL_REPORT.json'), 'utf8')).results || [] } catch {}
+  if (options.retryRejected) results = results.filter(result => result.status !== 'rejected')
   const itemById = new Map(items.map(value => [value.eventId, value]))
   results = results.map(result => {
     const item = itemById.get(result.eventId)
@@ -378,7 +380,7 @@ async function main() {
   for (const { item, exposure } of exposurePartition.blocked) if (!existingIds.has(item.eventId)) results.push(preflightRejectedResult(item, exposure))
   const completed = new Set(results.map(value => value.eventId))
   for (const item of exposurePartition.ready.map(value => value.item).filter(value => !completed.has(value.eventId))) {
-    const attempt = await writeCard(item.temporalPacket.writer_facing)
+    const attempt = await writeCard(item.temporalPacket.writer_facing, { dateRetry: options.retryRejected, repair: options.retryRejected })
     const card = attempt.complete ? attempt.parsed : null
     const audited = card ? auditCard(item, card) : { valid: false, audits: { content: { valid: false, reasons: ['writer output incomplete'], wordCount: 0, pageCount: 0 }, dates: { valid: false }, numbers: { valid: false, generatedNumbers: [], unsupportedNumbers: [] }, relativeTime: { valid: false, generatedExpressions: [], allowedExpressions: [], unsupportedExpressions: [] }, headline: { valid: false, sharedTerms: [] }, writerExposure: auditWriterTemporalExposure(item.temporalPacket) } }
     const valid = attempt.complete && audited.valid

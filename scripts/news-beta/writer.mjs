@@ -5,6 +5,7 @@ import { ordinary } from '../../artifacts/summary-feasibility/round-9/prompts.mj
 export const MODEL = '@cf/google/gemma-4-26b-a4b-it'
 export const DATE_RETRY_REMINDER = 'Use only the permitted exact event dates supplied in the evidence. Do not infer or calculate another calendar date.'
 export const FACTUAL_BOUNDARY_REMINDER = 'Do not introduce any number, exact date, or relative-time phrase such as this year or last year unless the source-led packet explicitly permits it. Give enough supported detail for a self-contained explanation; do not pad thin evidence.'
+export const REPAIR_REMINDER = 'This is a bounded repair of a rejected draft. Use no relative-time wording such as tonight or tomorrow. Use only exact dates explicitly permitted by allowed_exact_dates. Every page must end with a complete sentence. When the evidence supports it, write at least 65 words; otherwise stay concise rather than inventing context.'
 export const WRITER_CONFIGURATION = Object.freeze({
   model: MODEL, temperature: 0.2, maxCompletionTokens: 1536,
   responseFormat: 'json_schema', thinking: false, retries: 'date-only; maximum one', repair: false,
@@ -19,9 +20,9 @@ function credentials() {
 const safeHeaders = response => Object.fromEntries([...response.headers].filter(([name]) =>
   /^(?:cf-ray|retry-after|(?:x-)?request-id|x-correlation-id|(?:x-)?ratelimit[\w-]*|x-rate-limit[\w-]*)$/i.test(name)))
 
-export async function writeCard(packet, { dateRetry = false } = {}) {
+export async function writeCard(packet, { dateRetry = false, repair = false } = {}) {
   const { accountId, token } = credentials()
-  const systemPrompt = `${ordinary} ${FACTUAL_BOUNDARY_REMINDER}${dateRetry ? ` ${DATE_RETRY_REMINDER}` : ''}`
+  const systemPrompt = `${ordinary} ${FACTUAL_BOUNDARY_REMINDER}${dateRetry ? ` ${DATE_RETRY_REMINDER}` : ''}${repair ? ` ${REPAIR_REMINDER}` : ''}`
   const request = {
     messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: JSON.stringify({ source_led_packet: packet }) }],
     temperature: 0.2,
@@ -56,6 +57,6 @@ export async function writeCard(packet, { dateRetry = false } = {}) {
     parseError, providerParseError, schemaAudit, finishReason, usage: result?.usage ?? body?.usage ?? null,
     latencyMs: Math.round(performance.now() - started), safeHeaders: safeHeaders(response), complete,
     structuralStatus: complete ? 'valid_card' : !response.ok || body?.success === false ? 'provider_failure' : providerParseError || parseError ? 'malformed_json' : finishReason && finishReason !== 'stop' ? 'truncated' : 'schema_failure',
-    dateRetry,
+    dateRetry, repair,
   }
 }
