@@ -59,3 +59,11 @@ test('same Nepal flood and Ukraine ceasefire developments consolidate despite lo
     candidate('Energy ceasefire confusion in Kyiv after fresh strikes'),
   ), true)
 })
+
+test('generic casualty wording cannot create a transitive mega-cluster', () => {
+  const sudan = candidate('At least 72 Sudanese miners killed in air strike')
+  const bridge = candidate('At least 72 people killed in strikes across several regions')
+  const ukraine = candidate('At least 17 killed in Russian missile strikes on Kyiv')
+  const clusters = clusterCandidates([sudan, bridge, ukraine])
+  assert.equal(clusters.some(cluster => cluster.members.includes(sudan) && cluster.members.includes(ukraine)), false)
+})

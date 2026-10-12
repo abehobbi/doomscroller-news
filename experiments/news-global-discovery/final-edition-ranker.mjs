@@ -9,7 +9,7 @@ const LARGE_HUMAN_SCALE = /\b(?:million|hundreds? of thousands?|thousands?|\d{3,
 const ESCALATION = /\b(?:invasion|cross-border|troops?|military escalation|wider war|joins? (?:the )?war|deploy(?:ment|s|ed)?|missile|drone attack|airport attack)\b/i
 const SYSTEMIC = /\b(?:election|international criminal court|supreme court|constitutional|sanctions?|ceasefire|trade deal|central bank|unemployment|public health|national strike)\b/i
 const PROSPECTIVE = /\b(?:considers?|weighs?|may|might|could|plans? to|proposal|proposed|explores?|expected to)\b/i
-const RETROSPECTIVE = /\b(?:anniversary|one year after|years? after|looks back|retrospective)\b/i
+const RETROSPECTIVE = /\b(?:anniversary|(?:a|one) year after|years? after|looks back|retrospective)\b/i
 
 function combinedText(card) { return [card.headline, ...(card.pages || []).map(page => page.text)].join(' ') }
 
@@ -24,17 +24,18 @@ export function scoreFrontPageCard(card) {
   const text = combinedText(card), reasons = []
   let score = LANE_BASE[card.lane] ?? 0
   const isMajor = MAJOR_LANES.has(card.lane)
+  const isRetrospective = RETROSPECTIVE.test(card.headline)
   if (isMajor) reasons.push('qualified as major news')
   const casualties = largestExplicitCasualty(text)
-  if (isMajor && MASS_CASUALTY.test(text)) {
+  if (isMajor && !isRetrospective && MASS_CASUALTY.test(text)) {
     score += casualties >= 100 ? 38 : casualties >= 25 ? 34 : casualties > 0 ? 26 : 18
     reasons.push(casualties ? `immediate casualties (${casualties} explicitly reported)` : 'immediate casualty event')
   }
-  if (isMajor && LARGE_HUMAN_SCALE.test(text)) { score += 20; reasons.push('large directly affected population') }
-  if (isMajor && ESCALATION.test(text)) { score += 18; reasons.push('security escalation risk') }
+  if (isMajor && !isRetrospective && LARGE_HUMAN_SCALE.test(text)) { score += 20; reasons.push('large directly affected population') }
+  if (isMajor && !isRetrospective && ESCALATION.test(text)) { score += 18; reasons.push('security escalation risk') }
   if (isMajor && SYSTEMIC.test(text)) { score += 10; reasons.push('systemic institutional or national consequence') }
   if (isMajor && PROSPECTIVE.test(card.headline)) { score -= 14; reasons.push('development remains prospective') }
-  if (isMajor && RETROSPECTIVE.test(card.headline)) { score -= 18; reasons.push('retrospective or anniversary framing') }
+  if (isMajor && isRetrospective) { score -= 18; reasons.push('retrospective or anniversary framing') }
   return { score, reasons }
 }
 

@@ -28,6 +28,12 @@ test('anniversary framing does not receive the same immediacy as a breaking casu
   assert.ok(breaking.score > anniversary.score)
 })
 
+test('a year after framing is treated as retrospective', () => {
+  const score = scoreFrontPageCard(card('A year after ceasefire deal, families still wait for relief', 'priority-major', 'The report reviews conditions since an attack killed 300 people and displaced thousands.'))
+  assert.match(score.reasons.join(' '), /retrospective/)
+  assert.doesNotMatch(score.reasons.join(' '), /immediate casualties|security escalation|large directly affected/)
+})
+
 test('historical language cannot accidentally promote an Interesting card above Major news', () => {
   const ranked = rankFrontPage([
     card('Research adds Polish codebreakers to wartime roll of honour', 'world-interesting', 'The 103-year-old veteran trained with troops during the war.'),

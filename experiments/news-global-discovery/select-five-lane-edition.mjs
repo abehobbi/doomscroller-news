@@ -139,9 +139,22 @@ const PLACE_ANCHORS = new Set(['saudiarabia', 'sudan', 'ukraine', 'india', 'bang
 const EVENT_ANCHORS = new Set(['airport', 'attack', 'ceasefire', 'election', 'flood', 'mine', 'protest', 'strike'])
 const ENTITY_ANCHORS = new Set(['icc', 'iaea', 'imf', 'nato', 'who'])
 
+export function headlinesExplicitlyConflict(left, right) {
+  const a = tokens(left.title), b = tokens(right.title)
+  const placesA = [...a].filter(token => PLACE_ANCHORS.has(token))
+  const placesB = [...b].filter(token => PLACE_ANCHORS.has(token))
+  if (placesA.length && placesB.length && !placesA.some(place => placesB.includes(place))) return true
+  const numbersA = [...String(left.title || '').matchAll(/\b\d{1,4}\b/g)].map(match => match[0])
+  const numbersB = [...String(right.title || '').matchAll(/\b\d{1,4}\b/g)].map(match => match[0])
+  const sharedEventAnchors = [...a].filter(token => b.has(token) && EVENT_ANCHORS.has(token)).length
+  if (numbersA.length && numbersB.length && !numbersA.some(value => numbersB.includes(value)) && sharedEventAnchors < 2) return true
+  return false
+}
+
 export function candidatesDescribeSameThread(left, right) {
   const a = tokens(left.title), b = tokens(right.title)
   const sharedTokens = [...a].filter(token => b.has(token))
+  if (headlinesExplicitlyConflict(left, right)) return false
   const smaller = Math.max(1, Math.min(a.size, b.size))
   const ratio = sharedTokens.length / smaller
   const distinctive = sharedTokens.some(token => token.length >= 6 && !GENERIC_CLUSTER_TERMS.has(token))
@@ -154,9 +167,9 @@ export function candidatesDescribeSameThread(left, right) {
 export function clusterCandidates(scored) {
   const clusters = []
   for (const candidate of [...scored].sort((a, b) => Math.max(...Object.values(b.laneScores)) - Math.max(...Object.values(a.laneScores)))) {
-    const match = clusters.find(cluster => cluster.members.some(member => candidatesDescribeSameThread(candidate, member)))
+    const match = clusters.find(cluster => candidatesDescribeSameThread(candidate, cluster.representative))
     if (match) match.members.push(candidate)
-    else clusters.push({ id: `event-${String(clusters.length + 1).padStart(3, '0')}`, members: [candidate] })
+    else clusters.push({ id: `event-${String(clusters.length + 1).padStart(3, '0')}`, members: [candidate], representative: candidate })
   }
   return clusters.map(cluster => {
     const representative = [...cluster.members].sort((a, b) => Math.max(...Object.values(b.laneScores)) - Math.max(...Object.values(a.laneScores)))[0]
