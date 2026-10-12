@@ -2,12 +2,6 @@ name: Run isolated News generation trial
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - codex/news-editorial-selection
-    paths:
-      - experiments/news-global-discovery/FINALIST_GENERATION_TRIGGER
-      - experiments/news-global-discovery/FINALIST_REPAIR_TRIGGER
 
 concurrency:
   group: news-five-lane-generation-trial
@@ -39,31 +33,16 @@ jobs:
           test -n "$CLOUDFLARE_ACCOUNT_ID"
           test -n "$CLOUDFLARE_API_TOKEN"
       - name: Generate source-and-image-cleared finalists
-        if: ${{ !hashFiles('experiments/news-global-discovery/FINALIST_REPAIR_TRIGGER') }}
         run: >-
           node experiments/news-global-discovery/writer-shortlist-trial.mjs
           --shortlist experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/readiness/GENERATION_READY_SHORTLIST.json
           --verification experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/readiness/SOURCE_VERIFICATION_MERGED.json
           --all-selected
           --output-dir experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/generated-cards
-      - name: Repair only quarantined finalists
-        if: ${{ hashFiles('experiments/news-global-discovery/FINALIST_REPAIR_TRIGGER') != '' }}
-        run: >-
-          node experiments/news-global-discovery/writer-shortlist-trial.mjs
-          --shortlist experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/readiness/GENERATION_READY_SHORTLIST.json
-          --verification experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/readiness/SOURCE_VERIFICATION_MERGED.json
-          --event-id qualified-event-015
-          --event-id qualified-event-138
-          --event-id qualified-event-029
-          --event-id qualified-event-038
-          --event-id qualified-event-044
-          --output-dir experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/generated-card-repairs
       - name: Upload the review and exact diagnostics
         uses: actions/upload-artifact@v4
         with:
           name: news-finalist-cards-${{ github.run_id }}
-          path: |
-            experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/generated-cards
-            experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/generated-card-repairs
+          path: experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/generated-cards
           retention-days: 14
           if-no-files-found: error

@@ -1,0 +1,703 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-12T00:24:52.905Z",
+  "sourceShortlist": "experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/readiness/GENERATION_READY_SHORTLIST.json",
+  "sourceVerification": [
+    "experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/readiness/SOURCE_VERIFICATION_MERGED.json"
+  ],
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1536,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "complete": true,
+  "expected": 5,
+  "resultCount": 5,
+  "accepted": 2,
+  "rejected": 3,
+  "totalNeurons": 136.76362800598145,
+  "inputTokens": 10737,
+  "outputTokens": 1553,
+  "totalLatencyMs": 30495,
+  "results": [
+    {
+      "eventId": "qualified-event-015",
+      "lane": "world-major",
+      "sourceTitle": "Russian strike kills at least 33 in eastern Ukraine in deadliest single attack this year - Egypt Independent",
+      "sources": [
+        {
+          "publisher": "egyptindependent.com",
+          "url": "https://www.egyptindependent.com/russian-strike-kills-at-least-33-in-eastern-ukraine-in-deadliest-single-attack-this-year/"
+        },
+        {
+          "publisher": "kyivpost.com",
+          "url": "https://www.kyivpost.com/post/86735"
+        }
+      ],
+      "status": "rejected",
+      "card": {
+        "headline": "Russian strike kills at least 33 in eastern Ukraine in deadliest single attack this year",
+        "pages": [
+          {
+            "text": "A Russian strike on October 8, 2026, killed at least 33 people and injured another 18 when it caused two public buses to catch fire in Kramatorsk, a city in the Donetsk region of eastern Ukraine. Local authorities described the incident as the deadliest single attack of the year. Following the attack, authorities in Kramatorsk shut down the public transport system and urged residents to move to safer parts of the country. The State Emergency Service of Ukraine (SES) reported that the strike caused fires on the two buses and in the surrounding area. Vadym Filashkin, the head of the Donetsk regional military administration, stated that the Russians are deliberately targeting civilians, suggesting that a bus full of passengers is an attractive target because a single strike can kill as many people as possible."
+          },
+          {
+            "text": "Police in Donetsk reported that Russian drones targeted officers who were assisting victims of the strike. During the response, drones were observed near the scene as emergency workers loaded the injured onto stretchers and into vehicles. Police stated they are working to identify the victims, noting that some bodies must be pieced together from fragments. Filashkin offered condolences to the families of the victims, stating that Russia is striking Ukrainian cities and multiplying its crimes every day. This attack follows a mass Russian missile attack on Kyiv in July that killed 33 people, and an August drone strike on an ammunition depot near the capital that killed 38 people after triggering a large fire and multiple explosions in a residential area."
+          }
+        ]
+      },
+      "audits": {
+        "content": {
+          "valid": true,
+          "reasons": [],
+          "wordCount": 255,
+          "pageCount": 2
+        },
+        "dates": {
+          "valid": true,
+          "generated_exact_dates": [
+            {
+              "raw": "October 8, 2026",
+              "date": "2026-10-08"
+            }
+          ],
+          "allowed_exact_dates": [
+            "2026-10-08"
+          ],
+          "unsupported_exact_dates": [],
+          "weekday_date_pairs": [],
+          "invalid_weekday_date_pairs": [],
+          "status": "pass"
+        },
+        "numbers": {
+          "valid": true,
+          "generatedNumbers": [
+            "33",
+            "8",
+            "2026",
+            "33 people",
+            "18",
+            "38 people"
+          ],
+          "unsupportedNumbers": [],
+          "qualifierMismatches": []
+        },
+        "relativeTime": {
+          "valid": false,
+          "generatedExpressions": [
+            "this year"
+          ],
+          "allowedExpressions": [],
+          "unsupportedExpressions": [
+            "this year"
+          ]
+        },
+        "headline": {
+          "valid": true,
+          "sharedTerms": [
+            "russian",
+            "strike",
+            "kills",
+            "least",
+            "eastern",
+            "ukraine",
+            "deadliest",
+            "single",
+            "attack",
+            "this",
+            "year"
+          ]
+        },
+        "geography": {
+          "valid": true,
+          "forbidden": []
+        },
+        "metadata": {
+          "valid": true,
+          "exposed": []
+        },
+        "writerExposure": {
+          "raw_publication_timestamp_exposed": false,
+          "raw_update_timestamp_exposed": false,
+          "resolved_relative_expressions_exposed": [],
+          "unresolved_relative_expressions_exposed": [],
+          "normalized_event_date_exposed": true,
+          "passes": true
+        }
+      },
+      "provider": {
+        "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+        "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+        "httpStatus": 200,
+        "internalErrors": [],
+        "latencyMs": 5328,
+        "finishReason": "stop",
+        "usage": {
+          "prompt_tokens": 2077,
+          "completion_tokens": 364,
+          "total_tokens": 2441,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "neurons": 28.80908966064453
+        },
+        "safeHeaders": {
+          "cf-ray": "a491f6146adbc94b-IAD"
+        },
+        "complete": true,
+        "structuralStatus": "valid_card"
+      }
+    },
+    {
+      "eventId": "qualified-event-138",
+      "lane": "priority-major",
+      "sourceTitle": "Major Dhaka hospitals face rising dengue patient load",
+      "sources": [
+        {
+          "publisher": "tbsnews.net",
+          "url": "https://www.tbsnews.net/bangladesh/health/dengue-death-toll-nears-300-4-die-1631-hospitalised-24-hours-1568421"
+        },
+        {
+          "publisher": "thefinancialexpress.com.bd",
+          "url": "https://thefinancialexpress.com.bd/health/major-dhaka-hospitals-face-rising-dengue-patient-load"
+        }
+      ],
+      "status": "rejected",
+      "card": {
+        "headline": "Dengue cases in Bangladesh double compared to previous year, increasing pressure on Dhaka hospitals",
+        "pages": [
+          {
+            "text": "Major public hospitals in Dhaka, Bangladesh, are facing mounting pressure as the number of dengue cases has doubled compared to the same period in 2025. On October 8, 2026, the Directorate General of Health Services (DGHS) reported 1,935 new hospitalizations due to the mosquito-borne viral disease, bringing the total caseload to 94,151. Of those hospitalized, 88,208 patients have been discharged following recovery. The death toll reached 294 on October 8, 2026, following five additional reported deaths, surpassing the 220 deaths recorded during the corresponding period last year. While Bangladesh typically experiences dengue season between June and September, October has recorded 49 deaths so far, compared to 114 in September."
+          },
+          {
+            "text": "The DGHS director stated that the actual situation may be up to 10 times higher than reported cases, noting that current data only reflects partial cases provided by hospitals. He emphasized that exact data is crucial for taking proper precautionary measures, adding that the death rate in Bangladesh is the highest in the world. Regarding hospital capacity, the DGHS director said there is currently no plan to use government funds to help private hospitals dedicate beds to patients who cannot afford private care, though the agency has suggested that private hospitals consider the financial condition of dengue patients."
+          }
+        ]
+      },
+      "audits": {
+        "content": {
+          "valid": true,
+          "reasons": [],
+          "wordCount": 207,
+          "pageCount": 2
+        },
+        "dates": {
+          "valid": true,
+          "generated_exact_dates": [
+            {
+              "raw": "October 8, 2026",
+              "date": "2026-10-08"
+            }
+          ],
+          "allowed_exact_dates": [
+            "2026-10-08"
+          ],
+          "unsupported_exact_dates": [],
+          "weekday_date_pairs": [],
+          "invalid_weekday_date_pairs": [],
+          "status": "pass"
+        },
+        "numbers": {
+          "valid": true,
+          "generatedNumbers": [
+            "2025",
+            "8",
+            "2026",
+            "1,935",
+            "94,151",
+            "88,208",
+            "294",
+            "220",
+            "49",
+            "114",
+            "10"
+          ],
+          "unsupportedNumbers": [],
+          "qualifierMismatches": []
+        },
+        "relativeTime": {
+          "valid": false,
+          "generatedExpressions": [
+            "last year"
+          ],
+          "allowedExpressions": [],
+          "unsupportedExpressions": [
+            "last year"
+          ]
+        },
+        "headline": {
+          "valid": true,
+          "sharedTerms": [
+            "dengue",
+            "cases",
+            "bangladesh",
+            "compared",
+            "pressure",
+            "dhaka",
+            "hospitals"
+          ]
+        },
+        "geography": {
+          "valid": true,
+          "forbidden": []
+        },
+        "metadata": {
+          "valid": true,
+          "exposed": []
+        },
+        "writerExposure": {
+          "raw_publication_timestamp_exposed": false,
+          "raw_update_timestamp_exposed": false,
+          "resolved_relative_expressions_exposed": [],
+          "unresolved_relative_expressions_exposed": [],
+          "normalized_event_date_exposed": true,
+          "passes": true
+        }
+      },
+      "provider": {
+        "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+        "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+        "httpStatus": 200,
+        "internalErrors": [],
+        "latencyMs": 6995,
+        "finishReason": "stop",
+        "usage": {
+          "prompt_tokens": 2330,
+          "completion_tokens": 344,
+          "total_tokens": 2674,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "neurons": 30.563636779785156
+        },
+        "safeHeaders": {
+          "cf-ray": "a491f6354f39c94b-IAD"
+        },
+        "complete": true,
+        "structuralStatus": "valid_card"
+      }
+    },
+    {
+      "eventId": "qualified-event-029",
+      "lane": "world-major",
+      "sourceTitle": "China Unveils First Nationwide Labor Rules to Protect Gig Economy Workers",
+      "sources": [
+        {
+          "publisher": "caixinglobal.com",
+          "url": "https://www.caixinglobal.com/2026-10-09/china-unveils-first-nationwide-labor-rules-to-protect-gig-economy-workers-102491464.html"
+        },
+        {
+          "title": "China proposes new labor protections for gig workers",
+          "domain": "english.news.cn",
+          "url": "https://english.news.cn/20261008/43ff73f257e340f494ac0a7e1a5b9aaf/c.html",
+          "publishedAt": "2026-10-08T00:00:00.000Z",
+          "sharedTerms": [
+            "china",
+            "first",
+            "labor",
+            "rules",
+            "protect",
+            "gig",
+            "workers",
+            "ministry",
+            "thursday",
+            "released",
+            "draft",
+            "would",
+            "protections",
+            "including",
+            "human",
+            "resources",
+            "social",
+            "security",
+            "public",
+            "through",
+            "nov",
+            "rights",
+            "forms",
+            "employment",
+            "food",
+            "delivery",
+            "riders",
+            "ride",
+            "hailing",
+            "drivers",
+            "proposes",
+            "until",
+            "protecting",
+            "beijing",
+            "but",
+            "arrangements",
+            "also",
+            "platform",
+            "provisions",
+            "protection",
+            "comments",
+            "can",
+            "via",
+            "website",
+            "email"
+          ],
+          "propositions": [
+            "8 (Xinhua) -- China's Ministry of Human Resources and Social Security on Thursday released draft measures aimed at safeguarding the rights and interests of workers in new forms of employment, inviting public feedback until Nov.",
+            "If adopted, these measures would bring into the protection of the labor legal system those workers in new forms of employment who are subject to labor management by enterprises but whose arrangements do not fully meet the criteria for establishing a labor relationship.",
+            "It would be the first time China has done so through departmental rules.",
+            "The draft sets out provisions for protecting basic labor rights and interests, regulates labor rules and algorithms, and establishes rules for different forms of employment arrangements used by enterprises.",
+            "It also seeks to facilitate the resolution of labor disputes and clarify the regulatory responsibilities of government departments and legal liabilities for violations of the measures.",
+            "Members of the public can submit comments online via the ministry's website, by post or via email."
+          ]
+        }
+      ],
+      "status": "accepted",
+      "card": {
+        "headline": "China proposes first nationwide labor rules for gig economy workers",
+        "pages": [
+          {
+            "text": "China’s Ministry of Human Resources and Social Security released a 54-article draft rule on October 8, 2026, that would establish the country’s first ministerial regulation specifically governing the rights of workers in new forms of employment. The proposed measures target workers such as food-delivery riders, couriers, ride-hailing drivers, and truck drivers who often fall outside conventional labor-law definitions due to flexible and complex employment arrangements. If adopted, the rules would bring workers who are subject to labor management by enterprises—but whose arrangements do not fully meet the criteria for establishing a formal labor relationship—under the protection of the labor legal system through departmental rules."
+          },
+          {
+            "text": "The draft proposal includes several key protections and regulatory requirements:  • Minimum-pay safeguards and protections for basic labor rights and interests.  • Limits and regulations on algorithmic decision-making and labor rules.  • Requirements for transparent rules and breaks to protect rest rights.  • Labor protections during severe weather, addressing the outdoor nature of much gig work.  • Provisions to facilitate the resolution of labor disputes.  • Clarification of regulatory responsibilities for government departments and legal liabilities for violations.  Shen Jianfeng, a law professor at the Central University of Finance and Economics, noted that while parts of the draft adapt traditional labor standards to platform conditions, the provisions regarding data protection and algorithm rules represent institutional innovations."
+          },
+          {
+            "text": "The Ministry of Human Resources and Social Security is seeking public comment on the draft through Nov. 8, 2026. Members of the public can submit feedback via the ministry’s website, by mail, or via email."
+          }
+        ]
+      },
+      "audits": {
+        "content": {
+          "valid": true,
+          "reasons": [],
+          "wordCount": 255,
+          "pageCount": 3
+        },
+        "dates": {
+          "valid": true,
+          "generated_exact_dates": [
+            {
+              "raw": "October 8, 2026",
+              "date": "2026-10-08"
+            }
+          ],
+          "allowed_exact_dates": [
+            "2026-10-08"
+          ],
+          "unsupported_exact_dates": [],
+          "weekday_date_pairs": [],
+          "invalid_weekday_date_pairs": [],
+          "status": "pass"
+        },
+        "numbers": {
+          "valid": true,
+          "generatedNumbers": [
+            "54",
+            "8",
+            "2026"
+          ],
+          "unsupportedNumbers": [],
+          "qualifierMismatches": []
+        },
+        "relativeTime": {
+          "valid": true,
+          "generatedExpressions": [],
+          "allowedExpressions": [],
+          "unsupportedExpressions": []
+        },
+        "headline": {
+          "valid": true,
+          "sharedTerms": [
+            "china",
+            "proposes",
+            "first",
+            "nationwide",
+            "labor",
+            "rules",
+            "economy",
+            "workers"
+          ]
+        },
+        "geography": {
+          "valid": true,
+          "forbidden": []
+        },
+        "metadata": {
+          "valid": true,
+          "exposed": []
+        },
+        "writerExposure": {
+          "raw_publication_timestamp_exposed": false,
+          "raw_update_timestamp_exposed": false,
+          "resolved_relative_expressions_exposed": [],
+          "unresolved_relative_expressions_exposed": [],
+          "normalized_event_date_exposed": true,
+          "passes": true
+        }
+      },
+      "provider": {
+        "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+        "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+        "httpStatus": 200,
+        "internalErrors": [],
+        "latencyMs": 8358,
+        "finishReason": "stop",
+        "usage": {
+          "prompt_tokens": 2615,
+          "completion_tokens": 395,
+          "total_tokens": 3010,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "neurons": 34.54545211791992
+        },
+        "safeHeaders": {
+          "cf-ray": "a491f6610fdec94b-IAD"
+        },
+        "complete": true,
+        "structuralStatus": "valid_card"
+      }
+    },
+    {
+      "eventId": "qualified-event-038",
+      "lane": "priority-major",
+      "sourceTitle": "Rooppur Unit-1 achieves first nuclear chain reaction",
+      "sources": [
+        {
+          "publisher": "tbsnews.net",
+          "url": "https://www.tbsnews.net/economy/energy/rooppur-plant-achieves-first-nuclear-chain-reaction-unit-1-1569206"
+        },
+        {
+          "publisher": "thefinancialexpress.com.bd",
+          "url": "https://thefinancialexpress.com.bd/trade/rooppur-unit-1-crosses-hurdle-to-get-going-in-dec"
+        },
+        {
+          "publisher": "thefinancialexpress.com.bd",
+          "url": "https://thefinancialexpress.com.bd/national/rooppur-nuclear-power-plant-moves-closer-to-reactor-start-up"
+        },
+        {
+          "publisher": "en.prothomalo.com",
+          "url": "https://en.prothomalo.com/bangladesh/qg3o594xan"
+        },
+        {
+          "publisher": "thefinancialexpress.com.bd",
+          "url": "https://thefinancialexpress.com.bd/trade/bangladesh-enters-nuclear-era-as-fission-starts-at-rooppur-unit-1"
+        }
+      ],
+      "status": "rejected",
+      "card": {
+        "headline": "Unit 1 of Bangladesh's Rooppur Nuclear Power Plant achieves first controlled nuclear chain reaction",
+        "pages": [
+          {
+            "text": "Unit 1 of the Rooppur Nuclear Power Plant in Bangladesh achieved its first controlled nuclear chain reaction on October 11, 2026. This milestone marks the reactor's entry into the initial criticality stage, the first of four stages required before the plant can generate electricity. Md Anwar Hossain, secretary of the Ministry of Science and Technology, told The Business Standard that the reaction was achieved smoothly at 3:34 p.m., with parameters remaining within desired ranges and the reactor remaining stable. Hossain stated the reaction was initiated following the completion of required technical parameters, external certifications, and compliance procedures."
+          },
+          {
+            "text": "A controlled chain reaction occurs inside a nuclear reactor when uranium atoms are split through nuclear fission, a process that releases energy in the form of heat. To reach the final stage of electricity generation, the plant must complete three subsequent stages: thermal energy transfer, mechanical energy conversion, and finally, the supply of electricity to the national grid. Once fully operational, each unit at the Rooppur plant has a planned generation capacity of 1,200 megawatts, providing a combined total capacity of 2,400MW for the facility."
+          }
+        ]
+      },
+      "audits": {
+        "content": {
+          "valid": true,
+          "reasons": [],
+          "wordCount": 182,
+          "pageCount": 2
+        },
+        "dates": {
+          "valid": true,
+          "generated_exact_dates": [
+            {
+              "raw": "October 11, 2026",
+              "date": "2026-10-11"
+            }
+          ],
+          "allowed_exact_dates": [
+            "2026-10-11"
+          ],
+          "unsupported_exact_dates": [],
+          "weekday_date_pairs": [],
+          "invalid_weekday_date_pairs": [],
+          "status": "pass"
+        },
+        "numbers": {
+          "valid": false,
+          "generatedNumbers": [
+            "1",
+            "11",
+            "2026",
+            "3",
+            "34",
+            "1,200",
+            "2,400"
+          ],
+          "unsupportedNumbers": [
+            "2,400"
+          ],
+          "qualifierMismatches": []
+        },
+        "relativeTime": {
+          "valid": true,
+          "generatedExpressions": [],
+          "allowedExpressions": [],
+          "unsupportedExpressions": []
+        },
+        "headline": {
+          "valid": true,
+          "sharedTerms": [
+            "unit",
+            "bangladesh",
+            "rooppur",
+            "nuclear",
+            "power",
+            "plant",
+            "achieves",
+            "first",
+            "controlled",
+            "chain",
+            "reaction"
+          ]
+        },
+        "geography": {
+          "valid": true,
+          "forbidden": []
+        },
+        "metadata": {
+          "valid": true,
+          "exposed": []
+        },
+        "writerExposure": {
+          "raw_publication_timestamp_exposed": false,
+          "raw_update_timestamp_exposed": false,
+          "resolved_relative_expressions_exposed": [],
+          "unresolved_relative_expressions_exposed": [],
+          "normalized_event_date_exposed": false,
+          "passes": true
+        }
+      },
+      "provider": {
+        "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+        "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+        "httpStatus": 200,
+        "internalErrors": [],
+        "latencyMs": 6403,
+        "finishReason": "stop",
+        "usage": {
+          "prompt_tokens": 1963,
+          "completion_tokens": 300,
+          "total_tokens": 2263,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "neurons": 26.027271270751953
+        },
+        "safeHeaders": {
+          "cf-ray": "a491f6954d06c94b-IAD"
+        },
+        "complete": true,
+        "structuralStatus": "valid_card"
+      }
+    },
+    {
+      "eventId": "qualified-event-044",
+      "lane": "world-interesting",
+      "sourceTitle": "Last call? Not for this 103-year-old bartender.",
+      "sources": [
+        {
+          "publisher": "seattletimes.com",
+          "url": "https://www.seattletimes.com/nation-world/last-call-not-for-this-103-year-old-bartender/"
+        }
+      ],
+      "status": "accepted",
+      "card": {
+        "headline": "103-year-old bartender Irv Koch continues 63-year career",
+        "pages": [
+          {
+            "text": "Irv Koch, widely known as Irv, has worked as a bartender for 63 years and is considered by many unofficial accounts to be the world’s oldest bartender. At 103 years old, Koch continues to work the bar, maintaining a routine of delivering one-liners to patrons. According to Cook, Koch never stopped working even after the deaths of his wife and brother. Koch is currently looking forward to a party for his 104th birthday in August."
+          }
+        ]
+      },
+      "audits": {
+        "content": {
+          "valid": true,
+          "reasons": [],
+          "wordCount": 75,
+          "pageCount": 1
+        },
+        "dates": {
+          "valid": true,
+          "generated_exact_dates": [],
+          "allowed_exact_dates": [],
+          "unsupported_exact_dates": [],
+          "weekday_date_pairs": [],
+          "invalid_weekday_date_pairs": [],
+          "status": "pass"
+        },
+        "numbers": {
+          "valid": true,
+          "generatedNumbers": [
+            "103",
+            "63",
+            "63 years",
+            "103 years",
+            "104"
+          ],
+          "unsupportedNumbers": [],
+          "qualifierMismatches": []
+        },
+        "relativeTime": {
+          "valid": true,
+          "generatedExpressions": [],
+          "allowedExpressions": [],
+          "unsupportedExpressions": []
+        },
+        "headline": {
+          "valid": true,
+          "sharedTerms": [
+            "year",
+            "bartender",
+            "koch"
+          ]
+        },
+        "geography": {
+          "valid": true,
+          "forbidden": []
+        },
+        "metadata": {
+          "valid": true,
+          "exposed": []
+        },
+        "writerExposure": {
+          "raw_publication_timestamp_exposed": false,
+          "raw_update_timestamp_exposed": false,
+          "resolved_relative_expressions_exposed": [],
+          "unresolved_relative_expressions_exposed": [],
+          "normalized_event_date_exposed": false,
+          "passes": true
+        }
+      },
+      "provider": {
+        "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+        "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+        "httpStatus": 200,
+        "internalErrors": [],
+        "latencyMs": 3411,
+        "finishReason": "stop",
+        "usage": {
+          "prompt_tokens": 1752,
+          "completion_tokens": 150,
+          "total_tokens": 1902,
+          "prompt_tokens_details": {
+            "cached_tokens": 704
+          },
+          "neurons": 16.818178176879883
+        },
+        "safeHeaders": {
+          "cf-ray": "a491f6bd583dc94b-IAD"
+        },
+        "complete": true,
+        "structuralStatus": "valid_card"
+      }
+    }
+  ]
+}
