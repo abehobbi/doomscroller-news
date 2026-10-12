@@ -1,50 +1,58 @@
 name: Update and publish News data
+
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '17 */2 * * *'
+
 concurrency:
-  group: doomscroller-news-update
+  group: news-safe-writer-batch
   cancel-in-progress: false
+
 permissions:
-  contents: write
-  pages: write
-  id-token: write
+  actions: read
+  contents: read
+
 jobs:
-  update:
+  generate-shadow-cards:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    timeout-minutes: 20
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      FREE_PLAN_CONFIRMED: 'yes'
+      BATCH_ROOT: experiments/news-global-discovery/fixtures/writer-batch-38301057429
+      OUTPUT_ROOT: artifacts/news-safe-writer-batch
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
       - run: npm ci
-      - run: npm run news:update && npm run news:validate && npm run news:test
-      - name: Keep the last good dataset for the next collection
+      - name: Verify isolated News tests
+        run: npm run news:test
+      - name: Verify saved Cloudflare credentials
+        shell: bash
         run: |
-          git config user.name doomscroller-news-bot
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add public/news/feed.json
-          if ! git diff --cached --quiet; then
-            git commit -m "Update News dataset"
-            git push
-          fi
-      - name: Stage public News data (preserve isolated beta files when present)
-        run: |
-          mkdir -p news-site/news
-          cp public/news/feed.json news-site/news/feed.json
-          if [ -f public/news/beta-feed.json ]; then cp public/news/beta-feed.json news-site/news/beta-feed.json; fi
-          if [ -f public/news/beta-control.json ]; then cp public/news/beta-control.json news-site/news/beta-control.json; fi
-          printf '%s\n' '<!doctype html><title>Doomscroller News data</title><a href="news/feed.json">Stage 1 JSON</a>' > news-site/index.html
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+          test -n "$CLOUDFLARE_ACCOUNT_ID"
+          test -n "$CLOUDFLARE_API_TOKEN"
+      - name: Generate only source-and-image-cleared finalists
+        id: generation
+        continue-on-error: true
+        run: >-
+          node experiments/news-global-discovery/writer-shortlist-trial.mjs
+          --shortlist $BATCH_ROOT/WRITER_SHORTLIST.json
+          --verification $BATCH_ROOT/WRITER_VERIFICATION.json
+          --all-selected
+          --output-dir $OUTPUT_ROOT
+      - name: Upload exact cards, progress and diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
-          path: news-site
-      - name: Publish the dataset in this same run
-        id: deployment
-        uses: actions/deploy-pages@v4
+          name: news-safe-writer-checkpoint-${{ github.run_id }}
+          path: ${{ env.OUTPUT_ROOT }}
+          retention-days: 30
+          if-no-files-found: error
+      - name: Preserve generation failure after uploading progress
+        if: steps.generation.outcome == 'failure'
+        shell: bash
+        run: exit 1
