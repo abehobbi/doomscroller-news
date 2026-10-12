@@ -2,6 +2,24 @@ name: Run isolated News generation trial
 
 on:
   workflow_dispatch:
+    inputs:
+      pipeline:
+        description: Shadow pipeline stage to run
+        required: true
+        type: choice
+        default: fresh-qualification
+        options:
+          - fresh-qualification
+          - recall-rehearsal
+      scan:
+        description: Discovery lanes for a fresh qualification run
+        required: true
+        type: choice
+        default: full
+        options:
+          - full
+          - major
+          - depth
 
 concurrency:
   group: news-five-lane-generation-trial
@@ -11,7 +29,71 @@ permissions:
   contents: read
 
 jobs:
+  fresh-qualification:
+    if: inputs.pipeline == 'fresh-qualification'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+      RUN_ROOT: artifacts/news-shadow-runs/${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Verify isolated News tests
+        run: npm run news:test
+      - name: Verify saved discovery credential is available
+        shell: bash
+        run: test -n "$EXA_API_KEY"
+      - name: Create a fresh run workspace
+        shell: bash
+        run: mkdir -p "$RUN_ROOT/discovery" "$RUN_ROOT/selection" "$RUN_ROOT/verification" "$RUN_ROOT/repair" "$RUN_ROOT/verified"
+      - name: Discover current candidates across the requested lanes
+        run: >-
+          node experiments/news-global-discovery/exa-five-lane-scout.mjs
+          --scan ${{ inputs.scan }}
+          --days 3
+          --results-per-query 10
+          --output ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
+      - name: Deduplicate, rank, and balance the candidate pool
+        run: >-
+          node experiments/news-global-discovery/select-five-lane-edition.mjs
+          --input ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
+          --count 65
+          --output-dir ${{ env.RUN_ROOT }}/selection
+      - name: Verify sources, freshness, event identity, and publisher images
+        run: >-
+          node experiments/news-global-discovery/verify-unified-shortlist.mjs
+          --input ${{ env.RUN_ROOT }}/selection/ANSWER_KEY.json
+          --pool ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
+          --output-dir ${{ env.RUN_ROOT }}/verification
+      - name: Attempt bounded repair for otherwise useful blocked stories
+        run: >-
+          node experiments/news-global-discovery/repair-unified-shortlist.mjs
+          --input ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json
+          --pool ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
+          --maximum 12
+          --output-dir ${{ env.RUN_ROOT }}/repair
+      - name: Assemble and rank the source-ready provisional edition
+        run: >-
+          node experiments/news-global-discovery/assemble-verified-edition.mjs
+          --shortlist ${{ env.RUN_ROOT }}/selection/ANSWER_KEY.json
+          --verification ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json
+          --repair ${{ env.RUN_ROOT }}/repair/SOURCE_REPAIR_REPORT.json
+          --output-dir ${{ env.RUN_ROOT }}/verified
+      - name: Upload the complete fresh-run evidence trail
+        uses: actions/upload-artifact@v4
+        with:
+          name: news-fresh-qualification-${{ github.run_id }}
+          path: ${{ env.RUN_ROOT }}
+          retention-days: 14
+          if-no-files-found: error
+
   generate-trial:
+    if: inputs.pipeline == 'recall-rehearsal'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
