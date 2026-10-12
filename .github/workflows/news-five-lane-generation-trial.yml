@@ -2,6 +2,11 @@ name: Run isolated News generation trial
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - codex/news-editorial-selection
+    paths:
+      - experiments/news-global-discovery/FINALIST_GENERATION_TRIGGER
 
 concurrency:
   group: news-five-lane-generation-trial
