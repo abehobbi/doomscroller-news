@@ -10,3 +10,22 @@ test('merges recovered cards without duplicating an existing event thread', () =
   assert.ok(result.cards.some(item => item.eventId === 'new'))
   assert.ok(result.cards.some(item => item.eventId === 'other'))
 })
+
+test('deduplicates an identical headline discovered through different URLs', () => {
+  const headline = 'Six Ukrainian energy sites hit by Russia since Trump announced ceasefire, Zelensky says'
+  const result = mergeVerifiedEditions([
+    { cards: [card('initial', headline, 'https://bbc.test/story')] },
+    { cards: [card('recovery', headline, 'https://npr.test/story', 2)] },
+  ])
+  assert.equal(result.cards.length, 1)
+  assert.equal(result.cards[0].eventId, 'recovery')
+})
+
+test('retains event aliases when a stronger representative replaces the first card', () => {
+  const original = card('original', 'Six Ukrainian energy sites hit by Russia since Trump announced ceasefire, Zelensky says', 'https://one.test/a')
+  const broader = card('broader', 'Russian attacks hit Ukrainian energy sites after ceasefire announcement', 'https://two.test/b', 3)
+  const repeated = card('repeated', original.headline, 'https://three.test/c', 2)
+  const result = mergeVerifiedEditions([{ cards: [original, broader, repeated] }, { cards: [] }])
+  assert.equal(result.cards.length, 1)
+  assert.equal(result.cards[0].eventId, 'broader')
+})

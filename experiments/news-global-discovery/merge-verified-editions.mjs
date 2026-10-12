@@ -7,21 +7,27 @@ import { candidatesDescribeSameThread, headlinesExplicitlyConflict } from './sel
 
 const canonical = value => { try { const url = new URL(value); url.hash = ''; return url.toString() } catch { return String(value || '') } }
 const sourceCount = card => new Set((card.acceptedSources || []).map(source => source.family || source.domain)).size
+const normalizedHeadline = value => String(value || '').toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, ' ').trim()
 
 function sameEvent(left, right) {
   if (left.eventId === right.eventId) return true
   if (canonical(left.primaryUrl) && canonical(left.primaryUrl) === canonical(right.primaryUrl)) return true
+  if (normalizedHeadline(left.headline) && normalizedHeadline(left.headline) === normalizedHeadline(right.headline)) return true
   if (headlinesExplicitlyConflict({ title: left.headline }, { title: right.headline })) return false
   return candidatesDescribeSameThread({ title: left.headline }, { title: right.headline })
 }
 
 export function mergeVerifiedEditions(editions) {
-  const cards = []
+  const clusters = []
   for (const card of editions.flatMap(edition => edition.cards || [])) {
-    const index = cards.findIndex(existing => sameEvent(existing, card))
-    if (index < 0) cards.push(card)
-    else if (sourceCount(card) > sourceCount(cards[index]) || Date.parse(card.publishedAt || 0) > Date.parse(cards[index].publishedAt || 0)) cards[index] = card
+    const cluster = clusters.find(existing => existing.members.some(member => sameEvent(member, card)))
+    if (!cluster) clusters.push({ representative: card, members: [card] })
+    else {
+      cluster.members.push(card)
+      if (sourceCount(card) > sourceCount(cluster.representative) || Date.parse(card.publishedAt || 0) > Date.parse(cluster.representative.publishedAt || 0)) cluster.representative = card
+    }
   }
+  const cards = clusters.map(cluster => cluster.representative)
   const ranked = rankFrontPage(cards), audit = auditEdition(ranked)
   return { schemaVersion: 1, createdAt: new Date().toISOString(), sourceEditionCount: editions.length, cards: ranked, audit }
 }
