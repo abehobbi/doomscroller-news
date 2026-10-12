@@ -88,6 +88,11 @@ test('writer-safe temporal normalization removes relative timing that cannot be 
   assert.deepEqual(result.resolutions.map(value => value.resolution_status), ['unresolved', 'unresolved'])
 })
 
+test('explicit parenthetical dates resolve today in either day-month order', () => {
+  assert.equal(normalizeExplicitToday('Applications close today (October 12).', '2026-10-12T00:00:00Z'), 'Applications close on October 12, 2026.')
+  assert.equal(normalizeExplicitToday('Applications close today (12 October).', '2026-10-12T00:00:00Z'), 'Applications close on October 12, 2026.')
+})
+
 test('an explicit parenthetical date safely resolves every today reference in one report', () => {
   const result = normalizeExplicitToday('The milestone was achieved today (11 October). Today at 3:34pm, the reactor became critical.', '2026-10-11T11:15:00Z')
   assert.equal(result, 'The milestone was achieved on October 11, 2026. On October 11, 2026 at 3:34pm, the reactor became critical.')

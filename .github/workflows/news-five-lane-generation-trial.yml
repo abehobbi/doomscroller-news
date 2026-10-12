@@ -26,23 +26,30 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Verify isolated News tests
-        run: npm run news:test
+        run: npm run news:test && node --test experiments/news-global-discovery/prepare-recall-writer-trial.test.mjs
       - name: Verify saved Cloudflare credentials are available
         shell: bash
         run: |
           test -n "$CLOUDFLARE_ACCOUNT_ID"
           test -n "$CLOUDFLARE_API_TOKEN"
-      - name: Generate source-and-image-cleared finalists
+      - name: Prepare promoted recall candidates
+        run: >-
+          node experiments/news-global-discovery/prepare-recall-writer-trial.mjs
+          --edition experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial/READY_EDITION.json
+          --verification experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/verified/VERIFICATION_REPORT.json
+          --repair experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/repaired/SOURCE_REPAIR_REPORT.json
+          --output-dir experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/writer
+      - name: Generate five source-and-image-cleared recall finalists
         run: >-
           node experiments/news-global-discovery/writer-shortlist-trial.mjs
-          --shortlist experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/readiness/GENERATION_READY_SHORTLIST.json
-          --verification experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/readiness/SOURCE_VERIFICATION_MERGED.json
+          --shortlist experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/writer/WRITER_SHORTLIST.json
+          --verification experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/writer/WRITER_VERIFICATION.json
           --all-selected
-          --output-dir experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/generated-cards
+          --output-dir experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/writer/generated
       - name: Upload the review and exact diagnostics
         uses: actions/upload-artifact@v4
         with:
-          name: news-finalist-cards-${{ github.run_id }}
-          path: experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/generated-cards
+          name: news-recall-writer-${{ github.run_id }}
+          path: experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/writer
           retention-days: 14
           if-no-files-found: error

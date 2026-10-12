@@ -76,9 +76,11 @@ export function normalizeExplicitToday(value, publishedAt) {
   const text = String(value || '')
   const year = new Date(publishedAt).getUTCFullYear()
   if (!Number.isInteger(year)) return text
-  const match = text.match(/\btoday\s*\(\s*(\d{1,2})\s+([A-Za-z]+)\s*\)/i)
+  const match = text.match(/\btoday\s*\(\s*(?:(\d{1,2})\s+([A-Za-z]+)|([A-Za-z]+)\s+(\d{1,2}))\s*\)/i)
   if (!match) return text
-  const parsed = new Date(`${match[2]} ${match[1]}, ${year} 00:00:00 UTC`)
+  const day = match[1] || match[4]
+  const month = match[2] || match[3]
+  const parsed = new Date(`${month} ${day}, ${year} 00:00:00 UTC`)
   if (!Number.isFinite(parsed.getTime())) return text
   const exact = parsed.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
   return text.replace(match[0], `on ${exact}`).replace(/\btoday\b/gi, found => `${found === 'Today' ? 'On' : 'on'} ${exact}`)
