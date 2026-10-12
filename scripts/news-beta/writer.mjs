@@ -4,6 +4,7 @@ import { ordinary } from '../../artifacts/summary-feasibility/round-9/prompts.mj
 
 export const MODEL = '@cf/google/gemma-4-26b-a4b-it'
 export const DATE_RETRY_REMINDER = 'Use only the permitted exact event dates supplied in the evidence. Do not infer or calculate another calendar date.'
+export const FACTUAL_BOUNDARY_REMINDER = 'Do not introduce any number, exact date, or relative-time phrase such as this year or last year unless the source-led packet explicitly permits it. Give enough supported detail for a self-contained explanation; do not pad thin evidence.'
 export const WRITER_CONFIGURATION = Object.freeze({
   model: MODEL, temperature: 0.2, maxCompletionTokens: 1536,
   responseFormat: 'json_schema', thinking: false, retries: 'date-only; maximum one', repair: false,
@@ -20,7 +21,7 @@ const safeHeaders = response => Object.fromEntries([...response.headers].filter(
 
 export async function writeCard(packet, { dateRetry = false } = {}) {
   const { accountId, token } = credentials()
-  const systemPrompt = dateRetry ? `${ordinary} ${DATE_RETRY_REMINDER}` : ordinary
+  const systemPrompt = `${ordinary} ${FACTUAL_BOUNDARY_REMINDER}${dateRetry ? ` ${DATE_RETRY_REMINDER}` : ''}`
   const request = {
     messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: JSON.stringify({ source_led_packet: packet }) }],
     temperature: 0.2,
