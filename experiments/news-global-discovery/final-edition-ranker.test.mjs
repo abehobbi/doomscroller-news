@@ -41,3 +41,11 @@ test('historical language cannot accidentally promote an Interesting card above 
   ])
   assert.equal(ranked[0].lane, 'priority-major')
 })
+
+test('buried cumulative casualty totals do not outrank the fresh event toll', () => {
+  const current = { headline: 'Attack kills four people', lane: 'world-major', pages: [{ text: 'Four people were killed in the fresh attack. Authorities are investigating the incident. Later background says 100,000 people have died during the wider war.' }] }
+  const larger = { headline: 'Airport attack kills 13 people', lane: 'priority-major', pages: [{ text: 'The missile attack killed 13 people and injured more than 300 at the airport.' }] }
+  const ranked = rankFrontPage([current, larger])
+  assert.equal(ranked[0].headline, larger.headline)
+  assert.doesNotMatch(ranked[1].frontPageRanking.reasons.join(' '), /100000 explicitly reported/)
+})
