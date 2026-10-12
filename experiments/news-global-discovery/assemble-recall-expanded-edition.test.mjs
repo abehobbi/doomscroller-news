@@ -13,3 +13,13 @@ test('adds only accepted image-ready cards and preserves a ranked shadow edition
   assert.equal(result.auditComplete, true)
   assert.deepEqual(result.cards.map(card => card.frontPageRank), [1, 2])
 })
+
+test('rerunning an accepted event replaces its prior card instead of duplicating it', () => {
+  const baseline = { cards: [{ eventId: 'same', headline: 'Older card', lane: 'world-major', pages: [{ text: 'Earlier facts.' }], image: { url: 'https://old.test/image.jpg' }, primaryUrl: 'https://old.test/story', priorityRegions: [] }] }
+  const shortlist = { selected: [{ eventId: 'same', publishedAt: '2026-10-12T12:00:00Z', priorityRegions: [], primarySource: { url: 'https://new.test/story' }, image: { url: 'https://new.test/image.jpg' } }] }
+  const writerReport = { results: [{ eventId: 'same', status: 'accepted', lane: 'world-major', card: { headline: 'Updated card', pages: [{ text: 'Current facts.' }], uncertainties: [] }, sources: [{ publisher: 'new.test', url: 'https://new.test/story' }], audits: { content: { valid: true } } }] }
+  const result = assembleRecallExpandedEdition(baseline, writerReport, shortlist)
+  assert.equal(result.cardCount, 1)
+  assert.equal(result.cards[0].headline, 'Updated card')
+  assert.equal(result.duplicatesRemoved.length, 0)
+})

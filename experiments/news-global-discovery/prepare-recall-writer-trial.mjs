@@ -3,20 +3,13 @@ import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { completeSentences } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/lib.mjs'
 
-export const PROMOTED_EVENT_IDS = new Set([
-  'qualified-event-020', // Ghana pharmaceutical park
-  'qualified-event-013', // Syria / Aramco letter of credit
-  'qualified-event-027', // Roman fort
-  'qualified-event-008', // World Bank jobs council
-  'qualified-event-035', // breathwork study
-])
-
 const canonical = value => { try { const url = new URL(value); url.hash = ''; return url.toString() } catch { return String(value || '') } }
 
-export function prepareRecallWriterTrial(edition, verification, repair) {
+export function prepareRecallWriterTrial(edition, verification, repair, promotions) {
+  const promotedEventIds = new Set((promotions.promoted || []).map(item => item.eventId))
   const assessments = [...(verification.ready || []), ...(repair.results || []).filter(item => item.readiness?.ready)]
   const sourceByUrl = new Map(assessments.flatMap(item => item.sources.filter(source => source.accepted).map(source => [canonical(source.url), { item, source }])))
-  const selected = edition.events.filter(event => PROMOTED_EVENT_IDS.has(event.id)).map((event, index) => {
+  const selected = edition.events.filter(event => promotedEventIds.has(event.id)).map((event, index) => {
     const snapshot = event.representative.snapshot
     const matching = assessments.find(item => item.sources.some(source => source.accepted && canonical(source.url) === canonical(snapshot.finalUrl || snapshot.sourceUrl)))
     if (!matching) throw new Error(`No source assessment for ${event.id}`)
@@ -34,7 +27,7 @@ export function prepareRecallWriterTrial(edition, verification, repair) {
       readyForWriting: true, blockers: [],
     }
   })
-  if (selected.length !== PROMOTED_EVENT_IDS.size) throw new Error(`Expected ${PROMOTED_EVENT_IDS.size} promoted events; found ${selected.length}`)
+  if (selected.length !== promotedEventIds.size) throw new Error(`Expected ${promotedEventIds.size} promoted events; found ${selected.length}`)
   const usedUrls = new Set(selected.flatMap(item => item.sources.map(source => canonical(source.url))))
   const results = assessments.filter(item => item.sources.some(source => usedUrls.has(canonical(source.url)))).map(item => ({
     eventId: item.eventId,
@@ -51,10 +44,10 @@ export function prepareRecallWriterTrial(edition, verification, repair) {
 
 async function main() {
   const args = process.argv.slice(2), value = flag => args[args.indexOf(flag) + 1]
-  const editionPath = value('--edition'), verificationPath = value('--verification'), repairPath = value('--repair'), outputDir = value('--output-dir')
-  if (!editionPath || !verificationPath || !repairPath || !outputDir) throw new Error('--edition, --verification, --repair and --output-dir are required')
-  const [edition, verification, repair] = await Promise.all([editionPath, verificationPath, repairPath].map(file => fs.readFile(file, 'utf8').then(JSON.parse)))
-  const prepared = prepareRecallWriterTrial(edition, verification, repair)
+  const editionPath = value('--edition'), verificationPath = value('--verification'), repairPath = value('--repair'), promotionsPath = value('--promotions'), outputDir = value('--output-dir')
+  if (!editionPath || !verificationPath || !repairPath || !promotionsPath || !outputDir) throw new Error('--edition, --verification, --repair, --promotions and --output-dir are required')
+  const [edition, verification, repair, promotions] = await Promise.all([editionPath, verificationPath, repairPath, promotionsPath].map(file => fs.readFile(file, 'utf8').then(JSON.parse)))
+  const prepared = prepareRecallWriterTrial(edition, verification, repair, promotions)
   await fs.mkdir(outputDir, { recursive: true })
   await Promise.all([
     fs.writeFile(path.join(outputDir, 'WRITER_SHORTLIST.json'), `${JSON.stringify(prepared.shortlist, null, 2)}\n`),

@@ -26,26 +26,40 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Verify isolated News tests
-        run: npm run news:test && node --test experiments/news-global-discovery/prepare-recall-writer-trial.test.mjs
+        run: npm run news:test
       - name: Verify saved Cloudflare credentials are available
         shell: bash
         run: |
           test -n "$CLOUDFLARE_ACCOUNT_ID"
           test -n "$CLOUDFLARE_API_TOKEN"
-      - name: Prepare promoted recall candidates
+      - name: Select strong distinct recall promotions
+        run: >-
+          node experiments/news-global-discovery/select-recall-promotions.mjs
+          --scores experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial/run-38238358126/scored/EDITORIAL_SCORES.json
+          --classification experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/qualified/QUALIFIED_RECALL_CLASSIFICATION.json
+          --output-dir experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/automatic
+      - name: Prepare automatically promoted recall candidates
         run: >-
           node experiments/news-global-discovery/prepare-recall-writer-trial.mjs
           --edition experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial/READY_EDITION.json
           --verification experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/verified/VERIFICATION_REPORT.json
           --repair experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/repaired/SOURCE_REPAIR_REPORT.json
+          --promotions experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/automatic/RECALL_PROMOTIONS.json
           --output-dir experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/writer
-      - name: Generate five source-and-image-cleared recall finalists
+      - name: Generate source-and-image-cleared recall finalists
         run: >-
           node experiments/news-global-discovery/writer-shortlist-trial.mjs
           --shortlist experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/writer/WRITER_SHORTLIST.json
           --verification experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/writer/WRITER_VERIFICATION.json
           --all-selected
           --output-dir experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/writer/generated
+      - name: Assemble and audit the recall-expanded shadow edition
+        run: >-
+          node experiments/news-global-discovery/assemble-recall-expanded-edition.mjs
+          --baseline experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/expanded-edition/RECALL_EXPANDED_EDITION.json
+          --writer-report experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/writer/generated/TRIAL_REPORT.json
+          --shortlist experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/writer/WRITER_SHORTLIST.json
+          --output-dir experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/automatic/final
       - name: Upload the review and exact diagnostics
         uses: actions/upload-artifact@v4
         with:

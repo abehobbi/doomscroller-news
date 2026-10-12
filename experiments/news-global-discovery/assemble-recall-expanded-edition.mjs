@@ -27,7 +27,8 @@ export function assembleRecallExpandedEdition(baseline, writerReport, shortlist)
       origin: 'targeted-recall',
     }
   })
-  const baselineCards = (baseline.cards || []).map(card => ({ ...card, origin: card.origin || 'verified-baseline' }))
+  const acceptedIds = new Set(additions.map(card => card.eventId))
+  const baselineCards = (baseline.cards || []).filter(card => !acceptedIds.has(card.eventId)).map(card => ({ ...card, origin: card.origin || 'verified-baseline' }))
   const eventIds = new Set(), urls = new Set(), duplicates = [], combined = []
   for (const card of [...baselineCards, ...additions]) {
     const url = canonical(card.primaryUrl || card.sources?.[0]?.url || card.acceptedSources?.[0]?.url)
