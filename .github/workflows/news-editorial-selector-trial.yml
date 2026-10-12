@@ -1,4 +1,4 @@
-name: Run fresh News shadow-edition selector
+name: Run isolated News editorial selector trial
 
 on:
   workflow_dispatch:
@@ -30,25 +30,32 @@ jobs:
         run: |
           test -n "$CLOUDFLARE_ACCOUNT_ID"
           test -n "$CLOUDFLARE_API_TOKEN"
-      - name: Prepare the corrected selected-pool fixture
+      - name: Prepare source-ready recall edition
         run: >-
-          node experiments/news-global-discovery/editorial-selector.mjs
-          --edition experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/combined/COMBINED_QUALIFIED_EDITION.json
-          --prepare-fixture experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/EDITORIAL_FIXTURE.json
-          --selected-only
-      - name: Score the corrected Interesting and Discovery candidates
+          node experiments/news-global-discovery/prepare-recall-editorial-edition.mjs
+          --qualified experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/qualified/QUALIFIED_EDITION.json
+          --verification experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/verified/VERIFICATION_REPORT.json
+          --repair experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/repaired/SOURCE_REPAIR_REPORT.json
+          --output experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial/READY_EDITION.json
+      - name: Prepare blind 32-versus-13 editorial fixture
+        run: >-
+          node experiments/news-global-discovery/prepare-recall-head-to-head.mjs
+          --baseline experiments/news-global-discovery/review-output-edition-2026-10-12/VERIFIED_EDITION.json
+          --recall experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial/READY_EDITION.json
+          --output experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial/HEAD_TO_HEAD_FIXTURE.json
+      - name: Score all 45 candidates under one rubric
         id: score
         continue-on-error: true
         run: >-
           node experiments/news-global-discovery/editorial-selector.mjs
-          --fixture experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/EDITORIAL_FIXTURE.json
-          --output-dir experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/scored
+          --fixture experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial/HEAD_TO_HEAD_FIXTURE.json
+          --output-dir experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial/scored
       - name: Upload blind review, answer key and diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: news-shadow-editorial-selector-${{ github.run_id }}
-          path: experiments/news-global-discovery/review-output-shadow-2026-10-11-expanded/final-selection/scored
+          name: news-recall-editorial-${{ github.run_id }}
+          path: experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial
           retention-days: 30
           if-no-files-found: error
       - name: Preserve a failed selector result as a failed workflow
