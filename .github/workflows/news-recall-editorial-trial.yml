@@ -32,18 +32,18 @@ jobs:
           --verification experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/verified/VERIFICATION_REPORT.json
           --repair experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/repaired/SOURCE_REPAIR_REPORT.json
           --output experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial/READY_EDITION.json
-      - name: Prepare blind editorial fixture
+      - name: Prepare blind 32-versus-13 editorial fixture
         run: >-
-          node experiments/news-global-discovery/editorial-selector.mjs
-          --edition experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial/READY_EDITION.json
-          --prepare-fixture experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial/EDITORIAL_FIXTURE.json
-          --selected-only --include-major
-      - name: Score all source-ready newcomers
+          node experiments/news-global-discovery/prepare-recall-head-to-head.mjs
+          --baseline experiments/news-global-discovery/review-output-edition-2026-10-12/VERIFIED_EDITION.json
+          --recall experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial/READY_EDITION.json
+          --output experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial/HEAD_TO_HEAD_FIXTURE.json
+      - name: Score all 45 candidates under one rubric
         id: score
         continue-on-error: true
         run: >-
           node experiments/news-global-discovery/editorial-selector.mjs
-          --fixture experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial/EDITORIAL_FIXTURE.json
+          --fixture experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial/HEAD_TO_HEAD_FIXTURE.json
           --output-dir experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/editorial/scored
       - name: Upload diagnostics
         if: always()
