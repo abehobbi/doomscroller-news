@@ -7,12 +7,13 @@ const API_URL = 'https://api.exa.ai/search'
 const EXCLUDE_DOMAINS = ['facebook.com', 'instagram.com', 'linkedin.com', 'pinterest.com', 'tiktok.com', 'tripadvisor.com', 'youtube.com', 'x.com']
 
 function parseArgs(argv) {
-  const options = { scan: 'full', lanes: [], days: 3, resultsPerQuery: 10, output: null, dryRun: false }
+  const options = { scan: 'full', lanes: [], days: 3, resultsPerQuery: 10, maxQueries: null, output: null, dryRun: false }
   for (let i = 0; i < argv.length; i += 1) {
     if (argv[i] === '--scan') options.scan = argv[++i]
     else if (argv[i] === '--lanes') options.lanes = argv[++i].split(',').map(value => value.trim()).filter(Boolean)
     else if (argv[i] === '--days') options.days = Number(argv[++i])
     else if (argv[i] === '--results-per-query') options.resultsPerQuery = Number(argv[++i])
+    else if (argv[i] === '--max-queries') options.maxQueries = Number(argv[++i])
     else if (argv[i] === '--output') options.output = argv[++i]
     else if (argv[i] === '--dry-run') options.dryRun = true
   }
@@ -21,6 +22,7 @@ function parseArgs(argv) {
   if (options.lanes.some(lane => !knownLanes.has(lane))) throw new Error('--lanes contains an unknown editorial lane')
   if (!Number.isFinite(options.days) || options.days < 1) throw new Error('--days must be at least 1')
   if (!Number.isInteger(options.resultsPerQuery) || options.resultsPerQuery < 1 || options.resultsPerQuery > 100) throw new Error('--results-per-query must be an integer from 1 to 100')
+  if (options.maxQueries !== null && (!Number.isInteger(options.maxQueries) || options.maxQueries < 1)) throw new Error('--max-queries must be a positive integer')
   return options
 }
 
@@ -30,6 +32,24 @@ export function selectedQueries(scan, lanes = []) {
   else if (scan === 'depth') selected = FIVE_LANE_QUERIES.filter(query => !UPDATE_LANES.has(query.lane))
   else selected = FIVE_LANE_QUERIES
   return lanes.length ? selected.filter(query => lanes.includes(query.lane)) : selected
+}
+
+export function budgetQueries(queries, maximum = null) {
+  if (!maximum || queries.length <= maximum) return [...queries]
+  const remaining = [...queries], selected = [], laneCounts = new Map(), regionCounts = new Map()
+  while (remaining.length && selected.length < maximum) {
+    const ranked = remaining.map((query, index) => {
+      const newLane = !laneCounts.has(query.lane), newRegion = query.region && !regionCounts.has(query.region)
+      const majorBonus = query.lane.includes('major') ? 8 : 0
+      const score = Number(newRegion) * 100 + Number(newLane) * 40 + majorBonus - (laneCounts.get(query.lane) || 0) * 7 - (regionCounts.get(query.region) || 0) * 5 - index / 1000
+      return { query, score }
+    }).sort((a, b) => b.score - a.score)
+    const choice = ranked[0].query
+    selected.push(choice); remaining.splice(remaining.indexOf(choice), 1)
+    laneCounts.set(choice.lane, (laneCounts.get(choice.lane) || 0) + 1)
+    if (choice.region) regionCounts.set(choice.region, (regionCounts.get(choice.region) || 0) + 1)
+  }
+  return selected
 }
 
 function normalizeUrl(value) {
@@ -97,7 +117,7 @@ function mergeResults(searches) {
 
 async function main() {
   const options = parseArgs(process.argv.slice(2))
-  const queries = selectedQueries(options.scan, options.lanes)
+  const queries = budgetQueries(selectedQueries(options.scan, options.lanes), options.maxQueries)
   if (!queries.length) throw new Error('No queries match the requested scan and lanes')
   const estimatedCost = Number((queries.length * 0.007).toFixed(3))
   if (options.dryRun) {

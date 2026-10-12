@@ -27,7 +27,7 @@ test('three daily scans separate major updates from depth discovery within the e
   assert.equal(selectedQueries('depth').every(query => !query.lane.includes('major')), true)
   assert.equal(selectedQueries('major').length, 12)
   assert.equal(selectedQueries('depth').length, 22)
-  assert.equal(dailySearchBudget().totalQueries, 46)
+  assert.equal(dailySearchBudget().totalQueries, 26)
   assert.equal(NEWS_TIMEZONE, 'America/Toronto')
   assert.deepEqual(DAILY_CARD_GUIDELINE, { expectedMinimum: 30, hardMaximum: 65, paddingAllowed: false })
 })

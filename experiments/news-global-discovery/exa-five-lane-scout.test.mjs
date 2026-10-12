@@ -1,11 +1,18 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { selectedQueries } from './exa-five-lane-scout.mjs'
+import { budgetQueries, selectedQueries } from './exa-five-lane-scout.mjs'
 
 test('lane filter supports exact deficit discovery without unrelated searches', () => {
   const selected = selectedQueries('all', ['world-major', 'priority-major', 'discovery'])
   assert.equal(selected.length, 16)
   assert.deepEqual([...new Set(selected.map(query => query.lane))], ['world-major', 'priority-major', 'discovery'])
+})
+
+test('bounded full scans retain every lane and priority region before adding depth', () => {
+  const selected = budgetQueries(selectedQueries('full'), 12)
+  assert.equal(selected.length, 12)
+  assert.deepEqual(new Set(selected.map(query => query.lane)), new Set(['world-major', 'priority-major', 'world-interesting', 'priority-interesting', 'discovery']))
+  for (const region of ['Syria', 'Middle East', 'Bangladesh', 'Ghana', 'Canada', 'GTA']) assert.ok(selected.some(query => query.region === region))
 })
 
 test('lane filter still respects the requested scan family', () => {

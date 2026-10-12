@@ -6,11 +6,18 @@ import { FIVE_LANE_QUERIES } from './five-lane-queries.mjs'
 const API_URL = 'https://api.exa.ai/search'
 const EXCLUDE_DOMAINS = ['facebook.com', 'instagram.com', 'linkedin.com', 'pinterest.com', 'tiktok.com', 'tripadvisor.com', 'youtube.com', 'x.com']
 
-export function selectGapQueries(edition) {
+export function selectGapQueries(edition, maximum = 8) {
   const laneGaps = edition.audit?.laneGaps || {}
   const regionGaps = edition.audit?.regionGaps || {}
-  const selected = FIVE_LANE_QUERIES.filter(query => Number(laneGaps[query.lane] || 0) > 0 || (query.region && Number(regionGaps[query.region] || 0) > 0))
-  return [...new Map(selected.map(query => [query.id, query])).values()]
+  const candidates = [...new Map(FIVE_LANE_QUERIES.filter(query => Number(laneGaps[query.lane] || 0) > 0 || (query.region && Number(regionGaps[query.region] || 0) > 0)).map(query => [query.id, query])).values()]
+  const remainingLane = { ...laneGaps }, remainingRegion = { ...regionGaps }, selected = []
+  while (candidates.length && selected.length < maximum) {
+    const ranked = candidates.map((query, index) => ({ query, score: Number(remainingRegion[query.region] || 0) * 30 + Number(remainingLane[query.lane] || 0) * 10 + (query.lane.includes('major') ? 4 : 0) - index / 1000 })).sort((a, b) => b.score - a.score)
+    const choice = ranked[0].query; selected.push(choice); candidates.splice(candidates.indexOf(choice), 1)
+    if (remainingLane[choice.lane] > 0) remainingLane[choice.lane] -= 1
+    if (choice.region && remainingRegion[choice.region] > 0) remainingRegion[choice.region] -= 1
+  }
+  return selected
 }
 
 function normalizeUrl(value) {
@@ -51,10 +58,10 @@ function candidatesFrom(searches) {
 async function main() {
   const args = process.argv.slice(2), value = flag => args[args.indexOf(flag) + 1]
   const editionPath = value('--edition'), discoveryPath = value('--discovery'), output = value('--output')
-  const resultsPerQuery = Number(value('--results-per-query') || 10)
+  const resultsPerQuery = Number(value('--results-per-query') || 10), maxQueries = Number(value('--max-queries') || 8)
   if (!editionPath || !discoveryPath || !output) throw new Error('--edition, --discovery and --output are required')
   const [edition, discovery] = await Promise.all([editionPath, discoveryPath].map(file => fs.readFile(file, 'utf8').then(JSON.parse)))
-  const queries = selectGapQueries(edition), window = discovery.requestedWindow
+  const queries = selectGapQueries(edition, maxQueries), window = discovery.requestedWindow
   const searches = []
   if (queries.length) {
     const apiKey = process.env.EXA_API_KEY
@@ -62,7 +69,7 @@ async function main() {
     for (const query of queries) searches.push(await search(apiKey, query, window, resultsPerQuery))
   }
   const candidates = candidatesFrom(searches)
-  const report = { schemaVersion: 1, createdAt: new Date().toISOString(), provider: 'exa', scan: 'dynamic-gap-recovery', requestedWindow: window, requestedLaneGaps: edition.audit?.laneGaps || {}, requestedRegionGaps: edition.audit?.regionGaps || {}, queryCount: searches.length, resultsPerQuery, costDollars: Number(searches.reduce((sum, item) => sum + item.costDollars, 0).toFixed(6)), rawResultCount: searches.reduce((sum, item) => sum + item.results.length, 0), uniqueCandidateCount: candidates.length, searches: searches.map(({ results, ...item }) => ({ ...item, resultCount: results.length })), candidates }
+  const report = { schemaVersion: 1, createdAt: new Date().toISOString(), provider: 'exa', scan: 'dynamic-gap-recovery', requestedWindow: window, requestedLaneGaps: edition.audit?.laneGaps || {}, requestedRegionGaps: edition.audit?.regionGaps || {}, maxQueries, queryCount: searches.length, budgetExhausted: searches.length === maxQueries && FIVE_LANE_QUERIES.some(query => !queries.some(selected => selected.id === query.id) && (Number(edition.audit?.laneGaps?.[query.lane] || 0) > 0 || Number(edition.audit?.regionGaps?.[query.region] || 0) > 0)), resultsPerQuery, costDollars: Number(searches.reduce((sum, item) => sum + item.costDollars, 0).toFixed(6)), rawResultCount: searches.reduce((sum, item) => sum + item.results.length, 0), uniqueCandidateCount: candidates.length, searches: searches.map(({ results, ...item }) => ({ ...item, resultCount: results.length })), candidates }
   await fs.mkdir(path.dirname(output), { recursive: true }); await fs.writeFile(output, `${JSON.stringify(report, null, 2)}\n`)
   if (process.env.GITHUB_OUTPUT) await fs.appendFile(process.env.GITHUB_OUTPUT, `query_count=${report.queryCount}\n`)
   process.stdout.write(`${JSON.stringify({ queries: report.queryCount, candidates: report.uniqueCandidateCount, costDollars: report.costDollars, laneGaps: report.requestedLaneGaps, regionGaps: report.requestedRegionGaps }, null, 2)}\n`)

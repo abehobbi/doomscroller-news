@@ -50,31 +50,42 @@ jobs:
         run: test -n "$EXA_API_KEY"
       - name: Create a fresh run workspace
         shell: bash
-        run: mkdir -p "$RUN_ROOT/discovery" "$RUN_ROOT/selection" "$RUN_ROOT/verification" "$RUN_ROOT/repair" "$RUN_ROOT/verified" "$RUN_ROOT/gap/discovery" "$RUN_ROOT/gap/selection" "$RUN_ROOT/gap/verification" "$RUN_ROOT/gap/repair" "$RUN_ROOT/gap/verified" "$RUN_ROOT/merged"
+        run: mkdir -p "$RUN_ROOT/discovery" "$RUN_ROOT/publisher" "$RUN_ROOT/combined" "$RUN_ROOT/selection" "$RUN_ROOT/verification" "$RUN_ROOT/repair" "$RUN_ROOT/verified" "$RUN_ROOT/gap/discovery" "$RUN_ROOT/gap/selection" "$RUN_ROOT/gap/verification" "$RUN_ROOT/gap/repair" "$RUN_ROOT/gap/verified" "$RUN_ROOT/merged"
       - name: Discover current candidates across the requested lanes
         run: >-
           node experiments/news-global-discovery/exa-five-lane-scout.mjs
           --scan ${{ inputs.scan }}
           --days 3
           --results-per-query 10
+          --max-queries 20
           --output ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
+      - name: Collect the free publisher-feed safety net
+        run: >-
+          node experiments/news-global-discovery/source-seed-depth-scout.mjs
+          --output-dir ${{ env.RUN_ROOT }}/publisher
+      - name: Merge open-web and publisher-feed discovery
+        run: >-
+          node experiments/news-global-discovery/merge-discovery-candidates.mjs
+          --exa ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
+          --source ${{ env.RUN_ROOT }}/publisher/SOURCE_SEED_BATCH.json
+          --output ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json
       - name: Deduplicate, rank, and balance the candidate pool
         run: >-
           node experiments/news-global-discovery/select-five-lane-edition.mjs
-          --input ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
+          --input ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json
           --count 65
           --output-dir ${{ env.RUN_ROOT }}/selection
       - name: Verify sources, freshness, event identity, and publisher images
         run: >-
           node experiments/news-global-discovery/verify-unified-shortlist.mjs
           --input ${{ env.RUN_ROOT }}/selection/ANSWER_KEY.json
-          --pool ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
+          --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json
           --output-dir ${{ env.RUN_ROOT }}/verification
       - name: Attempt bounded repair for otherwise useful blocked stories
         run: >-
           node experiments/news-global-discovery/repair-unified-shortlist.mjs
           --input ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json
-          --pool ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
+          --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json
           --maximum 12
           --output-dir ${{ env.RUN_ROOT }}/repair
       - name: Assemble and rank the source-ready provisional edition
@@ -89,8 +100,9 @@ jobs:
         run: >-
           node experiments/news-global-discovery/exa-dynamic-gap-recovery.mjs
           --edition ${{ env.RUN_ROOT }}/verified/VERIFIED_EDITION.json
-          --discovery ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
+          --discovery ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json
           --results-per-query 10
+          --max-queries 8
           --output ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json
       - name: Select gap-recovery candidates
         if: steps.gap.outputs.query_count != '0'
