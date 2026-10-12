@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { normalizeTemporalFact } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
 import { buildWriterSafeTemporalPacket } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
-import { bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, geographyAudit, LANES, numericAudit, relativeTimeAudit, writerMetadataAudit } from './writer-shortlist-trial.mjs'
+import { bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, geographyAudit, LANES, normalizeExplicitToday, numericAudit, relativeTimeAudit, writerMetadataAudit } from './writer-shortlist-trial.mjs'
 
 test('trial chooses one multi-source candidate from every lane and prefers Syria in a priority tie', () => {
   const item = (eventId, lane, sources, regions = []) => ({ eventId, lane, headline: eventId, evidence: 'A complete factual sentence explains the event. Another complete sentence explains why it matters.', publishedAt: '2026-10-10T00:00:00Z', priorityRegions: regions, editorialRecommendation: 'strong', editorialScore: 90, independentSourceCount: sources, primarySource: { publisher: 'bbc.com', url: `https://bbc.com/${eventId}` }, sources: [{ publisher: 'bbc.com', url: `https://bbc.com/${eventId}` }] })
@@ -19,6 +19,14 @@ test('trial packet exposes only propositions from verified supporting sources', 
   const reports = [{ results: [{ accepted: [{ domain: 'reuters.com', url: 'https://reuters.com/a', propositions: ['Reuters independently reported the same event.', 'Its report supplied additional detail.'] }] }] }]
   const item = buildTrialItem(candidate, buildVerificationIndex(reports))
   assert.equal(item.temporalPacket.writer_facing.secondarySourceAdditions.length, 1)
+  assert.equal(item.temporalPacket.writer_facing.secondarySourceAdditions[0].publisher, 'reuters.com')
+})
+
+test('source-repair additions enter the writer only through their verified propositions', () => {
+  const supporting = { title: 'Independent report', domain: 'reuters.com', publisher: 'reuters.com', url: 'https://reuters.com/repaired', publishedAt: '2026-10-10T01:00:00Z', propositions: ['Reuters independently reported the same event.', 'The report supplied a concrete additional fact.'] }
+  const candidate = { eventId: 'e2', lane: 'world-major', headline: 'Headline', evidence: 'The event happened. Officials described its consequence.', publishedAt: '2026-10-10T00:00:00Z', priorityRegions: [], independentSourceCount: 1, primarySource: { publisher: 'bbc.com', url: 'https://bbc.com/b' }, sources: [{ publisher: 'bbc.com', url: 'https://bbc.com/b' }], supportingSources: [supporting] }
+  const item = buildTrialItem(candidate, buildVerificationIndex([{ results: [{ accepted: [supporting] }] }]))
+  assert.equal(item.sources.length, 2)
   assert.equal(item.temporalPacket.writer_facing.secondarySourceAdditions[0].publisher, 'reuters.com')
 })
 
@@ -78,6 +86,12 @@ test('writer-safe temporal normalization removes relative timing that cannot be 
   const result = normalizeTemporalFact('Next week, K will go on trial in Hamburg. A judge refused to extradite him last year.', { publicationTime: '2026-10-10T12:00:00Z', timeZone: 'Europe/Berlin' })
   assert.equal(result.normalized_fact, 'K will go on trial in Hamburg. A judge refused to extradite him.')
   assert.deepEqual(result.resolutions.map(value => value.resolution_status), ['unresolved', 'unresolved'])
+})
+
+test('an explicit parenthetical date safely resolves every today reference in one report', () => {
+  const result = normalizeExplicitToday('The milestone was achieved today (11 October). Today at 3:34pm, the reactor became critical.', '2026-10-11T11:15:00Z')
+  assert.equal(result, 'The milestone was achieved on October 11, 2026. On October 11, 2026 at 3:34pm, the reactor became critical.')
+  assert.doesNotMatch(result, /\btoday\b/i)
 })
 
 test('leading pronoun propositions stay bound to the named antecedent', () => {

@@ -14,7 +14,7 @@ const REGION_TIMEZONE = { Syria: 'Asia/Damascus', 'Middle East': 'Asia/Qatar', B
 const REGION_PRIORITY = { Syria: 5, 'Middle East': 4, Bangladesh: 3, Ghana: 2, Canada: 1, GTA: 1 }
 
 function parseArgs(argv) {
-  const options = { shortlist: null, verification: [], context: [], eventIds: [], outputDir: null, dryRun: false }
+  const options = { shortlist: null, verification: [], context: [], eventIds: [], outputDir: null, dryRun: false, allSelected: false }
   for (let index = 0; index < argv.length; index += 1) {
     if (argv[index] === '--shortlist') options.shortlist = argv[++index]
     else if (argv[index] === '--verification') options.verification.push(argv[++index])
@@ -22,6 +22,7 @@ function parseArgs(argv) {
     else if (argv[index] === '--event-id') options.eventIds.push(argv[++index])
     else if (argv[index] === '--output-dir') options.outputDir = argv[++index]
     else if (argv[index] === '--dry-run') options.dryRun = true
+    else if (argv[index] === '--all-selected') options.allSelected = true
   }
   if (!options.shortlist || !options.outputDir) throw new Error('--shortlist and --output-dir are required')
   return options
@@ -71,6 +72,18 @@ function facts(value, maxChars = 4200) {
   return completeSentences(String(value || ''), { maxChars, maxSentences: 12 })
 }
 
+export function normalizeExplicitToday(value, publishedAt) {
+  const text = String(value || '')
+  const year = new Date(publishedAt).getUTCFullYear()
+  if (!Number.isInteger(year)) return text
+  const match = text.match(/\btoday\s*\(\s*(\d{1,2})\s+([A-Za-z]+)\s*\)/i)
+  if (!match) return text
+  const parsed = new Date(`${match[2]} ${match[1]}, ${year} 00:00:00 UTC`)
+  if (!Number.isFinite(parsed.getTime())) return text
+  const exact = parsed.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
+  return text.replace(match[0], `on ${exact}`).replace(/\btoday\b/gi, found => `${found === 'Today' ? 'On' : 'on'} ${exact}`)
+}
+
 export function bindLeadingCoreferences(propositions) {
   const result = []
   for (const proposition of propositions || []) {
@@ -82,9 +95,11 @@ export function bindLeadingCoreferences(propositions) {
 }
 
 export function buildTrialItem(candidate, verificationIndex, contextIndex = new Map()) {
-  const primaryFacts = facts(candidate.evidence)
+  const primaryFacts = facts(normalizeExplicitToday(candidate.evidence, candidate.publishedAt))
   const primaryUrl = canonicalUrl(candidate.primarySource.url)
-  const secondary = candidate.sources.filter(source => canonicalUrl(source.url) !== primaryUrl).map((source, index) => {
+  const displayedSources = [...candidate.sources, ...(candidate.supportingSources || [])]
+    .filter((source, index, values) => values.findIndex(other => canonicalUrl(other.url) === canonicalUrl(source.url)) === index)
+  const secondary = displayedSources.filter(source => canonicalUrl(source.url) !== primaryUrl).map((source, index) => {
     const verified = verificationIndex.get(canonicalUrl(source.url))
     if (!verified?.propositions?.length) return null
     return {
@@ -144,7 +159,7 @@ export function buildTrialItem(candidate, verificationIndex, contextIndex = new 
   const temporalPacket = buildWriterSafeTemporalPacket(bound, { sourceTimezone: timezone })
   return {
     eventId: candidate.eventId, lane: candidate.lane, sourceTitle: candidate.headline,
-    sources: candidate.sources, independentSourceCount: candidate.independentSourceCount,
+    sources: displayedSources, independentSourceCount: candidate.independentSourceCount,
     temporalPacket,
   }
 }
@@ -262,7 +277,7 @@ function auditCard(item, card) {
   const geography = geographyAudit(card, item)
   const metadata = writerMetadataAudit(card)
   const audits = { content, dates, numbers, relativeTime, headline, geography, metadata, writerExposure: auditWriterTemporalExposure(item.temporalPacket) }
-  return { audits, valid: content.valid && dates.valid && numbers.valid && relativeTime.valid && headline.valid && geography.valid && metadata.valid }
+  return { audits, valid: content.valid && dates.valid && numbers.valid && relativeTime.valid && headline.valid && geography.valid && metadata.valid && audits.writerExposure.passes }
 }
 
 function reportFor(items, results, options, complete) {
@@ -315,10 +330,10 @@ async function main() {
   const contextIndex = buildContextIndex(contextFiles)
   const chosen = options.eventIds.length
     ? options.eventIds.map(eventId => shortlist.selected.find(candidate => candidate.eventId === eventId)).filter(Boolean)
-    : chooseTrialCandidates(shortlist)
+    : options.allSelected ? shortlist.selected : chooseTrialCandidates(shortlist)
   if (options.eventIds.length && chosen.length !== options.eventIds.length) throw new Error(`Could not find every requested event ID; requested ${options.eventIds.length}, found ${chosen.length}`)
   const items = chosen.map(candidate => buildTrialItem(candidate, verificationIndex, contextIndex))
-  if (!options.eventIds.length && items.length !== LANES.length) throw new Error(`Expected one candidate in each of ${LANES.length} lanes; found ${items.length}`)
+  if (!options.eventIds.length && !options.allSelected && items.length !== LANES.length) throw new Error(`Expected one candidate in each of ${LANES.length} lanes; found ${items.length}`)
   if (options.dryRun) {
     process.stdout.write(`${JSON.stringify({ selected: items.map(item => ({ eventId: item.eventId, lane: item.lane, title: item.sourceTitle, displayedSources: item.sources.length, evidenceBackedSecondarySources: item.temporalPacket.writer_facing.secondarySourceAdditions.length, writerExposure: auditWriterTemporalExposure(item.temporalPacket) })) }, null, 2)}\n`)
     return
