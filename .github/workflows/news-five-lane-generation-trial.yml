@@ -50,7 +50,7 @@ jobs:
         run: test -n "$EXA_API_KEY"
       - name: Create a fresh run workspace
         shell: bash
-        run: mkdir -p "$RUN_ROOT/discovery" "$RUN_ROOT/selection" "$RUN_ROOT/verification" "$RUN_ROOT/repair" "$RUN_ROOT/verified"
+        run: mkdir -p "$RUN_ROOT/discovery" "$RUN_ROOT/selection" "$RUN_ROOT/verification" "$RUN_ROOT/repair" "$RUN_ROOT/verified" "$RUN_ROOT/gap/discovery" "$RUN_ROOT/gap/selection" "$RUN_ROOT/gap/verification" "$RUN_ROOT/gap/repair" "$RUN_ROOT/gap/verified" "$RUN_ROOT/merged"
       - name: Discover current candidates across the requested lanes
         run: >-
           node experiments/news-global-discovery/exa-five-lane-scout.mjs
@@ -84,6 +84,55 @@ jobs:
           --verification ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json
           --repair ${{ env.RUN_ROOT }}/repair/SOURCE_REPAIR_REPORT.json
           --output-dir ${{ env.RUN_ROOT }}/verified
+      - name: Plan and run discovery only for measured gaps
+        id: gap
+        run: >-
+          node experiments/news-global-discovery/exa-dynamic-gap-recovery.mjs
+          --edition ${{ env.RUN_ROOT }}/verified/VERIFIED_EDITION.json
+          --discovery ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
+          --results-per-query 10
+          --output ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json
+      - name: Select gap-recovery candidates
+        if: steps.gap.outputs.query_count != '0'
+        run: >-
+          node experiments/news-global-discovery/select-five-lane-edition.mjs
+          --input ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json
+          --count 30
+          --output-dir ${{ env.RUN_ROOT }}/gap/selection
+      - name: Verify gap-recovery sources and images
+        if: steps.gap.outputs.query_count != '0'
+        run: >-
+          node experiments/news-global-discovery/verify-unified-shortlist.mjs
+          --input ${{ env.RUN_ROOT }}/gap/selection/ANSWER_KEY.json
+          --pool ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json
+          --output-dir ${{ env.RUN_ROOT }}/gap/verification
+      - name: Repair the strongest blocked gap candidates
+        if: steps.gap.outputs.query_count != '0'
+        run: >-
+          node experiments/news-global-discovery/repair-unified-shortlist.mjs
+          --input ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json
+          --pool ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json
+          --maximum 12
+          --output-dir ${{ env.RUN_ROOT }}/gap/repair
+      - name: Assemble verified gap additions
+        if: steps.gap.outputs.query_count != '0'
+        run: >-
+          node experiments/news-global-discovery/assemble-verified-edition.mjs
+          --shortlist ${{ env.RUN_ROOT }}/gap/selection/ANSWER_KEY.json
+          --verification ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json
+          --repair ${{ env.RUN_ROOT }}/gap/repair/SOURCE_REPAIR_REPORT.json
+          --output-dir ${{ env.RUN_ROOT }}/gap/verified
+      - name: Merge independently verified recovery cards
+        if: steps.gap.outputs.query_count != '0'
+        run: >-
+          node experiments/news-global-discovery/merge-verified-editions.mjs
+          --input ${{ env.RUN_ROOT }}/verified/VERIFIED_EDITION.json
+          --input ${{ env.RUN_ROOT }}/gap/verified/VERIFIED_EDITION.json
+          --output-dir ${{ env.RUN_ROOT }}/merged
+      - name: Preserve the original edition when no gaps exist
+        if: steps.gap.outputs.query_count == '0'
+        shell: bash
+        run: cp "$RUN_ROOT/verified/VERIFIED_EDITION.json" "$RUN_ROOT/merged/MERGED_VERIFIED_EDITION.json"
       - name: Upload the complete fresh-run evidence trail
         uses: actions/upload-artifact@v4
         with:
