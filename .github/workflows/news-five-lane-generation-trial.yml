@@ -64,6 +64,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: news-recall-writer-${{ github.run_id }}
-          path: experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/writer
+          path: |
+            experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/writer
+            experiments/news-global-discovery/review-output-targeted-recall-2026-10-12/automatic
           retention-days: 14
           if-no-files-found: error
