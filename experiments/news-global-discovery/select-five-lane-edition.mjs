@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import { pathToFileURL } from 'node:url'
 import { FIVE_LANE_QUERIES } from './five-lane-queries.mjs'
 
 const STOPWORDS = new Set('a an and are as at be by for from has have how in into is it its of on or that the their this to was were what when where who why will with says said'.split(' '))
@@ -23,7 +24,7 @@ const PRIORITY_REGION_MINIMUMS = { Syria: 2, 'Middle East': 2, Bangladesh: 2, Gh
 
 const HARD_REJECT = /\b(?:daily mail|tourism|travel guide|things to do|event calendar|press release|sponsored|opinion|podcast|newsletter|award ceremony|celebrity|football|soccer|basketball|tickets?|lottery results?|horoscope|weather forecast|stock picks?|coupon|shopping deal)\b/i
 const GENERIC_PAGE = /\b(?:home|front page|latest news|breaking news|all news|directory|annual report|meeting packet|minutes|agenda|live updates?)\b/i
-const WEAK_EVENT = /\b(?:invites?|calls? for|urges?|plans? to|could|may|set to|expected to|celebrates?|festival to be held|launches? initiative|shares? thoughts?|reacts? to)\b/i
+const WEAK_EVENT = /\b(?:invites?|calls? for|urges?|plans? to|could|may|set to|expected to|celebrates?|festival to be held|launches? initiative|shares? thoughts?|reacts? to|commends?|praises?|welcomes?|weighs? in|misses? court|open for|ready to|vows? to)\b/i
 const CONCRETE = /\b(?:kills?|dies?|dead|injur(?:y|ed|ies)|arrests?|convicts?|acquits?|bans?|blocks?|halts?|suspends?|overturns?|approves?|rejects?|signs?|strikes?|attacks?|evacuates?|floods?|earthquake|hurricane|outbreak|shortage|collapse|closes?|opens?|restores?|discovers?|found|reveals?|reports?|reaches? agreement|cuts?|rises?|falls?|first|record|investigat(?:es?|ion)|lawsuit|protest|sanctions?|election|ceasefire|troops?|war)\b/i
 const HUMAN_TEXTURE = /\b(?:village|community|famil(?:y|ies)|residents?|women|children|youths?|artisans?|farmers?|fishers?|workers?|craft|tradition|harvest|livelihood|neighbou?rhood|small town|Indigenous|tribal|refugee|market|water|wildlife|chimpanzees?|mosquitoes?|mangrove|forest|river|wetland|school|education|housing|tenant|hospital|theatre|portrait|literature|clothing|class|debt|sanitation|poultry|rescue|sailors?|mining|extraction)\b/i
 const DISCOVERY_SIGNAL = /\b(?:study|researchers?|scientists?|fossil|archaeolog|paleontolog|species|planet|space|Webb|brain|genome|microbes?|quantum|clock|ancient|excavat|Nature|journal|trial|mice|stars?|galaxy|evolution)\b/i
@@ -31,6 +32,7 @@ const COPY_MARKERS = /(?:\|\s*(?:AP News|Reuters|BBC News|CBC News|Al Jazeera)|-
 const WEAK_DOMAINS = [
   'dailymail.com', 'economictimes.indiatimes.com', 'timesofindia.indiatimes.com',
   'boredpanda.com', 'inkl.com', 'techtimes.com', 'newsghana.com.gh', 'newsghana.com',
+  'cnnbc.com', 'scienmag.com', 'scibeat.com', 'scitechdaily.com', 'dnyuz.com', 'dainiktrend.com',
 ]
 const STRONG_DOMAINS = [
   'apnews.com', 'reuters.com', 'bbc.com', 'bbc.co.uk', 'cbc.ca', 'aljazeera.com',
@@ -64,8 +66,24 @@ function cleanTitle(value) {
     .trim()
 }
 
+function normalizeToken(token) {
+  const aliases = new Map([
+    ['killed', 'kill'], ['kills', 'kill'], ['killing', 'kill'],
+    ['strikes', 'strike'], ['struck', 'strike'],
+    ['protests', 'protest'], ['protesters', 'protester'],
+    ['sudanese', 'sudan'], ['miners', 'mine'], ['miner', 'mine'],
+    ['riyadh', 'saudiarabia'], ['saudi', 'saudiarabia'],
+    ['kyiv', 'ukraine'], ['ukrainian', 'ukraine'],
+  ])
+  if (aliases.has(token)) return aliases.get(token)
+  if (token.length > 5 && token.endsWith('ies')) return `${token.slice(0, -3)}y`
+  if (token.length > 4 && token.endsWith('s') && !token.endsWith('ss')) return token.slice(0, -1)
+  return token
+}
+
 function tokens(value) {
-  return new Set(cleanTitle(value).toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').split(/\s+/).filter(token => token.length > 3 && !STOPWORDS.has(token)))
+  const preservedAcronyms = new Set(['icc', 'iaea', 'imf', 'nato', 'who'])
+  return new Set(cleanTitle(value).toLowerCase().replace(/airstrike/g, 'air strike').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').split(/\s+/).map(normalizeToken).filter(token => (token.length > 3 || preservedAcronyms.has(token)) && !STOPWORDS.has(token)))
 }
 
 function similarity(left, right) {
@@ -116,10 +134,27 @@ function scoreCandidate(candidate, reportCreatedAt) {
   return { ...candidate, priorityRegions, title, domain, sourceTier: tier, ageHours, score, laneScores, reasons }
 }
 
-function clusterCandidates(scored) {
+const GENERIC_CLUSTER_TERMS = new Set(['attack', 'airport', 'candidate', 'government', 'leader', 'minister', 'people', 'president', 'report', 'state', 'world'])
+const PLACE_ANCHORS = new Set(['saudiarabia', 'sudan', 'ukraine', 'india', 'bangladesh', 'ghana', 'syria', 'canada', 'nepal', 'gaza', 'lebanon'])
+const EVENT_ANCHORS = new Set(['airport', 'attack', 'ceasefire', 'election', 'flood', 'mine', 'protest', 'strike'])
+const ENTITY_ANCHORS = new Set(['icc', 'iaea', 'imf', 'nato', 'who'])
+
+export function candidatesDescribeSameThread(left, right) {
+  const a = tokens(left.title), b = tokens(right.title)
+  const sharedTokens = [...a].filter(token => b.has(token))
+  const smaller = Math.max(1, Math.min(a.size, b.size))
+  const ratio = sharedTokens.length / smaller
+  const distinctive = sharedTokens.some(token => token.length >= 6 && !GENERIC_CLUSTER_TERMS.has(token))
+  const sharedPlace = sharedTokens.some(token => PLACE_ANCHORS.has(token))
+  const sharedEventAnchors = sharedTokens.filter(token => EVENT_ANCHORS.has(token)).length
+  const sharedEntity = sharedTokens.some(token => ENTITY_ANCHORS.has(token))
+  return ratio >= 0.55 || (sharedTokens.length >= 3 && ratio >= 0.33 && distinctive) || (sharedPlace && sharedEventAnchors >= 1 && sharedTokens.length >= 3) || (sharedEntity && sharedTokens.length >= 2)
+}
+
+export function clusterCandidates(scored) {
   const clusters = []
   for (const candidate of [...scored].sort((a, b) => Math.max(...Object.values(b.laneScores)) - Math.max(...Object.values(a.laneScores)))) {
-    const match = clusters.find(cluster => cluster.members.some(member => similarity(candidate.title, member.title) >= 0.62))
+    const match = clusters.find(cluster => cluster.members.some(member => candidatesDescribeSameThread(candidate, member)))
     if (match) match.members.push(candidate)
     else clusters.push({ id: `event-${String(clusters.length + 1).padStart(3, '0')}`, members: [candidate] })
   }
@@ -235,4 +270,4 @@ async function main() {
   process.stdout.write(`${JSON.stringify({ inputCandidates: scored.length, eventClusters: clusters.length, selected: selection.selected.length, laneCounts: selection.counts }, null, 2)}\n`)
 }
 
-main().catch(error => { console.error(error); process.exitCode = 1 })
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) main().catch(error => { console.error(error); process.exitCode = 1 })

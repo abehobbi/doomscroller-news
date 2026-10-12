@@ -21,6 +21,7 @@ const lines = [
   `Fresh articles: ${batch.counts.freshArticles}`,
   `Unique articles: ${batch.counts.uniqueArticles}`,
   `Prepared events: ${batch.counts.preparedEvents}`,
+  `Qualified candidates retained: ${batch.candidates.length}`,
   `Source failures: ${batch.counts.sourceFailures}`,
   '',
   ...batch.selected.map((entry, index) => [

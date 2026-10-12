@@ -1,0 +1,128 @@
+import fs from 'node:fs/promises'
+import path from 'node:path'
+import { pathToFileURL } from 'node:url'
+import { SOURCES } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/sources.mjs'
+
+const PRIORITY_REGIONS = new Set(['Syria', 'Middle East', 'Bangladesh', 'Ghana', 'Canada', 'GTA'])
+const SOURCE_REGIONS = SOURCES.map(source => {
+  try { return { domain: new URL(source.sourceUrl).hostname.replace(/^www\./, ''), regions: source.coverage.filter(region => PRIORITY_REGIONS.has(region)) } }
+  catch { return { domain: '', regions: [] } }
+}).filter(source => source.domain && source.regions.length)
+
+function canonicalUrl(value) {
+  try {
+    const url = new URL(value)
+    url.hostname = url.hostname.replace(/^www\./, '')
+    url.hash = ''
+    for (const key of [...url.searchParams.keys()]) if (/^(?:utm_|fbclid|gclid|traffic_source)/i.test(key)) url.searchParams.delete(key)
+    return url.toString()
+  } catch { return String(value || '') }
+}
+
+function feedLanes(item) {
+  const parts = item.event?.scoreParts || {}
+  const regions = item.event?.regions || []
+  const priority = regions.some(region => PRIORITY_REGIONS.has(region))
+  const lanes = []
+  if ((parts.discovery || 0) >= 8) lanes.push('discovery')
+  const concreteHeadlineAction = (item.event?.primary?.signals?.headlineAction || []).length > 0
+  if ((parts.consequence || 0) >= 8 || ((parts.importance || 0) >= 24 && concreteHeadlineAction)) lanes.push(priority ? 'priority-major' : 'world-major')
+  if ((parts.interestingness || 0) > 0 || (parts.localTexture || 0) > 0 || !lanes.length) lanes.push(priority ? 'priority-interesting' : 'world-interesting')
+  return [...new Set(lanes)]
+}
+
+export function sourceCandidate(item, position = 1) {
+  const article = item.event.primary
+  const url = canonicalUrl(article.url)
+  const regions = (item.event.regions || []).filter(region => PRIORITY_REGIONS.has(region))
+  return {
+    title: article.title,
+    url,
+    publishedAt: article.sourceUpdatedAt || article.publishedAt || null,
+    author: null,
+    image: item.image?.url || article.imageUrl || null,
+    discoveries: [{ lane: feedLanes(item)[0], region: regions[0] || null, queryId: `publisher-feed:${article.provenance?.feedId || article.sourceId}`, position }],
+    lanes: feedLanes(item),
+    priorityRegions: regions,
+    queryIds: [`publisher-feed:${article.provenance?.feedId || article.sourceId}`],
+    bestPosition: position,
+    discoverySources: ['publisher-feed'],
+  }
+}
+
+function combine(existing, incoming) {
+  return {
+    ...existing,
+    title: existing.title || incoming.title,
+    publishedAt: [existing.publishedAt, incoming.publishedAt].filter(Boolean).sort().at(-1) || null,
+    image: existing.image || incoming.image,
+    discoveries: [...(existing.discoveries || []), ...(incoming.discoveries || [])],
+    lanes: [...new Set([...(existing.lanes || []), ...(incoming.lanes || [])])],
+    priorityRegions: [...new Set([...(existing.priorityRegions || []), ...(incoming.priorityRegions || [])])],
+    queryIds: [...new Set([...(existing.queryIds || []), ...(incoming.queryIds || [])])],
+    bestPosition: Math.min(existing.bestPosition || 999, incoming.bestPosition || 999),
+    discoverySources: [...new Set([...(existing.discoverySources || ['exa']), ...(incoming.discoverySources || [])])],
+  }
+}
+
+export function mergeDiscoveryCandidates(exaInput, sourceBatch) {
+  const exaReports = Array.isArray(exaInput) ? exaInput : [exaInput]
+  const byUrl = new Map()
+  for (const item of exaReports.flatMap(report => report.candidates || [])) {
+    const url = canonicalUrl(item.url)
+    let domain = ''
+    try { domain = new URL(url).hostname.replace(/^www\./, '') } catch {}
+    const registryRegions = SOURCE_REGIONS.filter(source => domain === source.domain || domain.endsWith(`.${source.domain}`)).flatMap(source => source.regions)
+    const priorityRegions = [...new Set([...(item.priorityRegions || []), ...registryRegions])]
+    const lanes = [...new Set([
+      ...(item.lanes || []),
+      ...(priorityRegions.length && item.lanes?.includes('world-interesting') ? ['priority-interesting'] : []),
+      ...(priorityRegions.length && item.lanes?.includes('world-major') ? ['priority-major'] : []),
+    ])]
+    const normalized = { ...item, url, lanes, priorityRegions, discoverySources: ['exa'] }
+    const existing = byUrl.get(normalized.url)
+    byUrl.set(normalized.url, existing ? combine(existing, normalized) : normalized)
+  }
+  for (const [index, item] of (sourceBatch.candidates || sourceBatch.selected || []).entries()) {
+    const normalized = sourceCandidate(item, index + 1)
+    const existing = byUrl.get(normalized.url)
+    byUrl.set(normalized.url, existing ? combine(existing, normalized) : normalized)
+  }
+  const candidates = [...byUrl.values()]
+  const exaCandidateCount = exaReports.reduce((sum, report) => sum + (report.candidates || []).length, 0)
+  const windowStarts = exaReports.map(report => report.requestedWindow?.start).filter(Boolean).sort()
+  const windowEnds = exaReports.map(report => report.requestedWindow?.end).filter(Boolean).sort()
+  return {
+    schemaVersion: 1,
+    createdAt: new Date().toISOString(),
+    provider: 'exa-plus-publisher-feeds',
+    requestedWindow: { start: windowStarts[0] || null, end: windowEnds.at(-1) || null },
+    queryCount: exaReports.reduce((sum, report) => sum + Number(report.queryCount || 0), 0),
+    costDollars: Number(exaReports.reduce((sum, report) => sum + Number(report.costDollars || 0), 0).toFixed(6)),
+    rawResultCount: exaReports.reduce((sum, report) => sum + Number(report.rawResultCount || 0), 0) + Number(sourceBatch.counts?.freshArticles || 0),
+    uniqueCandidateCount: candidates.length,
+    inputCounts: {
+      exa: exaCandidateCount,
+      publisherFeeds: (sourceBatch.candidates || sourceBatch.selected || []).length,
+      mergedByCanonicalUrl: exaCandidateCount + (sourceBatch.candidates || sourceBatch.selected || []).length - candidates.length,
+    },
+    candidates,
+  }
+}
+
+async function main() {
+  const exaInputs = [], sourceIndex = process.argv.indexOf('--source'), outputIndex = process.argv.indexOf('--output')
+  for (let index = 0; index < process.argv.length; index += 1) if (process.argv[index] === '--exa') exaInputs.push(process.argv[index + 1])
+  if (!exaInputs.length || sourceIndex < 0 || outputIndex < 0) throw new Error('one or more --exa values, --source and --output are required')
+  const [exaReports, sourceBatch] = await Promise.all([
+    Promise.all(exaInputs.map(input => fs.readFile(input, 'utf8').then(JSON.parse))),
+    fs.readFile(process.argv[sourceIndex + 1], 'utf8').then(JSON.parse),
+  ])
+  const report = mergeDiscoveryCandidates(exaReports, sourceBatch)
+  const output = path.resolve(process.argv[outputIndex + 1])
+  await fs.mkdir(path.dirname(output), { recursive: true })
+  await fs.writeFile(output, `${JSON.stringify(report, null, 2)}\n`)
+  process.stdout.write(`${JSON.stringify({ ...report.inputCounts, uniqueCandidates: report.uniqueCandidateCount }, null, 2)}\n`)
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) main().catch(error => { console.error(error); process.exitCode = 1 })

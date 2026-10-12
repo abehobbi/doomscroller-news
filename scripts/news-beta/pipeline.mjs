@@ -520,6 +520,7 @@ export async function buildEvidenceBatch({ now = Date.now() } = {}) {
   const reranked = diversityRerank(prepared)
   return {
     retrievedAt, sourceStatus, knownSourceFailures: KNOWN_SOURCE_FAILURES,
+    candidates: prepared,
     selected: reranked.selected, reranker: { adjustments: reranked.adjustments, distribution: reranked.distribution },
     evidenceRejected,
     counts: { discoveredArticles: articles.length, freshArticles: fresh.length, uniqueArticles: unique.length, eventCandidates: events.length, evidencePoolArticles: poolArticles.length, preparedEvents: prepared.length, selectedEvents: reranked.selected.length, evidenceFailures: evidenceRejected.length, sourceFailures: sourceStatus.filter(source => source.status === 'failed').length },
