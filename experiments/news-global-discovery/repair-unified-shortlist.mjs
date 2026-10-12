@@ -66,6 +66,11 @@ export function mergeSources(existing, additions) {
   return output
 }
 
+export function pendingRepairCandidates(candidates, savedResults = []) {
+  const completed = new Set(savedResults.map(item => item.eventId))
+  return candidates.filter(item => !completed.has(item.eventId))
+}
+
 async function repairItem(apiKey, item, context) {
   const found = await search(apiKey, item)
   const selection = { representative: { title: item.headline } }
@@ -141,26 +146,35 @@ async function main() {
   const apiKey = process.env.EXA_API_KEY
   if (!apiKey) throw new Error('EXA_API_KEY is not set. No requests were made.')
   const context = { windowStart: pool.requestedWindow?.start, referenceYear: new Date(pool.requestedWindow?.end || Date.now()).getUTCFullYear() }
-  const results = []
-  for (const candidate of candidates) {
+  await fs.mkdir(options.outputDir, { recursive: true })
+  let results = []
+  try {
+    const saved = JSON.parse(await fs.readFile(outputPath, 'utf8'))
+    if (saved.sourceReport === options.input && Array.isArray(saved.results)) results = saved.results
+  } catch {}
+  const writeCheckpoint = async complete => {
+    const checkpoint = {
+      schemaVersion: 1, createdAt: new Date().toISOString(), sourceReport: options.input, complete,
+      searches: results.filter(item => item.repair?.requestId).length,
+      costDollars: Number(results.reduce((sum, item) => sum + Number(item.repair?.costDollars || 0), 0).toFixed(6)),
+      repaired: results.filter(item => item.readiness.ready).length,
+      unresolved: results.filter(item => !item.readiness.ready).length,
+      completedCandidates: results.length, totalCandidates: candidates.length, results,
+    }
+    await fs.writeFile(outputPath, `${JSON.stringify(checkpoint, null, 2)}\n`)
+    return checkpoint
+  }
+  for (const candidate of pendingRepairCandidates(candidates, results)) {
     const originalSourceCount = candidate.sources.length
     try {
       results.push({ ...(await repairItem(apiKey, candidate, context)), originalSourceCount })
     } catch (error) {
       results.push({ ...candidate, originalSourceCount, repair: { requestId: null, costDollars: 0, latencyMs: 0, candidatesInspected: 0, acceptedAdditions: 0, error: String(error?.message || error).slice(0, 240) } })
     }
+    await writeCheckpoint(false)
   }
-  const output = {
-    schemaVersion: 1, createdAt: new Date().toISOString(), sourceReport: options.input,
-    searches: results.filter(item => item.repair?.requestId).length,
-    costDollars: Number(results.reduce((sum, item) => sum + Number(item.repair?.costDollars || 0), 0).toFixed(6)),
-    repaired: results.filter(item => item.readiness.ready).length,
-    unresolved: results.filter(item => !item.readiness.ready).length,
-    results,
-  }
-  await fs.mkdir(options.outputDir, { recursive: true })
+  const output = await writeCheckpoint(true)
   await Promise.all([
-    fs.writeFile(outputPath, `${JSON.stringify(output, null, 2)}\n`),
     fs.writeFile(path.join(options.outputDir, 'SOURCE_REPAIR_REPORT.md'), markdown(output)),
   ])
   process.stdout.write(`${JSON.stringify({ searches: output.searches, costDollars: output.costDollars, repaired: output.repaired, unresolved: output.unresolved }, null, 2)}\n`)

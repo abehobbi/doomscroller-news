@@ -10,7 +10,7 @@ import { fetchPublicArticle } from './public-article.mjs'
 import { trustedContextDomain } from './enrich-generation-context.mjs'
 import { establishedPublisherDomain } from './selection-safeguards.mjs'
 
-const HIGH_RISK = /\b(?:attack|killed|killing|war|military|troops?|sanctions?|election|protest|corrupt|crime|court|police|detain|alleg|accus|strike|missile|drone|ceasefire)\b/i
+const HIGH_RISK = /\b(?:attack|killed|killing|deaths?|died|casualt(?:y|ies)|war|military|troops?|sanctions?|election|protest|corrupt|crime|court|police|detain|alleg|accus|strike|missile|drone|ceasefire|hurricane|earthquake|floods?|outbreak)\b/i
 const MONTHS = new Map('january february march april may june july august september october november december'.split(' ').map((month, index) => [month, index]))
 const REGISTERED_DOMAINS = new Set(SOURCES.map(source => {
   try { return new URL(source.sourceUrl).hostname.replace(/^www\./, '') } catch { return null }

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { mergeSources, repairCandidates } from './repair-unified-shortlist.mjs'
+import { mergeSources, pendingRepairCandidates, repairCandidates } from './repair-unified-shortlist.mjs'
 import { isTrustedDomain } from './verify-unified-shortlist.mjs'
 
 test('repair candidates are bounded and ordered by selection strength', () => {
@@ -22,4 +22,9 @@ test('source merging removes exact family and URL duplicates without hiding inde
 test('repair reassessment recognizes newly vetted publishers without another search', () => {
   assert.equal(isTrustedDomain('mbcradio.com'), true)
   assert.equal(isTrustedDomain('washingtonpost.com'), true)
+})
+
+test('checkpoint resume skips already completed repair candidates', () => {
+  const candidates = [{ eventId: 'done' }, { eventId: 'pending' }]
+  assert.deepEqual(pendingRepairCandidates(candidates, [{ eventId: 'done' }]), [{ eventId: 'pending' }])
 })

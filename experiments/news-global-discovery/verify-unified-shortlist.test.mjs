@@ -21,3 +21,13 @@ test('high-risk events require independent families and every ready card needs a
   assert.match(readiness(selection, [source]).reasons.join(' '), /two independent/)
   assert.equal(readiness(selection, [source, { ...source, family: 'two' }]).ready, true)
 })
+
+test('casualty and disaster wording cannot bypass high-risk corroboration', () => {
+  const source = { accepted: true, trusted: true, family: 'publisher-a', imageUrl: 'https://example.com/image.jpg', url: 'https://example.com/story', domain: 'example.com' }
+  for (const title of ['Storm causes four deaths', 'Hurricane reaches the coast', 'Flood affects two million people']) {
+    const result = readiness({ representative: { title } }, [source])
+    assert.equal(result.highRisk, true)
+    assert.equal(result.ready, false)
+    assert.ok(result.reasons.includes('high-risk event lacks two independent source families'))
+  }
+})
