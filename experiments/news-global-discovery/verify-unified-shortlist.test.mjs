@@ -1,6 +1,12 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { evidenceMatchesTitle, explicitReportingPeriodEnd, readiness, sourceFreshness } from './verify-unified-shortlist.mjs'
+import { evidenceMatchesTitle, explicitReportingPeriodEnd, isTrustedDomain, readiness, sourceFreshness } from './verify-unified-shortlist.mjs'
+
+test('vetted specialist science publishers satisfy the trusted-source gate', () => {
+  assert.equal(isTrustedDomain('skyatnightmagazine.com'), true)
+  assert.equal(isTrustedDomain('psypost.org'), true)
+  assert.equal(isTrustedDomain('scitechupdates.com'), false)
+})
 
 test('source evidence must overlap the selected event', () => {
   assert.equal(evidenceMatchesTitle('Riyadh airport hit by missile attack', 'A missile struck the Riyadh international airport during the attack.').passes, true)

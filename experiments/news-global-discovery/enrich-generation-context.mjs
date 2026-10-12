@@ -16,7 +16,8 @@ const TRUSTED_CONTEXT_DOMAINS = new Set([
   'france24.com', 'seattletimes.com', 'theglobeandmail.com', 'citynews.ca', 'toronto.ca',
   'abc.net.au', 'channelnewsasia.com', 'newindianexpress.com', 'indiatoday.in', 'business-standard.com',
   'malaysiakini.com', 'nationthailand.com', 'theconversation.com', 'livescience.com', 'phys.org',
-  'eurekalert.org', 'sciencedaily.com', 'news.cn', 'chinanews.com.cn', 'yicaiglobal.com',
+  'eurekalert.org', 'sciencedaily.com', 'skyatnightmagazine.com', 'psypost.org',
+  'news.cn', 'chinanews.com.cn', 'yicaiglobal.com',
 ])
 
 function parseArgs(argv) {
