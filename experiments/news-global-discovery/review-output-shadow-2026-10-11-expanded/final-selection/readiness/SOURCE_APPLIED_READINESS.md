@@ -1,6 +1,6 @@
 # Source-applied readiness
 
-30 of 52 finalists are ready for live image probing. 22 still need source repair; 0 have other blockers.
+31 of 52 finalists are ready for live image probing. 21 still need source repair; 0 have other blockers.
 
 ## Ready
 
@@ -20,6 +20,7 @@
 - 18. New Liberal major projects bill clears first vote, heads to special committee | CBC News
 - 19. Ontario will officially begin removing Toronto bike lanes on Tuesday | CBC News
 - 20. US seeks review of rejected $109m health deal with Ghana – Mahama
+- 21. China Unveils First Nationwide Labor Rules to Protect Gig Economy Workers
 - 23. Treasury Imposes First Civil Penalty Under the Outbound Investment Rule
 - 24. Rooppur Unit-1 achieves first nuclear chain reaction
 - 28. How Tania stopped her own child marriage
@@ -41,7 +42,6 @@
 - 3. Bangladesh flood death toll rises to 44 as more than one million people affected — publisher remains unverified and unsupported
 - 12. Alberta Court of Appeal says Ottawa's Impact Assessment Act is still unconstitutional | CBC News — contested claim still lacks a second independent source family
 - 13. City Council approves Toronto's 2026 budget with $63.1-billion capital plan, frozen TTC fares — contested claim still lacks a second independent source family
-- 21. China Unveils First Nationwide Labor Rules to Protect Gig Economy Workers — publisher remains unverified and unsupported
 - 22. Why returning to Syria is only the first step toward rebuilding lives shattered by war — contested claim still lacks a second independent source family
 - 25. Inside Thailand’s cyanide murders and the search for its ‘most prolific serial killer’ in history — contested claim still lacks a second independent source family
 - 26. Syria Begins Destroying Chemical Weapons Remnants — publisher remains unverified and unsupported

@@ -1,6 +1,6 @@
 # Finalist generation-readiness gate
 
-26 of 52 finalists passed evidence, source and live-image checks. 22 require source repair and 4 require image repair. No failed candidate is silently admitted.
+30 of 52 finalists passed evidence, source and live-image checks. 21 require source repair and 1 require image repair. No failed candidate is silently admitted.
 
 ## Ready for card generation
 
@@ -13,11 +13,13 @@
 - 9. Pakistan imposes emergency rule over Imran Khan's provincial government
 - 10. Major earthquake hits Panama, injures at least 27
 - 11. US unveils sanctions on ICC in move court condemns as 'assault on rule of law'
+- 15. The Weekly Review, October 5 to 9, 2026 - Statistics Canada
 - 16. Major Dhaka hospitals face rising dengue patient load
 - 17. Teacher unions suspend two-week strike after meeting with Council of State
 - 18. New Liberal major projects bill clears first vote, heads to special committee | CBC News
 - 19. Ontario will officially begin removing Toronto bike lanes on Tuesday | CBC News
 - 20. US seeks review of rejected $109m health deal with Ghana – Mahama
+- 21. China Unveils First Nationwide Labor Rules to Protect Gig Economy Workers
 - 23. Treasury Imposes First Civil Penalty Under the Outbound Investment Rule
 - 24. Rooppur Unit-1 achieves first nuclear chain reaction
 - 28. How Tania stopped her own child marriage
@@ -25,8 +27,10 @@
 - 30. Eskasoni, efuel company create joint venture to make jet fuel from seawater | CBC News
 - 34. EU says trade deal could cut up to 50% of Chinese EV and plug-in hybrid imports and lower tariffs for some European exports to China | Fortune
 - 37. Meet “Noo-Noo”: A 99-Million-Year-Old Insect with a Surprising Secret
+- 38. New large docodont fossil sheds light on Jurassic mammaliaform diversity
 - 42. River swallows char beside Padma Bridge, 4 villages under water
 - 43. Kauai’s Hawaiian salt makers seek help restoring harvest area
+- 47. A Distant Planet Emitted a Burst of Radio Waves. Why? - Nautilus
 - 48. How a rebel force held the world to ransom in a single night of chaos and panic
 - 49. FoN Campaign Defends Ghana's Expanded Fishing Zone
 - 52. Last call? Not for this 103-year-old bartender.
@@ -34,9 +38,6 @@
 ## Image repair
 
 - 14. Nobel Peace Prize for 2026 - Nobel Peace Prize — HTTP 206; content type text/html; charset=utf-8
-- 15. The Weekly Review, October 5 to 9, 2026 - Statistics Canada — HTTP 200; content type text/html; charset=UTF-8
-- 38. New large docodont fossil sheds light on Jurassic mammaliaform diversity — HTTP 206; content type text/html; charset=utf-8
-- 47. A Distant Planet Emitted a Burst of Radio Waves. Why? - Nautilus — HTTP 206; content type text/html; charset=utf-8
 
 ## Source repair
 
@@ -44,7 +45,6 @@
 - 3. Bangladesh flood death toll rises to 44 as more than one million people affected — publisher remains unverified and unsupported
 - 12. Alberta Court of Appeal says Ottawa's Impact Assessment Act is still unconstitutional | CBC News — contested claim still lacks a second independent source family
 - 13. City Council approves Toronto's 2026 budget with $63.1-billion capital plan, frozen TTC fares — contested claim still lacks a second independent source family
-- 21. China Unveils First Nationwide Labor Rules to Protect Gig Economy Workers — publisher remains unverified and unsupported
 - 22. Why returning to Syria is only the first step toward rebuilding lives shattered by war — contested claim still lacks a second independent source family
 - 25. Inside Thailand’s cyanide murders and the search for its ‘most prolific serial killer’ in history — contested claim still lacks a second independent source family
 - 26. Syria Begins Destroying Chemical Weapons Remnants — publisher remains unverified and unsupported

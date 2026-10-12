@@ -22,7 +22,7 @@ function meta(html, key) {
 }
 
 function jsonLd(html) {
-  const found = { bodies: [], dates: [] }
+  const found = { bodies: [], dates: [], images: [] }
   for (const match of String(html || '').matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
     try {
       const visit = value => {
@@ -31,6 +31,10 @@ function jsonLd(html) {
           if (typeof value.articleBody === 'string') found.bodies.push(value.articleBody)
           for (const key of ['datePublished', 'dateCreated', 'dateModified']) {
             if (typeof value[key] === 'string') found.dates.push(value[key])
+          }
+          if (typeof value.image === 'string') found.images.push(value.image)
+          else if (value.image && typeof value.image === 'object') {
+            for (const key of ['url', 'contentUrl']) if (typeof value.image[key] === 'string') found.images.push(value.image[key])
           }
           Object.values(value).forEach(visit)
         }
@@ -41,6 +45,7 @@ function jsonLd(html) {
   return {
     body: found.bodies.map(plain).filter(value => value.length >= 180).sort((a, b) => b.length - a.length)[0] || null,
     publishedAt: found.dates.map(value => plain(value)).find(value => Number.isFinite(Date.parse(value))) || null,
+    imageUrl: found.images.map(value => plain(value)).find(Boolean) || null,
   }
 }
 
@@ -65,19 +70,33 @@ export function extractPublicArticle(html, finalUrl) {
   const structured = jsonLd(html)
   const description = meta(html, 'og:description') || meta(html, 'description') || ''
   const evidenceText = body.text.length >= 180 ? body.text : description
+  const imageUrl = [
+    meta(html, 'og:image:secure_url'), meta(html, 'og:image'), meta(html, 'twitter:image'),
+    meta(html, 'twitter:image:src'), meta(html, 'parsely-image-url'), structured.imageUrl,
+    String(html || '').match(/<link[^>]+rel=["']image_src["'][^>]+href=["']([^"']+)["']/i)?.[1],
+    String(html || '').match(/<link[^>]+href=["']([^"']+)["'][^>]+rel=["']image_src["']/i)?.[1],
+  ].map(value => safeUrl(value, finalUrl)).find(value => value && canonicalResource(value) !== canonicalResource(finalUrl)) || null
   return {
     title: meta(html, 'og:title'),
     description,
     extractionMethod: body.text.length >= 180 ? body.method : 'metadata description',
     evidenceText,
     evidenceChars: evidenceText.length,
-    imageUrl: safeUrl(meta(html, 'og:image') || meta(html, 'twitter:image'), finalUrl),
+    imageUrl,
     imageAlt: meta(html, 'og:image:alt'),
     publishedAt: [
       meta(html, 'article:published_time'), meta(html, 'og:published_time'), meta(html, 'datePublished'),
       structured.publishedAt, String(html || '').match(/<time[^>]+datetime=["']([^"']+)["']/i)?.[1],
     ].map(value => plain(value || '')).find(value => Number.isFinite(Date.parse(value))) || null,
   }
+}
+
+function canonicalResource(value) {
+  try {
+    const url = new URL(value)
+    url.hash = ''
+    return url.href.replace(/\/$/, '')
+  } catch { return String(value || '') }
 }
 
 export async function fetchPublicArticle(url, { timeoutMs = 20_000 } = {}) {

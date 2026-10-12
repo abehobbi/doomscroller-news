@@ -9,3 +9,10 @@ test('only source-ready finalists with a live image enter generation', () => {
   assert.deepEqual(report.imageRepair.map(value => value.eventId), ['b'])
   assert.deepEqual(report.sourceRepair.map(value => value.eventId), ['c'])
 })
+
+test('a verified visible publisher image repairs a failed metadata image', () => {
+  const candidate = { eventId: 'a', blockers: [], sourceReadiness: { ready: true } }
+  const report = finalizeReadiness({ candidateCount: 1, ready: [candidate], repair: [] }, { results: [{ eventId: 'a', valid: false }] }, { repaired: [{ eventId: 'a', recoveredFrom: 'visible article image', image: { valid: true, url: 'https://publisher.example/photo.jpg' } }] })
+  assert.equal(report.generationReadyCount, 1)
+  assert.equal(report.generationReady[0].imageProbe.url, 'https://publisher.example/photo.jpg')
+})

@@ -32,3 +32,9 @@ test('recognized independent and institutional publishers are accepted without o
   assert.equal(trustedContextDomain('malaysiakini.com'), true)
   assert.equal(trustedContextDomain('unknown-content-farm.example'), false)
 })
+
+test('public article extraction falls back to JSON-LD publisher images', () => {
+  const html = `<script type="application/ld+json">{"@type":"NewsArticle","image":{"contentUrl":"/assets/report-photo.webp"},"articleBody":"This sufficiently long report explains the event and its consequences in complete sentences. Officials supplied supporting details and described what happens next. Independent observers identified the most important unresolved question."}</script>`
+  const result = extractPublicArticle(html, 'https://publisher.example/report')
+  assert.equal(result.imageUrl, 'https://publisher.example/assets/report-photo.webp')
+})
