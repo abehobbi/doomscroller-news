@@ -17,7 +17,7 @@ jobs:
     env:
       EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
       RUN_ROOT: artifacts/news-replacement-discovery-${{ github.run_id }}
-      GAP_FIXTURE: experiments/news-global-discovery/fixtures/replacement-gap-demand-38311225318.json
+      GAP_FIXTURE: experiments/news-global-discovery/fixtures/replacement-gap-demand-pass2-38313546008.json
       WINDOW_FIXTURE: experiments/news-global-discovery/fixtures/replacement-discovery-window-38311225318.json
     steps:
       - uses: actions/checkout@v4
@@ -33,14 +33,15 @@ jobs:
         run: test -n "$EXA_API_KEY"
       - name: Create replacement workspace
         shell: bash
-        run: mkdir -p "$RUN_ROOT/discovery" "$RUN_ROOT/selection" "$RUN_ROOT/verification" "$RUN_ROOT/repair" "$RUN_ROOT/verified"
+        run: mkdir -p "$RUN_ROOT/discovery" "$RUN_ROOT/selection" "$RUN_ROOT/verification" "$RUN_ROOT/repair" "$RUN_ROOT/verified" "$RUN_ROOT/audit"
       - name: Discover only measured replacement gaps
         run: >-
           node experiments/news-global-discovery/exa-dynamic-gap-recovery.mjs
           --edition $GAP_FIXTURE
           --discovery $WINDOW_FIXTURE
           --results-per-query 10
-          --max-queries 8
+          --max-queries 5
+          --strict-shape
           --output $RUN_ROOT/discovery/EXA_REPLACEMENTS.json
       - name: Rank replacement candidates
         run: >-
@@ -68,6 +69,13 @@ jobs:
           --verification $RUN_ROOT/verification/VERIFICATION_REPORT.json
           --repair $RUN_ROOT/repair/SOURCE_REPAIR_REPORT.json
           --output-dir $RUN_ROOT/verified
+      - name: Stop prior accepted events from returning as replacements
+        run: >-
+          node experiments/news-global-discovery/audit-replacement-pool.mjs
+          --edition $RUN_ROOT/verified/VERIFIED_EDITION.json
+          --prior experiments/news-global-discovery/fixtures/writer-batch-38301057429/RECOVERY_CHECKPOINT.json
+          --prior experiments/news-global-discovery/fixtures/writer-recovery-accepted-38311225318.json
+          --output-dir $RUN_ROOT/audit
       - name: Upload exact replacement evidence trail
         uses: actions/upload-artifact@v4
         with:

@@ -14,3 +14,10 @@ test('selects only queries that address measured lane or region gaps', () => {
 test('does not search when the verified edition has no gaps', () => {
   assert.deepEqual(selectGapQueries({ audit: { laneGaps: {}, regionGaps: {} } }), [])
 })
+
+test('strict replacement shape excludes a region query from the wrong lane', () => {
+  const queries = selectGapQueries({ audit: { laneGaps: { 'priority-interesting': 1, 'world-interesting': 1 }, regionGaps: { Syria: 1 } } }, 5, true)
+  assert.ok(queries.some(item => item.id === 'syria-interesting'))
+  assert.ok(!queries.some(item => item.id === 'syria-major'))
+  assert.ok(queries.every(item => ['priority-interesting', 'world-interesting'].includes(item.lane)))
+})

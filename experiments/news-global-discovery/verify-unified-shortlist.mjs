@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url'
 import { SOURCES } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/sources.mjs'
 import { tokens } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/lib.mjs'
 import { assessExtractedEvidence } from './evidence-quality.mjs'
-import { publisherFamily } from './event-corroboration.mjs'
+import { publisherFamily, sourceFamilyFromEvidence } from './event-corroboration.mjs'
 import { fetchPublicArticle } from './public-article.mjs'
 import { trustedContextDomain } from './enrich-generation-context.mjs'
 import { establishedPublisherDomain } from './selection-safeguards.mjs'
@@ -67,6 +67,28 @@ export function sourceFreshness({ candidatePublishedAt, extractedPublishedAt, ti
   return { fresh: true, publishedAt, eventPeriodEnd: periodEnd, reason: null }
 }
 
+function shingles(value, size = 8) {
+  const words = String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().split(/\s+/).filter(Boolean)
+  return new Set(Array.from({ length: Math.max(0, words.length - size + 1) }, (_, index) => words.slice(index, index + size).join(' ')))
+}
+
+function syndicatedSimilarity(left, right) {
+  const a = shingles(String(left || '').slice(0, 5000)), b = shingles(String(right || '').slice(0, 5000))
+  if (!a.size || !b.size) return 0
+  const shared = [...a].filter(value => b.has(value)).length
+  return shared / Math.min(a.size, b.size)
+}
+
+export function independentSourceGroups(sources) {
+  const groups = []
+  for (const source of sources.filter(item => item.accepted)) {
+    const match = groups.find(group => group.some(member => member.family === source.family || syndicatedSimilarity(member.evidenceText, source.evidenceText) >= 0.35))
+    if (match) match.push(source)
+    else groups.push([source])
+  }
+  return groups
+}
+
 async function mapLimit(values, limit, operation) {
   const output = new Array(values.length)
   let cursor = 0
@@ -110,7 +132,7 @@ export async function inspectSource(selection, member, context) {
     if (!freshness.fresh) reasons.push(freshness.reason)
     if (article.evidenceChars < 180) reasons.push('insufficient article evidence')
     return {
-      url: article.finalUrl, domain, family: publisherFamily(domain), title: article.title || selection.representative.title,
+      url: article.finalUrl, domain, family: sourceFamilyFromEvidence(domain, article.evidenceText, article.title), title: article.title || selection.representative.title,
       accepted: reasons.length === 0, trusted: isTrustedDomain(domain), reasons,
       publishedAt: freshness.publishedAt, eventPeriodEnd: freshness.eventPeriodEnd,
       imageUrl: article.imageUrl, imageAlt: article.imageAlt,
@@ -124,19 +146,19 @@ export async function inspectSource(selection, member, context) {
 
 export function readiness(selection, sources) {
   const accepted = sources.filter(source => source.accepted)
-  const families = new Set(accepted.map(source => source.family))
-  const trustedFamilies = new Set(accepted.filter(source => source.trusted).map(source => source.family))
+  const groups = independentSourceGroups(sources)
+  const trustedGroups = groups.filter(group => group.some(source => source.trusted))
   const imageSource = accepted.find(source => source.imageUrl)
   const highRisk = HIGH_RISK.test(selection.representative.title)
   const reasons = []
   if (!accepted.length) reasons.push('no accessible, relevant and fresh source evidence')
-  if (!trustedFamilies.size) reasons.push('no trusted or registered publisher source')
-  if (highRisk && families.size < 2) reasons.push('high-risk event lacks two independent source families')
+  if (!trustedGroups.length) reasons.push('no trusted or registered publisher source')
+  if (highRisk && groups.length < 2) reasons.push('high-risk event lacks two independent source families')
   if (!imageSource) reasons.push('no verified publisher image recovered')
   return {
     ready: reasons.length === 0, reasons, highRisk,
-    acceptedSourceCount: accepted.length, independentSourceFamilies: families.size,
-    trustedSourceFamilies: trustedFamilies.size,
+    acceptedSourceCount: accepted.length, independentSourceFamilies: groups.length,
+    trustedSourceFamilies: trustedGroups.length,
     image: imageSource ? { url: imageSource.imageUrl, alt: imageSource.imageAlt || selection.representative.title, sourceUrl: imageSource.url, publisher: imageSource.domain } : null,
   }
 }

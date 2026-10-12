@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { evidenceMatchesTitle, explicitReportingPeriodEnd, isTrustedDomain, readiness, sourceFreshness } from './verify-unified-shortlist.mjs'
+import { evidenceMatchesTitle, explicitReportingPeriodEnd, independentSourceGroups, isTrustedDomain, readiness, sourceFreshness } from './verify-unified-shortlist.mjs'
 
 test('vetted specialist science publishers satisfy the trusted-source gate', () => {
   assert.equal(isTrustedDomain('skyatnightmagazine.com'), true)
@@ -36,4 +36,13 @@ test('casualty and disaster wording cannot bypass high-risk corroboration', () =
     assert.equal(result.ready, false)
     assert.ok(result.reasons.includes('high-risk event lacks two independent source families'))
   }
+})
+
+test('copied wire text counts as one independent source even when a republication omits the byline', () => {
+  const common = 'Standing knee deep in the river, residents said the government project flooded homes and temples without providing enough compensation to rebuild their lives. The dispute is an early test for an ambitious national plan to link rivers and redistribute water to drought prone regions.'
+  const sources = [
+    { accepted: true, trusted: true, family: 'wire:reuters', evidenceText: common },
+    { accepted: true, trusted: true, family: 'publisher:copy.example', evidenceText: `${common} Critics said the programme risks uprooting communities.` },
+  ]
+  assert.equal(independentSourceGroups(sources).length, 1)
 })

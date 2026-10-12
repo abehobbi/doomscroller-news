@@ -81,11 +81,15 @@ export function publisherFamily(value) {
   return publisher
 }
 
-export function sourceFamily(item) {
-  const evidence = item.snapshot.evidenceText || ''
-  const detected = detectWireOrigin(evidence) || evidence.slice(0, 1200).match(/\b(?:Reuters|Associated Press|Canadian Press|Agence France-Presse|AFP)\b|\(AP\)/i)?.[0]
+export function sourceFamilyFromEvidence(domain, evidence = '', title = '') {
+  const text = `${title}\n${evidence}`
+  const detected = detectWireOrigin(text) || text.match(/\b(?:Reuters|Associated Press|Canadian Press|Agence France-Presse|AFP)\b|\(AP\)/i)?.[0]
   if (detected) return `wire:${detected.toLowerCase().replace('(ap)', 'ap').replace('associated press', 'ap').replace('canadian press', 'cp').replace('agence france-presse', 'afp')}`
-  return `publisher:${publisherFamily(item.snapshot.publisher)}`
+  return `publisher:${publisherFamily(domain)}`
+}
+
+export function sourceFamily(item) {
+  return sourceFamilyFromEvidence(item.snapshot.publisher, item.snapshot.evidenceText, item.snapshot.title)
 }
 
 export function clusterCorroboratedEvents(items) {

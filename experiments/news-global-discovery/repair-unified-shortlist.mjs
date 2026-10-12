@@ -2,7 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 
-import { publisherFamily } from './event-corroboration.mjs'
+import { publisherFamily, sourceFamilyFromEvidence } from './event-corroboration.mjs'
 import { inspectSource, isTrustedDomain, readiness } from './verify-unified-shortlist.mjs'
 
 const API_URL = 'https://api.exa.ai/search'
@@ -58,10 +58,11 @@ async function search(apiKey, item) {
 export function mergeSources(existing, additions) {
   const output = [], seen = new Set()
   for (const source of [...existing, ...additions]) {
-    const key = `${publisherFamily(source.domain)}|${canonicalUrl(source.url)}`
+    const family = sourceFamilyFromEvidence(source.domain, source.evidenceText, source.title)
+    const key = `${family}|${canonicalUrl(source.url)}`
     if (seen.has(key)) continue
     seen.add(key)
-    output.push(source)
+    output.push({ ...source, family })
   }
   return output
 }
@@ -75,7 +76,7 @@ async function repairItem(apiKey, item, context) {
   const found = await search(apiKey, item)
   const selection = { representative: { title: item.headline } }
   const existingUrls = new Set(item.sources.map(source => canonicalUrl(source.url)))
-  const existingFamilies = new Set(item.sources.map(source => publisherFamily(source.domain)))
+  const existingFamilies = new Set(item.sources.map(source => sourceFamilyFromEvidence(source.domain, source.evidenceText, source.title)))
   const inspected = []
   for (const result of found.results) {
     const url = canonicalUrl(result.url)

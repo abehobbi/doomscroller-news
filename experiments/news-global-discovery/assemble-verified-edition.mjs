@@ -3,6 +3,8 @@ import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 
 import { rankFrontPage } from './final-edition-ranker.mjs'
+import { sourceFamilyFromEvidence } from './event-corroboration.mjs'
+import { independentSourceGroups } from './verify-unified-shortlist.mjs'
 import { candidatesDescribeSameThread, headlinesExplicitlyConflict } from './select-five-lane-edition.mjs'
 
 const DEFAULT_LANE_LIMITS = {
@@ -49,8 +51,9 @@ export function assembleVerifiedCards(shortlist, verification, repairs) {
     const acceptedSources = verified.sources.filter(source => source.accepted
       && !headlinesExplicitlyConflict({ title: selection.representative.title }, { title: source.title || '' })
       && (candidatesDescribeSameThread({ title: selection.representative.title }, { title: source.title || '' }) || (source.sharedTerms || []).length >= 4))
+      .map(source => ({ ...source, family: sourceFamilyFromEvidence(source.domain, source.evidenceText, source.title) }))
     if (!acceptedSources.length) return []
-    if (verified.readiness.highRisk && unique(acceptedSources.map(source => source.family)).length < 2) return []
+    if (verified.readiness.highRisk && independentSourceGroups(acceptedSources.map(source => ({ ...source, accepted: true }))).length < 2) return []
     const imageSource = acceptedSources.find(source => source.url === verified.readiness.image?.sourceUrl && source.imageUrl)
       || acceptedSources.find(source => source.imageUrl)
     if (!imageSource) return []
