@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { auditBatch, chunks, combineScores, compactEvidence, computedScore, prepareEditorialFixture } from './editorial-selector.mjs'
+import { ALL_EDITORIAL_LANES, auditBatch, chunks, combineScores, compactEvidence, computedScore, prepareEditorialFixture } from './editorial-selector.mjs'
 
 test('compact evidence preserves opening context and later consequential facts', () => {
   const text = '.video { font-size: 2rem; padding-top: 4px; } Thank you for visiting example.com. Your browser version has limited support for JavaScript. A local dispute began this week. Residents requested basic services. Officials met on Tuesday. The talks continued. A small committee was formed. More background followed. Another paragraph appeared. Several residents were injured and two people were killed while seeking toilets and clean water. Closing context.'
@@ -8,6 +8,12 @@ test('compact evidence preserves opening context and later consequential facts',
   assert.match(compact, /local dispute/)
   assert.match(compact, /injured and two people were killed/)
   assert.doesNotMatch(compact, /font-size|browser version/)
+})
+
+test('fixture preparation can include major lanes for head-to-head editorial review', () => {
+  const make = lane => ({ id: lane, representative: { selection: { assignedLane: lane, representative: { priorityRegions: [] } }, snapshot: { title: `A complete ${lane} candidate headline`, evidenceText: 'A concrete new development occurred. Officials documented its effects on residents and institutions. The report provides enough factual evidence for editorial review. It identifies the decision, the people affected, the date, and the immediate consequence in clear language.', publishedAt: '2026-10-12T00:00:00Z', publisher: 'example.com', finalUrl: `https://example.com/${lane}` } } })
+  const fixture = prepareEditorialFixture({ events: [make('world-major'), make('priority-major'), make('discovery')], qualifiedButNotSelected: [] }, { includedLanes: ALL_EDITORIAL_LANES })
+  assert.deepEqual(fixture.candidates.map(item => item.lane), ['world-major', 'priority-major', 'discovery'])
 })
 
 test('fixture preparation excludes major lanes and includes qualified reserves', () => {

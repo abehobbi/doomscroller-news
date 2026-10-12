@@ -6,6 +6,7 @@ import { parseStrict } from '../../artifacts/summary-feasibility/round-9/strict-
 
 export const MODEL = '@cf/google/gemma-4-26b-a4b-it'
 export const INCLUDED_LANES = new Set(['world-interesting', 'priority-interesting', 'discovery'])
+export const ALL_EDITORIAL_LANES = new Set(['world-major', 'priority-major', ...INCLUDED_LANES])
 export const SELECTOR_CONFIGURATION = Object.freeze({
   model: MODEL,
   temperature: 0.1,
@@ -19,7 +20,7 @@ const HIGH_SIGNAL = /\b(?:killed?|deaths?|died|injured?|missing|displaced|detain
 const EXTRACTION_JUNK = /(?:\{\s*(?:font|margin|padding|display|width|border|color)|\b(?:font-size|padding-top|margin-bottom|cursor|stylesheet|javascript|cookies? not supported|thank you for visiting|browser version with limited support|compatibility mode in internet explorer)\b|\b\d+(?:\.\d+)?(?:rem|px)\b|^\s*[.#][\w-]+\s)/i
 
 function parseArgs(argv) {
-  const options = { edition: null, fixture: null, prepareFixture: null, outputDir: null, resume: null, batchSize: SELECTOR_CONFIGURATION.batchSize, selectedOnly: false }
+  const options = { edition: null, fixture: null, prepareFixture: null, outputDir: null, resume: null, batchSize: SELECTOR_CONFIGURATION.batchSize, selectedOnly: false, includeMajor: false }
   for (let index = 0; index < argv.length; index += 1) {
     if (argv[index] === '--edition') options.edition = argv[++index]
     else if (argv[index] === '--fixture') options.fixture = argv[++index]
@@ -28,6 +29,7 @@ function parseArgs(argv) {
     else if (argv[index] === '--resume') options.resume = argv[++index]
     else if (argv[index] === '--batch-size') options.batchSize = Number(argv[++index])
     else if (argv[index] === '--selected-only') options.selectedOnly = true
+    else if (argv[index] === '--include-major') options.includeMajor = true
   }
   if (options.prepareFixture && !options.edition) throw new Error('--edition is required with --prepare-fixture')
   if (!options.prepareFixture && (!options.fixture || !options.outputDir)) throw new Error('Use --fixture and --output-dir to run scoring')
@@ -60,9 +62,9 @@ export function compactEvidence(text, { maxChars = 3200 } = {}) {
   return output.join(' ')
 }
 
-export function prepareEditorialFixture(edition, { includeReserves = true } = {}) {
-  const selected = edition.events.filter(event => INCLUDED_LANES.has(event.representative.selection.assignedLane))
-  const reserve = includeReserves ? (edition.qualifiedButNotSelected || []).filter(event => INCLUDED_LANES.has(event.representative.selection.assignedLane)) : []
+export function prepareEditorialFixture(edition, { includeReserves = true, includedLanes = INCLUDED_LANES } = {}) {
+  const selected = edition.events.filter(event => includedLanes.has(event.representative.selection.assignedLane))
+  const reserve = includeReserves ? (edition.qualifiedButNotSelected || []).filter(event => includedLanes.has(event.representative.selection.assignedLane)) : []
   const events = [...selected, ...reserve]
   const prepared = events.map((event, index) => {
     const item = event.representative
@@ -105,6 +107,8 @@ export function chunks(values, size) {
 const rubric = `You are an exacting editorial selector for a personal news product. Judge only the supplied evidence. Do not add facts from memory. Publisher identity has already been evaluated separately and is intentionally hidden.
 
 The lanes have different purposes:
+- world-major: a concrete fresh development with broad consequence, urgency or serious human/institutional impact. Penalize routine statements, speculative proposals, commentary and stories whose importance depends on hype.
+- priority-major: the same consequential-news bar for Syria, the wider Middle East, Bangladesh, Ghana, Canada or the GTA. Regional relevance routes the story; it does not make a routine announcement major.
 - world-interesting: a concrete, genuinely interesting story from anywhere. Reward human significance, a revealing window into a place or way of life, surprise with substance, and the feeling that a curious reader would be glad to have learned it. "Quirky" alone is not enough.
 - priority-interesting: the same quality bar, but about Syria, the wider Middle East, Bangladesh, Ghana, Canada or the GTA. Regional relevance routes a story; it does not make a weak story good.
 - discovery: a specific newly reported scientific, archaeological, psychological, natural-world or historical finding that a non-specialist can understand. Penalize generic reviews, vague explainers, institutional publicity and jargon without a concrete finding.
@@ -237,7 +241,7 @@ export function combineScores(fixture, batches) {
 function reviewMarkdown(report, includeSources = false) {
   const title = includeSources ? '# Editorial selector answer key' : '# Blind editorial selector review'
   const lines = [title, '', `Scored: ${report.createdAt}`, '', 'This is a diagnostic ranking, not a production feed. Scores judge the story idea from supplied evidence; source trust was gated separately.', '']
-  for (const lane of ['world-interesting', 'priority-interesting', 'discovery']) {
+  for (const lane of ['world-major', 'priority-major', 'world-interesting', 'priority-interesting', 'discovery']) {
     lines.push(`## ${lane}`, '')
     report.results.filter(value => value.lane === lane).forEach((value, index) => {
       lines.push(`### ${index + 1}. ${value.headline}`, '', `Score: ${value.editorialScore}/100 · ${value.evaluation.recommendation}`, '', value.evaluation.strongest_fact, '', `Why: ${value.evaluation.reason}`, '')
@@ -251,10 +255,11 @@ async function main() {
   const options = parseArgs(process.argv.slice(2))
   if (options.prepareFixture) {
     const edition = JSON.parse(await fs.readFile(options.edition, 'utf8'))
-    const fixture = prepareEditorialFixture(edition, { includeReserves: !options.selectedOnly })
+    const fixture = prepareEditorialFixture(edition, { includeReserves: !options.selectedOnly, includedLanes: options.includeMajor ? ALL_EDITORIAL_LANES : INCLUDED_LANES })
     await fs.mkdir(path.dirname(options.prepareFixture), { recursive: true })
     await fs.writeFile(options.prepareFixture, `${JSON.stringify(fixture, null, 2)}\n`, 'utf8')
-    process.stdout.write(`${JSON.stringify({ candidates: fixture.candidates.length, excluded: fixture.excluded.length, lanes: Object.fromEntries([...INCLUDED_LANES].map(lane => [lane, fixture.candidates.filter(value => value.lane === lane).length])), output: options.prepareFixture }, null, 2)}\n`)
+    const includedLanes = options.includeMajor ? ALL_EDITORIAL_LANES : INCLUDED_LANES
+    process.stdout.write(`${JSON.stringify({ candidates: fixture.candidates.length, excluded: fixture.excluded.length, lanes: Object.fromEntries([...includedLanes].map(lane => [lane, fixture.candidates.filter(value => value.lane === lane).length])), output: options.prepareFixture }, null, 2)}\n`)
     return
   }
   const fixture = JSON.parse(await fs.readFile(options.fixture, 'utf8'))
