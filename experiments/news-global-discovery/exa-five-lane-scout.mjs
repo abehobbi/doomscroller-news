@@ -1,4 +1,6 @@
 import fs from 'node:fs/promises'
+import path from 'node:path'
+import { pathToFileURL } from 'node:url'
 import { FIVE_LANE_QUERIES, UPDATE_LANES } from './five-lane-queries.mjs'
 
 const API_URL = 'https://api.exa.ai/search'
@@ -12,13 +14,15 @@ function parseArgs(argv) {
     else if (argv[i] === '--output') options.output = argv[++i]
     else if (argv[i] === '--dry-run') options.dryRun = true
   }
-  if (!['full', 'update'].includes(options.scan)) throw new Error('--scan must be full or update')
+  if (!['all', 'full', 'major', 'update', 'depth'].includes(options.scan)) throw new Error('--scan must be all, major, or depth')
   if (!Number.isFinite(options.days) || options.days < 1) throw new Error('--days must be at least 1')
   return options
 }
 
-function selectedQueries(scan) {
-  return scan === 'update' ? FIVE_LANE_QUERIES.filter(query => UPDATE_LANES.has(query.lane)) : FIVE_LANE_QUERIES
+export function selectedQueries(scan) {
+  if (scan === 'major' || scan === 'update') return FIVE_LANE_QUERIES.filter(query => UPDATE_LANES.has(query.lane))
+  if (scan === 'depth') return FIVE_LANE_QUERIES.filter(query => !UPDATE_LANES.has(query.lane))
+  return FIVE_LANE_QUERIES
 }
 
 function normalizeUrl(value) {
@@ -122,4 +126,6 @@ async function main() {
   else process.stdout.write(json)
 }
 
-main().catch(error => { console.error(error.message); process.exitCode = 1 })
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+  main().catch(error => { console.error(error.message); process.exitCode = 1 })
+}
