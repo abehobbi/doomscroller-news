@@ -5,6 +5,9 @@ import { auditDecisions, combineSafeguards, establishedPublisherDomain, prepareB
 test('vetted local and national publishers share one registry', () => {
   assert.equal(establishedPublisherDomain('www.mbcradio.com'), true)
   assert.equal(establishedPublisherDomain('washingtonpost.com'), true)
+  assert.equal(establishedPublisherDomain('scroll.in'), true)
+  assert.equal(establishedPublisherDomain('crossriverwatch.com'), true)
+  assert.equal(establishedPublisherDomain('aa.com.tr'), true)
   assert.equal(establishedPublisherDomain('unknown-example.invalid'), false)
 })
 

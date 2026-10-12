@@ -14,6 +14,7 @@ const ESTABLISHED = new Set([
   'straitstimes.com', 'thedailystar.net', 'thefinancialexpress.com.bd', 'theguardian.com', 'thenarwhal.ca',
   'thenationalnews.com', 'thepointer.com', 'toronto.citynews.ca', 'vanityfair.com', 'wired.com',
   'abcnews.com', 'independent.co.uk', 'mbcradio.com', 'washingtonpost.com',
+  'aa.com.tr', 'crossriverwatch.com', 'frontline.thehindu.com', 'scroll.in',
 ])
 const RESEARCH_OR_INSTITUTIONAL = new Set([
   'nature.com', 'news.uchicago.edu', 'phys.org', 'medicalxpress.com', 'researchmatters.in',

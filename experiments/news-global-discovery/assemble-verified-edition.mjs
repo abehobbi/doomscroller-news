@@ -15,35 +15,37 @@ const DEFAULT_LANE_LIMITS = {
 const DEFAULT_REGION_MINIMUMS = { Syria: 2, 'Middle East': 2, Bangladesh: 2, Ghana: 2, Canada: 2, GTA: 1 }
 
 function parseArgs(argv) {
-  const options = { shortlist: null, verification: null, repair: null, outputDir: null }
+  const options = { shortlist: null, verification: null, repairs: [], outputDir: null }
   for (let index = 0; index < argv.length; index += 1) {
     if (argv[index] === '--shortlist') options.shortlist = argv[++index]
     else if (argv[index] === '--verification') options.verification = argv[++index]
-    else if (argv[index] === '--repair') options.repair = argv[++index]
+    else if (argv[index] === '--repair') options.repairs.push(argv[++index])
     else if (argv[index] === '--output-dir') options.outputDir = argv[++index]
   }
-  if (Object.values(options).some(value => !value)) throw new Error('--shortlist, --verification, --repair and --output-dir are required')
+  if (!options.shortlist || !options.verification || !options.repairs.length || !options.outputDir) throw new Error('--shortlist, --verification, at least one --repair, and --output-dir are required')
   return options
 }
 
 function unique(values) { return [...new Set(values.filter(Boolean))] }
 
-export function verifiedEventIds(verification, repair) {
+function repairReports(value) { return Array.isArray(value) ? value : [value] }
+
+export function verifiedEventIds(verification, repairs) {
   return new Set([
     ...verification.ready.map(item => item.eventId),
-    ...repair.results.filter(item => item.readiness.ready).map(item => item.eventId),
+    ...repairReports(repairs).flatMap(repair => repair.results.filter(item => item.readiness.ready).map(item => item.eventId)),
   ])
 }
 
-function verifiedItem(eventId, verification, repair) {
-  return repair.results.find(item => item.eventId === eventId && item.readiness.ready)
+function verifiedItem(eventId, verification, repairs) {
+  return repairReports(repairs).toReversed().flatMap(repair => repair.results).find(item => item.eventId === eventId && item.readiness.ready)
     || verification.ready.find(item => item.eventId === eventId)
 }
 
-export function assembleVerifiedCards(shortlist, verification, repair) {
-  const ids = verifiedEventIds(verification, repair)
+export function assembleVerifiedCards(shortlist, verification, repairs) {
+  const ids = verifiedEventIds(verification, repairs)
   return shortlist.selections.filter(selection => ids.has(selection.id)).flatMap((selection, index) => {
-    const verified = verifiedItem(selection.id, verification, repair)
+    const verified = verifiedItem(selection.id, verification, repairs)
     const acceptedSources = verified.sources.filter(source => source.accepted
       && !headlinesExplicitlyConflict({ title: selection.representative.title }, { title: source.title || '' })
       && (candidatesDescribeSameThread({ title: selection.representative.title }, { title: source.title || '' }) || (source.sharedTerms || []).length >= 4))
@@ -106,16 +108,16 @@ function markdown(output) {
 
 async function main() {
   const options = parseArgs(process.argv.slice(2))
-  const [shortlist, verification, repair] = await Promise.all([
+  const [shortlist, verification, ...repairs] = await Promise.all([
     fs.readFile(options.shortlist, 'utf8').then(JSON.parse),
     fs.readFile(options.verification, 'utf8').then(JSON.parse),
-    fs.readFile(options.repair, 'utf8').then(JSON.parse),
+    ...options.repairs.map(file => fs.readFile(file, 'utf8').then(JSON.parse)),
   ])
-  const cards = rankFrontPage(assembleVerifiedCards(shortlist, verification, repair))
+  const cards = rankFrontPage(assembleVerifiedCards(shortlist, verification, repairs))
   const audit = auditEdition(cards, shortlist.laneLimits || DEFAULT_LANE_LIMITS, shortlist.priorityRegionMinimums || DEFAULT_REGION_MINIMUMS)
   const cardIds = new Set(cards.map(card => card.eventId))
   const excludedAfterContaminationCheck = shortlist.selections
-    .filter(selection => verifiedEventIds(verification, repair).has(selection.id) && !cardIds.has(selection.id))
+    .filter(selection => verifiedEventIds(verification, repairs).has(selection.id) && !cardIds.has(selection.id))
     .map(selection => ({ eventId: selection.id, headline: selection.representative.title, reason: 'valid supporting evidence fell below the final same-event source or image requirement after removing unrelated cluster members' }))
   const output = { schemaVersion: 1, createdAt: new Date().toISOString(), sources: options, audit, excludedAfterContaminationCheck, cards }
   await fs.mkdir(options.outputDir, { recursive: true })

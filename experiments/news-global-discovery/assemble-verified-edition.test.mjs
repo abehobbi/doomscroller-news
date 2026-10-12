@@ -9,6 +9,15 @@ test('verified ids combine baseline readiness and successful repairs only', () =
   assert.deepEqual([...verifiedEventIds(verification, repair)], ['a', 'b'])
 })
 
+test('verified ids combine multiple repair passes', () => {
+  const verification = { ready: [{ eventId: 'a' }] }
+  const repairs = [
+    { results: [{ eventId: 'b', readiness: { ready: true } }] },
+    { results: [{ eventId: 'c', readiness: { ready: true } }, { eventId: 'd', readiness: { ready: false } }] },
+  ]
+  assert.deepEqual([...verifiedEventIds(verification, repairs)], ['a', 'b', 'c'])
+})
+
 test('edition audit reports exact lane and priority-region deficits', () => {
   const cards = [
     { lane: 'world-major', priorityRegions: [], acceptedSources: [{ domain: 'a.example' }] },
