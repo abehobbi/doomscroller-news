@@ -7,15 +7,17 @@ const API_URL = 'https://api.exa.ai/search'
 const EXCLUDE_DOMAINS = ['facebook.com', 'instagram.com', 'linkedin.com', 'pinterest.com', 'tiktok.com', 'tripadvisor.com', 'youtube.com', 'x.com']
 
 function parseArgs(argv) {
-  const options = { scan: 'full', days: 3, output: null, dryRun: false }
+  const options = { scan: 'full', days: 3, resultsPerQuery: 10, output: null, dryRun: false }
   for (let i = 0; i < argv.length; i += 1) {
     if (argv[i] === '--scan') options.scan = argv[++i]
     else if (argv[i] === '--days') options.days = Number(argv[++i])
+    else if (argv[i] === '--results-per-query') options.resultsPerQuery = Number(argv[++i])
     else if (argv[i] === '--output') options.output = argv[++i]
     else if (argv[i] === '--dry-run') options.dryRun = true
   }
   if (!['all', 'full', 'major', 'update', 'depth'].includes(options.scan)) throw new Error('--scan must be all, major, or depth')
   if (!Number.isFinite(options.days) || options.days < 1) throw new Error('--days must be at least 1')
+  if (!Number.isInteger(options.resultsPerQuery) || options.resultsPerQuery < 1 || options.resultsPerQuery > 100) throw new Error('--results-per-query must be an integer from 1 to 100')
   return options
 }
 
@@ -40,7 +42,7 @@ async function runQuery(apiKey, definition, options, window) {
     objective: definition.objective,
     type: 'auto',
     category: 'news',
-    numResults: 10,
+    numResults: options.resultsPerQuery,
     moderation: true,
     excludeDomains: EXCLUDE_DOMAINS,
     startPublishedDate: window.start,
@@ -93,7 +95,7 @@ async function main() {
   const queries = selectedQueries(options.scan)
   const estimatedCost = Number((queries.length * 0.007).toFixed(3))
   if (options.dryRun) {
-    process.stdout.write(`${JSON.stringify({ scan: options.scan, queryCount: queries.length, estimatedCostDollars: estimatedCost, queries }, null, 2)}\n`)
+    process.stdout.write(`${JSON.stringify({ scan: options.scan, queryCount: queries.length, resultsPerQuery: options.resultsPerQuery, estimatedCostDollars: estimatedCost, queries }, null, 2)}\n`)
     return
   }
   const apiKey = process.env.EXA_API_KEY
@@ -114,7 +116,7 @@ async function main() {
   }
   const report = {
     schemaVersion: 1, createdAt: new Date().toISOString(), provider: 'exa', scan: options.scan,
-    requestedWindow: window, queryCount: searches.length,
+    requestedWindow: window, queryCount: searches.length, resultsPerQuery: options.resultsPerQuery,
     costDollars: Number(searches.reduce((sum, search) => sum + search.costDollars, 0).toFixed(6)),
     rawResultCount: searches.reduce((sum, search) => sum + search.results.length, 0),
     uniqueCandidateCount: candidates.length, laneCounts,
