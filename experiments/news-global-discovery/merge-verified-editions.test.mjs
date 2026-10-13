@@ -30,6 +30,26 @@ test('consolidates announcement and response angles on one Russia-Ukraine ceasef
   assert.deepEqual(result.cards[0].sourceEventIds, ['announcement', 'response'])
 })
 
+test('consolidates an infrastructure attack with its directly linked travel disruption', () => {
+  const attack = card('attack', "Houthi attack on Riyadh's King Khalid International Airport kills 12", 'https://guardian.test/attack')
+  attack.pages = [{ text: 'The attack closed King Khalid International Airport in Riyadh.' }]
+  const disruption = card('disruption', 'Saudi airport closures disrupt 62 flights from Dhaka', 'https://tbs.test/disruption')
+  disruption.pages = [{ text: 'The flights were cancelled after repeated attacks closed King Khalid International Airport in Riyadh.' }]
+  const result = mergeVerifiedEditions([{ cards: [attack] }, { cards: [disruption] }])
+  assert.equal(result.cards.length, 1)
+  assert.deepEqual(result.cards[0].sourceEventIds, ['attack', 'disruption'])
+  assert.equal(result.cards[0].acceptedSources.length, 2)
+})
+
+test('does not merge separate infrastructure projects in the same country', () => {
+  const mongla = card('mongla', 'Bangladesh secures Chinese loan for Mongla port modernization', 'https://one.test/mongla')
+  mongla.pages = [{ text: 'The agreement will finance modernization work at Mongla port in Bangladesh.' }]
+  const chittagong = card('chittagong', 'Chittagong Port Authority signs 15-year concession with DP World', 'https://two.test/chittagong')
+  chittagong.pages = [{ text: 'The separate concession covers a container terminal at Chittagong port in Bangladesh.' }]
+  const result = mergeVerifiedEditions([{ cards: [mongla] }, { cards: [chittagong] }])
+  assert.equal(result.cards.length, 2)
+})
+
 test('retains event aliases when a stronger representative replaces the first card', () => {
   const original = card('original', 'Six Ukrainian energy sites hit by Russia since Trump announced ceasefire, Zelensky says', 'https://one.test/a')
   const broader = card('broader', 'Russian attacks hit Ukrainian energy sites after ceasefire announcement', 'https://two.test/b', 3)
