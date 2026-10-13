@@ -1,0 +1,3290 @@
+{
+  "schema": "doomscroller.news-beta-diagnostics",
+  "schemaVersion": 1,
+  "batchId": "news-beta-2026-10-13T03-06-26-119Z",
+  "startedAt": "2026-10-13T03:04:56.899Z",
+  "finishedAt": "2026-10-13T03:06:26.119Z",
+  "durationMs": 89219,
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1024,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "discovery": {
+    "discoveredArticles": 805,
+    "freshArticles": 591,
+    "uniqueArticles": 558,
+    "eventCandidates": 520,
+    "evidencePoolArticles": 190,
+    "preparedEvents": 118,
+    "selectedEvents": 30,
+    "evidenceFailures": 42,
+    "sourceFailures": 4
+  },
+  "sourceStatus": [
+    {
+      "id": "sana-en",
+      "name": "SANA English",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "north-press-en",
+      "name": "North Press Agency",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "enab-baladi-en",
+      "name": "Enab Baladi English",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "syria-direct-en",
+      "name": "Syria Direct",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 415"
+    },
+    {
+      "id": "dhaka-tribune",
+      "name": "Dhaka Tribune",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "bd24live-en",
+      "name": "BD24Live English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "prothom-alo-en",
+      "name": "Prothom Alo English",
+      "status": "ok",
+      "itemCount": 1
+    },
+    {
+      "id": "financial-express-bd",
+      "name": "The Financial Express Bangladesh",
+      "status": "ok",
+      "itemCount": 28
+    },
+    {
+      "id": "daily-star-bd",
+      "name": "The Daily Star Bangladesh",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "myjoyonline",
+      "name": "MyJoyOnline",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "graphic-ghana",
+      "name": "Graphic Online",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "ghana-news-agency",
+      "name": "Ghana News Agency",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "toronto-city",
+      "name": "City of Toronto News",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "cbc-toronto",
+      "name": "CBC Toronto",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "cbc-canada",
+      "name": "CBC Canada",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "aljazeera-all",
+      "name": "Al Jazeera",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "arab-news",
+      "name": "Arab News",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "bbc-world",
+      "name": "BBC World",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "bbc-technology",
+      "name": "BBC Technology",
+      "status": "ok",
+      "itemCount": 21
+    },
+    {
+      "id": "bbc-science-environment",
+      "name": "BBC Science & Environment",
+      "status": "ok",
+      "itemCount": 41
+    },
+    {
+      "id": "guardian-world",
+      "name": "The Guardian World",
+      "status": "ok",
+      "itemCount": 45
+    },
+    {
+      "id": "guardian-science",
+      "name": "The Guardian Science",
+      "status": "ok",
+      "itemCount": 27
+    },
+    {
+      "id": "guardian-environment",
+      "name": "The Guardian Environment",
+      "status": "ok",
+      "itemCount": 34
+    },
+    {
+      "id": "npr-world",
+      "name": "NPR World",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "npr-science",
+      "name": "NPR Science",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dw-world",
+      "name": "DW World",
+      "status": "ok",
+      "itemCount": 136
+    },
+    {
+      "id": "africanews",
+      "name": "Africanews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "euronews",
+      "name": "Euronews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "global-voices",
+      "name": "Global Voices",
+      "status": "ok",
+      "itemCount": 15
+    },
+    {
+      "id": "japan-times",
+      "name": "The Japan Times",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "mongabay",
+      "name": "Mongabay",
+      "status": "ok",
+      "itemCount": 32
+    }
+  ],
+  "knownSourceFailures": [
+    {
+      "name": "Bangladesh Sangbad Sangstha",
+      "url": "https://www.bssnews.net/feed",
+      "status": "blocked",
+      "detail": "Cloudflare challenge returned HTTP 403 to the bounded collector."
+    },
+    {
+      "name": "The Indian Express feeds",
+      "url": "https://indianexpress.com/rss/",
+      "status": "blocked_in_cloud",
+      "detail": "Official feeds work locally but return HTTP 403 from GitHub Actions, so the automatic collector does not depend on them."
+    },
+    {
+      "name": "The Business Standard",
+      "url": "https://www.tbsnews.net/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "Feed served 2019–2021 items."
+    },
+    {
+      "name": "Ontario Newsroom",
+      "url": "https://news.ontario.ca/en/rss",
+      "status": "retired_from_registry",
+      "detail": "URL returns an HTML application shell, not RSS."
+    },
+    {
+      "name": "GhanaWeb",
+      "url": "https://www.ghanaweb.com/GhanaHomePage/NewsArchive/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "The publisher endpoint returned HTTP 404 in October 2026; MyJoyOnline and Graphic Online remain active Ghana sources."
+    }
+  ],
+  "reranker": {
+    "adjustments": [
+      {
+        "eventId": "event:78396c6f192511f2",
+        "baseScore": 70.85,
+        "adjustment": 14,
+        "adjustedScore": 84.85,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:98730dee02653527",
+        "baseScore": 69.74,
+        "adjustment": 8,
+        "adjustedScore": 77.74,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "United Arab Emirates"
+      },
+      {
+        "eventId": "event:eafeb2a99817dfb3",
+        "baseScore": 64.39,
+        "adjustment": 6,
+        "adjustedScore": 70.39,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "France"
+      },
+      {
+        "eventId": "event:e2e2680ab73fbbf6",
+        "baseScore": 61.66,
+        "adjustment": -4,
+        "adjustedScore": 57.66,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "Ukraine"
+      },
+      {
+        "eventId": "event:4f78ecb5b30d6edf",
+        "baseScore": 43.03,
+        "adjustment": 14,
+        "adjustedScore": 57.03,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:06d61715b966d904",
+        "baseScore": 42.73,
+        "adjustment": 14,
+        "adjustedScore": 56.73,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:a870a9dbfed49ca8",
+        "baseScore": 48.27,
+        "adjustment": 7,
+        "adjustedScore": 55.27,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:8a8c5f2987226754",
+        "baseScore": 42.62,
+        "adjustment": 10,
+        "adjustedScore": 52.62,
+        "contentType": "general",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:8d7fb7ea5f81fc5e",
+        "baseScore": 40.73,
+        "adjustment": 6,
+        "adjustedScore": 46.73,
+        "contentType": "general",
+        "regions": [
+          "Canada",
+          "GTA"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:b431c8e026b87fa9",
+        "baseScore": 47.79,
+        "adjustment": -5,
+        "adjustedScore": 42.79,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "France"
+      },
+      {
+        "eventId": "event:4cccc8fc2ca3f6c7",
+        "baseScore": 43.01,
+        "adjustment": -4,
+        "adjustedScore": 39.01,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:13ee35ae5d38ffac",
+        "baseScore": 36.73,
+        "adjustment": 0,
+        "adjustedScore": 36.73,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:9d3b59e1f949f598",
+        "baseScore": 56.18,
+        "adjustment": -22,
+        "adjustedScore": 34.18,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Lebanon"
+      },
+      {
+        "eventId": "event:1bbb5195a3797543",
+        "baseScore": 46.89,
+        "adjustment": -27,
+        "adjustedScore": 19.89,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:cc5ceef561c297c9",
+        "baseScore": 36.8,
+        "adjustment": -26,
+        "adjustedScore": 10.799999999999997,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "South Africa"
+      },
+      {
+        "eventId": "event:3bbc0402b7324a00",
+        "baseScore": 38.52,
+        "adjustment": -34,
+        "adjustedScore": 4.520000000000003,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Middle East"
+      },
+      {
+        "eventId": "event:42ff775c898a405d",
+        "baseScore": 37.95,
+        "adjustment": -35,
+        "adjustedScore": 2.950000000000003,
+        "contentType": "conflict",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:75302517d60fde18",
+        "baseScore": 37.62,
+        "adjustment": -37,
+        "adjustedScore": 0.6199999999999974,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:37dacc05dd464c2f",
+        "baseScore": 42.24,
+        "adjustment": -47,
+        "adjustedScore": -4.759999999999998,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "India"
+      },
+      {
+        "eventId": "event:bee436f7d03df1f0",
+        "baseScore": 38.14,
+        "adjustment": -50,
+        "adjustedScore": -11.86,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "Russia"
+      },
+      {
+        "eventId": "event:67bca27551df3725",
+        "baseScore": 34.96,
+        "adjustment": -47,
+        "adjustedScore": -12.04,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:8a3a60ab161d9eb2",
+        "baseScore": 50.18,
+        "adjustment": -64,
+        "adjustedScore": -13.82,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:75175e3994fe6103",
+        "baseScore": 43.73,
+        "adjustment": -63,
+        "adjustedScore": -19.270000000000003,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:72ecf876c67c1bcf",
+        "baseScore": 40.66,
+        "adjustment": -70,
+        "adjustedScore": -29.340000000000003,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:b8da508032aec09e",
+        "baseScore": 37.44,
+        "adjustment": -70,
+        "adjustedScore": -32.56,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:7c37cde567a9af88",
+        "baseScore": 49.81,
+        "adjustment": -84,
+        "adjustedScore": -34.19,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Iran"
+      },
+      {
+        "eventId": "event:9aa304026d996c3c",
+        "baseScore": 34.51,
+        "adjustment": -74,
+        "adjustedScore": -39.49,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "United States"
+      },
+      {
+        "eventId": "event:ea2027455d4efe24",
+        "baseScore": 44.67,
+        "adjustment": -87,
+        "adjustedScore": -42.33,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "United Arab Emirates"
+      },
+      {
+        "eventId": "event:cb49ecd679efac8c",
+        "baseScore": 34.93,
+        "adjustment": -80,
+        "adjustedScore": -45.07,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:97fd8662359a9bc9",
+        "baseScore": 44.25,
+        "adjustment": -103,
+        "adjustedScore": -58.75,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Middle East"
+      }
+    ],
+    "distribution": {
+      "regions": {
+        "Middle East": 10,
+        "World": 8,
+        "Ghana": 4,
+        "Bangladesh": 4,
+        "Syria": 2,
+        "Canada": 4,
+        "GTA": 3
+      },
+      "countries": {
+        "Yemen": 2,
+        "United Arab Emirates": 2,
+        "France": 2,
+        "Ukraine": 1,
+        "Ghana": 4,
+        "Bangladesh": 4,
+        "Syria": 2,
+        "Canada": 1,
+        "GTA": 3,
+        "Lebanon": 1,
+        "South Africa": 1,
+        "Middle East": 2,
+        "India": 1,
+        "Russia": 1,
+        "World": 1,
+        "Iran": 1,
+        "United States": 1
+      },
+      "contentTypes": {
+        "conflict": 8,
+        "diplomacy-or-speech": 8,
+        "general": 11,
+        "culture-science-education": 1,
+        "economy-or-public-life": 2
+      },
+      "publishers": {
+        "The Guardian World": 4,
+        "NPR World": 2,
+        "MyJoyOnline": 3,
+        "The Daily Star Bangladesh": 2,
+        "North Press Agency": 2,
+        "Al Jazeera": 2,
+        "CBC Toronto": 3,
+        "DW World": 1,
+        "Arab News": 3,
+        "Enab Baladi English": 1,
+        "Africanews": 1,
+        "Graphic Online": 1,
+        "The Financial Express Bangladesh": 2,
+        "Euronews": 1,
+        "BBC World": 1,
+        "The Japan Times": 1
+      }
+    }
+  },
+  "selectedEvents": [
+    {
+      "eventId": "event:78396c6f192511f2",
+      "title": "Riyadh airport hit again after deadly Houthi missile attack, Saudi authorities say",
+      "score": 70.85,
+      "adjustedScore": 84.85,
+      "rank": 1,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 12.85,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:98730dee02653527",
+      "title": "Middle East crisis: Riyadh airport hit again as Houthis claim attacks, including strike that killed 12 – as it happened",
+      "score": 69.74,
+      "adjustedScore": 77.74,
+      "rank": 2,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 11.74,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:eafeb2a99817dfb3",
+      "title": "Hackers force French supermarket fridges to heat up to 50C in ‘unprecedented’ cyber-attack",
+      "score": 64.39,
+      "adjustedScore": 70.39,
+      "rank": 3,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.39,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 10,
+        "localTexture": 0,
+        "editorialBonus": 22,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:e2e2680ab73fbbf6",
+      "title": "Trump announced a partial Russia-Ukraine ceasefire. Did either country know about it?",
+      "score": 61.66,
+      "adjustedScore": 57.66,
+      "rank": 4,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.66,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:4f78ecb5b30d6edf",
+      "title": "Tamale, Bolgatanga had just one Legal Aid lawyer between them – Kwesimintsim MP",
+      "score": 43.03,
+      "adjustedScore": 57.03,
+      "rank": 5,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.03,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:06d61715b966d904",
+      "title": "UP polls in 5 phases, likely from Jan 21",
+      "score": 42.73,
+      "adjustedScore": 56.73,
+      "rank": 6,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.73,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:a870a9dbfed49ca8",
+      "title": "Barzani, Mazloum Abdi discuss Kurds’ future in Syria",
+      "score": 48.27,
+      "adjustedScore": 55.27,
+      "rank": 7,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 17.27,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:8a8c5f2987226754",
+      "title": "Canada’s Carney calls for unity as Alberta prepares for secession vote",
+      "score": 42.62,
+      "adjustedScore": 52.62,
+      "rank": 8,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 18.62,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:8d7fb7ea5f81fc5e",
+      "title": "Can social media engage apathetic young voters in Ontario's elections?",
+      "score": 40.73,
+      "adjustedScore": 46.73,
+      "rank": 9,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 15.73,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 7,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada",
+        "GTA"
+      ]
+    },
+    {
+      "eventId": "event:b431c8e026b87fa9",
+      "title": "Hundreds of French supermarkets hit by a cyberattack that defrosted refrigeration systems",
+      "score": 47.79,
+      "adjustedScore": 42.79,
+      "rank": 10,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.79,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 5,
+        "localTexture": 0,
+        "editorialBonus": 17,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:4cccc8fc2ca3f6c7",
+      "title": "Legal Aid Commission has offices in only 45 of Ghana’s 261 districts, needs 180 more staff",
+      "score": 43.01,
+      "adjustedScore": 39.01,
+      "rank": 11,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.01,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:13ee35ae5d38ffac",
+      "title": "Cuet in focus: Students lock new VC in his office",
+      "score": 36.73,
+      "adjustedScore": 36.73,
+      "rank": 12,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.73,
+        "importance": 0,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:9d3b59e1f949f598",
+      "title": "Russia pledges more aid to Lebanon, calls for ceasefire",
+      "score": 56.18,
+      "adjustedScore": 34.18,
+      "rank": 13,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.18,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:1bbb5195a3797543",
+      "title": "Membership or Cooperation? Al-Sharaa’s Riyadh Visit Brings Syria Closer to the Mecca Pact",
+      "score": 46.89,
+      "adjustedScore": 19.89,
+      "rank": 14,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 15.89,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:cc5ceef561c297c9",
+      "title": "South Africa’s suspended police deputy chief resigns amid serious allegations",
+      "score": 36.8,
+      "adjustedScore": 10.8,
+      "rank": 15,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.8,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:3bbc0402b7324a00",
+      "title": "Renewables offer cheapest route to power and energy security, says IRENA chief",
+      "score": 38.52,
+      "adjustedScore": 4.52,
+      "rank": 16,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.52,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:42ff775c898a405d",
+      "title": "UG, KNUST stranded over strike - Reopening dates for students uncertain",
+      "score": 37.95,
+      "adjustedScore": 2.95,
+      "rank": 17,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 14.95,
+        "importance": 0,
+        "interestingness": 8,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:75302517d60fde18",
+      "title": "At age 10, she started an annual walk for at-risk youth. 500km later, she completed her final trek",
+      "score": 37.62,
+      "adjustedScore": 0.62,
+      "rank": 18,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 19.62,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:37dacc05dd464c2f",
+      "title": "India's opposition parties march to top court as protests over voter lists escalate",
+      "score": 42.24,
+      "adjustedScore": -4.76,
+      "rank": 19,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.24,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:bee436f7d03df1f0",
+      "title": "Bipartisan U.S. senators urge Trump to reverse Russia diesel deal",
+      "score": 38.14,
+      "adjustedScore": -11.86,
+      "rank": 20,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 15.14,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:67bca27551df3725",
+      "title": "'Breaking Bad' actor RJ Mitte dead at 34",
+      "score": 34.96,
+      "adjustedScore": -12.04,
+      "rank": 21,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.96,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:8a3a60ab161d9eb2",
+      "title": "12 killed and more than 300 wounded in attack on Riyadh airport",
+      "score": 50.18,
+      "adjustedScore": -13.82,
+      "rank": 22,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 5.18,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:75175e3994fe6103",
+      "title": "‘Clear and present danger’: fuel prices could rise by 30c a litre across Australia under IMF scenario",
+      "score": 43.73,
+      "adjustedScore": -19.27,
+      "rank": 23,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.73,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:72ecf876c67c1bcf",
+      "title": "Centre for CSR, West Africa partners with Climate x Culture Summit to champion corporate sustainability at Google AI Centre",
+      "score": 40.66,
+      "adjustedScore": -29.34,
+      "rank": 24,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.66,
+        "importance": 18,
+        "interestingness": 8,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": -18
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:b8da508032aec09e",
+      "title": "City of Toronto hosts 'Kids Vote' campaign during advance voting weekend",
+      "score": 37.44,
+      "adjustedScore": -32.56,
+      "rank": 25,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 12.44,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:7c37cde567a9af88",
+      "title": "Saudi Arabia’s ‘mindset’ helped Kingdom beat longest energy crisis says minister",
+      "score": 49.81,
+      "adjustedScore": -34.19,
+      "rank": 26,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 16.81,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:9aa304026d996c3c",
+      "title": "Analysis: Trump's global headaches worsen weeks before crucial elections",
+      "score": 34.51,
+      "adjustedScore": -39.49,
+      "rank": 27,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.51,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:ea2027455d4efe24",
+      "title": "Ethiopia’s Tigray war: Where do the UAE and Saudi Arabia stand?",
+      "score": 44.67,
+      "adjustedScore": -42.33,
+      "rank": 28,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.67,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:cb49ecd679efac8c",
+      "title": "Net FDI inflow falls 13pc in FY26",
+      "score": 34.93,
+      "adjustedScore": -45.07,
+      "rank": 29,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.93,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:97fd8662359a9bc9",
+      "title": "Saudi warning system stayed silent before deadly airport attacks",
+      "score": 44.25,
+      "adjustedScore": -58.75,
+      "rank": 30,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.25,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    }
+  ],
+  "invalidPreviousCardsRemoved": [],
+  "crossEventOverlap": [
+    {
+      "packet_event_id": "event:5c1b0cdceacb5bb5",
+      "other_event_id": "event:5c1b0cdceacb5bb5",
+      "fragment_id": "F13",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=french,cyber,attack,fridges,heat; entities=; actions=attack"
+    }
+  ],
+  "generation": [
+    {
+      "eventId": "event:fbfb7c6e48d3e209",
+      "title": "Middle East crisis: Riyadh airport hit again as Houthis claim attacks, including strike that killed 12 – as it happened",
+      "finalStatus": "accepted",
+      "previousMatch": "same source URL",
+      "contentVersion": 2,
+      "evidenceFingerprint": "14e7cd5f2ae4926d56a23192903d5cb5d1be5d9bab3fd5aea243d82f42860ec1",
+      "allowedExactDates": [
+        "2026-10-10",
+        "2026-10-05",
+        "2026-10-06",
+        "2026-10-07",
+        "2026-10-09"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 10, 2026",
+            "date": "2026-10-10"
+          },
+          {
+            "raw": "October 9, 2026",
+            "date": "2026-10-09"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-10",
+          "2026-10-05",
+          "2026-10-06",
+          "2026-10-07",
+          "2026-10-09"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 338,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:guardian:34b9d08cc8ae5b287284b8dc",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:guardian:34b9d08cc8ae5b287284b8dc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:guardian:34b9d08cc8ae5b287284b8dc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:guardian:34b9d08cc8ae5b287284b8dc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:guardian:34b9d08cc8ae5b287284b8dc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:euronews:14ef70f7e3505005cc27a6fc",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:euronews:14ef70f7e3505005cc27a6fc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:euronews:14ef70f7e3505005cc27a6fc",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:euronews:14ef70f7e3505005cc27a6fc",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:euronews:14ef70f7e3505005cc27a6fc",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:euronews:14ef70f7e3505005cc27a6fc",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:euronews:14ef70f7e3505005cc27a6fc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:euronews:14ef70f7e3505005cc27a6fc",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:euronews:14ef70f7e3505005cc27a6fc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:guardian:34b9d08cc8ae5b287284b8dc",
+          "publisher": "The Guardian World",
+          "url": "https://theguardian.com/world/live/2026/oct/11/saudi-arabia-riyadh-airport-houthis-yemen-attack-blockade-trump-latest-news-updates",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:euronews:14ef70f7e3505005cc27a6fc",
+          "publisher": "Euronews",
+          "url": "https://euronews.com/2026/10/11/riyadh-airport-stays-shut-after-deadly-attack-as-trump-says-us-may-join-saudi-strikes-on-h",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.guim.co.uk/img/media/85db3bfcd6d1dc107fbf4a8abeb1f7c4057fcae2/496_0_4341_3474/master/4341.jpg?width=140&quality=85&auto=format&fit=max&s=84521c8b2979ed443a4b77deeee9d943",
+        "alt": "Middle East crisis: Riyadh airport hit again as Houthis claim attacks, including strike that killed 12 – as it happened",
+        "status": "event-specific",
+        "source_url": "https://theguardian.com/world/live/2026/oct/11/saudi-arabia-riyadh-airport-houthis-yemen-attack-blockade-trump-latest-news-updates",
+        "attribution": "The Guardian World",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-13T03:05:15.473Z",
+          "finishedAt": "2026-10-13T03:05:31.327Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Missile attack on Riyadh airport kills 13 and injures hundreds\", \"pages\": \n[\n  {\n    \"text\": \"A missile attack on King Khalid International Airport in Riyadh, Saudi Arabia, on October 10, 2026, killed 13 people and injured more than 300, according to reports from aviation authorities and the Indian embassy in Saudi Arabia. The Houthis, an Iran-backed group in Yemen, claimed responsibility for the strike, which hit a passenger terminal and caused a fire. The death toll rose to 13 after an Indian national died from injuries sustained in the attack. Other fatalities included four Saudi citizens, a US citizen, and several other foreign nationals. Saudi aviation authorities initially reported 12 deaths and 309 injuries, noting that some victims were in critical condition. A separate projectile reportedly fell near King Fahd International Airport in Dammam on October 10, 2026. The Saudi-led coalition blamed the Houthis for the attack, which it described as the deadliest on Saudi soil in more than a decade, and vowed a response. The Houthis issued a warning to airlines, airport workers, and travelers against using Saudi airports, stating the facilities remain vulnerable to attack.\"\n  },\n  {\n    \"text\": \"Following the attack, King Khalid International Airport remained closed with no confirmed time for the resumption of passenger flights. Aviation sources indicated that radar and communications equipment were damaged and runways required assessment. Several airlines, including Etihad Airways, Emirates, Flydubai, Lufthansa Group, and SriLankan Airlines, suspended or cancelled flights to Riyadh and other Saudi cities. On October 9, 2026, the European Union Aviation Safety Agency widened its warning to cover more Saudi airspace due to risks from missile and drone attacks, air defense activity, and falling debris. In Riyadh, schools switched to remote learning for the week following instructions from the education ministry. In response to the strike, US President Donald Trump stated that Washington might join Saudi strikes against the Houthis, saying, “We may. We’re going to look at it,” though he did not announce a formal decision. European Commission President Ursula von der Leyen and UN Secretary-General António Guterres both condemned the attack, with Guterres stating that attacks on civilian infrastructure violate international law.\"\n  }\n]\n}",
+          "parsed": {
+            "headline": "Missile attack on Riyadh airport kills 13 and injures hundreds",
+            "pages": [
+              {
+                "text": "A missile attack on King Khalid International Airport in Riyadh, Saudi Arabia, on October 10, 2026, killed 13 people and injured more than 300, according to reports from aviation authorities and the Indian embassy in Saudi Arabia. The Houthis, an Iran-backed group in Yemen, claimed responsibility for the strike, which hit a passenger terminal and caused a fire. The death toll rose to 13 after an Indian national died from injuries sustained in the attack. Other fatalities included four Saudi citizens, a US citizen, and several other foreign nationals. Saudi aviation authorities initially reported 12 deaths and 309 injuries, noting that some victims were in critical condition. A separate projectile reportedly fell near King Fahd International Airport in Dammam on October 10, 2026. The Saudi-led coalition blamed the Houthis for the attack, which it described as the deadliest on Saudi soil in more than a decade, and vowed a response. The Houthis issued a warning to airlines, airport workers, and travelers against using Saudi airports, stating the facilities remain vulnerable to attack."
+              },
+              {
+                "text": "Following the attack, King Khalid International Airport remained closed with no confirmed time for the resumption of passenger flights. Aviation sources indicated that radar and communications equipment were damaged and runways required assessment. Several airlines, including Etihad Airways, Emirates, Flydubai, Lufthansa Group, and SriLankan Airlines, suspended or cancelled flights to Riyadh and other Saudi cities. On October 9, 2026, the European Union Aviation Safety Agency widened its warning to cover more Saudi airspace due to risks from missile and drone attacks, air defense activity, and falling debris. In Riyadh, schools switched to remote learning for the week following instructions from the education ministry. In response to the strike, US President Donald Trump stated that Washington might join Saudi strikes against the Houthis, saying, “We may. We’re going to look at it,” though he did not announce a formal decision. European Commission President Ursula von der Leyen and UN Secretary-General António Guterres both condemned the attack, with Guterres stating that attacks on civilian infrastructure violate international law."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2703,
+            "completion_tokens": 497,
+            "total_tokens": 3200,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 38.12727355957031
+          },
+          "latencyMs": 15853,
+          "safeHeaders": {
+            "cf-ray": "a49b1f1ffe344c9d-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:e2e2680ab73fbbf6",
+      "title": "Trump announced a partial Russia-Ukraine ceasefire. Did either country know about it?",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "5cfc6629de98fee1aabdac23b4fa444c76963f0b27319dd770242e026f64dd74",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 238,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:npr:6512c066421b26a34810b69e",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:npr:6512c066421b26a34810b69e",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:npr:6512c066421b26a34810b69e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:npr:6512c066421b26a34810b69e",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:npr:6512c066421b26a34810b69e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:npr:6512c066421b26a34810b69e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:npr:6512c066421b26a34810b69e",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:npr:6512c066421b26a34810b69e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:npr:6512c066421b26a34810b69e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:npr:6512c066421b26a34810b69e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:npr:6512c066421b26a34810b69e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:npr:6512c066421b26a34810b69e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:bbc:a37bea79194783efe6272279",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:bbc:a37bea79194783efe6272279",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F15",
+            "sourceId": "news:bbc:a37bea79194783efe6272279",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F16",
+            "sourceId": "news:bbc:a37bea79194783efe6272279",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F17",
+            "sourceId": "news:bbc:a37bea79194783efe6272279",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F18",
+            "sourceId": "news:bbc:a37bea79194783efe6272279",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F19",
+            "sourceId": "news:bbc:a37bea79194783efe6272279",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F20",
+            "sourceId": "news:bbc:a37bea79194783efe6272279",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F21",
+            "sourceId": "news:bbc:a37bea79194783efe6272279",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F22",
+            "sourceId": "news:bbc:a37bea79194783efe6272279",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F23",
+            "sourceId": "news:bbc:a37bea79194783efe6272279",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F24",
+            "sourceId": "news:bbc:a37bea79194783efe6272279",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:npr:6512c066421b26a34810b69e",
+          "publisher": "NPR World",
+          "url": "https://npr.org/2026/10/12/nx-s1-5998808/trump-announced-a-partial-russia-ukraine-ceasefire-did-either-country-know-about-it",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:bbc:a37bea79194783efe6272279",
+          "publisher": "BBC World",
+          "url": "https://bbc.co.uk/news/articles/cvlyd4pdlwkxo",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://media.npr.org/include/images/facebook-default-wide-s1400-c85.jpg",
+        "alt": "Trump announced a partial Russia-Ukraine ceasefire. Did either country know about it?",
+        "status": "event-specific",
+        "source_url": "https://npr.org/2026/10/12/nx-s1-5998808/trump-announced-a-partial-russia-ukraine-ceasefire-did-either-country-know-about-it",
+        "attribution": "NPR World",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-13T03:05:31.328Z",
+          "finishedAt": "2026-10-13T03:05:35.863Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Trump announces partial energy ceasefire between Russia and Ukraine\"\n,\n  \"pages\": [\n    {\n      \"text\": \"U.S. President Donald Trump announced via Truth Social that Russia and Ukraine have agreed to a partial ceasefire to halt attacks on each other's energy infrastructure. While Trump stated on Sunday that the truce would be effective immediately, reports indicate uncertainty regarding whether either Moscow or Kyiv were aware of the plan. NPR reporter Charles Maynes noted that neither country seemed to have known about the announcement at the time it was made. Following the announcement, Ukrainian President Volodymyr Zelensky stated that Russia is ignoring the declared energy ceasefire and continues to strike Ukrainian facilities. Zelensky reported that Russia hit gas stations, energy infrastructure, and other facilities, resulting in 33 injuries. He suggested the strikes were proof that Russia is unwilling to accept the ceasefire, characterizing the actions as a response from Vladimir Putin to President Trump.\"\n    },\n    {\n      \"text\": \"On Monday, Russian strikes targeted six Ukrainian energy facilities. According to Ukraine's state news agency Ukrinform, a strike destroyed power grids in Izyum, causing blackouts, while energy and railway infrastructure in western Ukraine was also targeted overnight. Ukraine's state-owned grid operator, Ukrenergo, reported new power cuts in Kharkiv, Donetsk, and Zaporizhzhia due to damage to energy equipment, leading to electricity rationing in parts of the country. Additionally, emergency services responded to a Russian drone strike on a residential building in Kharkiv. Separately, Russian Foreign Minister Sergei Lavrov stated on Monday that Ukraine does not deserve the respite a ceasefire would provide.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Trump announces partial energy ceasefire between Russia and Ukraine",
+            "pages": [
+              {
+                "text": "U.S. President Donald Trump announced via Truth Social that Russia and Ukraine have agreed to a partial ceasefire to halt attacks on each other's energy infrastructure. While Trump stated on Sunday that the truce would be effective immediately, reports indicate uncertainty regarding whether either Moscow or Kyiv were aware of the plan. NPR reporter Charles Maynes noted that neither country seemed to have known about the announcement at the time it was made. Following the announcement, Ukrainian President Volodymyr Zelensky stated that Russia is ignoring the declared energy ceasefire and continues to strike Ukrainian facilities. Zelensky reported that Russia hit gas stations, energy infrastructure, and other facilities, resulting in 33 injuries. He suggested the strikes were proof that Russia is unwilling to accept the ceasefire, characterizing the actions as a response from Vladimir Putin to President Trump."
+              },
+              {
+                "text": "On Monday, Russian strikes targeted six Ukrainian energy facilities. According to Ukraine's state news agency Ukrinform, a strike destroyed power grids in Izyum, causing blackouts, while energy and railway infrastructure in western Ukraine was also targeted overnight. Ukraine's state-owned grid operator, Ukrenergo, reported new power cuts in Kharkiv, Donetsk, and Zaporizhzhia due to damage to energy equipment, leading to electricity rationing in parts of the country. Additionally, emergency services responded to a Russian drone strike on a residential building in Kharkiv. Separately, Russian Foreign Minister Sergei Lavrov stated on Monday that Ukraine does not deserve the respite a ceasefire would provide."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1944,
+            "completion_tokens": 350,
+            "total_tokens": 2294,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 27.218181610107422
+          },
+          "latencyMs": 4535,
+          "safeHeaders": {
+            "cf-ray": "a49b1f82d9c44c9d-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:4f78ecb5b30d6edf",
+      "title": "Tamale, Bolgatanga had just one Legal Aid lawyer between them – Kwesimintsim MP",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "5ebbc386ba1fccd1fa4a560afd6ba43b1489c9f9984221853b8a391f7ecc011f",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 221,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:myjoyonline:fc6ae1a6b53508b1668cf726",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:myjoyonline:fc6ae1a6b53508b1668cf726",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:myjoyonline:fc6ae1a6b53508b1668cf726",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:myjoyonline:fc6ae1a6b53508b1668cf726",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:myjoyonline:fc6ae1a6b53508b1668cf726",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:myjoyonline:fc6ae1a6b53508b1668cf726",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:myjoyonline:fc6ae1a6b53508b1668cf726",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:myjoyonline:fc6ae1a6b53508b1668cf726",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:myjoyonline:fc6ae1a6b53508b1668cf726",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:myjoyonline:fc6ae1a6b53508b1668cf726",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:myjoyonline:fc6ae1a6b53508b1668cf726",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:myjoyonline:fc6ae1a6b53508b1668cf726",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:myjoyonline:fc6ae1a6b53508b1668cf726",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/tamale-bolgatanga-had-just-one-legal-aid-lawyer-between-them-kwesimintsim-mp",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.myjoyonline.com/wp-content/uploads/2026/10/images-23.jpg",
+        "alt": "tamale",
+        "status": "event-specific",
+        "source_url": "https://myjoyonline.com/tamale-bolgatanga-had-just-one-legal-aid-lawyer-between-them-kwesimintsim-mp",
+        "attribution": "MyJoyOnline",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-13T03:05:35.864Z",
+          "finishedAt": "2026-10-13T03:05:43.876Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Kwesimintsim MP reports single Legal Aid lawyer for Tamale and Bolgatanga, Ghana\",\n  \"pages\": [\n    {\n      \"text\": \"Philip Fiifi Buckman, the Member of Parliament for Kwesimintsim and a member of Parliament’s Constitutional and Legal Affairs Committee, described Legal Aid Commission services in northern Ghana as “pathetic” during the launch of the 2026 Legal Aid Week in Accra. Recounting a recent oversight visit to the northern regions, Mr. Buckman stated that Tamale and Bolgatanga had only one lawyer serving the Commission between them. He noted that the committee was informed the same lawyer was responsible for both cities, which he characterized as a serious shortage of personnel for those unable to afford legal representation. Mr. Buckman urged the government to take decisive steps to resource the Commission so it can fulfill its mandate under the Legal Aid Commission Act, 2018 (Act 977), which requires the agency to provide legal assistance to indigent and vulnerable people.\"\n    },\n    {\n      \"text\": \"The report follows an appeal by the Legal Aid Commission’s Board Chairman, Supreme Court Justice Samuel Kwame Asiedu Adibu, for urgent support to address office and staffing shortages. Justice Adibu stated that the Commission currently has 190 staff nationwide and operates 45 offices across Ghana’s 261 districts, maintaining a presence in only 10 of the country’s 16 regions. He disclosed that the Commission is short by approximately 180 staff, a deficit he said limits the ability to reach individuals in need of legal services.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Kwesimintsim MP reports single Legal Aid lawyer for Tamale and Bolgatanga, Ghana",
+            "pages": [
+              {
+                "text": "Philip Fiifi Buckman, the Member of Parliament for Kwesimintsim and a member of Parliament’s Constitutional and Legal Affairs Committee, described Legal Aid Commission services in northern Ghana as “pathetic” during the launch of the 2026 Legal Aid Week in Accra. Recounting a recent oversight visit to the northern regions, Mr. Buckman stated that Tamale and Bolgatanga had only one lawyer serving the Commission between them. He noted that the committee was informed the same lawyer was responsible for both cities, which he characterized as a serious shortage of personnel for those unable to afford legal representation. Mr. Buckman urged the government to take decisive steps to resource the Commission so it can fulfill its mandate under the Legal Aid Commission Act, 2018 (Act 977), which requires the agency to provide legal assistance to indigent and vulnerable people."
+              },
+              {
+                "text": "The report follows an appeal by the Legal Aid Commission’s Board Chairman, Supreme Court Justice Samuel Kwame Asiedu Adibu, for urgent support to address office and staffing shortages. Justice Adibu stated that the Commission currently has 190 staff nationwide and operates 45 offices across Ghana’s 261 districts, maintaining a presence in only 10 of the country’s 16 regions. He disclosed that the Commission is short by approximately 180 staff, a deficit he said limits the ability to reach individuals in need of legal services."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1742,
+            "completion_tokens": 361,
+            "total_tokens": 2103,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 25.68181610107422
+          },
+          "latencyMs": 8012,
+          "safeHeaders": {
+            "cf-ray": "a49b1f9f2f4a4c9d-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:06d61715b966d904",
+      "title": "UP polls in 5 phases, likely from Jan 21",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "19a5ef845522ddc3cc8a1f44fcd8ffc376e2311bce0bf480c97bd124c3f4793b",
+      "allowedExactDates": [
+        "2026-10-12"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 12, 2026",
+            "date": "2026-10-12"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-12"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 206,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:daily-star-bd:4c2db67dd0063a7c706b2625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:daily-star-bd:4c2db67dd0063a7c706b2625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:daily-star-bd:4c2db67dd0063a7c706b2625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:daily-star-bd:4c2db67dd0063a7c706b2625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:daily-star-bd:4c2db67dd0063a7c706b2625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:daily-star-bd:4c2db67dd0063a7c706b2625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:daily-star-bd:4c2db67dd0063a7c706b2625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:daily-star-bd:4c2db67dd0063a7c706b2625",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:daily-star-bd:4c2db67dd0063a7c706b2625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:daily-star-bd:4c2db67dd0063a7c706b2625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:daily-star-bd:4c2db67dd0063a7c706b2625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:daily-star-bd:4c2db67dd0063a7c706b2625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:daily-star-bd:4c2db67dd0063a7c706b2625",
+          "publisher": "The Daily Star Bangladesh",
+          "url": "https://thedailystar.net/news/bangladesh/news/polls-5-phases-likely-jan-21-4297386",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.thedailystar.net/sites/default/files/styles/social_share/public/2026-10/UP_polls_announcement.jpeg",
+        "alt": "UP polls in 5 phases, likely from Jan 21",
+        "status": "event-specific",
+        "source_url": "https://thedailystar.net/news/bangladesh/news/polls-5-phases-likely-jan-21-4297386",
+        "attribution": "The Daily Star Bangladesh",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-13T03:05:43.877Z",
+          "finishedAt": "2026-10-13T03:05:51.146Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Bangladesh Election Commission plans union parishad polls in five phases starting January\",\n  \"pages\": [\n    {\n      \"text\": \"The Election Commission in Bangladesh is planning to conduct union parishad elections in five phases, potentially beginning in the third week of January. On October 12, 2026, Election Commissioner Abul Fazal Md Sanaullah stated that the polls are intended to be held on January 21, February 4, April 29, May 13, and May 27. All five proposed polling dates fall on Thursdays. The commission noted that the number of phases was reduced from seven to five due to time constraints. The Election Commission plans to hold the polls simultaneously across all districts, prioritizing union parishads and Sadar upazilas where terms have already expired.\"\n    },\n    {\n      \"text\": \"The revised timeline follows previous scheduling discussions. On September 14, the Election Commission had announced November 12 as a tentative election date. However, a cabinet member expressed reservations, stating the date was announced without government consultation. Following an inter-ministerial meeting on September 17, top government officials suggested conducting the polls from January. Election Commissioner Sanaullah confirmed the commission met with representatives from all government departments on September 17, stating that election dates would be announced following the completion of desk work. The commission expects to announce election schedules approximately six weeks before each polling date, with a range of 38 to 45 days.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Bangladesh Election Commission plans union parishad polls in five phases starting January",
+            "pages": [
+              {
+                "text": "The Election Commission in Bangladesh is planning to conduct union parishad elections in five phases, potentially beginning in the third week of January. On October 12, 2026, Election Commissioner Abul Fazal Md Sanaullah stated that the polls are intended to be held on January 21, February 4, April 29, May 13, and May 27. All five proposed polling dates fall on Thursdays. The commission noted that the number of phases was reduced from seven to five due to time constraints. The Election Commission plans to hold the polls simultaneously across all districts, prioritizing union parishads and Sadar upazilas where terms have already expired."
+              },
+              {
+                "text": "The revised timeline follows previous scheduling discussions. On September 14, the Election Commission had announced November 12 as a tentative election date. However, a cabinet member expressed reservations, stating the date was announced without government consultation. Following an inter-ministerial meeting on September 17, top government officials suggested conducting the polls from January. Election Commissioner Sanaullah confirmed the commission met with representatives from all government departments on September 17, stating that election dates would be announced following the completion of desk work. The commission expects to announce election schedules approximately six weeks before each polling date, with a range of 38 to 45 days."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1669,
+            "completion_tokens": 329,
+            "total_tokens": 1998,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 24.14545440673828
+          },
+          "latencyMs": 7269,
+          "safeHeaders": {
+            "cf-ray": "a49b1fd14c764c9d-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:a870a9dbfed49ca8",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "page 1 ends mid-sentence"
+        ],
+        "wordCount": 96,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-13T03:05:51.146Z",
+          "finishedAt": "2026-10-13T03:05:55.599Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Masoud Barzani and Mazloum Abdi discuss the future of Kurds in Syria\",\n  \"pages\": [\n    {\n      \"text\": \"In Erbil, Masoud Barzani, President of the Kurdistan Democratic Party (KDP), received Mazloum Abdi, an adviser to the Syrian presidency, and a delegation to discuss Syria’s political developments and the future of Kurds in the country, according to the North Press Agency. The meeting, which took place on a Monday, reportedly focused on the political situation in Syria, the wider region, and predominantly Kurdish cities in north and northeast Syria (Rojava). Both parties emphasized the importance of stability, resolving outstanding issues, and dialogue. No further details regarding specific agreements reached during the meeting were provided. 1/1\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Masoud Barzani and Mazloum Abdi discuss the future of Kurds in Syria",
+            "pages": [
+              {
+                "text": "In Erbil, Masoud Barzani, President of the Kurdistan Democratic Party (KDP), received Mazloum Abdi, an adviser to the Syrian presidency, and a delegation to discuss Syria’s political developments and the future of Kurds in the country, according to the North Press Agency. The meeting, which took place on a Monday, reportedly focused on the political situation in Syria, the wider region, and predominantly Kurdish cities in north and northeast Syria (Rojava). Both parties emphasized the importance of stability, resolving outstanding issues, and dialogue. No further details regarding specific agreements reached during the meeting were provided. 1/1"
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1834,
+            "completion_tokens": 179,
+            "total_tokens": 2013,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 21.554546356201172
+          },
+          "latencyMs": 4452,
+          "safeHeaders": {
+            "cf-ray": "a49b1ffebfe04c9d-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:8a8c5f2987226754",
+      "title": "Canada’s Carney calls for unity as Alberta prepares for secession vote",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "c59d9dde37a03e258aa25401d098c41fd61b7d274734b97b2f7a9cb2cfc6618e",
+      "allowedExactDates": [
+        "2026-10-12"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 12, 2026",
+            "date": "2026-10-12"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-12"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 236,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:aljazeera:9a0127325124731e89905108",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:aljazeera:9a0127325124731e89905108",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:aljazeera:9a0127325124731e89905108",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:aljazeera:9a0127325124731e89905108",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:aljazeera:9a0127325124731e89905108",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:aljazeera:9a0127325124731e89905108",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:aljazeera:9a0127325124731e89905108",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:aljazeera:9a0127325124731e89905108",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:aljazeera:9a0127325124731e89905108",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:aljazeera:9a0127325124731e89905108",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:aljazeera:9a0127325124731e89905108",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:aljazeera:9a0127325124731e89905108",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:aljazeera:9a0127325124731e89905108",
+          "publisher": "Al Jazeera",
+          "url": "https://aljazeera.com/news/2026/10/12/canadas-carney-calls-for-unity-as-alberta-prepares-for-secession-vote?traffic_source=rss",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.aljazeera.com/wp-content/uploads/2026/10/reuters_6acd2d46-1791831366.jpg?resize=1920%2C1440",
+        "alt": "Canada’s Carney calls for unity as Alberta prepares for secession vote",
+        "status": "event-specific",
+        "source_url": "https://aljazeera.com/news/2026/10/12/canadas-carney-calls-for-unity-as-alberta-prepares-for-secession-vote?traffic_source=rss",
+        "attribution": "Al Jazeera",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-13T03:05:55.599Z",
+          "finishedAt": "2026-10-13T03:06:03.468Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Canadian Prime Minister calls for unity ahead of Alberta secession vote\", \"pages\": \n[\n  {\n    \"text\": \"In a video message released on October 12, 2026, Canadian Prime Minister Mark Carney called for national unity as the province of Alberta prepares to vote on a proposal to begin the process of seeking independence. Carney warned that Canada faces threats to its security, economy, and way of life, stating, “We can’t build big things on fault lines” and “We have to be strong, and we are stronger together.” The message was delivered via a Thanksgiving address one week before Albertans head to the polls on October 19. The upcoming referendum is non-binding; it asks voters whether the Government of Alberta should commence the legal process required under the Canadian Constitution to hold a future binding provincial referendum on whether the province should separate from Canada.\"\n  },\n  {\n    \"text\": \"The secessionist movement in Alberta has accused the Canadian government of unfairly targeting the province's oil and gas industry, which serves as the cornerstone of its economy. This push follows grievances regarding federal energy and environmental policies. According to Al Jazeera, the movement is also being monitored due to strained relations between Canada and the United States under President Donald Trump. An investigation by The Globe and Mail earlier this month reported that US Republican operatives met with secession organizers in Alberta to discuss campaign strategies. The report indicated that separatist leaders had reportedly offered access to Alberta's oil and water royalties in exchange for US support for independence.\"\n  }\n]\n}",
+          "parsed": {
+            "headline": "Canadian Prime Minister calls for unity ahead of Alberta secession vote",
+            "pages": [
+              {
+                "text": "In a video message released on October 12, 2026, Canadian Prime Minister Mark Carney called for national unity as the province of Alberta prepares to vote on a proposal to begin the process of seeking independence. Carney warned that Canada faces threats to its security, economy, and way of life, stating, “We can’t build big things on fault lines” and “We have to be strong, and we are stronger together.” The message was delivered via a Thanksgiving address one week before Albertans head to the polls on October 19. The upcoming referendum is non-binding; it asks voters whether the Government of Alberta should commence the legal process required under the Canadian Constitution to hold a future binding provincial referendum on whether the province should separate from Canada."
+              },
+              {
+                "text": "The secessionist movement in Alberta has accused the Canadian government of unfairly targeting the province's oil and gas industry, which serves as the cornerstone of its economy. This push follows grievances regarding federal energy and environmental policies. According to Al Jazeera, the movement is also being monitored due to strained relations between Canada and the United States under President Donald Trump. An investigation by The Globe and Mail earlier this month reported that US Republican operatives met with secession organizers in Alberta to discuss campaign strategies. The report indicated that separatist leaders had reportedly offered access to Alberta's oil and water royalties in exchange for US support for independence."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1665,
+            "completion_tokens": 329,
+            "total_tokens": 1994,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 24.109088897705078
+          },
+          "latencyMs": 7870,
+          "safeHeaders": {
+            "cf-ray": "a49b201a8b804c9d-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:8d7fb7ea5f81fc5e",
+      "title": "Can social media engage apathetic young voters in Ontario's elections?",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "7245ad80021c4ac0e360b6fd3ed9d4bdd0458e9b0301576e39bee23268121534",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 187,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:cbc:4ae3025bf88c238cd1b7bce4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:cbc:4ae3025bf88c238cd1b7bce4",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:cbc:4ae3025bf88c238cd1b7bce4",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:cbc:4ae3025bf88c238cd1b7bce4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:cbc:4ae3025bf88c238cd1b7bce4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:cbc:4ae3025bf88c238cd1b7bce4",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:cbc:4ae3025bf88c238cd1b7bce4",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:cbc:4ae3025bf88c238cd1b7bce4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:cbc:4ae3025bf88c238cd1b7bce4",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:cbc:4ae3025bf88c238cd1b7bce4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:cbc:4ae3025bf88c238cd1b7bce4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:cbc:4ae3025bf88c238cd1b7bce4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:cbc:4ae3025bf88c238cd1b7bce4",
+          "publisher": "CBC Toronto",
+          "url": "https://cbc.ca/news/canada/kitchener-waterloo/can-social-media-engage-apathetic-young-voters-in-ontario-s-elections-9.7369589?cmp=rss",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.cbc.ca/ais/c7bad545-c3b5-4f3e-9ccd-e57e5271b8fb,1791502382861/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C0%2C2000%2C1125%29%3B",
+        "alt": "Can social media engage apathetic young voters in Ontario's elections?",
+        "status": "event-specific",
+        "source_url": "https://cbc.ca/news/canada/kitchener-waterloo/can-social-media-engage-apathetic-young-voters-in-ontario-s-elections-9.7369589?cmp=rss",
+        "attribution": "CBC Toronto",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-13T03:06:03.469Z",
+          "finishedAt": "2026-10-13T03:06:09.345Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Social media role in engaging young voters during Ontario municipal elections\",\n  \"pages\": [\n    {\n      \"text\": \"As Ontario holds municipal elections this month, some young candidates and first-time voters report that social media is playing an increasing role in engaging attention regarding the ballot. In Guelph, some municipal candidates use TikTok to reach young voters. Florence Yan, a student at the University of Waterloo, stated that social media and social media discourse constitute a significant portion of how young people consume politics or media and form opinions. Neel Laroiya, a University of Waterloo student, noted that both social media and door-to-door campaigning are effective ways to reach younger voters, adding that time constraints make it difficult to find time to look at the news. Sebastian Wang, 18, is participating in his first election and expressed a desire to use his vote to make a change. Ibraheem Kappaya is an economics and financial management student at Wilfrid Laurier University. According to Elections Canada, voter turnout has been the lowest for those between the ages of 18 to 24 in every election since 2004. In those instances, turnout has increased with age, peaking for those aged 65 to 74 before dropping for those over 75.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Social media role in engaging young voters during Ontario municipal elections",
+            "pages": [
+              {
+                "text": "As Ontario holds municipal elections this month, some young candidates and first-time voters report that social media is playing an increasing role in engaging attention regarding the ballot. In Guelph, some municipal candidates use TikTok to reach young voters. Florence Yan, a student at the University of Waterloo, stated that social media and social media discourse constitute a significant portion of how young people consume politics or media and form opinions. Neel Laroiya, a University of Waterloo student, noted that both social media and door-to-door campaigning are effective ways to reach younger voters, adding that time constraints make it difficult to find time to look at the news. Sebastian Wang, 18, is participating in his first election and expressed a desire to use his vote to make a change. Ibraheem Kappaya is an economics and financial management student at Wilfrid Laurier University. According to Elections Canada, voter turnout has been the lowest for those between the ages of 18 to 24 in every election since 2004. In those instances, turnout has increased with age, peaking for those aged 65 to 74 before dropping for those over 75."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1534,
+            "completion_tokens": 281,
+            "total_tokens": 1815,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "neurons": 21.027271270751953
+          },
+          "latencyMs": 5876,
+          "safeHeaders": {
+            "cf-ray": "a49b204bbc3f4c9d-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:4cccc8fc2ca3f6c7",
+      "title": "Legal Aid Commission has offices in only 45 of Ghana’s 261 districts, needs 180 more staff",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "cd1d627b1c8136140e3f6e6282bcec4c0a96e511f1d7d22153305618a7efbb28",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 165,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:myjoyonline:1d255277d9235ff34ea949da",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:myjoyonline:1d255277d9235ff34ea949da",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:myjoyonline:1d255277d9235ff34ea949da",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:myjoyonline:1d255277d9235ff34ea949da",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:myjoyonline:1d255277d9235ff34ea949da",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:myjoyonline:1d255277d9235ff34ea949da",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:myjoyonline:1d255277d9235ff34ea949da",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:myjoyonline:1d255277d9235ff34ea949da",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:myjoyonline:1d255277d9235ff34ea949da",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:myjoyonline:1d255277d9235ff34ea949da",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:myjoyonline:1d255277d9235ff34ea949da",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:myjoyonline:1d255277d9235ff34ea949da",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:myjoyonline:1d255277d9235ff34ea949da",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/legal-aid-commission-has-offices-in-only-45-of-ghanas-261-districts-needs-180-more-staff",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.myjoyonline.com/wp-content/uploads/2026/10/images-2-1.png",
+        "alt": "legal",
+        "status": "event-specific",
+        "source_url": "https://myjoyonline.com/legal-aid-commission-has-offices-in-only-45-of-ghanas-261-districts-needs-180-more-staff",
+        "attribution": "MyJoyOnline",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-13T03:06:09.345Z",
+          "finishedAt": "2026-10-13T03:06:17.932Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Legal Aid Commission in Ghana reports limited office coverage and staff shortages\",\n  \"pages\": [\n    {\n      \"text\": \"The Legal Aid Commission in Ghana is appealing for support to address staff shortages and limited office coverage, according to Justice Samuel Kwame Asiedu Adibu, a Supreme Court Judge and the Commission’s Board Chairman. Speaking at the launch of the 2026 Legal Aid Week in Accra, Justice Adibu stated that the Commission currently operates 45 offices across the country’s 261 districts and maintains a presence in only 10 of Ghana’s 16 regions. Under Sections 24 and 25 of the Legal Aid Commission Act, 2018 (Act 977), the Commission is required to establish offices in every region and district. Justice Adibu noted that the Commission is short by approximately 180 staff members and currently has a total staff strength of 190. He stated that the lack of coverage means a significant proportion of people in need of legal services and assistance are not accessible to the Commission, warning that the absence of services could prevent poor and vulnerable people from effectively engaging with the justice system.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Legal Aid Commission in Ghana reports limited office coverage and staff shortages",
+            "pages": [
+              {
+                "text": "The Legal Aid Commission in Ghana is appealing for support to address staff shortages and limited office coverage, according to Justice Samuel Kwame Asiedu Adibu, a Supreme Court Judge and the Commission’s Board Chairman. Speaking at the launch of the 2026 Legal Aid Week in Accra, Justice Adibu stated that the Commission currently operates 45 offices across the country’s 261 districts and maintains a presence in only 10 of Ghana’s 16 regions. Under Sections 24 and 25 of the Legal Aid Commission Act, 2018 (Act 977), the Commission is required to establish offices in every region and district. Justice Adibu noted that the Commission is short by approximately 180 staff members and currently has a total staff strength of 190. He stated that the lack of coverage means a significant proportion of people in need of legal services and assistance are not accessible to the Commission, warning that the absence of services could prevent poor and vulnerable people from effectively engaging with the justice system."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1713,
+            "completion_tokens": 264,
+            "total_tokens": 1977,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 22.772727966308594
+          },
+          "latencyMs": 8587,
+          "safeHeaders": {
+            "cf-ray": "a49b20707dc34c9d-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:13ee35ae5d38ffac",
+      "title": "Cuet in focus: Students lock new VC in his office",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "26deb297c7ed5ca119b79ff92ae602ba4ff0a5739cae5ea690c8bc5a72a14b41",
+      "allowedExactDates": [
+        "2026-10-12"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 12, 2026",
+            "date": "2026-10-12"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-12"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 221,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:daily-star-bd:ff613e3aeb0cb6d52fd1b7cf",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:daily-star-bd:ff613e3aeb0cb6d52fd1b7cf",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:daily-star-bd:ff613e3aeb0cb6d52fd1b7cf",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:daily-star-bd:ff613e3aeb0cb6d52fd1b7cf",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:daily-star-bd:ff613e3aeb0cb6d52fd1b7cf",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:daily-star-bd:ff613e3aeb0cb6d52fd1b7cf",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:daily-star-bd:ff613e3aeb0cb6d52fd1b7cf",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:daily-star-bd:ff613e3aeb0cb6d52fd1b7cf",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:daily-star-bd:ff613e3aeb0cb6d52fd1b7cf",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:daily-star-bd:ff613e3aeb0cb6d52fd1b7cf",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:daily-star-bd:ff613e3aeb0cb6d52fd1b7cf",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:daily-star-bd:ff613e3aeb0cb6d52fd1b7cf",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:daily-star-bd:ff613e3aeb0cb6d52fd1b7cf",
+          "publisher": "The Daily Star Bangladesh",
+          "url": "https://thedailystar.net/news/bangladesh/news/cuet-focus-students-lock-new-vc-his-office-4297426",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.thedailystar.net/sites/default/files/styles/social_share/public/2026-10/Cuet%20VC.png",
+        "alt": "Cuet in focus: Students lock new VC in his office",
+        "status": "event-specific",
+        "source_url": "https://thedailystar.net/news/bangladesh/news/cuet-focus-students-lock-new-vc-his-office-4297426",
+        "attribution": "The Daily Star Bangladesh",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-13T03:06:17.932Z",
+          "finishedAt": "2026-10-13T03:06:26.058Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Students lock new Vice-Chancellor inside administrative building at CUET, Bangladesh\", \"pages\": [{\"text\": \"On October 12, 2026, demonstrating students at Chittagong University of Engineering and Technology (CUET) in Bangladesh locked the newly appointed Vice-Chancellor, Professor Sheikh Shariful Alam, inside the university's administrative building and demanded his resignation. The confrontation began around 9:00 a.m. when Professor Alam arrived on campus in a microbus for the first time since his September 21 appointment. According to university sources, he entered through the main gate after identifying himself as a “teacher.” Accompanied by faculty members, officials, and Jatiyatabadi Chhatra Dal (JCD) leaders, Professor Alam reportedly broke open padlocks previously placed on the office doors by protesting students. Ahnaf Shahriar Arnob, a student and movement coordinator, alleged that the Vice-Chancellor entered the campus by hiding his identity and broke the locks to enter the office. Following an ultimatum for the Vice-Chancellor to leave campus by noon, students declared the building vacant, re-locked the outer gates, and cut off power and water supplies to the building. While the Vice-Chancellor remained inside, JCD unit President Wasif Rashed denied breaking into the office. This escalation occurs on the 21st day of a campus-wide shutdown by students demanding the reinstatement of former vice-chancellor Professor Dr Abu Sadat Muhammad Sayem. In the afternoon, CUET’s teachers, officers, and staff associations announced a complete work stoppage and non-cooperation, bringing academic and administrative operations to a standstill.\"}]}",
+          "parsed": {
+            "headline": "Students lock new Vice-Chancellor inside administrative building at CUET, Bangladesh",
+            "pages": [
+              {
+                "text": "On October 12, 2026, demonstrating students at Chittagong University of Engineering and Technology (CUET) in Bangladesh locked the newly appointed Vice-Chancellor, Professor Sheikh Shariful Alam, inside the university's administrative building and demanded his resignation. The confrontation began around 9:00 a.m. when Professor Alam arrived on campus in a microbus for the first time since his September 21 appointment. According to university sources, he entered through the main gate after identifying himself as a “teacher.” Accompanied by faculty members, officials, and Jatiyatabadi Chhatra Dal (JCD) leaders, Professor Alam reportedly broke open padlocks previously placed on the office doors by protesting students. Ahnaf Shahriar Arnob, a student and movement coordinator, alleged that the Vice-Chancellor entered the campus by hiding his identity and broke the locks to enter the office. Following an ultimatum for the Vice-Chancellor to leave campus by noon, students declared the building vacant, re-locked the outer gates, and cut off power and water supplies to the building. While the Vice-Chancellor remained inside, JCD unit President Wasif Rashed denied breaking into the office. This escalation occurs on the 21st day of a campus-wide shutdown by students demanding the reinstatement of former vice-chancellor Professor Dr Abu Sadat Muhammad Sayem. In the afternoon, CUET’s teachers, officers, and staff associations announced a complete work stoppage and non-cooperation, bringing academic and administrative operations to a standstill."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1699,
+            "completion_tokens": 347,
+            "total_tokens": 2046,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 24.909090042114258
+          },
+          "latencyMs": 8126,
+          "safeHeaders": {
+            "cf-ray": "a49b20a61a094c9d-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "stage": "evidence",
+      "eventId": "event:c3fd8383a7988b78",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6bb3f6cd3bb934f2",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f790300075fc5958",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:a329a779c28b7bc7",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4626cf862631fd1d",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:5e556b5e53ccccf2",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:b07865c1c333e1ca",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0f844a24f6817f5e",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6333d2c2e7ae948c",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:ebf69c58ddb39ced",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:5f61258fb54ce0f9",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:963d2ef45f91d1e0",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:662f5d738a106778",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:c69d9fa77dba4278",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:d10927547f6bd4dc",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6c40c11f4bdde18b",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:28793b2bd32f94a8",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:d09c29cdca09dc65",
+      "reason": "principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6b44adda5b968100",
+      "reason": "principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:908a79ae2d77d390",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:8c23cc0fa8f60ad3",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:635ce41a69822bef",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:93ce74969528106a",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:cd9b26c75dc0a9ac",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:9ee37391435bbf06",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:74c092b75fdc7dd7",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e67aa919bacd0c5e",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:61db1430ca39a4e0",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6daf79daed0162b0",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:79589dbdbcb313eb",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6e29b4928f9ec800",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:8656823b5ca00e54",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:7cf3ed44f30195c8",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:db609e0b11543159",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:2f3b396cc4e38294",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:c228be3316e32bda",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:2be4c82384a1e467",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:370c662aab29d61f",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:a7c866b9e0a5f718",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:c04f698bb5acabe3",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:2d33be63dc24f388",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:d07a63a30681075b",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "eventId": "event:fbfb7c6e48d3e209",
+      "title": "Riyadh airport hit again after deadly Houthi missile attack, Saudi authorities say",
+      "stage": "writer-safety",
+      "reason": "unsafe temporal metadata exposure"
+    },
+    {
+      "eventId": "event:9d3b59e1f949f598",
+      "title": "Russia pledges more aid to Lebanon, calls for ceasefire",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:1bbb5195a3797543",
+      "title": "Membership or Cooperation? Al-Sharaa’s Riyadh Visit Brings Syria Closer to the Mecca Pact",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 19.89 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:cc5ceef561c297c9",
+      "title": "South Africa’s suspended police deputy chief resigns amid serious allegations",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 10.8 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:3bbc0402b7324a00",
+      "title": "Renewables offer cheapest route to power and energy security, says IRENA chief",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 4.52 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:42ff775c898a405d",
+      "title": "UG, KNUST stranded over strike - Reopening dates for students uncertain",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 2.95 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:75302517d60fde18",
+      "title": "At age 10, she started an annual walk for at-risk youth. 500km later, she completed her final trek",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 0.62 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:37dacc05dd464c2f",
+      "title": "India's opposition parties march to top court as protests over voter lists escalate",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -4.76 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:bee436f7d03df1f0",
+      "title": "Bipartisan U.S. senators urge Trump to reverse Russia diesel deal",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -11.86 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:67bca27551df3725",
+      "title": "'Breaking Bad' actor RJ Mitte dead at 34",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -12.04 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:8a3a60ab161d9eb2",
+      "title": "12 killed and more than 300 wounded in attack on Riyadh airport",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -13.82 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:75175e3994fe6103",
+      "title": "‘Clear and present danger’: fuel prices could rise by 30c a litre across Australia under IMF scenario",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -19.27 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:72ecf876c67c1bcf",
+      "title": "Centre for CSR, West Africa partners with Climate x Culture Summit to champion corporate sustainability at Google AI Centre",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -29.34 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:b8da508032aec09e",
+      "title": "City of Toronto hosts 'Kids Vote' campaign during advance voting weekend",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -32.56 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:7c37cde567a9af88",
+      "title": "Saudi Arabia’s ‘mindset’ helped Kingdom beat longest energy crisis says minister",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -34.19 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:9aa304026d996c3c",
+      "title": "Analysis: Trump's global headaches worsen weeks before crucial elections",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -39.49 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:ea2027455d4efe24",
+      "title": "Ethiopia’s Tigray war: Where do the UAE and Saudi Arabia stand?",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -42.33 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:cb49ecd679efac8c",
+      "title": "Net FDI inflow falls 13pc in FY26",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -45.07 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:97fd8662359a9bc9",
+      "title": "Saudi warning system stayed silent before deadly airport attacks",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -58.75 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:5c1b0cdceacb5bb5",
+      "title": "Hackers force French supermarket fridges to heat up to 50C in ‘unprecedented’ cyber-attack",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    },
+    {
+      "eventId": "event:a870a9dbfed49ca8",
+      "title": "Barzani, Mazloum Abdi discuss Kurds’ future in Syria",
+      "stage": "content-structure",
+      "reason": "page 1 ends mid-sentence"
+    },
+    {
+      "eventId": "event:5c1b0cdceacb5bb5",
+      "title": "Hundreds of French supermarkets hit by a cyberattack that defrosted refrigeration systems",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    }
+  ],
+  "outcome": {
+    "writerRequests": 9,
+    "retries": 0,
+    "acceptedCards": 8,
+    "retainedCards": 119,
+    "skippedCards": 64,
+    "totalNeurons": 229.5454502105713,
+    "inputTokens": 16503,
+    "outputTokens": 2937,
+    "meanNeuronsPerAcceptedCard": 28.69,
+    "datasetBytes": 332318,
+    "thirdPartyCostUsd": 0,
+    "imageStatus": {
+      "event-specific": 119,
+      "fallback": 1
+    },
+    "geographicDistribution": {
+      "Bangladesh": 28,
+      "Ghana": 20,
+      "Canada": 15,
+      "GTA": 7,
+      "Middle East": 28,
+      "Syria": 8
+    }
+  },
+  "integrity": {
+    "datasetSha256": "1954d7a7c1938cc0e3bb139791166151ae46b6ab329d64d696eccefb34f55ec5"
+  }
+}
