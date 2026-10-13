@@ -17,7 +17,7 @@ export function assembleUnattendedShadowEdition(writerReport, shortlist) {
   }))
   const cards = rankFrontPage(accepted.map(result => {
     const input = inputs.get(result.eventId)
-    if (!input?.image?.url) throw new Error(`Accepted card ${result.eventId} has no verified publisher image`)
+    if (!input?.image?.url && !input?.imageException?.granted) throw new Error(`Accepted card ${result.eventId} has neither a verified publisher image nor an approved image exception`)
     return {
       eventId: result.eventId,
       lane: result.lane,
@@ -27,6 +27,7 @@ export function assembleUnattendedShadowEdition(writerReport, shortlist) {
       pages: result.card.pages,
       uncertainties: result.card.uncertainties || [],
       image: input.image,
+      imageException: input.imageException || null,
       primaryUrl: input.primarySource?.url,
       sources: result.sources,
       acceptedSources: result.sources.map(source => ({ domain: source.publisher, family: source.publisher, url: source.url })),
@@ -74,7 +75,7 @@ function markdown(edition) {
     lines.push(`### ${card.frontPageRank}. ${card.headline}`, '', `Lane: ${card.lane} · regions: ${card.priorityRegions.join(', ') || 'broader world'}`, '')
     for (const page of card.pages) lines.push(page.text, '')
     if (card.uncertainties.length) lines.push(`Uncertainties: ${card.uncertainties.join(' · ')}`, '')
-    lines.push(`Image: [${card.image.publisher}](${card.image.url})`, '', `Sources: ${card.sources.map(source => `[${source.publisher}](${source.url})`).join(' · ')}`, '')
+    lines.push(card.image?.url ? `Image: [${card.image.publisher}](${card.image.url})` : 'Image: none — approved high-value exception after recovery was exhausted', '', `Sources: ${card.sources.map(source => `[${source.publisher}](${source.url})`).join(' · ')}`, '')
   }
   return `${lines.join('\n')}\n`
 }

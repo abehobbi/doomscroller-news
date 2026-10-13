@@ -30,7 +30,7 @@ export function prepareVerifiedWriterBatch(edition) {
       sources: sourceLinks, supportingSources: sourceLinks.filter(source => canonical(source.url) !== canonical(primary.url)),
       independentSourceCount: independentSourceGroups(sources.map(source => ({ ...source, accepted: true }))).length,
       editorialRecommendation: 'source-ready', editorialScore: card.selectionScore || null,
-      image: card.image, readyForWriting: true, blockers: [],
+      image: card.image, imageException: card.imageException || null, readyForWriting: true, blockers: [],
     })
     results.push({
       eventId: card.eventId,

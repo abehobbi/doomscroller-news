@@ -75,6 +75,8 @@ jobs:
           --input ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json
           --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --maximum 12
           --output-dir ${{ env.RUN_ROOT }}/repair
+      - name: Audit valuable stories that remain blocked
+        run: node experiments/news-global-discovery/audit-blocked-opportunities.mjs --verification ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/repair/SOURCE_REPAIR_REPORT.json --output-dir ${{ env.RUN_ROOT }}/opportunity-audit
       - name: Assemble source-ready provisional edition
         run: >-
           node experiments/news-global-discovery/assemble-verified-edition.mjs
@@ -99,6 +101,9 @@ jobs:
       - name: Repair strongest blocked gap candidates
         if: steps.gap.outputs.query_count != '0'
         run: node experiments/news-global-discovery/repair-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json --pool ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json --maximum 12 --output-dir ${{ env.RUN_ROOT }}/gap/repair
+      - name: Audit valuable gap stories that remain blocked
+        if: steps.gap.outputs.query_count != '0'
+        run: node experiments/news-global-discovery/audit-blocked-opportunities.mjs --verification ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/gap/repair/SOURCE_REPAIR_REPORT.json --output-dir ${{ env.RUN_ROOT }}/gap/opportunity-audit
       - name: Assemble verified gap additions
         if: steps.gap.outputs.query_count != '0'
         run: node experiments/news-global-discovery/assemble-verified-edition.mjs --shortlist ${{ env.RUN_ROOT }}/gap/selection/ANSWER_KEY.json --verification ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/gap/repair/SOURCE_REPAIR_REPORT.json --output-dir ${{ env.RUN_ROOT }}/gap/verified

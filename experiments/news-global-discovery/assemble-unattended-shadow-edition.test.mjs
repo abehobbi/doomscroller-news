@@ -23,3 +23,13 @@ test('flags generated cards that share a canonical source URL', () => {
   assert.equal(edition.overlaps.length, 1)
   assert.equal(edition.requiresEditorialReview, true)
 })
+
+test('retains an explicitly approved image exception without inventing an image', () => {
+  const noImage = { ...input('a', 'world-major', 'Important inaccessible-image story'), image: null, imageException: { granted: true, reason: 'recovery exhausted' } }
+  const shortlist = { selected: [noImage] }
+  const report = { expected: 1, resultCount: 1, totalNeurons: 40, results: [accepted('a', 'world-major', 'Important story remains available', 'A consequential event happened and was independently verified.')] }
+  const edition = assembleUnattendedShadowEdition(report, shortlist)
+  assert.equal(edition.cards.length, 1)
+  assert.equal(edition.cards[0].image, null)
+  assert.equal(edition.cards[0].imageException.granted, true)
+})

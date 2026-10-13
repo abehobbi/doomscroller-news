@@ -32,20 +32,43 @@ function unique(values) { return [...new Set(values.filter(Boolean))] }
 
 function repairReports(value) { return Array.isArray(value) ? value : [value] }
 
-export function verifiedEventIds(verification, repairs) {
+const IMAGE_EXCEPTION_REASON = 'no verified publisher image recovered'
+const IMAGE_EXCEPTION_MIN_SCORE = 115
+const IMAGE_EXCEPTION_LIMIT = 2
+
+export function imageExceptionIds(verification, repairs, { minimumScore = IMAGE_EXCEPTION_MIN_SCORE, limit = IMAGE_EXCEPTION_LIMIT } = {}) {
+  const latest = new Map()
+  for (const item of [...(verification.repairQueue || []), ...(verification.rejected || [])]) latest.set(item.eventId, item)
+  for (const item of repairReports(repairs).flatMap(repair => repair.results || [])) latest.set(item.eventId, item)
+  return new Set([...latest.values()]
+    .filter(item => item.readiness?.reasons?.length === 1
+      && item.readiness.reasons[0] === IMAGE_EXCEPTION_REASON
+      && Number(item.selectionScore || 0) >= minimumScore
+      && Number(item.readiness.trustedSourceFamilies || 0) >= 1
+      && Number(item.readiness.acceptedSourceCount || 0) >= 1)
+    .sort((a, b) => Number(b.selectionScore || 0) - Number(a.selectionScore || 0))
+    .slice(0, limit)
+    .map(item => item.eventId))
+}
+
+export function verifiedEventIds(verification, repairs, imageExceptions = imageExceptionIds(verification, repairs)) {
   return new Set([
     ...verification.ready.map(item => item.eventId),
     ...repairReports(repairs).flatMap(repair => repair.results.filter(item => item.readiness.ready).map(item => item.eventId)),
+    ...imageExceptions,
   ])
 }
 
 function verifiedItem(eventId, verification, repairs) {
   return repairReports(repairs).toReversed().flatMap(repair => repair.results).find(item => item.eventId === eventId && item.readiness.ready)
     || verification.ready.find(item => item.eventId === eventId)
+    || repairReports(repairs).toReversed().flatMap(repair => repair.results).find(item => item.eventId === eventId)
+    || (verification.repairQueue || []).find(item => item.eventId === eventId)
 }
 
 export function assembleVerifiedCards(shortlist, verification, repairs) {
-  const ids = verifiedEventIds(verification, repairs)
+  const exceptions = imageExceptionIds(verification, repairs)
+  const ids = verifiedEventIds(verification, repairs, exceptions)
   return shortlist.selections.filter(selection => ids.has(selection.id)).flatMap((selection, index) => {
     const verified = verifiedItem(selection.id, verification, repairs)
     const acceptedSources = verified.sources.filter(source => source.accepted && source.trusted
@@ -54,11 +77,12 @@ export function assembleVerifiedCards(shortlist, verification, repairs) {
       .map(source => ({ ...source, family: sourceFamilyFromEvidence(source.domain, source.evidenceText, source.title) }))
     if (!acceptedSources.length) return []
     const finalGate = readiness({ representative: { title: selection.representative.title } }, acceptedSources.map(source => ({ ...source, accepted: true })))
-    if (!finalGate.ready) return []
+    const isImageException = exceptions.has(selection.id)
+    if (!finalGate.ready && !(isImageException && finalGate.reasons.length === 1 && finalGate.reasons[0] === IMAGE_EXCEPTION_REASON)) return []
     const imageSource = acceptedSources.find(source => source.url === verified.readiness.image?.sourceUrl && source.imageUrl)
       || acceptedSources.find(source => source.imageUrl)
-    if (!imageSource) return []
-    const image = { url: imageSource.imageUrl, alt: imageSource.imageAlt || selection.representative.title, sourceUrl: imageSource.url, publisher: imageSource.domain }
+    if (!imageSource && !isImageException) return []
+    const image = imageSource ? { url: imageSource.imageUrl, alt: imageSource.imageAlt || selection.representative.title, sourceUrl: imageSource.url, publisher: imageSource.domain } : null
     const matchingMembers = selection.members.filter(member => candidatesDescribeSameThread(selection.representative, member))
     const regions = unique([...(selection.representative.priorityRegions || []), ...matchingMembers.flatMap(member => member.priorityRegions || [])])
     const evidence = acceptedSources.map(source => source.evidenceText || '').filter(Boolean).join('\n\n').slice(0, 10_000)
@@ -69,6 +93,7 @@ export function assembleVerifiedCards(shortlist, verification, repairs) {
       publishedAt: selection.representative.publishedAt,
       priorityRegions: regions,
       image,
+      imageException: isImageException ? { granted: true, reason: 'High-value story retained after publisher-image recovery was exhausted.' } : null,
       primaryUrl: image?.sourceUrl || acceptedSources[0]?.url || selection.representative.url,
       pages: [{ text: evidence }],
       acceptedSources: acceptedSources.map(source => ({
