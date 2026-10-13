@@ -7,6 +7,7 @@ import { validateGeneratedDates } from '../../artifacts/summary-feasibility/date
 import { auditWriterTemporalExposure, buildWriterSafeTemporalPacket } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
 import { validateCardContent } from '../../scripts/news-beta/content-validation.mjs'
 import { writeCard, WRITER_CONFIGURATION } from '../../scripts/news-beta/writer.mjs'
+import { assessExtractedEvidence } from './evidence-quality.mjs'
 
 export const LANES = ['world-major', 'priority-major', 'world-interesting', 'priority-interesting', 'discovery']
 const LABELS = { 'world-major': 'Major world', 'priority-major': 'Major priority region', 'world-interesting': 'Interesting world', 'priority-interesting': 'Interesting priority region', discovery: 'Discovery' }
@@ -171,28 +172,42 @@ export function partitionWriterExposure(items) {
   const ready = [], blocked = []
   for (const item of items) {
     const exposure = auditWriterTemporalExposure(item.temporalPacket)
+    const evidence = writerEvidencePreflight(item)
     const resolvedQuotationOnly = !exposure.raw_publication_timestamp_exposed
       && !exposure.raw_update_timestamp_exposed
       && exposure.unresolved_relative_expressions_exposed.length === 0
       && exposure.resolved_relative_expressions_exposed.length > 0
       && exposure.normalized_event_date_exposed
-    ;(exposure.passes || resolvedQuotationOnly ? ready : blocked).push({ item, exposure })
+    ;((exposure.passes || resolvedQuotationOnly) && evidence.valid ? ready : blocked).push({ item, exposure, evidence })
   }
   return { ready, blocked }
 }
 
-function preflightRejectedResult(item, exposure) {
+export function writerEvidencePreflight(item) {
+  const writerFacing = item?.temporalPacket?.writer_facing || {}
+  if (!Object.prototype.hasOwnProperty.call(writerFacing, 'coreFactualPropositions')) return { valid: true, reasons: [], propositionCount: null, wordCount: null }
+  const propositions = writerFacing.coreFactualPropositions || []
+  const text = propositions.join(' ')
+  const assessment = assessExtractedEvidence(text)
+  const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0
+  const reasons = [...assessment.reasons]
+  if (propositions.length < 2 || wordCount < 45) reasons.push('writer input lacks enough source-bound factual detail')
+  return { valid: reasons.length === 0, reasons: [...new Set(reasons)], propositionCount: propositions.length, wordCount }
+}
+
+function preflightRejectedResult(item, exposure, evidence = { valid: true, reasons: [] }) {
+  const reasons = evidence.valid ? ['writer input failed temporal preflight'] : evidence.reasons
   return {
     eventId: item.eventId, lane: item.lane, sourceTitle: item.sourceTitle, sources: item.sources,
     status: 'rejected', card: null,
     audits: {
-      content: { valid: false, reasons: ['writer input failed temporal preflight'], wordCount: 0, pageCount: 0 },
+      content: { valid: false, reasons, wordCount: 0, pageCount: 0 },
       dates: { valid: false }, numbers: { valid: false, generatedNumbers: [], unsupportedNumbers: [] },
       relativeTime: { valid: false, generatedExpressions: [], allowedExpressions: [], unsupportedExpressions: exposure.unresolved_relative_expressions_exposed || [] },
       headline: { valid: false, sharedTerms: [] }, geography: { valid: false, forbidden: [] }, metadata: { valid: false, exposed: [] },
       writerExposure: exposure,
     },
-    provider: { requestedModel: null, returnedModel: null, httpStatus: null, internalErrors: [], latencyMs: 0, finishReason: null, usage: null, safeHeaders: {}, complete: false, structuralStatus: 'writer_input_preflight_failure' },
+    provider: { requestedModel: null, returnedModel: null, httpStatus: null, internalErrors: [], latencyMs: 0, finishReason: null, usage: null, safeHeaders: {}, complete: false, structuralStatus: evidence.valid ? 'writer_input_temporal_preflight_failure' : 'writer_input_evidence_preflight_failure' },
   }
 }
 
@@ -412,7 +427,7 @@ async function main() {
     return { ...result, status: result.provider.complete && valid ? 'accepted' : 'rejected', audits }
   })
   const existingIds = new Set(results.map(result => result.eventId))
-  for (const { item, exposure } of exposurePartition.blocked) if (!existingIds.has(item.eventId)) results.push(preflightRejectedResult(item, exposure))
+  for (const { item, exposure, evidence } of exposurePartition.blocked) if (!existingIds.has(item.eventId)) results.push(preflightRejectedResult(item, exposure, evidence))
   const completed = new Set(results.map(value => value.eventId))
   for (const item of exposurePartition.ready.map(value => value.item).filter(value => !completed.has(value.eventId))) {
     const attempt = await writeCard(item.temporalPacket.writer_facing, { dateRetry: options.retryRejected, repair: options.retryRejected })

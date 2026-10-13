@@ -8,6 +8,10 @@ const CONTAMINATION_PATTERNS = [
   /find out how you can still connect with us/i,
   /subscribe to (?:our )?(?:newsletter|emails?)/i,
   /all rights reserved/i,
+  /please refresh (?:the page|your browser)/i,
+  /automatically logged in/i,
+  /your contribution truly helps/i,
+  /we rely on your support/i,
 ]
 
 const normalizedSentence = sentence => sentence.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()

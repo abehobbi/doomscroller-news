@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { auditWriterTemporalExposure, buildWriterSafeTemporalPacket, normalizeTemporalFact } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
-import { bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, geographyAudit, LANES, normalizeExplicitToday, numericAudit, partitionWriterExposure, relativeTimeAudit, writerMetadataAudit } from './writer-shortlist-trial.mjs'
+import { bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, geographyAudit, LANES, normalizeExplicitToday, numericAudit, partitionWriterExposure, relativeTimeAudit, writerEvidencePreflight, writerMetadataAudit } from './writer-shortlist-trial.mjs'
 
 test('trial chooses one multi-source candidate from every lane and prefers Syria in a priority tie', () => {
   const item = (eventId, lane, sources, regions = []) => ({ eventId, lane, headline: eventId, evidence: 'A complete factual sentence explains the event. Another complete sentence explains why it matters.', publishedAt: '2026-10-10T00:00:00Z', priorityRegions: regions, editorialRecommendation: 'strong', editorialScore: 90, independentSourceCount: sources, primarySource: { publisher: 'bbc.com', url: `https://bbc.com/${eventId}` }, sources: [{ publisher: 'bbc.com', url: `https://bbc.com/${eventId}` }] })
@@ -180,4 +180,24 @@ test('trial packet adds only explicit source-backed context propositions', () =>
   const item = buildTrialItem(candidate, new Map(), buildContextIndex(contexts))
   assert.equal(item.temporalPacket.writer_facing.secondarySourceAdditions.length, 1)
   assert.deepEqual(item.temporalPacket.writer_facing.secondarySourceAdditions[0].completeFactualPropositions, ['Jema is in Aowin in Ghana’s Western North Region.'])
+})
+
+test('writer preflight blocks empty and publisher-boilerplate evidence before model use', () => {
+  const item = propositions => ({ temporalPacket: { writer_facing: { coreFactualPropositions: propositions } } })
+  assert.equal(writerEvidencePreflight(item([])).valid, false)
+  const boilerplate = writerEvidencePreflight(item([
+    'Please refresh the page or navigate elsewhere to be automatically logged in.',
+    'We rely on your support to keep this work going and your contribution truly helps.',
+  ]))
+  assert.equal(boilerplate.valid, false)
+  assert.match(boilerplate.reasons.join(' '), /boilerplate/)
+})
+
+test('writer preflight accepts a sufficiently detailed source-bound evidence packet', () => {
+  const result = writerEvidencePreflight({ temporalPacket: { writer_facing: { coreFactualPropositions: [
+    'Officials said the storm damaged homes across three districts and forced hundreds of residents into temporary shelters.',
+    'Emergency crews restored the main road while health workers assessed water supplies and warned that further rain could slow recovery.',
+    'The national weather service said the rainfall was the heaviest recorded in the area this year and advised residents to avoid flooded routes.',
+  ] } } })
+  assert.equal(result.valid, true)
 })
