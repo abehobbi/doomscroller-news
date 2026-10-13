@@ -60,6 +60,20 @@ test('same Nepal flood and Ukraine ceasefire developments consolidate despite lo
   ), true)
 })
 
+test('a Russian strike wave and its same-day energy-ceasefire angle remain one Ukraine thread', () => {
+  assert.equal(candidatesDescribeSameThread(
+    candidate('Russian attacks kill at least 10 and injure 73 across Ukraine as Moscow targets energy infrastructure'),
+    candidate('Zelenskyy says Russia does not want energy ceasefire after strikes on six facilities'),
+  ), true)
+})
+
+test('different attacks in one country still require a shared event subject', () => {
+  assert.equal(candidatesDescribeSameThread(
+    candidate('Saudi airport strike kills travellers in Riyadh'),
+    candidate('Saudi border post strike injures guards near Yemen'),
+  ), false)
+})
+
 test('generic casualty wording cannot create a transitive mega-cluster', () => {
   const sudan = candidate('At least 72 Sudanese miners killed in air strike')
   const bridge = candidate('At least 72 people killed in strikes across several regions')

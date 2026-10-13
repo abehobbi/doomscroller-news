@@ -77,6 +77,7 @@ function normalizeToken(token) {
     ['kyiv', 'ukraine'], ['ukrainian', 'ukraine'],
     ['zelenskyy', 'ukraine'], ['zelensky', 'ukraine'],
     ['moscow', 'russia'], ['putin', 'russia'],
+    ['attack', 'strike'], ['attacks', 'strike'], ['attacked', 'strike'],
   ])
   if (aliases.has(token)) return aliases.get(token)
   if (token.length > 5 && token.endsWith('ies')) return `${token.slice(0, -3)}y`
