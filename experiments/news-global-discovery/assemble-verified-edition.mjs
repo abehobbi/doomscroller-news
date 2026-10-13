@@ -33,16 +33,15 @@ function unique(values) { return [...new Set(values.filter(Boolean))] }
 function repairReports(value) { return Array.isArray(value) ? value : [value] }
 
 const IMAGE_EXCEPTION_REASON = 'no verified publisher image recovered'
-const IMAGE_EXCEPTION_MIN_SCORE = 115
+const IMAGE_EXCEPTION_MIN_SCORE = 125
 const IMAGE_EXCEPTION_LIMIT = 2
 
 export function imageExceptionIds(verification, repairs, { minimumScore = IMAGE_EXCEPTION_MIN_SCORE, limit = IMAGE_EXCEPTION_LIMIT } = {}) {
-  const latest = new Map()
-  for (const item of [...(verification.repairQueue || []), ...(verification.rejected || [])]) latest.set(item.eventId, item)
-  for (const item of repairReports(repairs).flatMap(repair => repair.results || [])) latest.set(item.eventId, item)
-  return new Set([...latest.values()]
+  const attemptedRepairs = repairReports(repairs).flatMap(repair => repair.results || [])
+  return new Set(attemptedRepairs
     .filter(item => item.readiness?.reasons?.length === 1
       && item.readiness.reasons[0] === IMAGE_EXCEPTION_REASON
+      && item.repair?.requestId
       && Number(item.selectionScore || 0) >= minimumScore
       && Number(item.readiness.trustedSourceFamilies || 0) >= 1
       && Number(item.readiness.acceptedSourceCount || 0) >= 1)
@@ -93,7 +92,7 @@ export function assembleVerifiedCards(shortlist, verification, repairs) {
       publishedAt: selection.representative.publishedAt,
       priorityRegions: regions,
       image,
-      imageException: isImageException ? { granted: true, reason: 'High-value story retained after publisher-image recovery was exhausted.' } : null,
+      imageException: isImageException ? { granted: true, reason: 'Exceptional editorial value outweighed the visual gap after a completed publisher-image recovery search found no usable image.' } : null,
       primaryUrl: image?.sourceUrl || acceptedSources[0]?.url || selection.representative.url,
       pages: [{ text: evidence }],
       acceptedSources: acceptedSources.map(source => ({

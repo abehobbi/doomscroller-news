@@ -9,7 +9,8 @@ const item = (eventId, score, reasons, extra = {}) => ({
 })
 
 test('classifies image-only, corroboration, evidence and freshness blockers separately', () => {
-  assert.equal(blockedCategory(item('image', 130, ['no verified publisher image recovered'], { trusted: 1, accepted: 1 })), 'image-exception-candidate')
+  assert.equal(blockedCategory(item('image', 130, ['no verified publisher image recovered'], { trusted: 1, accepted: 1, repair: { requestId: 'request-image' } })), 'image-exception-candidate')
+  assert.equal(blockedCategory(item('unsearched-image', 150, ['no verified publisher image recovered'], { trusted: 1, accepted: 1 })), 'image-blocked')
   assert.equal(blockedCategory(item('corroboration', 130, ['high-risk event lacks two independent trusted source families'])), 'corroboration-blocked')
   assert.equal(blockedCategory(item('evidence', 130, ['no accessible, relevant and fresh source evidence'])), 'evidence-unavailable')
   assert.equal(blockedCategory(item('stale', 130, ['headline explicitly identifies a reporting period that ended before the edition window'])), 'freshness-blocked')

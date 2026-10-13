@@ -34,11 +34,13 @@ test('image exceptions are rare, score-bounded, and require otherwise ready trus
   const item = (eventId, selectionScore, reasons = ['no verified publisher image recovered']) => ({
     eventId, selectionScore,
     readiness: { ready: false, reasons, trustedSourceFamilies: 1, acceptedSourceCount: 1 },
+    repair: { requestId: `request-${eventId}` },
   })
-  const verification = { ready: [], repairQueue: [item('strongest', 140), item('second', 130), item('third', 120), item('weak', 114), item('mixed', 150, ['no verified publisher image recovered', 'no trusted or registered publisher source'])], rejected: [] }
-  const exceptions = imageExceptionIds(verification, { results: [] })
+  const verification = { ready: [], repairQueue: [item('not-attempted', 150)], rejected: [] }
+  const repair = { results: [item('strongest', 140), item('second', 130), item('third', 124), item('mixed', 150, ['no verified publisher image recovered', 'no trusted or registered publisher source']), { ...item('failed-search', 160), repair: { requestId: null, error: 'provider unavailable' } }] }
+  const exceptions = imageExceptionIds(verification, repair)
   assert.deepEqual([...exceptions], ['strongest', 'second'])
-  assert.deepEqual([...verifiedEventIds(verification, { results: [] }, exceptions)], ['strongest', 'second'])
+  assert.deepEqual([...verifiedEventIds(verification, repair, exceptions)], ['strongest', 'second'])
 })
 
 test('an approved image-only exception reaches the writer without a fabricated image', () => {
@@ -47,7 +49,8 @@ test('an approved image-only exception reaches the writer without a fabricated i
   const readiness = { ready: false, reasons: ['no verified publisher image recovered'], trustedSourceFamilies: 1, acceptedSourceCount: 1, image: null }
   const selection = { id: 'story', assignedLane: 'world-interesting', adjustedScore: 130, representative: { title, publishedAt: '2026-10-13T10:00:00Z', priorityRegions: [], url: source.url }, members: [{ title, priorityRegions: [] }] }
   const verification = { ready: [], repairQueue: [{ eventId: 'story', selectionScore: 130, readiness, sources: [source] }], rejected: [] }
-  const cards = assembleVerifiedCards({ selections: [selection] }, verification, { results: [] })
+  const repair = { results: [{ eventId: 'story', selectionScore: 130, readiness, sources: [source], repair: { requestId: 'request-story' } }] }
+  const cards = assembleVerifiedCards({ selections: [selection] }, verification, repair)
   assert.equal(cards.length, 1)
   assert.equal(cards[0].image, null)
   assert.equal(cards[0].imageException.granted, true)

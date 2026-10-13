@@ -18,7 +18,7 @@ function parseArgs(argv) {
 export function blockedCategory(item) {
   const reasons = item.readiness?.reasons || []
   if (item.readiness?.ready) return item.repair?.requestId ? 'rescued-by-source-repair' : 'source-ready'
-  if (reasons.length === 1 && reasons[0] === IMAGE_REASON) return Number(item.selectionScore || 0) >= 115 ? 'image-exception-candidate' : 'image-blocked'
+  if (reasons.length === 1 && reasons[0] === IMAGE_REASON) return Number(item.selectionScore || 0) >= 125 && item.repair?.requestId ? 'image-exception-candidate' : 'image-blocked'
   if (reasons.some(reason => /reporting period|predates|stale/i.test(reason))) return 'freshness-blocked'
   if (reasons.some(reason => /no accessible|no trusted|insufficient article evidence/i.test(reason))) return 'evidence-unavailable'
   if (reasons.some(reason => /two independent trusted source families/i.test(reason))) return 'corroboration-blocked'
