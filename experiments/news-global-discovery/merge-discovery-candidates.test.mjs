@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { majorEligible, mergeDiscoveryCandidates, sourceCandidate } from './merge-discovery-candidates.mjs'
+import { majorEligible, mergeDiscoveryCandidates, regionMatchesText, sourceCandidate } from './merge-discovery-candidates.mjs'
 
 function feedItem(overrides = {}) {
   return {
@@ -45,6 +45,13 @@ test('a foreign syndicated story does not inherit the publisher home country', (
   const candidate = sourceCandidate(foreign)
   assert.deepEqual(candidate.priorityRegions, [])
   assert.deepEqual(candidate.lanes, ['world-interesting'])
+})
+
+test('priority-region signals recognize common local places and political abbreviations', () => {
+  assert.equal(regionMatchesText('Ghana', 'Tema residents protest water shortages'), true)
+  assert.equal(regionMatchesText('Bangladesh', 'Former BNP lawmaker dies at 80'), true)
+  assert.equal(regionMatchesText('Canada', 'Durham police warn parents about online predators'), true)
+  assert.equal(regionMatchesText('GTA', 'Durham police warn parents about online predators'), true)
 })
 
 test('routine disruption is not major news merely because it is concrete', () => {

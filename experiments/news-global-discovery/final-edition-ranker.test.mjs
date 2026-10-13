@@ -57,3 +57,12 @@ test('buried cumulative casualty totals do not outrank the fresh event toll', ()
   assert.equal(ranked[0].headline, larger.headline)
   assert.doesNotMatch(ranked[1].frontPageRanking.reasons.join(' '), /100000 explicitly reported/)
 })
+
+test('an actual missile attack outranks a strategy for a potential invasion', () => {
+  const ranked = rankFrontPage([
+    card('NATO commander unveils strategy to counter potential Russian invasion', 'world-major', 'The strategy describes how NATO could respond.'),
+    card('Russian ballistic missiles strike Kyiv, hitting civilian infrastructure', 'world-major', 'Several missiles struck the city after delayed air raid alerts.'),
+  ])
+  assert.match(ranked[0].headline, /missiles strike Kyiv/)
+  assert.match(ranked[1].frontPageRanking.reasons.join(' '), /prospective/)
+})

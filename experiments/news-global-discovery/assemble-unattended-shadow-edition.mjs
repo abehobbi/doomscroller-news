@@ -15,7 +15,7 @@ export function assembleUnattendedShadowEdition(writerReport, shortlist) {
     failedChecks: Object.entries(result.audits || {}).filter(([, value]) => value?.valid === false).map(([name]) => name),
     complete: Boolean(result.provider?.complete),
   }))
-  const cards = rankFrontPage(accepted.map(result => {
+  const rankedCards = rankFrontPage(accepted.map(result => {
     const input = inputs.get(result.eventId)
     if (!input?.image?.url && !input?.imageException?.granted) throw new Error(`Accepted card ${result.eventId} has neither a verified publisher image nor an approved image exception`)
     return {
@@ -35,7 +35,16 @@ export function assembleUnattendedShadowEdition(writerReport, shortlist) {
       provider: result.provider,
     }
   }))
-  const overlaps = auditEditorialOverlap(cards)
+  const overlaps = auditEditorialOverlap(rankedCards)
+  const quarantinedIds = new Set(overlaps.filter(item => item.requiresReview).map(item => item.rightEventId))
+  const overlapRejections = rankedCards.filter(card => quarantinedIds.has(card.eventId)).map(card => ({
+    eventId: card.eventId,
+    sourceTitle: card.headline,
+    failedChecks: ['post-generation overlap'],
+    complete: true,
+  }))
+  rejected.push(...overlapRejections)
+  const cards = rankFrontPage(rankedCards.filter(card => !quarantinedIds.has(card.eventId)))
   const audit = auditEdition(cards)
   return {
     schemaVersion: 1,
@@ -48,6 +57,7 @@ export function assembleUnattendedShadowEdition(writerReport, shortlist) {
     totalNeurons: writerReport.totalNeurons,
     audit,
     overlaps,
+    quarantinedOverlaps: overlapRejections.length,
     requiresEditorialReview: rejected.length > 0 || overlaps.length > 0,
     cards,
   }

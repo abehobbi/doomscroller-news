@@ -6,9 +6,9 @@ const MAJOR_LANES = new Set(['world-major', 'priority-major'])
 const LANE_BASE = { 'world-major': 60, 'priority-major': 60, 'world-interesting': 24, 'priority-interesting': 26, discovery: 20 }
 const MASS_CASUALTY = /\b(?:attack|strike|bomb(?:ing)?|earthquake|flood|landslide|hurricane|outbreak|war)\b[\s\S]{0,180}\b(?:kill(?:ed|s)?|dead|deaths?|wound(?:ed|s)?|injur(?:ed|ies))\b|\b(?:kill(?:ed|s)?|dead|deaths?|wound(?:ed|s)?|injur(?:ed|ies))\b[\s\S]{0,180}\b(?:attack|strike|bomb(?:ing)?|earthquake|flood|landslide|hurricane|outbreak|war)\b/i
 const LARGE_HUMAN_SCALE = /\b(?:million|hundreds? of thousands?|thousands?|\d{3,})\b[\s\S]{0,100}\b(?:affected|displaced|detained|evacuated|without|stranded|injured|wounded|dead|killed)\b|\b(?:affected|displaced|detained|evacuated|without|stranded|injured|wounded|dead|killed)\b[\s\S]{0,100}\b(?:million|hundreds? of thousands?|thousands?|\d{3,})\b/i
-const ESCALATION = /\b(?:invasion|aggression|cross-border|troops?|military escalation|(?:wider|regional) war|joins? (?:the )?war|deploy(?:ment|s|ed)?|missile|drone attack|airport attack)\b/i
+const ESCALATION = /\b(?:invasion|aggression|cross-border|troops?|military escalation|(?:wider|regional) war|joins? (?:the )?war|deploy(?:ment|s|ed)?|missiles?|drone attack|airport attack)\b/i
 const SYSTEMIC = /\b(?:election|international criminal court|supreme court|constitutional|sanctions?|ceasefire|trade deal|central bank|unemployment|public health|national strike)\b/i
-const PROSPECTIVE = /\b(?:considers?|weighs?|may|might|could|plans? to|proposal|proposed|explores?|expected to)\b/i
+const PROSPECTIVE = /\b(?:considers?|weighs?|may|might|could|potential|plans? to|proposal|proposed|explores?|expected to)\b/i
 const RETROSPECTIVE = /\b(?:anniversary|(?:a|one) year after|years? after|looks back|retrospective)\b/i
 
 function combinedText(card) { return [card.headline, ...(card.pages || []).map(page => page.text)].join(' ') }

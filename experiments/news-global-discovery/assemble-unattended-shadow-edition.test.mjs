@@ -15,12 +15,15 @@ test('assembles accepted cards and preserves deterministic rejections', () => {
   assert.equal(edition.requiresEditorialReview, true)
 })
 
-test('flags generated cards that share a canonical source URL', () => {
+test('quarantines the lower-ranked generated card when cards share a canonical source URL', () => {
   const shortlist = { selected: [input('a', 'world-major', 'First event'), input('b', 'world-interesting', 'Second event')] }
   const shared = 'https://source.test/shared'
   const report = { expected: 2, resultCount: 2, totalNeurons: 90, results: [accepted('a', 'world-major', 'First event develops', 'One distinct development happened.', shared), accepted('b', 'world-interesting', 'Second event develops', 'Another distinct development happened.', shared)] }
   const edition = assembleUnattendedShadowEdition(report, shortlist)
   assert.equal(edition.overlaps.length, 1)
+  assert.equal(edition.cards.length, 1)
+  assert.equal(edition.cards[0].eventId, 'a')
+  assert.equal(edition.rejected.at(-1).failedChecks[0], 'post-generation overlap')
   assert.equal(edition.requiresEditorialReview, true)
 })
 
