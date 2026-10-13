@@ -3,7 +3,7 @@ import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 
 import { publisherFamily, sourceFamilyFromEvidence } from './event-corroboration.mjs'
-import { inspectSource, isTrustedDomain, readiness } from './verify-unified-shortlist.mjs'
+import { inspectSource, readiness, reassessStoredSource } from './verify-unified-shortlist.mjs'
 
 const API_URL = 'https://api.exa.ai/search'
 const EXCLUDED_DOMAINS = ['facebook.com', 'instagram.com', 'linkedin.com', 'pinterest.com', 'tiktok.com', 'youtube.com', 'x.com']
@@ -127,11 +127,13 @@ async function main() {
     return
   }
   const outputPath = path.join(options.outputDir, 'SOURCE_REPAIR_REPORT.json')
+  const context = { windowStart: pool.requestedWindow?.start, referenceYear: new Date(pool.requestedWindow?.end || Date.now()).getUTCFullYear() }
   if (options.reassessOnly) {
     const prior = JSON.parse(await fs.readFile(outputPath, 'utf8'))
     const results = prior.results.map(item => {
-      const sources = item.sources.map(source => ({ ...source, trusted: isTrustedDomain(source.domain) }))
-      return { ...item, sources, readiness: readiness({ representative: { title: item.headline } }, sources) }
+      const selection = { representative: { title: item.headline } }
+      const sources = item.sources.map(source => reassessStoredSource(selection, source, context))
+      return { ...item, sources, readiness: readiness(selection, sources) }
     })
     const output = {
       ...prior, createdAt: new Date().toISOString(),
@@ -146,7 +148,6 @@ async function main() {
   }
   const apiKey = process.env.EXA_API_KEY
   if (!apiKey) throw new Error('EXA_API_KEY is not set. No requests were made.')
-  const context = { windowStart: pool.requestedWindow?.start, referenceYear: new Date(pool.requestedWindow?.end || Date.now()).getUTCFullYear() }
   await fs.mkdir(options.outputDir, { recursive: true })
   let results = []
   try {

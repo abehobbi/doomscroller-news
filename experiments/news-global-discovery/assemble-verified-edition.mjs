@@ -4,7 +4,7 @@ import { pathToFileURL } from 'node:url'
 
 import { rankFrontPage } from './final-edition-ranker.mjs'
 import { sourceFamilyFromEvidence } from './event-corroboration.mjs'
-import { independentSourceGroups } from './verify-unified-shortlist.mjs'
+import { readiness } from './verify-unified-shortlist.mjs'
 import { candidatesDescribeSameThread, headlinesExplicitlyConflict } from './select-five-lane-edition.mjs'
 
 const DEFAULT_LANE_LIMITS = {
@@ -53,13 +53,14 @@ export function assembleVerifiedCards(shortlist, verification, repairs) {
       && (candidatesDescribeSameThread({ title: selection.representative.title }, { title: source.title || '' }) || (source.sharedTerms || []).length >= 4))
       .map(source => ({ ...source, family: sourceFamilyFromEvidence(source.domain, source.evidenceText, source.title) }))
     if (!acceptedSources.length) return []
-    if (verified.readiness.highRisk && independentSourceGroups(acceptedSources.map(source => ({ ...source, accepted: true }))).length < 2) return []
+    const finalGate = readiness({ representative: { title: selection.representative.title } }, acceptedSources.map(source => ({ ...source, accepted: true })))
+    if (!finalGate.ready) return []
     const imageSource = acceptedSources.find(source => source.url === verified.readiness.image?.sourceUrl && source.imageUrl)
       || acceptedSources.find(source => source.imageUrl)
     if (!imageSource) return []
     const image = { url: imageSource.imageUrl, alt: imageSource.imageAlt || selection.representative.title, sourceUrl: imageSource.url, publisher: imageSource.domain }
     const matchingMembers = selection.members.filter(member => candidatesDescribeSameThread(selection.representative, member))
-    const regions = unique(matchingMembers.flatMap(member => member.priorityRegions || []))
+    const regions = unique([...(selection.representative.priorityRegions || []), ...matchingMembers.flatMap(member => member.priorityRegions || [])])
     const evidence = acceptedSources.map(source => source.evidenceText || '').filter(Boolean).join('\n\n').slice(0, 10_000)
     return [{
       eventId: selection.id,

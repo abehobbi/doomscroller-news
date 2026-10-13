@@ -4,21 +4,22 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: news-targeted-replacement-discovery
+  group: news-exact-replacement-writer
   cancel-in-progress: false
 
 permissions:
   contents: read
 
 jobs:
-  qualify-replacements:
+  generate-replacements:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
-      RUN_ROOT: artifacts/news-replacement-discovery-${{ github.run_id }}
-      GAP_FIXTURE: experiments/news-global-discovery/fixtures/replacement-gap-demand-pass2-38313546008.json
-      WINDOW_FIXTURE: experiments/news-global-discovery/fixtures/replacement-discovery-window-38311225318.json
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      FREE_PLAN_CONFIRMED: 'yes'
+      BATCH_ROOT: artifacts/news-replacement-finalists-38315367280/writer
+      OUTPUT_ROOT: artifacts/news-replacement-writer-${{ github.run_id }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -28,58 +29,29 @@ jobs:
       - run: npm ci
       - name: Verify isolated News tests
         run: npm run news:test
-      - name: Verify saved discovery credential
+      - name: Verify saved Cloudflare credentials
         shell: bash
-        run: test -n "$EXA_API_KEY"
-      - name: Create replacement workspace
-        shell: bash
-        run: mkdir -p "$RUN_ROOT/discovery" "$RUN_ROOT/selection" "$RUN_ROOT/verification" "$RUN_ROOT/repair" "$RUN_ROOT/verified" "$RUN_ROOT/audit"
-      - name: Discover only measured replacement gaps
+        run: |
+          test -n "$CLOUDFLARE_ACCOUNT_ID"
+          test -n "$CLOUDFLARE_API_TOKEN"
+      - name: Generate exactly six source-cleared replacements
+        id: generation
+        continue-on-error: true
         run: >-
-          node experiments/news-global-discovery/exa-dynamic-gap-recovery.mjs
-          --edition $GAP_FIXTURE
-          --discovery $WINDOW_FIXTURE
-          --results-per-query 10
-          --max-queries 5
-          --strict-shape
-          --output $RUN_ROOT/discovery/EXA_REPLACEMENTS.json
-      - name: Rank replacement candidates
-        run: >-
-          node experiments/news-global-discovery/select-five-lane-edition.mjs
-          --input $RUN_ROOT/discovery/EXA_REPLACEMENTS.json
-          --count 30
-          --output-dir $RUN_ROOT/selection
-      - name: Verify replacement sources, freshness and images
-        run: >-
-          node experiments/news-global-discovery/verify-unified-shortlist.mjs
-          --input $RUN_ROOT/selection/ANSWER_KEY.json
-          --pool $RUN_ROOT/discovery/EXA_REPLACEMENTS.json
-          --output-dir $RUN_ROOT/verification
-      - name: Attempt bounded source repair
-        run: >-
-          node experiments/news-global-discovery/repair-unified-shortlist.mjs
-          --input $RUN_ROOT/verification/VERIFICATION_REPORT.json
-          --pool $RUN_ROOT/discovery/EXA_REPLACEMENTS.json
-          --maximum 8
-          --output-dir $RUN_ROOT/repair
-      - name: Assemble source-ready replacement pool
-        run: >-
-          node experiments/news-global-discovery/assemble-verified-edition.mjs
-          --shortlist $RUN_ROOT/selection/ANSWER_KEY.json
-          --verification $RUN_ROOT/verification/VERIFICATION_REPORT.json
-          --repair $RUN_ROOT/repair/SOURCE_REPAIR_REPORT.json
-          --output-dir $RUN_ROOT/verified
-      - name: Stop prior accepted events from returning as replacements
-        run: >-
-          node experiments/news-global-discovery/audit-replacement-pool.mjs
-          --edition $RUN_ROOT/verified/VERIFIED_EDITION.json
-          --prior experiments/news-global-discovery/fixtures/writer-batch-38301057429/RECOVERY_CHECKPOINT.json
-          --prior experiments/news-global-discovery/fixtures/writer-recovery-accepted-38311225318.json
-          --output-dir $RUN_ROOT/audit
-      - name: Upload exact replacement evidence trail
+          node experiments/news-global-discovery/writer-shortlist-trial.mjs
+          --shortlist $BATCH_ROOT/WRITER_SHORTLIST.json
+          --verification $BATCH_ROOT/WRITER_VERIFICATION.json
+          --all-selected
+          --output-dir $OUTPUT_ROOT
+      - name: Upload exact cards and diagnostics
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: news-replacement-discovery-${{ github.run_id }}
-          path: ${{ env.RUN_ROOT }}
+          name: news-replacement-writer-${{ github.run_id }}
+          path: ${{ env.OUTPUT_ROOT }}
           retention-days: 30
           if-no-files-found: error
+      - name: Preserve generation failure after uploading diagnostics
+        if: steps.generation.outcome == 'failure'
+        shell: bash
+        run: exit 1

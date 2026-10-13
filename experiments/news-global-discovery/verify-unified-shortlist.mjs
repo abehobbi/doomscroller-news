@@ -3,14 +3,13 @@ import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 
 import { SOURCES } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/sources.mjs'
-import { tokens } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/lib.mjs'
 import { assessExtractedEvidence } from './evidence-quality.mjs'
 import { publisherFamily, sourceFamilyFromEvidence } from './event-corroboration.mjs'
 import { fetchPublicArticle } from './public-article.mjs'
 import { trustedContextDomain } from './enrich-generation-context.mjs'
 import { establishedPublisherDomain } from './selection-safeguards.mjs'
 
-const HIGH_RISK = /\b(?:attack|killed|killing|deaths?|died|casualt(?:y|ies)|war|military|troops?|sanctions?|election|protest|corrupt|crime|court|police|detain|alleg|accus|strike|missile|drone|ceasefire|hurricane|earthquake|floods?|outbreak)\b/i
+const HIGH_RISK = /\b(?:attack(?:s|ed|ing)?|kill(?:s|ed|ing)?|deaths?|died|casualt(?:y|ies)|war|military|troops?|sanctions?|elections?|protests?|corrupt(?:ion)?|crimes?|courts?|police|detain(?:s|ed|ing)?|alleg(?:es|ed|ing|ation|ations)?|accus(?:es|ed|ing|ation|ations)?|strik(?:e|es|ing)|missiles?|drones?|ceasefire|hurricanes?|earthquakes?|floods?|outbreaks?)\b/i
 const MONTHS = new Map('january february march april may june july august september october november december'.split(' ').map((month, index) => [month, index]))
 const REGISTERED_DOMAINS = new Set(SOURCES.map(source => {
   try { return new URL(source.sourceUrl).hostname.replace(/^www\./, '') } catch { return null }
@@ -21,6 +20,7 @@ function domainOf(value) {
 }
 
 export function isTrustedDomain(domain) {
+  if (domain === 'aljazeera.net' || domain.endsWith('.aljazeera.net')) return true
   return trustedContextDomain(domain) || establishedPublisherDomain(domain)
     || [...REGISTERED_DOMAINS].some(value => domain === value || domain.endsWith(`.${value}`))
 }
@@ -34,10 +34,35 @@ function publicationTime(member) {
 }
 
 export function evidenceMatchesTitle(title, evidence) {
-  const headlineTerms = tokens(title)
-  const evidenceTerms = tokens(String(evidence || '').slice(0, 5000))
+  const multilingualTokens = value => new Set(String(value || '').toLowerCase().normalize('NFKC').match(/[\p{L}\p{N}]{2,}/gu) || [])
+  const headlineTerms = multilingualTokens(title)
+  const evidenceTerms = multilingualTokens(String(evidence || '').slice(0, 5000))
   const sharedTerms = [...headlineTerms].filter(term => evidenceTerms.has(term))
   return { passes: sharedTerms.length >= Math.min(4, Math.max(2, Math.ceil(headlineTerms.size * 0.2))), sharedTerms }
+}
+
+export function reassessStoredSource(selection, source, context) {
+  const quality = assessExtractedEvidence(source.evidenceText || '')
+  const relevance = evidenceMatchesTitle(selection.representative.title, `${source.title || ''}\n${source.evidenceText || ''}`)
+  const freshness = sourceFreshness({
+    candidatePublishedAt: source.publishedAt, extractedPublishedAt: source.publishedAt,
+    title: source.title || selection.representative.title, evidenceText: source.evidenceText,
+    windowStart: context.windowStart, referenceYear: context.referenceYear,
+  })
+  const reasons = [...quality.reasons]
+  if (!relevance.passes) reasons.push('source text does not sufficiently overlap the selected event')
+  if (!freshness.fresh) reasons.push(freshness.reason)
+  if (Number(source.evidenceChars || String(source.evidenceText || '').length) < 180) reasons.push('insufficient article evidence')
+  return {
+    ...source,
+    family: sourceFamilyFromEvidence(source.domain, source.evidenceText, source.title),
+    accepted: reasons.length === 0,
+    trusted: isTrustedDomain(source.domain),
+    reasons,
+    publishedAt: freshness.publishedAt,
+    eventPeriodEnd: freshness.eventPeriodEnd,
+    sharedTerms: relevance.sharedTerms,
+  }
 }
 
 export function explicitReportingPeriodEnd(value, referenceYear) {
@@ -188,6 +213,29 @@ async function main() {
     fs.readFile(process.argv[poolIndex + 1], 'utf8').then(JSON.parse),
   ])
   const context = { windowStart: pool.requestedWindow?.start, referenceYear: new Date(pool.requestedWindow?.end || Date.now()).getUTCFullYear() }
+  const outputDir = process.argv[outputIndex + 1]
+  if (process.argv.includes('--reassess-only')) {
+    const prior = JSON.parse(await fs.readFile(path.join(outputDir, 'VERIFICATION_REPORT.json'), 'utf8'))
+    const inspected = [...prior.ready, ...prior.repairQueue, ...prior.rejected].map(item => {
+      const selection = { representative: { title: item.headline } }
+      const sources = item.sources.map(source => reassessStoredSource(selection, source, context))
+      return { ...item, sources, readiness: readiness(selection, sources) }
+    })
+    const ready = inspected.filter(item => item.readiness.ready)
+    const rejected = inspected.filter(item =>
+      item.readiness.reasons.some(reason => /reporting period that ended/.test(reason)) ||
+      (item.sources.length && item.sources.every(source => source.reasons?.some(reason => /predates|reporting period ended|does not sufficiently overlap/.test(reason))))
+    )
+    const rejectedIds = new Set(rejected.map(item => item.eventId))
+    const repairQueue = inspected.filter(item => !item.readiness.ready && !rejectedIds.has(item.eventId))
+    const report = { ...prior, createdAt: new Date().toISOString(), counts: { inspected: inspected.length, ready: ready.length, repair: repairQueue.length, rejected: rejected.length }, ready, repairQueue, rejected }
+    await Promise.all([
+      fs.writeFile(path.join(outputDir, 'VERIFICATION_REPORT.json'), `${JSON.stringify(report, null, 2)}\n`),
+      fs.writeFile(path.join(outputDir, 'VERIFICATION_REPORT.md'), markdown(report)),
+    ])
+    process.stdout.write(`${JSON.stringify({ reassessed: true, ...report.counts }, null, 2)}\n`)
+    return
+  }
   const inspected = await mapLimit(shortlist.selections, 5, async selection => {
     const sources = await mapLimit(uniqueMembers(selection), 3, member => inspectSource(selection, member, context))
     const gate = readiness(selection, sources)
@@ -210,7 +258,6 @@ async function main() {
     counts: { inspected: inspected.length, ready: ready.length, repair: repairQueue.length, rejected: rejected.length },
     ready, repairQueue, rejected,
   }
-  const outputDir = process.argv[outputIndex + 1]
   await fs.mkdir(outputDir, { recursive: true })
   await Promise.all([
     fs.writeFile(path.join(outputDir, 'VERIFICATION_REPORT.json'), `${JSON.stringify(report, null, 2)}\n`),

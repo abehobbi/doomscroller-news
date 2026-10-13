@@ -3,6 +3,7 @@ import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 
 import { completeSentences } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/lib.mjs'
+import { independentSourceGroups } from './verify-unified-shortlist.mjs'
 
 const canonical = value => {
   try {
@@ -27,7 +28,7 @@ export function prepareVerifiedWriterBatch(edition) {
       priorityRegions: card.priorityRegions || [], evidence: primary.evidenceText,
       primarySource: { publisher: primary.domain, url: primary.url },
       sources: sourceLinks, supportingSources: sourceLinks.filter(source => canonical(source.url) !== canonical(primary.url)),
-      independentSourceCount: new Set(sources.map(source => source.family || source.domain)).size,
+      independentSourceCount: independentSourceGroups(sources.map(source => ({ ...source, accepted: true }))).length,
       editorialRecommendation: 'source-ready', editorialScore: card.selectionScore || null,
       image: card.image, readyForWriting: true, blockers: [],
     })

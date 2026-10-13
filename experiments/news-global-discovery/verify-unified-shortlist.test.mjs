@@ -13,6 +13,13 @@ test('source evidence must overlap the selected event', () => {
   assert.equal(evidenceMatchesTitle('Riyadh airport hit by missile attack', 'A museum opened an exhibition about ancient pottery.').passes, false)
 })
 
+test('Arabic headlines match Arabic article evidence and the Arabic Al Jazeera domain is trusted', () => {
+  const title = 'حرف حلب التراثية تقاوم الاندثار وتستعيد بريقها بلمسات معاصرة'
+  const evidence = 'اختتم في مدينة حلب السورية معرض المهن الحرفية والتراثية القديمة بهدف الحفاظ على الحرف المهددة بالاندثار وتطويرها بلمسات معاصرة.'
+  assert.equal(evidenceMatchesTitle(title, evidence).passes, true)
+  assert.equal(isTrustedDomain('aljazeera.net'), true)
+})
+
 test('an explicit old reporting period cannot masquerade as fresh publication', () => {
   assert.equal(explicitReportingPeriodEnd('Reporting Period: 26 August – 3 October 2026', 2026), '2026-10-03T23:59:59.000Z')
   const result = sourceFreshness({ candidatePublishedAt: '2026-10-11T12:00:00Z', title: 'Flood update (Reporting Period: 26 August – 3 October 2026)', evidenceText: '', windowStart: '2026-10-09T00:00:00Z', referenceYear: 2026 })
@@ -30,7 +37,7 @@ test('high-risk events require independent families and every ready card needs a
 
 test('casualty and disaster wording cannot bypass high-risk corroboration', () => {
   const source = { accepted: true, trusted: true, family: 'publisher-a', imageUrl: 'https://example.com/image.jpg', url: 'https://example.com/story', domain: 'example.com' }
-  for (const title of ['Storm causes four deaths', 'Hurricane reaches the coast', 'Flood affects two million people']) {
+  for (const title of ['Storm causes four deaths', 'Hurricane reaches the coast', 'Flood affects two million people', 'Russian attacks kill 10 people']) {
     const result = readiness({ representative: { title } }, [source])
     assert.equal(result.highRisk, true)
     assert.equal(result.ready, false)
