@@ -9,6 +9,7 @@ test('queues only the strongest unresolved opportunities for a blocker-specific 
   const firstRepair = { results: [item('image', 130, ['no verified publisher image recovered']), item('major', 95, [])] }
   const output = prepareOpportunityRecovery(verification, [firstRepair], 6)
   assert.deepEqual(output.repairQueue.map(value => value.eventId), ['image'])
+  assert.deepEqual(output.repairQueue[0].opportunityRecovery, { attempt: 2, blocker: 'image' })
 })
 
 test('bounds second-chance recovery by editorial score', () => {

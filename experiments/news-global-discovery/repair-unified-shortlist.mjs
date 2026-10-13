@@ -41,10 +41,12 @@ export function repairCandidates(report, maximum = 12) {
 
 async function search(apiKey, item) {
   const evidence = item.sources.find(source => source.evidenceText)?.evidenceText?.slice(0, 900) || ''
+  const secondChance = Number(item.opportunityRecovery?.attempt || 0) >= 2
+  const inspectedDomains = secondChance ? item.sources.map(source => source.domain).filter(Boolean) : []
   const body = {
-    query: `${item.headline} ${evidence}`,
+    query: secondChance ? secondChanceQuery(item) : `${item.headline} ${evidence}`,
     objective: repairObjective(item),
-    type: 'auto', numResults: 6, moderation: true, excludeDomains: EXCLUDED_DOMAINS,
+    type: 'auto', numResults: 6, moderation: true, excludeDomains: [...new Set([...EXCLUDED_DOMAINS, ...inspectedDomains])],
   }
   const started = performance.now()
   const response = await fetch(API_URL, { method: 'POST', headers: { 'x-api-key': apiKey, 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
@@ -53,6 +55,14 @@ async function search(apiKey, item) {
   try { payload = JSON.parse(raw) } catch {}
   if (!response.ok) throw new Error(`HTTP ${response.status}: ${payload?.error || raw.slice(0, 180)}`)
   return { results: payload?.results || [], requestId: payload?.requestId || null, costDollars: Number(payload?.costDollars?.total || 0), latencyMs: Math.round(performance.now() - started) }
+}
+
+export function secondChanceQuery(item) {
+  const headline = String(item.headline || '').replace(/\s*[|–—-]\s*(?:Reuters|AP|BBC|CNN|The Guardian|Al Jazeera|Nature.*)$/i, '').trim()
+  const blocker = item.opportunityRecovery?.blocker
+  if (blocker === 'corroboration') return `${headline} independent report official statement`
+  if (blocker === 'image') return `${headline} news photos`
+  return headline
 }
 
 export function repairObjective(item) {

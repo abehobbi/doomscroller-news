@@ -4,6 +4,12 @@ import { pathToFileURL } from 'node:url'
 
 const stale = item => (item.readiness?.reasons || []).some(reason => /reporting period|predates|stale/i.test(reason))
 const highPotential = item => Number(item.selectionScore || 0) >= 110 || (String(item.lane || '').endsWith('major') && Number(item.selectionScore || 0) >= 90)
+const blocker = item => {
+  const reasons = item.readiness?.reasons || []
+  if (reasons.length === 1 && reasons[0] === 'no verified publisher image recovered') return 'image'
+  if (reasons.some(reason => /two independent trusted source families/i.test(reason))) return 'corroboration'
+  return 'evidence'
+}
 
 export function prepareOpportunityRecovery(verification, repairs, maximum = 6) {
   const latest = new Map([...(verification.repairQueue || []), ...(verification.rejected || [])].map(item => [item.eventId, item]))
@@ -12,6 +18,7 @@ export function prepareOpportunityRecovery(verification, repairs, maximum = 6) {
     .filter(item => !item.readiness?.ready && !stale(item) && highPotential(item))
     .sort((left, right) => Number(right.selectionScore || 0) - Number(left.selectionScore || 0))
     .slice(0, maximum)
+    .map(item => ({ ...item, opportunityRecovery: { attempt: 2, blocker: blocker(item) } }))
   return { schemaVersion: 1, createdAt: new Date().toISOString(), counts: { candidates: repairQueue.length }, repairQueue, ready: [], rejected: [] }
 }
 

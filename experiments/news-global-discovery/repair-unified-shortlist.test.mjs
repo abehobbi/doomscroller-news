@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { mergeSources, pendingRepairCandidates, repairCandidates, repairObjective } from './repair-unified-shortlist.mjs'
+import { mergeSources, pendingRepairCandidates, repairCandidates, repairObjective, secondChanceQuery } from './repair-unified-shortlist.mjs'
 import { isTrustedDomain } from './verify-unified-shortlist.mjs'
 
 test('repair candidates are bounded and ordered by selection strength', () => {
@@ -34,4 +34,9 @@ test('second-chance searches target the actual unresolved blocker', () => {
   assert.match(objective(['no verified publisher image recovered']), /event-specific article image/)
   assert.match(objective(['high-risk event lacks two independent trusted source families']), /genuinely independent/)
   assert.match(objective(['no accessible, relevant and fresh source evidence']), /original accessible report/)
+})
+
+test('second-chance queries are concise and explicitly seek independent corroboration', () => {
+  const item = { headline: 'Major event under investigation | Reuters', opportunityRecovery: { attempt: 2, blocker: 'corroboration' } }
+  assert.equal(secondChanceQuery(item), 'Major event under investigation independent report official statement')
 })
