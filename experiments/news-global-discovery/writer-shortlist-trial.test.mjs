@@ -83,6 +83,12 @@ test('numeric audit recognizes supported written-number and punctuation equivale
   assert.equal(numericAudit(card, packet).valid, true)
 })
 
+test('numeric audit recognizes Arabic decade wording translated into English decades', () => {
+  const packet = { fact: 'كانت الحرفة رائدة من سبعينيات القرن الماضي إلى تسعينياته.' }
+  const card = { headline: 'Craft revived', pages: [{ text: 'The craft was prominent from the 1970s through the 1990s.' }] }
+  assert.equal(numericAudit(card, packet).valid, true)
+})
+
 test('numeric audit preserves source-backed metric and imperial length units', () => {
   const card = { headline: 'Fort found', pages: [{ text: 'The 395-metre summit is 1,300ft high and lies 2 miles away.' }], uncertainties: [] }
   const packet = { fact: 'The 395-metre (1,300ft) summit lies approximately 2 miles away.' }
@@ -102,6 +108,12 @@ test('relative-time audit rejects a next-week claim absent from the packet', () 
   const packet = { temporal_facts_writer_may_state: { unresolved_relative_time: [] } }
   const card = { headline: 'Trial update', pages: [{ text: 'The trial is scheduled to begin next week.' }] }
   assert.deepEqual(relativeTimeAudit(card, packet).unsupportedExpressions, ['next week'])
+})
+
+test('relative-time audit preserves a source-backed quoted fight tonight slogan', () => {
+  const packet = { central_event_to_explain: { selected_story: "Commander says alliance is 'ready to fight tonight'" } }
+  const card = { headline: 'Alliance strategy', pages: [{ text: 'The commander said the alliance was “ready to fight tonight” if attacked.' }] }
+  assert.equal(relativeTimeAudit(card, packet).valid, true)
 })
 
 test('geography audit rejects province terminology for a Syrian governorate', () => {

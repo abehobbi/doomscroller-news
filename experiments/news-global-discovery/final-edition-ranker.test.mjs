@@ -22,6 +22,14 @@ test('large current disaster outranks a major protest when both qualify', () => 
   assert.match(ranked[0].headline, /44 people dead/)
 })
 
+test('small casualty count does not automatically outrank interstate escalation risk', () => {
+  const ranked = rankFrontPage([
+    { eventId: 'family', lane: 'world-major', headline: 'Strike kills three members of one family', pages: [{ text: 'The strike killed 3 people.' }] },
+    { eventId: 'war-risk', lane: 'world-major', headline: 'Countries exchange invasion accusations as troops cross border', pages: [{ text: 'Officials warned that the military escalation could spread.' }] },
+  ])
+  assert.equal(ranked[0].eventId, 'war-risk')
+})
+
 test('anniversary framing does not receive the same immediacy as a breaking casualty event', () => {
   const anniversary = scoreFrontPageCard(card('Humanitarian groups report violence one year after ceasefire', 'world-major', 'Groups reported cumulative deaths.'))
   const breaking = scoreFrontPageCard(card('Strike kills 25 people in city', 'world-major', 'The attack occurred today.'))
