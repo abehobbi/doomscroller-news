@@ -21,6 +21,15 @@ test('deduplicates an identical headline discovered through different URLs', () 
   assert.deepEqual(result.cards[0].sourceEventIds, ['initial', 'recovery'])
 })
 
+test('consolidates announcement and response angles on one Russia-Ukraine ceasefire thread', () => {
+  const result = mergeVerifiedEditions([{ cards: [
+    card('announcement', 'Trump announced a partial Russia-Ukraine ceasefire. Did either country know about it?', 'https://npr.test/a'),
+    card('response', 'Zelenskyy says Russia does not want energy ceasefire after strikes on energy facilities', 'https://guardian.test/b', 2),
+  ] }, { cards: [] }])
+  assert.equal(result.cards.length, 1)
+  assert.deepEqual(result.cards[0].sourceEventIds, ['announcement', 'response'])
+})
+
 test('retains event aliases when a stronger representative replaces the first card', () => {
   const original = card('original', 'Six Ukrainian energy sites hit by Russia since Trump announced ceasefire, Zelensky says', 'https://one.test/a')
   const broader = card('broader', 'Russian attacks hit Ukrainian energy sites after ceasefire announcement', 'https://two.test/b', 3)

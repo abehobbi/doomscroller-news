@@ -48,7 +48,7 @@ export function assembleVerifiedCards(shortlist, verification, repairs) {
   const ids = verifiedEventIds(verification, repairs)
   return shortlist.selections.filter(selection => ids.has(selection.id)).flatMap((selection, index) => {
     const verified = verifiedItem(selection.id, verification, repairs)
-    const acceptedSources = verified.sources.filter(source => source.accepted
+    const acceptedSources = verified.sources.filter(source => source.accepted && source.trusted
       && !headlinesExplicitlyConflict({ title: selection.representative.title }, { title: source.title || '' })
       && (candidatesDescribeSameThread({ title: selection.representative.title }, { title: source.title || '' }) || (source.sharedTerms || []).length >= 4))
       .map(source => ({ ...source, family: sourceFamilyFromEvidence(source.domain, source.evidenceText, source.title) }))

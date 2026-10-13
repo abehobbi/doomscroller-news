@@ -39,9 +39,13 @@ test('temporal preflight separates safe writer packets from unresolved relative 
     },
   })
   const safe = { eventId: 'safe', temporalPacket: packet('The community completed the project.') }
+  const resolvedQuote = { eventId: 'resolved-quote', temporalPacket: {
+    writer_facing: { fact: 'A resident said “I heard about it on Sunday.”', date: 'October 10, 2026' },
+    internal_audit: { publication_timestamp: null, article_updated_timestamp: null, original_relative_expressions: [{ raw_expression: 'on Sunday', resolution_status: 'resolved' }], deterministic_temporal_context: { event_date: '2026-10-10' } },
+  } }
   const blocked = { eventId: 'blocked', temporalPacket: packet('The community expects to complete the project this year.', [{ raw_expression: 'this year', resolution_status: 'unresolved' }]) }
-  const partition = partitionWriterExposure([safe, blocked])
-  assert.deepEqual(partition.ready.map(value => value.item.eventId), ['safe'])
+  const partition = partitionWriterExposure([safe, resolvedQuote, blocked])
+  assert.deepEqual(partition.ready.map(value => value.item.eventId), ['safe', 'resolved-quote'])
   assert.deepEqual(partition.blocked.map(value => value.item.eventId), ['blocked'])
 })
 

@@ -41,7 +41,7 @@ test('casualty and disaster wording cannot bypass high-risk corroboration', () =
     const result = readiness({ representative: { title } }, [source])
     assert.equal(result.highRisk, true)
     assert.equal(result.ready, false)
-    assert.ok(result.reasons.includes('high-risk event lacks two independent source families'))
+    assert.ok(result.reasons.includes('high-risk event lacks two independent trusted source families'))
   }
 })
 

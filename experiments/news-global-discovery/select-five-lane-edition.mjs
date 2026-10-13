@@ -2,6 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { FIVE_LANE_QUERIES } from './five-lane-queries.mjs'
+import { majorEligible, regionMatchesText } from './merge-discovery-candidates.mjs'
 
 const STOPWORDS = new Set('a an and are as at be by for from has have how in into is it its of on or that the their this to was were what when where who why will with says said'.split(' '))
 const LANE_ORDER = ['world-major', 'priority-major', 'world-interesting', 'priority-interesting', 'discovery']
@@ -74,6 +75,8 @@ function normalizeToken(token) {
     ['sudanese', 'sudan'], ['miners', 'mine'], ['miner', 'mine'],
     ['riyadh', 'saudiarabia'], ['saudi', 'saudiarabia'],
     ['kyiv', 'ukraine'], ['ukrainian', 'ukraine'],
+    ['zelenskyy', 'ukraine'], ['zelensky', 'ukraine'],
+    ['moscow', 'russia'], ['putin', 'russia'],
   ])
   if (aliases.has(token)) return aliases.get(token)
   if (token.length > 5 && token.endsWith('ies')) return `${token.slice(0, -3)}y`
@@ -101,7 +104,7 @@ function domainTier(domain) {
 
 function laneScore(lane, title) {
   if (lane === 'discovery') return DISCOVERY_SIGNAL.test(title) ? 15 : -12
-  if (lane.includes('major')) return CONCRETE.test(title) ? 15 : -6
+  if (lane.includes('major')) return CONCRETE.test(title) && majorEligible(title) ? 15 : -30
   return HUMAN_TEXTURE.test(title) ? 14 : 2
 }
 
@@ -129,9 +132,13 @@ function scoreCandidate(candidate, reportCreatedAt) {
   const created = Date.parse(reportCreatedAt || '')
   const ageHours = Number.isFinite(published) && Number.isFinite(created) ? Math.max(0, (created - published) / 3_600_000) : null
   if (ageHours !== null) score += ageHours <= 30 ? 5 : ageHours <= 54 ? 2 : 0
-  const laneScores = Object.fromEntries(candidate.lanes.map(lane => [lane, score + laneScore(lane, title)]))
-  const priorityRegions = [...new Set([...(candidate.priorityRegions || []), ...candidate.queryIds.map(id => QUERY_REGIONS.get(id)).filter(Boolean)])]
-  return { ...candidate, priorityRegions, title, domain, sourceTier: tier, ageHours, score, laneScores, reasons }
+  const priorityRegions = [...new Set([...(candidate.priorityRegions || []), ...candidate.queryIds.map(id => QUERY_REGIONS.get(id)).filter(Boolean)].filter(region => regionMatchesText(region, title)))]
+  const eligibleLanes = [...new Set(candidate.lanes
+    .filter(lane => !lane.includes('major') || majorEligible(title))
+    .map(lane => !priorityRegions.length && lane.startsWith('priority-') ? lane.replace('priority-', 'world-') : lane))]
+  const lanes = eligibleLanes.length ? eligibleLanes : [priorityRegions.length ? 'priority-interesting' : 'world-interesting']
+  const laneScores = Object.fromEntries(lanes.map(lane => [lane, score + laneScore(lane, title)]))
+  return { ...candidate, lanes, priorityRegions, title, domain, sourceTier: tier, ageHours, score, laneScores, reasons }
 }
 
 const GENERIC_CLUSTER_TERMS = new Set(['attack', 'airport', 'candidate', 'government', 'leader', 'minister', 'people', 'president', 'report', 'state', 'world'])

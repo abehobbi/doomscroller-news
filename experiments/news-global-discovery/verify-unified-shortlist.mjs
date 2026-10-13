@@ -178,7 +178,7 @@ export function readiness(selection, sources) {
   const reasons = []
   if (!accepted.length) reasons.push('no accessible, relevant and fresh source evidence')
   if (!trustedGroups.length) reasons.push('no trusted or registered publisher source')
-  if (highRisk && groups.length < 2) reasons.push('high-risk event lacks two independent source families')
+  if (highRisk && trustedGroups.length < 2) reasons.push('high-risk event lacks two independent trusted source families')
   if (!imageSource) reasons.push('no verified publisher image recovered')
   return {
     ready: reasons.length === 0, reasons, highRisk,

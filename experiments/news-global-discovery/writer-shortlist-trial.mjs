@@ -171,7 +171,12 @@ export function partitionWriterExposure(items) {
   const ready = [], blocked = []
   for (const item of items) {
     const exposure = auditWriterTemporalExposure(item.temporalPacket)
-    ;(exposure.passes ? ready : blocked).push({ item, exposure })
+    const resolvedQuotationOnly = !exposure.raw_publication_timestamp_exposed
+      && !exposure.raw_update_timestamp_exposed
+      && exposure.unresolved_relative_expressions_exposed.length === 0
+      && exposure.resolved_relative_expressions_exposed.length > 0
+      && exposure.normalized_event_date_exposed
+    ;(exposure.passes || resolvedQuotationOnly ? ready : blocked).push({ item, exposure })
   }
   return { ready, blocked }
 }

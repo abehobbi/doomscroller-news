@@ -1,11 +1,11 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { mergeDiscoveryCandidates, sourceCandidate } from './merge-discovery-candidates.mjs'
+import { majorEligible, mergeDiscoveryCandidates, sourceCandidate } from './merge-discovery-candidates.mjs'
 
 function feedItem(overrides = {}) {
   return {
     event: {
-      primary: { title: 'Local story', url: 'https://example.com/story?utm_source=rss', publishedAt: '2026-10-11T10:00:00Z', sourceId: 'local', provenance: { feedId: 'local-feed' } },
+      primary: { title: 'Ghana farmers restore a community wetland', url: 'https://example.com/story?utm_source=rss', publishedAt: '2026-10-11T10:00:00Z', sourceId: 'local', provenance: { feedId: 'local-feed' } },
       regions: ['Ghana'], scoreParts: { importance: 18, localTexture: 7 },
     }, image: { url: 'https://example.com/image.jpg' }, ...overrides,
   }
@@ -19,7 +19,7 @@ test('publisher candidates retain priority geography and receive an editorial la
 })
 
 test('canonical URL overlap merges Exa and publisher-feed discovery before selection', () => {
-  const exa = { candidates: [{ title: 'Local story', url: 'https://www.example.com/story', lanes: ['world-interesting'], priorityRegions: [], queryIds: ['open'], bestPosition: 3 }], rawResultCount: 1 }
+  const exa = { candidates: [{ title: 'Ghana farmers restore a community wetland', url: 'https://www.example.com/story', lanes: ['world-interesting'], priorityRegions: [], queryIds: ['open'], bestPosition: 3 }], rawResultCount: 1 }
   const source = { candidates: [feedItem()], counts: { freshArticles: 1 } }
   const report = mergeDiscoveryCandidates(exa, source)
   assert.equal(report.uniqueCandidateCount, 1)
@@ -33,11 +33,24 @@ test('a locally interesting project is not promoted to major news without a conc
   assert.deepEqual(candidate.lanes, ['priority-interesting'])
 })
 
-test('known local publishers restore priority geography to open-web discoveries', () => {
-  const exa = { candidates: [{ title: 'River erosion forces farmers to harvest early', url: 'https://www.thedailystar.net/news/story', lanes: ['world-interesting'], priorityRegions: [], queryIds: ['world-local'], bestPosition: 2 }], rawResultCount: 1 }
+test('known local publishers restore priority geography only when the event text supports it', () => {
+  const exa = { candidates: [{ title: 'Bangladesh river erosion forces farmers to harvest early', url: 'https://www.thedailystar.net/news/story', lanes: ['world-interesting'], priorityRegions: [], queryIds: ['world-local'], bestPosition: 2 }], rawResultCount: 1 }
   const report = mergeDiscoveryCandidates(exa, { candidates: [], counts: { freshArticles: 0 } })
   assert.deepEqual(report.candidates[0].priorityRegions, ['Bangladesh'])
   assert.deepEqual(report.candidates[0].lanes, ['world-interesting', 'priority-interesting'])
+})
+
+test('a foreign syndicated story does not inherit the publisher home country', () => {
+  const foreign = feedItem({ event: { ...feedItem().event, primary: { ...feedItem().event.primary, title: 'Christa Pike returns to Nashville prison after failed execution' } } })
+  const candidate = sourceCandidate(foreign)
+  assert.deepEqual(candidate.priorityRegions, [])
+  assert.deepEqual(candidate.lanes, ['world-interesting'])
+})
+
+test('routine disruption is not major news merely because it is concrete', () => {
+  assert.equal(majorEligible('Qantas flight grounded after bedbug outbreak'), false)
+  assert.equal(majorEligible('Hackers force supermarket refrigerators to heat up'), false)
+  assert.equal(majorEligible('Court overturns national environmental law'), true)
 })
 
 test('multiple Exa scans merge without duplicating one URL and preserve total cost', () => {

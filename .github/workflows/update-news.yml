@@ -113,6 +113,8 @@ jobs:
         run: node experiments/news-global-discovery/prepare-verified-writer-batch.mjs --input ${{ env.RUN_ROOT }}/merged/MERGED_VERIFIED_EDITION.json --output-dir ${{ env.RUN_ROOT }}/writer
       - name: Generate every verified finalist with deterministic checks
         run: node experiments/news-global-discovery/writer-shortlist-trial.mjs --shortlist ${{ env.RUN_ROOT }}/writer/WRITER_SHORTLIST.json --verification ${{ env.RUN_ROOT }}/writer/WRITER_VERIFICATION.json --all-selected --output-dir ${{ env.RUN_ROOT }}/writer/generated
+      - name: Repair deterministic generation failures once
+        run: node experiments/news-global-discovery/writer-shortlist-trial.mjs --shortlist ${{ env.RUN_ROOT }}/writer/WRITER_SHORTLIST.json --verification ${{ env.RUN_ROOT }}/writer/WRITER_VERIFICATION.json --all-selected --retry-rejected --output-dir ${{ env.RUN_ROOT }}/writer/generated
       - name: Assemble and audit the unattended shadow edition
         run: node experiments/news-global-discovery/assemble-unattended-shadow-edition.mjs --writer-report ${{ env.RUN_ROOT }}/writer/generated/TRIAL_REPORT.json --shortlist ${{ env.RUN_ROOT }}/writer/WRITER_SHORTLIST.json --output-dir ${{ env.RUN_ROOT }}/final
       - name: Upload complete evidence trail

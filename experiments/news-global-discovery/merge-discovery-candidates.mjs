@@ -4,6 +4,16 @@ import { pathToFileURL } from 'node:url'
 import { SOURCES } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/sources.mjs'
 
 const PRIORITY_REGIONS = new Set(['Syria', 'Middle East', 'Bangladesh', 'Ghana', 'Canada', 'GTA'])
+const REGION_SIGNALS = {
+  Syria: /\b(?:syria|syrian|damascus|aleppo|homs|hama|idlib|latakia|tartous|daraa|deir ez-zor|raqqa|sweida|hasakah)\b/i,
+  'Middle East': /\b(?:middle east|iran|iraq|israel|israeli|palestin|gaza|west bank|leban|jordan|yemen|houthi|saudi|riyadh|qatar|emirat|uae|oman|bahrain|kuwait|turk(?:ey|iye)|syria)\b/i,
+  Bangladesh: /\b(?:bangladesh|bangladeshi|dhaka|chattogram|chittagong|sylhet|rajshahi|khulna|barisal|rangpur|mymensingh|mongla|padma)\b/i,
+  Ghana: /\b(?:ghana|ghanaian|accra|kumasi|tamale|takoradi|cape coast|ashanti|bawumia|mahama)\b/i,
+  Canada: /\b(?:canada|canadian|ontario|quebec|alberta|manitoba|saskatchewan|nova scotia|new brunswick|newfoundland|british columbia|b\.c\.|yukon|nunavut|toronto|montreal|vancouver|ottawa|calgary|edmonton)\b/i,
+  GTA: /\b(?:greater toronto|gta|toronto|mississauga|brampton|markham|vaughan|scarborough|etobicoke|pickering|ajax|oshawa|oakville|burlington)\b/i,
+}
+const MAJOR_SIGNAL = /\b(?:kills?|dead|deaths?|casualt(?:y|ies)|war|invasion|troops?|ceasefire|sanctions?|elections?|government|parliament|court|law|regulations?|inflation|unemployment|state of emergency|earthquake|hurricane|typhoon|floods?|drought|epidemic|pandemic|public health|corruption|embezzlement|billion|million|nationwide|constitutional|military)\b/i
+const LOW_SCOPE_MAJOR = /\b(?:bedbugs?|flight (?:cancelled|canceled|grounded)|wildlife park|shares? rise|takeover talks|reunited|fundraising walk)\b/i
 const SOURCE_REGIONS = SOURCES.map(source => {
   try { return { domain: new URL(source.sourceUrl).hostname.replace(/^www\./, ''), regions: source.coverage.filter(region => PRIORITY_REGIONS.has(region)) } }
   catch { return { domain: '', regions: [] } }
@@ -19,14 +29,23 @@ function canonicalUrl(value) {
   } catch { return String(value || '') }
 }
 
-function feedLanes(item) {
+export function regionMatchesText(region, value) {
+  return Boolean(REGION_SIGNALS[region]?.test(String(value || '')))
+}
+
+export function majorEligible(value) {
+  const text = String(value || '')
+  return MAJOR_SIGNAL.test(text) && !LOW_SCOPE_MAJOR.test(text)
+}
+
+function feedLanes(item, verifiedRegions = null) {
   const parts = item.event?.scoreParts || {}
-  const regions = item.event?.regions || []
+  const regions = verifiedRegions || item.event?.regions || []
   const priority = regions.some(region => PRIORITY_REGIONS.has(region))
   const lanes = []
   if ((parts.discovery || 0) >= 8) lanes.push('discovery')
   const concreteHeadlineAction = (item.event?.primary?.signals?.headlineAction || []).length > 0
-  if ((parts.consequence || 0) >= 8 || ((parts.importance || 0) >= 24 && concreteHeadlineAction)) lanes.push(priority ? 'priority-major' : 'world-major')
+  if (((parts.consequence || 0) >= 8 || ((parts.importance || 0) >= 24 && concreteHeadlineAction)) && majorEligible(item.event?.primary?.title)) lanes.push(priority ? 'priority-major' : 'world-major')
   if ((parts.interestingness || 0) > 0 || (parts.localTexture || 0) > 0 || !lanes.length) lanes.push(priority ? 'priority-interesting' : 'world-interesting')
   return [...new Set(lanes)]
 }
@@ -34,15 +53,17 @@ function feedLanes(item) {
 export function sourceCandidate(item, position = 1) {
   const article = item.event.primary
   const url = canonicalUrl(article.url)
-  const regions = (item.event.regions || []).filter(region => PRIORITY_REGIONS.has(region))
+  const geographicText = `${article.title || ''} ${article.description || ''}`
+  const regions = (item.event.regions || []).filter(region => PRIORITY_REGIONS.has(region) && regionMatchesText(region, geographicText))
+  const lanes = feedLanes(item, regions)
   return {
     title: article.title,
     url,
     publishedAt: article.sourceUpdatedAt || article.publishedAt || null,
     author: null,
     image: item.image?.url || article.imageUrl || null,
-    discoveries: [{ lane: feedLanes(item)[0], region: regions[0] || null, queryId: `publisher-feed:${article.provenance?.feedId || article.sourceId}`, position }],
-    lanes: feedLanes(item),
+    discoveries: [{ lane: lanes[0], region: regions[0] || null, queryId: `publisher-feed:${article.provenance?.feedId || article.sourceId}`, position }],
+    lanes,
     priorityRegions: regions,
     queryIds: [`publisher-feed:${article.provenance?.feedId || article.sourceId}`],
     bestPosition: position,
@@ -73,7 +94,7 @@ export function mergeDiscoveryCandidates(exaInput, sourceBatch) {
     let domain = ''
     try { domain = new URL(url).hostname.replace(/^www\./, '') } catch {}
     const registryRegions = SOURCE_REGIONS.filter(source => domain === source.domain || domain.endsWith(`.${source.domain}`)).flatMap(source => source.regions)
-    const priorityRegions = [...new Set([...(item.priorityRegions || []), ...registryRegions])]
+    const priorityRegions = [...new Set([...(item.priorityRegions || []), ...registryRegions].filter(region => regionMatchesText(region, item.title)))]
     const lanes = [...new Set([
       ...(item.lanes || []),
       ...(priorityRegions.length && item.lanes?.includes('world-interesting') ? ['priority-interesting'] : []),
