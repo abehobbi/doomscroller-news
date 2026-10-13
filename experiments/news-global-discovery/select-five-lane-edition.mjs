@@ -109,7 +109,7 @@ function laneScore(lane, title) {
   return HUMAN_TEXTURE.test(title) ? 14 : 2
 }
 
-function scoreCandidate(candidate, reportCreatedAt) {
+export function scoreCandidate(candidate, reportCreatedAt) {
   const title = cleanTitle(candidate.title)
   const domain = domainOf(candidate.url)
   const tier = domainTier(domain)
@@ -134,9 +134,11 @@ function scoreCandidate(candidate, reportCreatedAt) {
   const ageHours = Number.isFinite(published) && Number.isFinite(created) ? Math.max(0, (created - published) / 3_600_000) : null
   if (ageHours !== null) score += ageHours <= 30 ? 5 : ageHours <= 54 ? 2 : 0
   const priorityRegions = [...new Set([...(candidate.priorityRegions || []), ...candidate.queryIds.map(id => QUERY_REGIONS.get(id)).filter(Boolean)].filter(region => regionMatchesText(region, title)))]
-  const eligibleLanes = [...new Set(candidate.lanes
+  const normalizedLanes = candidate.lanes
     .filter(lane => !lane.includes('major') || majorEligible(title))
-    .map(lane => !priorityRegions.length && lane.startsWith('priority-') ? lane.replace('priority-', 'world-') : lane))]
+    .map(lane => !priorityRegions.length && lane.startsWith('priority-') ? lane.replace('priority-', 'world-')
+      : priorityRegions.length && lane === 'world-major' ? 'priority-major' : lane)
+  const eligibleLanes = [...new Set(normalizedLanes)]
   const lanes = eligibleLanes.length ? eligibleLanes : [priorityRegions.length ? 'priority-interesting' : 'world-interesting']
   const laneScores = Object.fromEntries(lanes.map(lane => [lane, score + laneScore(lane, title)]))
   return { ...candidate, lanes, priorityRegions, title, domain, sourceTier: tier, ageHours, score, laneScores, reasons }
