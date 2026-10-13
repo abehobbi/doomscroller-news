@@ -169,7 +169,10 @@ export function candidatesDescribeSameThread(left, right) {
   const sharedPlace = sharedTokens.some(token => PLACE_ANCHORS.has(token))
   const sharedEventAnchors = sharedTokens.filter(token => EVENT_ANCHORS.has(token)).length
   const sharedEntity = sharedTokens.some(token => ENTITY_ANCHORS.has(token))
-  return ratio >= 0.55 || (sharedTokens.length >= 3 && ratio >= 0.33 && distinctive) || (sharedPlace && sharedEventAnchors >= 1 && sharedTokens.length >= 3) || (sharedEntity && sharedTokens.length >= 2)
+  const sharedSpecificSubject = sharedTokens.some(token => token.length >= 7 && !GENERIC_CLUSTER_TERMS.has(token) && !PLACE_ANCHORS.has(token))
+  const leftNumbers = new Set(String(left.title || '').match(/\b\d+\b/g) || [])
+  const sharedNonYearNumber = [...(String(right.title || '').match(/\b\d+\b/g) || [])].some(value => leftNumbers.has(value) && !/^20\d{2}$/.test(value))
+  return ratio >= 0.55 || (sharedTokens.length >= 3 && ratio >= 0.33 && distinctive) || (sharedPlace && sharedEventAnchors >= 1 && sharedTokens.length >= 3) || (sharedEntity && sharedTokens.length >= 2) || (sharedSpecificSubject && sharedNonYearNumber)
 }
 
 export function clusterCandidates(scored) {

@@ -74,6 +74,20 @@ test('different attacks in one country still require a shared event subject', ()
   ), false)
 })
 
+test('differently worded reports about one numbered technical unit consolidate', () => {
+  assert.equal(candidatesDescribeSameThread(
+    candidate('Bangladesh’s Rooppur-1 Nuclear Plant Achieves First Criticality'),
+    candidate('Rooppur Unit-1 reaches minimum control level'),
+  ), true)
+})
+
+test('a shared year and country do not merge unrelated developments', () => {
+  assert.equal(candidatesDescribeSameThread(
+    candidate('Bangladesh inflation rises in 2026'),
+    candidate('Bangladesh opens new railway in 2026'),
+  ), false)
+})
+
 test('generic casualty wording cannot create a transitive mega-cluster', () => {
   const sudan = candidate('At least 72 Sudanese miners killed in air strike')
   const bridge = candidate('At least 72 people killed in strikes across several regions')
