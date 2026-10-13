@@ -4,8 +4,8 @@ import { ordinary } from '../../artifacts/summary-feasibility/round-9/prompts.mj
 
 export const MODEL = '@cf/google/gemma-4-26b-a4b-it'
 export const DATE_RETRY_REMINDER = 'Use only the permitted exact event dates supplied in the evidence. Do not infer or calculate another calendar date.'
-export const FACTUAL_BOUNDARY_REMINDER = 'Do not introduce any number, exact date, or relative-time phrase such as this year or last year unless the source-led packet explicitly permits it. Give enough supported detail for a self-contained explanation; do not pad thin evidence.'
-export const REPAIR_REMINDER = 'This is a bounded repair of a rejected draft. Use no relative-time wording such as tonight or tomorrow. Use only exact dates explicitly permitted by allowed_exact_dates. Every page must end with a complete sentence. When the evidence supports it, write at least 65 words; otherwise stay concise rather than inventing context.'
+export const FACTUAL_BOUNDARY_REMINDER = 'Do not introduce any number, exact date, or relative-time phrase such as this year or last year unless the source-led packet explicitly permits it. Never calculate, add together, or otherwise derive a new total from separate source figures; state the supported figures separately. Give enough supported detail for a self-contained explanation; do not pad thin evidence.'
+export const REPAIR_REMINDER = 'This is a bounded repair of a rejected draft. Use no relative-time wording such as tonight or tomorrow. Use only exact dates explicitly permitted by allowed_exact_dates. Copy numeric scope from a supported proposition; never calculate a combined casualty, cost, or quantity total. Every page must end with a complete sentence. When the evidence supports it, write at least 65 words; otherwise stay concise rather than inventing context.'
 export const WRITER_CONFIGURATION = Object.freeze({
   model: MODEL, temperature: 0.2, maxCompletionTokens: 1536,
   responseFormat: 'json_schema', thinking: false, retries: 'date-only; maximum one', repair: false,

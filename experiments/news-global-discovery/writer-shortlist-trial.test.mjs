@@ -108,6 +108,14 @@ test('numeric audit rejects a lower-bound figure stated as an exact count', () =
   assert.equal(numericAudit(collapsed, packet).valid, false)
 })
 
+test('numeric audit rejects arithmetic totals derived from separate incidents', () => {
+  const packet = { facts: ['One attack killed 12 people and injured more than 300.', 'A later strike killed one person and injured 11.'] }
+  const separated = { headline: 'Two attacks hit the airport', pages: [{ text: 'The first killed 12 people and wounded more than 300. The later strike killed one person and injured 11.' }] }
+  const aggregated = { headline: 'Attacks kill 13 people and injure 311', pages: [{ text: 'The attacks together killed 13 people and injured 311.' }] }
+  assert.equal(numericAudit(separated, packet).valid, true)
+  assert.deepEqual(numericAudit(aggregated, packet).unsupportedNumbers, ['13 people', '311'])
+})
+
 test('relative-time audit rejects a next-week claim absent from the packet', () => {
   const packet = { temporal_facts_writer_may_state: { unresolved_relative_time: [] } }
   const card = { headline: 'Trial update', pages: [{ text: 'The trial is scheduled to begin next week.' }] }
@@ -180,6 +188,7 @@ test('trial packet adds only explicit source-backed context propositions', () =>
   const item = buildTrialItem(candidate, new Map(), buildContextIndex(contexts))
   assert.equal(item.temporalPacket.writer_facing.secondarySourceAdditions.length, 1)
   assert.deepEqual(item.temporalPacket.writer_facing.secondarySourceAdditions[0].completeFactualPropositions, ['Jema is in Aowin in Ghana’s Western North Region.'])
+  assert.match(item.temporalPacket.writer_facing.curatorInstructions.join(' '), /Never add separate source figures/)
 })
 
 test('writer preflight blocks empty and publisher-boilerplate evidence before model use', () => {

@@ -146,6 +146,7 @@ export function buildTrialItem(candidate, verificationIndex, contextIndex = new 
     curatorInstructions: [
       'Use only the complete source propositions above.',
       'Preserve attribution, negation, dates, numeric units and scope.',
+      'Never add separate source figures into a new total. If linked developments have different figures, state each figure with its own event or date.',
       'Do not infer motives, causation, independent confirmation or missing sentence endings.',
       'Explain unfamiliar institutions, policies, places or scientific concepts only when the supplied propositions support the explanation.',
       ...(regions.includes('Syria') ? ['For Syrian first-level administrative divisions, always use the term Governorate; never write province.'] : []),
