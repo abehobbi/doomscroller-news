@@ -1,25 +1,32 @@
-name: Update and publish News data
+name: Run unattended News shadow pipeline
 
 on:
   workflow_dispatch:
+    inputs:
+      scan:
+        description: Discovery lanes to scan
+        required: true
+        type: choice
+        default: full
+        options: [full, major, depth]
 
 concurrency:
-  group: news-exact-replacement-writer
+  group: news-unattended-shadow
   cancel-in-progress: false
 
 permissions:
   contents: read
 
 jobs:
-  generate-replacements:
+  shadow:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 60
     env:
+      EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       FREE_PLAN_CONFIRMED: 'yes'
-      BATCH_ROOT: artifacts/news-replacement-finalists-38315367280/writer
-      OUTPUT_ROOT: artifacts/news-replacement-writer-${{ github.run_id }}
+      RUN_ROOT: artifacts/news-unattended-shadow/${{ github.run_id }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -29,29 +36,90 @@ jobs:
       - run: npm ci
       - name: Verify isolated News tests
         run: npm run news:test
-      - name: Verify saved Cloudflare credentials
+      - name: Verify saved free-tier credentials
         shell: bash
         run: |
+          test -n "$EXA_API_KEY"
           test -n "$CLOUDFLARE_ACCOUNT_ID"
           test -n "$CLOUDFLARE_API_TOKEN"
-      - name: Generate exactly six source-cleared replacements
-        id: generation
-        continue-on-error: true
+      - name: Create isolated run workspace
+        shell: bash
+        run: mkdir -p "$RUN_ROOT"/{discovery,publisher,combined,selection,verification,repair,verified,gap/discovery,gap/selection,gap/verification,gap/repair,gap/verified,merged,writer/generated,final}
+      - name: Discover fresh candidates
         run: >-
-          node experiments/news-global-discovery/writer-shortlist-trial.mjs
-          --shortlist $BATCH_ROOT/WRITER_SHORTLIST.json
-          --verification $BATCH_ROOT/WRITER_VERIFICATION.json
-          --all-selected
-          --output-dir $OUTPUT_ROOT
-      - name: Upload exact cards and diagnostics
+          node experiments/news-global-discovery/exa-five-lane-scout.mjs
+          --scan ${{ inputs.scan }} --days 3 --results-per-query 10 --max-queries 20
+          --output ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
+      - name: Collect publisher-feed safety net
+        run: node experiments/news-global-discovery/source-seed-depth-scout.mjs --output-dir ${{ env.RUN_ROOT }}/publisher
+      - name: Merge discovery sources
+        run: >-
+          node experiments/news-global-discovery/merge-discovery-candidates.mjs
+          --exa ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
+          --source ${{ env.RUN_ROOT }}/publisher/SOURCE_SEED_BATCH.json
+          --output ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json
+      - name: Deduplicate, rank, and balance candidates
+        run: >-
+          node experiments/news-global-discovery/select-five-lane-edition.mjs
+          --input ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --count 65
+          --output-dir ${{ env.RUN_ROOT }}/selection
+      - name: Verify source evidence, freshness, event identity, and images
+        run: >-
+          node experiments/news-global-discovery/verify-unified-shortlist.mjs
+          --input ${{ env.RUN_ROOT }}/selection/ANSWER_KEY.json
+          --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json
+          --output-dir ${{ env.RUN_ROOT }}/verification
+      - name: Attempt bounded source repair
+        run: >-
+          node experiments/news-global-discovery/repair-unified-shortlist.mjs
+          --input ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json
+          --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --maximum 12
+          --output-dir ${{ env.RUN_ROOT }}/repair
+      - name: Assemble source-ready provisional edition
+        run: >-
+          node experiments/news-global-discovery/assemble-verified-edition.mjs
+          --shortlist ${{ env.RUN_ROOT }}/selection/ANSWER_KEY.json
+          --verification ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json
+          --repair ${{ env.RUN_ROOT }}/repair/SOURCE_REPAIR_REPORT.json
+          --output-dir ${{ env.RUN_ROOT }}/verified
+      - name: Discover only for measured coverage gaps
+        id: gap
+        run: >-
+          node experiments/news-global-discovery/exa-dynamic-gap-recovery.mjs
+          --edition ${{ env.RUN_ROOT }}/verified/VERIFIED_EDITION.json
+          --discovery ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json
+          --results-per-query 10 --max-queries 8
+          --output ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json
+      - name: Select gap candidates
+        if: steps.gap.outputs.query_count != '0'
+        run: node experiments/news-global-discovery/select-five-lane-edition.mjs --input ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json --count 30 --output-dir ${{ env.RUN_ROOT }}/gap/selection
+      - name: Verify gap candidates
+        if: steps.gap.outputs.query_count != '0'
+        run: node experiments/news-global-discovery/verify-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/gap/selection/ANSWER_KEY.json --pool ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json --output-dir ${{ env.RUN_ROOT }}/gap/verification
+      - name: Repair strongest blocked gap candidates
+        if: steps.gap.outputs.query_count != '0'
+        run: node experiments/news-global-discovery/repair-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json --pool ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json --maximum 12 --output-dir ${{ env.RUN_ROOT }}/gap/repair
+      - name: Assemble verified gap additions
+        if: steps.gap.outputs.query_count != '0'
+        run: node experiments/news-global-discovery/assemble-verified-edition.mjs --shortlist ${{ env.RUN_ROOT }}/gap/selection/ANSWER_KEY.json --verification ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/gap/repair/SOURCE_REPAIR_REPORT.json --output-dir ${{ env.RUN_ROOT }}/gap/verified
+      - name: Merge verified baseline and gap editions
+        if: steps.gap.outputs.query_count != '0'
+        run: node experiments/news-global-discovery/merge-verified-editions.mjs --input ${{ env.RUN_ROOT }}/verified/VERIFIED_EDITION.json --input ${{ env.RUN_ROOT }}/gap/verified/VERIFIED_EDITION.json --output-dir ${{ env.RUN_ROOT }}/merged
+      - name: Preserve verified baseline when no gaps exist
+        if: steps.gap.outputs.query_count == '0'
+        shell: bash
+        run: cp "$RUN_ROOT/verified/VERIFIED_EDITION.json" "$RUN_ROOT/merged/MERGED_VERIFIED_EDITION.json"
+      - name: Prepare source-bound writer batch
+        run: node experiments/news-global-discovery/prepare-verified-writer-batch.mjs --input ${{ env.RUN_ROOT }}/merged/MERGED_VERIFIED_EDITION.json --output-dir ${{ env.RUN_ROOT }}/writer
+      - name: Generate every verified finalist with deterministic checks
+        run: node experiments/news-global-discovery/writer-shortlist-trial.mjs --shortlist ${{ env.RUN_ROOT }}/writer/WRITER_SHORTLIST.json --verification ${{ env.RUN_ROOT }}/writer/WRITER_VERIFICATION.json --all-selected --output-dir ${{ env.RUN_ROOT }}/writer/generated
+      - name: Assemble and audit the unattended shadow edition
+        run: node experiments/news-global-discovery/assemble-unattended-shadow-edition.mjs --writer-report ${{ env.RUN_ROOT }}/writer/generated/TRIAL_REPORT.json --shortlist ${{ env.RUN_ROOT }}/writer/WRITER_SHORTLIST.json --output-dir ${{ env.RUN_ROOT }}/final
+      - name: Upload complete evidence trail
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: news-replacement-writer-${{ github.run_id }}
-          path: ${{ env.OUTPUT_ROOT }}
-          retention-days: 30
+          name: news-unattended-shadow-${{ github.run_id }}
+          path: ${{ env.RUN_ROOT }}
+          retention-days: 14
           if-no-files-found: error
-      - name: Preserve generation failure after uploading diagnostics
-        if: steps.generation.outcome == 'failure'
-        shell: bash
-        run: exit 1
