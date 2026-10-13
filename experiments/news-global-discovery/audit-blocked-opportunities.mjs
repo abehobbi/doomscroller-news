@@ -5,13 +5,13 @@ import { pathToFileURL } from 'node:url'
 const IMAGE_REASON = 'no verified publisher image recovered'
 
 function parseArgs(argv) {
-  const options = { verification: null, repair: null, outputDir: null }
+  const options = { verification: null, repairs: [], outputDir: null }
   for (let index = 0; index < argv.length; index += 1) {
     if (argv[index] === '--verification') options.verification = argv[++index]
-    else if (argv[index] === '--repair') options.repair = argv[++index]
+    else if (argv[index] === '--repair') options.repairs.push(argv[++index])
     else if (argv[index] === '--output-dir') options.outputDir = argv[++index]
   }
-  if (!options.verification || !options.repair || !options.outputDir) throw new Error('--verification, --repair and --output-dir are required')
+  if (!options.verification || !options.repairs.length || !options.outputDir) throw new Error('--verification, at least one --repair and --output-dir are required')
   return options
 }
 
@@ -25,8 +25,9 @@ export function blockedCategory(item) {
   return 'mixed-unresolved'
 }
 
-export function auditBlockedOpportunities(verification, repair) {
-  const repaired = new Map((repair.results || []).map(item => [item.eventId, item]))
+export function auditBlockedOpportunities(verification, repairs) {
+  const reports = Array.isArray(repairs) ? repairs : [repairs]
+  const repaired = new Map(reports.flatMap(repair => repair.results || []).map(item => [item.eventId, item]))
   const items = [...(verification.ready || []), ...(verification.repairQueue || []), ...(verification.rejected || [])].map(original => {
     const item = repaired.get(original.eventId) || original
     const category = blockedCategory(item)
@@ -57,8 +58,9 @@ function markdown(report) {
 
 async function main() {
   const options = parseArgs(process.argv.slice(2))
-  const [verification, repair] = await Promise.all([options.verification, options.repair].map(file => fs.readFile(file, 'utf8').then(JSON.parse)))
-  const report = auditBlockedOpportunities(verification, repair)
+  const verification = JSON.parse(await fs.readFile(options.verification, 'utf8'))
+  const repairs = await Promise.all(options.repairs.map(file => fs.readFile(file, 'utf8').then(JSON.parse)))
+  const report = auditBlockedOpportunities(verification, repairs)
   await fs.mkdir(options.outputDir, { recursive: true })
   await Promise.all([
     fs.writeFile(path.join(options.outputDir, 'BLOCKED_OPPORTUNITIES.json'), `${JSON.stringify(report, null, 2)}\n`),

@@ -43,7 +43,7 @@ async function search(apiKey, item) {
   const evidence = item.sources.find(source => source.evidenceText)?.evidenceText?.slice(0, 900) || ''
   const body = {
     query: `${item.headline} ${evidence}`,
-    objective: 'Find independent, reputable reporting or a primary institutional record about this exact event. Prefer a different publisher family from the supplied report. Return original article pages with a clear publication date and usable article image; avoid homepages, copied syndications and generic background.',
+    objective: repairObjective(item),
     type: 'auto', numResults: 6, moderation: true, excludeDomains: EXCLUDED_DOMAINS,
   }
   const started = performance.now()
@@ -53,6 +53,14 @@ async function search(apiKey, item) {
   try { payload = JSON.parse(raw) } catch {}
   if (!response.ok) throw new Error(`HTTP ${response.status}: ${payload?.error || raw.slice(0, 180)}`)
   return { results: payload?.results || [], requestId: payload?.requestId || null, costDollars: Number(payload?.costDollars?.total || 0), latencyMs: Math.round(performance.now() - started) }
+}
+
+export function repairObjective(item) {
+  const reasons = item.readiness?.reasons || []
+  if (reasons.length === 1 && reasons[0] === 'no verified publisher image recovered') return 'Find an original reputable publisher article about this exact event that contains a usable event-specific article image. Prefer the publisher page or a genuinely independent report, not homepages, logos, author portraits, generic stock imagery or copied syndications. Preserve a clear publication date.'
+  if (reasons.some(reason => /two independent trusted source families/i.test(reason))) return 'Find genuinely independent reputable reporting about this exact high-risk event, preferably from a different publisher family or a primary institutional record. Do not return copied wire republications, homepages or generic background. Require a clear publication date and prefer a usable event-specific article image.'
+  if (reasons.some(reason => /no accessible|no trusted|insufficient article evidence/i.test(reason))) return 'Find the original accessible report or a reputable direct report about this exact event with substantial article text, a clear publication date and a usable event-specific image. Avoid homepages, snippets, copied syndications and generic background.'
+  return 'Find independent, reputable reporting or a primary institutional record about this exact event. Prefer a different publisher family from the supplied report. Return original article pages with a clear publication date and usable article image; avoid homepages, copied syndications and generic background.'
 }
 
 export function mergeSources(existing, additions) {
