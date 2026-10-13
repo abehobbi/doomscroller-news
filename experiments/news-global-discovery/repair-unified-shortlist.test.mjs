@@ -22,6 +22,7 @@ test('source merging removes exact family and URL duplicates without hiding inde
 test('repair reassessment recognizes newly vetted publishers without another search', () => {
   assert.equal(isTrustedDomain('mbcradio.com'), true)
   assert.equal(isTrustedDomain('washingtonpost.com'), true)
+  assert.equal(isTrustedDomain('rferl.org'), true)
 })
 
 test('checkpoint resume skips already completed repair candidates', () => {

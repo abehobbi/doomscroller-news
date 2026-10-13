@@ -13,7 +13,7 @@ const ESTABLISHED = new Set([
   'mainichi.jp', 'malaysiakini.com', 'myjoyonline.com', 'npr.org', 'paherald.sk.ca', 'seattletimes.com',
   'straitstimes.com', 'thedailystar.net', 'thefinancialexpress.com.bd', 'theguardian.com', 'thenarwhal.ca',
   'thenationalnews.com', 'thepointer.com', 'toronto.citynews.ca', 'vanityfair.com', 'wired.com',
-  'abcnews.com', 'independent.co.uk', 'mbcradio.com', 'washingtonpost.com',
+  'abcnews.com', 'independent.co.uk', 'mbcradio.com', 'rferl.org', 'washingtonpost.com',
   'aa.com.tr', 'crossriverwatch.com', 'frontline.thehindu.com', 'scroll.in',
 ])
 const RESEARCH_OR_INSTITUTIONAL = new Set([
