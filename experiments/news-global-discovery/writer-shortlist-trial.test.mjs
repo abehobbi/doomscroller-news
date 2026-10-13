@@ -158,6 +158,22 @@ test('an explicit parenthetical date safely resolves every today reference in on
   assert.doesNotMatch(result, /\btoday\b/i)
 })
 
+test('explicit weekday-date pairs are not reinterpreted as relative weekdays', () => {
+  const source = 'Universities should reopen by Sunday, October 18, 2026, after talks held on Tuesday, October 13, 2026.'
+  const result = normalizeTemporalFact(source, { publicationTime: '2026-10-13T10:00:00Z', timeZone: 'Africa/Accra' })
+  assert.equal(result.normalized_fact, source)
+  assert.deepEqual(result.resolutions, [])
+  assert.deepEqual(result.explicit_dates.map(value => value.date), ['2026-10-18', '2026-10-13'])
+})
+
+test('temporal preflight ignores weekday words that occur only in source URLs', () => {
+  const result = auditWriterTemporalExposure({
+    writer_facing: { coreFactualPropositions: ['Cyclists asked the court to hear their appeal.'], provenance: [{ url: 'https://example.com/demonstration-tuesday/' }] },
+    internal_audit: { publication_timestamp: null, article_updated_timestamp: null, original_relative_expressions: [{ raw_expression: 'Tuesday', resolution_status: 'unresolved' }], deterministic_temporal_context: { event_date: null } },
+  })
+  assert.equal(result.passes, true)
+})
+
 test('leading pronoun propositions stay bound to the named antecedent', () => {
   assert.deepEqual(bindLeadingCoreferences([
     'Volodymyr Zhuravlyov is fighting extradition from Croatia.',
