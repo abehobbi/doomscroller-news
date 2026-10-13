@@ -6,16 +6,25 @@ import { FIVE_LANE_QUERIES } from './five-lane-queries.mjs'
 const API_URL = 'https://api.exa.ai/search'
 const EXCLUDE_DOMAINS = ['facebook.com', 'instagram.com', 'linkedin.com', 'pinterest.com', 'tiktok.com', 'tripadvisor.com', 'youtube.com', 'x.com']
 
-export function selectGapQueries(edition, maximum = 8, strictShape = false) {
+export function selectGapQueries(edition, maximum = 8, strictShape = false, previouslyRunIds = []) {
   const laneGaps = edition.audit?.laneGaps || {}
   const regionGaps = edition.audit?.regionGaps || {}
+  const previouslyRun = new Set(previouslyRunIds)
   const candidates = [...new Map(FIVE_LANE_QUERIES.filter(query => strictShape
     ? Number(laneGaps[query.lane] || 0) > 0 && (!query.region || Number(regionGaps[query.region] || 0) > 0)
     : Number(laneGaps[query.lane] || 0) > 0 || (query.region && Number(regionGaps[query.region] || 0) > 0)).map(query => [query.id, query])).values()]
-  const remainingLane = { ...laneGaps }, remainingRegion = { ...regionGaps }, selected = []
+  const remainingLane = { ...laneGaps }, remainingRegion = { ...regionGaps }, selected = [], selectedLanes = new Set(), selectedRegions = new Set()
   while (candidates.length && selected.length < maximum) {
-    const ranked = candidates.map((query, index) => ({ query, score: Number(remainingRegion[query.region] || 0) * 30 + Number(remainingLane[query.lane] || 0) * 10 + (query.lane.includes('major') ? 4 : 0) - index / 1000 })).sort((a, b) => b.score - a.score)
+    const ranked = candidates.map((query, index) => ({ query, score:
+      Number(!selectedLanes.has(query.lane)) * 1000
+      + Number(!previouslyRun.has(query.id)) * 500
+      + Number(Boolean(query.region) && !selectedRegions.has(query.region)) * 80
+      + Number(remainingRegion[query.region] || 0) * 30
+      + Number(remainingLane[query.lane] || 0) * 10
+      + (query.lane.includes('major') ? 4 : 0) - index / 1000 })).sort((a, b) => b.score - a.score)
     const choice = ranked[0].query; selected.push(choice); candidates.splice(candidates.indexOf(choice), 1)
+    selectedLanes.add(choice.lane)
+    if (choice.region) selectedRegions.add(choice.region)
     if (remainingLane[choice.lane] > 0) remainingLane[choice.lane] -= 1
     if (choice.region && remainingRegion[choice.region] > 0) remainingRegion[choice.region] -= 1
   }
@@ -63,7 +72,7 @@ async function main() {
   const resultsPerQuery = Number(value('--results-per-query') || 10), maxQueries = Number(value('--max-queries') || 8)
   if (!editionPath || !discoveryPath || !output) throw new Error('--edition, --discovery and --output are required')
   const [edition, discovery] = await Promise.all([editionPath, discoveryPath].map(file => fs.readFile(file, 'utf8').then(JSON.parse)))
-  const queries = selectGapQueries(edition, maxQueries, args.includes('--strict-shape')), window = discovery.requestedWindow
+  const queries = selectGapQueries(edition, maxQueries, args.includes('--strict-shape'), (discovery.searches || []).map(search => search.id)), window = discovery.requestedWindow
   const searches = []
   if (queries.length) {
     const apiKey = process.env.EXA_API_KEY

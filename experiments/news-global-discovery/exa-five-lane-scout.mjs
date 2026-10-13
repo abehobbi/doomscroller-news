@@ -28,9 +28,10 @@ function parseArgs(argv) {
 
 export function selectedQueries(scan, lanes = []) {
   let selected
-  if (scan === 'major' || scan === 'update') selected = FIVE_LANE_QUERIES.filter(query => UPDATE_LANES.has(query.lane))
-  else if (scan === 'depth') selected = FIVE_LANE_QUERIES.filter(query => !UPDATE_LANES.has(query.lane))
-  else selected = FIVE_LANE_QUERIES
+  const routineQueries = FIVE_LANE_QUERIES.filter(query => !query.recoveryOnly)
+  if (scan === 'major' || scan === 'update') selected = routineQueries.filter(query => UPDATE_LANES.has(query.lane))
+  else if (scan === 'depth') selected = routineQueries.filter(query => !UPDATE_LANES.has(query.lane))
+  else selected = routineQueries
   return lanes.length ? selected.filter(query => lanes.includes(query.lane)) : selected
 }
 

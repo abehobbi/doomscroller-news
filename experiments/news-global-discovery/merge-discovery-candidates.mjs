@@ -14,6 +14,9 @@ const REGION_SIGNALS = {
 }
 const MAJOR_SIGNAL = /\b(?:kills?|dead|deaths?|casualt(?:y|ies)|war|invasion|troops?|ceasefire|sanctions?|elections?|government|parliament|court|law|regulations?|inflation|unemployment|state of emergency|earthquake|hurricane|typhoon|floods?|drought|epidemic|pandemic|public health|corruption|embezzlement|billion|million|nationwide|constitutional|military)\b/i
 const LOW_SCOPE_MAJOR = /\b(?:bedbugs?|flight (?:cancelled|canceled|grounded)|wildlife park|shares? rise|takeover talks|reunited|fundraising walk)\b/i
+const ANALYSIS_ONLY_MAJOR = /\b(?:whether|dilemma|what if|analysis|explainer)\b|\bnext war could\b/i
+const SPECULATIVE_MAJOR = /\b(?:could|might|may|potential|scenario)\b/i
+const REPORTED_MAJOR_ACTION = /\b(?:kills?|dies?|dead|injur(?:ed|ies)|arrests?|convicts?|acquits?|bans?|blocks?|halts?|suspends?|overturns?|approves?|rejects?|signs?|strikes?|attacks?|evacuates?|declares?|announces?|unveils?|adopts?|orders?|deploys?|launches?|resigns?|collapses?|closes?|opens?|restores?|releases?|discovers?|reveals?|reports?|reaches? agreement|cuts?|rises?|falls?|investigat(?:es?|ion)|lawsuit|protest|sanctions?|election|ceasefire)\b/i
 const SOURCE_REGIONS = SOURCES.map(source => {
   try { return { domain: new URL(source.sourceUrl).hostname.replace(/^www\./, ''), regions: source.coverage.filter(region => PRIORITY_REGIONS.has(region)) } }
   catch { return { domain: '', regions: [] } }
@@ -35,7 +38,7 @@ export function regionMatchesText(region, value) {
 
 export function majorEligible(value) {
   const text = String(value || '')
-  return MAJOR_SIGNAL.test(text) && !LOW_SCOPE_MAJOR.test(text)
+  return MAJOR_SIGNAL.test(text) && !LOW_SCOPE_MAJOR.test(text) && !ANALYSIS_ONLY_MAJOR.test(text) && (!SPECULATIVE_MAJOR.test(text) || REPORTED_MAJOR_ACTION.test(text))
 }
 
 function feedLanes(item, verifiedRegions = null) {

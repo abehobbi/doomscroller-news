@@ -60,6 +60,12 @@ test('routine disruption is not major news merely because it is concrete', () =>
   assert.equal(majorEligible('Court overturns national environmental law'), true)
 })
 
+test('hypothetical analysis does not qualify as major news without a reported action', () => {
+  assert.equal(majorEligible("Inside leaders' dilemma: strike before elections or wait"), false)
+  assert.equal(majorEligible("Iran's next war could be wider as defenses change"), false)
+  assert.equal(majorEligible('NATO commander unveils strategy to counter a potential invasion'), true)
+})
+
 test('multiple Exa scans merge without duplicating one URL and preserve total cost', () => {
   const shared = { title: 'Shared event', url: 'https://example.org/shared', lanes: ['world-major'], priorityRegions: [], queryIds: ['major'], bestPosition: 1 }
   const report = mergeDiscoveryCandidates([
