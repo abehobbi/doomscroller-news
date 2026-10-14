@@ -212,6 +212,31 @@ function preflightRejectedResult(item, exposure, evidence = { valid: true, reaso
   }
 }
 
+export function isProviderQuotaDeferral(provider = {}) {
+  return Number(provider.httpStatus) === 429
+    || (provider.internalErrors || []).some(error => Number(error.code) === 4006)
+}
+
+export function providerDeferredResult(item, provider = {}, reason = 'provider quota became unavailable before this finalist could be generated') {
+  return {
+    eventId: item.eventId, lane: item.lane, sourceTitle: item.sourceTitle, sources: item.sources,
+    status: 'deferred', card: null, deferredReason: reason,
+    audits: {},
+    provider: {
+      requestedModel: provider.requestedModel || WRITER_CONFIGURATION.model,
+      returnedModel: provider.returnedModel || null,
+      httpStatus: provider.httpStatus ?? null,
+      internalErrors: provider.internalErrors || [],
+      latencyMs: provider.latencyMs || 0,
+      finishReason: provider.finishReason || null,
+      usage: provider.usage || null,
+      safeHeaders: provider.safeHeaders || {},
+      complete: false,
+      structuralStatus: 'provider_deferred',
+    },
+  }
+}
+
 function supportedApproximateFraction(value, generated, evidence) {
   const normalized = Number(String(value).replace(/,/g, '').match(/\d+(?:\.\d+)?/)?.[0])
   const mappings = new Map([
@@ -365,6 +390,7 @@ function reportFor(items, results, options, complete) {
     complete, expected: items.length, resultCount: results.length,
     accepted: results.filter(result => result.status === 'accepted').length,
     rejected: results.filter(result => result.status === 'rejected').length,
+    deferred: results.filter(result => result.status === 'deferred' || isProviderQuotaDeferral(result.provider)).length,
     totalNeurons: results.reduce((sum, result) => sum + Number(result.provider.usage?.neurons || 0), 0),
     inputTokens: results.reduce((sum, result) => sum + Number(result.provider.usage?.prompt_tokens || result.provider.usage?.input_tokens || 0), 0),
     outputTokens: results.reduce((sum, result) => sum + Number(result.provider.usage?.completion_tokens || result.provider.usage?.output_tokens || 0), 0),
@@ -383,18 +409,28 @@ function markdown(report) {
       if (result.card.uncertainties?.length) lines.push(`Uncertainties: ${result.card.uncertainties.join(' · ')}`, '')
     }
     lines.push(`Sources: ${result.sources.map(source => `[${source.publisher}](${source.url})`).join(' · ')}`, '')
-    lines.push(`Checks: structure=${result.audits.content.valid}; dates=${result.audits.dates.valid}; relative-time=${result.audits.relativeTime.valid}; numbers=${result.audits.numbers.valid}; headline=${result.audits.headline.valid}; geography=${result.audits.geography?.valid ?? true}; metadata=${result.audits.metadata?.valid ?? true}`, '')
+    if (result.status === 'deferred') lines.push(`Deferred: ${result.deferredReason}`, '')
+    else lines.push(`Checks: structure=${result.audits.content.valid}; dates=${result.audits.dates.valid}; relative-time=${result.audits.relativeTime.valid}; numbers=${result.audits.numbers.valid}; headline=${result.audits.headline.valid}; geography=${result.audits.geography?.valid ?? true}; metadata=${result.audits.metadata?.valid ?? true}`, '')
   }
   return `${lines.join('\n')}\n`
 }
 
 async function save(outputDir, items, results, options, complete) {
   const report = reportFor(items, results, options, complete)
+  const deferred = results.filter(result => result.status === 'deferred' || isProviderQuotaDeferral(result.provider)).map(result => ({
+    eventId: result.eventId,
+    lane: result.lane,
+    sourceTitle: result.sourceTitle,
+    sources: result.sources,
+    reason: result.deferredReason || 'provider quota response interrupted generation for this finalist',
+    provider: result.provider,
+  }))
   await fs.mkdir(outputDir, { recursive: true })
   await Promise.all([
     fs.writeFile(path.join(outputDir, 'TRIAL_REPORT.json'), `${JSON.stringify(report, null, 2)}\n`, 'utf8'),
     fs.writeFile(path.join(outputDir, 'TRIAL_REVIEW.md'), markdown(report), 'utf8'),
     fs.writeFile(path.join(outputDir, 'TRIAL_INPUT.json'), `${JSON.stringify({ schemaVersion: 1, createdAt: report.createdAt, items }, null, 2)}\n`, 'utf8'),
+    fs.writeFile(path.join(outputDir, 'WRITER_DEFERRED_QUEUE.json'), `${JSON.stringify({ schemaVersion: 1, createdAt: report.createdAt, count: deferred.length, items: deferred }, null, 2)}\n`, 'utf8'),
   ])
   return report
 }
@@ -419,7 +455,7 @@ async function main() {
   const exposurePartition = partitionWriterExposure(items)
   let results = []
   try { results = JSON.parse(await fs.readFile(path.join(options.outputDir, 'TRIAL_REPORT.json'), 'utf8')).results || [] } catch {}
-  if (options.retryRejected) results = results.filter(result => result.status !== 'rejected')
+  if (options.retryRejected) results = results.filter(result => result.status !== 'rejected' || isProviderQuotaDeferral(result.provider))
   const itemById = new Map(items.map(value => [value.eventId, value]))
   results = results.map(result => {
     const item = itemById.get(result.eventId)
@@ -430,7 +466,9 @@ async function main() {
   const existingIds = new Set(results.map(result => result.eventId))
   for (const { item, exposure, evidence } of exposurePartition.blocked) if (!existingIds.has(item.eventId)) results.push(preflightRejectedResult(item, exposure, evidence))
   const completed = new Set(results.map(value => value.eventId))
-  for (const item of exposurePartition.ready.map(value => value.item).filter(value => !completed.has(value.eventId))) {
+  const pending = exposurePartition.ready.map(value => value.item).filter(value => !completed.has(value.eventId))
+  for (let index = 0; index < pending.length; index += 1) {
+    const item = pending[index]
     const attempt = await writeCard(item.temporalPacket.writer_facing, { dateRetry: options.retryRejected, repair: options.retryRejected })
     const card = attempt.complete ? attempt.parsed : null
     const audited = card ? auditCard(item, card) : { valid: false, audits: { content: { valid: false, reasons: ['writer output incomplete'], wordCount: 0, pageCount: 0 }, dates: { valid: false }, numbers: { valid: false, generatedNumbers: [], unsupportedNumbers: [] }, relativeTime: { valid: false, generatedExpressions: [], allowedExpressions: [], unsupportedExpressions: [] }, headline: { valid: false, sharedTerms: [] }, writerExposure: auditWriterTemporalExposure(item.temporalPacket) } }
@@ -441,10 +479,20 @@ async function main() {
       audits: audited.audits,
       provider: { requestedModel: attempt.requestedModel, returnedModel: attempt.returnedModel, httpStatus: attempt.httpStatus, internalErrors: attempt.internalErrors, latencyMs: attempt.latencyMs, finishReason: attempt.finishReason, usage: attempt.usage, safeHeaders: attempt.safeHeaders, complete: attempt.complete, structuralStatus: attempt.structuralStatus },
     })
+    if (isProviderQuotaDeferral(attempt)) {
+      const quotaProvider = {
+        requestedModel: attempt.requestedModel, returnedModel: attempt.returnedModel,
+        httpStatus: attempt.httpStatus, internalErrors: attempt.internalErrors,
+        safeHeaders: attempt.safeHeaders,
+      }
+      for (const untouched of pending.slice(index + 1)) results.push(providerDeferredResult(untouched, quotaProvider))
+      await save(options.outputDir, items, results, options, false)
+      break
+    }
     await save(options.outputDir, items, results, options, false)
   }
   const report = await save(options.outputDir, items, results, options, results.length === items.length)
-  process.stdout.write(`${JSON.stringify({ complete: report.complete, resultCount: report.resultCount, accepted: report.accepted, rejected: report.rejected, totalNeurons: report.totalNeurons, inputTokens: report.inputTokens, outputTokens: report.outputTokens, totalLatencyMs: report.totalLatencyMs }, null, 2)}\n`)
+  process.stdout.write(`${JSON.stringify({ complete: report.complete, resultCount: report.resultCount, accepted: report.accepted, rejected: report.rejected, deferred: report.deferred, totalNeurons: report.totalNeurons, inputTokens: report.inputTokens, outputTokens: report.outputTokens, totalLatencyMs: report.totalLatencyMs }, null, 2)}\n`)
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) main().catch(error => { console.error(error.message); process.exitCode = 1 })

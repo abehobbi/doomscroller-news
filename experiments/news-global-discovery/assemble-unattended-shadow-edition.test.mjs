@@ -62,5 +62,6 @@ test('routes generated priority-region headlines back into priority lanes', () =
 
 test('distinguishes provider quota deferrals from editorial rejection', () => {
   assert.equal(rejectionCategory({ provider: { httpStatus: 429, internalErrors: [{ code: 4006 }] } }), 'provider-deferred')
+  assert.equal(rejectionCategory({ status: 'deferred', provider: { structuralStatus: 'provider_deferred' } }), 'provider-deferred')
   assert.equal(rejectionCategory({ provider: { structuralStatus: 'writer_input_evidence_preflight_failure' } }), 'input-rejected')
 })

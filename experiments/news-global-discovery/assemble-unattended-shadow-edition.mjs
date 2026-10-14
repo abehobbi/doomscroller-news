@@ -26,6 +26,7 @@ export function normalizeGeneratedRouting(lane, priorityRegions, headline, sourc
 }
 
 export function rejectionCategory(result) {
+  if (result.status === 'deferred' || result.provider?.structuralStatus === 'provider_deferred') return 'provider-deferred'
   const quotaDeferred = result.provider?.httpStatus === 429
     || (result.provider?.internalErrors || []).some(error => Number(error.code) === 4006)
   if (quotaDeferred) return 'provider-deferred'

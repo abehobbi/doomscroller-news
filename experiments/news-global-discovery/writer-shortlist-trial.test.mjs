@@ -1,7 +1,17 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { auditWriterTemporalExposure, buildWriterSafeTemporalPacket, normalizeTemporalFact } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
-import { bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, geographyAudit, LANES, normalizeExplicitToday, numericAudit, partitionWriterExposure, relativeTimeAudit, writerEvidencePreflight, writerMetadataAudit } from './writer-shortlist-trial.mjs'
+import { bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, geographyAudit, isProviderQuotaDeferral, LANES, normalizeExplicitToday, numericAudit, partitionWriterExposure, providerDeferredResult, relativeTimeAudit, writerEvidencePreflight, writerMetadataAudit } from './writer-shortlist-trial.mjs'
+
+test('quota circuit breaker recognizes provider signals and preserves untouched finalists', () => {
+  assert.equal(isProviderQuotaDeferral({ httpStatus: 429 }), true)
+  assert.equal(isProviderQuotaDeferral({ httpStatus: 400, internalErrors: [{ code: 4006 }] }), true)
+  assert.equal(isProviderQuotaDeferral({ httpStatus: 500, internalErrors: [] }), false)
+  const deferred = providerDeferredResult({ eventId: 'later', lane: 'discovery', sourceTitle: 'Later story', sources: [{ publisher: 'source.test', url: 'https://source.test/later' }] }, { httpStatus: 429, internalErrors: [{ code: 4006 }] })
+  assert.equal(deferred.status, 'deferred')
+  assert.equal(deferred.provider.structuralStatus, 'provider_deferred')
+  assert.equal(deferred.sources.length, 1)
+})
 
 test('trial chooses one multi-source candidate from every lane and prefers Syria in a priority tie', () => {
   const item = (eventId, lane, sources, regions = []) => ({ eventId, lane, headline: eventId, evidence: 'A complete factual sentence explains the event. Another complete sentence explains why it matters.', publishedAt: '2026-10-10T00:00:00Z', priorityRegions: regions, editorialRecommendation: 'strong', editorialScore: 90, independentSourceCount: sources, primarySource: { publisher: 'bbc.com', url: `https://bbc.com/${eventId}` }, sources: [{ publisher: 'bbc.com', url: `https://bbc.com/${eventId}` }] })
