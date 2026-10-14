@@ -145,8 +145,9 @@ export function scoreCandidate(candidate, reportCreatedAt) {
 }
 
 const GENERIC_CLUSTER_TERMS = new Set([
-  'attack', 'airport', 'billion', 'candidate', 'government', 'leader', 'million',
-  'minister', 'people', 'president', 'report', 'state', 'world', 'year',
+  'administration', 'attack', 'airport', 'billion', 'candidate', 'case', 'court',
+  'government', 'leader', 'lawsuit', 'million', 'minister', 'people', 'president',
+  'report', 'state', 'supreme', 'world', 'year',
 ])
 const PLACE_ANCHORS = new Set(['saudiarabia', 'sudan', 'ukraine', 'india', 'bangladesh', 'ghana', 'syria', 'canada', 'nepal', 'gaza', 'lebanon'])
 const EVENT_ANCHORS = new Set(['airport', 'attack', 'ceasefire', 'election', 'flood', 'mine', 'protest', 'strike'])

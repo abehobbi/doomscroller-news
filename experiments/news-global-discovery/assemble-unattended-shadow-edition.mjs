@@ -20,6 +20,8 @@ export function normalizeGeneratedRouting(lane, priorityRegions, headline, sourc
   let normalizedLane = lane
   if (regions.length && lane === 'world-major') normalizedLane = 'priority-major'
   if (regions.length && lane === 'world-interesting') normalizedLane = 'priority-interesting'
+  if (!regions.length && lane === 'priority-major') normalizedLane = 'world-major'
+  if (!regions.length && lane === 'priority-interesting') normalizedLane = 'world-interesting'
   if (BREAKING_MAJOR_HEADLINE.test(headline) && normalizedLane === 'world-interesting') normalizedLane = 'world-major'
   if (BREAKING_MAJOR_HEADLINE.test(headline) && normalizedLane === 'priority-interesting') normalizedLane = 'priority-major'
   return { lane: normalizedLane, priorityRegions: regions }
@@ -35,13 +37,19 @@ export function rejectionCategory(result) {
   return 'check-rejected'
 }
 
+export function failedAuditChecks(audits = {}) {
+  return Object.entries(audits)
+    .filter(([, value]) => value?.valid === false || value?.passes === false)
+    .map(([name]) => name)
+}
+
 export function assembleUnattendedShadowEdition(writerReport, shortlist) {
   const inputs = new Map((shortlist.selected || []).map(item => [item.eventId, item]))
   const accepted = (writerReport.results || []).filter(result => result.status === 'accepted')
   const rejected = (writerReport.results || []).filter(result => result.status !== 'accepted').map(result => ({
     eventId: result.eventId,
     sourceTitle: result.sourceTitle,
-    failedChecks: Object.entries(result.audits || {}).filter(([, value]) => value?.valid === false).map(([name]) => name),
+    failedChecks: failedAuditChecks(result.audits),
     complete: Boolean(result.provider?.complete),
     category: rejectionCategory(result),
     providerStatus: result.provider?.httpStatus || null,
@@ -114,7 +122,12 @@ function markdown(edition) {
   }
   if (checkRejected.length) {
     lines.push('## Rejected by deterministic checks', '')
-    for (const item of checkRejected) lines.push(`- **${item.sourceTitle}** — ${item.complete ? item.failedChecks.join(', ') || 'unknown check' : 'incomplete output'}`)
+    for (const item of checkRejected) {
+      const reason = item.category === 'input-rejected'
+        ? 'writer input failed the evidence preflight'
+        : item.complete ? item.failedChecks.join(', ') || 'unclassified deterministic check' : 'incomplete provider output'
+      lines.push(`- **${item.sourceTitle}** — ${reason}`)
+    }
     lines.push('')
   }
   if (edition.overlaps.length) {

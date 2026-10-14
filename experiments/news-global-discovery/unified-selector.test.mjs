@@ -88,6 +88,17 @@ test('a shared year and country do not merge unrelated developments', () => {
   ), false)
 })
 
+test('the same court hearing different cases does not merge unrelated events', () => {
+  assert.equal(candidatesDescribeSameThread(
+    candidate('Supreme Court agrees to hear watchdog lawsuit seeking DOGE records'),
+    candidate('US Supreme Court to hear asylum case involving Nigerian cook'),
+  ), false)
+  assert.equal(candidatesDescribeSameThread(
+    candidate('Supreme Court agrees to hear watchdog lawsuit seeking DOGE records'),
+    candidate('DOGE records lawsuit returns to Supreme Court'),
+  ), true)
+})
+
 test('generic casualty wording cannot create a transitive mega-cluster', () => {
   const sudan = candidate('At least 72 Sudanese miners killed in air strike')
   const bridge = candidate('At least 72 people killed in strikes across several regions')

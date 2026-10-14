@@ -52,6 +52,15 @@ test('priority-region signals recognize common local places and political abbrev
   assert.equal(regionMatchesText('Bangladesh', 'Former BNP lawmaker dies at 80'), true)
   assert.equal(regionMatchesText('Canada', 'Durham police warn parents about online predators'), true)
   assert.equal(regionMatchesText('GTA', 'Durham police warn parents about online predators'), true)
+  assert.equal(regionMatchesText('Canada', 'B.C. premier defends child-care access'), true)
+  assert.equal(regionMatchesText('GTA', 'Torontonians report feeling unsafe after dark'), true)
+})
+
+test('a person nationality alone does not route an event into a priority region', () => {
+  assert.equal(regionMatchesText('Middle East', 'FBI arrests Saudi engineer in San Francisco'), false)
+  assert.equal(regionMatchesText('Middle East', 'FBI arrests Saudi OpenAI engineer in San Francisco'), false)
+  assert.equal(regionMatchesText('Syria', 'Syrian sailors missing after Black Sea strike off Bulgaria'), false)
+  assert.equal(regionMatchesText('Middle East', 'Saudi Arabia investigates a recording device found in Riyadh'), true)
 })
 
 test('routine disruption is not major news merely because it is concrete', () => {

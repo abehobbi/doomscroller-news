@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { assembleUnattendedShadowEdition, normalizeGeneratedRouting, rejectionCategory } from './assemble-unattended-shadow-edition.mjs'
+import { assembleUnattendedShadowEdition, failedAuditChecks, normalizeGeneratedRouting, rejectionCategory } from './assemble-unattended-shadow-edition.mjs'
 
 const input = (eventId, lane, headline) => ({ eventId, lane, headline, publishedAt: '2026-10-12T12:00:00Z', priorityRegions: [], image: { url: `https://img.test/${eventId}.jpg`, publisher: 'img.test' }, primarySource: { url: `https://source.test/${eventId}` } })
 const accepted = (eventId, lane, headline, text, url = `https://source.test/${eventId}`) => ({ eventId, lane, sourceTitle: headline, status: 'accepted', card: { headline, pages: [{ text }], uncertainties: [] }, sources: [{ publisher: 'source.test', url }], audits: { content: { valid: true } }, provider: { complete: true } })
@@ -48,11 +48,11 @@ test('routes generated priority-region headlines back into priority lanes', () =
   )
   assert.deepEqual(
     normalizeGeneratedRouting('priority-interesting', ['Middle East'], 'Former engineer charged in San Francisco', 'OpenAI engineer charged after listening device found'),
-    { lane: 'priority-interesting', priorityRegions: [] },
+    { lane: 'world-interesting', priorityRegions: [] },
   )
   assert.deepEqual(
-    normalizeGeneratedRouting('priority-interesting', ['Syria'], 'Syrian sailors missing after Black Sea drone strike'),
-    { lane: 'priority-interesting', priorityRegions: ['Syria'] },
+    normalizeGeneratedRouting('priority-interesting', ['Syria'], 'Syrian sailors missing after Black Sea drone strike off Bulgaria'),
+    { lane: 'world-interesting', priorityRegions: [] },
   )
   assert.deepEqual(
     normalizeGeneratedRouting('world-interesting', [], 'Russian attacks kill at least 10 and injure dozens across Ukraine'),
@@ -64,4 +64,11 @@ test('distinguishes provider quota deferrals from editorial rejection', () => {
   assert.equal(rejectionCategory({ provider: { httpStatus: 429, internalErrors: [{ code: 4006 }] } }), 'provider-deferred')
   assert.equal(rejectionCategory({ status: 'deferred', provider: { structuralStatus: 'provider_deferred' } }), 'provider-deferred')
   assert.equal(rejectionCategory({ provider: { structuralStatus: 'writer_input_evidence_preflight_failure' } }), 'input-rejected')
+})
+
+test('reports deterministic checks that use a passes flag', () => {
+  assert.deepEqual(failedAuditChecks({
+    content: { valid: true },
+    writerExposure: { passes: false },
+  }), ['writerExposure'])
 })

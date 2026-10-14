@@ -45,6 +45,18 @@ test('casualty and disaster wording cannot bypass high-risk corroboration', () =
   }
 })
 
+test('contested political evidence cannot bypass corroboration through a neutral headline', () => {
+  const source = {
+    accepted: true, trusted: true, family: 'publisher-a', imageUrl: 'https://example.com/image.jpg',
+    url: 'https://example.com/story', domain: 'example.com', title: 'Voters demand an explanation',
+    evidenceText: 'The report covers an election-roll dispute, protests and allegations that voters were disenfranchised.',
+  }
+  const result = readiness({ representative: { title: 'Millions of names removed from national voter rolls' } }, [source])
+  assert.equal(result.highRisk, true)
+  assert.equal(result.ready, false)
+  assert.ok(result.reasons.includes('high-risk event lacks two independent trusted source families'))
+})
+
 test('copied wire text counts as one independent source even when a republication omits the byline', () => {
   const common = 'Standing knee deep in the river, residents said the government project flooded homes and temples without providing enough compensation to rebuild their lives. The dispute is an early test for an ambitious national plan to link rivers and redistribute water to drought prone regions.'
   const sources = [

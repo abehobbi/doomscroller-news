@@ -9,8 +9,23 @@ const REGION_SIGNALS = {
   'Middle East': /\b(?:middle east|iran|iraq|israel|israeli|palestin|gaza|west bank|leban|jordan|yemen|houthi|saudi|riyadh|qatar|emirat|uae|oman|bahrain|kuwait|turk(?:ey|iye)|syria)\b/i,
   Bangladesh: /\b(?:bangladesh|bangladeshi|dhaka|chattogram|chittagong|sylhet|rajshahi|khulna|barisal|rangpur|mymensingh|mongla|padma|bnp|awami league)\b/i,
   Ghana: /\b(?:ghana|ghanaian|accra|tema|kumasi|tamale|takoradi|cape coast|ashanti|bawumia|mahama)\b/i,
-  Canada: /\b(?:canada|canadian|ontario|quebec|alberta|manitoba|saskatchewan|nova scotia|new brunswick|newfoundland|british columbia|b\.c\.|yukon|nunavut|toronto|durham|montreal|vancouver|ottawa|calgary|edmonton)\b/i,
-  GTA: /\b(?:greater toronto|gta|toronto|durham|mississauga|brampton|markham|vaughan|scarborough|etobicoke|pickering|ajax|oshawa|oakville|burlington)\b/i,
+  Canada: /(?:\b(?:canada|canadian|ontario|quebec|alberta|manitoba|saskatchewan|nova scotia|new brunswick|newfoundland|british columbia|yukon|nunavut|toronto|torontonians?|durham|montreal|vancouver|ottawa|calgary|edmonton)\b|\bb\.c\.(?=\s|$))/i,
+  GTA: /\b(?:greater toronto|gta|toronto|torontonians?|durham|mississauga|brampton|markham|vaughan|scarborough|etobicoke|pickering|ajax|oshawa|oakville|burlington)\b/i,
+}
+const REGION_PLACE_SIGNALS = {
+  Syria: /\b(?:syria|damascus|aleppo|homs|hama|idlib|latakia|tartous|daraa|deir ez-zor|raqqa|sweida|hasakah)\b/i,
+  'Middle East': /\b(?:middle east|iran|iraq|israel|palestin|gaza|west bank|lebanon|jordan|yemen|riyadh|saudi arabia|qatar|united arab emirates|uae|dubai|oman|bahrain|kuwait|turk(?:ey|iye))\b/i,
+  Bangladesh: /\b(?:bangladesh|dhaka|chattogram|chittagong|sylhet|rajshahi|khulna|barisal|rangpur|mymensingh|mongla|padma|bnp|awami league)\b/i,
+  Ghana: /\b(?:ghana|accra|tema|kumasi|tamale|takoradi|cape coast|ashanti|bawumia|mahama)\b/i,
+  Canada: /(?:\b(?:canada|ontario|quebec|alberta|manitoba|saskatchewan|nova scotia|new brunswick|newfoundland|british columbia|yukon|nunavut|toronto|torontonians?|durham|montreal|vancouver|ottawa|calgary|edmonton)\b|\bb\.c\.(?=\s|$))/i,
+  GTA: /\b(?:greater toronto|gta|toronto|torontonians?|durham|mississauga|brampton|markham|vaughan|scarborough|etobicoke|pickering|ajax|oshawa|oakville|burlington)\b/i,
+}
+const NATIONALITY_PERSON_SIGNALS = {
+  Syria: /\bsyrian(?:\s+[a-z0-9-]+){0,2}\s+(?:engineers?|sailors?|workers?|employees?|residents?|tourists?|students?|athletes?|actors?|singers?|doctors?|nurses?|professors?|researchers?|journalists?|citizens?|nationals?|men|women)\b/i,
+  'Middle East': /\b(?:iranian|iraqi|israeli|palestinian|lebanese|jordanian|yemeni|saudi|qatari|emirati|omani|bahraini|kuwaiti|turkish)(?:\s+[a-z0-9-]+){0,2}\s+(?:engineers?|sailors?|workers?|employees?|residents?|tourists?|students?|athletes?|actors?|singers?|doctors?|nurses?|professors?|researchers?|journalists?|citizens?|nationals?|men|women)\b/i,
+  Bangladesh: /\bbangladeshi(?:\s+[a-z0-9-]+){0,2}\s+(?:engineers?|sailors?|workers?|employees?|residents?|tourists?|students?|athletes?|actors?|singers?|doctors?|nurses?|professors?|researchers?|journalists?|citizens?|nationals?|men|women)\b/i,
+  Ghana: /\bghanaian(?:\s+[a-z0-9-]+){0,2}\s+(?:engineers?|sailors?|workers?|employees?|residents?|tourists?|students?|athletes?|actors?|singers?|doctors?|nurses?|professors?|researchers?|journalists?|citizens?|nationals?|men|women)\b/i,
+  Canada: /\bcanadian(?:\s+[a-z0-9-]+){0,2}\s+(?:engineers?|sailors?|workers?|employees?|residents?|tourists?|students?|athletes?|actors?|singers?|doctors?|nurses?|professors?|researchers?|journalists?|citizens?|nationals?|men|women)\b/i,
 }
 const MAJOR_SIGNAL = /\b(?:kills?|dead|deaths?|casualt(?:y|ies)|war|invasion|troops?|ceasefire|sanctions?|elections?|government|parliament|court|law|regulations?|inflation|unemployment|state of emergency|earthquake|hurricane|typhoon|floods?|drought|epidemic|pandemic|public health|corruption|embezzlement|billion|million|nationwide|constitutional|military)\b/i
 const LOW_SCOPE_MAJOR = /\b(?:bedbugs?|flight (?:cancelled|canceled|grounded)|wildlife park|shares? rise|takeover talks|reunited|fundraising walk)\b/i
@@ -33,7 +48,10 @@ function canonicalUrl(value) {
 }
 
 export function regionMatchesText(region, value) {
-  return Boolean(REGION_SIGNALS[region]?.test(String(value || '')))
+  const text = String(value || '')
+  if (!REGION_SIGNALS[region]?.test(text)) return false
+  if (REGION_PLACE_SIGNALS[region]?.test(text)) return true
+  return !NATIONALITY_PERSON_SIGNALS[region]?.test(text)
 }
 
 export function majorEligible(value) {

@@ -174,7 +174,8 @@ export function readiness(selection, sources) {
   const groups = independentSourceGroups(sources)
   const trustedGroups = groups.filter(group => group.some(source => source.trusted))
   const imageSource = accepted.find(source => source.imageUrl)
-  const highRisk = HIGH_RISK.test(selection.representative.title)
+  const riskText = [selection.representative.title, ...accepted.flatMap(source => [source.title, source.evidenceText?.slice(0, 1600)])].filter(Boolean).join('\n')
+  const highRisk = HIGH_RISK.test(riskText)
   const reasons = []
   if (!accepted.length) reasons.push('no accessible, relevant and fresh source evidence')
   if (!trustedGroups.length) reasons.push('no trusted or registered publisher source')
