@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { assembleUnattendedShadowEdition, normalizeGeneratedRouting } from './assemble-unattended-shadow-edition.mjs'
+import { assembleUnattendedShadowEdition, normalizeGeneratedRouting, rejectionCategory } from './assemble-unattended-shadow-edition.mjs'
 
 const input = (eventId, lane, headline) => ({ eventId, lane, headline, publishedAt: '2026-10-12T12:00:00Z', priorityRegions: [], image: { url: `https://img.test/${eventId}.jpg`, publisher: 'img.test' }, primarySource: { url: `https://source.test/${eventId}` } })
 const accepted = (eventId, lane, headline, text, url = `https://source.test/${eventId}`) => ({ eventId, lane, sourceTitle: headline, status: 'accepted', card: { headline, pages: [{ text }], uncertainties: [] }, sources: [{ publisher: 'source.test', url }], audits: { content: { valid: true } }, provider: { complete: true } })
@@ -54,4 +54,13 @@ test('routes generated priority-region headlines back into priority lanes', () =
     normalizeGeneratedRouting('priority-interesting', ['Syria'], 'Syrian sailors missing after Black Sea drone strike'),
     { lane: 'priority-interesting', priorityRegions: ['Syria'] },
   )
+  assert.deepEqual(
+    normalizeGeneratedRouting('world-interesting', [], 'Russian attacks kill at least 10 and injure dozens across Ukraine'),
+    { lane: 'world-major', priorityRegions: [] },
+  )
+})
+
+test('distinguishes provider quota deferrals from editorial rejection', () => {
+  assert.equal(rejectionCategory({ provider: { httpStatus: 429, internalErrors: [{ code: 4006 }] } }), 'provider-deferred')
+  assert.equal(rejectionCategory({ provider: { structuralStatus: 'writer_input_evidence_preflight_failure' } }), 'input-rejected')
 })

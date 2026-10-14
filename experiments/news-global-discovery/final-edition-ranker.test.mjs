@@ -66,3 +66,12 @@ test('an actual missile attack outranks a strategy for a potential invasion', ()
   assert.match(ranked[0].headline, /missiles strike Kyiv/)
   assert.match(ranked[1].frontPageRanking.reasons.join(' '), /prospective/)
 })
+
+test('plural attack wording and kill-at-least casualty phrasing receive urgency credit', () => {
+  const ranked = rankFrontPage([
+    card('NATO commander unveils strategy to counter Russian attacks', 'world-major', 'The plan describes a possible future response.'),
+    card('Russian attacks kill at least 10 and injure dozens across Ukraine', 'world-major', 'The attacks hit civilian areas.'),
+  ])
+  assert.match(ranked[0].headline, /kill at least 10/)
+  assert.match(ranked[0].frontPageRanking.reasons.join(' '), /immediate casualties \(10 explicitly reported\)/)
+})

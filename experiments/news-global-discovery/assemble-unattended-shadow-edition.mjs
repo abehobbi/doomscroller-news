@@ -8,6 +8,7 @@ import { auditEditorialOverlap } from './qualify-shadow-edition.mjs'
 import { regionMatchesText } from './merge-discovery-candidates.mjs'
 
 const PRIORITY_REGIONS = ['Syria', 'Middle East', 'Bangladesh', 'Ghana', 'Canada', 'GTA']
+const BREAKING_MAJOR_HEADLINE = /\b(?:kills? (?:at least )?\d+|\d+ (?:people )?(?:killed|dead)|dozens? (?:killed|dead)|declares? (?:a )?(?:national )?state of emergency|magnitude-\d+(?:\.\d+)? earthquake|hurricane makes landfall)\b/i
 
 export function normalizeGeneratedRouting(lane, priorityRegions, headline, sourceHeadline = '') {
   const headlineContext = `${sourceHeadline} ${headline}`
@@ -19,7 +20,18 @@ export function normalizeGeneratedRouting(lane, priorityRegions, headline, sourc
   let normalizedLane = lane
   if (regions.length && lane === 'world-major') normalizedLane = 'priority-major'
   if (regions.length && lane === 'world-interesting') normalizedLane = 'priority-interesting'
+  if (BREAKING_MAJOR_HEADLINE.test(headline) && normalizedLane === 'world-interesting') normalizedLane = 'world-major'
+  if (BREAKING_MAJOR_HEADLINE.test(headline) && normalizedLane === 'priority-interesting') normalizedLane = 'priority-major'
   return { lane: normalizedLane, priorityRegions: regions }
+}
+
+export function rejectionCategory(result) {
+  const quotaDeferred = result.provider?.httpStatus === 429
+    || (result.provider?.internalErrors || []).some(error => Number(error.code) === 4006)
+  if (quotaDeferred) return 'provider-deferred'
+  if (result.provider?.structuralStatus === 'provider_failure') return 'provider-failure'
+  if (result.provider?.structuralStatus === 'writer_input_evidence_preflight_failure') return 'input-rejected'
+  return 'check-rejected'
 }
 
 export function assembleUnattendedShadowEdition(writerReport, shortlist) {
@@ -30,6 +42,9 @@ export function assembleUnattendedShadowEdition(writerReport, shortlist) {
     sourceTitle: result.sourceTitle,
     failedChecks: Object.entries(result.audits || {}).filter(([, value]) => value?.valid === false).map(([name]) => name),
     complete: Boolean(result.provider?.complete),
+    category: rejectionCategory(result),
+    providerStatus: result.provider?.httpStatus || null,
+    providerCode: result.provider?.internalErrors?.[0]?.code || null,
   }))
   const rankedCards = rankFrontPage(accepted.map(result => {
     const input = inputs.get(result.eventId)
@@ -59,6 +74,7 @@ export function assembleUnattendedShadowEdition(writerReport, shortlist) {
     sourceTitle: card.headline,
     failedChecks: ['post-generation overlap'],
     complete: true,
+    category: 'overlap-rejected',
   }))
   rejected.push(...overlapRejections)
   const cards = rankFrontPage(rankedCards.filter(card => !quarantinedIds.has(card.eventId)))
@@ -75,6 +91,7 @@ export function assembleUnattendedShadowEdition(writerReport, shortlist) {
     audit,
     overlaps,
     quarantinedOverlaps: overlapRejections.length,
+    providerDeferred: rejected.filter(item => item.category === 'provider-deferred').length,
     requiresEditorialReview: rejected.length > 0 || overlaps.length > 0,
     cards,
   }
@@ -87,9 +104,16 @@ function markdown(edition) {
     `Requested: ${edition.requested} · accepted: ${edition.accepted} · rejected: ${edition.rejected.length} · overlap flags: ${edition.overlaps.length} · neurons: ${edition.totalNeurons}.`, '',
     `Requires editorial review: ${edition.requiresEditorialReview}.`, '',
   ]
-  if (edition.rejected.length) {
+  const providerDeferred = edition.rejected.filter(item => item.category === 'provider-deferred')
+  const checkRejected = edition.rejected.filter(item => item.category !== 'provider-deferred')
+  if (providerDeferred.length) {
+    lines.push('## Deferred by provider availability', '')
+    for (const item of providerDeferred) lines.push(`- **${item.sourceTitle}** — HTTP ${item.providerStatus || 'unknown'}, provider code ${item.providerCode || 'unknown'}`)
+    lines.push('')
+  }
+  if (checkRejected.length) {
     lines.push('## Rejected by deterministic checks', '')
-    for (const item of edition.rejected) lines.push(`- **${item.sourceTitle}** — ${item.complete ? item.failedChecks.join(', ') || 'unknown check' : 'incomplete output'}`)
+    for (const item of checkRejected) lines.push(`- **${item.sourceTitle}** — ${item.complete ? item.failedChecks.join(', ') || 'unknown check' : 'incomplete output'}`)
     lines.push('')
   }
   if (edition.overlaps.length) {
@@ -118,7 +142,7 @@ async function main() {
     fs.writeFile(path.join(outputDir, 'UNATTENDED_SHADOW_EDITION.json'), `${JSON.stringify(edition, null, 2)}\n`),
     fs.writeFile(path.join(outputDir, 'UNATTENDED_SHADOW_EDITION.md'), markdown(edition)),
   ])
-  process.stdout.write(`${JSON.stringify({ requested: edition.requested, accepted: edition.accepted, rejected: edition.rejected.length, overlapFlags: edition.overlaps.length, requiresEditorialReview: edition.requiresEditorialReview, laneCounts: edition.audit.laneCounts, regionCounts: edition.audit.regionCounts }, null, 2)}\n`)
+  process.stdout.write(`${JSON.stringify({ requested: edition.requested, accepted: edition.accepted, rejected: edition.rejected.length, providerDeferred: edition.providerDeferred, overlapFlags: edition.overlaps.length, requiresEditorialReview: edition.requiresEditorialReview, laneCounts: edition.audit.laneCounts, regionCounts: edition.audit.regionCounts }, null, 2)}\n`)
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) main().catch(error => { console.error(error.message); process.exitCode = 1 })
