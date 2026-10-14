@@ -144,7 +144,10 @@ export function scoreCandidate(candidate, reportCreatedAt) {
   return { ...candidate, lanes, priorityRegions, title, domain, sourceTier: tier, ageHours, score, laneScores, reasons }
 }
 
-const GENERIC_CLUSTER_TERMS = new Set(['attack', 'airport', 'candidate', 'government', 'leader', 'minister', 'people', 'president', 'report', 'state', 'world'])
+const GENERIC_CLUSTER_TERMS = new Set([
+  'attack', 'airport', 'billion', 'candidate', 'government', 'leader', 'million',
+  'minister', 'people', 'president', 'report', 'state', 'world', 'year',
+])
 const PLACE_ANCHORS = new Set(['saudiarabia', 'sudan', 'ukraine', 'india', 'bangladesh', 'ghana', 'syria', 'canada', 'nepal', 'gaza', 'lebanon'])
 const EVENT_ANCHORS = new Set(['airport', 'attack', 'ceasefire', 'election', 'flood', 'mine', 'protest', 'strike'])
 const ENTITY_ANCHORS = new Set(['icc', 'iaea', 'imf', 'nato', 'who'])

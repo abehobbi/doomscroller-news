@@ -5,6 +5,22 @@ import { pathToFileURL } from 'node:url'
 import { auditEdition } from './assemble-verified-edition.mjs'
 import { rankFrontPage } from './final-edition-ranker.mjs'
 import { auditEditorialOverlap } from './qualify-shadow-edition.mjs'
+import { regionMatchesText } from './merge-discovery-candidates.mjs'
+
+const PRIORITY_REGIONS = ['Syria', 'Middle East', 'Bangladesh', 'Ghana', 'Canada', 'GTA']
+
+export function normalizeGeneratedRouting(lane, priorityRegions, headline, sourceHeadline = '') {
+  const headlineContext = `${sourceHeadline} ${headline}`
+  const confirmed = (priorityRegions || []).filter(region => regionMatchesText(region, headlineContext))
+  const inferred = PRIORITY_REGIONS.filter(region => regionMatchesText(region, headline))
+  const regions = [...new Set([...confirmed, ...inferred])]
+  const broadMiddleEastIndex = regions.indexOf('Middle East')
+  if (regions.includes('Syria') && broadMiddleEastIndex >= 0) regions.splice(broadMiddleEastIndex, 1)
+  let normalizedLane = lane
+  if (regions.length && lane === 'world-major') normalizedLane = 'priority-major'
+  if (regions.length && lane === 'world-interesting') normalizedLane = 'priority-interesting'
+  return { lane: normalizedLane, priorityRegions: regions }
+}
 
 export function assembleUnattendedShadowEdition(writerReport, shortlist) {
   const inputs = new Map((shortlist.selected || []).map(item => [item.eventId, item]))
@@ -18,12 +34,13 @@ export function assembleUnattendedShadowEdition(writerReport, shortlist) {
   const rankedCards = rankFrontPage(accepted.map(result => {
     const input = inputs.get(result.eventId)
     if (!input?.image?.url && !input?.imageException?.granted) throw new Error(`Accepted card ${result.eventId} has neither a verified publisher image nor an approved image exception`)
+    const routing = normalizeGeneratedRouting(result.lane, input.priorityRegions, result.card.headline, input.headline)
     return {
       eventId: result.eventId,
-      lane: result.lane,
+      lane: routing.lane,
       headline: result.card.headline,
       publishedAt: input.publishedAt,
-      priorityRegions: input.priorityRegions || [],
+      priorityRegions: routing.priorityRegions,
       pages: result.card.pages,
       uncertainties: result.card.uncertainties || [],
       image: input.image,

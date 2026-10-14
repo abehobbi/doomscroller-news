@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { assembleUnattendedShadowEdition } from './assemble-unattended-shadow-edition.mjs'
+import { assembleUnattendedShadowEdition, normalizeGeneratedRouting } from './assemble-unattended-shadow-edition.mjs'
 
 const input = (eventId, lane, headline) => ({ eventId, lane, headline, publishedAt: '2026-10-12T12:00:00Z', priorityRegions: [], image: { url: `https://img.test/${eventId}.jpg`, publisher: 'img.test' }, primarySource: { url: `https://source.test/${eventId}` } })
 const accepted = (eventId, lane, headline, text, url = `https://source.test/${eventId}`) => ({ eventId, lane, sourceTitle: headline, status: 'accepted', card: { headline, pages: [{ text }], uncertainties: [] }, sources: [{ publisher: 'source.test', url }], audits: { content: { valid: true } }, provider: { complete: true } })
@@ -35,4 +35,23 @@ test('retains an explicitly approved image exception without inventing an image'
   assert.equal(edition.cards.length, 1)
   assert.equal(edition.cards[0].image, null)
   assert.equal(edition.cards[0].imageException.granted, true)
+})
+
+test('routes generated priority-region headlines back into priority lanes', () => {
+  assert.deepEqual(
+    normalizeGeneratedRouting('world-interesting', [], 'Ghanaian universities prepare to reopen after strike'),
+    { lane: 'priority-interesting', priorityRegions: ['Ghana'] },
+  )
+  assert.deepEqual(
+    normalizeGeneratedRouting('world-major', [], 'Bangladesh begins first nuclear reaction at Rooppur'),
+    { lane: 'priority-major', priorityRegions: ['Bangladesh'] },
+  )
+  assert.deepEqual(
+    normalizeGeneratedRouting('priority-interesting', ['Middle East'], 'Former engineer charged in San Francisco', 'OpenAI engineer charged after listening device found'),
+    { lane: 'priority-interesting', priorityRegions: [] },
+  )
+  assert.deepEqual(
+    normalizeGeneratedRouting('priority-interesting', ['Syria'], 'Syrian sailors missing after Black Sea drone strike'),
+    { lane: 'priority-interesting', priorityRegions: ['Syria'] },
+  )
 })
