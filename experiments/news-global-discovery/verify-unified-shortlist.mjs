@@ -174,7 +174,10 @@ export function readiness(selection, sources) {
   const groups = independentSourceGroups(sources)
   const trustedGroups = groups.filter(group => group.some(source => source.trusted))
   const imageSource = accepted.find(source => source.imageUrl)
-  const riskText = [selection.representative.title, ...accepted.flatMap(source => [source.title, source.evidenceText?.slice(0, 1600)])].filter(Boolean).join('\n')
+  const discoveryLane = (selection.assignedLane || selection.lane) === 'discovery'
+  const riskText = discoveryLane
+    ? [selection.representative.title, ...accepted.map(source => source.title)].filter(Boolean).join('\n')
+    : [selection.representative.title, ...accepted.flatMap(source => [source.title, source.evidenceText?.slice(0, 1600)])].filter(Boolean).join('\n')
   const highRisk = HIGH_RISK.test(riskText)
   const reasons = []
   if (!accepted.length) reasons.push('no accessible, relevant and fresh source evidence')

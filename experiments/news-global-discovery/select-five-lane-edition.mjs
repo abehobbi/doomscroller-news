@@ -22,11 +22,12 @@ const LANE_LIMITS = {
 }
 const QUERY_REGIONS = new Map(FIVE_LANE_QUERIES.map(query => [query.id, query.region]).filter(([, region]) => region))
 const PRIORITY_REGION_MINIMUMS = { Syria: 2, 'Middle East': 2, Bangladesh: 2, Ghana: 2, Canada: 2, GTA: 1 }
+const PRIORITY_REGIONS = Object.keys(PRIORITY_REGION_MINIMUMS)
 
 const HARD_REJECT = /\b(?:daily mail|tourism|travel guide|things to do|event calendar|press release|sponsored|opinion|podcast|newsletter|award ceremony|celebrity|football|soccer|basketball|tickets?|lottery results?|horoscope|weather forecast|stock picks?|coupon|shopping deal)\b/i
 const GENERIC_PAGE = /\b(?:home|front page|latest news|breaking news|all news|directory|annual report|meeting packet|minutes|agenda|live updates?)\b/i
 const WEAK_EVENT = /\b(?:invites?|calls? for|urges?|plans? to|could|may|set to|expected to|celebrates?|festival to be held|launches? initiative|shares? thoughts?|reacts? to|commends?|praises?|welcomes?|reaffirms?|showcas(?:e|es|ed|ing)|partner(?:s|ed|ing)? with|weighs? in|misses? court|open for|ready to|vows? to)\b/i
-const CONCRETE = /\b(?:kills?|dies?|dead|injur(?:y|ed|ies)|arrests?|convicts?|acquits?|bans?|blocks?|halts?|suspends?|overturns?|approves?|rejects?|signs?|strikes?|attacks?|evacuates?|floods?|earthquake|hurricane|outbreak|shortage|collapse|closes?|opens?|restores?|discovers?|found|reveals?|reports?|reaches? agreement|cuts?|rises?|falls?|first|record|investigat(?:es?|ion)|lawsuit|protest|sanctions?|election|ceasefire|troops?|war)\b/i
+const CONCRETE = /\b(?:kills?|dies?|dead|injur(?:y|ed|ies)|arrests?|convicts?|acquits?|bans?|blocks?|halts?|suspends?|overturns?|approves?|rejects?|signs?|strikes?|attacks?|evacuates?|sinks?|sank|sunk|traffick(?:ed|ing)?|layoffs?|displaced|floods?|earthquake|hurricane|outbreaks?|shortage|collapse|closes?|opens?|restores?|discovers?|found|reveals?|reports?|reaches? agreement|cuts?|rises?|falls?|first|record|investigat(?:es?|ion)|lawsuit|protest|sanctions?|election|ceasefire|troops?|war)\b/i
 const HUMAN_TEXTURE = /\b(?:village|community|famil(?:y|ies)|residents?|women|children|youths?|artisans?|farmers?|fishers?|workers?|craft|tradition|harvest|livelihood|neighbou?rhood|small town|Indigenous|tribal|refugee|market|water|wildlife|chimpanzees?|mosquitoes?|mangrove|forest|river|wetland|school|education|housing|tenant|hospital|theatre|portrait|literature|clothing|class|debt|sanitation|poultry|rescue|sailors?|mining|extraction)\b/i
 const DISCOVERY_SIGNAL = /\b(?:study|researchers?|scientists?|fossil|archaeolog|paleontolog|species|planet|space|Webb|brain|genome|microbes?|quantum|clock|ancient|excavat|Nature|journal|trial|mice|stars?|galaxy|evolution)\b/i
 const COPY_MARKERS = /(?:\|\s*(?:AP News|Reuters|BBC News|CBC News|Al Jazeera)|-Xinhua|Africa Newsroom\s*\/\s*Press release)/i
@@ -50,7 +51,7 @@ function parseArgs(argv) {
     else if (argv[index] === '--count') options.count = Number(argv[++index])
   }
   if (!options.input || !options.outputDir) throw new Error('--input and --output-dir are required')
-  if (!Number.isInteger(options.count) || options.count < 1 || options.count > 65) throw new Error('--count must be an integer from 1 to 65')
+  if (!Number.isInteger(options.count) || options.count < 1 || options.count > 160) throw new Error('--count must be an integer from 1 to 160')
   return options
 }
 
@@ -140,8 +141,12 @@ export function scoreCandidate(candidate, reportCreatedAt) {
   const created = Date.parse(reportCreatedAt || '')
   const ageHours = Number.isFinite(published) && Number.isFinite(created) ? Math.max(0, (created - published) / 3_600_000) : null
   if (ageHours !== null) score += ageHours <= 30 ? 5 : ageHours <= 54 ? 2 : 0
-  const priorityRegions = [...new Set([...(candidate.priorityRegions || []), ...candidate.queryIds.map(id => QUERY_REGIONS.get(id)).filter(Boolean)].filter(region => regionMatchesText(region, title)))]
-  const normalizedLanes = candidate.lanes
+  const inferredRegions = PRIORITY_REGIONS.filter(region => regionMatchesText(region, title))
+  const priorityRegions = [...new Set([...(candidate.priorityRegions || []), ...candidate.queryIds.map(id => QUERY_REGIONS.get(id)).filter(Boolean), ...inferredRegions].filter(region => regionMatchesText(region, title)))]
+  const inferredMajorLane = majorEligible(title) && CONCRETE.test(title) && !lowConsequence
+    ? (priorityRegions.length ? 'priority-major' : 'world-major')
+    : null
+  const normalizedLanes = [...candidate.lanes, inferredMajorLane].filter(Boolean)
     .filter(lane => !lane.includes('major') || majorEligible(title))
     .map(lane => !priorityRegions.length && lane.startsWith('priority-') ? lane.replace('priority-', 'world-')
       : priorityRegions.length && lane === 'world-major' ? 'priority-major' : lane)
@@ -204,7 +209,7 @@ export function clusterCandidates(scored) {
 
 function bestLaneFor(cluster, counts, phase) {
   return cluster.lanes
-    .filter(lane => counts[lane] < LANE_LIMITS[lane].maximum)
+    .filter(lane => phase === 'open' || counts[lane] < LANE_LIMITS[lane].maximum)
     .map(lane => {
       const limit = LANE_LIMITS[lane]
       const needBonus = phase === 'minimum' && counts[lane] < limit.minimum ? 30 : phase === 'preferred' && counts[lane] < limit.preferred ? 14 : 0
@@ -213,7 +218,11 @@ function bestLaneFor(cluster, counts, phase) {
     .sort((a, b) => b.adjusted - a.adjusted)[0] || null
 }
 
-function selectEdition(clusters, count) {
+export function domainDiversityPenalty(existingCount) {
+  return Math.min(28, Math.max(0, Number(existingCount || 0) - 1) * 14)
+}
+
+export function selectEdition(clusters, count) {
   const selected = []
   const counts = Object.fromEntries(LANE_ORDER.map(lane => [lane, 0]))
   const domainCounts = new Map(), regionCounts = new Map()
@@ -222,7 +231,7 @@ function selectEdition(clusters, count) {
     const choices = remaining.flatMap(cluster => {
       const assignment = bestLaneFor(cluster, counts, phase)
       if (!assignment) return []
-      const domainPenalty = Math.max(0, (domainCounts.get(cluster.representative.domain) || 0) - 1) * 14
+      const domainPenalty = domainDiversityPenalty(domainCounts.get(cluster.representative.domain) || 0)
       const regions = cluster.members.flatMap(member => member.priorityRegions || [])
       const largestRegionGap = Math.max(0, ...regions.map(region => Math.max(0, (PRIORITY_REGION_MINIMUMS[region] || 0) - (regionCounts.get(region) || 0))))
       const regionBonus = assignment.lane.startsWith('priority-') ? largestRegionGap * 14 : 0

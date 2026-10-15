@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 
-import { prepareVerifiedWriterBatch } from './prepare-verified-writer-batch.mjs'
+import { MAX_ACCEPTED_CARDS, prepareVerifiedWriterBatch } from './prepare-verified-writer-batch.mjs'
 
 test('preserves source boundaries when preparing a merged edition for the writer', () => {
   const edition = { cards: [{
@@ -22,4 +22,16 @@ test('preserves source boundaries when preparing a merged edition for the writer
 
 test('rejects cards whose per-source evidence was discarded', () => {
   assert.throws(() => prepareVerifiedWriterBatch({ cards: [{ eventId: 'broken', acceptedSources: [{ url: 'https://one.test' }] }] }), /no source-bound evidence/)
+})
+
+test('the publication batch never exceeds the 65-card hard limit', () => {
+  const cards = Array.from({ length: 70 }, (_, index) => ({
+    eventId: `event-${index}`, frontPageRank: index + 1, lane: 'world-interesting', headline: `Story ${index}`,
+    primaryUrl: `https://source.test/${index}`, priorityRegions: [],
+    acceptedSources: [{ domain: 'source.test', family: `source-${index}`, url: `https://source.test/${index}`, evidenceText: `Evidence for story ${index}.` }],
+  }))
+  const prepared = prepareVerifiedWriterBatch({ cards })
+  assert.equal(MAX_ACCEPTED_CARDS, 65)
+  assert.equal(prepared.shortlist.selected.length, 65)
+  assert.equal(prepared.verification.results.length, 65)
 })

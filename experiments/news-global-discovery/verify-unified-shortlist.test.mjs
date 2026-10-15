@@ -57,6 +57,17 @@ test('contested political evidence cannot bypass corroboration through a neutral
   assert.ok(result.reasons.includes('high-risk event lacks two independent trusted source families'))
 })
 
+test('animal language inside discovery evidence does not turn peer-reviewed research into a conflict event', () => {
+  const source = {
+    accepted: true, trusted: true, family: 'publisher:bbc.com', imageUrl: 'https://example.com/fossil.jpg',
+    url: 'https://bbc.com/fossil', domain: 'bbc.com', title: 'Isle of Wight fossil identified as new dinosaur species',
+    evidenceText: 'Researchers found a new megaraptoran. Its relatives attacked prey with their long arms and giant claws.',
+  }
+  const result = readiness({ assignedLane: 'discovery', representative: { title: source.title } }, [source])
+  assert.equal(result.highRisk, false)
+  assert.equal(result.ready, true)
+})
+
 test('copied wire text counts as one independent source even when a republication omits the byline', () => {
   const common = 'Standing knee deep in the river, residents said the government project flooded homes and temples without providing enough compensation to rebuild their lives. The dispute is an early test for an ambitious national plan to link rivers and redistribute water to drought prone regions.'
   const sources = [

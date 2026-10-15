@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { candidatesDescribeSameThread, lowConsequenceEvent, scoreCandidate } from './select-five-lane-edition.mjs'
+import { candidatesDescribeSameThread, domainDiversityPenalty, lowConsequenceEvent, scoreCandidate, selectEdition } from './select-five-lane-edition.mjs'
 
 const candidate = (title, lanes, priorityRegions = []) => ({
   title, lanes, priorityRegions, url: 'https://bbc.com/story', publishedAt: '2026-10-13T08:00:00Z',
@@ -17,6 +17,12 @@ test('priority-interesting searches do not promote stories without a major-news 
   assert.deepEqual(result.lanes, ['priority-interesting'])
 })
 
+test('a concrete consequential headline can recover a major lane even when a feed labeled it interesting', () => {
+  const shipping = scoreCandidate(candidate('Two commercial ships sink near the Strait of Hormuz', ['world-interesting']), '2026-10-13T10:00:00Z')
+  assert.ok(shipping.lanes.includes('priority-major'))
+  assert.ok(shipping.priorityRegions.includes('Middle East'))
+})
+
 test('shared amounts do not merge unrelated science and public spending stories', () => {
   const fossil = { title: 'The fossil record may be missing 200 million years of animal history' }
   const hospital = { title: 'Ghana allocates 200 million cedis for police hospital expansion' }
@@ -29,4 +35,29 @@ test('generic statements and ceremonial partnerships cannot fill an edition', ()
   assert.equal(lowConsequenceEvent('Saudi Arabia reaffirms support for refugee returns'), true)
   assert.equal(lowConsequenceEvent('Government signs agreement funding 49 school repairs'), false)
   assert.equal(scoreCandidate(candidate('Prime minister showcases country at annual meeting', ['priority-interesting'], ['Ghana']), '2026-10-13T10:00:00Z').lowConsequence, true)
+})
+
+test('candidate review can exceed a soft lane maximum before verification', () => {
+  const clusters = Array.from({ length: 21 }, (_, index) => ({
+    id: `event-${index}`,
+    lanes: ['world-interesting'],
+    members: [{ priorityRegions: [] }],
+    representative: {
+      title: `Distinct reporting project ${index}`,
+      domain: `source-${index}.test`,
+      score: 70,
+      laneScores: { 'world-interesting': 70 },
+      ageHours: 2,
+      priorityRegions: [],
+    },
+  }))
+  const result = selectEdition(clusters, 21)
+  assert.equal(result.selected.length, 21)
+  assert.equal(result.counts['world-interesting'], 21)
+})
+
+test('publisher diversity remains a preference rather than an exclusion wall', () => {
+  assert.equal(domainDiversityPenalty(1), 0)
+  assert.equal(domainDiversityPenalty(3), 28)
+  assert.equal(domainDiversityPenalty(20), 28)
 })

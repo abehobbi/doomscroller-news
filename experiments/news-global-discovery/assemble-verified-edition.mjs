@@ -75,7 +75,7 @@ export function assembleVerifiedCards(shortlist, verification, repairs) {
       && (candidatesDescribeSameThread({ title: selection.representative.title }, { title: source.title || '' }) || (source.sharedTerms || []).length >= 4))
       .map(source => ({ ...source, family: sourceFamilyFromEvidence(source.domain, source.evidenceText, source.title) }))
     if (!acceptedSources.length) return []
-    const finalGate = readiness({ representative: { title: selection.representative.title } }, acceptedSources.map(source => ({ ...source, accepted: true })))
+    const finalGate = readiness({ representative: { title: selection.representative.title }, assignedLane: selection.assignedLane }, acceptedSources.map(source => ({ ...source, accepted: true })))
     const isImageException = exceptions.has(selection.id)
     if (!finalGate.ready && !(isImageException && finalGate.reasons.length === 1 && finalGate.reasons[0] === IMAGE_EXCEPTION_REASON)) return []
     const imageSource = acceptedSources.find(source => source.url === verified.readiness.image?.sourceUrl && source.imageUrl)

@@ -5,6 +5,8 @@ import { pathToFileURL } from 'node:url'
 import { completeSentences } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/lib.mjs'
 import { independentSourceGroups } from './verify-unified-shortlist.mjs'
 
+export const MAX_ACCEPTED_CARDS = 65
+
 const canonical = value => {
   try {
     const url = new URL(value)
@@ -17,7 +19,7 @@ const canonical = value => {
 
 export function prepareVerifiedWriterBatch(edition) {
   const selected = [], results = []
-  for (const [index, card] of (edition.cards || []).entries()) {
+  for (const [index, card] of (edition.cards || []).slice(0, MAX_ACCEPTED_CARDS).entries()) {
     const sources = (card.acceptedSources || []).filter(source => source.url && source.evidenceText)
     if (!sources.length) throw new Error(`Card ${card.eventId || index + 1} has no source-bound evidence`)
     const primary = sources.find(source => canonical(source.url) === canonical(card.primaryUrl)) || sources[0]

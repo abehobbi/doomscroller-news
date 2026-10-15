@@ -63,10 +63,18 @@ test('a person nationality alone does not route an event into a priority region'
   assert.equal(regionMatchesText('Middle East', 'Saudi Arabia investigates a recording device found in Riyadh'), true)
 })
 
+test('targeted trafficking of a priority population is central rather than a passing nationality mention', () => {
+  assert.equal(regionMatchesText('Bangladesh', '20 out of 30 Bangladeshis trafficked into Russia war were killed'), true)
+  assert.equal(regionMatchesText('Bangladesh', 'Bangladeshi engineer wins award in London'), false)
+})
+
 test('routine disruption is not major news merely because it is concrete', () => {
   assert.equal(majorEligible('Qantas flight grounded after bedbug outbreak'), false)
   assert.equal(majorEligible('Hackers force supermarket refrigerators to heat up'), false)
   assert.equal(majorEligible('Court overturns national environmental law'), true)
+  assert.equal(majorEligible('Two commercial ships sink near the Strait of Hormuz'), true)
+  assert.equal(majorEligible('Bangladeshi jobseekers trafficked into Russia war'), true)
+  assert.equal(majorEligible('Public employees strike shuts schools and disrupts hospitals'), true)
 })
 
 test('hypothetical analysis does not qualify as major news without a reported action', () => {
