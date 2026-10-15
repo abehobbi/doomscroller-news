@@ -9,7 +9,7 @@ const REGION_SIGNALS = {
   'Middle East': /\b(?:middle east|iran|iraq|israel|israeli|palestin|gaza|west bank|leban|jordan|yemen|houthi|saudi|riyadh|qatar|emirat|uae|oman|bahrain|kuwait|turk(?:ey|iye)|syria)\b/i,
   Bangladesh: /\b(?:bangladesh|bangladeshi|dhaka|chattogram|chittagong|sylhet|rajshahi|khulna|barisal|rangpur|mymensingh|mongla|padma|bnp|awami league)\b/i,
   Ghana: /\b(?:ghana|ghanaian|accra|tema|kumasi|tamale|takoradi|cape coast|ashanti|bawumia|mahama)\b/i,
-  Canada: /(?:\b(?:canada|canadian|ontario|quebec|alberta|manitoba|saskatchewan|nova scotia|new brunswick|newfoundland|british columbia|yukon|nunavut|toronto|torontonians?|durham|montreal|vancouver|ottawa|calgary|edmonton)\b|\bb\.c\.(?=\s|$))/i,
+  Canada: /(?:\b(?:canada|canadian|ontario|quebec|alberta|manitoba|saskatchewan|nova scotia|new brunswick|newfoundland|british columbia|yukon|nunavut|toronto|torontonians?|durham|montreal|vancouver|ottawa|calgary|edmonton)\b|\bb\.c\.(?=\s|$|[,;:]))/i,
   GTA: /\b(?:greater toronto|gta|toronto|torontonians?|durham|mississauga|brampton|markham|vaughan|scarborough|etobicoke|pickering|ajax|oshawa|oakville|burlington)\b/i,
 }
 const REGION_PLACE_SIGNALS = {
@@ -17,7 +17,7 @@ const REGION_PLACE_SIGNALS = {
   'Middle East': /\b(?:middle east|iran|iraq|israel|palestin|gaza|west bank|lebanon|jordan|yemen|riyadh|saudi arabia|qatar|united arab emirates|uae|dubai|oman|bahrain|kuwait|turk(?:ey|iye))\b/i,
   Bangladesh: /\b(?:bangladesh|dhaka|chattogram|chittagong|sylhet|rajshahi|khulna|barisal|rangpur|mymensingh|mongla|padma|bnp|awami league)\b/i,
   Ghana: /\b(?:ghana|accra|tema|kumasi|tamale|takoradi|cape coast|ashanti|bawumia|mahama)\b/i,
-  Canada: /(?:\b(?:canada|ontario|quebec|alberta|manitoba|saskatchewan|nova scotia|new brunswick|newfoundland|british columbia|yukon|nunavut|toronto|torontonians?|durham|montreal|vancouver|ottawa|calgary|edmonton)\b|\bb\.c\.(?=\s|$))/i,
+  Canada: /(?:\b(?:canada|ontario|quebec|alberta|manitoba|saskatchewan|nova scotia|new brunswick|newfoundland|british columbia|yukon|nunavut|toronto|torontonians?|durham|montreal|vancouver|ottawa|calgary|edmonton)\b|\bb\.c\.(?=\s|$|[,;:]))/i,
   GTA: /\b(?:greater toronto|gta|toronto|torontonians?|durham|mississauga|brampton|markham|vaughan|scarborough|etobicoke|pickering|ajax|oshawa|oakville|burlington)\b/i,
 }
 const NATIONALITY_PERSON_SIGNALS = {

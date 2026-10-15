@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { candidatesDescribeSameThread, scoreCandidate } from './select-five-lane-edition.mjs'
+import { candidatesDescribeSameThread, lowConsequenceEvent, scoreCandidate } from './select-five-lane-edition.mjs'
 
 const candidate = (title, lanes, priorityRegions = []) => ({
   title, lanes, priorityRegions, url: 'https://bbc.com/story', publishedAt: '2026-10-13T08:00:00Z',
@@ -21,4 +21,12 @@ test('shared amounts do not merge unrelated science and public spending stories'
   const fossil = { title: 'The fossil record may be missing 200 million years of animal history' }
   const hospital = { title: 'Ghana allocates 200 million cedis for police hospital expansion' }
   assert.equal(candidatesDescribeSameThread(fossil, hospital), false)
+})
+
+test('generic statements and ceremonial partnerships cannot fill an edition', () => {
+  assert.equal(lowConsequenceEvent('President urges churches to provide practical community service'), true)
+  assert.equal(lowConsequenceEvent('Watch company partners with school for 150th anniversary'), true)
+  assert.equal(lowConsequenceEvent('Saudi Arabia reaffirms support for refugee returns'), true)
+  assert.equal(lowConsequenceEvent('Government signs agreement funding 49 school repairs'), false)
+  assert.equal(scoreCandidate(candidate('Prime minister showcases country at annual meeting', ['priority-interesting'], ['Ghana']), '2026-10-13T10:00:00Z').lowConsequence, true)
 })

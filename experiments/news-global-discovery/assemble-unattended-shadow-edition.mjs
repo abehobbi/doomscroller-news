@@ -10,10 +10,10 @@ import { regionMatchesText } from './merge-discovery-candidates.mjs'
 const PRIORITY_REGIONS = ['Syria', 'Middle East', 'Bangladesh', 'Ghana', 'Canada', 'GTA']
 const BREAKING_MAJOR_HEADLINE = /\b(?:kills? (?:at least )?\d+|\d+ (?:people )?(?:killed|dead)|dozens? (?:killed|dead)|declares? (?:a )?(?:national )?state of emergency|magnitude-\d+(?:\.\d+)? earthquake|hurricane makes landfall)\b/i
 
-export function normalizeGeneratedRouting(lane, priorityRegions, headline, sourceHeadline = '') {
-  const headlineContext = `${sourceHeadline} ${headline}`
+export function normalizeGeneratedRouting(lane, priorityRegions, headline, sourceHeadline = '', sourceEvidence = '') {
+  const headlineContext = `${sourceHeadline} ${String(sourceEvidence || '').slice(0, 1600)} ${headline}`
   const confirmed = (priorityRegions || []).filter(region => regionMatchesText(region, headlineContext))
-  const inferred = PRIORITY_REGIONS.filter(region => regionMatchesText(region, headline))
+  const inferred = PRIORITY_REGIONS.filter(region => regionMatchesText(region, headlineContext))
   const regions = [...new Set([...confirmed, ...inferred])]
   const broadMiddleEastIndex = regions.indexOf('Middle East')
   if (regions.includes('Syria') && broadMiddleEastIndex >= 0) regions.splice(broadMiddleEastIndex, 1)
@@ -58,7 +58,7 @@ export function assembleUnattendedShadowEdition(writerReport, shortlist) {
   const rankedCards = rankFrontPage(accepted.map(result => {
     const input = inputs.get(result.eventId)
     if (!input?.image?.url && !input?.imageException?.granted) throw new Error(`Accepted card ${result.eventId} has neither a verified publisher image nor an approved image exception`)
-    const routing = normalizeGeneratedRouting(result.lane, input.priorityRegions, result.card.headline, input.headline)
+    const routing = normalizeGeneratedRouting(result.lane, input.priorityRegions, result.card.headline, input.headline, input.evidence)
     return {
       eventId: result.eventId,
       lane: routing.lane,

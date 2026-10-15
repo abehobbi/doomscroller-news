@@ -55,6 +55,14 @@ test('routes generated priority-region headlines back into priority lanes', () =
     { lane: 'world-interesting', priorityRegions: [] },
   )
   assert.deepEqual(
+    normalizeGeneratedRouting('world-interesting', [], 'Heiltsuk Nation seeks further spill compensation', 'Heiltsuk Nation still seeking compensation', 'The tug ran aground near Bella Bella, B.C., and spilled fuel in Heiltsuk territory.'),
+    { lane: 'priority-interesting', priorityRegions: ['Canada'] },
+  )
+  assert.deepEqual(
+    normalizeGeneratedRouting('world-interesting', [], 'GAUA says its strike will continue', 'GAUA insists strike will continue', 'The president of the Ghana Association of University Administrators said public universities remain affected.'),
+    { lane: 'priority-interesting', priorityRegions: ['Ghana'] },
+  )
+  assert.deepEqual(
     normalizeGeneratedRouting('world-interesting', [], 'Russian attacks kill at least 10 and injure dozens across Ukraine'),
     { lane: 'world-major', priorityRegions: [] },
   )

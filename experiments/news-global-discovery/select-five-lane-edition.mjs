@@ -25,7 +25,7 @@ const PRIORITY_REGION_MINIMUMS = { Syria: 2, 'Middle East': 2, Bangladesh: 2, Gh
 
 const HARD_REJECT = /\b(?:daily mail|tourism|travel guide|things to do|event calendar|press release|sponsored|opinion|podcast|newsletter|award ceremony|celebrity|football|soccer|basketball|tickets?|lottery results?|horoscope|weather forecast|stock picks?|coupon|shopping deal)\b/i
 const GENERIC_PAGE = /\b(?:home|front page|latest news|breaking news|all news|directory|annual report|meeting packet|minutes|agenda|live updates?)\b/i
-const WEAK_EVENT = /\b(?:invites?|calls? for|urges?|plans? to|could|may|set to|expected to|celebrates?|festival to be held|launches? initiative|shares? thoughts?|reacts? to|commends?|praises?|welcomes?|weighs? in|misses? court|open for|ready to|vows? to)\b/i
+const WEAK_EVENT = /\b(?:invites?|calls? for|urges?|plans? to|could|may|set to|expected to|celebrates?|festival to be held|launches? initiative|shares? thoughts?|reacts? to|commends?|praises?|welcomes?|reaffirms?|showcas(?:e|es|ed|ing)|partner(?:s|ed|ing)? with|weighs? in|misses? court|open for|ready to|vows? to)\b/i
 const CONCRETE = /\b(?:kills?|dies?|dead|injur(?:y|ed|ies)|arrests?|convicts?|acquits?|bans?|blocks?|halts?|suspends?|overturns?|approves?|rejects?|signs?|strikes?|attacks?|evacuates?|floods?|earthquake|hurricane|outbreak|shortage|collapse|closes?|opens?|restores?|discovers?|found|reveals?|reports?|reaches? agreement|cuts?|rises?|falls?|first|record|investigat(?:es?|ion)|lawsuit|protest|sanctions?|election|ceasefire|troops?|war)\b/i
 const HUMAN_TEXTURE = /\b(?:village|community|famil(?:y|ies)|residents?|women|children|youths?|artisans?|farmers?|fishers?|workers?|craft|tradition|harvest|livelihood|neighbou?rhood|small town|Indigenous|tribal|refugee|market|water|wildlife|chimpanzees?|mosquitoes?|mangrove|forest|river|wetland|school|education|housing|tenant|hospital|theatre|portrait|literature|clothing|class|debt|sanitation|poultry|rescue|sailors?|mining|extraction)\b/i
 const DISCOVERY_SIGNAL = /\b(?:study|researchers?|scientists?|fossil|archaeolog|paleontolog|species|planet|space|Webb|brain|genome|microbes?|quantum|clock|ancient|excavat|Nature|journal|trial|mice|stars?|galaxy|evolution)\b/i
@@ -109,6 +109,11 @@ function laneScore(lane, title) {
   return HUMAN_TEXTURE.test(title) ? 14 : 2
 }
 
+export function lowConsequenceEvent(value) {
+  const title = cleanTitle(value)
+  return WEAK_EVENT.test(title) && !CONCRETE.test(title) && !DISCOVERY_SIGNAL.test(title)
+}
+
 export function scoreCandidate(candidate, reportCreatedAt) {
   const title = cleanTitle(candidate.title)
   const domain = domainOf(candidate.url)
@@ -125,7 +130,9 @@ export function scoreCandidate(candidate, reportCreatedAt) {
   score += Math.max(0, 7 - candidate.bestPosition)
   if (candidate.image) score += 3
   else { score -= 3; reasons.push('missing provider image') }
-  if (WEAK_EVENT.test(title)) { score -= 8; reasons.push('statement, invitation, or prospective framing') }
+  const lowConsequence = lowConsequenceEvent(title)
+  if (lowConsequence) { score -= 50; reasons.push('low-consequence statement, publicity, or prospective framing') }
+  else if (WEAK_EVENT.test(title)) { score -= 8; reasons.push('statement, invitation, or prospective framing') }
   if (GENERIC_PAGE.test(title)) { score -= 30; reasons.push('generic or rolling page') }
   if (HARD_REJECT.test(`${title} ${domain}`)) { score -= 80; reasons.push('hard editorial rejection') }
   if (COPY_MARKERS.test(candidate.title) && tier !== 'strong') { score -= 4; reasons.push('possible derivative or republished copy') }
@@ -141,7 +148,7 @@ export function scoreCandidate(candidate, reportCreatedAt) {
   const eligibleLanes = [...new Set(normalizedLanes)]
   const lanes = eligibleLanes.length ? eligibleLanes : [priorityRegions.length ? 'priority-interesting' : 'world-interesting']
   const laneScores = Object.fromEntries(lanes.map(lane => [lane, score + laneScore(lane, title)]))
-  return { ...candidate, lanes, priorityRegions, title, domain, sourceTier: tier, ageHours, score, laneScores, reasons }
+  return { ...candidate, lanes, priorityRegions, title, domain, sourceTier: tier, ageHours, score, laneScores, reasons, lowConsequence }
 }
 
 const GENERIC_CLUSTER_TERMS = new Set([
@@ -210,7 +217,7 @@ function selectEdition(clusters, count) {
   const selected = []
   const counts = Object.fromEntries(LANE_ORDER.map(lane => [lane, 0]))
   const domainCounts = new Map(), regionCounts = new Map()
-  const remaining = clusters.filter(cluster => Math.max(...Object.values(cluster.representative.laneScores)) >= 32)
+  const remaining = clusters.filter(cluster => !cluster.members.every(member => member.lowConsequence) && Math.max(...Object.values(cluster.representative.laneScores)) >= 32)
   const choose = phase => {
     const choices = remaining.flatMap(cluster => {
       const assignment = bestLaneFor(cluster, counts, phase)
