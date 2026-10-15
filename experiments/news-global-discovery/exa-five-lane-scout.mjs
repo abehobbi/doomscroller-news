@@ -42,7 +42,7 @@ export function budgetQueries(queries, maximum = null) {
     const ranked = remaining.map((query, index) => {
       const newLane = !laneCounts.has(query.lane), newRegion = query.region && !regionCounts.has(query.region)
       const majorBonus = query.lane.includes('major') ? 8 : 0
-      const score = Number(newRegion) * 100 + Number(newLane) * 40 + majorBonus - (laneCounts.get(query.lane) || 0) * 7 - (regionCounts.get(query.region) || 0) * 5 - index / 1000
+      const score = Number(newLane) * 120 + Number(newRegion) * 40 + majorBonus - (laneCounts.get(query.lane) || 0) * 18 - (regionCounts.get(query.region) || 0) * 5 - index / 1000
       return { query, score }
     }).sort((a, b) => b.score - a.score)
     const choice = ranked[0].query
@@ -51,6 +51,10 @@ export function budgetQueries(queries, maximum = null) {
     if (choice.region) regionCounts.set(choice.region, (regionCounts.get(choice.region) || 0) + 1)
   }
   return selected
+}
+
+export function isProviderLimitError(error) {
+  return /HTTP\s+402|exceeded (?:your )?(?:credits?|quota)|payment required/i.test(String(error?.message || error || ''))
 }
 
 function normalizeUrl(value) {
@@ -116,6 +120,42 @@ function mergeResults(searches) {
   }))
 }
 
+function buildReport({ options, queries, searches, window, status = 'complete', deferral = null }) {
+  const candidates = mergeResults(searches)
+  const laneCounts = {}
+  for (const lane of new Set(queries.map(query => query.lane))) {
+    laneCounts[lane] = {
+      plannedQueries: queries.filter(query => query.lane === lane).length,
+      completedQueries: searches.filter(search => search.lane === lane).length,
+      queries: searches.filter(search => search.lane === lane).length,
+      rawResults: searches.filter(search => search.lane === lane).reduce((sum, search) => sum + search.results.length, 0),
+      uniqueCandidates: candidates.filter(candidate => candidate.lanes.includes(lane)).length,
+    }
+  }
+  return {
+    schemaVersion: 1, createdAt: new Date().toISOString(), provider: 'exa', scan: options.scan,
+    status, deferral, requestedWindow: window, plannedQueryCount: queries.length,
+    queryCount: searches.length, remainingQueryIds: queries.slice(searches.length).map(query => query.id),
+    resultsPerQuery: options.resultsPerQuery,
+    estimatedCostDollars: Number((queries.length * 0.007).toFixed(3)),
+    costDollars: Number(searches.reduce((sum, search) => sum + search.costDollars, 0).toFixed(6)),
+    rawResultCount: searches.reduce((sum, search) => sum + search.results.length, 0),
+    uniqueCandidateCount: candidates.length, laneCounts,
+    searches: searches.map(({ results, ...metadata }) => ({ ...metadata, resultCount: results.length })),
+    candidates,
+  }
+}
+
+async function writeReport(output, report) {
+  const json = `${JSON.stringify(report, null, 2)}\n`
+  if (!output) {
+    process.stdout.write(json)
+    return
+  }
+  await fs.mkdir(path.dirname(output), { recursive: true })
+  await fs.writeFile(output, json, 'utf8')
+}
+
 async function main() {
   const options = parseArgs(process.argv.slice(2))
   const queries = budgetQueries(selectedQueries(options.scan, options.lanes), options.maxQueries)
@@ -131,28 +171,22 @@ async function main() {
   const start = new Date(end.getTime() - options.days * 86_400_000)
   const window = { start: start.toISOString(), end: end.toISOString() }
   const searches = []
-  for (const query of queries) searches.push(await runQuery(apiKey, query, options, window))
-  const candidates = mergeResults(searches)
-  const laneCounts = {}
-  for (const lane of new Set(queries.map(query => query.lane))) {
-    laneCounts[lane] = {
-      queries: searches.filter(search => search.lane === lane).length,
-      rawResults: searches.filter(search => search.lane === lane).reduce((sum, search) => sum + search.results.length, 0),
-      uniqueCandidates: candidates.filter(candidate => candidate.lanes.includes(lane)).length,
+  for (const query of queries) {
+    try {
+      searches.push(await runQuery(apiKey, query, options, window))
+      if (options.output) await writeReport(options.output, buildReport({ options, queries, searches, window, status: 'running' }))
+    } catch (error) {
+      const providerLimited = isProviderLimitError(error)
+      await writeReport(options.output, buildReport({
+        options, queries, searches, window,
+        status: providerLimited ? 'deferred' : 'failed',
+        deferral: { reason: providerLimited ? 'provider-quota' : 'request-failure', failedQueryId: query.id },
+      }))
+      if (providerLimited) throw new Error(`Discovery deferred after ${searches.length} of ${queries.length} searches because the free provider allowance was exhausted.`)
+      throw error
     }
   }
-  const report = {
-    schemaVersion: 1, createdAt: new Date().toISOString(), provider: 'exa', scan: options.scan,
-    requestedWindow: window, queryCount: searches.length, resultsPerQuery: options.resultsPerQuery,
-    costDollars: Number(searches.reduce((sum, search) => sum + search.costDollars, 0).toFixed(6)),
-    rawResultCount: searches.reduce((sum, search) => sum + search.results.length, 0),
-    uniqueCandidateCount: candidates.length, laneCounts,
-    searches: searches.map(({ results, ...metadata }) => ({ ...metadata, resultCount: results.length })),
-    candidates,
-  }
-  const json = `${JSON.stringify(report, null, 2)}\n`
-  if (options.output) await fs.writeFile(options.output, json, 'utf8')
-  else process.stdout.write(json)
+  await writeReport(options.output, buildReport({ options, queries, searches, window }))
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {

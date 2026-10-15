@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { FIVE_LANE_QUERIES } from './five-lane-queries.mjs'
-import { selectedQueries } from './exa-five-lane-scout.mjs'
+import { budgetQueries, isProviderLimitError, selectedQueries } from './exa-five-lane-scout.mjs'
 import { dailySearchBudget, DAILY_CARD_GUIDELINE, NEWS_TIMEZONE } from './daily-news-run-plan.mjs'
 import { SOURCES } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/sources.mjs'
 
@@ -30,6 +30,21 @@ test('three daily scans separate major updates from depth discovery within the e
   assert.equal(dailySearchBudget().totalQueries, 26)
   assert.equal(NEWS_TIMEZONE, 'America/Toronto')
   assert.deepEqual(DAILY_CARD_GUIDELINE, { expectedMinimum: 30, hardMaximum: 65, paddingAllowed: false })
+})
+
+test('a bounded full scan preserves every editorial lane and every priority region', () => {
+  const queries = budgetQueries(selectedQueries('full'), 28)
+  assert.equal(queries.length, 28)
+  assert.deepEqual(new Set(queries.map(query => query.lane)), new Set(['world-major', 'priority-major', 'world-interesting', 'priority-interesting', 'discovery']))
+  for (const region of ['Syria', 'Middle East', 'Bangladesh', 'Ghana', 'Canada', 'GTA']) {
+    assert.equal(queries.some(query => query.region === region), true)
+  }
+  assert.equal(queries.filter(query => query.lane === 'discovery').length, 4)
+})
+
+test('provider credit exhaustion is recognized as a deferral rather than editorial rejection', () => {
+  assert.equal(isProviderLimitError(new Error('gta-major: HTTP 402 You have exceeded your credits limit.')), true)
+  assert.equal(isProviderLimitError(new Error('world-major: HTTP 503 temporarily unavailable')), false)
 })
 
 test('the free publisher safety net includes arts coverage missed by broad search ranking', () => {
