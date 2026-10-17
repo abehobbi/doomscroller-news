@@ -1,0 +1,3619 @@
+{
+  "schema": "doomscroller.news-beta-diagnostics",
+  "schemaVersion": 1,
+  "batchId": "news-beta-2026-10-17T00-38-07-282Z",
+  "startedAt": "2026-10-17T00:36:34.453Z",
+  "finishedAt": "2026-10-17T00:38:07.282Z",
+  "durationMs": 92828,
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1024,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "discovery": {
+    "discoveredArticles": 828,
+    "freshArticles": 649,
+    "uniqueArticles": 602,
+    "eventCandidates": 563,
+    "evidencePoolArticles": 185,
+    "preparedEvents": 137,
+    "selectedEvents": 30,
+    "evidenceFailures": 23,
+    "sourceFailures": 4
+  },
+  "sourceStatus": [
+    {
+      "id": "sana-en",
+      "name": "SANA English",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "north-press-en",
+      "name": "North Press Agency",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "enab-baladi-en",
+      "name": "Enab Baladi English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "syria-direct-en",
+      "name": "Syria Direct",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dhaka-tribune",
+      "name": "Dhaka Tribune",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "bd24live-en",
+      "name": "BD24Live English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "prothom-alo-en",
+      "name": "Prothom Alo English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "No valid feed items"
+    },
+    {
+      "id": "financial-express-bd",
+      "name": "The Financial Express Bangladesh",
+      "status": "ok",
+      "itemCount": 28
+    },
+    {
+      "id": "daily-star-bd",
+      "name": "The Daily Star Bangladesh",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "myjoyonline",
+      "name": "MyJoyOnline",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "graphic-ghana",
+      "name": "Graphic Online",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "ghana-news-agency",
+      "name": "Ghana News Agency",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "toronto-city",
+      "name": "City of Toronto News",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "cbc-toronto",
+      "name": "CBC Toronto",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "cbc-canada",
+      "name": "CBC Canada",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "aljazeera-all",
+      "name": "Al Jazeera",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "arab-news",
+      "name": "Arab News",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "bbc-world",
+      "name": "BBC World",
+      "status": "ok",
+      "itemCount": 32
+    },
+    {
+      "id": "bbc-technology",
+      "name": "BBC Technology",
+      "status": "ok",
+      "itemCount": 21
+    },
+    {
+      "id": "bbc-science-environment",
+      "name": "BBC Science & Environment",
+      "status": "ok",
+      "itemCount": 42
+    },
+    {
+      "id": "guardian-world",
+      "name": "The Guardian World",
+      "status": "ok",
+      "itemCount": 45
+    },
+    {
+      "id": "guardian-science",
+      "name": "The Guardian Science",
+      "status": "ok",
+      "itemCount": 28
+    },
+    {
+      "id": "guardian-environment",
+      "name": "The Guardian Environment",
+      "status": "ok",
+      "itemCount": 34
+    },
+    {
+      "id": "npr-world",
+      "name": "NPR World",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "npr-science",
+      "name": "NPR Science",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dw-world",
+      "name": "DW World",
+      "status": "ok",
+      "itemCount": 136
+    },
+    {
+      "id": "africanews",
+      "name": "Africanews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "euronews",
+      "name": "Euronews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "global-voices",
+      "name": "Global Voices",
+      "status": "ok",
+      "itemCount": 15
+    },
+    {
+      "id": "japan-times",
+      "name": "The Japan Times",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "mongabay",
+      "name": "Mongabay",
+      "status": "ok",
+      "itemCount": 32
+    }
+  ],
+  "knownSourceFailures": [
+    {
+      "name": "Bangladesh Sangbad Sangstha",
+      "url": "https://www.bssnews.net/feed",
+      "status": "blocked",
+      "detail": "Cloudflare challenge returned HTTP 403 to the bounded collector."
+    },
+    {
+      "name": "The Indian Express feeds",
+      "url": "https://indianexpress.com/rss/",
+      "status": "blocked_in_cloud",
+      "detail": "Official feeds work locally but return HTTP 403 from GitHub Actions, so the automatic collector does not depend on them."
+    },
+    {
+      "name": "The Business Standard",
+      "url": "https://www.tbsnews.net/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "Feed served 2019–2021 items."
+    },
+    {
+      "name": "Ontario Newsroom",
+      "url": "https://news.ontario.ca/en/rss",
+      "status": "retired_from_registry",
+      "detail": "URL returns an HTML application shell, not RSS."
+    },
+    {
+      "name": "GhanaWeb",
+      "url": "https://www.ghanaweb.com/GhanaHomePage/NewsArchive/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "The publisher endpoint returned HTTP 404 in October 2026; MyJoyOnline and Graphic Online remain active Ghana sources."
+    }
+  ],
+  "reranker": {
+    "adjustments": [
+      {
+        "eventId": "event:bba8ec8570bf5583",
+        "baseScore": 79.1,
+        "adjustment": 14,
+        "adjustedScore": 93.1,
+        "contentType": "conflict",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:f8f6a5280daaf72e",
+        "baseScore": 75.79,
+        "adjustment": 14,
+        "adjustedScore": 89.79,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:1a9a959e6f0aa781",
+        "baseScore": 75.78,
+        "adjustment": 14,
+        "adjustedScore": 89.78,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:66e6e9b0d7839679",
+        "baseScore": 52,
+        "adjustment": 14,
+        "adjustedScore": 66,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:90249eaf1c3e3d1b",
+        "baseScore": 63.74,
+        "adjustment": 0,
+        "adjustedScore": 63.74,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:fbbdea03a4e084a8",
+        "baseScore": 72.81,
+        "adjustment": -17,
+        "adjustedScore": 55.81,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:d53412ab651385f0",
+        "baseScore": 42.81,
+        "adjustment": 10,
+        "adjustedScore": 52.81,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:f938007de706b3d7",
+        "baseScore": 53.43,
+        "adjustment": -2,
+        "adjustedScore": 51.43,
+        "contentType": "conflict",
+        "regions": [
+          "Canada",
+          "GTA"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:bc1aba7463e54522",
+        "baseScore": 55.6,
+        "adjustment": -8,
+        "adjustedScore": 47.6,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "United States"
+      },
+      {
+        "eventId": "event:19ef5d993ed6e10b",
+        "baseScore": 40.35,
+        "adjustment": 0,
+        "adjustedScore": 40.35,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "Ukraine"
+      },
+      {
+        "eventId": "event:5b50d9b4c00575c1",
+        "baseScore": 41.35,
+        "adjustment": -6,
+        "adjustedScore": 35.35,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:0fb79eda9935e205",
+        "baseScore": 71.99,
+        "adjustment": -40,
+        "adjustedScore": 31.989999999999995,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:074a0a8d7e0dfc58",
+        "baseScore": 48.28,
+        "adjustment": -23,
+        "adjustedScore": 25.28,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:85337f02b25fe505",
+        "baseScore": 42.65,
+        "adjustment": -21,
+        "adjustedScore": 21.65,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:6ff300ed13ef83c7",
+        "baseScore": 49.6,
+        "adjustment": -28,
+        "adjustedScore": 21.6,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "Iran"
+      },
+      {
+        "eventId": "event:f82c09b80a0df807",
+        "baseScore": 44.48,
+        "adjustment": -29,
+        "adjustedScore": 15.479999999999997,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Canada",
+          "GTA"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:80b802c597369aff",
+        "baseScore": 39.07,
+        "adjustment": -30,
+        "adjustedScore": 9.07,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:0410e6090ced66f1",
+        "baseScore": 39.67,
+        "adjustment": -38,
+        "adjustedScore": 1.6700000000000017,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:247da25879f9f970",
+        "baseScore": 36.16,
+        "adjustment": -44,
+        "adjustedScore": -7.840000000000003,
+        "contentType": "conflict",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:1f73150a75c20fef",
+        "baseScore": 43.6,
+        "adjustment": -53,
+        "adjustedScore": -9.399999999999999,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "United Kingdom"
+      },
+      {
+        "eventId": "event:ac52a5324fef0c95",
+        "baseScore": 38.49,
+        "adjustment": -53,
+        "adjustedScore": -14.509999999999998,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:136fad69df6ecb93",
+        "baseScore": 53.51,
+        "adjustment": -69,
+        "adjustedScore": -15.490000000000002,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:d0cdc70ecd640aa5",
+        "baseScore": 46.6,
+        "adjustment": -67,
+        "adjustedScore": -20.4,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Iraq"
+      },
+      {
+        "eventId": "event:8d2d72e97abdfae0",
+        "baseScore": 36.75,
+        "adjustment": -61,
+        "adjustedScore": -24.25,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:d8d93b4fc51670ed",
+        "baseScore": 37.31,
+        "adjustment": -62,
+        "adjustedScore": -24.689999999999998,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "Kenya"
+      },
+      {
+        "eventId": "event:fdc96470b0d7c2e7",
+        "baseScore": 42.77,
+        "adjustment": -71,
+        "adjustedScore": -28.229999999999997,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:e14df6dd842824e0",
+        "baseScore": 45.84,
+        "adjustment": -82,
+        "adjustedScore": -36.16,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:8d44da83bd2efdfc",
+        "baseScore": 41.83,
+        "adjustment": -90,
+        "adjustedScore": -48.17,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:340f6f4625cc86e8",
+        "baseScore": 39.69,
+        "adjustment": -91,
+        "adjustedScore": -51.31,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:c3ad2e6a8d02559c",
+        "baseScore": 35.32,
+        "adjustment": -92,
+        "adjustedScore": -56.68,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Canada",
+          "GTA"
+        ],
+        "country": "GTA"
+      }
+    ],
+    "distribution": {
+      "regions": {
+        "Syria": 4,
+        "Middle East": 8,
+        "Ghana": 6,
+        "GTA": 5,
+        "Canada": 6,
+        "Bangladesh": 3,
+        "World": 7
+      },
+      "countries": {
+        "Syria": 4,
+        "Israel": 2,
+        "Ghana": 6,
+        "GTA": 5,
+        "Yemen": 1,
+        "Bangladesh": 3,
+        "United States": 1,
+        "Ukraine": 1,
+        "Iran": 1,
+        "World": 2,
+        "Canada": 1,
+        "United Kingdom": 1,
+        "Iraq": 1,
+        "Kenya": 1
+      },
+      "contentTypes": {
+        "conflict": 9,
+        "general": 9,
+        "economy-or-public-life": 4,
+        "diplomacy-or-speech": 5,
+        "culture-science-education": 3
+      },
+      "publishers": {
+        "North Press Agency": 3,
+        "Arab News": 3,
+        "Graphic Online": 3,
+        "City of Toronto News": 1,
+        "The Financial Express Bangladesh": 2,
+        "CBC Toronto": 4,
+        "The Guardian World": 3,
+        "Al Jazeera": 1,
+        "The Daily Star Bangladesh": 1,
+        "MyJoyOnline": 2,
+        "The Guardian Environment": 1,
+        "Africanews": 2,
+        "Ghana News Agency": 1,
+        "CBC Canada": 1,
+        "The Guardian Science": 1,
+        "Euronews": 1
+      }
+    }
+  },
+  "selectedEvents": [
+    {
+      "eventId": "event:bba8ec8570bf5583",
+      "title": "Katz says al-Sharaa awaits Netanyahu’s election defeat over Druze issue",
+      "score": 79.1,
+      "adjustedScore": 93.1,
+      "rank": 1,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 12.1,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:f8f6a5280daaf72e",
+      "title": "More than 340 children killed in Gaza in year since Israel-Hamas ceasefire, UNICEF says",
+      "score": 75.79,
+      "adjustedScore": 89.79,
+      "rank": 2,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.79,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:1a9a959e6f0aa781",
+      "title": "President Mahama commends Ablakwa for Ghana's UNHRC re-election",
+      "score": 75.78,
+      "adjustedScore": 89.78,
+      "rank": 3,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.78,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:66e6e9b0d7839679",
+      "title": "Turnout increases for advance voting in Toronto’s 2026 municipal election",
+      "score": 52,
+      "adjustedScore": 66,
+      "rank": 4,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 0,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 22,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:90249eaf1c3e3d1b",
+      "title": "Ghana seeks wider trade and investment opportunities through BRICS",
+      "score": 63.74,
+      "adjustedScore": 63.74,
+      "rank": 5,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.74,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:fbbdea03a4e084a8",
+      "title": "Yemen’s Houthi war threatens ancient heritage and fuels fears of antiquities trafficking",
+      "score": 72.81,
+      "adjustedScore": 55.81,
+      "rank": 6,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.81,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 5,
+        "localTexture": 14,
+        "editorialBonus": 27,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:d53412ab651385f0",
+      "title": "BNP sells 70 nomination forms for reserved women’s seat by-election",
+      "score": 42.81,
+      "adjustedScore": 52.81,
+      "rank": 7,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.81,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:f938007de706b3d7",
+      "title": "Ontario set to import New York electricity this winter after Ford threatened to cut the U.S. off",
+      "score": 53.43,
+      "adjustedScore": 51.43,
+      "rank": 8,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 19.43,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada",
+        "GTA"
+      ]
+    },
+    {
+      "eventId": "event:bc1aba7463e54522",
+      "title": "Trump in Georgia falsely claims election of Jon Ossoff was illegitimate",
+      "score": 55.6,
+      "adjustedScore": 47.6,
+      "rank": 9,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.6,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:19ef5d993ed6e10b",
+      "title": "Ukraine president targets Trump, Putin at EU summit",
+      "score": 40.35,
+      "adjustedScore": 40.35,
+      "rank": 10,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.35,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:5b50d9b4c00575c1",
+      "title": "Beef feast at JnU to protest slaughter ban",
+      "score": 41.35,
+      "adjustedScore": 35.35,
+      "rank": 11,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.35,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:0fb79eda9935e205",
+      "title": "Israeli settlers attack olive farmers and Washington Post journalist in West Bank",
+      "score": 71.99,
+      "adjustedScore": 31.99,
+      "rank": 12,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.99,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 26,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:074a0a8d7e0dfc58",
+      "title": "Newsfile to discuss GH¢49.72m evacuation cost, EC appointments and Obuasi SHTS abuse case",
+      "score": 48.28,
+      "adjustedScore": 25.28,
+      "rank": 13,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.28,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:85337f02b25fe505",
+      "title": "Syrian, Saudi foreign ministers meet in Riyadh",
+      "score": 42.65,
+      "adjustedScore": 21.65,
+      "rank": 14,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 17.65,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:6ff300ed13ef83c7",
+      "title": "US voters want more action on global heating. Why are Democrats and Republicans staying silent?",
+      "score": 49.6,
+      "adjustedScore": 21.6,
+      "rank": 15,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.6,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:f82c09b80a0df807",
+      "title": "Prediction markets are taking big bets on Ontario municipal races. Here's what the rules say",
+      "score": 44.48,
+      "adjustedScore": 15.48,
+      "rank": 16,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 12.48,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 14,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada",
+        "GTA"
+      ]
+    },
+    {
+      "eventId": "event:80b802c597369aff",
+      "title": "Ebola outbreak in DR Congo spreads to new province bordering CAR",
+      "score": 39.07,
+      "adjustedScore": 9.07,
+      "rank": 17,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 15.07,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:0410e6090ced66f1",
+      "title": "NCCE urges women in Ketu South to report corruption",
+      "score": 39.67,
+      "adjustedScore": 1.67,
+      "rank": 18,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.67,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 7,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:247da25879f9f970",
+      "title": "Ottawa youth accused of anti-Jewish terror plot guilty of 2 of 3 charges",
+      "score": 36.16,
+      "adjustedScore": -7.84,
+      "rank": 19,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 18.16,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:1f73150a75c20fef",
+      "title": "Milei adviser claims UK being ‘colonised by Islam’ as Falklands row grows",
+      "score": 43.6,
+      "adjustedScore": -9.4,
+      "rank": 20,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 11.6,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:ac52a5324fef0c95",
+      "title": "President calls for collective efforts to protect religious freedom on Durga Puja",
+      "score": 38.49,
+      "adjustedScore": -14.51,
+      "rank": 21,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.49,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:136fad69df6ecb93",
+      "title": "Ghana Research Fund targets local solutions to national challenges",
+      "score": 53.51,
+      "adjustedScore": -15.49,
+      "rank": 22,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 16.51,
+        "importance": 6,
+        "interestingness": 12,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:d0cdc70ecd640aa5",
+      "title": "Neanderthal remains may be earliest human ancestor find killed by a spear",
+      "score": 46.6,
+      "adjustedScore": -20.4,
+      "rank": 23,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 11.6,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:8d2d72e97abdfae0",
+      "title": "Major road closures coming for Toronto's waterfront marathon this weekend",
+      "score": 36.75,
+      "adjustedScore": -24.25,
+      "rank": 24,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 18.75,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:d8d93b4fc51670ed",
+      "title": "Kenya on high alert as Ebola outbreak in DR Congo fuels border fears",
+      "score": 37.31,
+      "adjustedScore": -24.69,
+      "rank": 25,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.31,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:fdc96470b0d7c2e7",
+      "title": "Saudi, Syrian FMs discuss ties and regional security",
+      "score": 42.77,
+      "adjustedScore": -28.23,
+      "rank": 26,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 17.77,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:e14df6dd842824e0",
+      "title": "Ghana to host UN convention signing on digital cargo documents on October 26",
+      "score": 45.84,
+      "adjustedScore": -36.16,
+      "rank": 27,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.84,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:8d44da83bd2efdfc",
+      "title": "Syria, Turkey discuss bilateral ties, stability",
+      "score": 41.83,
+      "adjustedScore": -48.17,
+      "rank": 28,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 16.83,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:340f6f4625cc86e8",
+      "title": "Three children and one teacher killed in Oregon elementary school shooting",
+      "score": 39.69,
+      "adjustedScore": -51.31,
+      "rank": 29,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 14.69,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:c3ad2e6a8d02559c",
+      "title": "OSAP pause impacting National Ballet School, divinity college students",
+      "score": 35.32,
+      "adjustedScore": -56.68,
+      "rank": 30,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 17.32,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada",
+        "GTA"
+      ]
+    }
+  ],
+  "invalidPreviousCardsRemoved": [],
+  "crossEventOverlap": [],
+  "generation": [
+    {
+      "eventId": "event:bba8ec8570bf5583",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "summary is too thin for a self-contained beta card"
+        ],
+        "wordCount": 59,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-17T00:36:47.017Z",
+          "finishedAt": "2026-10-17T00:36:48.047Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Israeli Defense Minister claims Syrian President is awaiting Netanyahu's election defeat regarding Druze issue\", \"pages\": [{\"text\": \"Israeli Defense Minister Israel Katz stated on Thursday that Syrian President Ahmed al-Sharaa is waiting for Prime Minister Benjamin Netanyahu to lose Israel's election before resuming attacks on Druze communities in Syria. Katz made these remarks during a Likud Party conference focused on Israel's Druze community held in Yarka, northern Israel, according to reporting from the North Press Agency.\"}]}",
+          "parsed": {
+            "headline": "Israeli Defense Minister claims Syrian President is awaiting Netanyahu's election defeat regarding Druze issue",
+            "pages": [
+              {
+                "text": "Israeli Defense Minister Israel Katz stated on Thursday that Syrian President Ahmed al-Sharaa is waiting for Prime Minister Benjamin Netanyahu to lose Israel's election before resuming attacks on Druze communities in Syria. Katz made these remarks during a Likud Party conference focused on Israel's Druze community held in Yarka, northern Israel, according to reporting from the North Press Agency."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1029,
+            "completion_tokens": 108,
+            "total_tokens": 1137,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 12.300000190734863
+          },
+          "latencyMs": 1029,
+          "safeHeaders": {
+            "cf-ray": "a4bb3b21f85970c5-IAD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:f8f6a5280daaf72e",
+      "title": "More than 340 children killed in Gaza in year since Israel-Hamas ceasefire, UNICEF says",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "af366fe22182a212d28138d860b40f6109bfa78a2433ff9fb29be783fd378a74",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 67,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:arab-news:f57698f798958c95f3f71d9d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:arab-news:f57698f798958c95f3f71d9d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:arab-news:f57698f798958c95f3f71d9d",
+          "publisher": "Arab News",
+          "url": "https://arabnews.com/middle-east/more-than-340-children-killed-in-gaza-in-year-since-israel-hamas-ceasefire-unicef-says-3006755",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://assets.maestronewsroom.com/media/30f6532d-717b-4366-9158-9c455299fcd9/1792177309181-f6c2a08ee570c141.jpg",
+        "alt": "More than 340 children killed in Gaza in year since Israel-Hamas ceasefire, UNICEF says",
+        "status": "event-specific",
+        "source_url": "https://arabnews.com/middle-east/more-than-340-children-killed-in-gaza-in-year-since-israel-hamas-ceasefire-unicef-says-3006755",
+        "attribution": "Arab News",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-17T00:36:48.047Z",
+          "finishedAt": "2026-10-17T00:36:51.445Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"UNICEF reports more than 340 children killed in Gaza since Israel-Hamas ceasefire announcement\", \"pages\": [{\"text\": \"The UN Children’s Fund, known as UNICEF, stated on Friday that more than 340 children in Gaza have been killed and hundreds injured since the ceasefire agreement between Israel and Hamas was announced on Oct. 10, 2026. Speaking to reporters in Geneva, Ricardo Pires, a spokesperson for the fund, said that for families mourning the loss of their children, the statistics do not equate with a ceasefire.\"}]}",
+          "parsed": {
+            "headline": "UNICEF reports more than 340 children killed in Gaza since Israel-Hamas ceasefire announcement",
+            "pages": [
+              {
+                "text": "The UN Children’s Fund, known as UNICEF, stated on Friday that more than 340 children in Gaza have been killed and hundreds injured since the ceasefire agreement between Israel and Hamas was announced on Oct. 10, 2026. Speaking to reporters in Geneva, Ricardo Pires, a spokesperson for the fund, said that for families mourning the loss of their children, the statistics do not equate with a ceasefire."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1134,
+            "completion_tokens": 125,
+            "total_tokens": 1259,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 13.718181610107422
+          },
+          "latencyMs": 3398,
+          "safeHeaders": {
+            "cf-ray": "a4bb3b28488470c5-IAD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:1a9a959e6f0aa781",
+      "title": "President Mahama commends Ablakwa for Ghana's UNHRC re-election",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "c0f099bac36b7e6d1b00205f9d92367fa9d7435cb158f0672b68ed296a3ca5fe",
+      "allowedExactDates": [
+        "2026-10-16",
+        "2026-10-14",
+        "2027-01-01",
+        "2029-12-31",
+        "2026-12-31",
+        "2026-10-13"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 16, 2026",
+            "date": "2026-10-16"
+          },
+          {
+            "raw": "December 31, 2026",
+            "date": "2026-12-31"
+          },
+          {
+            "raw": "October 13, 2026",
+            "date": "2026-10-13"
+          },
+          {
+            "raw": "January 1, 2027",
+            "date": "2027-01-01"
+          },
+          {
+            "raw": "December 31, 2029",
+            "date": "2029-12-31"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-16",
+          "2026-10-14",
+          "2027-01-01",
+          "2029-12-31",
+          "2026-12-31",
+          "2026-10-13"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [
+          {
+            "raw": "Friday, October 16, 2026",
+            "weekday": "Friday",
+            "date": "2026-10-16",
+            "valid": true
+          }
+        ],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 179,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:graphic-ghana:7ba2b7105827387537174e1d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:graphic-ghana:7ba2b7105827387537174e1d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:graphic-ghana:7ba2b7105827387537174e1d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:graphic-ghana:7ba2b7105827387537174e1d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:graphic-ghana:7ba2b7105827387537174e1d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:graphic-ghana:7ba2b7105827387537174e1d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:graphic-ghana:7ba2b7105827387537174e1d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:graphic-ghana:7ba2b7105827387537174e1d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:graphic-ghana:7ba2b7105827387537174e1d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:graphic-ghana:7ba2b7105827387537174e1d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:graphic-ghana:7ba2b7105827387537174e1d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:graphic-ghana:7ba2b7105827387537174e1d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:graphic-ghana:7ba2b7105827387537174e1d",
+          "publisher": "Graphic Online",
+          "url": "https://graphic.com.gh/news/general-news/president-mahama-commends-ablakwa-for-ghanas-unhrc-re-election.html",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.graphic.com.gh/",
+        "alt": "President Mahama commends Ablakwa for Ghana's UNHRC re-election",
+        "status": "event-specific",
+        "source_url": "https://graphic.com.gh/news/general-news/president-mahama-commends-ablakwa-for-ghanas-unhrc-re-election.html",
+        "attribution": "Graphic Online",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-17T00:36:51.446Z",
+          "finishedAt": "2026-10-17T00:36:59.525Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"President Mahama commends Ghana's re-election to the UN Human Rights Council\",\n  \"pages\": [\n    {\n      \"text\": \"President John Dramani Mahama has commended Ghana's Minister of Foreign Affairs, Samuel Okudzeto Ablakwa, and the Ministry of Foreign Affairs for leading a successful campaign for re-election to the United Nations Human Rights Council (UNHRC). Speaking at the commissioning of new ambassadors at the Jubilee House in Accra on Friday, October 16, 2026, the President stated that the re-election for the 2027–2029 term places a renewed responsibility on the country to contribute with purpose and credibility. He expressed expectation that Ghana's Mission in Geneva will translate this confidence into constructive service on the council. Ghana's current term, which began following an election in 2023, is scheduled to end on December 31, 2026. During elections held by the UN General Assembly in New York on October 13, 2026, Ghana secured 173 votes out of 181 valid ballots. This result placed Ghana joint second globally with Kuwait and Nepal. Within the African group, Zambia received 177 votes, while Nigeria secured 172 votes. Ghana's upcoming term on the 47-member council is scheduled to run from January 1, 2027, to December 31, 2029.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "President Mahama commends Ghana's re-election to the UN Human Rights Council",
+            "pages": [
+              {
+                "text": "President John Dramani Mahama has commended Ghana's Minister of Foreign Affairs, Samuel Okudzeto Ablakwa, and the Ministry of Foreign Affairs for leading a successful campaign for re-election to the United Nations Human Rights Council (UNHRC). Speaking at the commissioning of new ambassadors at the Jubilee House in Accra on Friday, October 16, 2026, the President stated that the re-election for the 2027–2029 term places a renewed responsibility on the country to contribute with purpose and credibility. He expressed expectation that Ghana's Mission in Geneva will translate this confidence into constructive service on the council. Ghana's current term, which began following an election in 2023, is scheduled to end on December 31, 2026. During elections held by the UN General Assembly in New York on October 13, 2026, Ghana secured 173 votes out of 181 valid ballots. This result placed Ghana joint second globally with Kuwait and Nepal. Within the African group, Zambia received 177 votes, while Nigeria secured 172 votes. Ghana's upcoming term on the 47-member council is scheduled to run from January 1, 2027, to December 31, 2029."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2031,
+            "completion_tokens": 329,
+            "total_tokens": 2360,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 27.436363220214844
+          },
+          "latencyMs": 8079,
+          "safeHeaders": {
+            "cf-ray": "a4bb3b3d8fb870c5-IAD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:90249eaf1c3e3d1b",
+      "title": "Ghana seeks wider trade and investment opportunities through BRICS",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "070b4ce6968bc0bb5d7943e2ac27bfe8892b379e74294d871f1cc0bd40883ee7",
+      "allowedExactDates": [
+        "2026-10-16",
+        "2026-10-06",
+        "2026-10-13"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 16, 2026",
+            "date": "2026-10-16"
+          },
+          {
+            "raw": "October 13, 2026",
+            "date": "2026-10-13"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-16",
+          "2026-10-06",
+          "2026-10-13"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [
+          {
+            "raw": "Friday, October 16, 2026",
+            "weekday": "Friday",
+            "date": "2026-10-16",
+            "valid": true
+          }
+        ],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 116,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:graphic-ghana:469218b1a1deeb113c4d0507",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:graphic-ghana:469218b1a1deeb113c4d0507",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:graphic-ghana:469218b1a1deeb113c4d0507",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:graphic-ghana:469218b1a1deeb113c4d0507",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:graphic-ghana:469218b1a1deeb113c4d0507",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:graphic-ghana:469218b1a1deeb113c4d0507",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:graphic-ghana:469218b1a1deeb113c4d0507",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:graphic-ghana:469218b1a1deeb113c4d0507",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:graphic-ghana:469218b1a1deeb113c4d0507",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:graphic-ghana:469218b1a1deeb113c4d0507",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:graphic-ghana:469218b1a1deeb113c4d0507",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:graphic-ghana:469218b1a1deeb113c4d0507",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:graphic-ghana:469218b1a1deeb113c4d0507",
+          "publisher": "Graphic Online",
+          "url": "https://graphic.com.gh/news/general-news/ghana-seeks-wider-trade-and-investment-opportunities-through-brics.html",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.graphic.com.gh/",
+        "alt": "Ghana seeks wider trade and investment opportunities through BRICS",
+        "status": "event-specific",
+        "source_url": "https://graphic.com.gh/news/general-news/ghana-seeks-wider-trade-and-investment-opportunities-through-brics.html",
+        "attribution": "Graphic Online",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-17T00:36:59.526Z",
+          "finishedAt": "2026-10-17T00:37:04.801Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Ghana seeks trade and investment opportunities through BRICS application\",\n  \"pages\": [\n    {\n      \"text\": \"President John Dramani Mahama stated that Ghana's application to join the BRICS bloc is a strategy to broaden development partnerships and deepen South-South cooperation. Speaking at the Jubilee House in Accra on Friday, October 16, 2026, during the commissioning of ambassadors assigned to Angola, Qatar, Israel, and the Permanent Mission to the United Nations, the President said the decision reflects a determination to widen opportunities for trade, investment, industrialisation, and value addition while maintaining relationships with traditional partners. On October 13, 2026, Minister of Foreign Affairs Samuel Okudzeto Ablakwa announced that the Cabinet had approved a formal application to join the bloc during a joint press briefing with visiting Indian External Affairs Minister Dr. Subrahmanyam Jaishankar.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Ghana seeks trade and investment opportunities through BRICS application",
+            "pages": [
+              {
+                "text": "President John Dramani Mahama stated that Ghana's application to join the BRICS bloc is a strategy to broaden development partnerships and deepen South-South cooperation. Speaking at the Jubilee House in Accra on Friday, October 16, 2026, during the commissioning of ambassadors assigned to Angola, Qatar, Israel, and the Permanent Mission to the United Nations, the President said the decision reflects a determination to widen opportunities for trade, investment, industrialisation, and value addition while maintaining relationships with traditional partners. On October 13, 2026, Minister of Foreign Affairs Samuel Okudzeto Ablakwa announced that the Cabinet had approved a formal application to join the bloc during a joint press briefing with visiting Indian External Affairs Minister Dr. Subrahmanyam Jaishankar."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2136,
+            "completion_tokens": 203,
+            "total_tokens": 2339,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 24.954544067382812
+          },
+          "latencyMs": 5275,
+          "safeHeaders": {
+            "cf-ray": "a4bb3b700e8e70c5-IAD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:fbbdea03a4e084a8",
+      "title": "Yemen’s Houthi war threatens ancient heritage and fuels fears of antiquities trafficking",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "b3c16d0ed7dff57a658ba10e4839f6c5f636023350b6c45cee4d163deda678b8",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 246,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:arab-news:96ea472a56b732e26856b839",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:arab-news:96ea472a56b732e26856b839",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:arab-news:96ea472a56b732e26856b839",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:arab-news:96ea472a56b732e26856b839",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:arab-news:96ea472a56b732e26856b839",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:arab-news:96ea472a56b732e26856b839",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:arab-news:96ea472a56b732e26856b839",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:arab-news:96ea472a56b732e26856b839",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:arab-news:96ea472a56b732e26856b839",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:arab-news:96ea472a56b732e26856b839",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:arab-news:96ea472a56b732e26856b839",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:arab-news:96ea472a56b732e26856b839",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:arab-news:96ea472a56b732e26856b839",
+          "publisher": "Arab News",
+          "url": "https://arabnews.com/middle-east/yemens-houthi-war-threatens-ancient-heritage-and-fuels-fears-of-antiquities-trafficking-3006292",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://assets.maestronewsroom.com/media/30f6532d-717b-4366-9158-9c455299fcd9/1791987141905-a2fcfc59a08bf618.JPG",
+        "alt": "Yemen’s Houthi war threatens ancient heritage and fuels fears of antiquities trafficking",
+        "status": "event-specific",
+        "source_url": "https://arabnews.com/middle-east/yemens-houthi-war-threatens-ancient-heritage-and-fuels-fears-of-antiquities-trafficking-3006292",
+        "attribution": "Arab News",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-17T00:37:04.802Z",
+          "finishedAt": "2026-10-17T00:37:17.454Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"War in Yemen threatens archaeological sites and fuels antiquities trafficking concerns\",\n  \"pages\": [\n    {\n      \"text\": \"Renewed offensives by the Houthi militia in Yemen have raised concerns regarding the fate of cultural heritage following more than a decade of conflict, destruction, and looting. While the specific impact of recent fighting on museum collections and archaeological sites has yet to be established, researchers report significant damage to the country's history. Mohammed Ali Thamer, the director general of cultural statistics at the Sanaa-based Ministry of Culture, estimates that approximately 477 of the 2,318 archaeological sites documented by Yemen’s Archaeological Atlas in 2014 have undergone total or partial destruction during the war. Thamer’s research for the Sanaa Center, which utilizes ministry records, statistical data, and the Yemen Data Project, also documents 775 destructive operations affecting cultural sites between the start of the civil war in 2014 and 2025.\"\n    },\n    {\n      \"text\": \"The conflict and fragmented authority have created conditions for the theft, smuggling, and sale of antiquities to international buyers. Thamer’s research describes a wave of looting during the current war, specifically targeting ancient tombs and archaeological sites in Marib, Al-Jawf, and Shabwa by individuals searching for gold and saleable artifacts. While comprehensive national statistics on stolen artifacts are unavailable, estimates in Thamer's research place the number of Yemeni artifacts held abroad between 10,000 and 14,000. Additionally, Yemen’s antiquities authorities have listed 8,000 objects they say were smuggled out during the war. Saleh Al-Baydani, president of the Anaween Center for Research and Transformation Studies in Aden, stated that the deterioration of state institutions has allowed trafficking to flourish.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "War in Yemen threatens archaeological sites and fuels antiquities trafficking concerns",
+            "pages": [
+              {
+                "text": "Renewed offensives by the Houthi militia in Yemen have raised concerns regarding the fate of cultural heritage following more than a decade of conflict, destruction, and looting. While the specific impact of recent fighting on museum collections and archaeological sites has yet to be established, researchers report significant damage to the country's history. Mohammed Ali Thamer, the director general of cultural statistics at the Sanaa-based Ministry of Culture, estimates that approximately 477 of the 2,318 archaeological sites documented by Yemen’s Archaeological Atlas in 2014 have undergone total or partial destruction during the war. Thamer’s research for the Sanaa Center, which utilizes ministry records, statistical data, and the Yemen Data Project, also documents 775 destructive operations affecting cultural sites between the start of the civil war in 2014 and 2025."
+              },
+              {
+                "text": "The conflict and fragmented authority have created conditions for the theft, smuggling, and sale of antiquities to international buyers. Thamer’s research describes a wave of looting during the current war, specifically targeting ancient tombs and archaeological sites in Marib, Al-Jawf, and Shabwa by individuals searching for gold and saleable artifacts. While comprehensive national statistics on stolen artifacts are unavailable, estimates in Thamer's research place the number of Yemeni artifacts held abroad between 10,000 and 14,000. Additionally, Yemen’s antiquities authorities have listed 8,000 objects they say were smuggled out during the war. Saleh Al-Baydani, president of the Anaween Center for Research and Transformation Studies in Aden, stated that the deterioration of state institutions has allowed trafficking to flourish."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1810,
+            "completion_tokens": 408,
+            "total_tokens": 2218,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "neurons": 27
+          },
+          "latencyMs": 12652,
+          "safeHeaders": {
+            "cf-ray": "a4bb3b910b6670c5-IAD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:d53412ab651385f0",
+      "title": "BNP sells 70 nomination forms for reserved women’s seat by-election",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "8156320e966e64047a9b9bf2af2ae14b0039d5bf3fbd2a6ce46a94079027c91e",
+      "allowedExactDates": [
+        "2026-10-01"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 1, 2026",
+            "date": "2026-10-01"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-01"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 158,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:financial-express-bd:e43a6584e6a1d13f72ed6a74",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:financial-express-bd:e43a6584e6a1d13f72ed6a74",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:financial-express-bd:e43a6584e6a1d13f72ed6a74",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:financial-express-bd:e43a6584e6a1d13f72ed6a74",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:financial-express-bd:e43a6584e6a1d13f72ed6a74",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:financial-express-bd:e43a6584e6a1d13f72ed6a74",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:financial-express-bd:e43a6584e6a1d13f72ed6a74",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:financial-express-bd:e43a6584e6a1d13f72ed6a74",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:financial-express-bd:e43a6584e6a1d13f72ed6a74",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:financial-express-bd:e43a6584e6a1d13f72ed6a74",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:financial-express-bd:e43a6584e6a1d13f72ed6a74",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:financial-express-bd:e43a6584e6a1d13f72ed6a74",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:financial-express-bd:e43a6584e6a1d13f72ed6a74",
+          "publisher": "The Financial Express Bangladesh",
+          "url": "https://thefinancialexpress.com.bd/national/bnp-sells-70-nomination-forms-for-reserved-womens-seat-by-election",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://thefe-bd.sgp1.cdn.digitaloceanspaces.com/posts/177578/bnp-logo.jpg",
+        "alt": "BNP sells 70 nomination forms for reserved women’s seat by-election",
+        "status": "event-specific",
+        "source_url": "https://thefinancialexpress.com.bd/national/bnp-sells-70-nomination-forms-for-reserved-womens-seat-by-election",
+        "attribution": "The Financial Express Bangladesh",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-17T00:37:17.455Z",
+          "finishedAt": "2026-10-17T00:37:20.598Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"BNP sells 70 nomination forms for reserved women’s seat by-election in Bangladesh\",\n  \"pages\": [\n    {\n      \"text\": \"The Bangladesh Nationalist Party (BNP) sold 70 nomination forms to female candidates on Friday for a by-election to reserved women’s seat No. 23 in the 13th Jatiya Sangsad. According to BNP Media Cell member Sairul Kabir Khan and sources at the party’s central office, the forms were distributed at the party's central office in Nayapaltan, Dhaka, between 10 a.m. and 5 p.m. on Friday. Each form cost Tk 5,000, totaling Tk 350,000 in revenue for the party. Candidates who proceed to submit completed forms must pay an additional Tk 50,000, resulting in a total cost of Tk 55,000 per aspirant. Aspiring candidates have been instructed to submit their completed forms to the BNP central office between 10 a.m. and 5 p.m. on Saturday, October 17. The by-election for the vacant seat is scheduled for November 12, according to the Election Commission. The seat became vacant following the resignation of previous occupant Ferdousy Ahmed Mishti on October 1, 2026.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "BNP sells 70 nomination forms for reserved women’s seat by-election in Bangladesh",
+            "pages": [
+              {
+                "text": "The Bangladesh Nationalist Party (BNP) sold 70 nomination forms to female candidates on Friday for a by-election to reserved women’s seat No. 23 in the 13th Jatiya Sangsad. According to BNP Media Cell member Sairul Kabir Khan and sources at the party’s central office, the forms were distributed at the party's central office in Nayapaltan, Dhaka, between 10 a.m. and 5 p.m. on Friday. Each form cost Tk 5,000, totaling Tk 350,000 in revenue for the party. Candidates who proceed to submit completed forms must pay an additional Tk 50,000, resulting in a total cost of Tk 55,000 per aspirant. Aspiring candidates have been instructed to submit their completed forms to the BNP central office between 10 a.m. and 5 p.m. on Saturday, October 17. The by-election for the vacant seat is scheduled for November 12, according to the Election Commission. The seat became vacant following the resignation of previous occupant Ferdousy Ahmed Mishti on October 1, 2026."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2312,
+            "completion_tokens": 308,
+            "total_tokens": 2620,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 29.418180465698242
+          },
+          "latencyMs": 3143,
+          "safeHeaders": {
+            "cf-ray": "a4bb3be01eb770c5-IAD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:f938007de706b3d7",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "summary is too thin for a self-contained beta card"
+        ],
+        "wordCount": 56,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-17T00:37:20.598Z",
+          "finishedAt": "2026-10-17T00:37:24.675Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Ontario to import 600 megawatts of electricity from New York this winter\",\n  \"pages\": [\n    {\n      \"text\": \"Ontario has signed a contract to import 600 megawatts of electricity from New York state this winter to offset unspecified facility maintenance, according to the Independent Electricity System Operator. The agreement follows a period in which Ontario Premier Doug Ford threatened to cut off electricity exports to the U.S. as retaliation in an ongoing trade war.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Ontario to import 600 megawatts of electricity from New York this winter",
+            "pages": [
+              {
+                "text": "Ontario has signed a contract to import 600 megawatts of electricity from New York state this winter to offset unspecified facility maintenance, according to the Independent Electricity System Operator. The agreement follows a period in which Ontario Premier Doug Ford threatened to cut off electricity exports to the U.S. as retaliation in an ongoing trade war."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1054,
+            "completion_tokens": 114,
+            "total_tokens": 1168,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 12.690908432006836
+          },
+          "latencyMs": 4077,
+          "safeHeaders": {
+            "cf-ray": "a4bb3bf3be1d70c5-IAD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:bc1aba7463e54522",
+      "title": "Trump in Georgia falsely claims election of Jon Ossoff was illegitimate",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "5cc1987db8767b1d3c95ce786bc88c8c432b5c608307c7cc88705735ce9b8ec7",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 77,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:guardian:0f5b5daf3c5dbbd78ed961ef",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:guardian:0f5b5daf3c5dbbd78ed961ef",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:guardian:0f5b5daf3c5dbbd78ed961ef",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:guardian:0f5b5daf3c5dbbd78ed961ef",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:guardian:0f5b5daf3c5dbbd78ed961ef",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:guardian:0f5b5daf3c5dbbd78ed961ef",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:guardian:0f5b5daf3c5dbbd78ed961ef",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:guardian:0f5b5daf3c5dbbd78ed961ef",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:guardian:0f5b5daf3c5dbbd78ed961ef",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:guardian:0f5b5daf3c5dbbd78ed961ef",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:guardian:0f5b5daf3c5dbbd78ed961ef",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:guardian:0f5b5daf3c5dbbd78ed961ef",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:guardian:0f5b5daf3c5dbbd78ed961ef",
+          "publisher": "The Guardian World",
+          "url": "https://theguardian.com/us-news/2026/oct/16/trump-georgia-rally-jon-ossoff",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.guim.co.uk/img/media/6e11f1a1e4436c44c59a6792b0742b141c7aca94/688_0_6880_5504/master/6880.jpg?width=140&quality=85&auto=format&fit=max&s=914d085fcc51a649db991803f74c8e0e",
+        "alt": "Trump in Georgia falsely claims election of Jon Ossoff was illegitimate",
+        "status": "event-specific",
+        "source_url": "https://theguardian.com/us-news/2026/oct/16/trump-georgia-rally-jon-ossoff",
+        "attribution": "The Guardian World",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-17T00:37:24.675Z",
+          "finishedAt": "2026-10-17T00:37:26.647Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Donald Trump alleges US Senator Jon Ossoff's election in Georgia was illegitimate\",\n  \"pages\": [\n    {\n      \"text\": \"During a rally in north Georgia, Donald Trump claimed that the 2020 election in the state was fraudulent and alleged that the election of US Senator Jon Ossoff was illegitimate, according to reporting by The Guardian World. Trump stated that Ossoff does not represent the values of Georgia. Ossoff is currently facing US Congressman Mike Collins in the November election and has maintained a consistent lead in recent polling, showing a nine-point advantage over his Republican rival.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Donald Trump alleges US Senator Jon Ossoff's election in Georgia was illegitimate",
+            "pages": [
+              {
+                "text": "During a rally in north Georgia, Donald Trump claimed that the 2020 election in the state was fraudulent and alleged that the election of US Senator Jon Ossoff was illegitimate, according to reporting by The Guardian World. Trump stated that Ossoff does not represent the values of Georgia. Ossoff is currently facing US Congressman Mike Collins in the November election and has maintained a consistent lead in recent polling, showing a nine-point advantage over his Republican rival."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1535,
+            "completion_tokens": 141,
+            "total_tokens": 1676,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 17.799999237060547
+          },
+          "latencyMs": 1972,
+          "safeHeaders": {
+            "cf-ray": "a4bb3c0d3e2d70c5-IAD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:19ef5d993ed6e10b",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "summary is too thin for a self-contained beta card"
+        ],
+        "wordCount": 50,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-17T00:37:26.647Z",
+          "finishedAt": "2026-10-17T00:37:29.389Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Ukrainian President Zelenskyy addresses Putin and Trump at EU summit\",\n  \"pages\": [\n    {\n      \"text\": \"Speaking after an EU summit in Belgium, Ukrainian President Volodymyr Zelenskyy warned that Russia’s ambitions extend beyond eastern Ukraine, stating that Russian drone attacks threaten NATO. Zelenskyy also commented on US President Donald Trump, taking a jibe at Trump's previous assertion that he is harder to deal with than Putin.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Ukrainian President Zelenskyy addresses Putin and Trump at EU summit",
+            "pages": [
+              {
+                "text": "Speaking after an EU summit in Belgium, Ukrainian President Volodymyr Zelenskyy warned that Russia’s ambitions extend beyond eastern Ukraine, stating that Russian drone attacks threaten NATO. Zelenskyy also commented on US President Donald Trump, taking a jibe at Trump's previous assertion that he is harder to deal with than Putin."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 893,
+            "completion_tokens": 107,
+            "total_tokens": 1000,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 11.03636360168457
+          },
+          "latencyMs": 2742,
+          "safeHeaders": {
+            "cf-ray": "a4bb3c198bc970c5-IAD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:5b50d9b4c00575c1",
+      "title": "Beef feast at JnU to protest slaughter ban",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "e83a64c226aa4369e6633dc410afac90255e46a359c58da3fb9203efc689a3a1",
+      "allowedExactDates": [
+        "2026-10-16",
+        "2026-10-12"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 16, 2026",
+            "date": "2026-10-16"
+          },
+          {
+            "raw": "October 12, 2026",
+            "date": "2026-10-12"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-16",
+          "2026-10-12"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 309,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:daily-star-bd:b56af3ed9eee33f77253755e",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:daily-star-bd:b56af3ed9eee33f77253755e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:daily-star-bd:b56af3ed9eee33f77253755e",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:daily-star-bd:b56af3ed9eee33f77253755e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:daily-star-bd:b56af3ed9eee33f77253755e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:daily-star-bd:b56af3ed9eee33f77253755e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:daily-star-bd:b56af3ed9eee33f77253755e",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:daily-star-bd:b56af3ed9eee33f77253755e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:daily-star-bd:b56af3ed9eee33f77253755e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:daily-star-bd:b56af3ed9eee33f77253755e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:daily-star-bd:b56af3ed9eee33f77253755e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:daily-star-bd:b56af3ed9eee33f77253755e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:daily-star-bd:b56af3ed9eee33f77253755e",
+          "publisher": "The Daily Star Bangladesh",
+          "url": "https://thedailystar.net/news/bangladesh/education/news/beef-feast-jnu-protest-slaughter-ban-4300581",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.thedailystar.net/sites/default/files/styles/social_share/public/images/2025/11/05/jnu.jpg",
+        "alt": "Beef feast at JnU to protest slaughter ban",
+        "status": "event-specific",
+        "source_url": "https://thedailystar.net/news/bangladesh/education/news/beef-feast-jnu-protest-slaughter-ban-4300581",
+        "attribution": "The Daily Star Bangladesh",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-17T00:37:29.389Z",
+          "finishedAt": "2026-10-17T00:37:42.674Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Student organizations at Jagannath University hold beef feast to protest slaughter ban\",\n  \"pages\": [\n    {\n      \"text\": \"Leaders of the Jagannath University Central Students’ Union (JnUCSU) and several other student organizations held a feast on the Jagannath University campus in Bangladesh on October 16, 2026. The organizers described the event, which involved the slaughter of a cow, as a protest against a university directive banning animal slaughter on the premises. According to Abdul Alim Arif, general secretary of JnUCSU and president of the JnU unit of the pro-Jamaat-e-Islami student organization Islami Chhatra Shibir, the feast was held in protest against what he called “an unreasonable administrative decision.” Arif claimed that almost all student organizations on campus participated in the event. Organizers stated they viewed the slaughter restriction as an unreasonable curb on cultural practices and student food choices. On the morning of October 16, 2026, students arranged the slaughter of a cow on the road between the mathematics department and the vice-chancellor’s building, later distributing cooked beef and khichuri to students. Organizers said the cost of the cow was met through donations and a registration fee of Tk 70.\"\n    },\n    {\n      \"text\": \"The protest follows a dispute that began on the night of October 12, 2026, when students from the 2021-22 academic session of the Islamic history and culture department arranged to cook beef khichuri near the university’s open-air stage to celebrate completing their undergraduate studies. At that time, several Hindu students objected to the location, stating it was too close to the central temple, and it was alleged that bricks from the temple had been used to construct the cooking stove. Regarding the October 16 event, Acting Proctor Prof Md Azam Khan told The Daily Star that the university administration had verbally withdrawn the slaughter restriction and permitted the program on the condition that the slaughter be conducted hygienically under university supervision. Khan stated that university officials and police monitored the event and that no untoward incident occurred.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Student organizations at Jagannath University hold beef feast to protest slaughter ban",
+            "pages": [
+              {
+                "text": "Leaders of the Jagannath University Central Students’ Union (JnUCSU) and several other student organizations held a feast on the Jagannath University campus in Bangladesh on October 16, 2026. The organizers described the event, which involved the slaughter of a cow, as a protest against a university directive banning animal slaughter on the premises. According to Abdul Alim Arif, general secretary of JnUCSU and president of the JnU unit of the pro-Jamaat-e-Islami student organization Islami Chhatra Shibir, the feast was held in protest against what he called “an unreasonable administrative decision.” Arif claimed that almost all student organizations on campus participated in the event. Organizers stated they viewed the slaughter restriction as an unreasonable curb on cultural practices and student food choices. On the morning of October 16, 2026, students arranged the slaughter of a cow on the road between the mathematics department and the vice-chancellor’s building, later distributing cooked beef and khichuri to students. Organizers said the cost of the cow was met through donations and a registration fee of Tk 70."
+              },
+              {
+                "text": "The protest follows a dispute that began on the night of October 12, 2026, when students from the 2021-22 academic session of the Islamic history and culture department arranged to cook beef khichuri near the university’s open-air stage to celebrate completing their undergraduate studies. At that time, several Hindu students objected to the location, stating it was too close to the central temple, and it was alleged that bricks from the temple had been used to construct the cooking stove. Regarding the October 16 event, Acting Proctor Prof Md Azam Khan told The Daily Star that the university administration had verbally withdrawn the slaughter restriction and permitted the program on the condition that the slaughter be conducted hygienically under university supervision. Khan stated that university officials and police monitored the event and that no untoward incident occurred."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1741,
+            "completion_tokens": 467,
+            "total_tokens": 2208,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 28.563636779785156
+          },
+          "latencyMs": 13284,
+          "safeHeaders": {
+            "cf-ray": "a4bb3c2aba3f70c5-IAD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:0fb79eda9935e205",
+      "title": "Israeli settlers attack olive farmers and Washington Post journalist in West Bank",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "1d3000cb2f7e1c49a4b641cf4d77d9800ba75908d9dfb8e46be38134d4a602de",
+      "allowedExactDates": [
+        "2026-10-15"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 15, 2026",
+            "date": "2026-10-15"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-15"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 309,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:guardian:b22dea3d2e22a8a31342eedb",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:guardian:b22dea3d2e22a8a31342eedb",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:guardian:b22dea3d2e22a8a31342eedb",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:guardian:b22dea3d2e22a8a31342eedb",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:guardian:b22dea3d2e22a8a31342eedb",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:guardian:b22dea3d2e22a8a31342eedb",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:guardian:b22dea3d2e22a8a31342eedb",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:guardian:b22dea3d2e22a8a31342eedb",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:guardian:b22dea3d2e22a8a31342eedb",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:guardian:b22dea3d2e22a8a31342eedb",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:guardian:b22dea3d2e22a8a31342eedb",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:guardian:b22dea3d2e22a8a31342eedb",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:myjoyonline:234cc0c44c3eef40f36f20c1",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:myjoyonline:234cc0c44c3eef40f36f20c1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F15",
+            "sourceId": "news:myjoyonline:234cc0c44c3eef40f36f20c1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F16",
+            "sourceId": "news:myjoyonline:234cc0c44c3eef40f36f20c1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F17",
+            "sourceId": "news:myjoyonline:234cc0c44c3eef40f36f20c1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F18",
+            "sourceId": "news:myjoyonline:234cc0c44c3eef40f36f20c1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F19",
+            "sourceId": "news:myjoyonline:234cc0c44c3eef40f36f20c1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F20",
+            "sourceId": "news:myjoyonline:234cc0c44c3eef40f36f20c1",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F21",
+            "sourceId": "news:myjoyonline:234cc0c44c3eef40f36f20c1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F22",
+            "sourceId": "news:myjoyonline:234cc0c44c3eef40f36f20c1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F23",
+            "sourceId": "news:myjoyonline:234cc0c44c3eef40f36f20c1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F24",
+            "sourceId": "news:myjoyonline:234cc0c44c3eef40f36f20c1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F25",
+            "sourceId": "news:npr:8b69f39273552a281c84f745",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F26",
+            "sourceId": "news:npr:8b69f39273552a281c84f745",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F27",
+            "sourceId": "news:npr:8b69f39273552a281c84f745",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F28",
+            "sourceId": "news:npr:8b69f39273552a281c84f745",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F29",
+            "sourceId": "news:npr:8b69f39273552a281c84f745",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F30",
+            "sourceId": "news:npr:8b69f39273552a281c84f745",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F31",
+            "sourceId": "news:npr:8b69f39273552a281c84f745",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F32",
+            "sourceId": "news:npr:8b69f39273552a281c84f745",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F33",
+            "sourceId": "news:npr:8b69f39273552a281c84f745",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F34",
+            "sourceId": "news:npr:8b69f39273552a281c84f745",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F35",
+            "sourceId": "news:npr:8b69f39273552a281c84f745",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F36",
+            "sourceId": "news:npr:8b69f39273552a281c84f745",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F37",
+            "sourceId": "news:myjoyonline:4cbad75401efa34ed1c53ea6",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F38",
+            "sourceId": "news:myjoyonline:4cbad75401efa34ed1c53ea6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F39",
+            "sourceId": "news:myjoyonline:4cbad75401efa34ed1c53ea6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F40",
+            "sourceId": "news:myjoyonline:4cbad75401efa34ed1c53ea6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F41",
+            "sourceId": "news:myjoyonline:4cbad75401efa34ed1c53ea6",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F42",
+            "sourceId": "news:myjoyonline:4cbad75401efa34ed1c53ea6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F43",
+            "sourceId": "news:myjoyonline:4cbad75401efa34ed1c53ea6",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F44",
+            "sourceId": "news:myjoyonline:4cbad75401efa34ed1c53ea6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F45",
+            "sourceId": "news:myjoyonline:4cbad75401efa34ed1c53ea6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F46",
+            "sourceId": "news:myjoyonline:4cbad75401efa34ed1c53ea6",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F47",
+            "sourceId": "news:myjoyonline:4cbad75401efa34ed1c53ea6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F48",
+            "sourceId": "news:myjoyonline:4cbad75401efa34ed1c53ea6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F49",
+            "sourceId": "news:bbc:62dbfa357c0feff33c023130",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F50",
+            "sourceId": "news:bbc:62dbfa357c0feff33c023130",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F51",
+            "sourceId": "news:bbc:62dbfa357c0feff33c023130",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F52",
+            "sourceId": "news:bbc:62dbfa357c0feff33c023130",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F53",
+            "sourceId": "news:bbc:62dbfa357c0feff33c023130",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F54",
+            "sourceId": "news:bbc:62dbfa357c0feff33c023130",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F55",
+            "sourceId": "news:bbc:62dbfa357c0feff33c023130",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F56",
+            "sourceId": "news:bbc:62dbfa357c0feff33c023130",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F57",
+            "sourceId": "news:bbc:62dbfa357c0feff33c023130",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F58",
+            "sourceId": "news:bbc:62dbfa357c0feff33c023130",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F59",
+            "sourceId": "news:bbc:62dbfa357c0feff33c023130",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F60",
+            "sourceId": "news:bbc:62dbfa357c0feff33c023130",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F61",
+            "sourceId": "news:dw:0abf7586af6c6b74719631e0",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F62",
+            "sourceId": "news:dw:0abf7586af6c6b74719631e0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F63",
+            "sourceId": "news:dw:0abf7586af6c6b74719631e0",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F64",
+            "sourceId": "news:dw:0abf7586af6c6b74719631e0",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F65",
+            "sourceId": "news:dw:0abf7586af6c6b74719631e0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F66",
+            "sourceId": "news:arab-news:335d3e35d71d417b0fdb8ed4",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F67",
+            "sourceId": "news:arab-news:335d3e35d71d417b0fdb8ed4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:guardian:b22dea3d2e22a8a31342eedb",
+          "publisher": "The Guardian World",
+          "url": "https://theguardian.com/world/2026/oct/16/israeli-settlers-attack-olive-farmers-west-bank-washington-post-journalist-heidi-levine",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:myjoyonline:234cc0c44c3eef40f36f20c1",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/china-tells-israel-to-stop-forced-establishment-of-west-bank-settlements",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:npr:8b69f39273552a281c84f745",
+          "publisher": "NPR World",
+          "url": "https://npr.org/2026/10/16/nx-s1-6004904/israeli-settlers-beat-us-photojournalist-washington-post-west-bank",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:myjoyonline:4cbad75401efa34ed1c53ea6",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/palestinians-and-us-journalist-injured-by-israeli-settlers-in-west-bank-harvest-attack",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:bbc:62dbfa357c0feff33c023130",
+          "publisher": "BBC World",
+          "url": "https://bbc.co.uk/news/videos/cqn06zx2r15jo",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:dw:0abf7586af6c6b74719631e0",
+          "publisher": "DW World",
+          "url": "https://dw.com/en/west-bank-us-journalist-injured-by-israeli-settlers/a-79684181?maca=en-rss-en-all-1573-rdf",
+          "wireOrigin": null,
+          "sourceType": "public_service_reporting"
+        },
+        {
+          "sourceId": "news:arab-news:335d3e35d71d417b0fdb8ed4",
+          "publisher": "Arab News",
+          "url": "https://arabnews.com/middle-east/israeli-settlers-attack-us-photographer-covering-west-bank-violence-3006785",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.guim.co.uk/img/media/eacefac392ed027227ecec0ab9c67d13ee077d57/560_0_4583_3668/master/4583.jpg?width=140&quality=85&auto=format&fit=max&s=038d95a2d40c5fbb7dc1081bf52e77b9",
+        "alt": "Israeli settlers attack olive farmers and Washington Post journalist in West Bank",
+        "status": "event-specific",
+        "source_url": "https://theguardian.com/world/2026/oct/16/israeli-settlers-attack-olive-farmers-west-bank-washington-post-journalist-heidi-levine",
+        "attribution": "The Guardian World",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-17T00:37:42.674Z",
+          "finishedAt": "2026-10-17T00:37:56.214Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Israeli settlers attack Palestinian olive farmers and Washington Post journalist in West Bank\", \"pages\": \n[\n  {\n    \"text\": \"Masked Israeli settlers wielding clubs, slingshots, and other weapons attacked Palestinian olive farmers and a Washington Post photographer in the occupied West Bank on Friday, October 15, 2026. The coordinated movement, described as part of yearly attacks to disrupt the annual olive harvest, resulted in injuries to at least 20 people across eight villages, according to Palestinian authorities. Witnesses reported that settlers also burned cars and approximately a dozen olive trees during the violence. In the town of Abu Falah, near Ramallah, at least 80 settlers—some carrying firearms or clubs—gathered to stop harvesting. When some Palestinians used rocks to defend themselves, the Israeli military reportedly fired teargas in their direction. The Israeli Foreign Press Association stated that such violent attacks against journalists and civilians have been a recurring issue and that calls for action have been ignored by Israeli authorities. The United Nations noted that levels of settler violence have reached an all-time high this year, with the past two weeks seeing more attacks than the entire previous harvest season.\"\n  },\n  {\n    \"text\": \"Among those injured was Heidi Levine, a veteran photographer for The Washington Post, who was beaten during an attack that witnesses said lasted more than 10 minutes. Levine, who was wearing a protective vest clearly marked as “press,” reported being pushed to the ground and kicked. Settlers also reportedly stole her passport, phone, wallet, and camera equipment. Levine was treated at a hospital in Ramallah for injuries to her leg and hand. Washington Post Executive Editor Matt Murray denounced the attack as unwarranted and called for a thorough investigation. Reporters Without Borders characterized the incident as “brazen violence.” Local officials reported that among the Palestinian injuries were four dual Palestinian-American citizens, including Majdi Fheed, who sustained head and neck wounds. In response to the reports of violence, a spokesperson for the US State Department said they were aware of the situation.\"\n  },\n  {\n    \"text\": \"The violence occurred amid broader diplomatic tensions regarding West Bank settlements. On October 15, 2026, Chinese Foreign Minister Wang Yi met with Israeli President Isaac Herzog in Azerbaijan. During the meeting, Wang told Herzog that the “Palestinian question” is the “greatest historical injustice of this century” and urged Israel to stop the “forced establishment” of settlements in the West Bank. Herzog stated the meeting focused on Middle East relations and emphasized Israel's desire for peace alongside strategic security threats from Iran and its proxies.\"\n  }\n]}",
+          "parsed": {
+            "headline": "Israeli settlers attack Palestinian olive farmers and Washington Post journalist in West Bank",
+            "pages": [
+              {
+                "text": "Masked Israeli settlers wielding clubs, slingshots, and other weapons attacked Palestinian olive farmers and a Washington Post photographer in the occupied West Bank on Friday, October 15, 2026. The coordinated movement, described as part of yearly attacks to disrupt the annual olive harvest, resulted in injuries to at least 20 people across eight villages, according to Palestinian authorities. Witnesses reported that settlers also burned cars and approximately a dozen olive trees during the violence. In the town of Abu Falah, near Ramallah, at least 80 settlers—some carrying firearms or clubs—gathered to stop harvesting. When some Palestinians used rocks to defend themselves, the Israeli military reportedly fired teargas in their direction. The Israeli Foreign Press Association stated that such violent attacks against journalists and civilians have been a recurring issue and that calls for action have been ignored by Israeli authorities. The United Nations noted that levels of settler violence have reached an all-time high this year, with the past two weeks seeing more attacks than the entire previous harvest season."
+              },
+              {
+                "text": "Among those injured was Heidi Levine, a veteran photographer for The Washington Post, who was beaten during an attack that witnesses said lasted more than 10 minutes. Levine, who was wearing a protective vest clearly marked as “press,” reported being pushed to the ground and kicked. Settlers also reportedly stole her passport, phone, wallet, and camera equipment. Levine was treated at a hospital in Ramallah for injuries to her leg and hand. Washington Post Executive Editor Matt Murray denounced the attack as unwarranted and called for a thorough investigation. Reporters Without Borders characterized the incident as “brazen violence.” Local officials reported that among the Palestinian injuries were four dual Palestinian-American citizens, including Majdi Fheed, who sustained head and neck wounds. In response to the reports of violence, a spokesperson for the US State Department said they were aware of the situation."
+              },
+              {
+                "text": "The violence occurred amid broader diplomatic tensions regarding West Bank settlements. On October 15, 2026, Chinese Foreign Minister Wang Yi met with Israeli President Isaac Herzog in Azerbaijan. During the meeting, Wang told Herzog that the “Palestinian question” is the “greatest historical injustice of this century” and urged Israel to stop the “forced establishment” of settlements in the West Bank. Herzog stated the meeting focused on Middle East relations and emphasized Israel's desire for peace alongside strategic security threats from Iran and its proxies."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 4692,
+            "completion_tokens": 551,
+            "total_tokens": 5243,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 57.68181610107422
+          },
+          "latencyMs": 13539,
+          "safeHeaders": {
+            "cf-ray": "a4bb3c7dbded70c5-IAD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        },
+        {
+          "timestamp": "2026-10-17T00:37:56.214Z",
+          "finishedAt": "2026-10-17T00:38:07.191Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Israeli settlers attack Palestinian olive farmers and Washington Post journalist in West Bank\", \"pages\": [{\"text\": \"On October 15, 2026, masked Israeli settlers wielding clubs, firearms, and other weapons attacked Palestinians during an olive harvest in the occupied West Bank, injuring at least 20 people and a Washington Post photographer. The attacks occurred in several towns, including Abu Falah near Ramallah, where witnesses reported at least 80 settlers gathered to stop the harvest by hurling rocks from slingshots and burning cars and trees. Palestinian authorities recorded attacks across eight villages. In one instance, the Israeli military reportedly fired teargas toward Palestinians who had picked up rocks to defend themselves. A local official reported that 12 Palestinians were injured in the violence, including four dual Palestinian-American citizens. One victim, Majdi Fheed, reported being attacked with guns, rocks, and special weapons. The UN stated that levels of settler violence have reached an all-time high this year, with the past two weeks seeing more attacks than the entire previous harvest season. The Israeli Foreign Press Association stated that such attacks against journalists and civilians are part of a long line of incidents that have gone unaddressed by Israeli authorities.\"}, {\"text\": \"Among those injured was Washington Post photographer Heidi Levine, who was beaten during an attack that lasted more than 10 minutes. Levine, who was wearing a protective vest marked as press, reported being pushed to the ground and kicked by settlers. Witnesses and the publication noted that settlers also stole her passport, phone, wallet, and equipment. Levine was treated at a hospital in Ramallah. Washington Post Executive Editor Matt Murray denounced the violence and called for a thorough investigation. Reporters Without Borders described the incident as brazen violence. Separately, Chinese Foreign Minister Wang Yi told Israeli President Isaac Herzog on October 15, 2026, that Israel must stop the forced establishment of settlements in the West Bank. The U.S. State Department stated it was aware of the reports of violence.\"}] }",
+          "parsed": {
+            "headline": "Israeli settlers attack Palestinian olive farmers and Washington Post journalist in West Bank",
+            "pages": [
+              {
+                "text": "On October 15, 2026, masked Israeli settlers wielding clubs, firearms, and other weapons attacked Palestinians during an olive harvest in the occupied West Bank, injuring at least 20 people and a Washington Post photographer. The attacks occurred in several towns, including Abu Falah near Ramallah, where witnesses reported at least 80 settlers gathered to stop the harvest by hurling rocks from slingshots and burning cars and trees. Palestinian authorities recorded attacks across eight villages. In one instance, the Israeli military reportedly fired teargas toward Palestinians who had picked up rocks to defend themselves. A local official reported that 12 Palestinians were injured in the violence, including four dual Palestinian-American citizens. One victim, Majdi Fheed, reported being attacked with guns, rocks, and special weapons. The UN stated that levels of settler violence have reached an all-time high this year, with the past two weeks seeing more attacks than the entire previous harvest season. The Israeli Foreign Press Association stated that such attacks against journalists and civilians are part of a long line of incidents that have gone unaddressed by Israeli authorities."
+              },
+              {
+                "text": "Among those injured was Washington Post photographer Heidi Levine, who was beaten during an attack that lasted more than 10 minutes. Levine, who was wearing a protective vest marked as press, reported being pushed to the ground and kicked by settlers. Witnesses and the publication noted that settlers also stole her passport, phone, wallet, and equipment. Levine was treated at a hospital in Ramallah. Washington Post Executive Editor Matt Murray denounced the violence and called for a thorough investigation. Reporters Without Borders described the incident as brazen violence. Separately, Chinese Foreign Minister Wang Yi told Israeli President Isaac Herzog on October 15, 2026, that Israel must stop the forced establishment of settlements in the West Bank. The U.S. State Department stated it was aware of the reports of violence."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 4713,
+            "completion_tokens": 419,
+            "total_tokens": 5132,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 54.27272415161133
+          },
+          "latencyMs": 10977,
+          "safeHeaders": {
+            "cf-ray": "a4bb3cd25ace70c5-IAD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": true
+        }
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "stage": "evidence",
+      "eventId": "event:e638ca794034ced1",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:70c70fe9286edcaa",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e4899fbc754574f9",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:437578a99b49ad4a",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:b205144da0a89930",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:5a6b443257178188",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:32642e7614c454ad",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:639295e9186c1a39",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:53010cce10ff4225",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:961f850129d442fb",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:041f85b21ae1cb3f",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:871b3fe9f5884cc3",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:bf40e3dba49a8684",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:bef62a2bad74a6c0",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:80ffd8e3a7585182",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0f74e80d18b79821",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:99796501697e14bb",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:27771440ce5e690c",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:ff12d2fc3c12df0e",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:3d60cc0700fce147",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:073bb7c7d09a083e",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6960c8e6a5180850",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:badb692af3a6face",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "eventId": "event:798aa6d9445f7f17",
+      "title": "Turnout increases for advance voting in Toronto’s 2026 municipal election",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:074a0a8d7e0dfc58",
+      "title": "Newsfile to discuss GH¢49.72m evacuation cost, EC appointments and Obuasi SHTS abuse case",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 25.28 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:85337f02b25fe505",
+      "title": "Syrian, Saudi foreign ministers meet in Riyadh",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 21.65 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:6ff300ed13ef83c7",
+      "title": "US voters want more action on global heating. Why are Democrats and Republicans staying silent?",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 21.6 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:f82c09b80a0df807",
+      "title": "Prediction markets are taking big bets on Ontario municipal races. Here's what the rules say",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 15.48 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:80b802c597369aff",
+      "title": "Ebola outbreak in DR Congo spreads to new province bordering CAR",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 9.07 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:0410e6090ced66f1",
+      "title": "NCCE urges women in Ketu South to report corruption",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 1.67 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:247da25879f9f970",
+      "title": "Ottawa youth accused of anti-Jewish terror plot guilty of 2 of 3 charges",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -7.84 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:1f73150a75c20fef",
+      "title": "Milei adviser claims UK being ‘colonised by Islam’ as Falklands row grows",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -9.4 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:ac52a5324fef0c95",
+      "title": "President calls for collective efforts to protect religious freedom on Durga Puja",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -14.51 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:136fad69df6ecb93",
+      "title": "Ghana Research Fund targets local solutions to national challenges",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -15.49 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:d0cdc70ecd640aa5",
+      "title": "Neanderthal remains may be earliest human ancestor find killed by a spear",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -20.4 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:8d2d72e97abdfae0",
+      "title": "Major road closures coming for Toronto's waterfront marathon this weekend",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -24.25 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:d8d93b4fc51670ed",
+      "title": "Kenya on high alert as Ebola outbreak in DR Congo fuels border fears",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -24.69 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:fdc96470b0d7c2e7",
+      "title": "Saudi, Syrian FMs discuss ties and regional security",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -28.23 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:e14df6dd842824e0",
+      "title": "Ghana to host UN convention signing on digital cargo documents on October 26",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -36.16 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:8d44da83bd2efdfc",
+      "title": "Syria, Turkey discuss bilateral ties, stability",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -48.17 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:340f6f4625cc86e8",
+      "title": "Three children and one teacher killed in Oregon elementary school shooting",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -51.31 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:c3ad2e6a8d02559c",
+      "title": "OSAP pause impacting National Ballet School, divinity college students",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -56.68 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:bba8ec8570bf5583",
+      "title": "Katz says al-Sharaa awaits Netanyahu’s election defeat over Druze issue",
+      "stage": "content-structure",
+      "reason": "summary is too thin for a self-contained beta card"
+    },
+    {
+      "eventId": "event:f938007de706b3d7",
+      "title": "Ontario set to import New York electricity this winter after Ford threatened to cut the U.S. off",
+      "stage": "content-structure",
+      "reason": "summary is too thin for a self-contained beta card"
+    },
+    {
+      "eventId": "event:19ef5d993ed6e10b",
+      "title": "Ukraine president targets Trump, Putin at EU summit",
+      "stage": "content-structure",
+      "reason": "summary is too thin for a self-contained beta card"
+    }
+  ],
+  "outcome": {
+    "writerRequests": 12,
+    "retries": 1,
+    "acceptedCards": 8,
+    "retainedCards": 120,
+    "skippedCards": 45,
+    "totalNeurons": 316.87271785736084,
+    "inputTokens": 25080,
+    "outputTokens": 3280,
+    "meanNeuronsPerAcceptedCard": 39.61,
+    "datasetBytes": 325689,
+    "thirdPartyCostUsd": 0,
+    "imageStatus": {
+      "event-specific": 117,
+      "fallback": 3
+    },
+    "geographicDistribution": {
+      "Middle East": 26,
+      "Bangladesh": 26,
+      "Ghana": 25,
+      "Syria": 10,
+      "Canada": 13,
+      "GTA": 5
+    }
+  },
+  "integrity": {
+    "datasetSha256": "a80ff5d6ec924d2163259849256fc1b9821cf9b1fe88853050d3d8b43bd6c669"
+  }
+}
