@@ -1,0 +1,2788 @@
+{
+  "schema": "doomscroller.news-beta-diagnostics",
+  "schemaVersion": 1,
+  "batchId": "news-beta-2026-10-19T00-17-09-711Z",
+  "startedAt": "2026-10-19T00:16:17.965Z",
+  "finishedAt": "2026-10-19T00:17:09.711Z",
+  "durationMs": 51746,
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1024,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "discovery": {
+    "discoveredArticles": 824,
+    "freshArticles": 622,
+    "uniqueArticles": 595,
+    "eventCandidates": 563,
+    "evidencePoolArticles": 183,
+    "preparedEvents": 127,
+    "selectedEvents": 30,
+    "evidenceFailures": 33,
+    "sourceFailures": 4
+  },
+  "sourceStatus": [
+    {
+      "id": "sana-en",
+      "name": "SANA English",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "north-press-en",
+      "name": "North Press Agency",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "enab-baladi-en",
+      "name": "Enab Baladi English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "syria-direct-en",
+      "name": "Syria Direct",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dhaka-tribune",
+      "name": "Dhaka Tribune",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "bd24live-en",
+      "name": "BD24Live English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "prothom-alo-en",
+      "name": "Prothom Alo English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "No valid feed items"
+    },
+    {
+      "id": "financial-express-bd",
+      "name": "The Financial Express Bangladesh",
+      "status": "ok",
+      "itemCount": 28
+    },
+    {
+      "id": "daily-star-bd",
+      "name": "The Daily Star Bangladesh",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "myjoyonline",
+      "name": "MyJoyOnline",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "graphic-ghana",
+      "name": "Graphic Online",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "ghana-news-agency",
+      "name": "Ghana News Agency",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "toronto-city",
+      "name": "City of Toronto News",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "cbc-toronto",
+      "name": "CBC Toronto",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "cbc-canada",
+      "name": "CBC Canada",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "aljazeera-all",
+      "name": "Al Jazeera",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "arab-news",
+      "name": "Arab News",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "bbc-world",
+      "name": "BBC World",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "bbc-technology",
+      "name": "BBC Technology",
+      "status": "ok",
+      "itemCount": 21
+    },
+    {
+      "id": "bbc-science-environment",
+      "name": "BBC Science & Environment",
+      "status": "ok",
+      "itemCount": 42
+    },
+    {
+      "id": "guardian-world",
+      "name": "The Guardian World",
+      "status": "ok",
+      "itemCount": 45
+    },
+    {
+      "id": "guardian-science",
+      "name": "The Guardian Science",
+      "status": "ok",
+      "itemCount": 27
+    },
+    {
+      "id": "guardian-environment",
+      "name": "The Guardian Environment",
+      "status": "ok",
+      "itemCount": 34
+    },
+    {
+      "id": "npr-world",
+      "name": "NPR World",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "npr-science",
+      "name": "NPR Science",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dw-world",
+      "name": "DW World",
+      "status": "ok",
+      "itemCount": 135
+    },
+    {
+      "id": "africanews",
+      "name": "Africanews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "euronews",
+      "name": "Euronews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "global-voices",
+      "name": "Global Voices",
+      "status": "ok",
+      "itemCount": 15
+    },
+    {
+      "id": "japan-times",
+      "name": "The Japan Times",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "mongabay",
+      "name": "Mongabay",
+      "status": "ok",
+      "itemCount": 32
+    }
+  ],
+  "knownSourceFailures": [
+    {
+      "name": "Bangladesh Sangbad Sangstha",
+      "url": "https://www.bssnews.net/feed",
+      "status": "blocked",
+      "detail": "Cloudflare challenge returned HTTP 403 to the bounded collector."
+    },
+    {
+      "name": "The Indian Express feeds",
+      "url": "https://indianexpress.com/rss/",
+      "status": "blocked_in_cloud",
+      "detail": "Official feeds work locally but return HTTP 403 from GitHub Actions, so the automatic collector does not depend on them."
+    },
+    {
+      "name": "The Business Standard",
+      "url": "https://www.tbsnews.net/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "Feed served 2019–2021 items."
+    },
+    {
+      "name": "Ontario Newsroom",
+      "url": "https://news.ontario.ca/en/rss",
+      "status": "retired_from_registry",
+      "detail": "URL returns an HTML application shell, not RSS."
+    },
+    {
+      "name": "GhanaWeb",
+      "url": "https://www.ghanaweb.com/GhanaHomePage/NewsArchive/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "The publisher endpoint returned HTTP 404 in October 2026; MyJoyOnline and Graphic Online remain active Ghana sources."
+    }
+  ],
+  "reranker": {
+    "adjustments": [
+      {
+        "eventId": "event:4e641d866ea198d4",
+        "baseScore": 84.19,
+        "adjustment": 14,
+        "adjustedScore": 98.19,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:c309a933f9a9eccf",
+        "baseScore": 83.17,
+        "adjustment": 6,
+        "adjustedScore": 89.17,
+        "contentType": "general",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:50c589e8aeb36f93",
+        "baseScore": 67.56,
+        "adjustment": 14,
+        "adjustedScore": 81.56,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:b53b4e041ec3efd8",
+        "baseScore": 70.9,
+        "adjustment": 8,
+        "adjustedScore": 78.9,
+        "contentType": "conflict",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:370eee9405339fca",
+        "baseScore": 67.68,
+        "adjustment": 3,
+        "adjustedScore": 70.68,
+        "contentType": "conflict",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:5d8fbcab1e393dde",
+        "baseScore": 56.02,
+        "adjustment": 10,
+        "adjustedScore": 66.02000000000001,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:11299dee35b0669f",
+        "baseScore": 44.27,
+        "adjustment": 6,
+        "adjustedScore": 50.27,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:1c16c8c326bb3f03",
+        "baseScore": 43.43,
+        "adjustment": 6,
+        "adjustedScore": 49.43,
+        "contentType": "conflict",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:221f3321498b75b4",
+        "baseScore": 56.7,
+        "adjustment": -14,
+        "adjustedScore": 42.7,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:f3e88575e5d096df",
+        "baseScore": 50.67,
+        "adjustment": -14,
+        "adjustedScore": 36.67,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East",
+          "Syria"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:41d20c19b89eaca3",
+        "baseScore": 51.4,
+        "adjustment": -15,
+        "adjustedScore": 36.4,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:dc5fedde4f780a32",
+        "baseScore": 37.42,
+        "adjustment": -6,
+        "adjustedScore": 31.42,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:d62878232aa11565",
+        "baseScore": 52.93,
+        "adjustment": -24,
+        "adjustedScore": 28.93,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "Ukraine"
+      },
+      {
+        "eventId": "event:201b6f9ffa922cea",
+        "baseScore": 49.8,
+        "adjustment": -21,
+        "adjustedScore": 28.799999999999997,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "United Arab Emirates"
+      },
+      {
+        "eventId": "event:44dc761471a690bf",
+        "baseScore": 41.31,
+        "adjustment": -29,
+        "adjustedScore": 12.310000000000002,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:667206815c771d95",
+        "baseScore": 47.57,
+        "adjustment": -36,
+        "adjustedScore": 11.57,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:a60fc05e18533bbf",
+        "baseScore": 37.29,
+        "adjustment": -28,
+        "adjustedScore": 9.29,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:acaebc342a8dca93",
+        "baseScore": 44.18,
+        "adjustment": -44,
+        "adjustedScore": 0.17999999999999972,
+        "contentType": "general",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Palestinian territories"
+      },
+      {
+        "eventId": "event:47b5577c6354d8fb",
+        "baseScore": 37.87,
+        "adjustment": -44,
+        "adjustedScore": -6.130000000000003,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "Russia"
+      },
+      {
+        "eventId": "event:823cce387f23f872",
+        "baseScore": 47.79,
+        "adjustment": -55,
+        "adjustedScore": -7.210000000000001,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana",
+          "Canada",
+          "GTA"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:a3fbf059cb255400",
+        "baseScore": 37.15,
+        "adjustment": -49,
+        "adjustedScore": -11.850000000000001,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:4c9d8d68bd95e0fd",
+        "baseScore": 43.4,
+        "adjustment": -61,
+        "adjustedScore": -17.6,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:24f399d6b9e280cc",
+        "baseScore": 37.23,
+        "adjustment": -57,
+        "adjustedScore": -19.770000000000003,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "South Africa"
+      },
+      {
+        "eventId": "event:8b0d1c38dd37fc61",
+        "baseScore": 40.16,
+        "adjustment": -63,
+        "adjustedScore": -22.840000000000003,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:5529f48f53a68e32",
+        "baseScore": 48.88,
+        "adjustment": -78,
+        "adjustedScore": -29.119999999999997,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Middle East"
+      },
+      {
+        "eventId": "event:6ff300ed13ef83c7",
+        "baseScore": 37.68,
+        "adjustment": -67,
+        "adjustedScore": -29.32,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "Iran"
+      },
+      {
+        "eventId": "event:234c7d6b4a005b11",
+        "baseScore": 50.93,
+        "adjustment": -84,
+        "adjustedScore": -33.07,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:9f1581cbb7483512",
+        "baseScore": 37.19,
+        "adjustment": -85,
+        "adjustedScore": -47.81,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Middle East",
+          "Syria"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:34c6362b44a2b817",
+        "baseScore": 41.09,
+        "adjustment": -89,
+        "adjustedScore": -47.91,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:20e63b7b7a0871f9",
+        "baseScore": 34.24,
+        "adjustment": -88,
+        "adjustedScore": -53.76,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      }
+    ],
+    "distribution": {
+      "regions": {
+        "Middle East": 9,
+        "Ghana": 6,
+        "Canada": 6,
+        "Syria": 3,
+        "GTA": 4,
+        "Bangladesh": 3,
+        "World": 7
+      },
+      "countries": {
+        "Israel": 3,
+        "Ghana": 6,
+        "Canada": 2,
+        "Syria": 3,
+        "GTA": 3,
+        "Bangladesh": 3,
+        "World": 3,
+        "Ukraine": 1,
+        "United Arab Emirates": 1,
+        "Palestinian territories": 1,
+        "Russia": 1,
+        "South Africa": 1,
+        "Middle East": 1,
+        "Iran": 1
+      },
+      "contentTypes": {
+        "conflict": 8,
+        "general": 10,
+        "economy-or-public-life": 4,
+        "diplomacy-or-speech": 4,
+        "culture-science-education": 4
+      },
+      "publishers": {
+        "The Guardian World": 2,
+        "Arab News": 4,
+        "Graphic Online": 2,
+        "North Press Agency": 3,
+        "CBC Toronto": 3,
+        "Ghana News Agency": 3,
+        "The Daily Star Bangladesh": 1,
+        "Al Jazeera": 2,
+        "The Financial Express Bangladesh": 2,
+        "MyJoyOnline": 3,
+        "Africanews": 2,
+        "NPR World": 1,
+        "BBC World": 1,
+        "The Guardian Environment": 1
+      }
+    }
+  },
+  "selectedEvents": [
+    {
+      "eventId": "event:4e641d866ea198d4",
+      "title": "US ambassador to Israel calls West Bank settler attack on American photojournalist ‘terror’",
+      "score": 84.19,
+      "adjustedScore": 98.19,
+      "rank": 1,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.19,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 26,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:c309a933f9a9eccf",
+      "title": "Trump backs ally Netanyahu ahead of Israel’s tight election",
+      "score": 83.17,
+      "adjustedScore": 89.17,
+      "rank": 2,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.17,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:50c589e8aeb36f93",
+      "title": "Agbogbloshie waste evacuation exercise satisfactory — Ayariga",
+      "score": 67.56,
+      "adjustedScore": 81.56,
+      "rank": 3,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 10.56,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:b53b4e041ec3efd8",
+      "title": "Four people killed in ‘violent, fast-moving’ fire at Canadian military base",
+      "score": 70.9,
+      "adjustedScore": 78.9,
+      "rank": 4,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 19.9,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:370eee9405339fca",
+      "title": "Syrian army soldier killed while clearing mines near al-Tanf",
+      "score": 67.68,
+      "adjustedScore": 70.68,
+      "rank": 5,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 12.68,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:5d8fbcab1e393dde",
+      "title": "Chow, Bradford back on campaign trail as election race enters its final full week",
+      "score": 56.02,
+      "adjustedScore": 66.02,
+      "rank": 6,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 18.02,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:11299dee35b0669f",
+      "title": "Ghana to host automotive trade fair in December",
+      "score": 44.27,
+      "adjustedScore": 50.27,
+      "rank": 7,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.27,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:1c16c8c326bb3f03",
+      "title": "Discipline, public trust key to armed forces’ strength: PM",
+      "score": 43.43,
+      "adjustedScore": 49.43,
+      "rank": 8,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.43,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:221f3321498b75b4",
+      "title": "Congo’s fast-moving Ebola outbreak spreads to eighth province",
+      "score": 56.7,
+      "adjustedScore": 42.7,
+      "rank": 9,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.7,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:f3e88575e5d096df",
+      "title": "Saudi coalition says helicopter crash in Najran kills two crew members",
+      "score": 50.67,
+      "adjustedScore": 36.67,
+      "rank": 10,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 15.67,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East",
+        "Syria"
+      ]
+    },
+    {
+      "eventId": "event:41d20c19b89eaca3",
+      "title": "Alberta independence referendum: Will separatists survive a loss?",
+      "score": 51.4,
+      "adjustedScore": 36.4,
+      "rank": 11,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 19.4,
+        "importance": 12,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:dc5fedde4f780a32",
+      "title": "Reports of PM ordering Ishraque to resign baseless: Press officer",
+      "score": 37.42,
+      "adjustedScore": 31.42,
+      "rank": 12,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.42,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:d62878232aa11565",
+      "title": "Trump bashes Zelensky, defends waiving Russia sanctions",
+      "score": 52.93,
+      "adjustedScore": 28.93,
+      "rank": 13,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.93,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:201b6f9ffa922cea",
+      "title": "IMF/ World Bank signs agreement with UAE over holding 2029 Annual Meetings in Abu Dhabi",
+      "score": 49.8,
+      "adjustedScore": 28.8,
+      "rank": 14,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.8,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:44dc761471a690bf",
+      "title": "Obuasi SHTS abuse: Culture of tolerance enabled sexual abuse – Rev. Apprey",
+      "score": 41.31,
+      "adjustedScore": 12.31,
+      "rank": 15,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.31,
+        "importance": 0,
+        "interestingness": 8,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:667206815c771d95",
+      "title": "DRC accuses ex-president Kabila of planning 'general attack' on the country",
+      "score": 47.57,
+      "adjustedScore": 11.57,
+      "rank": 16,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 15.57,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:a60fc05e18533bbf",
+      "title": "Toronto home prices drop nearly 4% compared to 2025",
+      "score": 37.29,
+      "adjustedScore": 9.29,
+      "rank": 17,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 19.29,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:acaebc342a8dca93",
+      "title": "'Life is absolutely brutal in Gaza,' says World Food Programme head",
+      "score": 44.18,
+      "adjustedScore": 0.18,
+      "rank": 18,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.18,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:47b5577c6354d8fb",
+      "title": "Oil facilities hit in deadly overnight attack on St Petersburg",
+      "score": 37.87,
+      "adjustedScore": -6.13,
+      "rank": 19,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.87,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:823cce387f23f872",
+      "title": "Ghana Consulate in Toronto to launch DPE Canada 2027 on November 27",
+      "score": 47.79,
+      "adjustedScore": -7.21,
+      "rank": 20,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 16.79,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana",
+        "Canada",
+        "GTA"
+      ]
+    },
+    {
+      "eventId": "event:a3fbf059cb255400",
+      "title": "Ishraque Hossain asked to resign from cabinet",
+      "score": 37.15,
+      "adjustedScore": -11.85,
+      "rank": 21,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.15,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:4c9d8d68bd95e0fd",
+      "title": "JERUSALEM DAILY: Settlers attack EU diplomats",
+      "score": 43.4,
+      "adjustedScore": -17.6,
+      "rank": 22,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.4,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:24f399d6b9e280cc",
+      "title": "NPP demands publication of invoices for GH¢27m South Africa evacuation flights",
+      "score": 37.23,
+      "adjustedScore": -19.77,
+      "rank": 23,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.23,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:8b0d1c38dd37fc61",
+      "title": "Government urged to invest in open science to improve public access to research",
+      "score": 40.16,
+      "adjustedScore": -22.84,
+      "rank": 24,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 13.16,
+        "importance": 0,
+        "interestingness": 12,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:5529f48f53a68e32",
+      "title": "KAPSARC reinforces Saudi role in global energy dialogue",
+      "score": 48.88,
+      "adjustedScore": -29.12,
+      "rank": 25,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.88,
+        "importance": 12,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:6ff300ed13ef83c7",
+      "title": "US voters want more action on global heating. Why are Democrats and Republicans staying silent?",
+      "score": 37.68,
+      "adjustedScore": -29.32,
+      "rank": 26,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 5.68,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:234c7d6b4a005b11",
+      "title": "Oshawa's growing homeless and addiction crisis takes centre stage in mayoral race",
+      "score": 50.93,
+      "adjustedScore": -33.07,
+      "rank": 27,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 15.93,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 11,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:9f1581cbb7483512",
+      "title": "Lebanese Justice Minister says explosives transport, storage threaten national security",
+      "score": 37.19,
+      "adjustedScore": -47.81,
+      "rank": 28,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 12.19,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East",
+        "Syria"
+      ]
+    },
+    {
+      "eventId": "event:34c6362b44a2b817",
+      "title": "Frontline workers in DRC receive Ervebo vaccine amid growing Ebola outbreak",
+      "score": 41.09,
+      "adjustedScore": -47.91,
+      "rank": 29,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 11.09,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:20e63b7b7a0871f9",
+      "title": "World Insights: Xi’s principles on settling Africa’s hotspot issues resonate across continent",
+      "score": 34.24,
+      "adjustedScore": -53.76,
+      "rank": 30,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 13.24,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    }
+  ],
+  "invalidPreviousCardsRemoved": [],
+  "crossEventOverlap": [],
+  "generation": [
+    {
+      "eventId": "event:c309a933f9a9eccf",
+      "title": "Trump backs ally Netanyahu ahead of Israel’s tight election",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "1d0fd7c5b30437720c56b187c5349208c5bc9fba2c6e49462fb9da3c8333a5d4",
+      "allowedExactDates": [
+        "2023-10-07"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 7, 2023",
+            "date": "2023-10-07"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2023-10-07"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 359,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:arab-news:667108aa3a1ae1edc3e173b7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:arab-news:667108aa3a1ae1edc3e173b7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:arab-news:667108aa3a1ae1edc3e173b7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:arab-news:667108aa3a1ae1edc3e173b7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:arab-news:667108aa3a1ae1edc3e173b7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:arab-news:667108aa3a1ae1edc3e173b7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:arab-news:667108aa3a1ae1edc3e173b7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:arab-news:667108aa3a1ae1edc3e173b7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:arab-news:667108aa3a1ae1edc3e173b7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:arab-news:667108aa3a1ae1edc3e173b7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:arab-news:667108aa3a1ae1edc3e173b7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:arab-news:667108aa3a1ae1edc3e173b7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:dw:8994fd5e966beac0abef214d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:dw:8994fd5e966beac0abef214d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F15",
+            "sourceId": "news:dw:8994fd5e966beac0abef214d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F16",
+            "sourceId": "news:dw:8994fd5e966beac0abef214d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F17",
+            "sourceId": "news:dw:8994fd5e966beac0abef214d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F18",
+            "sourceId": "news:dw:8994fd5e966beac0abef214d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F19",
+            "sourceId": "news:dw:8994fd5e966beac0abef214d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F20",
+            "sourceId": "news:dw:8994fd5e966beac0abef214d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F21",
+            "sourceId": "news:dw:8994fd5e966beac0abef214d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F22",
+            "sourceId": "news:dw:8994fd5e966beac0abef214d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F23",
+            "sourceId": "news:dw:8994fd5e966beac0abef214d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F24",
+            "sourceId": "news:dw:8994fd5e966beac0abef214d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:arab-news:667108aa3a1ae1edc3e173b7",
+          "publisher": "Arab News",
+          "url": "https://arabnews.com/middle-east/trump-backs-ally-netanyahu-ahead-of-israels-tight-election-3007054",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:dw:8994fd5e966beac0abef214d",
+          "publisher": "DW World",
+          "url": "https://dw.com/en/israel-trump-endorses-netanyahu-ahead-of-elections/a-79693698?maca=en-rss-en-all-1573-rdf",
+          "wireOrigin": null,
+          "sourceType": "public_service_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://assets.maestronewsroom.com/media/30f6532d-717b-4366-9158-9c455299fcd9/1792355484343-f11d56d69a357200.jpg",
+        "alt": "Trump backs ally Netanyahu ahead of Israel’s tight election",
+        "status": "event-specific",
+        "source_url": "https://arabnews.com/middle-east/trump-backs-ally-netanyahu-ahead-of-israels-tight-election-3007054",
+        "attribution": "Arab News",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-19T00:16:37.196Z",
+          "finishedAt": "2026-10-19T00:16:47.613Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Donald Trump endorses Benjamin Netanyahu ahead of Israel's parliamentary election\",\n  \"pages\": [\n    {\n      \"text\": \"US President Donald Trump issued a complete and total endorsement of Israeli Prime Minister Benjamin Netanyahu on Sunday, prior to Israel's parliamentary election scheduled for October 27. In a post on his Truth Social platform, Trump described Netanyahu as a partner the United States demands of Israel and a leader who has been strong, brave, and brilliant in the face of opposition. Trump also characterized Netanyahu as a “Great Warrior Prime Minister” and suggested that if anyone other than Netanyahu were re-elected, the United States would have to handle the work against Iran itself, which he stated he is not inclined to do. Trump further noted that the US would be alone in the war against Iran if Netanyahu were not re-elected, referencing the labeling of the US and Israel as “the big and small Satans” by Iran's Revolutionary Guards. The endorsement comes less than two weeks before the first Israeli vote since the October 7, 2023, Hamas-led attack. While polls suggest the election is a tight race, some indicate that neither Netanyahu nor the opposition may secure the 61 seats required to form a coalition. Opposition politicians have accused Netanyahu of bearing personal responsibility for the October 7 attack after allegedly ignoring warnings.\"\n    },\n    {\n      \"text\": \"Netanyahu thanked Trump for his support on Sunday, stating, “Together we will complete the mission!” In a video released by his Likud party, Netanyahu touted his relationship with the US president, claiming that together they had “crushed Iran” and stating that re-election would allow him to work with Trump to eliminate the Iranian threat within two years or sooner. Netanyahu previously described Trump in August as one of the greatest friends Israel has had in the White House. The two leaders have worked together on multi-front wars following the October 7 attack, including actions involving Iran. Trump joined Netanyahu in a US-Israeli attack on Iran in late February, though he agreed to a ceasefire in April following US public opposition to the war, which had caused oil prices to spiral. The conflict between Israel, the US, and Iran began in February and resulted in Tehran blocking some global oil supplies through the Strait of Hormuz.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Donald Trump endorses Benjamin Netanyahu ahead of Israel's parliamentary election",
+            "pages": [
+              {
+                "text": "US President Donald Trump issued a complete and total endorsement of Israeli Prime Minister Benjamin Netanyahu on Sunday, prior to Israel's parliamentary election scheduled for October 27. In a post on his Truth Social platform, Trump described Netanyahu as a partner the United States demands of Israel and a leader who has been strong, brave, and brilliant in the face of opposition. Trump also characterized Netanyahu as a “Great Warrior Prime Minister” and suggested that if anyone other than Netanyahu were re-elected, the United States would have to handle the work against Iran itself, which he stated he is not inclined to do. Trump further noted that the US would be alone in the war against Iran if Netanyahu were not re-elected, referencing the labeling of the US and Israel as “the big and small Satans” by Iran's Revolutionary Guards. The endorsement comes less than two weeks before the first Israeli vote since the October 7, 2023, Hamas-led attack. While polls suggest the election is a tight race, some indicate that neither Netanyahu nor the opposition may secure the 61 seats required to form a coalition. Opposition politicians have accused Netanyahu of bearing personal responsibility for the October 7 attack after allegedly ignoring warnings."
+              },
+              {
+                "text": "Netanyahu thanked Trump for his support on Sunday, stating, “Together we will complete the mission!” In a video released by his Likud party, Netanyahu touted his relationship with the US president, claiming that together they had “crushed Iran” and stating that re-election would allow him to work with Trump to eliminate the Iranian threat within two years or sooner. Netanyahu previously described Trump in August as one of the greatest friends Israel has had in the White House. The two leaders have worked together on multi-front wars following the October 7 attack, including actions involving Iran. Trump joined Netanyahu in a US-Israeli attack on Iran in late February, though he agreed to a ceasefire in April following US public opposition to the war, which had caused oil prices to spiral. The conflict between Israel, the US, and Iran began in February and resulted in Tehran blocking some global oil supplies through the Strait of Hormuz."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2526,
+            "completion_tokens": 489,
+            "total_tokens": 3015,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 36.29999923706055
+          },
+          "latencyMs": 10416,
+          "safeHeaders": {
+            "cf-ray": "a4cb9858cc507e62-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:11299dee35b0669f",
+      "title": "Ghana to host automotive trade fair in December",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "7fb3c2dd21e6a49e51df96ed347c5cc963ef0fc66400cabcabc863220d1c9b35",
+      "allowedExactDates": [
+        "2026-10-16"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 16, 2026",
+            "date": "2026-10-16"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-16"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 229,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:ghana-news-agency:b272a106965957bad617806d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:ghana-news-agency:b272a106965957bad617806d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:ghana-news-agency:b272a106965957bad617806d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:ghana-news-agency:b272a106965957bad617806d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:ghana-news-agency:b272a106965957bad617806d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:ghana-news-agency:b272a106965957bad617806d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:ghana-news-agency:b272a106965957bad617806d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:ghana-news-agency:b272a106965957bad617806d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:ghana-news-agency:b272a106965957bad617806d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:ghana-news-agency:b272a106965957bad617806d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:ghana-news-agency:b272a106965957bad617806d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:ghana-news-agency:b272a106965957bad617806d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:ghana-news-agency:b272a106965957bad617806d",
+          "publisher": "Ghana News Agency",
+          "url": "https://gna.org.gh/2026/10/ghana-to-host-automotive-trade-fair-in-december",
+          "wireOrigin": null,
+          "sourceType": "public_service_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://gna.org.gh/web/wp-content/uploads/2026/10/WhatsApp-Image-2026-10-18-at-14.23.49.jpeg",
+        "alt": "Ghana to host automotive trade fair in December",
+        "status": "event-specific",
+        "source_url": "https://gna.org.gh/2026/10/ghana-to-host-automotive-trade-fair-in-december",
+        "attribution": "Ghana News Agency",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-19T00:16:47.614Z",
+          "finishedAt": "2026-10-19T00:16:50.527Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Ghana to host automotive trade fair in December\",\n  \"pages\": [\n    {\n      \"text\": \"Ghana is scheduled to host the Ghana Auto Trade Fair and Exhibition (GATFE 2026) from December 5 to 10 at Black Star Square. Launched in Accra on October 16, 2026, the event aims to connect industry players and promote investment in vehicle assembly, component manufacturing, and related services. The fair is being organized by Resonate Ghana Limited in collaboration with the National Road Safety Authority, the Black Star Experience, and the Ministries of Trade and Transport. Under the theme “Driving Innovation and Synergies within the Auto Ecosystem,” the exhibition is intended to bring together vehicle manufacturers, importers, spare parts dealers, insurers, and financial institutions. Theodora Wuni, Executive Director of GATFE, stated that the platform is designed to bridge the gap between manufacturers, assemblers, and stakeholders to explore avenues for the growth of the Ghanaian automotive sector.\"\n    },\n    {\n      \"text\": \"The upcoming exhibition follows the 2019 introduction of the Ghana Automotive Development Policy, which seeks to attract investment and position the country as a competitive automotive manufacturing hub in West Africa. While international brands such as Toyota, Volkswagen, Nissan, and Suzuki have established assembly operations in Ghana, the market remains heavily dependent on imported vehicles, specifically used cars. The GATFE 2026 organizers stated the event will focus on strengthening collaboration across the automotive value chain as the country seeks to expand from vehicle assembly to the local production of components and spare parts.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Ghana to host automotive trade fair in December",
+            "pages": [
+              {
+                "text": "Ghana is scheduled to host the Ghana Auto Trade Fair and Exhibition (GATFE 2026) from December 5 to 10 at Black Star Square. Launched in Accra on October 16, 2026, the event aims to connect industry players and promote investment in vehicle assembly, component manufacturing, and related services. The fair is being organized by Resonate Ghana Limited in collaboration with the National Road Safety Authority, the Black Star Experience, and the Ministries of Trade and Transport. Under the theme “Driving Innovation and Synergies within the Auto Ecosystem,” the exhibition is intended to bring together vehicle manufacturers, importers, spare parts dealers, insurers, and financial institutions. Theodora Wuni, Executive Director of GATFE, stated that the platform is designed to bridge the gap between manufacturers, assemblers, and stakeholders to explore avenues for the growth of the Ghanaian automotive sector."
+              },
+              {
+                "text": "The upcoming exhibition follows the 2019 introduction of the Ghana Automotive Development Policy, which seeks to attract investment and position the country as a competitive automotive manufacturing hub in West Africa. While international brands such as Toyota, Volkswagen, Nissan, and Suzuki have established assembly operations in Ghana, the market remains heavily dependent on imported vehicles, specifically used cars. The GATFE 2026 organizers stated the event will focus on strengthening collaboration across the automotive value chain as the country seeks to expand from vehicle assembly to the local production of components and spare parts."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1740,
+            "completion_tokens": 348,
+            "total_tokens": 2088,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 25.30908966064453
+          },
+          "latencyMs": 2913,
+          "safeHeaders": {
+            "cf-ray": "a4cb9899984b7e62-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:1c16c8c326bb3f03",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "page 1 exposes a citation/list marker"
+        ],
+        "wordCount": 222,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-19T00:16:50.527Z",
+          "finishedAt": "2026-10-19T00:16:57.179Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Prime Minister Tarique Rahman emphasizes discipline and public trust for Bangladesh armed forces\",\n  \"pages\": [\n    {\n      \"text\": \"On October 18, 2026, Prime Minister Tarique Rahman urged members of the armed forces in Bangladesh to uphold the Constitution, laws, military regulations, and humanitarian values during their duties. Speaking at a ceremony organized by the army’s 9th Infantry Division, the Prime Minister stated that an armed force's real strength is found in discipline, skills, leadership, morality, training, and public trust, rather than being limited to weapons, equipment, or manpower. He also stressed the importance of maintaining the chain of command. 10. The Prime Minister noted that the government is working to increase the technological advancement, skill, and professionalism of the armed forces, while prioritizing a domestic defense industry for the production of weapons, ammunition, and other equipment. While acknowledging technological progress, he stated that technology could not replace people and emphasized the need for an integrated defense capability to allow the army, navy, and air force to operate together effectively. During the event, the Prime Minister congratulated units receiving the National Standard, noting the honor reflects their history, tradition, discipline, sacrifice, and professionalism. Attendees included Prime Minister’s Defence Adviser Brig Gen (retd) AKM Shamsul Islam, Chief of Army Staff General Waker-Uz-Zaman, Major General Molla Mohammad Kamruzzaman (General Officer Commanding of the 9th Infantry Division and Savar Area Commander), Home Minister Salahuddin Ahmed, and State Minister for Land Mir Mohammed Helal Uddin.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Prime Minister Tarique Rahman emphasizes discipline and public trust for Bangladesh armed forces",
+            "pages": [
+              {
+                "text": "On October 18, 2026, Prime Minister Tarique Rahman urged members of the armed forces in Bangladesh to uphold the Constitution, laws, military regulations, and humanitarian values during their duties. Speaking at a ceremony organized by the army’s 9th Infantry Division, the Prime Minister stated that an armed force's real strength is found in discipline, skills, leadership, morality, training, and public trust, rather than being limited to weapons, equipment, or manpower. He also stressed the importance of maintaining the chain of command. 10. The Prime Minister noted that the government is working to increase the technological advancement, skill, and professionalism of the armed forces, while prioritizing a domestic defense industry for the production of weapons, ammunition, and other equipment. While acknowledging technological progress, he stated that technology could not replace people and emphasized the need for an integrated defense capability to allow the army, navy, and air force to operate together effectively. During the event, the Prime Minister congratulated units receiving the National Standard, noting the honor reflects their history, tradition, discipline, sacrifice, and professionalism. Attendees included Prime Minister’s Defence Adviser Brig Gen (retd) AKM Shamsul Islam, Chief of Army Staff General Waker-Uz-Zaman, Major General Molla Mohammad Kamruzzaman (General Officer Commanding of the 9th Infantry Division and Savar Area Commander), Home Minister Salahuddin Ahmed, and State Minister for Land Mir Mohammed Helal Uddin."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1419,
+            "completion_tokens": 349,
+            "total_tokens": 1768,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 22.418182373046875
+          },
+          "latencyMs": 6651,
+          "safeHeaders": {
+            "cf-ray": "a4cb98abd9127e62-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:221f3321498b75b4",
+      "title": "Congo’s fast-moving Ebola outbreak spreads to eighth province",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "44ebb6514c839d8c8ad59919184e183c5f9cdbc346c7545c1c0d5f16904f404d",
+      "allowedExactDates": [
+        "2026-10-18",
+        "2026-10-17",
+        "2026-10-16",
+        "2026-10-15",
+        "2026-10-14"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 18, 2026",
+            "date": "2026-10-18"
+          },
+          {
+            "raw": "October 15, 2026",
+            "date": "2026-10-15"
+          },
+          {
+            "raw": "October 14, 2026",
+            "date": "2026-10-14"
+          },
+          {
+            "raw": "October 16, 2026",
+            "date": "2026-10-16"
+          },
+          {
+            "raw": "October 17, 2026",
+            "date": "2026-10-17"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-18",
+          "2026-10-17",
+          "2026-10-16",
+          "2026-10-15",
+          "2026-10-14"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 378,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:arab-news:bdeeaa2168396621d3124c11",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:arab-news:bdeeaa2168396621d3124c11",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:arab-news:bdeeaa2168396621d3124c11",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:arab-news:bdeeaa2168396621d3124c11",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:arab-news:bdeeaa2168396621d3124c11",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:arab-news:bdeeaa2168396621d3124c11",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:arab-news:bdeeaa2168396621d3124c11",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:arab-news:bdeeaa2168396621d3124c11",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:arab-news:bdeeaa2168396621d3124c11",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:arab-news:bdeeaa2168396621d3124c11",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:arab-news:bdeeaa2168396621d3124c11",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:arab-news:bdeeaa2168396621d3124c11",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:africanews:9746fa19fc57c6d3211a97f2",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:africanews:9746fa19fc57c6d3211a97f2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F15",
+            "sourceId": "news:africanews:9746fa19fc57c6d3211a97f2",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F16",
+            "sourceId": "news:africanews:9746fa19fc57c6d3211a97f2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F17",
+            "sourceId": "news:africanews:9746fa19fc57c6d3211a97f2",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F18",
+            "sourceId": "news:africanews:9746fa19fc57c6d3211a97f2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F19",
+            "sourceId": "news:africanews:9746fa19fc57c6d3211a97f2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F20",
+            "sourceId": "news:africanews:9746fa19fc57c6d3211a97f2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F21",
+            "sourceId": "news:africanews:9746fa19fc57c6d3211a97f2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F22",
+            "sourceId": "news:africanews:33f8afa7c2af3f93f5f31cd9",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F23",
+            "sourceId": "news:africanews:33f8afa7c2af3f93f5f31cd9",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F24",
+            "sourceId": "news:africanews:33f8afa7c2af3f93f5f31cd9",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F25",
+            "sourceId": "news:africanews:33f8afa7c2af3f93f5f31cd9",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F26",
+            "sourceId": "news:africanews:33f8afa7c2af3f93f5f31cd9",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F27",
+            "sourceId": "news:africanews:33f8afa7c2af3f93f5f31cd9",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F28",
+            "sourceId": "news:africanews:33f8afa7c2af3f93f5f31cd9",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:arab-news:bdeeaa2168396621d3124c11",
+          "publisher": "Arab News",
+          "url": "https://arabnews.com/world/congos-fast-moving-ebola-outbreak-spreads-to-eighth-province-3007063",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:africanews:9746fa19fc57c6d3211a97f2",
+          "publisher": "Africanews",
+          "url": "https://africanews.com/2026/10/16/ebola-outbreak-in-dr-congo-spreads-to-new-province-bordering-car",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:africanews:33f8afa7c2af3f93f5f31cd9",
+          "publisher": "Africanews",
+          "url": "https://africanews.com/2026/10/16/at-least-10-students-die-as-ebola-outbreak-spreads-in-dr-congo",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://assets.maestronewsroom.com/media/30f6532d-717b-4366-9158-9c455299fcd9/1792364396048-538dcd26ae3ec592.jpg",
+        "alt": "Congo’s fast-moving Ebola outbreak spreads to eighth province",
+        "status": "event-specific",
+        "source_url": "https://arabnews.com/world/congos-fast-moving-ebola-outbreak-spreads-to-eighth-province-3007063",
+        "attribution": "Arab News",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-19T00:16:57.179Z",
+          "finishedAt": "2026-10-19T00:17:00.784Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Ebola outbreak in Democratic Republic of Congo spreads to eighth province\",\n  \"pages\": [\n    {\n      \"text\": \"An Ebola outbreak in the Democratic Republic of Congo (DRC) has reached an eighth province in the country’s north, according to authorities on October 18, 2026. The Health Ministry reported two cases, including one death, in Nord-Ubangi province, which borders the Central African Republic. The ministry identified the patients as men in their 20s living in the Wapinda health zone, an area bordering Bas-Uele province where previous cases have been reported. While two health officials told Reuters on October 15, 2026, that the cases in Nord-Ubangi had been recorded, the development had not yet been announced by Congolese authorities at that time. The outbreak, which was declared in mid-May, has resulted in at least 9,400 cases and over 4,500 deaths, making it the deadliest in the country's history. The virus is identified as the Bundibugyo strain, for which there is currently no vaccine or treatment. The World Health Organization (WHO) expects a first clinical trial for a vaccine to begin in the DRC by the end of October.\"\n    },\n    {\n      \"text\": \"The outbreak continues to spread geographically and in scale, according to a WHO situation report released on October 14, 2026. Mohamed Yakub Janabi, the WHO Regional Director for Africa, told The Associated Press on October 16, 2026, that while some pockets of the disease are decreasing, the outbreak is spreading out geographically. Janabi noted that a significant challenge involves convincing infected individuals to seek medical assistance, as some deaths occur in the community outside of health centers. Serge Ngalebato, an epidemiologist and field coordinator for the Wamba health zone in Haut-Uele province, told the AP that health workers in his zone implemented periodic home visits because residents were too afraid to visit hospitals. Ituri province in eastern Congo remains the epicenter, accounting for nearly three-quarters of confirmed cases. In Ituri, education officials in Bunia reported on October 15, 2026, that at least 10 students have died from Ebola among 25 confirmed cases identified at several schools. The outbreak has affected more than 65 health zones across eight provinces. The virus has also spilled over into neighboring countries; Kenya recorded a seventh case on October 17, 2026, and Uganda, which previously recorded cases, has since declared itself free of the disease. The Central African Republic has not recorded any confirmed cases.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Ebola outbreak in Democratic Republic of Congo spreads to eighth province",
+            "pages": [
+              {
+                "text": "An Ebola outbreak in the Democratic Republic of Congo (DRC) has reached an eighth province in the country’s north, according to authorities on October 18, 2026. The Health Ministry reported two cases, including one death, in Nord-Ubangi province, which borders the Central African Republic. The ministry identified the patients as men in their 20s living in the Wapinda health zone, an area bordering Bas-Uele province where previous cases have been reported. While two health officials told Reuters on October 15, 2026, that the cases in Nord-Ubangi had been recorded, the development had not yet been announced by Congolese authorities at that time. The outbreak, which was declared in mid-May, has resulted in at least 9,400 cases and over 4,500 deaths, making it the deadliest in the country's history. The virus is identified as the Bundibugyo strain, for which there is currently no vaccine or treatment. The World Health Organization (WHO) expects a first clinical trial for a vaccine to begin in the DRC by the end of October."
+              },
+              {
+                "text": "The outbreak continues to spread geographically and in scale, according to a WHO situation report released on October 14, 2026. Mohamed Yakub Janabi, the WHO Regional Director for Africa, told The Associated Press on October 16, 2026, that while some pockets of the disease are decreasing, the outbreak is spreading out geographically. Janabi noted that a significant challenge involves convincing infected individuals to seek medical assistance, as some deaths occur in the community outside of health centers. Serge Ngalebato, an epidemiologist and field coordinator for the Wamba health zone in Haut-Uele province, told the AP that health workers in his zone implemented periodic home visits because residents were too afraid to visit hospitals. Ituri province in eastern Congo remains the epicenter, accounting for nearly three-quarters of confirmed cases. In Ituri, education officials in Bunia reported on October 15, 2026, that at least 10 students have died from Ebola among 25 confirmed cases identified at several schools. The outbreak has affected more than 65 health zones across eight provinces. The virus has also spilled over into neighboring countries; Kenya recorded a seventh case on October 17, 2026, and Uganda, which previously recorded cases, has since declared itself free of the disease. The Central African Republic has not recorded any confirmed cases."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 3017,
+            "completion_tokens": 578,
+            "total_tokens": 3595,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 43.19091033935547
+          },
+          "latencyMs": 3605,
+          "safeHeaders": {
+            "cf-ray": "a4cb98d56fd57e62-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:f3e88575e5d096df",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "summary is too thin for a self-contained beta card"
+        ],
+        "wordCount": 58,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-19T00:17:00.785Z",
+          "finishedAt": "2026-10-19T00:17:03.036Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Saudi-led coalition says two crew members killed in Najran helicopter crash\", \"pages\": [{\"text\": \"The Saudi-led coalition reported on Sunday that two crew members were killed when a Saudi AH-6i reconnaissance helicopter crashed in the Najran region. According to a statement from coalition spokesman Turki al-Maliki, the crash was caused by a technical malfunction. Al-Maliki stated that the helicopter went down in an area under the jurisdiction of the Saudi Arabian Ministry.\"}]}",
+          "parsed": {
+            "headline": "Saudi-led coalition says two crew members killed in Najran helicopter crash",
+            "pages": [
+              {
+                "text": "The Saudi-led coalition reported on Sunday that two crew members were killed when a Saudi AH-6i reconnaissance helicopter crashed in the Najran region. According to a statement from coalition spokesman Turki al-Maliki, the crash was caused by a technical malfunction. Al-Maliki stated that the helicopter went down in an area under the jurisdiction of the Saudi Arabian Ministry."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1007,
+            "completion_tokens": 104,
+            "total_tokens": 1111,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 11.9909086227417
+          },
+          "latencyMs": 2251,
+          "safeHeaders": {
+            "cf-ray": "a4cb98ebfeee7e62-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:41d20c19b89eaca3",
+      "title": "Alberta independence referendum: Will separatists survive a loss?",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "19413d1e41f8426d175a6cb5d7c2108d00aab7a58da0647dcce8f8f1b118f48a",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 118,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:aljazeera:d4e8134a4c488ff82cd804de",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:aljazeera:d4e8134a4c488ff82cd804de",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:aljazeera:d4e8134a4c488ff82cd804de",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:aljazeera:d4e8134a4c488ff82cd804de",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:aljazeera:d4e8134a4c488ff82cd804de",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:aljazeera:d4e8134a4c488ff82cd804de",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:aljazeera:d4e8134a4c488ff82cd804de",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:aljazeera:d4e8134a4c488ff82cd804de",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:aljazeera:d4e8134a4c488ff82cd804de",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:aljazeera:d4e8134a4c488ff82cd804de",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:aljazeera:d4e8134a4c488ff82cd804de",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:aljazeera:d4e8134a4c488ff82cd804de",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:aljazeera:d4e8134a4c488ff82cd804de",
+          "publisher": "Al Jazeera",
+          "url": "https://aljazeera.com/news/2026/10/18/alberta-independence-referendum-will-separatists-survive-a-loss?traffic_source=rss",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.aljazeera.com/wp-content/uploads/2026/10/afp_6ad50c753c64-1792347253.jpg?resize=1920%2C1440",
+        "alt": "Alberta independence referendum: Will separatists survive a loss?",
+        "status": "event-specific",
+        "source_url": "https://aljazeera.com/news/2026/10/18/alberta-independence-referendum-will-separatists-survive-a-loss?traffic_source=rss",
+        "attribution": "Al Jazeera",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-19T00:17:03.036Z",
+          "finishedAt": "2026-10-19T00:17:05.004Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Alberta residents to vote in referendum on pursuing future independence resolution\",\n  \"pages\": [\n    {\n      \"text\": \"On Monday, residents of Alberta, Canada, will vote in a provincial referendum to decide whether they wish to pursue a binding resolution regarding the province's independence in the future. According to Al Jazeera, polls indicate the pro-independence movement faces a likely defeat, with four out of five people in the province stating they want Alberta to remain part of Canada. Cory Morgan, the founder of the advocacy organization Pathway to Independence, has spent more than 25 years campaigning for the oil-rich province to become an independent country. Morgan told Al Jazeera that while he would respect the will of the voters, he does not intend to stop his efforts even if the referendum results in a negative outcome.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Alberta residents to vote in referendum on pursuing future independence resolution",
+            "pages": [
+              {
+                "text": "On Monday, residents of Alberta, Canada, will vote in a provincial referendum to decide whether they wish to pursue a binding resolution regarding the province's independence in the future. According to Al Jazeera, polls indicate the pro-independence movement faces a likely defeat, with four out of five people in the province stating they want Alberta to remain part of Canada. Cory Morgan, the founder of the advocacy organization Pathway to Independence, has spent more than 25 years campaigning for the oil-rich province to become an independent country. Morgan told Al Jazeera that while he would respect the will of the voters, he does not intend to stop his efforts even if the referendum results in a negative outcome."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1500,
+            "completion_tokens": 183,
+            "total_tokens": 1683,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 18.62727165222168
+          },
+          "latencyMs": 1968,
+          "safeHeaders": {
+            "cf-ray": "a4cb98fa08667e62-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:dc5fedde4f780a32",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "page 1 exposes a citation/list marker"
+        ],
+        "wordCount": 180,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-19T00:17:05.005Z",
+          "finishedAt": "2026-10-19T00:17:09.657Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Press officer calls reports of Bangladesh State Minister's resignation baseless\", \"pages\": [{\"text\": \"The office of Ishraq Hossain, Bangladesh's State Minister for Liberation War Affairs, has denied reports that he resigned or was directed by the Prime Minister to resign from the cabinet. In a press release issued on Sunday, Mahfuz Kabir Mukta, the state minister's press officer, characterized the reports circulating in media outlets and on social media as false, baseless, and fabricated to serve political interests. Mukta urged media organizations to withdraw the misleading reports and publish accurate information, warning that legal action would be taken against those responsible for spreading the misinformation if they fail to comply. 1. The press release addressed reports following a Saturday incident in which the state minister displayed a firearm during a social resistance programme against drugs in his parliamentary constituency. The office stated that Hossain had displayed the firearm lawfully in self-defence and had already clarified his position regarding the incident. 2. The office described the circulation of resignation reports as unlawful and contrary to journalistic ethics, alleging that a vested quarter was spreading false information to achieve political objectives and create public confusion.\"}]}",
+          "parsed": {
+            "headline": "Press officer calls reports of Bangladesh State Minister's resignation baseless",
+            "pages": [
+              {
+                "text": "The office of Ishraq Hossain, Bangladesh's State Minister for Liberation War Affairs, has denied reports that he resigned or was directed by the Prime Minister to resign from the cabinet. In a press release issued on Sunday, Mahfuz Kabir Mukta, the state minister's press officer, characterized the reports circulating in media outlets and on social media as false, baseless, and fabricated to serve political interests. Mukta urged media organizations to withdraw the misleading reports and publish accurate information, warning that legal action would be taken against those responsible for spreading the misinformation if they fail to comply. 1. The press release addressed reports following a Saturday incident in which the state minister displayed a firearm during a social resistance programme against drugs in his parliamentary constituency. The office stated that Hossain had displayed the firearm lawfully in self-defence and had already clarified his position regarding the incident. 2. The office described the circulation of resignation reports as unlawful and contrary to journalistic ethics, alleging that a vested quarter was spreading false information to achieve political objectives and create public confusion."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2008,
+            "completion_tokens": 240,
+            "total_tokens": 2248,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 24.799999237060547
+          },
+          "latencyMs": 4652,
+          "safeHeaders": {
+            "cf-ray": "a4cb99065a9e7e62-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "stage": "evidence",
+      "eventId": "event:bba01b4b4f90c2c6",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e638ca794034ced1",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:958a1e4d87e3d50f",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6f51ce4f03c9f76a",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:8f2658e77bad1dfe",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:ce050cee4ce09156",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f520068881f5cf47",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:3085d0b5e6d09269",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:69e732d4a9af80b1",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:1d5876366086e42c",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:b23bfa74f353a926",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:49543e5003a7806f",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:144bcf6d7bdfab3f",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:b155dfae1e3fd999",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:c98977c8bfe5343f",
+      "reason": "principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:fe79f0f0849dc8da",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:639295e9186c1a39",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:23b1ec9c37f10bb8",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:a683228b615a39b3",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:2b230c402d0dadf6",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:5d38ce953d432435",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:becccc00c7f94fe8",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f1df8875c8984b63",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e59375cfeec8e436",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:cb8bd045c7fb6ebf",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:3ce8c95a8cfb3036",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:11dcbc6fbd1daea8",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:a58e299c07f600b9",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f136095d15538a31",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4f59ceb391f534e0",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:3c4f3205b0d5bb45",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:040b07932286f491",
+      "reason": "too little complete accessible reporting; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4b1b01f96bc8c22a",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "eventId": "event:0fb79eda9935e205",
+      "title": "US ambassador to Israel calls West Bank settler attack on American photojournalist ‘terror’",
+      "stage": "writer-safety",
+      "reason": "unsafe temporal metadata exposure"
+    },
+    {
+      "eventId": "event:50c589e8aeb36f93",
+      "title": "Agbogbloshie waste evacuation exercise satisfactory — Ayariga",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:e4c88c881d9b8846",
+      "title": "Four people killed in ‘violent, fast-moving’ fire at Canadian military base",
+      "stage": "writer-safety",
+      "reason": "unsafe temporal metadata exposure"
+    },
+    {
+      "eventId": "event:370eee9405339fca",
+      "title": "Syrian army soldier killed while clearing mines near al-Tanf",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:5d8fbcab1e393dde",
+      "title": "Chow, Bradford back on campaign trail as election race enters its final full week",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:d62878232aa11565",
+      "title": "Trump bashes Zelensky, defends waiving Russia sanctions",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 28.93 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:201b6f9ffa922cea",
+      "title": "IMF/ World Bank signs agreement with UAE over holding 2029 Annual Meetings in Abu Dhabi",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 28.8 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:44dc761471a690bf",
+      "title": "Obuasi SHTS abuse: Culture of tolerance enabled sexual abuse – Rev. Apprey",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 12.31 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:667206815c771d95",
+      "title": "DRC accuses ex-president Kabila of planning 'general attack' on the country",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 11.57 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:a60fc05e18533bbf",
+      "title": "Toronto home prices drop nearly 4% compared to 2025",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 9.29 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:acaebc342a8dca93",
+      "title": "'Life is absolutely brutal in Gaza,' says World Food Programme head",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 0.18 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:47b5577c6354d8fb",
+      "title": "Oil facilities hit in deadly overnight attack on St Petersburg",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -6.13 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:823cce387f23f872",
+      "title": "Ghana Consulate in Toronto to launch DPE Canada 2027 on November 27",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -7.21 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:a3fbf059cb255400",
+      "title": "Ishraque Hossain asked to resign from cabinet",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -11.85 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:4c9d8d68bd95e0fd",
+      "title": "JERUSALEM DAILY: Settlers attack EU diplomats",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -17.6 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:24f399d6b9e280cc",
+      "title": "NPP demands publication of invoices for GH¢27m South Africa evacuation flights",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -19.77 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:8b0d1c38dd37fc61",
+      "title": "Government urged to invest in open science to improve public access to research",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -22.84 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:5529f48f53a68e32",
+      "title": "KAPSARC reinforces Saudi role in global energy dialogue",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -29.12 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:6ff300ed13ef83c7",
+      "title": "US voters want more action on global heating. Why are Democrats and Republicans staying silent?",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -29.32 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:234c7d6b4a005b11",
+      "title": "Oshawa's growing homeless and addiction crisis takes centre stage in mayoral race",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -33.07 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:9f1581cbb7483512",
+      "title": "Lebanese Justice Minister says explosives transport, storage threaten national security",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -47.81 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:34c6362b44a2b817",
+      "title": "Frontline workers in DRC receive Ervebo vaccine amid growing Ebola outbreak",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -47.91 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:20e63b7b7a0871f9",
+      "title": "World Insights: Xi’s principles on settling Africa’s hotspot issues resonate across continent",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -53.76 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:1c16c8c326bb3f03",
+      "title": "Discipline, public trust key to armed forces’ strength: PM",
+      "stage": "content-structure",
+      "reason": "page 1 exposes a citation/list marker"
+    },
+    {
+      "eventId": "event:f3e88575e5d096df",
+      "title": "Saudi coalition says helicopter crash in Najran kills two crew members",
+      "stage": "content-structure",
+      "reason": "summary is too thin for a self-contained beta card"
+    },
+    {
+      "eventId": "event:dc5fedde4f780a32",
+      "title": "Reports of PM ordering Ishraque to resign baseless: Press officer",
+      "stage": "content-structure",
+      "reason": "page 1 exposes a citation/list marker"
+    }
+  ],
+  "outcome": {
+    "writerRequests": 7,
+    "retries": 0,
+    "acceptedCards": 4,
+    "retainedCards": 120,
+    "skippedCards": 59,
+    "totalNeurons": 182.63636112213135,
+    "inputTokens": 13217,
+    "outputTokens": 2291,
+    "meanNeuronsPerAcceptedCard": 45.66,
+    "datasetBytes": 326184,
+    "thirdPartyCostUsd": 0,
+    "imageStatus": {
+      "event-specific": 117,
+      "fallback": 3
+    },
+    "geographicDistribution": {
+      "Canada": 14,
+      "Ghana": 24,
+      "Middle East": 28,
+      "Bangladesh": 26,
+      "GTA": 6,
+      "Syria": 10
+    }
+  },
+  "integrity": {
+    "datasetSha256": "aa62e16629b0ff20a09587ffeb6793a5971ac9676bcbbc3559e0688a96ee1c09"
+  }
+}
