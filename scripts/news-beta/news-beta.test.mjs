@@ -4,7 +4,7 @@ import { validateNewsBetaDataset, articlesForFeed } from '../../src/news/schema.
 import {
   applyBetaSelectionPolicy, buildDiscoveryPool, classifyCardRegions, classifyPriorityRegions, clearsGenerationQualityFloor,
   consolidatePublishedCards, diversityRerank, htmlListingItems, isEditoriallyEligibleTitle, sanitizeRetainedCard,
-  selectActiveFeedCards, wordpressJsonItems,
+  newsSitemapItems, selectActiveFeedCards, wordpressJsonItems,
 } from './pipeline.mjs'
 import { normalizeFeedItem } from '../news/normalize.mjs'
 import { validateCardContent } from './content-validation.mjs'
@@ -40,6 +40,23 @@ test('public WordPress JSON yields Ghana agency stories without scraping private
   assert.equal(items[0].pubDate, '2026-10-03T22:14:54Z')
   assert.equal(items[0].description, 'A public-interest local government development.')
   assert.equal(items[0].enclosure['@_url'], 'https://gna.org.gh/example.jpg')
+})
+
+test('official news sitemaps yield current original publisher stories and images', () => {
+  const items = newsSitemapItems({ urlset: { url: [{
+    loc: 'https://www.reuters.com/world/example-2026-10-19/', lastmod: '2026-10-19T02:11:00Z',
+    'news:news': { 'news:title': 'Government announces a material policy change', 'news:publication_date': '2026-10-19T02:10:00Z' },
+    'image:image': { 'image:loc': 'https://www.reuters.com/resizer/example.jpg' },
+  }] } })
+  assert.equal(items.length, 1)
+  assert.equal(items[0].title, 'Government announces a material policy change')
+  assert.equal(items[0].link, 'https://www.reuters.com/world/example-2026-10-19/')
+  assert.equal(items[0].pubDate, '2026-10-19T02:10:00Z')
+  assert.equal(items[0].enclosure['@_url'], 'https://www.reuters.com/resizer/example.jpg')
+  assert.equal(newsSitemapItems({ urlset: { url: [{
+    loc: 'https://www.reuters.com/world/espanol-2026-10-19/',
+    'news:news': { 'news:title': 'Titular', 'news:publication_date': '2026-10-19T02:10:00Z', 'news:publication': { 'news:language': 'es' } },
+  }] } }).length, 0)
 })
 
 test('beta schema preserves event cards, pages, sources and stable ids', () => {

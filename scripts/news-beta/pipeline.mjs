@@ -97,6 +97,8 @@ async function discover(source, retrievedAt) {
       ? htmlListingItems(response.text, response.finalUrl)
       : source.format === 'wordpress-json'
         ? wordpressJsonItems(response.text)
+        : source.format === 'news-sitemap'
+          ? newsSitemapItems(parser.parse(response.text))
         : feedItems(parser.parse(response.text))
     const articles = items.map(item => normalizeFeedItem(item, {
       ...source, regions: source.coverage, topics: source.coverage,
@@ -106,6 +108,25 @@ async function discover(source, retrievedAt) {
   } catch (error) {
     return { status: { id: source.id, name: source.name, status: 'failed', itemCount: 0, error: safeError(error) }, articles: [] }
   }
+}
+
+export function newsSitemapItems(document) {
+  const urls = document?.urlset?.url
+  return (Array.isArray(urls) ? urls : urls ? [urls] : []).map(entry => {
+    const news = entry?.['news:news'] || entry?.news
+    const publication = news?.['news:publication'] || news?.publication
+    const language = String(publication?.['news:language'] || publication?.language || '').toLowerCase()
+    const title = plain(news?.['news:title'] || news?.title || '')
+    const link = safeHttpsUrl(entry?.loc)
+    const published = String(news?.['news:publication_date'] || news?.publication_date || entry?.lastmod || '')
+    const image = entry?.['image:image'] || entry?.image
+    const imageUrl = safeHttpsUrl(image?.['image:loc'] || image?.loc)
+    if ((language && !language.startsWith('en')) || !link || !title || !Number.isFinite(Date.parse(published))) return null
+    return {
+      title, link, guid: link, pubDate: published,
+      enclosure: imageUrl ? { '@_url': imageUrl, '@_type': 'image/jpeg' } : undefined,
+    }
+  }).filter(Boolean)
 }
 
 export function htmlListingItems(html, baseUrl) {
@@ -520,6 +541,15 @@ export async function buildEvidenceBatch({ now = Date.now() } = {}) {
   const reranked = diversityRerank(prepared)
   return {
     retrievedAt, sourceStatus, knownSourceFailures: KNOWN_SOURCE_FAILURES,
+    discoveryCandidates: evidencePool.map(event => ({
+      event,
+      image: {
+        url: event.primary.imageUrl || null,
+        alt: event.primary.imageAlt || event.primary.title,
+        sourceUrl: event.primary.url,
+        attribution: event.primary.sourceName,
+      },
+    })),
     candidates: prepared,
     selected: reranked.selected, reranker: { adjustments: reranked.adjustments, distribution: reranked.distribution },
     evidenceRejected,

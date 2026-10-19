@@ -28,6 +28,23 @@ test('canonical URL overlap merges Exa and publisher-feed discovery before selec
   assert.equal(report.inputCounts.mergedByCanonicalUrl, 1)
 })
 
+test('publisher discovery leads survive an initial evidence-extraction failure', () => {
+  const lead = feedItem({
+    event: {
+      ...feedItem().event,
+      primary: { ...feedItem().event.primary, title: 'National court overturns emergency law' },
+      scoreParts: { importance: 30, consequence: 8 },
+    },
+  })
+  const report = mergeDiscoveryCandidates({ candidates: [], rawResultCount: 0 }, {
+    discoveryCandidates: [lead], candidates: [], counts: { freshArticles: 1 },
+  })
+  assert.equal(report.uniqueCandidateCount, 1)
+  assert.equal(report.candidates[0].title, 'National court overturns emergency law')
+  assert.ok(report.candidates[0].lanes.includes('world-major'))
+  assert.deepEqual(report.candidates[0].discoverySources, ['publisher-feed'])
+})
+
 test('a locally interesting project is not promoted to major news without a concrete headline action', () => {
   const candidate = sourceCandidate(feedItem({ event: { ...feedItem().event, scoreParts: { importance: 30, consequence: 0, localTexture: 7 } } }))
   assert.deepEqual(candidate.lanes, ['priority-interesting'])

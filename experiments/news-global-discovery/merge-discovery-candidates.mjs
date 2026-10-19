@@ -127,7 +127,11 @@ export function mergeDiscoveryCandidates(exaInput, sourceBatch) {
     const existing = byUrl.get(normalized.url)
     byUrl.set(normalized.url, existing ? combine(existing, normalized) : normalized)
   }
-  for (const [index, item] of (sourceBatch.candidates || sourceBatch.selected || []).entries()) {
+  // Publisher headlines remain discovery leads even when immediate article
+  // extraction fails. The downstream verifier and bounded repair pass decide
+  // whether adequate evidence exists; discovery must not silently erase them.
+  const sourceItems = sourceBatch.discoveryCandidates || sourceBatch.candidates || sourceBatch.selected || []
+  for (const [index, item] of sourceItems.entries()) {
     const normalized = sourceCandidate(item, index + 1)
     const existing = byUrl.get(normalized.url)
     byUrl.set(normalized.url, existing ? combine(existing, normalized) : normalized)
@@ -147,8 +151,8 @@ export function mergeDiscoveryCandidates(exaInput, sourceBatch) {
     uniqueCandidateCount: candidates.length,
     inputCounts: {
       exa: exaCandidateCount,
-      publisherFeeds: (sourceBatch.candidates || sourceBatch.selected || []).length,
-      mergedByCanonicalUrl: exaCandidateCount + (sourceBatch.candidates || sourceBatch.selected || []).length - candidates.length,
+      publisherFeeds: sourceItems.length,
+      mergedByCanonicalUrl: exaCandidateCount + sourceItems.length - candidates.length,
     },
     candidates,
   }
