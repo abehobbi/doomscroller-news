@@ -121,7 +121,8 @@ export function newsSitemapItems(document) {
     const published = String(news?.['news:publication_date'] || news?.publication_date || entry?.lastmod || '')
     const image = entry?.['image:image'] || entry?.image
     const imageUrl = safeHttpsUrl(image?.['image:loc'] || image?.loc)
-    if ((language && !language.startsWith('en')) || !link || !title || !Number.isFinite(Date.parse(published))) return null
+    const localizedReutersPath = link && /^\/(?:de|latam|fr|ar|es|pt|ja)(?:\/|$)/i.test(new URL(link).pathname)
+    if ((language && !language.startsWith('en')) || localizedReutersPath || !link || !title || !Number.isFinite(Date.parse(published))) return null
     return {
       title, link, guid: link, pubDate: published,
       enclosure: imageUrl ? { '@_url': imageUrl, '@_type': 'image/jpeg' } : undefined,

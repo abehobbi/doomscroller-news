@@ -29,7 +29,7 @@ const NATIONALITY_PERSON_SIGNALS = {
 }
 const POPULATION_CENTRAL_HARM = /\b(?:traffick(?:ed|ing)?|forcibly recruit(?:ed|ing)?|recruit(?:ed|ing)? into (?:a |the )?(?:war|military))\b/i
 const MAJOR_SIGNAL = /\b(?:kills?|dead|deaths?|casualt(?:y|ies)|war|invasion|troops?|ceasefire|sanctions?|elections?|government|parliament|court|law|regulations?|inflation|unemployment|layoffs?|strikes?|sinks?|sank|sunk|outbreaks?|epidemic|pandemic|public health|traffick(?:ed|ing)?|displaced|state of emergency|earthquake|hurricane|typhoon|floods?|drought|corruption|embezzlement|billion|million|nationwide|constitutional|military)\b/i
-const LOW_SCOPE_MAJOR = /\b(?:bedbugs?|flight (?:cancelled|canceled|grounded)|wildlife park|shares? rise|takeover talks|reunited|fundraising walk)\b/i
+const LOW_SCOPE_MAJOR = /\b(?:bedbugs?|flight (?:cancelled|canceled|grounded)|wildlife park|shares? rise|takeover talks|reunited|fundraising walk|(?:pile of )?dead (?:[a-z-]+\s+){0,2}(?:geese|birds?|fish|animals?))\b/i
 const ANALYSIS_ONLY_MAJOR = /\b(?:whether|dilemma|what if|analysis|explainer)\b|\bnext war could\b/i
 const SPECULATIVE_MAJOR = /\b(?:could|might|may|potential|scenario)\b/i
 const REPORTED_MAJOR_ACTION = /\b(?:kills?|dies?|dead|injur(?:ed|ies)|arrests?|convicts?|acquits?|bans?|blocks?|halts?|suspends?|overturns?|approves?|rejects?|signs?|strikes?|attacks?|evacuates?|declares?|announces?|unveils?|adopts?|orders?|deploys?|launches?|resigns?|collapses?|closes?|opens?|restores?|releases?|discovers?|reveals?|reports?|reaches? agreement|cuts?|rises?|falls?|investigat(?:es?|ion)|lawsuit|protest|sanctions?|election|ceasefire)\b/i

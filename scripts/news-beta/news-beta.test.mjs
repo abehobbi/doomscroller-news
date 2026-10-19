@@ -57,6 +57,10 @@ test('official news sitemaps yield current original publisher stories and images
     loc: 'https://www.reuters.com/world/espanol-2026-10-19/',
     'news:news': { 'news:title': 'Titular', 'news:publication_date': '2026-10-19T02:10:00Z', 'news:publication': { 'news:language': 'es' } },
   }] } }).length, 0)
+  assert.equal(newsSitemapItems({ urlset: { url: [{
+    loc: 'https://www.reuters.com/de/welt/deutscher-titel-2026-10-19/',
+    'news:news': { 'news:title': 'Deutscher Titel', 'news:publication_date': '2026-10-19T02:10:00Z', 'news:publication': { 'news:language': 'en' } },
+  }] } }).length, 0)
 })
 
 test('beta schema preserves event cards, pages, sources and stable ids', () => {
