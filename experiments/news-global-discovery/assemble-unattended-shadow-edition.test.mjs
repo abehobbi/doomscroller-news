@@ -63,6 +63,14 @@ test('routes generated priority-region headlines back into priority lanes', () =
     { lane: 'priority-interesting', priorityRegions: ['Ghana'] },
   )
   assert.deepEqual(
+    normalizeGeneratedRouting('discovery', [], 'Faience workshop reveals Kushite craft production', 'Ancient Nubian temple workshop found', 'The researchers include Kathryn Howley from New York University and Rennan Lemos from Durham University.'),
+    { lane: 'discovery', priorityRegions: [] },
+  )
+  assert.deepEqual(
+    normalizeGeneratedRouting('discovery', [], 'Volcanic eruption reshaped prehistoric Japan', 'Study examines a 7,300-year-old eruption', 'Professor Peter Jordan said communities adapted after the disaster.'),
+    { lane: 'discovery', priorityRegions: [] },
+  )
+  assert.deepEqual(
     normalizeGeneratedRouting('world-interesting', [], 'Russian attacks kill at least 10 and injure dozens across Ukraine'),
     { lane: 'world-major', priorityRegions: [] },
   )

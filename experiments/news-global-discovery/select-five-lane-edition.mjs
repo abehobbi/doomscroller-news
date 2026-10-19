@@ -24,9 +24,10 @@ const QUERY_REGIONS = new Map(FIVE_LANE_QUERIES.map(query => [query.id, query.re
 const PRIORITY_REGION_MINIMUMS = { Syria: 2, 'Middle East': 2, Bangladesh: 2, Ghana: 2, Canada: 2, GTA: 1 }
 const PRIORITY_REGIONS = Object.keys(PRIORITY_REGION_MINIMUMS)
 
-const HARD_REJECT = /\b(?:daily mail|tourism|travel guide|things to do|event calendar|press release|sponsored|opinion|podcast|newsletter|award ceremony|celebrity|football|soccer|basketball|tickets?|lottery results?|horoscope|weather forecast|stock picks?|coupon|shopping deal)\b/i
+const HARD_REJECT = /\b(?:daily mail|tourism|travel guide|things to do|event calendar|press release|sponsored|opinion|podcast|newsletter|award ceremony|celebrity|football|soccer|basketball|tickets?|lottery results?|horoscope|weather forecast|stock picks?|coupon|shopping deal|habitat fair|big sales|return to winning ways)\b|\b(?:property|housing|trade|sales?)\s+(?:expo|fair)\b|\bagreement\b.{0,80}\b(?:hold|holding|host|hosting)\b.{0,80}\b(?:meeting|conference|summit)s?\b|\b(?:fc|sc)\b.{0,80}\b(?:defeat|winning|league|match)\b/i
 const GENERIC_PAGE = /\b(?:home|front page|latest news|breaking news|all news|directory|annual report|meeting packet|minutes|agenda|live updates?)\b/i
-const WEAK_EVENT = /\b(?:invites?|calls? for|urges?|plans? to|could|may|set to|expected to|celebrates?|festival to be held|launches? initiative|shares? thoughts?|reacts? to|commends?|praises?|welcomes?|reaffirms?|showcas(?:e|es|ed|ing)|partner(?:s|ed|ing)? with|weighs? in|misses? court|open for|ready to|vows? to)\b/i
+const WEAK_EVENT = /\b(?:invites?|calls? for|urges?|plans? to|could|may|set to|expected to|celebrates?|festival to be held|(?:will|to) launch|launches? initiative|cuts? (?:the )?sod|breaks? ground|groundbreaking|shares? thoughts?|reacts? to|commends?|praises?|welcomes?|reaffirms?|showcas(?:e|es|ed|ing)|partner(?:s|ed|ing)? with|weighs? in|misses? court|open for|ready to|vows? to)\b|\bsays?\s+(?:professor|minister|official|expert)\b|\bprof(?:essor|\.)?\s+[A-Z]/i
+const CEREMONIAL_EVENT = /\b(?:cuts? (?:the )?sod|breaks? ground|groundbreaking)\b/i
 const CONCRETE = /\b(?:kills?|dies?|dead|injur(?:y|ed|ies)|arrests?|convicts?|acquits?|bans?|blocks?|halts?|suspends?|overturns?|approves?|rejects?|signs?|strikes?|attacks?|evacuates?|sinks?|sank|sunk|traffick(?:ed|ing)?|layoffs?|displaced|floods?|earthquake|hurricane|outbreaks?|shortage|collapse|closes?|opens?|restores?|discovers?|found|reveals?|reports?|reaches? agreement|cuts?|rises?|falls?|first|record|investigat(?:es?|ion)|lawsuit|protest|sanctions?|election|ceasefire|troops?|war)\b/i
 const HUMAN_TEXTURE = /\b(?:village|community|famil(?:y|ies)|residents?|women|children|youths?|artisans?|farmers?|fishers?|workers?|craft|tradition|harvest|livelihood|neighbou?rhood|small town|Indigenous|tribal|refugee|market|water|wildlife|chimpanzees?|mosquitoes?|mangrove|forest|river|wetland|school|education|housing|tenant|hospital|theatre|portrait|literature|clothing|class|debt|sanitation|poultry|rescue|sailors?|mining|extraction)\b/i
 const DISCOVERY_SIGNAL = /\b(?:study|researchers?|scientists?|fossil|archaeolog|paleontolog|species|planet|space|Webb|brain|genome|microbes?|quantum|clock|ancient|excavat|Nature|journal|trial|mice|stars?|galaxy|evolution)\b/i
@@ -112,7 +113,7 @@ function laneScore(lane, title) {
 
 export function lowConsequenceEvent(value) {
   const title = cleanTitle(value)
-  return WEAK_EVENT.test(title) && !CONCRETE.test(title) && !DISCOVERY_SIGNAL.test(title)
+  return CEREMONIAL_EVENT.test(title) || (WEAK_EVENT.test(title) && !CONCRETE.test(title) && !DISCOVERY_SIGNAL.test(title))
 }
 
 export function scoreCandidate(candidate, reportCreatedAt) {
@@ -161,15 +162,19 @@ const GENERIC_CLUSTER_TERMS = new Set([
   'government', 'leader', 'lawsuit', 'million', 'minister', 'people', 'president',
   'report', 'state', 'supreme', 'world', 'year',
 ])
-const PLACE_ANCHORS = new Set(['saudiarabia', 'sudan', 'ukraine', 'india', 'bangladesh', 'ghana', 'syria', 'canada', 'nepal', 'gaza', 'lebanon'])
+const PLACE_ANCHORS = new Set(['saudiarabia', 'sudan', 'ukraine', 'india', 'bangladesh', 'ghana', 'syria', 'canada', 'nepal', 'gaza', 'lebanon', 'congo'])
 const EVENT_ANCHORS = new Set(['airport', 'attack', 'ceasefire', 'election', 'flood', 'mine', 'protest', 'strike'])
 const ENTITY_ANCHORS = new Set(['icc', 'iaea', 'imf', 'nato', 'who'])
+const DISEASE_ANCHORS = new Set(['measle', 'ebola', 'cholera', 'dengue', 'mpox', 'malaria', 'covid', 'influenza', 'polio'])
 
 export function headlinesExplicitlyConflict(left, right) {
   const a = tokens(left.title), b = tokens(right.title)
   const placesA = [...a].filter(token => PLACE_ANCHORS.has(token))
   const placesB = [...b].filter(token => PLACE_ANCHORS.has(token))
   if (placesA.length && placesB.length && !placesA.some(place => placesB.includes(place))) return true
+  const diseasesA = [...a].filter(token => DISEASE_ANCHORS.has(token))
+  const diseasesB = [...b].filter(token => DISEASE_ANCHORS.has(token))
+  if (diseasesA.length && diseasesB.length && !diseasesA.some(disease => diseasesB.includes(disease))) return true
   const numbersA = [...String(left.title || '').matchAll(/\b\d{1,4}\b/g)].map(match => match[0])
   const numbersB = [...String(right.title || '').matchAll(/\b\d{1,4}\b/g)].map(match => match[0])
   const sharedEventAnchors = [...a].filter(token => b.has(token) && EVENT_ANCHORS.has(token)).length

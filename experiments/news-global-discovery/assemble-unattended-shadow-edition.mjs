@@ -9,11 +9,23 @@ import { regionMatchesText } from './merge-discovery-candidates.mjs'
 
 const PRIORITY_REGIONS = ['Syria', 'Middle East', 'Bangladesh', 'Ghana', 'Canada', 'GTA']
 const BREAKING_MAJOR_HEADLINE = /\b(?:kills? (?:at least )?\d+|\d+ (?:people )?(?:killed|dead)|dozens? (?:killed|dead)|declares? (?:a )?(?:national )?state of emergency|magnitude-\d+(?:\.\d+)? earthquake|hurricane makes landfall)\b/i
+const UNAMBIGUOUS_EVIDENCE_REGION = {
+  Syria: /\b(?:syria|syrian|damascus|aleppo|homs|hama|idlib|latakia|tartous|daraa|deir ez-zor|raqqa|sweida|hasakah)\b/i,
+  'Middle East': /\b(?:middle east|iran|iranian|iraq|iraqi|israel|israeli|palestin|gaza|west bank|leban|yemen|houthi|saudi|riyadh|qatar|emirat|uae|oman|bahrain|kuwait|turk(?:ey|iye)|amman|jordanian)\b/i,
+  Bangladesh: /\b(?:bangladesh|bangladeshi|dhaka|chattogram|chittagong|sylhet|rajshahi|khulna|barisal|rangpur|mymensingh|mongla|padma|bnp|awami league)\b/i,
+  Ghana: /\b(?:ghana|ghanaian|accra|tema|kumasi|tamale|takoradi|cape coast|ashanti|bawumia|mahama)\b/i,
+  Canada: /(?:\b(?:canada|canadian|ontario|quebec|alberta|manitoba|saskatchewan|nova scotia|new brunswick|newfoundland|british columbia|yukon|nunavut|toronto|montreal|vancouver|ottawa|calgary|edmonton)\b|\bb\.c\.(?=\s|$|[,;:]))/i,
+  GTA: /\b(?:greater toronto|gta|toronto|mississauga|brampton|markham|vaughan|scarborough|etobicoke|pickering|ajax|oshawa|oakville|burlington|durham region|durham,? ontario)\b/i,
+}
+
+function regionMatchesGeneratedContext(region, headlineContext, evidence) {
+  return regionMatchesText(region, headlineContext) || UNAMBIGUOUS_EVIDENCE_REGION[region]?.test(String(evidence || '').slice(0, 1600))
+}
 
 export function normalizeGeneratedRouting(lane, priorityRegions, headline, sourceHeadline = '', sourceEvidence = '') {
-  const headlineContext = `${sourceHeadline} ${String(sourceEvidence || '').slice(0, 1600)} ${headline}`
-  const confirmed = (priorityRegions || []).filter(region => regionMatchesText(region, headlineContext))
-  const inferred = PRIORITY_REGIONS.filter(region => regionMatchesText(region, headlineContext))
+  const headlineContext = `${sourceHeadline} ${headline}`
+  const confirmed = (priorityRegions || []).filter(region => regionMatchesGeneratedContext(region, headlineContext, sourceEvidence))
+  const inferred = PRIORITY_REGIONS.filter(region => regionMatchesGeneratedContext(region, headlineContext, sourceEvidence))
   const regions = [...new Set([...confirmed, ...inferred])]
   const broadMiddleEastIndex = regions.indexOf('Middle East')
   if (regions.includes('Syria') && broadMiddleEastIndex >= 0) regions.splice(broadMiddleEastIndex, 1)
