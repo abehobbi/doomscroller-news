@@ -1,0 +1,2525 @@
+{
+  "schema": "doomscroller.news-beta-diagnostics",
+  "schemaVersion": 1,
+  "batchId": "news-beta-2026-10-20T01-08-07-540Z",
+  "startedAt": "2026-10-20T01:07:10.846Z",
+  "finishedAt": "2026-10-20T01:08:07.540Z",
+  "durationMs": 56694,
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1024,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "discovery": {
+    "discoveredArticles": 820,
+    "freshArticles": 611,
+    "uniqueArticles": 579,
+    "eventCandidates": 544,
+    "evidencePoolArticles": 187,
+    "preparedEvents": 136,
+    "selectedEvents": 30,
+    "evidenceFailures": 24,
+    "sourceFailures": 4
+  },
+  "sourceStatus": [
+    {
+      "id": "sana-en",
+      "name": "SANA English",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "north-press-en",
+      "name": "North Press Agency",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "enab-baladi-en",
+      "name": "Enab Baladi English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "syria-direct-en",
+      "name": "Syria Direct",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dhaka-tribune",
+      "name": "Dhaka Tribune",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "bd24live-en",
+      "name": "BD24Live English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "prothom-alo-en",
+      "name": "Prothom Alo English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "No valid feed items"
+    },
+    {
+      "id": "financial-express-bd",
+      "name": "The Financial Express Bangladesh",
+      "status": "ok",
+      "itemCount": 28
+    },
+    {
+      "id": "daily-star-bd",
+      "name": "The Daily Star Bangladesh",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "myjoyonline",
+      "name": "MyJoyOnline",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "graphic-ghana",
+      "name": "Graphic Online",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "ghana-news-agency",
+      "name": "Ghana News Agency",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "toronto-city",
+      "name": "City of Toronto News",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "cbc-toronto",
+      "name": "CBC Toronto",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "cbc-canada",
+      "name": "CBC Canada",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "aljazeera-all",
+      "name": "Al Jazeera",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "arab-news",
+      "name": "Arab News",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "bbc-world",
+      "name": "BBC World",
+      "status": "ok",
+      "itemCount": 28
+    },
+    {
+      "id": "bbc-technology",
+      "name": "BBC Technology",
+      "status": "ok",
+      "itemCount": 21
+    },
+    {
+      "id": "bbc-science-environment",
+      "name": "BBC Science & Environment",
+      "status": "ok",
+      "itemCount": 41
+    },
+    {
+      "id": "guardian-world",
+      "name": "The Guardian World",
+      "status": "ok",
+      "itemCount": 45
+    },
+    {
+      "id": "guardian-science",
+      "name": "The Guardian Science",
+      "status": "ok",
+      "itemCount": 27
+    },
+    {
+      "id": "guardian-environment",
+      "name": "The Guardian Environment",
+      "status": "ok",
+      "itemCount": 34
+    },
+    {
+      "id": "npr-world",
+      "name": "NPR World",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "npr-science",
+      "name": "NPR Science",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dw-world",
+      "name": "DW World",
+      "status": "ok",
+      "itemCount": 134
+    },
+    {
+      "id": "africanews",
+      "name": "Africanews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "euronews",
+      "name": "Euronews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "global-voices",
+      "name": "Global Voices",
+      "status": "ok",
+      "itemCount": 15
+    },
+    {
+      "id": "japan-times",
+      "name": "The Japan Times",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "mongabay",
+      "name": "Mongabay",
+      "status": "ok",
+      "itemCount": 32
+    }
+  ],
+  "knownSourceFailures": [
+    {
+      "name": "Bangladesh Sangbad Sangstha",
+      "url": "https://www.bssnews.net/feed",
+      "status": "blocked",
+      "detail": "Cloudflare challenge returned HTTP 403 to the bounded collector."
+    },
+    {
+      "name": "The Indian Express feeds",
+      "url": "https://indianexpress.com/rss/",
+      "status": "blocked_in_cloud",
+      "detail": "Official feeds work locally but return HTTP 403 from GitHub Actions, so the automatic collector does not depend on them."
+    },
+    {
+      "name": "The Business Standard",
+      "url": "https://www.tbsnews.net/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "Feed served 2019–2021 items."
+    },
+    {
+      "name": "Ontario Newsroom",
+      "url": "https://news.ontario.ca/en/rss",
+      "status": "retired_from_registry",
+      "detail": "URL returns an HTML application shell, not RSS."
+    },
+    {
+      "name": "GhanaWeb",
+      "url": "https://www.ghanaweb.com/GhanaHomePage/NewsArchive/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "The publisher endpoint returned HTTP 404 in October 2026; MyJoyOnline and Graphic Online remain active Ghana sources."
+    }
+  ],
+  "reranker": {
+    "adjustments": [
+      {
+        "eventId": "event:86e30af142377e70",
+        "baseScore": 84.18,
+        "adjustment": 14,
+        "adjustedScore": 98.18,
+        "contentType": "conflict",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:79bc56d709e2f924",
+        "baseScore": 82.03,
+        "adjustment": 14,
+        "adjustedScore": 96.03,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:b85755a6e599b742",
+        "baseScore": 72.68,
+        "adjustment": 14,
+        "adjustedScore": 86.68,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:b36a5839e6f7be0a",
+        "baseScore": 61.47,
+        "adjustment": 14,
+        "adjustedScore": 75.47,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:4b8721679774b7f4",
+        "baseScore": 62.27,
+        "adjustment": 8,
+        "adjustedScore": 70.27000000000001,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "United States"
+      },
+      {
+        "eventId": "event:e22928ac1c80f9ec",
+        "baseScore": 64,
+        "adjustment": 2,
+        "adjustedScore": 66,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:f7bafa45761afab4",
+        "baseScore": 49.26,
+        "adjustment": 10,
+        "adjustedScore": 59.26,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:cfed229e299066a7",
+        "baseScore": 42.66,
+        "adjustment": 14,
+        "adjustedScore": 56.66,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:802500c3b41ceb6a",
+        "baseScore": 64.69,
+        "adjustment": -10,
+        "adjustedScore": 54.69,
+        "contentType": "conflict",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:59f6666453cc509d",
+        "baseScore": 43.93,
+        "adjustment": 3,
+        "adjustedScore": 46.93,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "Ukraine"
+      },
+      {
+        "eventId": "event:012c7ee0d0b5acad",
+        "baseScore": 51.51,
+        "adjustment": -7,
+        "adjustedScore": 44.51,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:743b58e988a551ce",
+        "baseScore": 37.22,
+        "adjustment": 6,
+        "adjustedScore": 43.22,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:ff11a5de14709a4b",
+        "baseScore": 44.96,
+        "adjustment": -8,
+        "adjustedScore": 36.96,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:ef6ddb620f93d098",
+        "baseScore": 43.06,
+        "adjustment": -14,
+        "adjustedScore": 29.060000000000002,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "World"
+        ],
+        "country": "Brazil"
+      },
+      {
+        "eventId": "event:0bb74d3a06806cd4",
+        "baseScore": 36.63,
+        "adjustment": -15,
+        "adjustedScore": 21.630000000000003,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "Japan"
+      },
+      {
+        "eventId": "event:1f3418be61efbd02",
+        "baseScore": 45.39,
+        "adjustment": -27,
+        "adjustedScore": 18.39,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:2a03773a27b02abd",
+        "baseScore": 72.24,
+        "adjustment": -61,
+        "adjustedScore": 11.239999999999995,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:fa40575346df2201",
+        "baseScore": 40.2,
+        "adjustment": -29,
+        "adjustedScore": 11.200000000000003,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:8e8202b16b8f1934",
+        "baseScore": 53.4,
+        "adjustment": -50,
+        "adjustedScore": 3.3999999999999986,
+        "contentType": "general",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Middle East"
+      },
+      {
+        "eventId": "event:0fdbbc188f4804cb",
+        "baseScore": 43.34,
+        "adjustment": -43,
+        "adjustedScore": 0.3400000000000034,
+        "contentType": "conflict",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:63747a44cdd9bcad",
+        "baseScore": 50.37,
+        "adjustment": -52,
+        "adjustedScore": -1.6300000000000026,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:01c61b9e2b66001e",
+        "baseScore": 38.3,
+        "adjustment": -46,
+        "adjustedScore": -7.700000000000003,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "South Africa"
+      },
+      {
+        "eventId": "event:f0368e52e1767936",
+        "baseScore": 39.22,
+        "adjustment": -49,
+        "adjustedScore": -9.780000000000001,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:8ac454112c3a6730",
+        "baseScore": 36.24,
+        "adjustment": -47,
+        "adjustedScore": -10.759999999999998,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "United Arab Emirates"
+      },
+      {
+        "eventId": "event:c0130b52bb2cffdb",
+        "baseScore": 54.03,
+        "adjustment": -71,
+        "adjustedScore": -16.97,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "Germany"
+      },
+      {
+        "eventId": "event:dd0398cb9cabf49e",
+        "baseScore": 37.74,
+        "adjustment": -61,
+        "adjustedScore": -23.259999999999998,
+        "contentType": "general",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:f9b4ea449ccb4b00",
+        "baseScore": 41.64,
+        "adjustment": -69,
+        "adjustedScore": -27.36,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:e8fcbfd62d7f6db4",
+        "baseScore": 38.64,
+        "adjustment": -70,
+        "adjustedScore": -31.36,
+        "contentType": "general",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Palestinian territories"
+      },
+      {
+        "eventId": "event:1b373c7df2e243c6",
+        "baseScore": 35.43,
+        "adjustment": -72,
+        "adjustedScore": -36.57,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:7882feffee8ccbc7",
+        "baseScore": 40.56,
+        "adjustment": -82,
+        "adjustedScore": -41.44,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      }
+    ],
+    "distribution": {
+      "regions": {
+        "Syria": 2,
+        "Middle East": 8,
+        "Ghana": 5,
+        "GTA": 3,
+        "Canada": 6,
+        "World": 8,
+        "Bangladesh": 3
+      },
+      "countries": {
+        "Syria": 2,
+        "Yemen": 1,
+        "Ghana": 5,
+        "GTA": 3,
+        "United States": 1,
+        "World": 2,
+        "Bangladesh": 3,
+        "Canada": 3,
+        "Ukraine": 1,
+        "Israel": 2,
+        "Brazil": 1,
+        "Japan": 1,
+        "Middle East": 1,
+        "South Africa": 1,
+        "United Arab Emirates": 1,
+        "Germany": 1,
+        "Palestinian territories": 1
+      },
+      "contentTypes": {
+        "conflict": 7,
+        "general": 10,
+        "economy-or-public-life": 4,
+        "diplomacy-or-speech": 6,
+        "culture-science-education": 3
+      },
+      "publishers": {
+        "North Press Agency": 1,
+        "The Guardian World": 4,
+        "Graphic Online": 2,
+        "CBC Toronto": 3,
+        "MyJoyOnline": 3,
+        "Africanews": 1,
+        "The Financial Express Bangladesh": 1,
+        "Al Jazeera": 1,
+        "Arab News": 3,
+        "The Daily Star Bangladesh": 2,
+        "Syria Direct": 1,
+        "Euronews": 1,
+        "The Guardian Science": 1,
+        "Ghana News Agency": 2,
+        "NPR World": 1,
+        "CBC Canada": 1,
+        "DW World": 1,
+        "The Guardian Environment": 1
+      }
+    }
+  },
+  "selectedEvents": [
+    {
+      "eventId": "event:86e30af142377e70",
+      "title": "Syrian army soldier killed in Deir ez-Zor countryside",
+      "score": 84.18,
+      "adjustedScore": 98.18,
+      "rank": 1,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 17.18,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:79bc56d709e2f924",
+      "title": "Houthi attack kills 53 in biggest single loss of life since Yemen civil war reignited",
+      "score": 82.03,
+      "adjustedScore": 96.03,
+      "rank": 2,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.03,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:b85755a6e599b742",
+      "title": "President Mahama commends Ablakwa for Ghana’s UNHRC re-election - Tasks Geneva envoy to advance Accra Reset agenda on health sovereignty",
+      "score": 72.68,
+      "adjustedScore": 86.68,
+      "rank": 3,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.68,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:b36a5839e6f7be0a",
+      "title": "Community organizers come together to battle voter apathy in upcoming Toronto election",
+      "score": 61.47,
+      "adjustedScore": 75.47,
+      "rank": 4,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 16.47,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 15,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:4b8721679774b7f4",
+      "title": "Ebola cases in Kenya highlight US failures amid Trump cuts to key services",
+      "score": 62.27,
+      "adjustedScore": 70.27,
+      "rank": 5,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.27,
+        "importance": 24,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 5,
+        "localTexture": 0,
+        "editorialBonus": 17,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:e22928ac1c80f9ec",
+      "title": "Natural resources, the environment and the Constitutional Review Committee’s recommendations: Why government should reconsider its position",
+      "score": 64,
+      "adjustedScore": 66,
+      "rank": 6,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:f7bafa45761afab4",
+      "title": "DR Congo: Ebola outbreak deepens mental health crisis amid stigma and conflict",
+      "score": 49.26,
+      "adjustedScore": 59.26,
+      "rank": 7,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 15.26,
+        "importance": 18,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:cfed229e299066a7",
+      "title": "Global food inflation is expected to intensify as supply shocks pile up",
+      "score": 42.66,
+      "adjustedScore": 56.66,
+      "rank": 8,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.66,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:802500c3b41ceb6a",
+      "title": "Four people killed in ‘violent, fast-moving’ fire at Canadian military base",
+      "score": 64.69,
+      "adjustedScore": 54.69,
+      "rank": 9,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 13.69,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:59f6666453cc509d",
+      "title": "Injured Ukrainian soldier rescued in first-ever drone evacuation mission",
+      "score": 43.93,
+      "adjustedScore": 46.93,
+      "rank": 10,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.93,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 5,
+        "localTexture": 0,
+        "editorialBonus": 13,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:012c7ee0d0b5acad",
+      "title": "Hegseth meets Netanyahu in unannounced visit to Israel, reports Axios",
+      "score": 51.51,
+      "adjustedScore": 44.51,
+      "rank": 11,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.51,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:743b58e988a551ce",
+      "title": "Education reforms must go beyond curriculum - Says state minister",
+      "score": 37.22,
+      "adjustedScore": 43.22,
+      "rank": 12,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.22,
+        "importance": 0,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:ff11a5de14709a4b",
+      "title": "Syria’s Kurds fight to keep their language alive in the classroom",
+      "score": 44.96,
+      "adjustedScore": 36.96,
+      "rank": 13,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 15.96,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:ef6ddb620f93d098",
+      "title": "Lula and Bolsonaro trade insults in TV debate ahead of weekend presidential runoff",
+      "score": 43.06,
+      "adjustedScore": 29.06,
+      "rank": 14,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 16.06,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:0bb74d3a06806cd4",
+      "title": "‘Once-in-a-lifetime chance’: Japan launches historic mission to collect rocks from Mars’s moon Phobos",
+      "score": 36.63,
+      "adjustedScore": 21.63,
+      "rank": 15,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.63,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 10,
+        "localTexture": 0,
+        "editorialBonus": 10,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:1f3418be61efbd02",
+      "title": "West African ports need connected digital systems to facilitate trade – World Bank specialist",
+      "score": 45.39,
+      "adjustedScore": 18.39,
+      "rank": 16,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.39,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:2a03773a27b02abd",
+      "title": "Israeli police detain 10 people in rare raid against West Bank settlers",
+      "score": 72.24,
+      "adjustedScore": 11.24,
+      "rank": 17,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.24,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 26,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:fa40575346df2201",
+      "title": "Water main repaired at Billy Bishop Airport after break impacted flight operations",
+      "score": 40.2,
+      "adjustedScore": 11.2,
+      "rank": 18,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 17.2,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 5,
+        "localTexture": 0,
+        "editorialBonus": 5,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:8e8202b16b8f1934",
+      "title": "Palestinian activist Mahmoud Khalil asks US Supreme Court to hear case seeking to avoid re-arrest",
+      "score": 53.4,
+      "adjustedScore": 3.4,
+      "rank": 19,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.4,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:0fdbbc188f4804cb",
+      "title": "Alberta voters decide whether to take a step toward separating from Canada",
+      "score": 43.34,
+      "adjustedScore": 0.34,
+      "rank": 20,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 19.34,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:63747a44cdd9bcad",
+      "title": "GH¢400million to be allocated for reclamation of galamsey destroyed lands, EPA and Blue Water Guards in 2027 budget - President Mahama",
+      "score": 50.37,
+      "adjustedScore": -1.63,
+      "rank": 21,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.37,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:01c61b9e2b66001e",
+      "title": "Kofi Tonto demands answers from Ablakwa over alleged errors in South Africa evacuation records",
+      "score": 38.3,
+      "adjustedScore": -7.7,
+      "rank": 22,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.3,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:f0368e52e1767936",
+      "title": "PM to visit puja mandaps in Rangpur, Rajshahi, Ctg today",
+      "score": 39.22,
+      "adjustedScore": -9.78,
+      "rank": 23,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.22,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:8ac454112c3a6730",
+      "title": "Tuwaiq Sculpture 2027 names curators, unveils ‘Where Roots Run Deep’ theme",
+      "score": 36.24,
+      "adjustedScore": -10.76,
+      "rank": 24,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.24,
+        "importance": 0,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:c0130b52bb2cffdb",
+      "title": "One killed, two seriously injured in attack at German care home",
+      "score": 54.03,
+      "adjustedScore": -16.97,
+      "rank": 25,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.03,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:dd0398cb9cabf49e",
+      "title": "Yellowknife election: Polls closing soon as voters choose next mayor, councillors",
+      "score": 37.74,
+      "adjustedScore": -23.26,
+      "rank": 26,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 19.74,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:f9b4ea449ccb4b00",
+      "title": "University of Ghana awaits Book and Research Allowance over documentation delay",
+      "score": 41.64,
+      "adjustedScore": -27.36,
+      "rank": 27,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.64,
+        "importance": 0,
+        "interestingness": 8,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:e8fcbfd62d7f6db4",
+      "title": "UN food program cuts aid to 500,000 Palestinians in Gaza",
+      "score": 38.64,
+      "adjustedScore": -31.36,
+      "rank": 28,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 16.64,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:1b373c7df2e243c6",
+      "title": "Unifor Stellantis workers in Ontario vote 97% in favour of strike mandate with talks still stalled",
+      "score": 35.43,
+      "adjustedScore": -36.57,
+      "rank": 29,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 17.43,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:7882feffee8ccbc7",
+      "title": "Melting Ron DeSantis statue unveiled to call out his inaction on climate crisis",
+      "score": 40.56,
+      "adjustedScore": -41.44,
+      "rank": 30,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.56,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    }
+  ],
+  "invalidPreviousCardsRemoved": [],
+  "crossEventOverlap": [],
+  "generation": [
+    {
+      "eventId": "event:86e30af142377e70",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "summary is too thin for a self-contained beta card"
+        ],
+        "wordCount": 53,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-20T01:07:33.875Z",
+          "finishedAt": "2026-10-20T01:07:36.605Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Syrian army soldier killed in attack in Deir ez-Zor countryside\",\n  \"pages\": [\n    {\n      \"text\": \"A Syrian army soldier was killed on Monday during an attack by unidentified gunmen in al-Baghuz, located in the eastern countryside of Deir ez-Zor, Syria, according to a source at the Syrian Defense Ministry. The source told Syria’s Al-Iikhbariya TV that the soldier was killed in what was described as a treacherous attack.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Syrian army soldier killed in attack in Deir ez-Zor countryside",
+            "pages": [
+              {
+                "text": "A Syrian army soldier was killed on Monday during an attack by unidentified gunmen in al-Baghuz, located in the eastern countryside of Deir ez-Zor, Syria, according to a source at the Syrian Defense Ministry. The source told Syria’s Al-Iikhbariya TV that the soldier was killed in what was described as a treacherous attack."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1032,
+            "completion_tokens": 122,
+            "total_tokens": 1154,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 12.709090232849121
+          },
+          "latencyMs": 2730,
+          "safeHeaders": {
+            "cf-ray": "a4d42058da76b33f-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:b36a5839e6f7be0a",
+      "title": "Community organizers come together to battle voter apathy in upcoming Toronto election",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "1edc163fb077acc16c82a6a64c5a52c7aa483c9fd5eff252a7290bd80ed7019c",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 194,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:cbc:70a54e2fbbbd685e09758ac0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:cbc:70a54e2fbbbd685e09758ac0",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:cbc:70a54e2fbbbd685e09758ac0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:cbc:70a54e2fbbbd685e09758ac0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:cbc:70a54e2fbbbd685e09758ac0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:cbc:70a54e2fbbbd685e09758ac0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:cbc:70a54e2fbbbd685e09758ac0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:cbc:70a54e2fbbbd685e09758ac0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:cbc:70a54e2fbbbd685e09758ac0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:cbc:70a54e2fbbbd685e09758ac0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:cbc:70a54e2fbbbd685e09758ac0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:cbc:70a54e2fbbbd685e09758ac0",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:cbc:70a54e2fbbbd685e09758ac0",
+          "publisher": "CBC Toronto",
+          "url": "https://cbc.ca/news/canada/toronto/voter-apathy-voice-the-vote-organization-toronto-north-york-election-9.7386377?cmp=rss",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.cbc.ca/ais/ce9d7f14-09a4-49d3-bc6f-b3c03ce43f95,1792406723261/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C106%2C3952%2C2223%29%3B",
+        "alt": "Community organizers come together to battle voter apathy in upcoming Toronto election",
+        "status": "event-specific",
+        "source_url": "https://cbc.ca/news/canada/toronto/voter-apathy-voice-the-vote-organization-toronto-north-york-election-9.7386377?cmp=rss",
+        "attribution": "CBC Toronto",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-20T01:07:36.606Z",
+          "finishedAt": "2026-10-20T01:07:42.472Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Community organizers hold civic engagement fair in Toronto to encourage voter participation\", \"pages\": [{\"text\": \"Community organizers held a non-partisan fair at the Lawrence Heights Community Centre in Toronto to raise civic engagement and encourage residents to vote in the Oct. 26 municipal election. Organized by the North York Harvest Food Bank, the event included participation from Voice the Vote, a joint initiative by United Way Greater Toronto and Toronto Metropolitan University’s Democratic Engagement Exchange. During the event, Jonathan Dong distributed election handbooks and spoke about the importance of participating in the democratic process. This effort follows previous municipal elections in the city that saw what observers described as a downward trend in voter participation. In the 2023 mayoral byelection won by Olivia Chow, 37 per cent of eligible voters participated, while turnout was less than 30 per cent in the 2022 municipal election and approximately 41 per cent in 2018. Data from the Association of Municipalities of Ontario indicated that across the province, overall voter turnout was nearly 33 per cent in the 2022 municipal elections and roughly 38 per cent in 2018. However, turnout at Toronto's advance polls for the upcoming election was reported as more than 222,000 people, the highest number in more than a decade.\"}]}",
+          "parsed": {
+            "headline": "Community organizers hold civic engagement fair in Toronto to encourage voter participation",
+            "pages": [
+              {
+                "text": "Community organizers held a non-partisan fair at the Lawrence Heights Community Centre in Toronto to raise civic engagement and encourage residents to vote in the Oct. 26 municipal election. Organized by the North York Harvest Food Bank, the event included participation from Voice the Vote, a joint initiative by United Way Greater Toronto and Toronto Metropolitan University’s Democratic Engagement Exchange. During the event, Jonathan Dong distributed election handbooks and spoke about the importance of participating in the democratic process. This effort follows previous municipal elections in the city that saw what observers described as a downward trend in voter participation. In the 2023 mayoral byelection won by Olivia Chow, 37 per cent of eligible voters participated, while turnout was less than 30 per cent in the 2022 municipal election and approximately 41 per cent in 2018. Data from the Association of Municipalities of Ontario indicated that across the province, overall voter turnout was nearly 33 per cent in the 2022 municipal elections and roughly 38 per cent in 2018. However, turnout at Toronto's advance polls for the upcoming election was reported as more than 222,000 people, the highest number in more than a decade."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1721,
+            "completion_tokens": 285,
+            "total_tokens": 2006,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 23.418182373046875
+          },
+          "latencyMs": 5866,
+          "safeHeaders": {
+            "cf-ray": "a4d42069c954b33f-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:e22928ac1c80f9ec",
+      "title": "Natural resources, the environment and the Constitutional Review Committee’s recommendations: Why government should reconsider its position",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "3c45201aeb566ff3a613abe54f9fa4ab1d1a99e6846e0a77df694d07aa896930",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 152,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:myjoyonline:2ff05d3dee2ff54b3855fa8b",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:myjoyonline:2ff05d3dee2ff54b3855fa8b",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:myjoyonline:2ff05d3dee2ff54b3855fa8b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:myjoyonline:2ff05d3dee2ff54b3855fa8b",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:myjoyonline:2ff05d3dee2ff54b3855fa8b",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:myjoyonline:2ff05d3dee2ff54b3855fa8b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:myjoyonline:2ff05d3dee2ff54b3855fa8b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:myjoyonline:2ff05d3dee2ff54b3855fa8b",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:myjoyonline:2ff05d3dee2ff54b3855fa8b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:myjoyonline:2ff05d3dee2ff54b3855fa8b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:myjoyonline:2ff05d3dee2ff54b3855fa8b",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:myjoyonline:2ff05d3dee2ff54b3855fa8b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:myjoyonline:2ff05d3dee2ff54b3855fa8b",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/natural-resources-the-environment-and-the-constitutional-review-committees-recommendations-why-government-should-reconsider-its-position",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.myjoyonline.com/wp-content/uploads/2026/01/1992-constitution-1140x570-1-1024x512.jpg",
+        "alt": "Constitution",
+        "status": "event-specific",
+        "source_url": "https://myjoyonline.com/natural-resources-the-environment-and-the-constitutional-review-committees-recommendations-why-government-should-reconsider-its-position",
+        "attribution": "MyJoyOnline",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-20T01:07:42.473Z",
+          "finishedAt": "2026-10-20T01:07:49.083Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Ghanaian government declines most Constitutional Review Committee recommendations on natural resources and environment\",\n  \"pages\": [\n    {\n      \"text\": \"Following the publication of a Government Position Paper regarding the final recommendations of the Constitution Review Committee (CRC), the government of Ghana has declined substantially all proposals concerning lands, natural resources, and environmental thematic areas. The CRC had proposed several reforms, including a clearer public trust framework for natural resources, stronger parliamentary oversight of resource transactions, basic principles for natural resource governance, and improved institutional coordination. Other CRC proposals included the constitutional recognition of ocean governance and the blue economy, the creation of an offence of ecocide, and a guaranteed share of mineral revenue for mining communities. According to MyJoyOnline, the government's position is that existing constitutional provisions are adequate or that these objectives can be achieved through ordinary legislation, such as the Minerals and Mining Act, 2006 (Act 703), the Fisheries Act, 2002 (Act 625), the Petroleum Revenue Management Act, 2011 (Act 815), and the Environmental Protection Act, 2025 (Act 1124).\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Ghanaian government declines most Constitutional Review Committee recommendations on natural resources and environment",
+            "pages": [
+              {
+                "text": "Following the publication of a Government Position Paper regarding the final recommendations of the Constitution Review Committee (CRC), the government of Ghana has declined substantially all proposals concerning lands, natural resources, and environmental thematic areas. The CRC had proposed several reforms, including a clearer public trust framework for natural resources, stronger parliamentary oversight of resource transactions, basic principles for natural resource governance, and improved institutional coordination. Other CRC proposals included the constitutional recognition of ocean governance and the blue economy, the creation of an offence of ecocide, and a guaranteed share of mineral revenue for mining communities. According to MyJoyOnline, the government's position is that existing constitutional provisions are adequate or that these objectives can be achieved through ordinary legislation, such as the Minerals and Mining Act, 2006 (Act 703), the Fisheries Act, 2002 (Act 625), the Petroleum Revenue Management Act, 2011 (Act 815), and the Environmental Protection Act, 2025 (Act 1124)."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1678,
+            "completion_tokens": 261,
+            "total_tokens": 1939,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 22.372726440429688
+          },
+          "latencyMs": 6610,
+          "safeHeaders": {
+            "cf-ray": "a4d4208e7ddcb33f-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:59f6666453cc509d",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "summary is too thin for a self-contained beta card"
+        ],
+        "wordCount": 62,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-20T01:07:49.084Z",
+          "finishedAt": "2026-10-20T01:07:51.698Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Ukrainian army reports first drone evacuation of wounded soldier from front line\", \"pages\": [{\"text\": \"The Ukrainian army says it has carried out the world’s first drone evacuation of a wounded soldier from the front line. According to reports from Al Jazeera, a heavy-lift hexacopter was used to carry the injured soldier to safety. The military described the mission as a showcase of battlefield innovation occurring as Ukraine faces intensifying Russian drone threats and declining troop numbers.\"}]}",
+          "parsed": {
+            "headline": "Ukrainian army reports first drone evacuation of wounded soldier from front line",
+            "pages": [
+              {
+                "text": "The Ukrainian army says it has carried out the world’s first drone evacuation of a wounded soldier from the front line. According to reports from Al Jazeera, a heavy-lift hexacopter was used to carry the injured soldier to safety. The military described the mission as a showcase of battlefield innovation occurring as Ukraine faces intensifying Russian drone threats and declining troop numbers."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 934,
+            "completion_tokens": 100,
+            "total_tokens": 1034,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 11.218181610107422
+          },
+          "latencyMs": 2614,
+          "safeHeaders": {
+            "cf-ray": "a4d420b7cdf2b33f-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:012c7ee0d0b5acad",
+      "title": "Hegseth meets Netanyahu in unannounced visit to Israel, reports Axios",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "434a4d934b76ea2ca1ab11805ad61bcd6a7a3a803dbc312c3977564d3adcce3a",
+      "allowedExactDates": [
+        "2023-10-07",
+        "2026-10-19",
+        "2026-10-18"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 19, 2026",
+            "date": "2026-10-19"
+          },
+          {
+            "raw": "October 7, 2023",
+            "date": "2023-10-07"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2023-10-07",
+          "2026-10-19",
+          "2026-10-18"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 124,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:arab-news:156ec4c3e1918636e94537e8",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:arab-news:156ec4c3e1918636e94537e8",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:arab-news:156ec4c3e1918636e94537e8",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:arab-news:156ec4c3e1918636e94537e8",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:arab-news:156ec4c3e1918636e94537e8",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:arab-news:156ec4c3e1918636e94537e8",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:arab-news:156ec4c3e1918636e94537e8",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:arab-news:156ec4c3e1918636e94537e8",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:arab-news:156ec4c3e1918636e94537e8",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:aljazeera:632573c94f1995d16cf343f2",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:aljazeera:632573c94f1995d16cf343f2",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:aljazeera:632573c94f1995d16cf343f2",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:aljazeera:632573c94f1995d16cf343f2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:aljazeera:632573c94f1995d16cf343f2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F15",
+            "sourceId": "news:aljazeera:632573c94f1995d16cf343f2",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F16",
+            "sourceId": "news:aljazeera:632573c94f1995d16cf343f2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F17",
+            "sourceId": "news:aljazeera:632573c94f1995d16cf343f2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F18",
+            "sourceId": "news:aljazeera:632573c94f1995d16cf343f2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F19",
+            "sourceId": "news:aljazeera:632573c94f1995d16cf343f2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F20",
+            "sourceId": "news:aljazeera:632573c94f1995d16cf343f2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F21",
+            "sourceId": "news:aljazeera:632573c94f1995d16cf343f2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:arab-news:156ec4c3e1918636e94537e8",
+          "publisher": "Arab News",
+          "url": "https://arabnews.com/middle-east/hegseth-meets-netanyahu-in-unannounced-visit-to-israel-reports-axios-3007242",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:aljazeera:632573c94f1995d16cf343f2",
+          "publisher": "Al Jazeera",
+          "url": "https://aljazeera.com/news/2026/10/20/hegseth-meets-netanyahu-in-unannounced-israel-visit?traffic_source=rss",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://assets.maestronewsroom.com/media/30f6532d-717b-4366-9158-9c455299fcd9/1792451332424-ac3c16da1379c8f5.jpg",
+        "alt": "Hegseth meets Netanyahu in unannounced visit to Israel, reports Axios",
+        "status": "event-specific",
+        "source_url": "https://arabnews.com/middle-east/hegseth-meets-netanyahu-in-unannounced-visit-to-israel-reports-axios-3007242",
+        "attribution": "Arab News",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-20T01:07:51.698Z",
+          "finishedAt": "2026-10-20T01:07:57.272Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"US Defense Secretary Pete Hegseth meets Israeli Prime Minister Benjamin Netanyahu during unannounced visit\",\n  \"pages\": [\n    {\n      \"text\": \"US Defense Secretary Pete Hegseth met with Israeli Prime Minister Benjamin Netanyahu during an unannounced visit to Israel on October 19, 2026, according to a report by Axios citing two sources with knowledge of the matter. Reuters could not immediately confirm the visit, and there was no immediate indication of what was discussed. The Pentagon declined to comment, and Israel’s embassy in Washington did not immediately respond to requests for comment. 19 October 2026 marks a visit occurring ahead of Israel's parliamentary election scheduled for next week, which is the country's first vote since the Hamas-led attacks on October 7, 2023. Opinion polls suggest Netanyahu’s religious-nationalist coalition is projected to lose its governing majority, though the opposition may also struggle to form a government.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "US Defense Secretary Pete Hegseth meets Israeli Prime Minister Benjamin Netanyahu during unannounced visit",
+            "pages": [
+              {
+                "text": "US Defense Secretary Pete Hegseth met with Israeli Prime Minister Benjamin Netanyahu during an unannounced visit to Israel on October 19, 2026, according to a report by Axios citing two sources with knowledge of the matter. Reuters could not immediately confirm the visit, and there was no immediate indication of what was discussed. The Pentagon declined to comment, and Israel’s embassy in Washington did not immediately respond to requests for comment. 19 October 2026 marks a visit occurring ahead of Israel's parliamentary election scheduled for next week, which is the country's first vote since the Hamas-led attacks on October 7, 2023. Opinion polls suggest Netanyahu’s religious-nationalist coalition is projected to lose its governing majority, though the opposition may also struggle to form a government."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2381,
+            "completion_tokens": 220,
+            "total_tokens": 2601,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "neurons": 27.063634872436523
+          },
+          "latencyMs": 5574,
+          "safeHeaders": {
+            "cf-ray": "a4d420c82c4eb33f-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:743b58e988a551ce",
+      "title": "Education reforms must go beyond curriculum - Says state minister",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "c28dd78ae965583962b89988e8ebe41a03c0e640f291b9d7aaff1546f072adff",
+      "allowedExactDates": [
+        "2026-10-19"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 19, 2026",
+            "date": "2026-10-19"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-19"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 296,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:daily-star-bd:4e5ec7324fd912aaaa43b625",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:daily-star-bd:4e5ec7324fd912aaaa43b625",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:daily-star-bd:4e5ec7324fd912aaaa43b625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:daily-star-bd:4e5ec7324fd912aaaa43b625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:daily-star-bd:4e5ec7324fd912aaaa43b625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:daily-star-bd:4e5ec7324fd912aaaa43b625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:daily-star-bd:4e5ec7324fd912aaaa43b625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:daily-star-bd:4e5ec7324fd912aaaa43b625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:daily-star-bd:4e5ec7324fd912aaaa43b625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:daily-star-bd:4e5ec7324fd912aaaa43b625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:daily-star-bd:4e5ec7324fd912aaaa43b625",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:daily-star-bd:4e5ec7324fd912aaaa43b625",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:daily-star-bd:4e5ec7324fd912aaaa43b625",
+          "publisher": "The Daily Star Bangladesh",
+          "url": "https://thedailystar.net/news/bangladesh/education/news/education-reforms-must-go-beyond-curriculum-says-state-minister-4303026",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.thedailystar.net/sites/default/files/styles/social_share/public/2026-09/Bobby-Hajjaj.jpg",
+        "alt": "Education reforms must go beyond curriculum - Says state minister",
+        "status": "event-specific",
+        "source_url": "https://thedailystar.net/news/bangladesh/education/news/education-reforms-must-go-beyond-curriculum-says-state-minister-4303026",
+        "attribution": "The Daily Star Bangladesh",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-20T01:07:57.272Z",
+          "finishedAt": "2026-10-20T01:08:07.447Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Bangladesh state minister says education reforms must extend beyond curriculum\",\n  \"pages\": [\n    {\n      \"text\": \"On October 19, 2026, the State Minister for Primary and Mass Education in Bangladesh, Bobby Hajjaj, stated that curriculum reforms alone would not improve primary education unless teacher training, school supervision, infrastructure, and technology are addressed together. Speaking at a dialogue organized by the ministry, the Directorate of Primary Education (DPE), and Unicef, Hajjaj noted that a proposed curriculum would place greater emphasis on English, mathematics, Bangla, digital content, practical activities, and play-based learning. The ministry plans to test teaching materials and assessments in 2027, with a revised curriculum scheduled for introduction in 2028. Additionally, a 12-month practical learning programme has been proposed to cover topics such as child protection, road safety, hygiene, nutrition, digital safety, and environmental protection. A teacher policy is also being prepared to cover recruitment, training, postings, professional development, and evaluation, with Hajjaj stressing that teachers should receive training before entering classrooms. Planning State Minister Md Zonayed Abdur Rahim Saki added that improving the professional skills, status, and salaries of teachers is essential to reducing dropouts and raising education quality.\"\n    },\n    {\n      \"text\": \"The ministry presented findings from consultations held between July 26 and September 10 involving more than 3,200 participants across eight divisions. The ministry also proposed common minimum standards for primary schools, including equal instruction time for single- and double-shift schools, with annual teaching hours ranging from 750 for Class I to 900 for Class V, subject to approval. Survey data presented during the dialogue included responses from 1,036 monitoring officials, which found that 86.3 percent could visit no more than 10 schools per month, while 58.2 percent supervised more than 50 schools each. A separate survey of 580 officials found that 84.3 percent wanted duplicate or lengthy reporting requirements reduced. These figures reflect the responses of officials rather than verified inspection records.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Bangladesh state minister says education reforms must extend beyond curriculum",
+            "pages": [
+              {
+                "text": "On October 19, 2026, the State Minister for Primary and Mass Education in Bangladesh, Bobby Hajjaj, stated that curriculum reforms alone would not improve primary education unless teacher training, school supervision, infrastructure, and technology are addressed together. Speaking at a dialogue organized by the ministry, the Directorate of Primary Education (DPE), and Unicef, Hajjaj noted that a proposed curriculum would place greater emphasis on English, mathematics, Bangla, digital content, practical activities, and play-based learning. The ministry plans to test teaching materials and assessments in 2027, with a revised curriculum scheduled for introduction in 2028. Additionally, a 12-month practical learning programme has been proposed to cover topics such as child protection, road safety, hygiene, nutrition, digital safety, and environmental protection. A teacher policy is also being prepared to cover recruitment, training, postings, professional development, and evaluation, with Hajjaj stressing that teachers should receive training before entering classrooms. Planning State Minister Md Zonayed Abdur Rahim Saki added that improving the professional skills, status, and salaries of teachers is essential to reducing dropouts and raising education quality."
+              },
+              {
+                "text": "The ministry presented findings from consultations held between July 26 and September 10 involving more than 3,200 participants across eight divisions. The ministry also proposed common minimum standards for primary schools, including equal instruction time for single- and double-shift schools, with annual teaching hours ranging from 750 for Class I to 900 for Class V, subject to approval. Survey data presented during the dialogue included responses from 1,036 monitoring officials, which found that 86.3 percent could visit no more than 10 schools per month, while 58.2 percent supervised more than 50 schools each. A separate survey of 580 officials found that 84.3 percent wanted duplicate or lengthy reporting requirements reduced. These figures reflect the responses of officials rather than verified inspection records."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1739,
+            "completion_tokens": 473,
+            "total_tokens": 2212,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 28.709091186523438
+          },
+          "latencyMs": 10175,
+          "safeHeaders": {
+            "cf-ray": "a4d420eaf88bb33f-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "stage": "evidence",
+      "eventId": "event:2c82ceac37bb176f",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:9d59b514faaa7785",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:084d80bb23025e94",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:040bfbda0801479f",
+      "reason": "too little complete accessible reporting; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:c7f1b09737d5a553",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:32fdd574dcdda27a",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:a056a8d1744756b7",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0b7c261aae45a358",
+      "reason": "principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:fe79f0f0849dc8da",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4167666c2fb7480e",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:70ce72f949aad2d2",
+      "reason": "principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:37be4a6b41f194c5",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f624b1ffda912eef",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:a648712db523731f",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:d8d5e1b1468b0b70",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:ba458711ca61e6b8",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:d8626a1c67bba973",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0204c82584c8fc2b",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:8538129d4cf0707e",
+      "reason": "principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:020bae22fc70452c",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:8f2658e77bad1dfe",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:62f726bc5511937b",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0881ee57e22ccc2f",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6c91ed301fcd2e08",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "eventId": "event:e12ce01d713ec053",
+      "title": "Houthi attack kills 53 in biggest single loss of life since Yemen civil war reignited",
+      "stage": "writer-safety",
+      "reason": "unsafe temporal metadata exposure"
+    },
+    {
+      "eventId": "event:b85755a6e599b742",
+      "title": "President Mahama commends Ablakwa for Ghana’s UNHRC re-election - Tasks Geneva envoy to advance Accra Reset agenda on health sovereignty",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:4b8721679774b7f4",
+      "title": "Ebola cases in Kenya highlight US failures amid Trump cuts to key services",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:f7bafa45761afab4",
+      "title": "DR Congo: Ebola outbreak deepens mental health crisis amid stigma and conflict",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:cfed229e299066a7",
+      "title": "Global food inflation is expected to intensify as supply shocks pile up",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:802500c3b41ceb6a",
+      "title": "Four people killed in ‘violent, fast-moving’ fire at Canadian military base",
+      "stage": "writer-safety",
+      "reason": "unsafe temporal metadata exposure"
+    },
+    {
+      "eventId": "event:ff11a5de14709a4b",
+      "title": "Syria’s Kurds fight to keep their language alive in the classroom",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:ef6ddb620f93d098",
+      "title": "Lula and Bolsonaro trade insults in TV debate ahead of weekend presidential runoff",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 29.06 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:0bb74d3a06806cd4",
+      "title": "‘Once-in-a-lifetime chance’: Japan launches historic mission to collect rocks from Mars’s moon Phobos",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 21.63 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:1f3418be61efbd02",
+      "title": "West African ports need connected digital systems to facilitate trade – World Bank specialist",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 18.39 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:2a03773a27b02abd",
+      "title": "Israeli police detain 10 people in rare raid against West Bank settlers",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 11.24 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:fa40575346df2201",
+      "title": "Water main repaired at Billy Bishop Airport after break impacted flight operations",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 11.2 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:8e8202b16b8f1934",
+      "title": "Palestinian activist Mahmoud Khalil asks US Supreme Court to hear case seeking to avoid re-arrest",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 3.4 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:0fdbbc188f4804cb",
+      "title": "Alberta voters decide whether to take a step toward separating from Canada",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 0.34 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:63747a44cdd9bcad",
+      "title": "GH¢400million to be allocated for reclamation of galamsey destroyed lands, EPA and Blue Water Guards in 2027 budget - President Mahama",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -1.63 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:01c61b9e2b66001e",
+      "title": "Kofi Tonto demands answers from Ablakwa over alleged errors in South Africa evacuation records",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -7.7 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:f0368e52e1767936",
+      "title": "PM to visit puja mandaps in Rangpur, Rajshahi, Ctg today",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -9.78 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:8ac454112c3a6730",
+      "title": "Tuwaiq Sculpture 2027 names curators, unveils ‘Where Roots Run Deep’ theme",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -10.76 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:c0130b52bb2cffdb",
+      "title": "One killed, two seriously injured in attack at German care home",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -16.97 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:dd0398cb9cabf49e",
+      "title": "Yellowknife election: Polls closing soon as voters choose next mayor, councillors",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -23.26 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:f9b4ea449ccb4b00",
+      "title": "University of Ghana awaits Book and Research Allowance over documentation delay",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -27.36 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:e8fcbfd62d7f6db4",
+      "title": "UN food program cuts aid to 500,000 Palestinians in Gaza",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -31.36 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:1b373c7df2e243c6",
+      "title": "Unifor Stellantis workers in Ontario vote 97% in favour of strike mandate with talks still stalled",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -36.57 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:7882feffee8ccbc7",
+      "title": "Melting Ron DeSantis statue unveiled to call out his inaction on climate crisis",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -41.44 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:86e30af142377e70",
+      "title": "Syrian army soldier killed in Deir ez-Zor countryside",
+      "stage": "content-structure",
+      "reason": "summary is too thin for a self-contained beta card"
+    },
+    {
+      "eventId": "event:59f6666453cc509d",
+      "title": "Injured Ukrainian soldier rescued in first-ever drone evacuation mission",
+      "stage": "content-structure",
+      "reason": "summary is too thin for a self-contained beta card"
+    }
+  ],
+  "outcome": {
+    "writerRequests": 6,
+    "retries": 0,
+    "acceptedCards": 4,
+    "retainedCards": 120,
+    "skippedCards": 50,
+    "totalNeurons": 125.49090671539307,
+    "inputTokens": 9485,
+    "outputTokens": 1461,
+    "meanNeuronsPerAcceptedCard": 31.37,
+    "datasetBytes": 327705,
+    "thirdPartyCostUsd": 0,
+    "imageStatus": {
+      "event-specific": 117,
+      "fallback": 3
+    },
+    "geographicDistribution": {
+      "Bangladesh": 28,
+      "Middle East": 27,
+      "Ghana": 24,
+      "GTA": 7,
+      "Canada": 15,
+      "Syria": 9
+    }
+  },
+  "integrity": {
+    "datasetSha256": "16ce29646eae4846dc7dd449ac9b243ff85ccb72a51506a09967c02b21507b18"
+  }
+}
