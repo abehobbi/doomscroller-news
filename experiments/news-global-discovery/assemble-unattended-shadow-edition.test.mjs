@@ -71,6 +71,10 @@ test('routes generated priority-region headlines back into priority lanes', () =
     { lane: 'discovery', priorityRegions: [] },
   )
   assert.deepEqual(
+    normalizeGeneratedRouting('discovery', [], 'Delegates assess global biodiversity progress at COP17', 'Governments review conservation targets', 'The Kunming-Montreal biodiversity framework was adopted in 2022.'),
+    { lane: 'discovery', priorityRegions: [] },
+  )
+  assert.deepEqual(
     normalizeGeneratedRouting('world-interesting', [], 'Russian attacks kill at least 10 and injure dozens across Ukraine'),
     { lane: 'world-major', priorityRegions: [] },
   )

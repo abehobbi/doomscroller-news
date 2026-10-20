@@ -97,6 +97,12 @@ test('numeric audit recognizes supported written-number and punctuation equivale
   assert.equal(numericAudit(card, packet).valid, true)
 })
 
+test('numeric audit recognizes compact million and billion source notation', () => {
+  const packet = { facts: ['More than £300m is needed.', 'The agreement is worth $28bn.', 'More than 1m votes were counted.'] }
+  const card = { headline: 'Agreement update', pages: [{ text: 'More than £300 million is needed. The agreement is worth $28 billion. More than 1 million votes were counted.' }] }
+  assert.equal(numericAudit(card, packet).valid, true)
+})
+
 test('numeric audit recognizes Arabic decade wording translated into English decades', () => {
   const packet = { fact: 'كانت الحرفة رائدة من سبعينيات القرن الماضي إلى تسعينياته.' }
   const card = { headline: 'Craft revived', pages: [{ text: 'The craft was prominent from the 1970s through the 1990s.' }] }

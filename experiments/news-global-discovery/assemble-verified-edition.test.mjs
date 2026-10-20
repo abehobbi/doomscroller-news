@@ -55,3 +55,22 @@ test('an approved image-only exception reaches the writer without a fabricated i
   assert.equal(cards[0].image, null)
   assert.equal(cards[0].imageException.granted, true)
 })
+
+test('generic attack wording cannot admit evidence from a different country', () => {
+  const title = 'Drone attack near market kills 80 in Sudan'
+  const source = (domain, sourceTitle, imageUrl) => ({ accepted: true, trusted: true, domain, url: `https://${domain}/story`, title: sourceTitle, publishedAt: '2026-10-19T10:00:00Z', evidenceText: `${sourceTitle}. Officials described the attack and casualties.`, sharedTerms: ['drone', 'attack', 'kills', 'people'], imageUrl })
+  const sources = [source('theguardian.com', title, 'https://theguardian.com/image.jpg'), source('kyivindependent.com', 'Russian drone attack on park in Kharkiv kills children', 'https://kyivindependent.com/image.jpg')]
+  const selection = { id: 'story', assignedLane: 'world-major', adjustedScore: 130, representative: { title, publishedAt: '2026-10-19T10:00:00Z', priorityRegions: [], url: sources[0].url }, members: [{ title, priorityRegions: [] }] }
+  const verification = { ready: [{ eventId: 'story', readiness: { ready: true, image: { sourceUrl: sources[0].url } }, sources }], repairQueue: [], rejected: [] }
+  const cards = assembleVerifiedCards({ selections: [selection] }, verification, { results: [] })
+  assert.equal(cards.length, 0)
+})
+
+test('verified local-source evidence restores a lost Ghana classification', () => {
+  const title = 'NAGRAT disputes party decision over school leadership'
+  const source = { accepted: true, trusted: true, domain: 'myjoyonline.com', url: 'https://myjoyonline.com/story', title, publishedAt: '2026-10-20T05:00:00Z', evidenceText: 'The National Association of Graduate Teachers said the decision affects confidence in institutions in Ghana.', sharedTerms: ['nagrat', 'challenges', 'party', 'decision'], imageUrl: 'https://myjoyonline.com/image.jpg' }
+  const selection = { id: 'story', assignedLane: 'world-interesting', adjustedScore: 100, representative: { title, publishedAt: source.publishedAt, priorityRegions: [], url: source.url }, members: [{ title, priorityRegions: [] }] }
+  const verification = { ready: [{ eventId: 'story', readiness: { ready: true, image: { sourceUrl: source.url } }, sources: [source] }], repairQueue: [], rejected: [] }
+  const cards = assembleVerifiedCards({ selections: [selection] }, verification, { results: [] })
+  assert.deepEqual(cards[0].priorityRegions, ['Ghana'])
+})

@@ -19,12 +19,14 @@ const UNAMBIGUOUS_EVIDENCE_REGION = {
 }
 
 function regionMatchesGeneratedContext(region, headlineContext, evidence) {
-  return regionMatchesText(region, headlineContext) || UNAMBIGUOUS_EVIDENCE_REGION[region]?.test(String(evidence || '').slice(0, 1600))
+  const centralEvidence = String(evidence || '').slice(0, 1600).replace(/\bKunming-Montreal\b/gi, '')
+  return regionMatchesText(region, headlineContext) || UNAMBIGUOUS_EVIDENCE_REGION[region]?.test(centralEvidence)
 }
 
 export function normalizeGeneratedRouting(lane, priorityRegions, headline, sourceHeadline = '', sourceEvidence = '') {
   const headlineContext = `${sourceHeadline} ${headline}`
-  const confirmed = (priorityRegions || []).filter(region => regionMatchesGeneratedContext(region, headlineContext, sourceEvidence))
+  const confirmed = (priorityRegions || []).filter(region => regionMatchesText(region, headlineContext)
+    || UNAMBIGUOUS_EVIDENCE_REGION[region]?.test(String(sourceEvidence || '').replace(/\bKunming-Montreal\b/gi, '')))
   const inferred = PRIORITY_REGIONS.filter(region => regionMatchesGeneratedContext(region, headlineContext, sourceEvidence))
   const regions = [...new Set([...confirmed, ...inferred])]
   const broadMiddleEastIndex = regions.indexOf('Middle East')

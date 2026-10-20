@@ -4,8 +4,10 @@ import { pathToFileURL } from 'node:url'
 
 import { rankFrontPage } from './final-edition-ranker.mjs'
 import { sourceFamilyFromEvidence } from './event-corroboration.mjs'
+import { regionMatchesText } from './merge-discovery-candidates.mjs'
 import { readiness } from './verify-unified-shortlist.mjs'
 import { candidatesDescribeSameThread, headlinesExplicitlyConflict } from './select-five-lane-edition.mjs'
+import { SOURCES } from '../../artifacts/summary-feasibility/discovery-evidence-milestone/sources.mjs'
 
 const DEFAULT_LANE_LIMITS = {
   'world-major': { minimum: 10, preferred: 12, maximum: 15 },
@@ -29,6 +31,22 @@ function parseArgs(argv) {
 }
 
 function unique(values) { return [...new Set(values.filter(Boolean))] }
+
+const PRIORITY_REGIONS = new Set(['Syria', 'Middle East', 'Bangladesh', 'Ghana', 'Canada', 'GTA'])
+const SOURCE_COVERAGE = SOURCES.flatMap(source => {
+  try {
+    return [{ domain: new URL(source.sourceUrl).hostname.replace(/^www\./, ''), regions: source.coverage.filter(region => PRIORITY_REGIONS.has(region)) }]
+  } catch { return [] }
+}).filter(source => source.regions.length)
+
+function sourceBackedRegions(sources) {
+  return unique(sources.flatMap(source => {
+    const domain = String(source.domain || '').replace(/^www\./, '')
+    const coverage = SOURCE_COVERAGE.filter(item => domain === item.domain || domain.endsWith(`.${item.domain}`)).flatMap(item => item.regions)
+    const evidence = `${source.title || ''} ${source.evidenceText || ''}`
+    return coverage.filter(region => regionMatchesText(region, evidence))
+  }))
+}
 
 function repairReports(value) { return Array.isArray(value) ? value : [value] }
 
@@ -83,7 +101,7 @@ export function assembleVerifiedCards(shortlist, verification, repairs) {
     if (!imageSource && !isImageException) return []
     const image = imageSource ? { url: imageSource.imageUrl, alt: imageSource.imageAlt || selection.representative.title, sourceUrl: imageSource.url, publisher: imageSource.domain } : null
     const matchingMembers = selection.members.filter(member => candidatesDescribeSameThread(selection.representative, member))
-    const regions = unique([...(selection.representative.priorityRegions || []), ...matchingMembers.flatMap(member => member.priorityRegions || [])])
+    const regions = unique([...(selection.representative.priorityRegions || []), ...matchingMembers.flatMap(member => member.priorityRegions || []), ...sourceBackedRegions(acceptedSources)])
     const evidence = acceptedSources.map(source => source.evidenceText || '').filter(Boolean).join('\n\n').slice(0, 10_000)
     return [{
       eventId: selection.id,
