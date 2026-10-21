@@ -29,6 +29,10 @@ function headlineAcronyms(value) {
   return new Set([...String(value || '').matchAll(/\b[A-Z]{2,}\b/g)].map(match => match[0]).filter(value => !ignored.has(value)))
 }
 
+function namedVessels(value) {
+  return new Set([...String(value || '').matchAll(/\b(?:m\/?v|ss|ms)\s+([a-z][a-z'-]{3,})\b/gi)].map(match => match[1].toLowerCase()))
+}
+
 function article(item) {
   return {
     id: item.selection.id,
@@ -54,6 +58,9 @@ export function compareCandidateEvents(left, right) {
       return { relation: 'same-event', score: 100, reason: `same targeted recovery event (${leftRecoveryKey})` }
     }
   }
+  const leftVessels = namedVessels(article(left).title), rightVessels = namedVessels(article(right).title)
+  const sharedVessel = [...leftVessels].find(name => rightVessels.has(name))
+  if (sharedVessel) return { relation: 'same-event', score: 90, reason: `same named vessel (${sharedVessel})` }
   const deterministic = compareEvents(article(left), article(right))
   if (deterministic.reason === 'explicit event locations conflict') return deterministic
   const leftAcronyms = headlineAcronyms(article(left).title), rightAcronyms = headlineAcronyms(article(right).title)
@@ -68,6 +75,7 @@ export function compareCandidateEvents(left, right) {
   if (titles.shared >= 3 && titles.containment >= 0.45 && leads.shared >= 8 && leads.jaccard >= 0.22) return { relation: 'same-event', score: Math.round((titles.containment + leads.jaccard) * 15), reason: 'headline and lead evidence independently overlap' }
   if (titles.shared >= 2 && distinctive >= 3 && leads.shared >= 7 && leads.containment >= 0.18) return { relation: 'same-event', score: distinctive * 3 + titles.shared + Math.round(leads.containment * 10), reason: `shared distinctive entities/details (${distinctive}) plus overlapping evidence` }
   if (titles.shared >= 2 && distinctive >= 5 && leads.shared >= 10) return { relation: 'same-event', score: distinctive * 3 + titles.shared, reason: `shared named scientific/event details (${distinctive}) across differently written reports` }
+  if (titles.shared >= 1 && distinctive >= 6 && leads.shared >= 12 && leads.jaccard >= 0.18) return { relation: 'same-event', score: distinctive * 3 + titles.shared + Math.round(leads.jaccard * 10), reason: 'shared headline subject plus dense matching meeting/update evidence' }
   return deterministic
 }
 

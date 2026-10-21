@@ -61,3 +61,15 @@ test('shared background about one port does not merge different operator negotia
   const psa = item('psa', 'Govt in talks with Singapore PSA to operate more Ctg Port terminals', 'The government is negotiating with PSA about different Chattogram port terminals while reforms continue across the port.', 'two.test')
   assert.equal(compareCandidateEvents(dp, psa).relation, 'distinct-or-uncertain')
 })
+
+test('different updates from the same named vessel tragedy cluster as one thread', () => {
+  const rescue = item('rescue', 'Joint rescue effort saved 69 MV Barima survivors', 'The Coast Guard rescued passengers after the MV Barima wreck in Guyana.')
+  const recovery = item('recovery', 'Bodies found far from MV Barima wreckage', 'Search teams recovered bodies while looking for survivors of the MV Barima wreck in Guyana.')
+  assert.match(compareCandidateEvents(rescue, recovery).reason, /same named vessel/)
+})
+
+test('one meeting and its material policy update cluster when the evidence densely overlaps', () => {
+  const meeting = item('meeting', 'Zelenskyy meets US envoy in Norway for peace talks', 'Ukrainian President Volodymyr Zelenskyy met US envoy Steve Witkoff in Oslo with Finnish President Alexander Stubb and Norwegian Prime Minister Jonas Gahr Store. They discussed negotiations and Russia.')
+  const update = item('update', 'Zelenskyy says US intelligence sharing has been restored', 'Ukrainian President Volodymyr Zelenskyy said after meeting US envoy Steve Witkoff in Oslo that intelligence sharing and ballistic missile warnings were working. Finnish President Alexander Stubb and Norwegian Prime Minister Jonas Gahr Store attended discussions about negotiations and Russia.')
+  assert.equal(compareCandidateEvents(meeting, update).relation, 'same-event')
+})

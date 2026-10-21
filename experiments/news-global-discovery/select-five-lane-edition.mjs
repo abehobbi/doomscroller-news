@@ -28,7 +28,10 @@ const HARD_REJECT = /\b(?:daily mail|tourism|travel guide|things to do|event cal
 const GENERIC_PAGE = /\b(?:home|front page|latest news|breaking news|all news|directory|annual report|meeting packet|minutes|agenda|live updates?)\b/i
 const WEAK_EVENT = /\b(?:invites?|calls? for|called for|urges?|urged|challenges?|challenged|highlights? (?:the )?need for|emphasi[sz]es? (?:the )?need for|efforts? (?:are )?needed to|must (?:go|move|extend) beyond|plans? to|could|may|set to|expected to|celebrates?|festival to be held|(?:will|to) launch|launches? initiative|cuts? (?:the )?sod|breaks? ground|groundbreaking|shares? thoughts?|reacts? to|commends?|praises?|welcomes?|reaffirms?|showcas(?:e|es|ed|ing)|partner(?:s|ed|ing)? with|weighs? in|misses? court|open for|ready to|vows? to)\b|\bsays?\s+(?:professor|minister|official|expert)\b|\bprof(?:essor|\.)?\s+[A-Z]/i
 const CEREMONIAL_EVENT = /\b(?:cuts? (?:the )?sod|breaks? ground|groundbreaking)\b/i
-const CONCRETE = /\b(?:kills?|dies?|dead|injur(?:y|ed|ies)|arrests?|convicts?|acquits?|bans?|blocks?|halts?|suspends?|overturns?|approves?|rejects?|signs?|strikes?|attacks?|evacuates?|sinks?|sank|sunk|traffick(?:ed|ing)?|layoffs?|displaced|floods?|earthquake|hurricane|outbreaks?|shortage|collapse|closes?|opens?|restores?|discovers?|found|reveals?|reports?|reaches? agreement|cuts?|rises?|falls?|first|record|investigat(?:es?|ion)|lawsuit|protest|sanctions?|election|ceasefire|troops?|war)\b/i
+const CEREMONIAL_COMMISSION = /\b(?:commissions?|commissioned|inaugurates?|inaugurated|unveils?|unveiled)\b.{0,70}\b(?:borehole|classroom|school block|mural|statue|plaque|office|facility)\b|\b(?:borehole|classroom|school block|mural|statue|plaque|office|facility)\b.{0,70}\b(?:commissions?|commissioned|inaugurates?|inaugurated|unveils?|unveiled)\b/i
+const PUBLICITY_AGREEMENT = /\b(?:signs?|inks?|announces?|forms?|enters?)\b.{0,50}\b(?:partnership|memorandum|mou|cooperation agreement)\b|\bpartners? with\b/i
+const DELIVERED_CONSEQUENCE = /\b(?:funding (?:approved|released)|loan (?:approved|disbursed)|construction (?:begins|started)|opens? to (?:the )?public|starts? operations?|service begins|acquisition completed|workers? hired|homes? completed)\b/i
+const CONCRETE = /\b(?:kills?|dies?|dead|injur(?:y|ed|ies)|arrests?|convicts?|acquits?|bans?|blocks?|halts?|suspends?|overturns?|approves?|rejects?|signs?|strikes?|attacks?|evacuates?|sinks?|sank|sunk|traffick(?:ed|ing)?|layoffs?|displaced|floods?|earthquake|hurricane|outbreaks?|shortage|collapse|closes?|opens?|restores?|discovers?|found|reveals?|reports?|reaches? agreement|cuts?|rises?|falls?|first|record|investigat(?:es?|ion)|lawsuit|protest|sanctions?|election|ceasefire|troops?|war|famine|hunger|food insecurity|malnutrition)\b/i
 const HUMAN_TEXTURE = /\b(?:village|community|famil(?:y|ies)|residents?|women|children|youths?|artisans?|farmers?|fishers?|workers?|craft|tradition|harvest|livelihood|neighbou?rhood|small town|Indigenous|tribal|refugee|market|water|wildlife|chimpanzees?|mosquitoes?|mangrove|forest|river|wetland|school|education|housing|tenant|hospital|theatre|portrait|literature|clothing|class|debt|sanitation|poultry|rescue|sailors?|mining|extraction)\b/i
 const DISCOVERY_SIGNAL = /\b(?:study|researchers?|scientists?|fossil|archaeolog|paleontolog|species|planet|space|Webb|brain|genome|microbes?|quantum|clock|ancient|excavat|Nature|journal|trial|mice|stars?|galaxy|evolution)\b/i
 const COPY_MARKERS = /(?:\|\s*(?:AP News|Reuters|BBC News|CBC News|Al Jazeera)|-Xinhua|Africa Newsroom\s*\/\s*Press release)/i
@@ -100,6 +103,10 @@ function similarity(left, right) {
   return intersection / Math.min(a.size, b.size)
 }
 
+function namedVessels(value) {
+  return new Set([...String(value || '').matchAll(/\b(?:m\/?v|ss|ms)\s+([a-z][a-z'-]{3,})\b/gi)].map(match => match[1].toLowerCase()))
+}
+
 function domainTier(domain) {
   if (STRONG_DOMAINS.some(item => domain === item || domain.endsWith(`.${item}`))) return 'strong'
   if (WEAK_DOMAINS.some(item => domain === item || domain.endsWith(`.${item}`))) return 'weak'
@@ -114,7 +121,10 @@ function laneScore(lane, title) {
 
 export function lowConsequenceEvent(value) {
   const title = cleanTitle(value)
-  return CEREMONIAL_EVENT.test(title) || (WEAK_EVENT.test(title) && !CONCRETE.test(title) && !DISCOVERY_SIGNAL.test(title))
+  return CEREMONIAL_EVENT.test(title)
+    || CEREMONIAL_COMMISSION.test(title)
+    || (PUBLICITY_AGREEMENT.test(title) && !DELIVERED_CONSEQUENCE.test(title))
+    || (WEAK_EVENT.test(title) && !CONCRETE.test(title) && !DISCOVERY_SIGNAL.test(title))
 }
 
 export function scoreCandidate(candidate, reportCreatedAt) {
@@ -184,6 +194,8 @@ export function headlinesExplicitlyConflict(left, right) {
 }
 
 export function candidatesDescribeSameThread(left, right) {
+  const leftVessels = namedVessels(left.title), rightVessels = namedVessels(right.title)
+  if ([...leftVessels].some(name => rightVessels.has(name))) return true
   const a = tokens(left.title), b = tokens(right.title)
   const sharedTokens = [...a].filter(token => b.has(token))
   if (headlinesExplicitlyConflict(left, right)) return false

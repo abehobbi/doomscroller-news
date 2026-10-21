@@ -98,6 +98,31 @@ export function prepareEditorialFixture(edition, { includeReserves = true, inclu
   }
 }
 
+export function prepareVerifiedEditorialFixture(edition, { includedLanes = ALL_EDITORIAL_LANES } = {}) {
+  const prepared = (edition.cards || []).filter(card => includedLanes.has(card.lane)).map((card, index) => ({
+    blindId: `E${String(index + 1).padStart(3, '0')}`,
+    eventId: card.eventId,
+    lane: card.lane,
+    priorityRegions: card.priorityRegions || [],
+    headline: card.headline,
+    evidence: compactEvidence((card.pages || []).map(page => page.text).join(' ')),
+    publishedAt: card.publishedAt,
+    baselineSelected: true,
+    baselineRank: card.frontPageRank || card.shortlistOrder || index + 1,
+    source: { publisher: card.acceptedSources?.[0]?.domain || null, url: card.primaryUrl },
+  }))
+  const candidates = prepared.filter(value => value.evidence.length >= 180)
+  const excluded = prepared.filter(value => value.evidence.length < 180).map(value => ({
+    blindId: value.blindId, eventId: value.eventId, headline: value.headline,
+    reason: 'less than 180 characters of usable verified evidence remained after boilerplate removal',
+  }))
+  return {
+    schemaVersion: 1, createdAt: new Date().toISOString(),
+    purpose: 'Blind editorial scoring of source-verified finalists; publisher identity is withheld from the model.',
+    candidates, excluded,
+  }
+}
+
 export function chunks(values, size) {
   const output = []
   for (let index = 0; index < values.length; index += size) output.push(values.slice(index, index + size))
@@ -255,10 +280,12 @@ async function main() {
   const options = parseArgs(process.argv.slice(2))
   if (options.prepareFixture) {
     const edition = JSON.parse(await fs.readFile(options.edition, 'utf8'))
-    const fixture = prepareEditorialFixture(edition, { includeReserves: !options.selectedOnly, includedLanes: options.includeMajor ? ALL_EDITORIAL_LANES : INCLUDED_LANES })
+    const includedLanes = options.includeMajor ? ALL_EDITORIAL_LANES : INCLUDED_LANES
+    const fixture = Array.isArray(edition.cards)
+      ? prepareVerifiedEditorialFixture(edition, { includedLanes })
+      : prepareEditorialFixture(edition, { includeReserves: !options.selectedOnly, includedLanes })
     await fs.mkdir(path.dirname(options.prepareFixture), { recursive: true })
     await fs.writeFile(options.prepareFixture, `${JSON.stringify(fixture, null, 2)}\n`, 'utf8')
-    const includedLanes = options.includeMajor ? ALL_EDITORIAL_LANES : INCLUDED_LANES
     process.stdout.write(`${JSON.stringify({ candidates: fixture.candidates.length, excluded: fixture.excluded.length, lanes: Object.fromEntries([...includedLanes].map(lane => [lane, fixture.candidates.filter(value => value.lane === lane).length])), output: options.prepareFixture }, null, 2)}\n`)
     return
   }

@@ -5,21 +5,24 @@ import { pathToFileURL } from 'node:url'
 import { publisherFamily, sourceFamilyFromEvidence } from './event-corroboration.mjs'
 import { inspectSource, readiness, reassessStoredSource } from './verify-unified-shortlist.mjs'
 
-const API_URL = 'https://api.exa.ai/search'
+const EXA_API_URL = 'https://api.exa.ai/search'
+const TAVILY_API_URL = 'https://api.tavily.com/search'
 const EXCLUDED_DOMAINS = ['facebook.com', 'instagram.com', 'linkedin.com', 'pinterest.com', 'tiktok.com', 'youtube.com', 'x.com']
 
 function parseArgs(argv) {
-  const options = { input: null, pool: null, outputDir: null, maximum: 12, dryRun: false, reassessOnly: false }
+  const options = { input: null, pool: null, outputDir: null, maximum: 12, provider: 'exa', dryRun: false, reassessOnly: false }
   for (let index = 0; index < argv.length; index += 1) {
     if (argv[index] === '--input') options.input = argv[++index]
     else if (argv[index] === '--pool') options.pool = argv[++index]
     else if (argv[index] === '--output-dir') options.outputDir = argv[++index]
     else if (argv[index] === '--maximum') options.maximum = Number(argv[++index])
+    else if (argv[index] === '--provider') options.provider = argv[++index]
     else if (argv[index] === '--dry-run') options.dryRun = true
     else if (argv[index] === '--reassess-only') options.reassessOnly = true
   }
   if (!options.input || !options.pool || !options.outputDir) throw new Error('--input, --pool and --output-dir are required')
   if (!Number.isInteger(options.maximum) || options.maximum < 1 || options.maximum > 20) throw new Error('--maximum must be from 1 to 20')
+  if (!['exa', 'tavily'].includes(options.provider)) throw new Error('--provider must be exa or tavily')
   return options
 }
 
@@ -39,22 +42,52 @@ export function repairCandidates(report, maximum = 12) {
     .slice(0, maximum)
 }
 
-async function search(apiKey, item) {
+export function repairSearchQuery(item) {
   const evidence = item.sources.find(source => source.evidenceText)?.evidenceText?.slice(0, 900) || ''
+  const secondChance = Number(item.opportunityRecovery?.attempt || 0) >= 2
+  return secondChance ? secondChanceQuery(item) : `${item.headline} ${evidence}`.trim()
+}
+
+async function searchExa(apiKey, item) {
   const secondChance = Number(item.opportunityRecovery?.attempt || 0) >= 2
   const inspectedDomains = secondChance ? item.sources.map(source => source.domain).filter(Boolean) : []
   const body = {
-    query: secondChance ? secondChanceQuery(item) : `${item.headline} ${evidence}`,
+    query: repairSearchQuery(item),
     objective: repairObjective(item),
     type: 'auto', numResults: 6, moderation: true, excludeDomains: [...new Set([...EXCLUDED_DOMAINS, ...inspectedDomains])],
   }
   const started = performance.now()
-  const response = await fetch(API_URL, { method: 'POST', headers: { 'x-api-key': apiKey, 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+  const response = await fetch(EXA_API_URL, { method: 'POST', headers: { 'x-api-key': apiKey, 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
   const raw = await response.text()
   let payload = null
   try { payload = JSON.parse(raw) } catch {}
   if (!response.ok) throw new Error(`HTTP ${response.status}: ${payload?.error || raw.slice(0, 180)}`)
-  return { results: payload?.results || [], requestId: payload?.requestId || null, costDollars: Number(payload?.costDollars?.total || 0), latencyMs: Math.round(performance.now() - started) }
+  return { provider: 'exa', results: payload?.results || [], requestId: payload?.requestId || null, costDollars: Number(payload?.costDollars?.total || 0), creditsUsed: 0, latencyMs: Math.round(performance.now() - started) }
+}
+
+async function searchTavily(apiKey, item) {
+  const response = await fetch(TAVILY_API_URL, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      query: repairSearchQuery(item), search_depth: 'basic', max_results: 10, topic: 'news',
+      include_answer: false, include_raw_content: false, include_images: false,
+      include_published_date: true, filter_by_published_date: true, include_usage: true, safe_search: true,
+    }),
+  })
+  const raw = await response.text()
+  let payload = null
+  try { payload = JSON.parse(raw) } catch {}
+  if (!response.ok) throw new Error(`HTTP ${response.status}: ${payload?.detail?.error || raw.slice(0, 180)}`)
+  return {
+    provider: 'tavily', requestId: payload?.request_id || null, costDollars: 0,
+    creditsUsed: Number(payload?.usage?.credits || 1), latencyMs: Number(payload?.response_time ? payload.response_time * 1000 : 0),
+    results: (payload?.results || []).map(result => ({ ...result, publishedDate: result.published_date || null })),
+  }
+}
+
+export async function searchForRepair(provider, apiKey, item) {
+  return provider === 'tavily' ? searchTavily(apiKey, item) : searchExa(apiKey, item)
 }
 
 export function secondChanceQuery(item) {
@@ -90,8 +123,8 @@ export function pendingRepairCandidates(candidates, savedResults = []) {
   return candidates.filter(item => !completed.has(item.eventId))
 }
 
-async function repairItem(apiKey, item, context) {
-  const found = await search(apiKey, item)
+async function repairItem(provider, apiKey, item, context) {
+  const found = await searchForRepair(provider, apiKey, item)
   const selection = { representative: { title: item.headline } }
   const existingUrls = new Set(item.sources.map(source => canonicalUrl(source.url)))
   const existingFamilies = new Set(item.sources.map(source => sourceFamilyFromEvidence(source.domain, source.evidenceText, source.title)))
@@ -108,7 +141,7 @@ async function repairItem(apiKey, item, context) {
   return {
     ...item, readiness: gate, sources,
     repair: {
-      requestId: found.requestId, costDollars: found.costDollars, latencyMs: found.latencyMs,
+      provider: found.provider, requestId: found.requestId, costDollars: found.costDollars, creditsUsed: found.creditsUsed, latencyMs: found.latencyMs,
       candidatesInspected: inspected.length, acceptedAdditions: inspected.filter(source => source.accepted).length,
     },
   }
@@ -118,7 +151,7 @@ function markdown(output) {
   const lines = [
     '# Bounded unified shortlist source repair', '',
     `Created: ${output.createdAt}`, '',
-    `${output.searches} searches · $${output.costDollars.toFixed(3)} reported Exa cost · ${output.repaired} stories repaired · ${output.unresolved} still unresolved.`, '',
+    `${output.searches} ${output.provider} searches · $${output.costDollars.toFixed(3)} reported cost · ${output.creditsUsed} credits · ${output.repaired} stories repaired · ${output.unresolved} still unresolved.`, '',
     'No summaries were generated and no app data was changed.', '',
   ]
   output.results.forEach((item, index) => {
@@ -141,7 +174,7 @@ async function main() {
   ])
   const candidates = repairCandidates(report, options.maximum)
   if (options.dryRun) {
-    process.stdout.write(`${JSON.stringify({ candidates: candidates.length, estimatedCostDollarsAtObservedRate: Number((candidates.length * 0.007).toFixed(3)), headlines: candidates.map(item => item.headline) }, null, 2)}\n`)
+    process.stdout.write(`${JSON.stringify({ provider: options.provider, candidates: candidates.length, estimatedCostDollarsAtObservedRate: options.provider === 'exa' ? Number((candidates.length * 0.007).toFixed(3)) : 0, estimatedCredits: options.provider === 'tavily' ? candidates.length : 0, headlines: candidates.map(item => item.headline) }, null, 2)}\n`)
     return
   }
   const outputPath = path.join(options.outputDir, 'SOURCE_REPAIR_REPORT.json')
@@ -164,8 +197,8 @@ async function main() {
     process.stdout.write(`${JSON.stringify({ searches: 0, addedCostDollars: 0, repaired: output.repaired, unresolved: output.unresolved }, null, 2)}\n`)
     return
   }
-  const apiKey = process.env.EXA_API_KEY
-  if (!apiKey) throw new Error('EXA_API_KEY is not set. No requests were made.')
+  const apiKey = options.provider === 'tavily' ? process.env.TAVILY_API_KEY : process.env.EXA_API_KEY
+  if (!apiKey) throw new Error(`${options.provider === 'tavily' ? 'TAVILY_API_KEY' : 'EXA_API_KEY'} is not set. No requests were made.`)
   await fs.mkdir(options.outputDir, { recursive: true })
   let results = []
   try {
@@ -174,9 +207,10 @@ async function main() {
   } catch {}
   const writeCheckpoint = async complete => {
     const checkpoint = {
-      schemaVersion: 1, createdAt: new Date().toISOString(), sourceReport: options.input, complete,
+      schemaVersion: 1, createdAt: new Date().toISOString(), sourceReport: options.input, provider: options.provider, complete,
       searches: results.filter(item => item.repair?.requestId).length,
       costDollars: Number(results.reduce((sum, item) => sum + Number(item.repair?.costDollars || 0), 0).toFixed(6)),
+      creditsUsed: results.reduce((sum, item) => sum + Number(item.repair?.creditsUsed || 0), 0),
       repaired: results.filter(item => item.readiness.ready).length,
       unresolved: results.filter(item => !item.readiness.ready).length,
       completedCandidates: results.length, totalCandidates: candidates.length, results,
@@ -187,9 +221,9 @@ async function main() {
   for (const candidate of pendingRepairCandidates(candidates, results)) {
     const originalSourceCount = candidate.sources.length
     try {
-      results.push({ ...(await repairItem(apiKey, candidate, context)), originalSourceCount })
+      results.push({ ...(await repairItem(options.provider, apiKey, candidate, context)), originalSourceCount })
     } catch (error) {
-      results.push({ ...candidate, originalSourceCount, repair: { requestId: null, costDollars: 0, latencyMs: 0, candidatesInspected: 0, acceptedAdditions: 0, error: String(error?.message || error).slice(0, 240) } })
+      results.push({ ...candidate, originalSourceCount, repair: { provider: options.provider, requestId: null, costDollars: 0, creditsUsed: 0, latencyMs: 0, candidatesInspected: 0, acceptedAdditions: 0, error: String(error?.message || error).slice(0, 240) } })
     }
     await writeCheckpoint(false)
   }
@@ -197,7 +231,7 @@ async function main() {
   await Promise.all([
     fs.writeFile(path.join(options.outputDir, 'SOURCE_REPAIR_REPORT.md'), markdown(output)),
   ])
-  process.stdout.write(`${JSON.stringify({ searches: output.searches, costDollars: output.costDollars, repaired: output.repaired, unresolved: output.unresolved }, null, 2)}\n`)
+  process.stdout.write(`${JSON.stringify({ provider: output.provider, searches: output.searches, costDollars: output.costDollars, creditsUsed: output.creditsUsed, repaired: output.repaired, unresolved: output.unresolved }, null, 2)}\n`)
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) main().catch(error => { console.error(error.message); process.exitCode = 1 })

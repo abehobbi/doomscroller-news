@@ -22,6 +22,11 @@ test('large current disaster outranks a major protest when both qualify', () => 
   assert.match(ranked[0].headline, /44 people dead/)
 })
 
+test('mass hunger affecting millions receives large-human-scale priority', () => {
+  const score = scoreFrontPageCard(card('Nearly 16 million Afghans face crisis-level hunger', 'world-major', 'The food emergency is worsening before winter.'))
+  assert.match(score.reasons.join(' '), /large directly affected population/)
+})
+
 test('small casualty count does not automatically outrank interstate escalation risk', () => {
   const ranked = rankFrontPage([
     { eventId: 'family', lane: 'world-major', headline: 'Strike kills three members of one family', pages: [{ text: 'The strike killed 3 people.' }] },

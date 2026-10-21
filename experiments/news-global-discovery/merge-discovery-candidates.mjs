@@ -28,10 +28,12 @@ const NATIONALITY_PERSON_SIGNALS = {
   Canada: /\bcanadian(?:\s+[a-z0-9-]+){0,2}\s+(?:engineers?|sailors?|workers?|employees?|residents?|tourists?|students?|athletes?|actors?|singers?|doctors?|nurses?|professors?|researchers?|journalists?|citizens?|nationals?|men|women)\b/i,
 }
 const POPULATION_CENTRAL_HARM = /\b(?:traffick(?:ed|ing)?|forcibly recruit(?:ed|ing)?|recruit(?:ed|ing)? into (?:a |the )?(?:war|military))\b/i
-const MAJOR_SIGNAL = /\b(?:kills?|dead|deaths?|casualt(?:y|ies)|war|invasion|troops?|ceasefire|sanctions?|elections?|government|parliament|court|law|regulations?|inflation|unemployment|layoffs?|strikes?|sinks?|sank|sunk|outbreaks?|epidemic|pandemic|public health|traffick(?:ed|ing)?|displaced|state of emergency|earthquake|hurricane|typhoon|floods?|drought|corruption|embezzlement|billion|million|nationwide|constitutional|military)\b/i
+const MAJOR_SIGNAL = /\b(?:kills?|dead|deaths?|casualt(?:y|ies)|war|invasion|troops?|ceasefire|sanctions?|elections?|government|parliament|court|law|regulations?|inflation|unemployment|layoffs?|strikes?|outbreaks?|epidemic|pandemic|public health|traffick(?:ed|ing)?|displaced|state of emergency|earthquake|hurricane|typhoon|floods?|drought|corruption|embezzlement|billion|million|nationwide|constitutional|military)\b/i
+const MARITIME_SINKING = /\b(?:ship|vessel|boat|ferry|tanker|freighter)s?\b.{0,50}\b(?:sinks?|sank|sunk)\b|\b(?:sinks?|sank|sunk)\b.{0,50}\b(?:ship|vessel|boat|ferry|tanker|freighter)s?\b/i
 const LOW_SCOPE_MAJOR = /\b(?:bedbugs?|flight (?:cancelled|canceled|grounded)|wildlife park|shares? rise|takeover talks|reunited|fundraising walk|(?:pile of )?dead (?:[a-z-]+\s+){0,2}(?:geese|birds?|fish|animals?))\b/i
 const ANALYSIS_ONLY_MAJOR = /\b(?:whether|dilemma|what if|analysis|explainer)\b|\bnext war could\b/i
 const SPECULATIVE_MAJOR = /\b(?:could|might|may|potential|scenario)\b/i
+const POLL_ONLY = /\b(?:polls? (?:show|suggest|forecast)|according to (?:an? )?(?:opinion )?poll|poised for election gains|forecast to win)\b/i
 const REPORTED_MAJOR_ACTION = /\b(?:kills?|dies?|dead|injur(?:ed|ies)|arrests?|convicts?|acquits?|bans?|blocks?|halts?|suspends?|overturns?|approves?|rejects?|signs?|strikes?|attacks?|evacuates?|declares?|announces?|unveils?|adopts?|orders?|deploys?|launches?|resigns?|collapses?|closes?|opens?|restores?|releases?|discovers?|reveals?|reports?|reaches? agreement|cuts?|rises?|falls?|investigat(?:es?|ion)|lawsuit|protest|sanctions?|election|ceasefire)\b/i
 const SOURCE_REGIONS = SOURCES.map(source => {
   try { return { domain: new URL(source.sourceUrl).hostname.replace(/^www\./, ''), regions: source.coverage.filter(region => PRIORITY_REGIONS.has(region)) } }
@@ -58,7 +60,9 @@ export function regionMatchesText(region, value) {
 
 export function majorEligible(value) {
   const text = String(value || '')
-  return MAJOR_SIGNAL.test(text) && !LOW_SCOPE_MAJOR.test(text) && !ANALYSIS_ONLY_MAJOR.test(text) && (!SPECULATIVE_MAJOR.test(text) || REPORTED_MAJOR_ACTION.test(text))
+  return (MAJOR_SIGNAL.test(text) || MARITIME_SINKING.test(text))
+    && !LOW_SCOPE_MAJOR.test(text) && !ANALYSIS_ONLY_MAJOR.test(text) && !POLL_ONLY.test(text)
+    && (!SPECULATIVE_MAJOR.test(text) || REPORTED_MAJOR_ACTION.test(text))
 }
 
 function feedLanes(item, verifiedRegions = null) {

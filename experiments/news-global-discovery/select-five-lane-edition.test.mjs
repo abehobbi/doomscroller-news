@@ -21,6 +21,8 @@ test('a concrete consequential headline can recover a major lane even when a fee
   const shipping = scoreCandidate(candidate('Two commercial ships sink near the Strait of Hormuz', ['world-interesting']), '2026-10-13T10:00:00Z')
   assert.ok(shipping.lanes.includes('priority-major'))
   assert.ok(shipping.priorityRegions.includes('Middle East'))
+  const hunger = scoreCandidate(candidate('Nearly 16 million Afghans face crisis-level hunger', ['world-interesting']), '2026-10-13T10:00:00Z')
+  assert.ok(hunger.lanes.includes('world-major'))
 })
 
 test('shared amounts do not merge unrelated science and public spending stories', () => {
@@ -36,6 +38,13 @@ test('different disease outbreaks in different countries never become one event 
   ), false)
 })
 
+test('rescue and body-recovery updates for the same named vessel remain one event thread', () => {
+  assert.equal(candidatesDescribeSameThread(
+    { title: 'Joint rescue effort saved 69 MV Barima survivors' },
+    { title: 'Bodies found 36 nautical miles from MV Barima wreckage' },
+  ), true)
+})
+
 test('generic statements and ceremonial partnerships cannot fill an edition', () => {
   assert.equal(lowConsequenceEvent('President urges churches to provide practical community service'), true)
   assert.equal(lowConsequenceEvent('Watch company partners with school for 150th anniversary'), true)
@@ -47,6 +56,10 @@ test('generic statements and ceremonial partnerships cannot fill an edition', ()
   assert.equal(lowConsequenceEvent('Minister highlights need for African unity in mining'), true)
   assert.equal(lowConsequenceEvent('Efforts needed to address plight of rural women'), true)
   assert.equal(lowConsequenceEvent('Education reforms must go beyond curriculum, state minister says'), true)
+  assert.equal(lowConsequenceEvent('New KG block and borehole commissioned at district school'), true)
+  assert.equal(lowConsequenceEvent('Ottawa unveils downtown heritage mural'), true)
+  assert.equal(lowConsequenceEvent('Ghana signs $28bn petroleum hub partnership with foreign company'), true)
+  assert.equal(lowConsequenceEvent('Ghana partnership releases funding and construction begins on petroleum hub'), false)
   assert.ok(scoreCandidate(candidate('Consulate to launch property expo next month', ['priority-interesting'], ['Ghana']), '2026-10-13T10:00:00Z').score < 0)
   assert.ok(scoreCandidate(candidate('Habitat Fair closes with fun and big sales', ['priority-interesting'], ['Ghana']), '2026-10-13T10:00:00Z').score < 0)
   assert.ok(scoreCandidate(candidate('Club suffers first defeat as rivals return to winning ways', ['priority-interesting'], ['Ghana']), '2026-10-13T10:00:00Z').score < 0)

@@ -262,6 +262,7 @@ const NUMBER_WORDS = new Map([
 function normalizeNumberWords(value) {
   return String(value)
     .toLowerCase()
+    .replace(/\b(tk|bdt)\s*(\d+(?:\.\d+)?)\s*t\b/g, '$1 $2 trillion')
     .replace(/([£$€])\s*(\d+(?:\.\d+)?)\s*bn\b/g, '$1$2 billion')
     .replace(/([£$€])\s*(\d+(?:\.\d+)?)\s*m\b/g, '$1$2 million')
     .replace(/\b(\d+(?:\.\d+)?)m\b(?=\s+(?:people|persons?|residents?|voters?|votes?|viewers?|users?|households?|families|workers?|jobs?|tonnes?|dollars?|pounds?|euros?)\b)/g, '$1 million')

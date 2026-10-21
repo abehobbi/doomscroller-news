@@ -78,6 +78,14 @@ test('routes generated priority-region headlines back into priority lanes', () =
     normalizeGeneratedRouting('world-interesting', [], 'Russian attacks kill at least 10 and injure dozens across Ukraine'),
     { lane: 'world-major', priorityRegions: [] },
   )
+  assert.deepEqual(
+    normalizeGeneratedRouting('priority-interesting', ['GTA', 'Canada'], 'Ottawa unveils a new downtown mural', 'Artists complete Ottawa mural', 'Related coverage from Toronto appears below the article.'),
+    { lane: 'priority-interesting', priorityRegions: ['Canada'] },
+  )
+  assert.deepEqual(
+    normalizeGeneratedRouting('priority-interesting', ['GTA', 'Canada'], 'Regina development breaks ground', 'Regina project begins', 'The publisher also covers Toronto and the GTA.'),
+    { lane: 'priority-interesting', priorityRegions: ['Canada'] },
+  )
 })
 
 test('distinguishes provider quota deferrals from editorial rejection', () => {

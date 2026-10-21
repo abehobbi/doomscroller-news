@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { ALL_EDITORIAL_LANES, auditBatch, chunks, combineScores, compactEvidence, computedScore, prepareEditorialFixture } from './editorial-selector.mjs'
+import { ALL_EDITORIAL_LANES, auditBatch, chunks, combineScores, compactEvidence, computedScore, prepareEditorialFixture, prepareVerifiedEditorialFixture } from './editorial-selector.mjs'
 
 test('compact evidence preserves opening context and later consequential facts', () => {
   const text = '.video { font-size: 2rem; padding-top: 4px; } Thank you for visiting example.com. Your browser version has limited support for JavaScript. A local dispute began this week. Residents requested basic services. Officials met on Tuesday. The talks continued. A small committee was formed. More background followed. Another paragraph appeared. Several residents were injured and two people were killed while seeking toilets and clean water. Closing context.'
@@ -35,6 +35,17 @@ test('selected-only fixture omits qualified reserves for a bounded final-edition
   const make = (id, lane) => ({ id, representative: { selection: { assignedLane: lane, representative: { priorityRegions: [] } }, snapshot: { title: `Title ${id} contains enough words`, evidenceText: 'This evidence describes a specific recent event with enough context for a bounded editorial review. It identifies the people and place involved. It also explains why the development matters and supplies a concrete consequence for affected residents.', publishedAt: '2026-10-10T00:00:00Z', publisher: 'example.com', finalUrl: `https://example.com/${id}` } } })
   const fixture = prepareEditorialFixture({ events: [make('selected', 'world-interesting')], qualifiedButNotSelected: [make('reserve', 'world-interesting')] }, { includeReserves: false })
   assert.deepEqual(fixture.candidates.map(value => value.eventId), ['selected'])
+})
+
+test('verified finalists can be converted into a blind all-lane editorial fixture', () => {
+  const fixture = prepareVerifiedEditorialFixture({ cards: [{
+    eventId: 'verified', lane: 'world-major', headline: 'A specific verified development', publishedAt: '2026-10-20T12:00:00Z',
+    priorityRegions: [], primaryUrl: 'https://example.com/story', acceptedSources: [{ domain: 'example.com' }],
+    pages: [{ text: 'Officials documented a specific recent development affecting many residents. The verified evidence identifies the decision, the people involved, and the immediate consequences. A second paragraph supplies enough concrete context for editorial review.' }],
+  }] })
+  assert.equal(fixture.candidates.length, 1)
+  assert.equal(fixture.candidates[0].eventId, 'verified')
+  assert.equal(fixture.candidates[0].source.publisher, 'example.com')
 })
 
 test('batch helper is deterministic', () => {

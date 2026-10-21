@@ -93,6 +93,9 @@ test('routine disruption is not major news merely because it is concrete', () =>
   assert.equal(majorEligible('Bangladeshi jobseekers trafficked into Russia war'), true)
   assert.equal(majorEligible('Public employees strike shuts schools and disrupts hospitals'), true)
   assert.equal(majorEligible('Pile of dead Canada geese discovered near town'), false)
+  assert.equal(majorEligible('The £17m design museum made from old sinks opens in Ghent'), false)
+  assert.equal(majorEligible('Two cargo ships sink after an attack in the Black Sea'), true)
+  assert.equal(majorEligible('Ben-Gvir poised for election gains, opinion poll suggests'), false)
 })
 
 test('hypothetical analysis does not qualify as major news without a reported action', () => {

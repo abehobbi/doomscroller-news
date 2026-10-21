@@ -103,6 +103,12 @@ test('numeric audit recognizes compact million and billion source notation', () 
   assert.equal(numericAudit(card, packet).valid, true)
 })
 
+test('numeric audit recognizes Bangladeshi taka trillion shorthand', () => {
+  const packet = { fact: 'Private-sector credit rose to Tk 18.3t.' }
+  const card = { headline: 'Private credit reaches Tk 18.3 trillion', pages: [{ text: 'The reported total was Tk 18.3 trillion.' }] }
+  assert.equal(numericAudit(card, packet).valid, true)
+})
+
 test('numeric audit recognizes Arabic decade wording translated into English decades', () => {
   const packet = { fact: 'كانت الحرفة رائدة من سبعينيات القرن الماضي إلى تسعينياته.' }
   const card = { headline: 'Craft revived', pages: [{ text: 'The craft was prominent from the 1970s through the 1990s.' }] }

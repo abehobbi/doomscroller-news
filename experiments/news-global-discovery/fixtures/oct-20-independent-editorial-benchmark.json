@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "name": "October 20 independent editorial benchmark",
+  "developmentOnly": true,
+  "cutoff": "2026-10-20T23:17:00-04:00",
+  "windowHours": 72,
+  "purpose": "A frozen comparison set for measuring recall and editorial taste. It must not be used as a production query list or as evidence for any story.",
+  "thresholds": {
+    "essentialRecall": 0.75,
+    "valuableRecall": 0.5,
+    "serendipityRecall": 0.3,
+    "maximumForbiddenMatches": 0
+  },
+  "cases": [
+    { "id": "france-riot-support", "tier": "essential", "match": [["france"], ["military", "soldiers"], ["riot", "violence"]] },
+    { "id": "australia-mp-attack", "tier": "essential", "match": [["helen haines"], ["attack", "car"]] },
+    { "id": "haiti-ambush", "tier": "essential", "match": [["haiti"], ["ambush"], ["salvadoran", "international force"]] },
+    { "id": "nigeria-ebola", "tier": "essential", "match": [["nigeria"], ["ebola"]] },
+    { "id": "china-growth", "tier": "essential", "match": [["china"], ["4.5", "economy", "gdp"]] },
+    { "id": "kenya-cult-conviction", "tier": "essential", "match": [["kenya", "kenyan"], ["cult"], ["191", "murder", "starvation"]] },
+    { "id": "syria-dna-identifications", "tier": "essential", "match": [["syria", "syrian"], ["dna"], ["missing", "identified", "identification"]] },
+    { "id": "gaza-wfp-cuts", "tier": "essential", "match": [["gaza"], ["world food programme", "wfp"], ["500,000", "500000", "aid cuts"]] },
+    { "id": "canada-inflation", "tier": "essential", "match": [["canada", "canadian"], ["inflation"], ["3.1"]] },
+    { "id": "bangladesh-measles", "tier": "essential", "match": [["bangladesh"], ["measles"], ["1,200", "1200"]] },
+
+    { "id": "italy-protest-law", "tier": "valuable", "match": [["italy", "italian"], ["protest"], ["penalties", "law", "soldiers"]] },
+    { "id": "south-korea-kyiv-diplomats", "tier": "valuable", "match": [["south korea", "korean"], ["diplomat"], ["kyiv", "pow"]] },
+    { "id": "alberta-referendum", "tier": "valuable", "match": [["alberta"], ["referendum", "independence"]] },
+    { "id": "wainwright-fire", "tier": "valuable", "match": [["wainwright"], ["fire"], ["training", "military", "safety"]] },
+    { "id": "bombardier-retreat", "tier": "valuable", "match": [["bombardier"], ["trump", "united states", "u.s."] ] },
+    { "id": "ghana-school-abuse", "tier": "valuable", "match": [["ghana"], ["school"], ["abuse"]] },
+    { "id": "natrore-crash", "tier": "valuable", "match": [["natore"], ["bus"], ["12", "twelve", "killed"]] },
+    { "id": "xai-pollution-suit", "tier": "valuable", "match": [["xai"], ["pollution"], ["lawsuit", "suit", "judge"]] },
+    { "id": "ghana-herbal-recall", "tier": "valuable", "match": [["ghana"], ["herbal"], ["recall", "undeclared medicine"]] },
+    { "id": "missing-ghana-fishers", "tier": "valuable", "match": [["ghana", "ghanaian"], ["fishers", "fishermen"], ["missing"]] },
+
+    { "id": "guinea-bissau-vaccine-raid", "tier": "serendipity", "match": [["guinea-bissau", "guinea bissau"], ["vaccine"], ["raid", "research"]] },
+    { "id": "anjouan-gambling", "tier": "serendipity", "match": [["anjouan"], ["gambling", "casino", "betting"]] },
+    { "id": "longyearbyen-water", "tier": "serendipity", "match": [["longyearbyen", "svalbard"], ["water"], ["permafrost", "metals", "contamination"]] },
+    { "id": "nubian-workshop", "tier": "serendipity", "match": [["nubian", "kushite"], ["temple"], ["workshop", "faience"]] },
+    { "id": "colorado-wildlife-bridge", "tier": "serendipity", "match": [["colorado"], ["wildlife"], ["bridge", "crossing"], ["91"]] },
+    { "id": "europe-wild-bees", "tier": "serendipity", "match": [["europe", "european"], ["wild bee", "bees"], ["decline"]] },
+    { "id": "bangladesh-fishing-cat", "tier": "serendipity", "match": [["bangladesh"], ["fishing cat"], ["satellite", "collar"]] },
+    { "id": "earhart-trees", "tier": "serendipity", "match": [["amelia earhart", "earhart"], ["trees", "wreckage"]] },
+    { "id": "busan-shark-guardians", "tier": "serendipity", "match": [["busan"], ["shark"], ["guardian", "youtuber"]] },
+    { "id": "flamingo-cruelty", "tier": "serendipity", "match": [["flamingo"], ["hotel"], ["convicted", "cruelty"]] },
+
+    { "id": "ceremonial-borehole", "tier": "forbidden", "match": [["commission", "unveil"], ["borehole"]] },
+    { "id": "ceremonial-school-block", "tier": "forbidden", "match": [["commission", "unveil"], ["school block", "classroom block"]] },
+    { "id": "generic-partnership-mou", "tier": "forbidden", "match": [["partnership", "memorandum of understanding", "mou"], ["announces", "signs", "signed"]] },
+    { "id": "poll-only-horserace", "tier": "forbidden", "match": [["poll"], ["poised", "would win", "election gains"]] }
+  ]
+}

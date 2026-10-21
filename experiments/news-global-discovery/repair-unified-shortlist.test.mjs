@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { mergeSources, pendingRepairCandidates, repairCandidates, repairObjective, secondChanceQuery } from './repair-unified-shortlist.mjs'
+import { mergeSources, pendingRepairCandidates, repairCandidates, repairObjective, repairSearchQuery, searchForRepair, secondChanceQuery } from './repair-unified-shortlist.mjs'
 import { isTrustedDomain } from './verify-unified-shortlist.mjs'
 
 test('repair candidates are bounded and ordered by selection strength', () => {
@@ -40,4 +40,27 @@ test('second-chance searches target the actual unresolved blocker', () => {
 test('second-chance queries are concise and explicitly seek independent corroboration', () => {
   const item = { headline: 'Major event under investigation | Reuters', opportunityRecovery: { attempt: 2, blocker: 'corroboration' } }
   assert.equal(secondChanceQuery(item), 'Major event under investigation independent report official statement')
+})
+
+test('repair search query keeps first-pass evidence but second chances stay concise', () => {
+  const first = { headline: 'Fishing cat released with tracking collar', sources: [{ evidenceText: 'The animal recovered after months of treatment.' }] }
+  assert.match(repairSearchQuery(first), /months of treatment/)
+  const second = { headline: 'Major event | Reuters', opportunityRecovery: { attempt: 2, blocker: 'evidence' }, sources: [] }
+  assert.equal(repairSearchQuery(second), 'Major event')
+})
+
+test('Tavily repair uses one basic credit and normalizes publication dates', async () => {
+  const originalFetch = globalThis.fetch
+  globalThis.fetch = async (_url, request) => {
+    const body = JSON.parse(request.body)
+    assert.equal(body.search_depth, 'basic')
+    assert.equal(body.include_raw_content, false)
+    return new Response(JSON.stringify({ request_id: 'tvly-1', usage: { credits: 1 }, results: [{ title: 'Report', url: 'https://example.com/report', published_date: '2026-10-20T10:00:00Z' }] }))
+  }
+  try {
+    const result = await searchForRepair('tavily', 'secret', { headline: 'A specific event', sources: [] })
+    assert.equal(result.provider, 'tavily')
+    assert.equal(result.creditsUsed, 1)
+    assert.equal(result.results[0].publishedDate, '2026-10-20T10:00:00Z')
+  } finally { globalThis.fetch = originalFetch }
 })

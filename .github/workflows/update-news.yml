@@ -23,6 +23,7 @@ jobs:
     timeout-minutes: 60
     env:
       EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+      TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       FREE_PLAN_CONFIRMED: 'yes'
@@ -40,11 +41,12 @@ jobs:
         shell: bash
         run: |
           test -n "$EXA_API_KEY"
+          test -n "$TAVILY_API_KEY"
           test -n "$CLOUDFLARE_ACCOUNT_ID"
           test -n "$CLOUDFLARE_API_TOKEN"
       - name: Create isolated run workspace
         shell: bash
-        run: mkdir -p "$RUN_ROOT"/{discovery,publisher,combined,selection,verification,repair,opportunity-repair,verified,gap/discovery,gap/selection,gap/verification,gap/repair,gap/opportunity-repair,gap/verified,merged,writer/generated,final}
+        run: mkdir -p "$RUN_ROOT"/{discovery,publisher,combined,selection,verification,repair,opportunity-repair,verified,gap/discovery,gap/selection,gap/verification,gap/repair,gap/opportunity-repair,gap/verified,merged,editorial/scored,writer/generated,final}
       - name: Discover fresh candidates
         run: >-
           node experiments/news-global-discovery/exa-five-lane-scout.mjs
@@ -73,12 +75,12 @@ jobs:
         run: >-
           node experiments/news-global-discovery/repair-unified-shortlist.mjs
           --input ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json
-          --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --maximum 12
+          --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --maximum 10 --provider tavily
           --output-dir ${{ env.RUN_ROOT }}/repair
       - name: Prepare strongest unresolved opportunities for a targeted second chance
-        run: node experiments/news-global-discovery/prepare-opportunity-recovery.mjs --verification ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/repair/SOURCE_REPAIR_REPORT.json --maximum 6 --output ${{ env.RUN_ROOT }}/opportunity-repair/OPPORTUNITY_QUEUE.json
+        run: node experiments/news-global-discovery/prepare-opportunity-recovery.mjs --verification ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/repair/SOURCE_REPAIR_REPORT.json --maximum 4 --output ${{ env.RUN_ROOT }}/opportunity-repair/OPPORTUNITY_QUEUE.json
       - name: Attempt blocker-specific opportunity recovery
-        run: node experiments/news-global-discovery/repair-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/opportunity-repair/OPPORTUNITY_QUEUE.json --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --maximum 6 --output-dir ${{ env.RUN_ROOT }}/opportunity-repair
+        run: node experiments/news-global-discovery/repair-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/opportunity-repair/OPPORTUNITY_QUEUE.json --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --maximum 4 --provider tavily --output-dir ${{ env.RUN_ROOT }}/opportunity-repair
       - name: Audit valuable stories that remain blocked
         run: node experiments/news-global-discovery/audit-blocked-opportunities.mjs --verification ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/repair/SOURCE_REPAIR_REPORT.json --repair ${{ env.RUN_ROOT }}/opportunity-repair/SOURCE_REPAIR_REPORT.json --output-dir ${{ env.RUN_ROOT }}/opportunity-audit
       - name: Assemble source-ready provisional edition
@@ -105,13 +107,13 @@ jobs:
         run: node experiments/news-global-discovery/verify-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/gap/selection/ANSWER_KEY.json --pool ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json --output-dir ${{ env.RUN_ROOT }}/gap/verification
       - name: Repair strongest blocked gap candidates
         if: steps.gap.outputs.query_count != '0'
-        run: node experiments/news-global-discovery/repair-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json --pool ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json --maximum 12 --output-dir ${{ env.RUN_ROOT }}/gap/repair
+        run: node experiments/news-global-discovery/repair-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json --pool ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json --maximum 8 --provider tavily --output-dir ${{ env.RUN_ROOT }}/gap/repair
       - name: Prepare unresolved gap opportunities for a targeted second chance
         if: steps.gap.outputs.query_count != '0'
-        run: node experiments/news-global-discovery/prepare-opportunity-recovery.mjs --verification ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/gap/repair/SOURCE_REPAIR_REPORT.json --maximum 4 --output ${{ env.RUN_ROOT }}/gap/opportunity-repair/OPPORTUNITY_QUEUE.json
+        run: node experiments/news-global-discovery/prepare-opportunity-recovery.mjs --verification ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/gap/repair/SOURCE_REPAIR_REPORT.json --maximum 3 --output ${{ env.RUN_ROOT }}/gap/opportunity-repair/OPPORTUNITY_QUEUE.json
       - name: Attempt blocker-specific gap opportunity recovery
         if: steps.gap.outputs.query_count != '0'
-        run: node experiments/news-global-discovery/repair-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/gap/opportunity-repair/OPPORTUNITY_QUEUE.json --pool ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json --maximum 4 --output-dir ${{ env.RUN_ROOT }}/gap/opportunity-repair
+        run: node experiments/news-global-discovery/repair-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/gap/opportunity-repair/OPPORTUNITY_QUEUE.json --pool ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json --maximum 3 --provider tavily --output-dir ${{ env.RUN_ROOT }}/gap/opportunity-repair
       - name: Audit valuable gap stories that remain blocked
         if: steps.gap.outputs.query_count != '0'
         run: node experiments/news-global-discovery/audit-blocked-opportunities.mjs --verification ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/gap/repair/SOURCE_REPAIR_REPORT.json --repair ${{ env.RUN_ROOT }}/gap/opportunity-repair/SOURCE_REPAIR_REPORT.json --output-dir ${{ env.RUN_ROOT }}/gap/opportunity-audit
@@ -125,8 +127,35 @@ jobs:
         if: steps.gap.outputs.query_count == '0'
         shell: bash
         run: cp "$RUN_ROOT/verified/VERIFIED_EDITION.json" "$RUN_ROOT/merged/MERGED_VERIFIED_EDITION.json"
+      - name: Enforce recurring-free provider budget
+        run: >-
+          node experiments/news-global-discovery/audit-provider-budget.mjs
+          --report ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
+          --report ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json
+          --report ${{ env.RUN_ROOT }}/repair/SOURCE_REPAIR_REPORT.json
+          --report ${{ env.RUN_ROOT }}/opportunity-repair/SOURCE_REPAIR_REPORT.json
+          --report ${{ env.RUN_ROOT }}/gap/repair/SOURCE_REPAIR_REPORT.json
+          --report ${{ env.RUN_ROOT }}/gap/opportunity-repair/SOURCE_REPAIR_REPORT.json
+          --output ${{ env.RUN_ROOT }}/PROVIDER_BUDGET.json
+      - name: Prepare blind source-verified editorial fixture
+        run: >-
+          node experiments/news-global-discovery/editorial-selector.mjs
+          --edition ${{ env.RUN_ROOT }}/merged/MERGED_VERIFIED_EDITION.json
+          --prepare-fixture ${{ env.RUN_ROOT }}/editorial/EDITORIAL_FIXTURE.json
+          --include-major --selected-only
+      - name: Score every verified finalist under the product rubric
+        run: >-
+          node experiments/news-global-discovery/editorial-selector.mjs
+          --fixture ${{ env.RUN_ROOT }}/editorial/EDITORIAL_FIXTURE.json
+          --output-dir ${{ env.RUN_ROOT }}/editorial/scored
+      - name: Apply complete editorial scores without weakening evidence gates
+        run: >-
+          node experiments/news-global-discovery/apply-editorial-scores.mjs
+          --edition ${{ env.RUN_ROOT }}/merged/MERGED_VERIFIED_EDITION.json
+          --scores ${{ env.RUN_ROOT }}/editorial/scored/EDITORIAL_SCORES.json
+          --output ${{ env.RUN_ROOT }}/editorial/EDITORIAL_VERIFIED_EDITION.json
       - name: Prepare source-bound writer batch
-        run: node experiments/news-global-discovery/prepare-verified-writer-batch.mjs --input ${{ env.RUN_ROOT }}/merged/MERGED_VERIFIED_EDITION.json --output-dir ${{ env.RUN_ROOT }}/writer
+        run: node experiments/news-global-discovery/prepare-verified-writer-batch.mjs --input ${{ env.RUN_ROOT }}/editorial/EDITORIAL_VERIFIED_EDITION.json --output-dir ${{ env.RUN_ROOT }}/writer
       - name: Generate every verified finalist with deterministic checks
         run: node experiments/news-global-discovery/writer-shortlist-trial.mjs --shortlist ${{ env.RUN_ROOT }}/writer/WRITER_SHORTLIST.json --verification ${{ env.RUN_ROOT }}/writer/WRITER_VERIFICATION.json --all-selected --output-dir ${{ env.RUN_ROOT }}/writer/generated
       - name: Repair deterministic generation failures once
