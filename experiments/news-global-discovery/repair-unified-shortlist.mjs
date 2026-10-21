@@ -38,7 +38,12 @@ function canonicalUrl(value) {
 export function repairCandidates(report, maximum = 12) {
   return [...report.repairQueue]
     .filter(item => !item.readiness.reasons.some(reason => /reporting period that ended/.test(reason)))
-    .sort((left, right) => Number(right.selectionScore || 0) - Number(left.selectionScore || 0))
+    .sort((left, right) => {
+      const utility = item => Number(item.selectionScore || 0)
+        + (String(item.lane || '').includes('major') ? 45 : 0)
+        + (item.readiness?.highRisk && Number(item.readiness?.acceptedSourceCount || 0) >= 1 ? 35 : 0)
+      return utility(right) - utility(left)
+    })
     .slice(0, maximum)
 }
 

@@ -127,7 +127,7 @@ export function mergeDiscoveryCandidates(exaInput, sourceBatch) {
       ...(priorityRegions.length && item.lanes?.includes('world-interesting') ? ['priority-interesting'] : []),
       ...(priorityRegions.length && item.lanes?.includes('world-major') ? ['priority-major'] : []),
     ])]
-    const normalized = { ...item, url, lanes, priorityRegions, discoverySources: ['exa'] }
+    const normalized = { ...item, url, lanes, priorityRegions, discoverySources: item.discoverySources || ['exa'] }
     const existing = byUrl.get(normalized.url)
     byUrl.set(normalized.url, existing ? combine(existing, normalized) : normalized)
   }

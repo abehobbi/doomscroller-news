@@ -46,7 +46,7 @@ jobs:
           test -n "$CLOUDFLARE_API_TOKEN"
       - name: Create isolated run workspace
         shell: bash
-        run: mkdir -p "$RUN_ROOT"/{discovery,publisher,combined,selection,verification,repair,opportunity-repair,verified,gap/discovery,gap/selection,gap/verification,gap/repair,gap/opportunity-repair,gap/verified,merged,editorial/scored,writer/generated,final}
+        run: mkdir -p "$RUN_ROOT"/{discovery,tavily-discovery,publisher,combined,selection,verification,repair,opportunity-repair,verified,gap/discovery,gap/selection,gap/verification,gap/repair,gap/opportunity-repair,gap/verified,merged,editorial/scored,writer/generated,final}
       - name: Discover fresh candidates
         run: >-
           node experiments/news-global-discovery/exa-five-lane-scout.mjs
@@ -54,10 +54,13 @@ jobs:
           --output ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
       - name: Collect publisher-feed safety net
         run: node experiments/news-global-discovery/source-seed-depth-scout.mjs --output-dir ${{ env.RUN_ROOT }}/publisher
+      - name: Discover complementary stories with Tavily
+        run: node experiments/news-global-discovery/tavily-complementary-scout.mjs --output ${{ env.RUN_ROOT }}/tavily-discovery/TAVILY_DISCOVERY.json
       - name: Merge discovery sources
         run: >-
           node experiments/news-global-discovery/merge-discovery-candidates.mjs
           --exa ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
+          --exa ${{ env.RUN_ROOT }}/tavily-discovery/TAVILY_DISCOVERY.json
           --source ${{ env.RUN_ROOT }}/publisher/SOURCE_SEED_BATCH.json
           --output ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json
       - name: Deduplicate, rank, and balance candidates
@@ -75,12 +78,12 @@ jobs:
         run: >-
           node experiments/news-global-discovery/repair-unified-shortlist.mjs
           --input ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json
-          --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --maximum 10 --provider tavily
+          --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --maximum 7 --provider tavily
           --output-dir ${{ env.RUN_ROOT }}/repair
       - name: Prepare strongest unresolved opportunities for a targeted second chance
-        run: node experiments/news-global-discovery/prepare-opportunity-recovery.mjs --verification ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/repair/SOURCE_REPAIR_REPORT.json --maximum 4 --output ${{ env.RUN_ROOT }}/opportunity-repair/OPPORTUNITY_QUEUE.json
+        run: node experiments/news-global-discovery/prepare-opportunity-recovery.mjs --verification ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/repair/SOURCE_REPAIR_REPORT.json --maximum 3 --output ${{ env.RUN_ROOT }}/opportunity-repair/OPPORTUNITY_QUEUE.json
       - name: Attempt blocker-specific opportunity recovery
-        run: node experiments/news-global-discovery/repair-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/opportunity-repair/OPPORTUNITY_QUEUE.json --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --maximum 4 --provider tavily --output-dir ${{ env.RUN_ROOT }}/opportunity-repair
+        run: node experiments/news-global-discovery/repair-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/opportunity-repair/OPPORTUNITY_QUEUE.json --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --maximum 3 --provider tavily --output-dir ${{ env.RUN_ROOT }}/opportunity-repair
       - name: Audit valuable stories that remain blocked
         run: node experiments/news-global-discovery/audit-blocked-opportunities.mjs --verification ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/repair/SOURCE_REPAIR_REPORT.json --repair ${{ env.RUN_ROOT }}/opportunity-repair/SOURCE_REPAIR_REPORT.json --output-dir ${{ env.RUN_ROOT }}/opportunity-audit
       - name: Assemble source-ready provisional edition
@@ -107,7 +110,7 @@ jobs:
         run: node experiments/news-global-discovery/verify-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/gap/selection/ANSWER_KEY.json --pool ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json --output-dir ${{ env.RUN_ROOT }}/gap/verification
       - name: Repair strongest blocked gap candidates
         if: steps.gap.outputs.query_count != '0'
-        run: node experiments/news-global-discovery/repair-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json --pool ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json --maximum 8 --provider tavily --output-dir ${{ env.RUN_ROOT }}/gap/repair
+        run: node experiments/news-global-discovery/repair-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json --pool ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json --maximum 7 --provider tavily --output-dir ${{ env.RUN_ROOT }}/gap/repair
       - name: Prepare unresolved gap opportunities for a targeted second chance
         if: steps.gap.outputs.query_count != '0'
         run: node experiments/news-global-discovery/prepare-opportunity-recovery.mjs --verification ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/gap/repair/SOURCE_REPAIR_REPORT.json --maximum 3 --output ${{ env.RUN_ROOT }}/gap/opportunity-repair/OPPORTUNITY_QUEUE.json
@@ -131,6 +134,7 @@ jobs:
         run: >-
           node experiments/news-global-discovery/audit-provider-budget.mjs
           --report ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
+          --report ${{ env.RUN_ROOT }}/tavily-discovery/TAVILY_DISCOVERY.json
           --report ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json
           --report ${{ env.RUN_ROOT }}/repair/SOURCE_REPAIR_REPORT.json
           --report ${{ env.RUN_ROOT }}/opportunity-repair/SOURCE_REPAIR_REPORT.json

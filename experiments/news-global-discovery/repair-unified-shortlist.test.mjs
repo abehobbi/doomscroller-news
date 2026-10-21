@@ -13,6 +13,14 @@ test('repair candidates are bounded and ordered by selection strength', () => {
   assert.deepEqual(repairCandidates(report, 1).map(item => item.eventId), ['high'])
 })
 
+test('source-ready major leads needing corroboration outrank weaker publicity repairs', () => {
+  const report = { repairQueue: [
+    { eventId: 'publicity', lane: 'priority-interesting', selectionScore: 120, readiness: { highRisk: false, acceptedSourceCount: 0, reasons: [] } },
+    { eventId: 'outbreak', lane: 'world-major', selectionScore: 58, readiness: { highRisk: true, acceptedSourceCount: 1, reasons: ['needs corroboration'] } },
+  ] }
+  assert.equal(repairCandidates(report, 1)[0].eventId, 'outbreak')
+})
+
 test('source merging removes exact family and URL duplicates without hiding independent reports', () => {
   const source = domain => ({ domain, url: `https://${domain}/story` })
   const merged = mergeSources([source('bbc.com')], [source('bbc.com'), source('reuters.com')])
