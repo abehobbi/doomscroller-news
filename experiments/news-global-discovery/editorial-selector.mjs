@@ -13,7 +13,7 @@ export const SELECTOR_CONFIGURATION = Object.freeze({
   maxCompletionTokens: 1800,
   batchSize: 8,
   thinking: false,
-  retries: 0,
+  structuralRetries: 1,
 })
 
 const HIGH_SIGNAL = /\b(?:killed?|deaths?|died|injured?|missing|displaced|detained|arrested|evicted|without (?:water|toilets?|electricity)|rights?|ban(?:ned)?|court|lawsuit|pollution|erosion|destroyed|restor(?:e|ed|ation)|first|oldest|largest|million|billion|percent|study|researchers?|fossil|discovered?|evidence|suggests?|reveals?|found)\b/i
@@ -129,10 +129,10 @@ export function chunks(values, size) {
   return output
 }
 
-const rubric = `You are an exacting editorial selector for a personal news product. Judge only the supplied evidence. Do not add facts from memory. Publisher identity has already been evaluated separately and is intentionally hidden.
+export const EDITORIAL_RUBRIC = `You are an exacting editorial selector for a personal news product. Judge only the supplied evidence. Do not add facts from memory. Publisher identity has already been evaluated separately and is intentionally hidden.
 
 The lanes have different purposes:
-- world-major: a concrete fresh development with broad consequence, urgency or serious human/institutional impact. Penalize routine statements, speculative proposals, commentary and stories whose importance depends on hype.
+- world-major: a concrete fresh development with broad consequence, urgency or serious human/institutional impact. A suspected or confirmed targeted attack on an elected official can have democratic and institutional significance even when one person is physically harmed; judge the evidence for targeting and wider implications rather than treating it automatically as personal tragedy. Penalize routine statements, speculative proposals, commentary and stories whose importance depends on hype.
 - priority-major: the same consequential-news bar for Syria, the wider Middle East, Bangladesh, Ghana, Canada or the GTA. Regional relevance routes the story; it does not make a routine announcement major.
 - world-interesting: a concrete, genuinely interesting story from anywhere. Reward human significance, a revealing window into a place or way of life, surprise with substance, and the feeling that a curious reader would be glad to have learned it. "Quirky" alone is not enough.
 - priority-interesting: the same quality bar, but about Syria, the wider Middle East, Bangladesh, Ghana, Canada or the GTA. Regional relevance routes a story; it does not make a weak story good.
@@ -146,7 +146,9 @@ Score every dimension from 0 (absent/bad) to 5 (exceptional):
 - clarity: the central fact and why it matters are understandable from the evidence.
 - freshness_specificity: a specific recent report/development/finding, rather than generic background or recycled material.
 
-Use recommendation "strong" only when you would actively choose the story; "possible" when worthwhile but replaceable; "reject" when it should not consume scarce feed space. Identify the single strongest supported fact. Keep reasons concise.`
+Use recommendation "strong" only when you would actively choose the story; "possible" when worthwhile but replaceable; "reject" when it should not consume scarce feed space. Identify the single strongest supported fact. Keep reasons concise.
+
+Return exactly one evaluation for every supplied candidate. Copy each supplied candidate ID exactly once; never invent, omit, or repeat an ID.`
 
 export function scoreSchema(maxItems = 10) {
   return {
@@ -206,42 +208,77 @@ export function auditBatch(parsed, expectedIds) {
   return { valid: true, reason: null }
 }
 
-async function scoreBatch(candidates, batchIndex) {
+export function shouldRetryStructuralFailure(result, attempt, maxRetries = SELECTOR_CONFIGURATION.structuralRetries) {
+  return attempt < maxRetries
+    && result.httpStatus === 200
+    && !result.providerParseError
+    && !result.parseError
+    && ['duplicate candidate id', 'candidate ids do not exactly match batch'].includes(result.audit?.reason)
+}
+
+export function resumableEvaluations(report, candidateIds) {
+  return (report?.calls || [])
+    .filter(call => call.complete === true)
+    .flatMap(call => call.evaluations || [])
+    .filter(value => candidateIds.has(value.id))
+}
+
+export async function scoreBatch(candidates, batchIndex) {
   const { accountId, token } = credentials()
   const publicCandidates = candidates.map(({ blindId, lane, priorityRegions, headline, evidence, publishedAt }) => ({ id: blindId, lane, priority_regions: priorityRegions, headline, evidence, published_at: publishedAt }))
-  const request = {
-    messages: [{ role: 'system', content: rubric }, { role: 'user', content: JSON.stringify({ candidates: publicCandidates }) }],
-    temperature: SELECTOR_CONFIGURATION.temperature,
-    max_completion_tokens: SELECTOR_CONFIGURATION.maxCompletionTokens,
-    response_format: { type: 'json_schema', json_schema: scoreSchema(candidates.length) },
-    chat_template_kwargs: { enable_thinking: false },
-    store: false,
+  const expectedIds = candidates.map(value => value.blindId)
+  const attempts = []
+  for (let attempt = 0; attempt <= SELECTOR_CONFIGURATION.structuralRetries; attempt += 1) {
+    const request = {
+      messages: [
+        { role: 'system', content: EDITORIAL_RUBRIC },
+        { role: 'user', content: JSON.stringify({ required_ids: expectedIds, instruction: 'Return every required ID exactly once. The evaluations array length must equal the required_ids length.', candidates: publicCandidates }) },
+      ],
+      temperature: SELECTOR_CONFIGURATION.temperature,
+      max_completion_tokens: SELECTOR_CONFIGURATION.maxCompletionTokens,
+      response_format: { type: 'json_schema', json_schema: scoreSchema(candidates.length) },
+      chat_template_kwargs: { enable_thinking: false },
+      store: false,
+    }
+    const timestamp = new Date().toISOString(), started = performance.now()
+    let response, raw
+    try {
+      response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/${MODEL}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify(request), signal: AbortSignal.timeout(55_000),
+      })
+      raw = await response.text()
+    } catch (error) {
+      attempts.push({ attempt: attempt + 1, timestamp, complete: false, state: 'provider_network_failure', error: error.name, latencyMs: Math.round(performance.now() - started), evaluations: [] })
+      break
+    }
+    let body = null, providerParseError = null
+    try { body = parseStrict(raw) } catch (error) { providerParseError = error.message }
+    const exposed = exposedResponse(body)
+    let parsed = exposed && typeof exposed === 'object' ? exposed : null, parseError = null
+    if (typeof exposed === 'string') try { parsed = parseStrict(exposed) } catch (error) { parseError = error.message }
+    const audit = auditBatch(parsed, expectedIds)
+    const providerResult = body?.result, finishReason = providerResult?.choices?.[0]?.finish_reason ?? null
+    const complete = response.ok && body?.success !== false && !providerParseError && !parseError && audit.valid && (finishReason === null || finishReason === 'stop')
+    const attemptResult = {
+      attempt: attempt + 1, timestamp, finishedAt: new Date().toISOString(), complete,
+      requestedModel: MODEL, returnedModel: providerResult?.model ?? null, httpStatus: response.status,
+      internalErrors: body?.errors ?? [], latencyMs: Math.round(performance.now() - started),
+      usage: providerResult?.usage ?? body?.usage ?? null, finishReason, safeHeaders: safeHeaders(response),
+      providerParseError, parseError, audit, evaluations: parsed?.evaluations ?? [],
+    }
+    attempts.push(attemptResult)
+    if (complete || !shouldRetryStructuralFailure(attemptResult, attempt)) break
   }
-  const timestamp = new Date().toISOString(), started = performance.now()
-  let response, raw
-  try {
-    response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/${MODEL}`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify(request), signal: AbortSignal.timeout(55_000),
-    })
-    raw = await response.text()
-  } catch (error) {
-    return { batchIndex, timestamp, complete: false, state: 'provider_network_failure', error: error.name, latencyMs: Math.round(performance.now() - started) }
+  const finalAttempt = attempts.at(-1)
+  const usage = {
+    neurons: attempts.reduce((sum, value) => sum + Number(value.usage?.neurons || 0), 0),
+    prompt_tokens: attempts.reduce((sum, value) => sum + Number(value.usage?.prompt_tokens || value.usage?.input_tokens || 0), 0),
+    completion_tokens: attempts.reduce((sum, value) => sum + Number(value.usage?.completion_tokens || value.usage?.output_tokens || 0), 0),
   }
-  let body = null, providerParseError = null
-  try { body = parseStrict(raw) } catch (error) { providerParseError = error.message }
-  const exposed = exposedResponse(body)
-  let parsed = exposed && typeof exposed === 'object' ? exposed : null, parseError = null
-  if (typeof exposed === 'string') try { parsed = parseStrict(exposed) } catch (error) { parseError = error.message }
-  const audit = auditBatch(parsed, candidates.map(value => value.blindId))
-  const result = body?.result, finishReason = result?.choices?.[0]?.finish_reason ?? null
-  const complete = response.ok && body?.success !== false && !providerParseError && !parseError && audit.valid && (finishReason === null || finishReason === 'stop')
   return {
-    batchIndex, timestamp, finishedAt: new Date().toISOString(), complete,
-    requestedModel: MODEL, returnedModel: result?.model ?? null, httpStatus: response.status,
-    internalErrors: body?.errors ?? [], latencyMs: Math.round(performance.now() - started),
-    usage: result?.usage ?? body?.usage ?? null, finishReason, safeHeaders: safeHeaders(response),
-    providerParseError, parseError, audit, evaluations: parsed?.evaluations ?? [],
+    ...finalAttempt, batchIndex, attempts, structuralRetryCount: Math.max(0, attempts.length - 1),
+    latencyMs: attempts.reduce((sum, value) => sum + Number(value.latencyMs || 0), 0), usage,
   }
 }
 
@@ -293,8 +330,8 @@ async function main() {
   let priorReport = null
   if (options.resume) priorReport = JSON.parse(await fs.readFile(options.resume, 'utf8'))
   const candidateIds = new Set(fixture.candidates.map(value => value.blindId))
-  const resumedEvaluations = (priorReport?.calls || []).flatMap(call => call.evaluations || [])
-    .filter(value => candidateIds.has(value.id) && auditBatch({ evaluations: [value] }, [value.id]).valid)
+  const resumedEvaluations = resumableEvaluations(priorReport, candidateIds)
+    .filter(value => auditBatch({ evaluations: [value] }, [value.id]).valid)
   const resumedById = new Map(resumedEvaluations.map(value => [value.id, value]))
   const pending = fixture.candidates.filter(value => !resumedById.has(value.blindId))
   const calls = []

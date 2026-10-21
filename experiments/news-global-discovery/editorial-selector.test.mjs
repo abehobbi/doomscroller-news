@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { ALL_EDITORIAL_LANES, auditBatch, chunks, combineScores, compactEvidence, computedScore, prepareEditorialFixture, prepareVerifiedEditorialFixture } from './editorial-selector.mjs'
+import { ALL_EDITORIAL_LANES, EDITORIAL_RUBRIC, auditBatch, chunks, combineScores, compactEvidence, computedScore, prepareEditorialFixture, prepareVerifiedEditorialFixture, resumableEvaluations, scoreBatch, shouldRetryStructuralFailure } from './editorial-selector.mjs'
 
 test('compact evidence preserves opening context and later consequential facts', () => {
   const text = '.video { font-size: 2rem; padding-top: 4px; } Thank you for visiting example.com. Your browser version has limited support for JavaScript. A local dispute began this week. Residents requested basic services. Officials met on Tuesday. The talks continued. A small committee was formed. More background followed. Another paragraph appeared. Several residents were injured and two people were killed while seeking toilets and clean water. Closing context.'
@@ -56,6 +56,68 @@ test('batch audit requires every expected id exactly once', () => {
   const evaluation = id => ({ id, lane_fit: 4, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, recommendation: 'strong', strongest_fact: 'Fact', reason: 'Reason' })
   assert.equal(auditBatch({ evaluations: [evaluation('E001'), evaluation('E002')] }, ['E001', 'E002']).valid, true)
   assert.equal(auditBatch({ evaluations: [evaluation('E001'), evaluation('E001')] }, ['E001', 'E002']).valid, false)
+})
+
+test('only exact-id structural failures receive one bounded retry', () => {
+  const duplicate = { httpStatus: 200, providerParseError: null, parseError: null, audit: { valid: false, reason: 'duplicate candidate id' } }
+  assert.equal(shouldRetryStructuralFailure(duplicate, 0), true)
+  assert.equal(shouldRetryStructuralFailure(duplicate, 1), false)
+  assert.equal(shouldRetryStructuralFailure({ ...duplicate, httpStatus: 429 }, 0), false)
+  assert.equal(shouldRetryStructuralFailure({ ...duplicate, audit: { valid: false, reason: 'score outside integer 0-5 range' } }, 0), false)
+})
+
+test('scoring retries a duplicate-id response once and accounts for both attempts', async t => {
+  const evaluation = id => ({ id, lane_fit: 4, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, recommendation: 'strong', strongest_fact: 'Fact', reason: 'Reason' })
+  const responses = [
+    { result: { response: { evaluations: [evaluation('E001'), evaluation('E001')] }, choices: [{ finish_reason: 'stop' }], usage: { neurons: 2, prompt_tokens: 10, completion_tokens: 4 } } },
+    { result: { response: { evaluations: [evaluation('E001'), evaluation('E002')] }, choices: [{ finish_reason: 'stop' }], usage: { neurons: 3, prompt_tokens: 11, completion_tokens: 5 } } },
+  ]
+  let calls = 0
+  t.mock.method(globalThis, 'fetch', async () => {
+    const body = responses[calls++]
+    return { ok: true, status: 200, headers: new Headers(), text: async () => JSON.stringify(body) }
+  })
+  const previousEnvironment = {
+    freePlanConfirmed: process.env.FREE_PLAN_CONFIRMED,
+    accountId: process.env.CLOUDFLARE_ACCOUNT_ID,
+    apiToken: process.env.CLOUDFLARE_API_TOKEN,
+  }
+  t.after(() => {
+    if (previousEnvironment.freePlanConfirmed === undefined) delete process.env.FREE_PLAN_CONFIRMED
+    else process.env.FREE_PLAN_CONFIRMED = previousEnvironment.freePlanConfirmed
+    if (previousEnvironment.accountId === undefined) delete process.env.CLOUDFLARE_ACCOUNT_ID
+    else process.env.CLOUDFLARE_ACCOUNT_ID = previousEnvironment.accountId
+    if (previousEnvironment.apiToken === undefined) delete process.env.CLOUDFLARE_API_TOKEN
+    else process.env.CLOUDFLARE_API_TOKEN = previousEnvironment.apiToken
+  })
+  process.env.FREE_PLAN_CONFIRMED = 'yes'
+  process.env.CLOUDFLARE_ACCOUNT_ID = 'test-account'
+  process.env.CLOUDFLARE_API_TOKEN = 'test-token'
+  const result = await scoreBatch([
+    { blindId: 'E001', lane: 'world-major', priorityRegions: [], headline: 'One', evidence: 'Evidence one', publishedAt: '2026-10-21T00:00:00Z' },
+    { blindId: 'E002', lane: 'world-major', priorityRegions: [], headline: 'Two', evidence: 'Evidence two', publishedAt: '2026-10-21T00:00:00Z' },
+  ], 1)
+  assert.equal(calls, 2)
+  assert.equal(result.complete, true)
+  assert.equal(result.structuralRetryCount, 1)
+  assert.equal(result.attempts[0].audit.reason, 'duplicate candidate id')
+  assert.equal(result.usage.neurons, 5)
+  assert.equal(result.usage.prompt_tokens, 21)
+  assert.deepEqual(result.evaluations.map(value => value.id), ['E001', 'E002'])
+})
+
+test('resume accepts evaluations only from batches that passed as a whole', () => {
+  const evaluation = id => ({ id, lane_fit: 4, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, recommendation: 'strong', strongest_fact: 'Fact', reason: 'Reason' })
+  const report = { calls: [
+    { complete: false, evaluations: [evaluation('E001')] },
+    { complete: true, evaluations: [evaluation('E002')] },
+  ] }
+  assert.deepEqual(resumableEvaluations(report, new Set(['E001', 'E002'])).map(value => value.id), ['E002'])
+})
+
+test('major-lane rubric recognizes targeted attacks on elected officials as potentially institutional news', () => {
+  assert.match(EDITORIAL_RUBRIC, /targeted attack on an elected official can have democratic and institutional significance/i)
+  assert.match(EDITORIAL_RUBRIC, /Copy each supplied candidate ID exactly once/i)
 })
 
 test('computed score uses fixed editorial weights and combined ranking stays within lanes', () => {
