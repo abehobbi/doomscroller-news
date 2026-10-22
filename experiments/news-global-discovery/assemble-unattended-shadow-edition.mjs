@@ -31,7 +31,12 @@ export function normalizeGeneratedRouting(lane, priorityRegions, headline, sourc
   const confirmed = (priorityRegions || []).filter(region => region === 'GTA'
     ? regionMatchesText(region, headlineContext)
     : regionMatchesText(region, headlineContext) || UNAMBIGUOUS_EVIDENCE_REGION[region]?.test(String(sourceEvidence || '').replace(/\bKunming-Montreal\b/gi, '')))
-  const inferred = PRIORITY_REGIONS.filter(region => regionMatchesGeneratedContext(region, headlineContext, sourceEvidence))
+  const headlineRegions = PRIORITY_REGIONS.filter(region => regionMatchesText(region, headlineContext))
+  // Once a headline clearly identifies the event's priority geography, do not
+  // add another region merely because the article mentions it as background.
+  const inferred = headlineRegions.length
+    ? headlineRegions
+    : PRIORITY_REGIONS.filter(region => regionMatchesGeneratedContext(region, headlineContext, sourceEvidence))
   const regions = [...new Set([...confirmed, ...inferred])]
   const broadMiddleEastIndex = regions.indexOf('Middle East')
   if (regions.includes('Syria') && broadMiddleEastIndex >= 0) regions.splice(broadMiddleEastIndex, 1)

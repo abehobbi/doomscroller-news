@@ -13,6 +13,21 @@ test('source evidence must overlap the selected event', () => {
   assert.equal(evidenceMatchesTitle('Riyadh airport hit by missile attack', 'A museum opened an exhibition about ancient pottery.').passes, false)
 })
 
+test('generic election and violence terms cannot corroborate different events', () => {
+  assert.equal(evidenceMatchesTitle(
+    'Mississauga mayoral election 2026: Where candidates stand on key issues',
+    'Toronto mayoral candidate Brad Bradford outlines his plans ahead of the 2026 election.',
+  ).passes, false)
+  assert.equal(evidenceMatchesTitle(
+    'Former Conservative candidate Jack Ross suspended over alleged contract killing discussions',
+    'Ivory Coast charged 12 people over a gendarme killing amid lingering election tensions.',
+  ).passes, false)
+  assert.equal(evidenceMatchesTitle(
+    'Mississauga mayoral election 2026: Where candidates stand on key issues',
+    'Mississauga voters will choose among mayoral candidates debating housing and transit issues.',
+  ).passes, true)
+})
+
 test('Arabic headlines match Arabic article evidence and the Arabic Al Jazeera domain is trusted', () => {
   const title = 'حرف حلب التراثية تقاوم الاندثار وتستعيد بريقها بلمسات معاصرة'
   const evidence = 'اختتم في مدينة حلب السورية معرض المهن الحرفية والتراثية القديمة بهدف الحفاظ على الحرف المهددة بالاندثار وتطويرها بلمسات معاصرة.'

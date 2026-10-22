@@ -14,6 +14,8 @@ const MONTHS = new Map('january february march april may june july august septem
 const REGISTERED_DOMAINS = new Set(SOURCES.map(source => {
   try { return new URL(source.sourceUrl).hostname.replace(/^www\./, '') } catch { return null }
 }).filter(Boolean))
+const RELEVANCE_STOPWORDS = new Set('a an and are as at be by for from has have how in into is it its of on or that the their this to was were what when where who why will with says said'.split(' '))
+const GENERIC_EVENT_TERMS = new Set('alleged announces announcement candidate candidates case charged claims country election elections former government issue issues key killed killing kills leader leaders major mayor mayoral minister people plans report reports stand state suspended talks year'.split(' '))
 
 function domainOf(value) {
   try { return new URL(value).hostname.replace(/^www\./, '') } catch { return '' }
@@ -38,7 +40,11 @@ export function evidenceMatchesTitle(title, evidence) {
   const headlineTerms = multilingualTokens(title)
   const evidenceTerms = multilingualTokens(String(evidence || '').slice(0, 5000))
   const sharedTerms = [...headlineTerms].filter(term => evidenceTerms.has(term))
-  return { passes: sharedTerms.length >= Math.min(4, Math.max(2, Math.ceil(headlineTerms.size * 0.2))), sharedTerms }
+  const meaningfulHeadlineTerms = [...headlineTerms].filter(term => !RELEVANCE_STOPWORDS.has(term)
+    && !GENERIC_EVENT_TERMS.has(term) && !/^20\d{2}$/.test(term))
+  const meaningfulSharedTerms = meaningfulHeadlineTerms.filter(term => evidenceTerms.has(term))
+  const overlapPasses = sharedTerms.length >= Math.min(4, Math.max(2, Math.ceil(headlineTerms.size * 0.2)))
+  return { passes: overlapPasses && meaningfulSharedTerms.length >= 1, sharedTerms, meaningfulSharedTerms }
 }
 
 export function reassessStoredSource(selection, source, context) {

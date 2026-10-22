@@ -30,6 +30,7 @@ const WEAK_EVENT = /\b(?:invites?|calls? for|called for|urges?|urged|challenges?
 const CEREMONIAL_EVENT = /\b(?:cuts? (?:the )?sod|breaks? ground|groundbreaking)\b/i
 const CEREMONIAL_COMMISSION = /\b(?:commissions?|commissioned|inaugurates?|inaugurated|unveils?|unveiled)\b.{0,70}\b(?:borehole|classroom|school block|mural|statue|plaque|office|facility)\b|\b(?:borehole|classroom|school block|mural|statue|plaque|office|facility)\b.{0,70}\b(?:commissions?|commissioned|inaugurates?|inaugurated|unveils?|unveiled)\b/i
 const PUBLICITY_AGREEMENT = /\b(?:signs?|inks?|announces?|forms?|enters?)\b.{0,50}\b(?:partnership|memorandum|mou|cooperation agreement)\b|\bpartners? with\b|\bsigns?\b.{0,60}(?:\b(?:agreement|deal)\b.{0,80}\b(?:project|development|expansion|planned|phase|hub)\b|\b(?:project|development|expansion|planned|phase|hub)\b.{0,40}\b(?:agreement|deal)\b)/i
+const STATEMENT_ONLY = /\b(?:calls? for|urges?|reaffirms?|outlines?)\b.{0,100}\b(?:implementation|investment|initiative|plan|policy|support|cooperation|ceasefire|peace|navigation)\b/i
 const DELIVERED_CONSEQUENCE = /\b(?:funding (?:approved|released)|loan (?:approved|disbursed)|construction (?:begins|started)|opens? to (?:the )?public|starts? operations?|service begins|acquisition completed|workers? hired|homes? completed)\b/i
 const CONCRETE = /\b(?:kills?|dies?|dead|injur(?:y|ed|ies)|arrests?|convicts?|acquits?|bans?|blocks?|halts?|suspends?|overturns?|approves?|rejects?|signs?|strikes?|attacks?|evacuates?|sinks?|sank|sunk|traffick(?:ed|ing)?|layoffs?|displaced|floods?|earthquake|hurricane|outbreaks?|shortage|collapse|closes?|opens?|restores?|discovers?|found|reveals?|reports?|reaches? agreement|cuts?|rises?|falls?|first|record|investigat(?:es?|ion)|lawsuit|protest|sanctions?|election|ceasefire|troops?|war|famine|hunger|food insecurity|malnutrition)\b/i
 const HUMAN_TEXTURE = /\b(?:village|community|famil(?:y|ies)|residents?|women|children|youths?|artisans?|farmers?|fishers?|workers?|craft|tradition|harvest|livelihood|neighbou?rhood|small town|Indigenous|tribal|refugee|market|water|wildlife|chimpanzees?|mosquitoes?|mangrove|forest|river|wetland|school|education|housing|tenant|hospital|theatre|portrait|literature|clothing|class|debt|sanitation|poultry|rescue|sailors?|mining|extraction)\b/i
@@ -124,6 +125,7 @@ export function lowConsequenceEvent(value) {
   return CEREMONIAL_EVENT.test(title)
     || CEREMONIAL_COMMISSION.test(title)
     || (PUBLICITY_AGREEMENT.test(title) && !DELIVERED_CONSEQUENCE.test(title))
+    || (STATEMENT_ONLY.test(title) && !DELIVERED_CONSEQUENCE.test(title))
     || (WEAK_EVENT.test(title) && !CONCRETE.test(title) && !DISCOVERY_SIGNAL.test(title))
 }
 

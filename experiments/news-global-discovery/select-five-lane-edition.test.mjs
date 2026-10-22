@@ -69,6 +69,12 @@ test('generic statements and ceremonial partnerships cannot fill an edition', ()
   assert.ok(scoreCandidate(candidate('IMF signs agreement over holding annual meetings in capital', ['priority-interesting']), '2026-10-13T10:00:00Z').score < 0)
 })
 
+test('calls for implementation and outlined investments remain statement-only', () => {
+  assert.equal(lowConsequenceEvent('Qatar and France call for Gaza ceasefire implementation and freedom of navigation'), true)
+  assert.equal(lowConsequenceEvent('Minister outlines $270 million AI investment plan'), true)
+  assert.equal(lowConsequenceEvent('Government releases approved funding and construction begins'), false)
+})
+
 test('candidate review can exceed a soft lane maximum before verification', () => {
   const clusters = Array.from({ length: 21 }, (_, index) => ({
     id: `event-${index}`,
