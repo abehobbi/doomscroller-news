@@ -10,7 +10,7 @@ export const ALL_EDITORIAL_LANES = new Set(['world-major', 'priority-major', ...
 export const SELECTOR_CONFIGURATION = Object.freeze({
   model: MODEL,
   temperature: 0.1,
-  maxCompletionTokens: 1800,
+  maxCompletionTokens: 2400,
   batchSize: 8,
   thinking: false,
   structuralRetries: 1,
@@ -171,8 +171,8 @@ export function scoreSchema(maxItems = 10) {
               clarity: { type: 'integer', minimum: 0, maximum: 5 },
               freshness_specificity: { type: 'integer', minimum: 0, maximum: 5 },
               recommendation: { type: 'string', enum: ['strong', 'possible', 'reject'] },
-              strongest_fact: { type: 'string' },
-              reason: { type: 'string' },
+              strongest_fact: { type: 'string', maxLength: 240 },
+              reason: { type: 'string', maxLength: 240 },
             },
           },
         },
@@ -212,8 +212,8 @@ export function shouldRetryStructuralFailure(result, attempt, maxRetries = SELEC
   return attempt < maxRetries
     && result.httpStatus === 200
     && !result.providerParseError
-    && !result.parseError
-    && ['duplicate candidate id', 'candidate ids do not exactly match batch'].includes(result.audit?.reason)
+    && (result.finishReason === 'length'
+      || (!result.parseError && ['duplicate candidate id', 'candidate ids do not exactly match batch'].includes(result.audit?.reason)))
 }
 
 export function resumableEvaluations(report, candidateIds) {
@@ -232,7 +232,7 @@ export async function scoreBatch(candidates, batchIndex) {
     const request = {
       messages: [
         { role: 'system', content: EDITORIAL_RUBRIC },
-        { role: 'user', content: JSON.stringify({ required_ids: expectedIds, instruction: 'Return every required ID exactly once. The evaluations array length must equal the required_ids length.', candidates: publicCandidates }) },
+        { role: 'user', content: JSON.stringify({ required_ids: expectedIds, instruction: 'Return every required ID exactly once. The evaluations array length must equal the required_ids length. Keep strongest_fact and reason to one concise sentence each, no more than 30 words.', candidates: publicCandidates }) },
       ],
       temperature: SELECTOR_CONFIGURATION.temperature,
       max_completion_tokens: SELECTOR_CONFIGURATION.maxCompletionTokens,

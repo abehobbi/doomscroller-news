@@ -58,10 +58,12 @@ test('batch audit requires every expected id exactly once', () => {
   assert.equal(auditBatch({ evaluations: [evaluation('E001'), evaluation('E001')] }, ['E001', 'E002']).valid, false)
 })
 
-test('only exact-id structural failures receive one bounded retry', () => {
+test('only exact-id or provider-truncation failures receive one bounded retry', () => {
   const duplicate = { httpStatus: 200, providerParseError: null, parseError: null, audit: { valid: false, reason: 'duplicate candidate id' } }
   assert.equal(shouldRetryStructuralFailure(duplicate, 0), true)
   assert.equal(shouldRetryStructuralFailure(duplicate, 1), false)
+  assert.equal(shouldRetryStructuralFailure({ ...duplicate, parseError: 'Expected comma', finishReason: 'length', audit: { valid: false, reason: 'evaluations array missing' } }, 0), true)
+  assert.equal(shouldRetryStructuralFailure({ ...duplicate, parseError: 'Expected comma', finishReason: 'length', audit: { valid: false, reason: 'evaluations array missing' } }, 1), false)
   assert.equal(shouldRetryStructuralFailure({ ...duplicate, httpStatus: 429 }, 0), false)
   assert.equal(shouldRetryStructuralFailure({ ...duplicate, audit: { valid: false, reason: 'score outside integer 0-5 range' } }, 0), false)
 })
