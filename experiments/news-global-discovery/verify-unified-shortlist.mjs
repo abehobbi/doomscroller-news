@@ -14,7 +14,7 @@ const MONTHS = new Map('january february march april may june july august septem
 const REGISTERED_DOMAINS = new Set(SOURCES.map(source => {
   try { return new URL(source.sourceUrl).hostname.replace(/^www\./, '') } catch { return null }
 }).filter(Boolean))
-const RELEVANCE_STOPWORDS = new Set('a an and are as at be by for from has have how in into is it its of on or that the their this to was were what when where who why will with says said'.split(' '))
+const RELEVANCE_STOPWORDS = new Set('a after amid an and are as at be before by for from has have how in into is it its near of on or over that the their this to was were what when where who why will with says said'.split(' '))
 const GENERIC_EVENT_TERMS = new Set('alleged announces announcement candidate candidates case charged claims country election elections former government issue issues key killed killing kills leader leaders major mayor mayoral minister people plans report reports stand state suspended talks year'.split(' '))
 
 function domainOf(value) {

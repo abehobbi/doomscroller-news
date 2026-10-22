@@ -23,6 +23,10 @@ test('generic election and violence terms cannot corroborate different events', 
     'Ivory Coast charged 12 people over a gendarme killing amid lingering election tensions.',
   ).passes, false)
   assert.equal(evidenceMatchesTitle(
+    'Former Tory election candidate suspended over contract killing claims',
+    'Ivory Coast: 12 charged over a gendarme killing amid lingering election tensions.',
+  ).passes, false)
+  assert.equal(evidenceMatchesTitle(
     'Mississauga mayoral election 2026: Where candidates stand on key issues',
     'Mississauga voters will choose among mayoral candidates debating housing and transit issues.',
   ).passes, true)
