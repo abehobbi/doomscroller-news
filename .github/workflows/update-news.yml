@@ -81,9 +81,9 @@ jobs:
           --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --maximum 7 --provider tavily
           --output-dir ${{ env.RUN_ROOT }}/repair
       - name: Prepare strongest unresolved opportunities for a targeted second chance
-        run: node experiments/news-global-discovery/prepare-opportunity-recovery.mjs --verification ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/repair/SOURCE_REPAIR_REPORT.json --maximum 7 --output ${{ env.RUN_ROOT }}/opportunity-repair/OPPORTUNITY_QUEUE.json
+        run: node experiments/news-global-discovery/prepare-opportunity-recovery.mjs --verification ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/repair/SOURCE_REPAIR_REPORT.json --maximum 3 --output ${{ env.RUN_ROOT }}/opportunity-repair/OPPORTUNITY_QUEUE.json
       - name: Attempt blocker-specific opportunity recovery
-        run: node experiments/news-global-discovery/repair-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/opportunity-repair/OPPORTUNITY_QUEUE.json --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --maximum 7 --provider tavily --output-dir ${{ env.RUN_ROOT }}/opportunity-repair
+        run: node experiments/news-global-discovery/repair-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/opportunity-repair/OPPORTUNITY_QUEUE.json --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --maximum 3 --provider tavily --output-dir ${{ env.RUN_ROOT }}/opportunity-repair
       - name: Audit valuable stories that remain blocked
         run: node experiments/news-global-discovery/audit-blocked-opportunities.mjs --verification ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/repair/SOURCE_REPAIR_REPORT.json --repair ${{ env.RUN_ROOT }}/opportunity-repair/SOURCE_REPAIR_REPORT.json --output-dir ${{ env.RUN_ROOT }}/opportunity-audit
       - name: Assemble source-ready provisional edition
@@ -100,7 +100,7 @@ jobs:
           node experiments/news-global-discovery/exa-dynamic-gap-recovery.mjs
           --edition ${{ env.RUN_ROOT }}/verified/VERIFIED_EDITION.json
           --discovery ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json
-          --results-per-query 10 --max-queries 14
+          --results-per-query 10 --max-queries 8
           --output ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json
       - name: Select gap candidates
         if: steps.gap.outputs.query_count != '0'
