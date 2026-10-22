@@ -28,3 +28,14 @@ test('replaceable possible stories need real substance while strong niche storie
   assert.deepEqual(result.cards.map(value => value.eventId), ['local-craft', 'strong-low-score'])
   assert.deepEqual(result.editorialScoring.rejected.map(value => value.eventId), ['routine-school'])
 })
+
+test('possible statement-only stories are rejected while statements reporting concrete action survive', () => {
+  const edition = { createdAt: 'before', cards: [card('willingness', 'priority-interesting', 1), card('signed-law', 'priority-major', 2)] }
+  const willingness = scored('willingness', 65, 'possible')
+  willingness.evaluation.strongest_fact = 'President Mahama stated he is open to foreign security assistance in the Sahel.'
+  const signedLaw = scored('signed-law', 65, 'possible')
+  signedLaw.evaluation.strongest_fact = 'The president said the newly enacted labour law was signed on Tuesday.'
+  const result = applyEditorialScores(edition, { complete: true, candidateCount: 2, results: [willingness, signedLaw] })
+  assert.deepEqual(result.cards.map(value => value.eventId), ['signed-law'])
+  assert.deepEqual(result.editorialScoring.rejected.map(value => value.eventId), ['willingness'])
+})

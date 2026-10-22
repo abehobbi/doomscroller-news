@@ -10,10 +10,21 @@ function destinationLane(card, evaluation) {
   return card.lane === 'priority-major' ? 'priority-interesting' : 'world-interesting'
 }
 
+const STATEMENT_ONLY_CUE = /\b(?:says?|said|states?|stated|declares?|declared|calls?\s+for|urges?|warns?|welcomes?|open\s+to|wants?|backs?|supports?|opposes?|pledges?|promises?|aims?|expects?|predicts?|believes?|questions?|criticises?|criticizes?)\b/i
+const CONCRETE_DEVELOPMENT_CUE = /\b(?:signed|enacted|approved|adopted|passed|launched|opened|began|started|deployed|allocated|released|awarded|funded|filed|ordered|arrested|charged|resigned|appointed|elected|won|killed|injured|displaced|discovered|identified|published|recorded|confirmed|cancelled|canceled|closed|reopened|delivered|arrived|completed|broke\s+ground)\b/i
+
+function isStatementOnlyPossible(score) {
+  const evaluation = score?.evaluation
+  if (evaluation?.recommendation !== 'possible') return false
+  const strongestFact = String(evaluation.strongest_fact || '')
+  return STATEMENT_ONLY_CUE.test(strongestFact) && !CONCRETE_DEVELOPMENT_CUE.test(strongestFact)
+}
+
 function editorialRejectionReason(score) {
   const evaluation = score?.evaluation
   if (!evaluation) return 'missing complete editorial score'
   if (evaluation.recommendation === 'reject' || score.editorialScore < 45) return evaluation.reason
+  if (isStatementOnlyPossible(score)) return 'the strongest fact is political or institutional messaging without a concrete new development'
   if (evaluation.recommendation === 'possible' && (
     score.editorialScore < 60
     || evaluation.substantive_value < 3
