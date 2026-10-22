@@ -1,10 +1,10 @@
 {
   "schema": "doomscroller.news-beta-diagnostics",
   "schemaVersion": 1,
-  "batchId": "news-beta-2026-10-22T00-46-45-020Z",
-  "startedAt": "2026-10-22T00:45:27.388Z",
-  "finishedAt": "2026-10-22T00:46:45.020Z",
-  "durationMs": 77631,
+  "batchId": "news-beta-2026-10-22T15-25-30-982Z",
+  "startedAt": "2026-10-22T15:24:19.226Z",
+  "finishedAt": "2026-10-22T15:25:30.982Z",
+  "durationMs": 71755,
   "writerConfiguration": {
     "model": "@cf/google/gemma-4-26b-a4b-it",
     "temperature": 0.2,
@@ -15,15 +15,15 @@
     "repair": false
   },
   "discovery": {
-    "discoveredArticles": 829,
-    "freshArticles": 640,
-    "uniqueArticles": 602,
-    "eventCandidates": 568,
-    "evidencePoolArticles": 181,
-    "preparedEvents": 129,
+    "discoveredArticles": 838,
+    "freshArticles": 658,
+    "uniqueArticles": 618,
+    "eventCandidates": 585,
+    "evidencePoolArticles": 180,
+    "preparedEvents": 136,
     "selectedEvents": 30,
-    "evidenceFailures": 31,
-    "sourceFailures": 4
+    "evidenceFailures": 24,
+    "sourceFailures": 3
   },
   "sourceStatus": [
     {
@@ -68,9 +68,8 @@
     {
       "id": "prothom-alo-en",
       "name": "Prothom Alo English",
-      "status": "failed",
-      "itemCount": 0,
-      "error": "No valid feed items"
+      "status": "ok",
+      "itemCount": 7
     },
     {
       "id": "financial-express-bd",
@@ -148,7 +147,7 @@
       "id": "bbc-science-environment",
       "name": "BBC Science & Environment",
       "status": "ok",
-      "itemCount": 40
+      "itemCount": 42
     },
     {
       "id": "guardian-world",
@@ -160,7 +159,7 @@
       "id": "guardian-science",
       "name": "The Guardian Science",
       "status": "ok",
-      "itemCount": 29
+      "itemCount": 27
     },
     {
       "id": "guardian-environment",
@@ -184,7 +183,7 @@
       "id": "dw-world",
       "name": "DW World",
       "status": "ok",
-      "itemCount": 132
+      "itemCount": 134
     },
     {
       "id": "africanews",
@@ -252,55 +251,10 @@
   "reranker": {
     "adjustments": [
       {
-        "eventId": "event:e005bf43620e385f",
-        "baseScore": 68.68,
+        "eventId": "event:47c335465948e686",
+        "baseScore": 80.88,
         "adjustment": 14,
-        "adjustedScore": 82.68,
-        "contentType": "conflict",
-        "regions": [
-          "Middle East"
-        ],
-        "country": "Yemen"
-      },
-      {
-        "eventId": "event:38ffd9fc29600833",
-        "baseScore": 63.2,
-        "adjustment": 14,
-        "adjustedScore": 77.2,
-        "contentType": "conflict",
-        "regions": [
-          "Syria",
-          "Middle East"
-        ],
-        "country": "Syria"
-      },
-      {
-        "eventId": "event:7250cc5e2a2179d9",
-        "baseScore": 61.87,
-        "adjustment": 14,
-        "adjustedScore": 75.87,
-        "contentType": "diplomacy-or-speech",
-        "regions": [
-          "Ghana"
-        ],
-        "country": "Ghana"
-      },
-      {
-        "eventId": "event:ce83dc3a449e4113",
-        "baseScore": 54.63,
-        "adjustment": 14,
-        "adjustedScore": 68.63,
-        "contentType": "conflict",
-        "regions": [
-          "World"
-        ],
-        "country": "World"
-      },
-      {
-        "eventId": "event:e8e6a8aa224d3822",
-        "baseScore": 53.83,
-        "adjustment": 14,
-        "adjustedScore": 67.83,
+        "adjustedScore": 94.88,
         "contentType": "general",
         "regions": [
           "GTA",
@@ -309,10 +263,89 @@
         "country": "GTA"
       },
       {
-        "eventId": "event:1947196f420bac7d",
-        "baseScore": 47.73,
+        "eventId": "event:e9865255add534e6",
+        "baseScore": 75.61,
+        "adjustment": 14,
+        "adjustedScore": 89.61,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:8f258d3c60f63e5d",
+        "baseScore": 75.42,
+        "adjustment": 14,
+        "adjustedScore": 89.42,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East",
+          "Syria"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:e789531174717b06",
+        "baseScore": 68.84,
+        "adjustment": 14,
+        "adjustedScore": 82.84,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:ce83dc3a449e4113",
+        "baseScore": 50.97,
         "adjustment": 18,
-        "adjustedScore": 65.72999999999999,
+        "adjustedScore": 68.97,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:b7b6a32213f3c619",
+        "baseScore": 62.87,
+        "adjustment": 0,
+        "adjustedScore": 62.87,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:84e0091bf60c3797",
+        "baseScore": 46.92,
+        "adjustment": 14,
+        "adjustedScore": 60.92,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:00f4c4c77b5a395c",
+        "baseScore": 64.47,
+        "adjustment": -5,
+        "adjustedScore": 59.47,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:1947196f420bac7d",
+        "baseScore": 44.07,
+        "adjustment": 12,
+        "adjustedScore": 56.07,
         "contentType": "general",
         "regions": [
           "World"
@@ -320,32 +353,121 @@
         "country": "Brazil"
       },
       {
-        "eventId": "event:792d1e28af30dd4d",
-        "baseScore": 47.78,
+        "eventId": "event:c67cc90ab39a3340",
+        "baseScore": 41.42,
         "adjustment": 14,
-        "adjustedScore": 61.78,
-        "contentType": "diplomacy-or-speech",
+        "adjustedScore": 55.42,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:d74b5819bed64bfb",
+        "baseScore": 44.89,
+        "adjustment": 2,
+        "adjustedScore": 46.89,
+        "contentType": "conflict",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:39dbdf3a2887e6a3",
+        "baseScore": 40.4,
+        "adjustment": 3,
+        "adjustedScore": 43.4,
+        "contentType": "culture-science-education",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:b47cb029872341ad",
+        "baseScore": 63.39,
+        "adjustment": -22,
+        "adjustedScore": 41.39,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Iran"
+      },
+      {
+        "eventId": "event:e8e6a8aa224d3822",
+        "baseScore": 50.17,
+        "adjustment": -19,
+        "adjustedScore": 31.17,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:1e4b67a29442c16a",
+        "baseScore": 43.29,
+        "adjustment": -14,
+        "adjustedScore": 29.29,
+        "contentType": "culture-science-education",
+        "regions": [
+          "World"
+        ],
+        "country": "Brazil"
+      },
+      {
+        "eventId": "event:bc4a98e127c9f289",
+        "baseScore": 64.44,
+        "adjustment": -39,
+        "adjustedScore": 25.439999999999998,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:299c33a7a21614e6",
+        "baseScore": 44.18,
+        "adjustment": -30,
+        "adjustedScore": 14.18,
+        "contentType": "general",
         "regions": [
           "Canada"
         ],
         "country": "Canada"
       },
       {
-        "eventId": "event:c586ce9867fdf33e",
-        "baseScore": 51.95,
-        "adjustment": 6,
-        "adjustedScore": 57.95,
+        "eventId": "event:be2c19ab6935d176",
+        "baseScore": 35.27,
+        "adjustment": -25,
+        "adjustedScore": 10.270000000000003,
         "contentType": "economy-or-public-life",
+        "regions": [
+          "World"
+        ],
+        "country": "Japan"
+      },
+      {
+        "eventId": "event:700bd231b9b9106d",
+        "baseScore": 43.94,
+        "adjustment": -35,
+        "adjustedScore": 8.939999999999998,
+        "contentType": "general",
         "regions": [
           "Ghana"
         ],
         "country": "Ghana"
       },
       {
-        "eventId": "event:b0086524c5623e8d",
-        "baseScore": 42.75,
-        "adjustment": 14,
-        "adjustedScore": 56.75,
+        "eventId": "event:2d5be6cbff99bc4a",
+        "baseScore": 40.27,
+        "adjustment": -37,
+        "adjustedScore": 3.270000000000003,
         "contentType": "economy-or-public-life",
         "regions": [
           "Bangladesh"
@@ -353,32 +475,43 @@
         "country": "Bangladesh"
       },
       {
-        "eventId": "event:284b36adc3d12a77",
-        "baseScore": 34.32,
-        "adjustment": 11,
-        "adjustedScore": 45.32,
-        "contentType": "culture-science-education",
+        "eventId": "event:e005bf43620e385f",
+        "baseScore": 65.02,
+        "adjustment": -63,
+        "adjustedScore": 2.019999999999996,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:80e92e1099d053f4",
+        "baseScore": 43.71,
+        "adjustment": -48,
+        "adjustedScore": -4.289999999999999,
+        "contentType": "diplomacy-or-speech",
         "regions": [
           "World"
         ],
-        "country": "France"
+        "country": "Ukraine"
       },
       {
-        "eventId": "event:692a1cf1f56ffe4e",
-        "baseScore": 39.31,
-        "adjustment": 2,
-        "adjustedScore": 41.31,
-        "contentType": "general",
+        "eventId": "event:73beec7a83a744e5",
+        "baseScore": 39.9,
+        "adjustment": -49,
+        "adjustedScore": -9.100000000000001,
+        "contentType": "economy-or-public-life",
         "regions": [
-          "Bangladesh"
+          "Canada"
         ],
-        "country": "Bangladesh"
+        "country": "Canada"
       },
       {
-        "eventId": "event:ae8869eb7c294c65",
-        "baseScore": 43.16,
-        "adjustment": -5,
-        "adjustedScore": 38.16,
+        "eventId": "event:7fbf8a90cb7c29eb",
+        "baseScore": 50.88,
+        "adjustment": -63,
+        "adjustedScore": -12.119999999999997,
         "contentType": "diplomacy-or-speech",
         "regions": [
           "Syria",
@@ -387,121 +520,43 @@
         "country": "Syria"
       },
       {
-        "eventId": "event:a1a8f71ccee618d4",
-        "baseScore": 55.92,
-        "adjustment": -28,
-        "adjustedScore": 27.92,
+        "eventId": "event:3bc172d78789a4d5",
+        "baseScore": 40.92,
+        "adjustment": -54,
+        "adjustedScore": -13.079999999999998,
         "contentType": "general",
-        "regions": [
-          "Middle East"
-        ],
-        "country": "Iran"
-      },
-      {
-        "eventId": "event:42bfe0aad05dc64f",
-        "baseScore": 45.01,
-        "adjustment": -22,
-        "adjustedScore": 23.009999999999998,
-        "contentType": "conflict",
-        "regions": [
-          "World"
-        ],
-        "country": "Ukraine"
-      },
-      {
-        "eventId": "event:299c33a7a21614e6",
-        "baseScore": 47.84,
-        "adjustment": -27,
-        "adjustedScore": 20.840000000000003,
-        "contentType": "general",
-        "regions": [
-          "Canada"
-        ],
-        "country": "Canada"
-      },
-      {
-        "eventId": "event:2f62b1f8b511cba9",
-        "baseScore": 41.77,
-        "adjustment": -23,
-        "adjustedScore": 18.770000000000003,
-        "contentType": "culture-science-education",
         "regions": [
           "Ghana"
         ],
         "country": "Ghana"
       },
       {
-        "eventId": "event:5dfe8d3aacec2cfd",
-        "baseScore": 59.92,
-        "adjustment": -43,
-        "adjustedScore": 16.92,
-        "contentType": "diplomacy-or-speech",
-        "regions": [
-          "Middle East"
-        ],
-        "country": "Yemen"
-      },
-      {
-        "eventId": "event:10683cd6146d029b",
-        "baseScore": 34.83,
-        "adjustment": -25,
-        "adjustedScore": 9.829999999999998,
+        "eventId": "event:692a1cf1f56ffe4e",
+        "baseScore": 35.65,
+        "adjustment": -58,
+        "adjustedScore": -22.35,
         "contentType": "general",
-        "regions": [
-          "World"
-        ],
-        "country": "Nigeria"
-      },
-      {
-        "eventId": "event:8ffc67332735cf3b",
-        "baseScore": 41.72,
-        "adjustment": -32,
-        "adjustedScore": 9.719999999999999,
-        "contentType": "culture-science-education",
-        "regions": [
-          "GTA",
-          "Canada"
-        ],
-        "country": "GTA"
-      },
-      {
-        "eventId": "event:df829421825b69b6",
-        "baseScore": 47.29,
-        "adjustment": -46,
-        "adjustedScore": 1.2899999999999991,
-        "contentType": "conflict",
-        "regions": [
-          "World"
-        ],
-        "country": "South Africa"
-      },
-      {
-        "eventId": "event:7bb65bd5ee15531a",
-        "baseScore": 37.82,
-        "adjustment": -39,
-        "adjustedScore": -1.1799999999999997,
-        "contentType": "economy-or-public-life",
         "regions": [
           "Bangladesh"
         ],
         "country": "Bangladesh"
       },
       {
-        "eventId": "event:c79ac9ea2ed7bcbe",
-        "baseScore": 49.42,
-        "adjustment": -52,
-        "adjustedScore": -2.5799999999999983,
+        "eventId": "event:9c8d4076441c9d40",
+        "baseScore": 46.62,
+        "adjustment": -70,
+        "adjustedScore": -23.380000000000003,
         "contentType": "diplomacy-or-speech",
         "regions": [
           "Middle East"
         ],
-        "country": "United Kingdom"
+        "country": "Palestinian territories"
       },
       {
-        "eventId": "event:6a3d8c7f11b69404",
-        "baseScore": 45.46,
-        "adjustment": -52,
-        "adjustedScore": -6.539999999999999,
+        "eventId": "event:6527760429191bf6",
+        "baseScore": 38.22,
+        "adjustment": -67,
+        "adjustedScore": -28.78,
         "contentType": "culture-science-education",
         "regions": [
           "Ghana"
@@ -509,148 +564,166 @@
         "country": "Ghana"
       },
       {
-        "eventId": "event:3f7501ca8ef2dc6d",
-        "baseScore": 36.94,
-        "adjustment": -51,
-        "adjustedScore": -14.060000000000002,
-        "contentType": "economy-or-public-life",
-        "regions": [
-          "Middle East"
-        ],
-        "country": "Iran"
-      },
-      {
-        "eventId": "event:4492488deae727d1",
-        "baseScore": 47.72,
-        "adjustment": -63,
-        "adjustedScore": -15.280000000000001,
-        "contentType": "general",
-        "regions": [
-          "Canada"
-        ],
-        "country": "Canada"
-      },
-      {
-        "eventId": "event:506c137d641ac0af",
-        "baseScore": 56.58,
-        "adjustment": -76,
-        "adjustedScore": -19.42,
-        "contentType": "conflict",
-        "regions": [
-          "World"
-        ],
-        "country": "World"
-      },
-      {
-        "eventId": "event:e6e09e2a15e935d1",
-        "baseScore": 57.13,
-        "adjustment": -83,
-        "adjustedScore": -25.869999999999997,
-        "contentType": "general",
-        "regions": [
-          "Ghana"
-        ],
-        "country": "Ghana"
-      },
-      {
-        "eventId": "event:a6a46cfbe5b12efc",
-        "baseScore": 35.18,
-        "adjustment": -66,
-        "adjustedScore": -30.82,
+        "eventId": "event:686c4f79ff3d1356",
+        "baseScore": 37.33,
+        "adjustment": -67,
+        "adjustedScore": -29.67,
         "contentType": "diplomacy-or-speech",
         "regions": [
           "World"
         ],
-        "country": "Ukraine"
+        "country": "Sudan"
       },
       {
-        "eventId": "event:a21180764917d8f6",
-        "baseScore": 42.15,
-        "adjustment": -74,
-        "adjustedScore": -31.85,
-        "contentType": "conflict",
-        "regions": [
-          "Bangladesh"
-        ],
-        "country": "Bangladesh"
-      },
-      {
-        "eventId": "event:21c3729c37b565b9",
-        "baseScore": 35.85,
+        "eventId": "event:2d2caee34081e4e3",
+        "baseScore": 37.27,
         "adjustment": -68,
-        "adjustedScore": -32.15,
+        "adjustedScore": -30.729999999999997,
         "contentType": "economy-or-public-life",
         "regions": [
-          "GTA",
           "Canada"
         ],
-        "country": "GTA"
+        "country": "Canada"
       }
     ],
     "distribution": {
       "regions": {
-        "Middle East": 7,
-        "Syria": 2,
-        "Ghana": 5,
-        "World": 8,
-        "GTA": 3,
+        "GTA": 2,
         "Canada": 6,
+        "Ghana": 5,
+        "Middle East": 8,
+        "Syria": 3,
+        "World": 7,
         "Bangladesh": 4
       },
       "countries": {
-        "Yemen": 2,
-        "Syria": 2,
+        "GTA": 2,
         "Ghana": 5,
+        "Syria": 3,
+        "Yemen": 2,
         "World": 2,
-        "GTA": 3,
-        "Brazil": 1,
-        "Canada": 3,
+        "Canada": 4,
+        "Brazil": 2,
         "Bangladesh": 4,
-        "France": 1,
-        "Iran": 2,
-        "Ukraine": 2,
-        "Nigeria": 1,
-        "South Africa": 1,
-        "United Kingdom": 1
+        "Iran": 1,
+        "Israel": 1,
+        "Japan": 1,
+        "Ukraine": 1,
+        "Palestinian territories": 1,
+        "Sudan": 1
       },
       "contentTypes": {
-        "conflict": 7,
-        "diplomacy-or-speech": 6,
-        "general": 8,
-        "economy-or-public-life": 5,
-        "culture-science-education": 4
+        "general": 7,
+        "diplomacy-or-speech": 7,
+        "conflict": 6,
+        "culture-science-education": 4,
+        "economy-or-public-life": 6
       },
       "publishers": {
-        "Africanews": 2,
-        "Arab News": 3,
+        "City of Toronto News": 1,
         "Graphic Online": 2,
-        "Mongabay": 3,
-        "CBC Toronto": 3,
         "The Guardian World": 3,
-        "Al Jazeera": 1,
-        "MyJoyOnline": 2,
+        "Africanews": 3,
+        "Mongabay": 2,
+        "BBC World": 1,
+        "Arab News": 3,
+        "Prothom Alo English": 1,
         "The Financial Express Bangladesh": 2,
         "The Guardian Science": 1,
-        "The Daily Star Bangladesh": 1,
+        "NPR World": 1,
+        "CBC Toronto": 1,
+        "CBC Canada": 1,
+        "The Japan Times": 1,
+        "MyJoyOnline": 2,
+        "Al Jazeera": 1,
         "North Press Agency": 1,
-        "Euronews": 1,
-        "CBC Canada": 2,
         "Ghana News Agency": 1,
-        "DW World": 1,
-        "BBC World": 1
+        "The Daily Star Bangladesh": 1,
+        "Euronews": 1
       }
     }
   },
   "selectedEvents": [
     {
-      "eventId": "event:e005bf43620e385f",
-      "title": "Yemen: 75 new recruits killed in Houthi missile strike laid to rest",
-      "score": 68.68,
-      "adjustedScore": 82.68,
+      "eventId": "event:47c335465948e686",
+      "title": "Voters head to the polls Monday for Toronto’s 2026 municipal election",
+      "score": 80.88,
+      "adjustedScore": 94.88,
       "rank": 1,
       "scoreParts": {
+        "region": 18,
+        "fresh": 19.88,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 19,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:e9865255add534e6",
+      "title": "President Mahama: ‘I’ll try to convince President Putin to have a ceasefire’",
+      "score": 75.61,
+      "adjustedScore": 89.61,
+      "rank": 2,
+      "scoreParts": {
         "region": 15,
-        "fresh": 17.68,
+        "fresh": 18.61,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:8f258d3c60f63e5d",
+      "title": "Some US diplomats told to leave Saudi Arabia amid Houthi attacks",
+      "score": 75.42,
+      "adjustedScore": 89.42,
+      "rank": 3,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 19.42,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East",
+        "Syria"
+      ]
+    },
+    {
+      "eventId": "event:e789531174717b06",
+      "title": "Egypt will 'defend Saudi territory' and won't attack Yemen, Sisi says",
+      "score": 68.84,
+      "adjustedScore": 82.84,
+      "rank": 4,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.84,
         "importance": 24,
         "interestingness": 0,
         "multiSourceSignal": 0,
@@ -666,14 +739,81 @@
       ]
     },
     {
-      "eventId": "event:38ffd9fc29600833",
-      "title": "After Syria war, Druze in Golan Heights warm to Israel",
-      "score": 63.2,
-      "adjustedScore": 77.2,
-      "rank": 2,
+      "eventId": "event:ce83dc3a449e4113",
+      "title": "Wildfire in Indonesia’s Mount Bromo National Park kills 4 firefighters",
+      "score": 50.97,
+      "adjustedScore": 68.97,
+      "rank": 5,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 6.97,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 26,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:b7b6a32213f3c619",
+      "title": "UG School of Law launches Supreme Court judgement review",
+      "score": 62.87,
+      "adjustedScore": 62.87,
+      "rank": 6,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.87,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:84e0091bf60c3797",
+      "title": "US embassy accuses Canada of election meddling ahead of midterms",
+      "score": 46.92,
+      "adjustedScore": 60.92,
+      "rank": 7,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 16.92,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:00f4c4c77b5a395c",
+      "title": "2 Syrian security personnel killed in raid targeting Daesh-linked cell near Lebanese border",
+      "score": 64.47,
+      "adjustedScore": 59.47,
+      "rank": 8,
       "scoreParts": {
         "region": 25,
-        "fresh": 18.2,
+        "fresh": 19.47,
         "importance": 12,
         "interestingness": 0,
         "multiSourceSignal": 0,
@@ -690,17 +830,38 @@
       ]
     },
     {
-      "eventId": "event:7250cc5e2a2179d9",
-      "title": "President Mahama open to Russian security assistance in Sahel, says anyone fighting terrorism is welcome",
-      "score": 61.87,
-      "adjustedScore": 75.87,
-      "rank": 3,
+      "eventId": "event:1947196f420bac7d",
+      "title": "Flavio Bolsonaro’s ‘corrupto’ stunt sparks viral meme before Brazil election runoff",
+      "score": 44.07,
+      "adjustedScore": 56.07,
+      "rank": 9,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 8.07,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 5,
+        "localTexture": 0,
+        "editorialBonus": 17,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:c67cc90ab39a3340",
+      "title": "UPDF opens fire on tourists, law enforcement personnel in Rangamati's Sajek: ISPR",
+      "score": 41.42,
+      "adjustedScore": 55.42,
+      "rank": 10,
       "scoreParts": {
         "region": 15,
-        "fresh": 16.87,
-        "importance": 30,
+        "fresh": 19.42,
+        "importance": 0,
         "interestingness": 0,
-        "multiSourceSignal": 0,
+        "multiSourceSignal": 7,
         "lowValuePenalty": 0,
         "consequence": 0,
         "discovery": 0,
@@ -709,39 +870,85 @@
         "editorialPenalty": 0
       },
       "regions": [
-        "Ghana"
+        "Bangladesh"
       ]
     },
     {
-      "eventId": "event:ce83dc3a449e4113",
-      "title": "Wildfire in Indonesia’s Mount Bromo National Park kills 4 firefighters",
-      "score": 54.63,
-      "adjustedScore": 68.63,
-      "rank": 4,
+      "eventId": "event:d74b5819bed64bfb",
+      "title": "Two killed, three injured in highway collision in Narayanganj",
+      "score": 44.89,
+      "adjustedScore": 46.89,
+      "rank": 11,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.89,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:39dbdf3a2887e6a3",
+      "title": "Have scientists finally found a way to save the banana from disaster?",
+      "score": 40.4,
+      "adjustedScore": 43.4,
+      "rank": 12,
       "scoreParts": {
         "region": 0,
-        "fresh": 10.63,
+        "fresh": 19.4,
+        "importance": 12,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 5,
+        "localTexture": 0,
+        "editorialBonus": 5,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:b47cb029872341ad",
+      "title": "U.S. and Israel are planning for a possible attack on Iran, source tells NPR",
+      "score": 63.39,
+      "adjustedScore": 41.39,
+      "rank": 13,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.39,
         "importance": 18,
         "interestingness": 0,
         "multiSourceSignal": 0,
         "lowValuePenalty": 0,
         "consequence": 12,
         "discovery": 0,
-        "localTexture": 14,
-        "editorialBonus": 26,
+        "localTexture": 0,
+        "editorialBonus": 12,
         "editorialPenalty": 0
       },
-      "regions": []
+      "regions": [
+        "Middle East"
+      ]
     },
     {
       "eventId": "event:e8e6a8aa224d3822",
       "title": "Oshawa’s voter turnout in 2022 was 18 per cent. Here’s your guide to voting this year",
-      "score": 53.83,
-      "adjustedScore": 67.83,
-      "rank": 5,
+      "score": 50.17,
+      "adjustedScore": 31.17,
+      "rank": 14,
       "scoreParts": {
         "region": 18,
-        "fresh": 18.83,
+        "fresh": 15.17,
         "importance": 6,
         "interestingness": 0,
         "multiSourceSignal": 0,
@@ -758,35 +965,58 @@
       ]
     },
     {
-      "eventId": "event:1947196f420bac7d",
-      "title": "Flavio Bolsonaro’s ‘corrupto’ stunt sparks viral meme before Brazil election runoff",
-      "score": 47.73,
-      "adjustedScore": 65.73,
-      "rank": 6,
+      "eventId": "event:1e4b67a29442c16a",
+      "title": "Deforestation in Brazil’s Amazon and Cerrado savanna at lowest rate ever recorded",
+      "score": 43.29,
+      "adjustedScore": 29.29,
+      "rank": 15,
       "scoreParts": {
         "region": 0,
-        "fresh": 11.73,
+        "fresh": 19.29,
         "importance": 12,
-        "interestingness": 0,
-        "multiSourceSignal": 7,
+        "interestingness": 8,
+        "multiSourceSignal": 0,
         "lowValuePenalty": 0,
-        "consequence": 12,
-        "discovery": 5,
+        "consequence": 4,
+        "discovery": 0,
         "localTexture": 0,
-        "editorialBonus": 17,
+        "editorialBonus": 4,
         "editorialPenalty": 0
       },
       "regions": []
     },
     {
-      "eventId": "event:792d1e28af30dd4d",
-      "title": "US accuses Canada of election interference ahead of midterms",
-      "score": 47.78,
-      "adjustedScore": 61.78,
-      "rank": 7,
+      "eventId": "event:bc4a98e127c9f289",
+      "title": "Israeli fire kills 3 people in Gaza, medics say",
+      "score": 64.44,
+      "adjustedScore": 25.44,
+      "rank": 16,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.44,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:299c33a7a21614e6",
+      "title": "In her riding, United Conservative Party leaders back Danielle Smith",
+      "score": 44.18,
+      "adjustedScore": 14.18,
+      "rank": 17,
       "scoreParts": {
         "region": 8,
-        "fresh": 19.78,
+        "fresh": 16.18,
         "importance": 12,
         "interestingness": 0,
         "multiSourceSignal": 0,
@@ -802,37 +1032,35 @@
       ]
     },
     {
-      "eventId": "event:c586ce9867fdf33e",
-      "title": "MobileMoney Fintech LTD scales up digital finance for 18,000 MSMEs",
-      "score": 51.95,
-      "adjustedScore": 57.95,
-      "rank": 8,
+      "eventId": "event:be2c19ab6935d176",
+      "title": "Most BOJ watchers expect next interest rate hike in December",
+      "score": 35.27,
+      "adjustedScore": 10.27,
+      "rank": 18,
       "scoreParts": {
-        "region": 15,
-        "fresh": 18.95,
-        "importance": 18,
+        "region": 0,
+        "fresh": 17.27,
+        "importance": 6,
         "interestingness": 0,
         "multiSourceSignal": 0,
         "lowValuePenalty": 0,
-        "consequence": 0,
+        "consequence": 12,
         "discovery": 0,
         "localTexture": 0,
-        "editorialBonus": 0,
+        "editorialBonus": 12,
         "editorialPenalty": 0
       },
-      "regions": [
-        "Ghana"
-      ]
+      "regions": []
     },
     {
-      "eventId": "event:b0086524c5623e8d",
-      "title": "Inflation pushes 8 to 10 million people below poverty line: Titumir",
-      "score": 42.75,
-      "adjustedScore": 56.75,
-      "rank": 9,
+      "eventId": "event:700bd231b9b9106d",
+      "title": "State appeals Court of Appeal ruling suspending Hanan’s trial over charge sheet dispute",
+      "score": 43.94,
+      "adjustedScore": 8.94,
+      "rank": 19,
       "scoreParts": {
         "region": 15,
-        "fresh": 17.75,
+        "fresh": 18.94,
         "importance": 6,
         "interestingness": 0,
         "multiSourceSignal": 0,
@@ -844,39 +1072,18 @@
         "editorialPenalty": 0
       },
       "regions": [
-        "Bangladesh"
+        "Ghana"
       ]
     },
     {
-      "eventId": "event:284b36adc3d12a77",
-      "title": "More than 1 million mice used in Australian research annually, ‘overdue’ study finds",
-      "score": 34.32,
-      "adjustedScore": 45.32,
-      "rank": 10,
-      "scoreParts": {
-        "region": 0,
-        "fresh": 17.32,
-        "importance": 0,
-        "interestingness": 12,
-        "multiSourceSignal": 0,
-        "lowValuePenalty": 0,
-        "consequence": 0,
-        "discovery": 5,
-        "localTexture": 0,
-        "editorialBonus": 5,
-        "editorialPenalty": 0
-      },
-      "regions": []
-    },
-    {
-      "eventId": "event:692a1cf1f56ffe4e",
-      "title": "Star journalist Sohrab Hossain laid to rest",
-      "score": 39.31,
-      "adjustedScore": 41.31,
-      "rank": 11,
+      "eventId": "event:2d5be6cbff99bc4a",
+      "title": "Bangladesh, Algeria agree to enhance energy cooperation, bilateral trade",
+      "score": 40.27,
+      "adjustedScore": 3.27,
+      "rank": 20,
       "scoreParts": {
         "region": 15,
-        "fresh": 18.31,
+        "fresh": 19.27,
         "importance": 6,
         "interestingness": 0,
         "multiSourceSignal": 0,
@@ -892,14 +1099,81 @@
       ]
     },
     {
-      "eventId": "event:ae8869eb7c294c65",
-      "title": "EU welcomes Syria’s continued cooperation with chemical weapons watchdog",
-      "score": 43.16,
-      "adjustedScore": 38.16,
-      "rank": 12,
+      "eventId": "event:e005bf43620e385f",
+      "title": "Yemen: 75 new recruits killed in Houthi missile strike laid to rest",
+      "score": 65.02,
+      "adjustedScore": 2.02,
+      "rank": 21,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 14.02,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:80e92e1099d053f4",
+      "title": "Russia bombards Kyiv with missiles hours after agreeing to resume talks with Ukraine",
+      "score": 43.71,
+      "adjustedScore": -4.29,
+      "rank": 22,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.71,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:73beec7a83a744e5",
+      "title": "Carney, Erdogan launch ‘strong and resilient’ Canada-Turkiye partnership",
+      "score": 39.9,
+      "adjustedScore": -9.1,
+      "rank": 23,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 19.9,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:7fbf8a90cb7c29eb",
+      "title": "Jordan, Syria stress need for strategic partnership",
+      "score": 50.88,
+      "adjustedScore": -12.12,
+      "rank": 24,
       "scoreParts": {
         "region": 25,
-        "fresh": 12.16,
+        "fresh": 19.88,
         "importance": 6,
         "interestingness": 0,
         "multiSourceSignal": 0,
@@ -916,89 +1190,22 @@
       ]
     },
     {
-      "eventId": "event:a1a8f71ccee618d4",
-      "title": "Israel opposition decries Netanyahu ‘circus’ after Iran threats",
-      "score": 55.92,
-      "adjustedScore": 27.92,
-      "rank": 13,
+      "eventId": "event:3bc172d78789a4d5",
+      "title": "Extension officer urges farmers to maintain good agriculture practices",
+      "score": 40.92,
+      "adjustedScore": -13.08,
+      "rank": 25,
       "scoreParts": {
         "region": 15,
         "fresh": 18.92,
-        "importance": 18,
-        "interestingness": 0,
-        "multiSourceSignal": 0,
-        "lowValuePenalty": 0,
-        "consequence": 4,
-        "discovery": 0,
-        "localTexture": 0,
-        "editorialBonus": 4,
-        "editorialPenalty": 0
-      },
-      "regions": [
-        "Middle East"
-      ]
-    },
-    {
-      "eventId": "event:42bfe0aad05dc64f",
-      "title": "Russian drone attack kills two in Kyiv as residents survey damage",
-      "score": 45.01,
-      "adjustedScore": 23.01,
-      "rank": 14,
-      "scoreParts": {
-        "region": 0,
-        "fresh": 15.01,
-        "importance": 18,
-        "interestingness": 0,
-        "multiSourceSignal": 0,
-        "lowValuePenalty": 0,
-        "consequence": 12,
-        "discovery": 0,
-        "localTexture": 0,
-        "editorialBonus": 12,
-        "editorialPenalty": 0
-      },
-      "regions": []
-    },
-    {
-      "eventId": "event:299c33a7a21614e6",
-      "title": "In her riding, United Conservative Party leaders back Danielle Smith",
-      "score": 47.84,
-      "adjustedScore": 20.84,
-      "rank": 15,
-      "scoreParts": {
-        "region": 8,
-        "fresh": 19.84,
-        "importance": 12,
-        "interestingness": 0,
-        "multiSourceSignal": 0,
-        "lowValuePenalty": 0,
-        "consequence": 8,
-        "discovery": 0,
-        "localTexture": 0,
-        "editorialBonus": 8,
-        "editorialPenalty": 0
-      },
-      "regions": [
-        "Canada"
-      ]
-    },
-    {
-      "eventId": "event:2f62b1f8b511cba9",
-      "title": "Dr Zanetor urges human oversight of AI in journalism, music industry",
-      "score": 41.77,
-      "adjustedScore": 18.77,
-      "rank": 16,
-      "scoreParts": {
-        "region": 15,
-        "fresh": 18.77,
         "importance": 0,
-        "interestingness": 8,
+        "interestingness": 0,
         "multiSourceSignal": 0,
         "lowValuePenalty": 0,
         "consequence": 0,
         "discovery": 0,
-        "localTexture": 0,
-        "editorialBonus": 0,
+        "localTexture": 7,
+        "editorialBonus": 7,
         "editorialPenalty": 0
       },
       "regions": [
@@ -1006,104 +1213,15 @@
       ]
     },
     {
-      "eventId": "event:5dfe8d3aacec2cfd",
-      "title": "Some US diplomats told to leave Saudi Arabia amid Houthi attacks",
-      "score": 59.92,
-      "adjustedScore": 16.92,
-      "rank": 17,
+      "eventId": "event:692a1cf1f56ffe4e",
+      "title": "Star journalist Sohrab Hossain laid to rest",
+      "score": 35.65,
+      "adjustedScore": -22.35,
+      "rank": 26,
       "scoreParts": {
         "region": 15,
-        "fresh": 19.92,
+        "fresh": 14.65,
         "importance": 6,
-        "interestingness": 0,
-        "multiSourceSignal": 7,
-        "lowValuePenalty": 0,
-        "consequence": 12,
-        "discovery": 0,
-        "localTexture": 0,
-        "editorialBonus": 12,
-        "editorialPenalty": 0
-      },
-      "regions": [
-        "Middle East"
-      ]
-    },
-    {
-      "eventId": "event:10683cd6146d029b",
-      "title": "Nigeria’s parks chief stresses conservation gains amid struggle to protect wildlife",
-      "score": 34.83,
-      "adjustedScore": 9.83,
-      "rank": 18,
-      "scoreParts": {
-        "region": 0,
-        "fresh": 10.83,
-        "importance": 0,
-        "interestingness": 0,
-        "multiSourceSignal": 0,
-        "lowValuePenalty": 0,
-        "consequence": 0,
-        "discovery": 10,
-        "localTexture": 14,
-        "editorialBonus": 24,
-        "editorialPenalty": 0
-      },
-      "regions": []
-    },
-    {
-      "eventId": "event:8ffc67332735cf3b",
-      "title": "Toronto's OCAD University to offer 150 scholarships to mark its 150th anniversary",
-      "score": 41.72,
-      "adjustedScore": 9.72,
-      "rank": 19,
-      "scoreParts": {
-        "region": 18,
-        "fresh": 13.72,
-        "importance": 6,
-        "interestingness": 4,
-        "multiSourceSignal": 0,
-        "lowValuePenalty": 0,
-        "consequence": 0,
-        "discovery": 0,
-        "localTexture": 0,
-        "editorialBonus": 0,
-        "editorialPenalty": 0
-      },
-      "regions": [
-        "GTA",
-        "Canada"
-      ]
-    },
-    {
-      "eventId": "event:df829421825b69b6",
-      "title": "Woman, 65, killed in shark attack at South African beach",
-      "score": 47.29,
-      "adjustedScore": 1.29,
-      "rank": 20,
-      "scoreParts": {
-        "region": 0,
-        "fresh": 16.29,
-        "importance": 12,
-        "interestingness": 0,
-        "multiSourceSignal": 7,
-        "lowValuePenalty": 0,
-        "consequence": 12,
-        "discovery": 0,
-        "localTexture": 0,
-        "editorialBonus": 12,
-        "editorialPenalty": 0
-      },
-      "regions": []
-    },
-    {
-      "eventId": "event:7bb65bd5ee15531a",
-      "title": "Bank credit remains scarce in Bangladesh where climate risks are highest",
-      "score": 37.82,
-      "adjustedScore": -1.18,
-      "rank": 21,
-      "scoreParts": {
-        "region": 15,
-        "fresh": 10.82,
-        "importance": 12,
         "interestingness": 0,
         "multiSourceSignal": 0,
         "lowValuePenalty": 0,
@@ -1118,129 +1236,39 @@
       ]
     },
     {
-      "eventId": "event:c79ac9ea2ed7bcbe",
-      "title": "UK-Oman partnership vital for safeguarding global trade: City’s lady mayor",
-      "score": 49.42,
-      "adjustedScore": -2.58,
-      "rank": 22,
-      "scoreParts": {
-        "region": 15,
-        "fresh": 18.42,
-        "importance": 12,
-        "interestingness": 4,
-        "multiSourceSignal": 0,
-        "lowValuePenalty": 0,
-        "consequence": 0,
-        "discovery": 0,
-        "localTexture": 0,
-        "editorialBonus": 0,
-        "editorialPenalty": 0
-      },
-      "regions": [
-        "Middle East"
-      ]
-    },
-    {
-      "eventId": "event:6a3d8c7f11b69404",
-      "title": "KNUST Engineering College launches 75th anniversary, eyes Gh¢40m innovation building",
-      "score": 45.46,
-      "adjustedScore": -6.54,
-      "rank": 23,
-      "scoreParts": {
-        "region": 15,
-        "fresh": 18.46,
-        "importance": 0,
-        "interestingness": 12,
-        "multiSourceSignal": 0,
-        "lowValuePenalty": 0,
-        "consequence": 0,
-        "discovery": 0,
-        "localTexture": 0,
-        "editorialBonus": 0,
-        "editorialPenalty": 0
-      },
-      "regions": [
-        "Ghana"
-      ]
-    },
-    {
-      "eventId": "event:3f7501ca8ef2dc6d",
-      "title": "US sanctions target Iran's rail sector as Tehran shifts cargo from sea routes to overland corridors",
-      "score": 36.94,
-      "adjustedScore": -14.06,
-      "rank": 24,
-      "scoreParts": {
-        "region": 15,
-        "fresh": 15.94,
-        "importance": 6,
-        "interestingness": 0,
-        "multiSourceSignal": 0,
-        "lowValuePenalty": 0,
-        "consequence": 0,
-        "discovery": 0,
-        "localTexture": 0,
-        "editorialBonus": 0,
-        "editorialPenalty": 0
-      },
-      "regions": [
-        "Middle East"
-      ]
-    },
-    {
-      "eventId": "event:4492488deae727d1",
-      "title": "Northern Alberta shows higher support for separation, especially in rural areas",
-      "score": 47.72,
-      "adjustedScore": -15.28,
-      "rank": 25,
-      "scoreParts": {
-        "region": 8,
-        "fresh": 19.72,
-        "importance": 12,
-        "interestingness": 0,
-        "multiSourceSignal": 0,
-        "lowValuePenalty": 0,
-        "consequence": 8,
-        "discovery": 0,
-        "localTexture": 0,
-        "editorialBonus": 8,
-        "editorialPenalty": 0
-      },
-      "regions": [
-        "Canada"
-      ]
-    },
-    {
-      "eventId": "event:506c137d641ac0af",
-      "title": "Labor, Coalition and crossbench MPs afraid at home and work after alleged attack on Helen Haines",
-      "score": 56.58,
-      "adjustedScore": -19.42,
-      "rank": 26,
-      "scoreParts": {
-        "region": 0,
-        "fresh": 19.58,
-        "importance": 18,
-        "interestingness": 0,
-        "multiSourceSignal": 7,
-        "lowValuePenalty": 0,
-        "consequence": 12,
-        "discovery": 0,
-        "localTexture": 0,
-        "editorialBonus": 12,
-        "editorialPenalty": 0
-      },
-      "regions": []
-    },
-    {
-      "eventId": "event:e6e09e2a15e935d1",
-      "title": "Rev. Enoch Thompson inducted for second term as Ghana Baptist Convention President",
-      "score": 57.13,
-      "adjustedScore": -25.87,
+      "eventId": "event:9c8d4076441c9d40",
+      "title": "UN expert urges Indonesia to reconsider involvement in Trump’s Gaza board",
+      "score": 46.62,
+      "adjustedScore": -23.38,
       "rank": 27,
       "scoreParts": {
         "region": 15,
-        "fresh": 18.13,
-        "importance": 24,
+        "fresh": 19.62,
+        "importance": 12,
         "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:6527760429191bf6",
+      "title": "Ghana’s fiscal consolidation in 2025 largely driven by expenditure restraint, not revenue growth – ISSER",
+      "score": 38.22,
+      "adjustedScore": -28.78,
+      "rank": 28,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.22,
+        "importance": 0,
+        "interestingness": 4,
         "multiSourceSignal": 0,
         "lowValuePenalty": 0,
         "consequence": 0,
@@ -1254,59 +1282,36 @@
       ]
     },
     {
-      "eventId": "event:a6a46cfbe5b12efc",
-      "title": "Missiles hit Kyiv after Russia agrees to US call to resume Ukraine peace talks",
-      "score": 35.18,
-      "adjustedScore": -30.82,
-      "rank": 28,
+      "eventId": "event:686c4f79ff3d1356",
+      "title": "'This war must end': UN and Swiss officials hold talks on Sudan conflict",
+      "score": 37.33,
+      "adjustedScore": -29.67,
+      "rank": 29,
       "scoreParts": {
         "region": 0,
-        "fresh": 19.18,
+        "fresh": 17.33,
         "importance": 12,
         "interestingness": 0,
         "multiSourceSignal": 0,
         "lowValuePenalty": 0,
-        "consequence": 4,
+        "consequence": 8,
         "discovery": 0,
         "localTexture": 0,
-        "editorialBonus": 4,
+        "editorialBonus": 8,
         "editorialPenalty": 0
       },
       "regions": []
     },
     {
-      "eventId": "event:a21180764917d8f6",
-      "title": "Over 125,000 killed in road crashes in nearly 12 years",
-      "score": 42.15,
-      "adjustedScore": -31.85,
-      "rank": 29,
-      "scoreParts": {
-        "region": 15,
-        "fresh": 17.15,
-        "importance": 6,
-        "interestingness": 0,
-        "multiSourceSignal": 0,
-        "lowValuePenalty": 0,
-        "consequence": 4,
-        "discovery": 0,
-        "localTexture": 0,
-        "editorialBonus": 4,
-        "editorialPenalty": 0
-      },
-      "regions": [
-        "Bangladesh"
-      ]
-    },
-    {
-      "eventId": "event:21c3729c37b565b9",
-      "title": "Chow, 15 councillors criticize Bradford’s plan to spin off Toronto Water into public utility",
-      "score": 35.85,
-      "adjustedScore": -32.15,
+      "eventId": "event:2d2caee34081e4e3",
+      "title": "Canada unveils $6.2bn plan to shield manufacturers as Trump trade tariffs bite",
+      "score": 37.27,
+      "adjustedScore": -30.73,
       "rank": 30,
       "scoreParts": {
-        "region": 18,
-        "fresh": 17.85,
-        "importance": 0,
+        "region": 8,
+        "fresh": 17.27,
+        "importance": 12,
         "interestingness": 0,
         "multiSourceSignal": 0,
         "lowValuePenalty": 0,
@@ -1317,35 +1322,75 @@
         "editorialPenalty": 0
       },
       "regions": [
-        "GTA",
         "Canada"
       ]
     }
   ],
   "invalidPreviousCardsRemoved": [],
-  "crossEventOverlap": [],
+  "crossEventOverlap": [
+    {
+      "packet_event_id": "event:8f258d3c60f63e5d",
+      "other_event_id": "event:e789531174717b06",
+      "fragment_id": "F13",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=saudi,yemen,attack; entities=; actions=attack"
+    },
+    {
+      "packet_event_id": "event:8f258d3c60f63e5d",
+      "other_event_id": "event:e789531174717b06",
+      "fragment_id": "F24",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=saudi,defend,yemen,territory; entities=; actions=attack"
+    },
+    {
+      "packet_event_id": "event:8f258d3c60f63e5d",
+      "other_event_id": "event:e789531174717b06",
+      "fragment_id": "F27",
+      "membership": "supporting_context",
+      "reason": "fragment overlaps other central event: terms=saudi,attack,yemen; entities=; actions=attack"
+    },
+    {
+      "packet_event_id": "event:8f258d3c60f63e5d",
+      "other_event_id": "event:e789531174717b06",
+      "fragment_id": "F38",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=saudi,defend,yemen; entities=; actions=attack"
+    },
+    {
+      "packet_event_id": "event:e789531174717b06",
+      "other_event_id": "event:8f258d3c60f63e5d",
+      "fragment_id": "F09",
+      "membership": "supporting_context",
+      "reason": "fragment overlaps other central event: terms=houthi,attacks,saudi,arabia; entities=saudi arabia; actions=attack"
+    },
+    {
+      "packet_event_id": "event:8f258d3c60f63e5d",
+      "other_event_id": "event:d74b5819bed64bfb",
+      "fragment_id": "F13",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=killed,two,injured; entities=; actions=kill"
+    },
+    {
+      "packet_event_id": "event:8f258d3c60f63e5d",
+      "other_event_id": "event:d74b5819bed64bfb",
+      "fragment_id": "F27",
+      "membership": "supporting_context",
+      "reason": "fragment overlaps other central event: terms=killed,injured,two; entities=; actions=kill"
+    }
+  ],
   "generation": [
     {
-      "eventId": "event:e005bf43620e385f",
-      "title": "Yemen: 75 new recruits killed in Houthi missile strike laid to rest",
+      "eventId": "event:47c335465948e686",
+      "title": "Voters head to the polls Monday for Toronto’s 2026 municipal election",
       "finalStatus": "accepted",
       "previousMatch": null,
       "contentVersion": 1,
-      "evidenceFingerprint": "5b16b2c2c0bfb2a8a7ced09cd51bb34728c202bf8a193807a81a0a7c8a79df3b",
-      "allowedExactDates": [
-        "2026-10-19"
-      ],
+      "evidenceFingerprint": "9bb29f03fd7a062dca45ca969036378e3fb95a6a3d52478c693e05d3b91d729a",
+      "allowedExactDates": [],
       "dateValidation": {
         "valid": true,
-        "generated_exact_dates": [
-          {
-            "raw": "October 19, 2026",
-            "date": "2026-10-19"
-          }
-        ],
-        "allowed_exact_dates": [
-          "2026-10-19"
-        ],
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
         "unsupported_exact_dates": [],
         "weekday_date_pairs": [],
         "invalid_weekday_date_pairs": [],
@@ -1355,68 +1400,86 @@
         "raw_publication_timestamp_exposed": false,
         "raw_update_timestamp_exposed": false,
         "resolved_relative_expressions_exposed": [],
-        "normalized_event_date_exposed": true,
+        "normalized_event_date_exposed": false,
         "passes": true
       },
       "contentValidation": {
         "valid": true,
         "reasons": [],
-        "wordCount": 151,
-        "pageCount": 1
+        "wordCount": 230,
+        "pageCount": 3
       },
       "scope": {
         "fragments": [
           {
             "fragmentId": "F01",
-            "sourceId": "news:africanews:97026dfc6a1c6bab455de664",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
             "membership": "central",
             "reason": "shares selected event actors/action or multiple high-specificity title terms"
           },
           {
             "fragmentId": "F02",
-            "sourceId": "news:africanews:97026dfc6a1c6bab455de664",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F03",
-            "sourceId": "news:africanews:97026dfc6a1c6bab455de664",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
             "membership": "central",
             "reason": "shares selected event actors/action or multiple high-specificity title terms"
           },
           {
             "fragmentId": "F04",
-            "sourceId": "news:africanews:97026dfc6a1c6bab455de664",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F05",
-            "sourceId": "news:africanews:97026dfc6a1c6bab455de664",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
           },
           {
             "fragmentId": "F06",
-            "sourceId": "news:africanews:97026dfc6a1c6bab455de664",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F07",
-            "sourceId": "news:africanews:97026dfc6a1c6bab455de664",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F08",
-            "sourceId": "news:africanews:97026dfc6a1c6bab455de664",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F09",
-            "sourceId": "news:africanews:97026dfc6a1c6bab455de664",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           }
@@ -1424,35 +1487,41 @@
       },
       "provenance": [
         {
-          "sourceId": "news:africanews:97026dfc6a1c6bab455de664",
-          "publisher": "Africanews",
-          "url": "https://africanews.com/2026/10/21/yemen-75-new-recruits-killed-in-houthi-missile-strike-laid-to-rest",
+          "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+          "publisher": "City of Toronto News",
+          "url": "https://toronto.ca/news/voters-head-to-the-polls-monday-for-torontos-2026-municipal-election",
           "wireOrigin": null,
-          "sourceType": "independent_reporting"
+          "sourceType": "primary_institutional"
         }
       ],
       "image": {
-        "url": "https://images.euronews.com/articles/stories/09/96/19/41/1024x538_cmsv2_a60b8bcf-3fd1-5154-9dd3-5a4f1cc5418f-9961941.jpg",
-        "alt": "Yemen: 75 new recruits killed in Houthi missile strike laid to rest",
+        "url": "https://www.toronto.ca/wp-content/themes/cot/img/share_toronto_twitter.jpg",
+        "alt": "Voters head to the polls Monday for Toronto’s 2026 municipal election",
         "status": "event-specific",
-        "source_url": "https://africanews.com/2026/10/21/yemen-75-new-recruits-killed-in-houthi-missile-strike-laid-to-rest",
-        "attribution": "Africanews",
+        "source_url": "https://toronto.ca/news/voters-head-to-the-polls-monday-for-torontos-2026-municipal-election",
+        "attribution": "City of Toronto News",
         "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
       },
       "attempts": [
         {
-          "timestamp": "2026-10-22T00:45:47.343Z",
-          "finishedAt": "2026-10-22T00:45:53.460Z",
+          "timestamp": "2026-10-22T15:24:33.813Z",
+          "finishedAt": "2026-10-22T15:24:41.591Z",
           "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
           "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
           "httpStatus": 200,
           "internalErrors": [],
-          "rawStructuredText": "{\n  \"headline\": \"Yemen military holds mass funeral for 75 recruits killed in Houthi missile strike\",\n  \"pages\": [\n    {\n      \"text\": \"Yemen's military held a mass funeral on Wednesday for 75 new recruits killed during a Houthi missile strike in south-central Shabwa province. According to reporting by Africanews, the strike occurred on October 19, 2026, at the al-Alam camp while the recruits, aged between 18 and 20, were lining up in formation for a training session. The governor of Shabwa stated the recruits were being trained to provide security in the province rather than for combat operations. In addition to the fatalities, 200 others were wounded in the attack. The funeral ceremony was held in a soccer field at the site of the strike and was attended by senior government and military officials as troops and security forces carried the coffins of the deceased. Following the ceremony, the governor of Shabwa pledged to increase efforts to defend the province and vowed to pursue those responsible for the strike to hold them accountable.\"\n    }\n  ]\n}",
+          "rawStructuredText": "{\n  \"headline\": \"Voters scheduled to cast ballots in Toronto's 2026 municipal election\",\n  \"pages\": [\n    {\n      \"text\": \"According to the City of Toronto, voters are scheduled to head to the polls on a Monday for the 2026 municipal election. On election day, voting places will be open from 10 a.m. to 8 p.m. While voting places close at 8 p.m., any voter in line by that time will be permitted to vote. To avoid lineups, the city suggests voters consider voting during off-peak hours between 11 a.m. and 3 p.m.\"\n    },\n    {\n      \"text\": \"Eligible voters must vote at their assigned voting place as indicated on their Voter Information Card (VIC) or the Toronto Elections webpage. To be eligible, a person must vote in the ward where they live, and may only vote once regardless of how many properties they own or rent in Toronto. To vote in person, individuals must show one piece of acceptable identification that includes their name and a qualifying Toronto address; photo identification is not required. The city encourages voters to bring their paper or digital VIC to facilitate a faster process. Voters on the voters' list can access their digital VIC and a list of acceptable identification at www.toronto.ca/Elections.\"\n    },\n    {\n      \"text\": \"Voters may bring a friend, family member, caregiver, or other support person to assist them at the voting place. Individuals assisting a voter behind the voting screen are required to complete a declaration first. Alternatively, an election official can provide assistance to voters with accessibility needs.\"\n    }\n  ]\n}",
           "parsed": {
-            "headline": "Yemen military holds mass funeral for 75 recruits killed in Houthi missile strike",
+            "headline": "Voters scheduled to cast ballots in Toronto's 2026 municipal election",
             "pages": [
               {
-                "text": "Yemen's military held a mass funeral on Wednesday for 75 new recruits killed during a Houthi missile strike in south-central Shabwa province. According to reporting by Africanews, the strike occurred on October 19, 2026, at the al-Alam camp while the recruits, aged between 18 and 20, were lining up in formation for a training session. The governor of Shabwa stated the recruits were being trained to provide security in the province rather than for combat operations. In addition to the fatalities, 200 others were wounded in the attack. The funeral ceremony was held in a soccer field at the site of the strike and was attended by senior government and military officials as troops and security forces carried the coffins of the deceased. Following the ceremony, the governor of Shabwa pledged to increase efforts to defend the province and vowed to pursue those responsible for the strike to hold them accountable."
+                "text": "According to the City of Toronto, voters are scheduled to head to the polls on a Monday for the 2026 municipal election. On election day, voting places will be open from 10 a.m. to 8 p.m. While voting places close at 8 p.m., any voter in line by that time will be permitted to vote. To avoid lineups, the city suggests voters consider voting during off-peak hours between 11 a.m. and 3 p.m."
+              },
+              {
+                "text": "Eligible voters must vote at their assigned voting place as indicated on their Voter Information Card (VIC) or the Toronto Elections webpage. To be eligible, a person must vote in the ward where they live, and may only vote once regardless of how many properties they own or rent in Toronto. To vote in person, individuals must show one piece of acceptable identification that includes their name and a qualifying Toronto address; photo identification is not required. The city encourages voters to bring their paper or digital VIC to facilitate a faster process. Voters on the voters' list can access their digital VIC and a list of acceptable identification at www.toronto.ca/Elections."
+              },
+              {
+                "text": "Voters may bring a friend, family member, caregiver, or other support person to assist them at the voting place. Individuals assisting a voter behind the voting screen are required to complete a declaration first. Alternatively, an election official can provide assistance to voters with accessibility needs."
               }
             ]
           },
@@ -1468,17 +1537,17 @@
           },
           "finishReason": "stop",
           "usage": {
-            "prompt_tokens": 1315,
-            "completion_tokens": 245,
-            "total_tokens": 1560,
+            "prompt_tokens": 1484,
+            "completion_tokens": 367,
+            "total_tokens": 1851,
             "prompt_tokens_details": {
               "cached_tokens": 0
             },
-            "neurons": 18.636363983154297
+            "neurons": 23.5
           },
-          "latencyMs": 6117,
+          "latencyMs": 7777,
           "safeHeaders": {
-            "cf-ray": "a4e47b33296edb9e-LAX"
+            "cf-ray": "a4e982779ac2311a-IAD"
           },
           "complete": true,
           "structuralStatus": "valid_card",
@@ -1487,12 +1556,72 @@
       ]
     },
     {
-      "eventId": "event:38ffd9fc29600833",
-      "title": "After Syria war, Druze in Golan Heights warm to Israel",
+      "eventId": "event:e9865255add534e6",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "summary is too thin for a self-contained beta card",
+          "page 1 ends mid-sentence",
+          "page 1 exposes a citation/list marker"
+        ],
+        "wordCount": 59,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-22T15:24:41.592Z",
+          "finishedAt": "2026-10-22T15:24:44.196Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Ghanaian President Mahama expresses intent to seek ceasefire from President Putin\",\n  \"pages\": [\n    {\n      \"text\": \"During an interview with the Financial Times at its Africa Summit on October 21, 2026, Ghanaian President John Dramani Mahama stated he would attempt to persuade Russian President Vladimir Putin to agree to a ceasefire in the war in Ukraine. Mahama said he intends to make this attempt during his upcoming travel to Russia for the Russia-Africa Summit. 1\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Ghanaian President Mahama expresses intent to seek ceasefire from President Putin",
+            "pages": [
+              {
+                "text": "During an interview with the Financial Times at its Africa Summit on October 21, 2026, Ghanaian President John Dramani Mahama stated he would attempt to persuade Russian President Vladimir Putin to agree to a ceasefire in the war in Ukraine. Mahama said he intends to make this attempt during his upcoming travel to Russia for the Russia-Africa Summit. 1"
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1601,
+            "completion_tokens": 120,
+            "total_tokens": 1721,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 17.827272415161133
+          },
+          "latencyMs": 2603,
+          "safeHeaders": {
+            "cf-ray": "a4e982a80fc4311a-IAD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:b7b6a32213f3c619",
+      "title": "UG School of Law launches Supreme Court judgement review",
       "finalStatus": "accepted",
       "previousMatch": null,
       "contentVersion": 1,
-      "evidenceFingerprint": "af3b50ff9d9f2e8ec0af9616ae2fba026b0014ecb15dd646a3109b126e4dd210",
+      "evidenceFingerprint": "669be777ed5343ac951f4050860e2d62fa1356a405748af73b1b2a486bb19573",
       "allowedExactDates": [
         "2026-10-21"
       ],
@@ -1522,80 +1651,68 @@
       "contentValidation": {
         "valid": true,
         "reasons": [],
-        "wordCount": 199,
+        "wordCount": 191,
         "pageCount": 1
       },
       "scope": {
         "fragments": [
           {
             "fragmentId": "F01",
-            "sourceId": "news:arab-news:97cbc906047afdc1842d2e33",
+            "sourceId": "news:graphic-ghana:300b337798a8995c01ff36a8",
             "membership": "central",
             "reason": "shares selected event actors/action or multiple high-specificity title terms"
           },
           {
             "fragmentId": "F02",
-            "sourceId": "news:arab-news:97cbc906047afdc1842d2e33",
+            "sourceId": "news:graphic-ghana:300b337798a8995c01ff36a8",
             "membership": "central",
             "reason": "shares selected event actors/action or multiple high-specificity title terms"
           },
           {
             "fragmentId": "F03",
-            "sourceId": "news:arab-news:97cbc906047afdc1842d2e33",
+            "sourceId": "news:graphic-ghana:300b337798a8995c01ff36a8",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F04",
-            "sourceId": "news:arab-news:97cbc906047afdc1842d2e33",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F05",
-            "sourceId": "news:arab-news:97cbc906047afdc1842d2e33",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F06",
-            "sourceId": "news:arab-news:97cbc906047afdc1842d2e33",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F07",
-            "sourceId": "news:arab-news:97cbc906047afdc1842d2e33",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F08",
-            "sourceId": "news:arab-news:97cbc906047afdc1842d2e33",
+            "sourceId": "news:graphic-ghana:300b337798a8995c01ff36a8",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
+            "fragmentId": "F05",
+            "sourceId": "news:graphic-ghana:300b337798a8995c01ff36a8",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:graphic-ghana:300b337798a8995c01ff36a8",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:graphic-ghana:300b337798a8995c01ff36a8",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:graphic-ghana:300b337798a8995c01ff36a8",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
             "fragmentId": "F09",
-            "sourceId": "news:arab-news:97cbc906047afdc1842d2e33",
+            "sourceId": "news:graphic-ghana:300b337798a8995c01ff36a8",
             "membership": "central",
             "reason": "shares selected event actors/action or multiple high-specificity title terms"
           },
           {
             "fragmentId": "F10",
-            "sourceId": "news:arab-news:97cbc906047afdc1842d2e33",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F11",
-            "sourceId": "news:arab-news:97cbc906047afdc1842d2e33",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F12",
-            "sourceId": "news:arab-news:97cbc906047afdc1842d2e33",
+            "sourceId": "news:graphic-ghana:300b337798a8995c01ff36a8",
             "membership": "central",
             "reason": "shares selected event actors/action or multiple high-specificity title terms"
           }
@@ -1603,220 +1720,35 @@
       },
       "provenance": [
         {
-          "sourceId": "news:arab-news:97cbc906047afdc1842d2e33",
-          "publisher": "Arab News",
-          "url": "https://arabnews.com/middle-east/after-syria-war-druze-in-golan-heights-warm-to-israel-3007592",
+          "sourceId": "news:graphic-ghana:300b337798a8995c01ff36a8",
+          "publisher": "Graphic Online",
+          "url": "https://graphic.com.gh/news/general-news/ghana-news-ug-school-of-law-launches-supreme-court-judgement-review.html",
           "wireOrigin": null,
           "sourceType": "independent_reporting"
         }
       ],
       "image": {
-        "url": "https://assets.maestronewsroom.com/media/30f6532d-717b-4366-9158-9c455299fcd9/1792603699767-b5f9f405687b7cc4.jpg",
-        "alt": "After Syria war, Druze in Golan Heights warm to Israel",
+        "url": "https://www.graphic.com.gh/images/2026/Oct/22/Baffoe-Bonnie.jpg",
+        "alt": "UG School of Law launches Supreme Court judgement review",
         "status": "event-specific",
-        "source_url": "https://arabnews.com/middle-east/after-syria-war-druze-in-golan-heights-warm-to-israel-3007592",
-        "attribution": "Arab News",
+        "source_url": "https://graphic.com.gh/news/general-news/ghana-news-ug-school-of-law-launches-supreme-court-judgement-review.html",
+        "attribution": "Graphic Online",
         "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
       },
       "attempts": [
         {
-          "timestamp": "2026-10-22T00:45:53.461Z",
-          "finishedAt": "2026-10-22T00:45:57.333Z",
-          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
-          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
-          "httpStatus": 200,
-          "internalErrors": [],
-          "rawStructuredText": "{\"headline\": \"Druze population in Golan Heights shows increased interest in Israeli citizenship following 2025 military strikes in Syria\", \"pages\": [{\"text\": \"According to interior ministry figures reported by Arab News, approximately 45 percent of the 26,000 Druze living in the Golan Heights held Israeli nationality as of October 21, 2026, compared to 2 percent forty years ago. This shift in attitude follows military strikes carried out by Israel in Syria in 2025. Israeli Prime Minister Benjamin Netanyahu stated the attacks were intended to protect Syria’s Druze population. Some residents interviewed by AFP identified Israel's 2025 intervention in Syria’s Sweida province, which is predominantly Druze, as a turning point in their perspective. In Majdal Shams, a Golan Druze city of 12,000 people, citizenship applications rose to 3,750 in 2025 from 570 the previous year. Historically, the Golan's Druze have rejected outward allegiance to Israel, which captured the territory from Syria in 1967 and annexed it in 1981. Political expert Salim Brik noted that because nearly all Druze in the territory have family in Syria, there was an initial social and religious boycott of Israel. While the annexation has been recognized by the United States and Colombia, the Druze population in the Golan has historically differed from other Arabic-speaking groups in Israel who are integrated and required to serve in the military.\"}]}",
-          "parsed": {
-            "headline": "Druze population in Golan Heights shows increased interest in Israeli citizenship following 2025 military strikes in Syria",
-            "pages": [
-              {
-                "text": "According to interior ministry figures reported by Arab News, approximately 45 percent of the 26,000 Druze living in the Golan Heights held Israeli nationality as of October 21, 2026, compared to 2 percent forty years ago. This shift in attitude follows military strikes carried out by Israel in Syria in 2025. Israeli Prime Minister Benjamin Netanyahu stated the attacks were intended to protect Syria’s Druze population. Some residents interviewed by AFP identified Israel's 2025 intervention in Syria’s Sweida province, which is predominantly Druze, as a turning point in their perspective. In Majdal Shams, a Golan Druze city of 12,000 people, citizenship applications rose to 3,750 in 2025 from 570 the previous year. Historically, the Golan's Druze have rejected outward allegiance to Israel, which captured the territory from Syria in 1967 and annexed it in 1981. Political expert Salim Brik noted that because nearly all Druze in the territory have family in Syria, there was an initial social and religious boycott of Israel. While the annexation has been recognized by the United States and Colombia, the Druze population in the Golan has historically differed from other Arabic-speaking groups in Israel who are integrated and required to serve in the military."
-              }
-            ]
-          },
-          "parseError": null,
-          "providerParseError": null,
-          "schemaAudit": {
-            "valid": true,
-            "unknownProperties": [],
-            "missingProperties": [],
-            "misplacedProperties": [],
-            "pageProblems": [],
-            "uncertaintyProblem": false
-          },
-          "finishReason": "stop",
-          "usage": {
-            "prompt_tokens": 1882,
-            "completion_tokens": 325,
-            "total_tokens": 2207,
-            "prompt_tokens_details": {
-              "cached_tokens": 0
-            },
-            "neurons": 25.972726821899414
-          },
-          "latencyMs": 3872,
-          "safeHeaders": {
-            "cf-ray": "a4e47b592d84db9e-LAX"
-          },
-          "complete": true,
-          "structuralStatus": "valid_card",
-          "dateRetry": false
-        }
-      ]
-    },
-    {
-      "eventId": "event:e8e6a8aa224d3822",
-      "title": "Oshawa’s voter turnout in 2022 was 18 per cent. Here’s your guide to voting this year",
-      "finalStatus": "accepted",
-      "previousMatch": null,
-      "contentVersion": 1,
-      "evidenceFingerprint": "3ac85921085b0dabaa10e4725a56e9b2c3467ba26081af19a0496390949cd553",
-      "allowedExactDates": [
-        "2026-10-19",
-        "2026-10-16"
-      ],
-      "dateValidation": {
-        "valid": true,
-        "generated_exact_dates": [
-          {
-            "raw": "October 19, 2026",
-            "date": "2026-10-19"
-          },
-          {
-            "raw": "October 16, 2026",
-            "date": "2026-10-16"
-          }
-        ],
-        "allowed_exact_dates": [
-          "2026-10-19",
-          "2026-10-16"
-        ],
-        "unsupported_exact_dates": [],
-        "weekday_date_pairs": [],
-        "invalid_weekday_date_pairs": [],
-        "status": "pass"
-      },
-      "writerExposureAudit": {
-        "raw_publication_timestamp_exposed": false,
-        "raw_update_timestamp_exposed": false,
-        "resolved_relative_expressions_exposed": [],
-        "normalized_event_date_exposed": true,
-        "passes": true
-      },
-      "contentValidation": {
-        "valid": true,
-        "reasons": [],
-        "wordCount": 124,
-        "pageCount": 1
-      },
-      "scope": {
-        "fragments": [
-          {
-            "fragmentId": "F01",
-            "sourceId": "news:cbc:a4bfa96d2c395dbe19bc2832",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
-          },
-          {
-            "fragmentId": "F02",
-            "sourceId": "news:cbc:a4bfa96d2c395dbe19bc2832",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
-          },
-          {
-            "fragmentId": "F03",
-            "sourceId": "news:cbc:a4bfa96d2c395dbe19bc2832",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
-          },
-          {
-            "fragmentId": "F04",
-            "sourceId": "news:cbc:a4bfa96d2c395dbe19bc2832",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F05",
-            "sourceId": "news:cbc:a4bfa96d2c395dbe19bc2832",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
-          },
-          {
-            "fragmentId": "F06",
-            "sourceId": "news:cbc:a4bfa96d2c395dbe19bc2832",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F07",
-            "sourceId": "news:cbc:a4bfa96d2c395dbe19bc2832",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F08",
-            "sourceId": "news:cbc:a4bfa96d2c395dbe19bc2832",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F09",
-            "sourceId": "news:cbc:a4bfa96d2c395dbe19bc2832",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
-          },
-          {
-            "fragmentId": "F10",
-            "sourceId": "news:cbc:a4bfa96d2c395dbe19bc2832",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F11",
-            "sourceId": "news:cbc:a4bfa96d2c395dbe19bc2832",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
-          },
-          {
-            "fragmentId": "F12",
-            "sourceId": "news:cbc:a4bfa96d2c395dbe19bc2832",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
-          }
-        ]
-      },
-      "provenance": [
-        {
-          "sourceId": "news:cbc:a4bfa96d2c395dbe19bc2832",
-          "publisher": "CBC Toronto",
-          "url": "https://cbc.ca/news/canada/toronto/oshawa-voters-guide-municipal-election-9.7390451?cmp=rss",
-          "wireOrigin": null,
-          "sourceType": "independent_reporting"
-        }
-      ],
-      "image": {
-        "url": "https://i.cbc.ca/ais/48e3e962-d69d-48be-8649-815f41f352f1,1792568487497/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C0%2C1920%2C1080%29%3B",
-        "alt": "Oshawa’s voter turnout in 2022 was 18 per cent. Here’s your guide to voting this year",
-        "status": "event-specific",
-        "source_url": "https://cbc.ca/news/canada/toronto/oshawa-voters-guide-municipal-election-9.7390451?cmp=rss",
-        "attribution": "CBC Toronto",
-        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
-      },
-      "attempts": [
-        {
-          "timestamp": "2026-10-22T00:45:57.333Z",
-          "finishedAt": "2026-10-22T00:46:04.078Z",
+          "timestamp": "2026-10-22T15:24:44.196Z",
+          "finishedAt": "2026-10-22T15:24:52.007Z",
           "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
           "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
           "httpStatus": 200,
           "internalErrors": [],
-          "rawStructuredText": "{\n  \"headline\": \"Oshawa voter turnout was 18.4 per cent in 2022 ahead of 2026 municipal election\",\n  \"pages\": [\n    {\n      \"text\": \"In the 2022 municipal election in Oshawa, Canada, 18.4 per cent of eligible residents cast a ballot. This turnout was lower than the average for the Durham Region during the same election, which was just under 24 per cent. The upcoming municipal election is scheduled for October 19, 2026, and will feature nine candidates seeking to replace outgoing Mayor Dan Carter. For the first time this year, Oshawa residents will have the option to vote online. To participate, voters must be on the voters' list. Unregistered residents can visit the voter assistance centre at Oshawa City Hall, located at 50 Centre Street S., to be added to the list. The centre is open from 10 a.m. to 6 p.m. daily until October 16, 2026.\"\n    }\n  ]\n}",
+          "rawStructuredText": "{\n  \"headline\": \"University of Ghana School of Law launches Supreme Court judgement review\",\n  \"pages\": [\n    {\n      \"text\": \"The University of Ghana School of Law (UGSoL) launched the “Ghana Supreme Court Review” on October 21, 2026, a publication designed to explain landmark decisions of the country's Supreme Court to the general public and outline their societal implications. Described as the first compendium of its kind in Ghana, the review was compiled by faculty members from the university and other faculties to provide context, explanation, and the legal basis for decisions made by the apex court. The publication is noted as being approximately four times the volume of a second book launched at the same event, titled “The Administrative Law in Ghana: Principles, practice and comparative perspectives.” This 800-page work contains 23 chapters and was produced with support from 14 contributors from the UGSoL, Pentecost University, and KAAF University law schools and faculties. During the launch event, Professor Nana Aba Appiah Amfo, the Vice-Chancellor of the university, stated that such authoritative works are necessary to ensure legal education and scholarships address the Ghanaian experience and contribute to national and global conversations. The event was attended by Chief Justice Justice Paul Baffor-Bonnie, other Supreme Court justices, law school deans, and students.\"\n    }\n  ]\n}",
           "parsed": {
-            "headline": "Oshawa voter turnout was 18.4 per cent in 2022 ahead of 2026 municipal election",
+            "headline": "University of Ghana School of Law launches Supreme Court judgement review",
             "pages": [
               {
-                "text": "In the 2022 municipal election in Oshawa, Canada, 18.4 per cent of eligible residents cast a ballot. This turnout was lower than the average for the Durham Region during the same election, which was just under 24 per cent. The upcoming municipal election is scheduled for October 19, 2026, and will feature nine candidates seeking to replace outgoing Mayor Dan Carter. For the first time this year, Oshawa residents will have the option to vote online. To participate, voters must be on the voters' list. Unregistered residents can visit the voter assistance centre at Oshawa City Hall, located at 50 Centre Street S., to be added to the list. The centre is open from 10 a.m. to 6 p.m. daily until October 16, 2026."
+                "text": "The University of Ghana School of Law (UGSoL) launched the “Ghana Supreme Court Review” on October 21, 2026, a publication designed to explain landmark decisions of the country's Supreme Court to the general public and outline their societal implications. Described as the first compendium of its kind in Ghana, the review was compiled by faculty members from the university and other faculties to provide context, explanation, and the legal basis for decisions made by the apex court. The publication is noted as being approximately four times the volume of a second book launched at the same event, titled “The Administrative Law in Ghana: Principles, practice and comparative perspectives.” This 800-page work contains 23 chapters and was produced with support from 14 contributors from the UGSoL, Pentecost University, and KAAF University law schools and faculties. During the launch event, Professor Nana Aba Appiah Amfo, the Vice-Chancellor of the university, stated that such authoritative works are necessary to ensure legal education and scholarships address the Ghanaian experience and contribute to national and global conversations. The event was attended by Chief Justice Justice Paul Baffor-Bonnie, other Supreme Court justices, law school deans, and students."
               }
             ]
           },
@@ -1832,17 +1764,17 @@
           },
           "finishReason": "stop",
           "usage": {
-            "prompt_tokens": 1559,
-            "completion_tokens": 241,
-            "total_tokens": 1800,
+            "prompt_tokens": 1704,
+            "completion_tokens": 296,
+            "total_tokens": 2000,
             "prompt_tokens_details": {
               "cached_tokens": 0
             },
-            "neurons": 20.745452880859375
+            "neurons": 23.563636779785156
           },
-          "latencyMs": 6744,
+          "latencyMs": 7811,
           "safeHeaders": {
-            "cf-ray": "a4e47b715c04db9e-LAX"
+            "cf-ray": "a4e982b84870311a-IAD"
           },
           "complete": true,
           "structuralStatus": "valid_card",
@@ -1852,11 +1784,11 @@
     },
     {
       "eventId": "event:792d1e28af30dd4d",
-      "title": "US accuses Canada of election interference ahead of midterms",
+      "title": "US embassy accuses Canada of election meddling ahead of midterms",
       "finalStatus": "accepted",
-      "previousMatch": null,
-      "contentVersion": 1,
-      "evidenceFingerprint": "95d9317b821a061f49562debca9e4e83dacd3214a6c9af21c7f3125d096e4df3",
+      "previousMatch": "conservative headline/geography match (0.86)",
+      "contentVersion": 2,
+      "evidenceFingerprint": "4d60650ff448fffa67be19c34733397be3cb9df8413e8c424e0a3efe97b09d1d",
       "allowedExactDates": [
         "2026-10-21"
       ],
@@ -1886,241 +1818,80 @@
       "contentValidation": {
         "valid": true,
         "reasons": [],
-        "wordCount": 237,
+        "wordCount": 225,
         "pageCount": 2
       },
       "scope": {
         "fragments": [
           {
             "fragmentId": "F01",
-            "sourceId": "news:aljazeera:8882bf0b540e431a87224c69",
+            "sourceId": "news:bbc:644f304421c10863efddf1f5",
             "membership": "central",
             "reason": "shares selected event actors/action or multiple high-specificity title terms"
           },
           {
             "fragmentId": "F02",
-            "sourceId": "news:aljazeera:8882bf0b540e431a87224c69",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+            "sourceId": "news:bbc:644f304421c10863efddf1f5",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F03",
-            "sourceId": "news:aljazeera:8882bf0b540e431a87224c69",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+            "sourceId": "news:bbc:644f304421c10863efddf1f5",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F04",
-            "sourceId": "news:aljazeera:8882bf0b540e431a87224c69",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+            "sourceId": "news:bbc:644f304421c10863efddf1f5",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F05",
-            "sourceId": "news:aljazeera:8882bf0b540e431a87224c69",
+            "sourceId": "news:bbc:644f304421c10863efddf1f5",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F06",
-            "sourceId": "news:aljazeera:8882bf0b540e431a87224c69",
+            "sourceId": "news:bbc:644f304421c10863efddf1f5",
             "membership": "central",
             "reason": "shares selected event actors/action or multiple high-specificity title terms"
           },
           {
             "fragmentId": "F07",
-            "sourceId": "news:aljazeera:8882bf0b540e431a87224c69",
+            "sourceId": "news:bbc:644f304421c10863efddf1f5",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F08",
-            "sourceId": "news:aljazeera:8882bf0b540e431a87224c69",
+            "sourceId": "news:bbc:644f304421c10863efddf1f5",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F09",
-            "sourceId": "news:aljazeera:8882bf0b540e431a87224c69",
+            "sourceId": "news:bbc:644f304421c10863efddf1f5",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F10",
-            "sourceId": "news:aljazeera:8882bf0b540e431a87224c69",
+            "sourceId": "news:bbc:644f304421c10863efddf1f5",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F11",
-            "sourceId": "news:aljazeera:8882bf0b540e431a87224c69",
+            "sourceId": "news:bbc:644f304421c10863efddf1f5",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F12",
-            "sourceId": "news:aljazeera:8882bf0b540e431a87224c69",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          }
-        ]
-      },
-      "provenance": [
-        {
-          "sourceId": "news:aljazeera:8882bf0b540e431a87224c69",
-          "publisher": "Al Jazeera",
-          "url": "https://aljazeera.com/news/2026/10/21/us-accuses-canada-of-election-interference-ahead-of-midterms?traffic_source=rss",
-          "wireOrigin": null,
-          "sourceType": "independent_reporting"
-        }
-      ],
-      "image": {
-        "url": "https://www.aljazeera.com/wp-content/uploads/2026/10/reuters_6ad92a1e-1792616990.jpg?resize=1920%2C1440",
-        "alt": "US accuses Canada of election interference ahead of midterms",
-        "status": "event-specific",
-        "source_url": "https://aljazeera.com/news/2026/10/21/us-accuses-canada-of-election-interference-ahead-of-midterms?traffic_source=rss",
-        "attribution": "Al Jazeera",
-        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
-      },
-      "attempts": [
-        {
-          "timestamp": "2026-10-22T00:46:04.078Z",
-          "finishedAt": "2026-10-22T00:46:13.160Z",
-          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
-          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
-          "httpStatus": 200,
-          "internalErrors": [],
-          "rawStructuredText": "{\n  \"headline\": \"US embassy accuses Canada of election interference ahead of midterms\",\n  \"pages\": [\n    {\n      \"text\": \"In a fact sheet released on October 21, 2026, the United States embassy accused Canadian politicians of attempting to influence the upcoming November 3 midterm elections. According to Al Jazeera, the US embassy alleged that the Canadian government has been dismissive of these concerns, claiming that ministers and premiers have described plans to influence American politics in public appearances and official documents. The allegations follow a trade war between the two nations that began at the start of President Donald Trump’s second term in 2025, characterized by US tariffs and reciprocal Canadian import taxes. The US embassy identified public statements regarding these tariffs as attempts to sway the midterm election, citing Canadian tariffs, political meetings, and anti-Trump advertisements as evidence of interference.\"\n    },\n    {\n      \"text\": \"The US embassy singled out Canadian Industry Minister Melanie Joly in the fact sheet, pointing to comments she made in August regarding the response to US tariffs. Joly stated at the time, “We’re also targeting products that will target states in the US. And so we’re being wise and strategic to put political pressure.” The embassy also cited Joly’s September meetings with Democratic officials in Boston and Chicago. When asked by a reporter about potential tariff outcomes if Democrats won the midterms, Joly responded, “That’s exactly why I’m meeting so many governors and potential presidential candidates.” Joly has rejected the suggestion that her actions constitute interference, stating that Canada would never meddle in US elections.\"\n    }\n  ]\n}",
-          "parsed": {
-            "headline": "US embassy accuses Canada of election interference ahead of midterms",
-            "pages": [
-              {
-                "text": "In a fact sheet released on October 21, 2026, the United States embassy accused Canadian politicians of attempting to influence the upcoming November 3 midterm elections. According to Al Jazeera, the US embassy alleged that the Canadian government has been dismissive of these concerns, claiming that ministers and premiers have described plans to influence American politics in public appearances and official documents. The allegations follow a trade war between the two nations that began at the start of President Donald Trump’s second term in 2025, characterized by US tariffs and reciprocal Canadian import taxes. The US embassy identified public statements regarding these tariffs as attempts to sway the midterm election, citing Canadian tariffs, political meetings, and anti-Trump advertisements as evidence of interference."
-              },
-              {
-                "text": "The US embassy singled out Canadian Industry Minister Melanie Joly in the fact sheet, pointing to comments she made in August regarding the response to US tariffs. Joly stated at the time, “We’re also targeting products that will target states in the US. And so we’re being wise and strategic to put political pressure.” The embassy also cited Joly’s September meetings with Democratic officials in Boston and Chicago. When asked by a reporter about potential tariff outcomes if Democrats won the midterms, Joly responded, “That’s exactly why I’m meeting so many governors and potential presidential candidates.” Joly has rejected the suggestion that her actions constitute interference, stating that Canada would never meddle in US elections."
-              }
-            ]
-          },
-          "parseError": null,
-          "providerParseError": null,
-          "schemaAudit": {
-            "valid": true,
-            "unknownProperties": [],
-            "missingProperties": [],
-            "misplacedProperties": [],
-            "pageProblems": [],
-            "uncertaintyProblem": false
-          },
-          "finishReason": "stop",
-          "usage": {
-            "prompt_tokens": 1649,
-            "completion_tokens": 352,
-            "total_tokens": 2001,
-            "prompt_tokens_details": {
-              "cached_tokens": 0
-            },
-            "neurons": 24.59090805053711
-          },
-          "latencyMs": 9082,
-          "safeHeaders": {
-            "cf-ray": "a4e47b9b8a01db9e-LAX"
-          },
-          "complete": true,
-          "structuralStatus": "valid_card",
-          "dateRetry": false
-        }
-      ]
-    },
-    {
-      "eventId": "event:c586ce9867fdf33e",
-      "title": "MobileMoney Fintech LTD scales up digital finance for 18,000 MSMEs",
-      "finalStatus": "accepted",
-      "previousMatch": null,
-      "contentVersion": 1,
-      "evidenceFingerprint": "ea463e508ef23762fb1de1bb9addaca3905b37b09a395eba495f585d71377d65",
-      "allowedExactDates": [],
-      "dateValidation": {
-        "valid": true,
-        "generated_exact_dates": [],
-        "allowed_exact_dates": [],
-        "unsupported_exact_dates": [],
-        "weekday_date_pairs": [],
-        "invalid_weekday_date_pairs": [],
-        "status": "pass"
-      },
-      "writerExposureAudit": {
-        "raw_publication_timestamp_exposed": false,
-        "raw_update_timestamp_exposed": false,
-        "resolved_relative_expressions_exposed": [],
-        "normalized_event_date_exposed": false,
-        "passes": true
-      },
-      "contentValidation": {
-        "valid": true,
-        "reasons": [],
-        "wordCount": 142,
-        "pageCount": 1
-      },
-      "scope": {
-        "fragments": [
-          {
-            "fragmentId": "F01",
-            "sourceId": "news:myjoyonline:5d72f6d23be242f23c05df19",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F02",
-            "sourceId": "news:myjoyonline:5d72f6d23be242f23c05df19",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F03",
-            "sourceId": "news:myjoyonline:5d72f6d23be242f23c05df19",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F04",
-            "sourceId": "news:myjoyonline:5d72f6d23be242f23c05df19",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F05",
-            "sourceId": "news:myjoyonline:5d72f6d23be242f23c05df19",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F06",
-            "sourceId": "news:myjoyonline:5d72f6d23be242f23c05df19",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F07",
-            "sourceId": "news:myjoyonline:5d72f6d23be242f23c05df19",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F08",
-            "sourceId": "news:myjoyonline:5d72f6d23be242f23c05df19",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F09",
-            "sourceId": "news:myjoyonline:5d72f6d23be242f23c05df19",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
-          },
-          {
-            "fragmentId": "F10",
-            "sourceId": "news:myjoyonline:5d72f6d23be242f23c05df19",
+            "sourceId": "news:bbc:644f304421c10863efddf1f5",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           }
@@ -2128,263 +1899,38 @@
       },
       "provenance": [
         {
-          "sourceId": "news:myjoyonline:5d72f6d23be242f23c05df19",
-          "publisher": "MyJoyOnline",
-          "url": "https://myjoyonline.com/mobilemoney-fintech-ltd-scales-up-digital-finance-for-18000-msmes",
+          "sourceId": "news:bbc:644f304421c10863efddf1f5",
+          "publisher": "BBC World",
+          "url": "https://bbc.co.uk/news/articles/cmn06g29522lo",
           "wireOrigin": null,
           "sourceType": "independent_reporting"
         }
       ],
       "image": {
-        "url": "https://www.myjoyonline.com/wp-content/uploads/2026/10/IMG_2813_2.jpg",
-        "alt": "Mr. Shaibu Haruna (right) and Mr. Allen Anie exchanging documents after signing",
+        "url": "https://ichef.bbci.co.uk/ace/standard/240/cpsprodpb/2dd2/live/280120d0-cdc5-11f1-ae0b-3f5d64e6a869.jpg",
+        "alt": "Mark Carney, Canada's prime minister, right, and Doug Ford, Ontario's premier, during a news conference in Ottawa, Ontario, Canada, on Thursday, Dec. 18, 2025.",
         "status": "event-specific",
-        "source_url": "https://myjoyonline.com/mobilemoney-fintech-ltd-scales-up-digital-finance-for-18000-msmes",
-        "attribution": "MyJoyOnline",
+        "source_url": "https://bbc.co.uk/news/articles/cmn06g29522lo",
+        "attribution": "BBC World",
         "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
       },
       "attempts": [
         {
-          "timestamp": "2026-10-22T00:46:13.161Z",
-          "finishedAt": "2026-10-22T00:46:19.648Z",
-          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
-          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
-          "httpStatus": 200,
-          "internalErrors": [],
-          "rawStructuredText": "{\n  \"headline\": \"MobileMoney Fintech LTD signs partnership to expand digital finance for MSMEs in Ghana\",\n  \"pages\": [\n    {\n      \"text\": \"MobileMoney Fintech LTD has signed a strategic partnership with the United Nations Capital Development Fund and the United Nations Conference on Trade and Development to expand digital financial services for Micro, Small and Medium Enterprises (MSMEs) in Ghana. The agreement was signed in Accra by Shaibu Haruna, Chief Executive Officer of MobileMoney Fintech LTD, and Allen Anie, Head of Experimentation and Chief Technical Adviser at UNDP, who initialled for the UN system. The signing was witnessed by officials from the Ministry of Trade, Agribusiness and Industry and senior management from MobileMoney Fintech LTD. Under the Joint SDG Fund programme, the partnership aims to leverage digital ecosystems to increase MSME productivity and advance financial inclusion. Shaibu Haruna stated that the programme focuses on underserved groups, specifically women and youth-led businesses, and intends to address financial health pillars including savings, micro-loans, and group loans.\"\n    }\n  ]\n}",
-          "parsed": {
-            "headline": "MobileMoney Fintech LTD signs partnership to expand digital finance for MSMEs in Ghana",
-            "pages": [
-              {
-                "text": "MobileMoney Fintech LTD has signed a strategic partnership with the United Nations Capital Development Fund and the United Nations Conference on Trade and Development to expand digital financial services for Micro, Small and Medium Enterprises (MSMEs) in Ghana. The agreement was signed in Accra by Shaibu Haruna, Chief Executive Officer of MobileMoney Fintech LTD, and Allen Anie, Head of Experimentation and Chief Technical Adviser at UNDP, who initialled for the UN system. The signing was witnessed by officials from the Ministry of Trade, Agribusiness and Industry and senior management from MobileMoney Fintech LTD. Under the Joint SDG Fund programme, the partnership aims to leverage digital ecosystems to increase MSME productivity and advance financial inclusion. Shaibu Haruna stated that the programme focuses on underserved groups, specifically women and youth-led businesses, and intends to address financial health pillars including savings, micro-loans, and group loans."
-              }
-            ]
-          },
-          "parseError": null,
-          "providerParseError": null,
-          "schemaAudit": {
-            "valid": true,
-            "unknownProperties": [],
-            "missingProperties": [],
-            "misplacedProperties": [],
-            "pageProblems": [],
-            "uncertaintyProblem": false
-          },
-          "finishReason": "stop",
-          "usage": {
-            "prompt_tokens": 1476,
-            "completion_tokens": 226,
-            "total_tokens": 1702,
-            "prompt_tokens_details": {
-              "cached_tokens": 0
-            },
-            "neurons": 19.581817626953125
-          },
-          "latencyMs": 6487,
-          "safeHeaders": {
-            "cf-ray": "a4e47bd44b6edb9e-LAX"
-          },
-          "complete": true,
-          "structuralStatus": "valid_card",
-          "dateRetry": false
-        }
-      ]
-    },
-    {
-      "eventId": "event:b0086524c5623e8d",
-      "finalStatus": "content_structure_failure",
-      "contentValidation": {
-        "valid": false,
-        "reasons": [
-          "page 1 exposes a citation/list marker"
-        ],
-        "wordCount": 259,
-        "pageCount": 1
-      },
-      "attempts": [
-        {
-          "timestamp": "2026-10-22T00:46:19.649Z",
-          "finishedAt": "2026-10-22T00:46:28.843Z",
-          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
-          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
-          "httpStatus": 200,
-          "internalErrors": [],
-          "rawStructuredText": "{\"headline\": \"Inflation estimated to have pushed 8 to 10 million people below poverty line in Bangladesh\", \"pages\": [{\"text\": \"Rashed Al Mahmud Titumir, the Prime Minister’s Adviser on Finance and Planning in Bangladesh, stated that inflation has placed a heavy burden on low- and middle-income citizens, resulting in an estimated 8 million to 10 million people falling below the poverty line. Titumir made these remarks to journalists on a Wednesday afternoon during a meeting organized by the Rajbari District Administration at the Rajbari Municipality auditorium. Rajbari District Council Administrator Abdus Salam Mia was also in attendance. 1. Titumir cited a World Bank report and noted that the introduction of farmer and family cards has been recognized by the International Monetary Fund (IMF) and the World Bank as an initiative intended to reduce poverty and ease hardship. 2. Describing the current economic state as a fragile transition, Titumir said the administration inherited high inflation, rising unemployment, and weak private-sector investment. He noted that rising prices have forced many individuals to use savings or take on debt, and highlighted unemployment among young, educated citizens as a major concern. 3. Titumir attributed increased pressure on the economy to rising fuel prices caused by the Middle East crisis and alleged that the previous government failed to expand solar energy, explore domestic gas, or ensure sustainable energy security. He further alleged that cronyism and patronage weakened the economic system, stating that approximately US$40 billion is now required to repair the banking sector. 4. To address these issues, Titumir emphasized the need to develop renewable energy to reduce dependence on imported fuel, reform the education system, and develop a skilled workforce to combat unemployment.\"}]}",
-          "parsed": {
-            "headline": "Inflation estimated to have pushed 8 to 10 million people below poverty line in Bangladesh",
-            "pages": [
-              {
-                "text": "Rashed Al Mahmud Titumir, the Prime Minister’s Adviser on Finance and Planning in Bangladesh, stated that inflation has placed a heavy burden on low- and middle-income citizens, resulting in an estimated 8 million to 10 million people falling below the poverty line. Titumir made these remarks to journalists on a Wednesday afternoon during a meeting organized by the Rajbari District Administration at the Rajbari Municipality auditorium. Rajbari District Council Administrator Abdus Salam Mia was also in attendance. 1. Titumir cited a World Bank report and noted that the introduction of farmer and family cards has been recognized by the International Monetary Fund (IMF) and the World Bank as an initiative intended to reduce poverty and ease hardship. 2. Describing the current economic state as a fragile transition, Titumir said the administration inherited high inflation, rising unemployment, and weak private-sector investment. He noted that rising prices have forced many individuals to use savings or take on debt, and highlighted unemployment among young, educated citizens as a major concern. 3. Titumir attributed increased pressure on the economy to rising fuel prices caused by the Middle East crisis and alleged that the previous government failed to expand solar energy, explore domestic gas, or ensure sustainable energy security. He further alleged that cronyism and patronage weakened the economic system, stating that approximately US$40 billion is now required to repair the banking sector. 4. To address these issues, Titumir emphasized the need to develop renewable energy to reduce dependence on imported fuel, reform the education system, and develop a skilled workforce to combat unemployment."
-              }
-            ]
-          },
-          "parseError": null,
-          "providerParseError": null,
-          "schemaAudit": {
-            "valid": true,
-            "unknownProperties": [],
-            "missingProperties": [],
-            "misplacedProperties": [],
-            "pageProblems": [],
-            "uncertaintyProblem": false
-          },
-          "finishReason": "stop",
-          "usage": {
-            "prompt_tokens": 2166,
-            "completion_tokens": 358,
-            "total_tokens": 2524,
-            "prompt_tokens_details": {
-              "cached_tokens": 0
-            },
-            "neurons": 29.454544067382812
-          },
-          "latencyMs": 9194,
-          "safeHeaders": {
-            "cf-ray": "a4e47bfcdccadb9e-LAX"
-          },
-          "complete": true,
-          "structuralStatus": "valid_card",
-          "dateRetry": false
-        }
-      ]
-    },
-    {
-      "eventId": "event:5cd157f8ec06dafd",
-      "title": "More than 1 million mice used in Australian research annually, ‘overdue’ study finds",
-      "finalStatus": "accepted",
-      "previousMatch": "same source URL",
-      "contentVersion": 2,
-      "evidenceFingerprint": "8a9f144240d5e25b362b095b42c71b892589002f3e3e3dd717e8110f065b8e9e",
-      "allowedExactDates": [],
-      "dateValidation": {
-        "valid": true,
-        "generated_exact_dates": [],
-        "allowed_exact_dates": [],
-        "unsupported_exact_dates": [],
-        "weekday_date_pairs": [],
-        "invalid_weekday_date_pairs": [],
-        "status": "pass"
-      },
-      "writerExposureAudit": {
-        "raw_publication_timestamp_exposed": false,
-        "raw_update_timestamp_exposed": false,
-        "resolved_relative_expressions_exposed": [],
-        "normalized_event_date_exposed": false,
-        "passes": true
-      },
-      "contentValidation": {
-        "valid": true,
-        "reasons": [],
-        "wordCount": 209,
-        "pageCount": 1
-      },
-      "scope": {
-        "fragments": [
-          {
-            "fragmentId": "F01",
-            "sourceId": "news:guardian:8a034f06d35ada5e2f0366c2",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F02",
-            "sourceId": "news:guardian:8a034f06d35ada5e2f0366c2",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F03",
-            "sourceId": "news:guardian:8a034f06d35ada5e2f0366c2",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
-          },
-          {
-            "fragmentId": "F04",
-            "sourceId": "news:guardian:8a034f06d35ada5e2f0366c2",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
-          },
-          {
-            "fragmentId": "F05",
-            "sourceId": "news:guardian:8a034f06d35ada5e2f0366c2",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F06",
-            "sourceId": "news:guardian:8a034f06d35ada5e2f0366c2",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F07",
-            "sourceId": "news:guardian:8a034f06d35ada5e2f0366c2",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
-          },
-          {
-            "fragmentId": "F08",
-            "sourceId": "news:guardian:8a034f06d35ada5e2f0366c2",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
-          },
-          {
-            "fragmentId": "F09",
-            "sourceId": "news:guardian:8a034f06d35ada5e2f0366c2",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
-          },
-          {
-            "fragmentId": "F10",
-            "sourceId": "news:guardian:8a034f06d35ada5e2f0366c2",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
-          },
-          {
-            "fragmentId": "F11",
-            "sourceId": "news:guardian:8a034f06d35ada5e2f0366c2",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          },
-          {
-            "fragmentId": "F12",
-            "sourceId": "news:guardian:8a034f06d35ada5e2f0366c2",
-            "membership": "central",
-            "reason": "shares selected event actors/action or multiple high-specificity title terms"
-          }
-        ]
-      },
-      "provenance": [
-        {
-          "sourceId": "news:guardian:8a034f06d35ada5e2f0366c2",
-          "publisher": "The Guardian Science",
-          "url": "https://theguardian.com/environment/2026/oct/22/more-than-a-million-mice-used-in-australian-research-annually-overdue-study-finds",
-          "wireOrigin": null,
-          "sourceType": "independent_reporting"
-        }
-      ],
-      "image": {
-        "url": "https://i.guim.co.uk/img/media/9607bf552d2351df0bde1b59181b0659e59a16b1/0_45_2350_1880/master/2350.jpg?width=140&quality=85&auto=format&fit=max&s=3ae3b74b992c6b170098b669c4f2e130",
-        "alt": "More than 1 million mice used in Australian research annually, ‘overdue’ study finds",
-        "status": "event-specific",
-        "source_url": "https://theguardian.com/environment/2026/oct/22/more-than-a-million-mice-used-in-australian-research-annually-overdue-study-finds",
-        "attribution": "The Guardian Science",
-        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
-      },
-      "attempts": [
-        {
-          "timestamp": "2026-10-22T00:46:28.843Z",
-          "finishedAt": "2026-10-22T00:46:32.341Z",
+          "timestamp": "2026-10-22T15:24:52.007Z",
+          "finishedAt": "2026-10-22T15:24:56.838Z",
           "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
           "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
           "httpStatus": 200,
           "internalErrors": [],
-          "rawStructuredText": "{\"headline\": \"First nationwide count finds over 1 million mice and 46,000 rats used in Australian research annually\", \"pages\": [{\"text\": \"A pilot study conducted for the Australian and New Zealand Council for the Care of Animals in Research and Teaching has reported that 1,193,619 mice and 46,961 rats were used for scientific research, teaching, and testing in Australia in 2024. The figure represents the first nationwide count of its kind, though it does not include animals bred for research purposes that were not used. The study focused on mice and rats because they are widely used in biomedical research. According to veterinarian Dr. Malcolm France, who compiled the data, the count is an overdue step toward publishing national statistics for all research animals, including birds, monkeys, fish, and rabbits. Dr. France noted that while New South Wales, Victoria, and Tasmania consistently publish animal use data, other jurisdictions either collect statistics without sharing them or do not collect them at all. Establishing the national figure required various methods, including a freedom of information request. Dr. France stated that national statistics are used in the United Kingdom, the United States, Canada, the European Union, and New Zealand to inform resource allocation and animal welfare priorities. Bella Lear, chief executive of Understanding Animal Research Oceania, said nationwide data is vital for demonstrating the scope of Australian research and its animal welfare practices.\"}]}",
+          "rawStructuredText": "{\n  \"headline\": \"US Embassy in Ottawa accuses Canadian officials of election meddling\",\n  \"pages\": [\n    {\n      \"text\": \"The US Embassy in Ottawa released a fact sheet on October 21, 2026, alleging that the Canadian government is meddling in the upcoming November US midterm elections. The embassy claimed that Canadian officials have brushed off concerns regarding potential interference and that ministers and premiers have openly described plans to influence American politics through public appearances and official documents. Specific actions cited by the embassy include meetings with US Democrats and calls for retaliatory tariffs against the US. The embassy noted that Industry Minister Mélanie Joly stated she was meeting with governors and potential presidential candidates in relation to tariff expectations if Democrats win the midterms. Additionally, the embassy alleged that Ontario Premier Doug Ford urged the Canadian federal government to consider retaliatory tariffs on imports from US states considered politically significant to the current administration's base of support.\"\n    },\n    {\n      \"text\": \"Canadian Prime Minister Mark Carney and Ontario Premier Doug Ford have denied allegations that the country is interfering in the US midterm elections. Responding to the claims on October 21, 2026, Carney stated that the US initiated trade actions against Canada first. He characterized the Canadian government's response as being in the interests of Canadian workers, families, and the economy to protect Canadian jobs and companies. The US midterms are scheduled for November and will determine which political party controls both branches of the US Congress.\"\n    }\n  ]\n}",
           "parsed": {
-            "headline": "First nationwide count finds over 1 million mice and 46,000 rats used in Australian research annually",
+            "headline": "US Embassy in Ottawa accuses Canadian officials of election meddling",
             "pages": [
               {
-                "text": "A pilot study conducted for the Australian and New Zealand Council for the Care of Animals in Research and Teaching has reported that 1,193,619 mice and 46,961 rats were used for scientific research, teaching, and testing in Australia in 2024. The figure represents the first nationwide count of its kind, though it does not include animals bred for research purposes that were not used. The study focused on mice and rats because they are widely used in biomedical research. According to veterinarian Dr. Malcolm France, who compiled the data, the count is an overdue step toward publishing national statistics for all research animals, including birds, monkeys, fish, and rabbits. Dr. France noted that while New South Wales, Victoria, and Tasmania consistently publish animal use data, other jurisdictions either collect statistics without sharing them or do not collect them at all. Establishing the national figure required various methods, including a freedom of information request. Dr. France stated that national statistics are used in the United Kingdom, the United States, Canada, the European Union, and New Zealand to inform resource allocation and animal welfare priorities. Bella Lear, chief executive of Understanding Animal Research Oceania, said nationwide data is vital for demonstrating the scope of Australian research and its animal welfare practices."
+                "text": "The US Embassy in Ottawa released a fact sheet on October 21, 2026, alleging that the Canadian government is meddling in the upcoming November US midterm elections. The embassy claimed that Canadian officials have brushed off concerns regarding potential interference and that ministers and premiers have openly described plans to influence American politics through public appearances and official documents. Specific actions cited by the embassy include meetings with US Democrats and calls for retaliatory tariffs against the US. The embassy noted that Industry Minister Mélanie Joly stated she was meeting with governors and potential presidential candidates in relation to tariff expectations if Democrats win the midterms. Additionally, the embassy alleged that Ontario Premier Doug Ford urged the Canadian federal government to consider retaliatory tariffs on imports from US states considered politically significant to the current administration's base of support."
+              },
+              {
+                "text": "Canadian Prime Minister Mark Carney and Ontario Premier Doug Ford have denied allegations that the country is interfering in the US midterm elections. Responding to the claims on October 21, 2026, Carney stated that the US initiated trade actions against Canada first. He characterized the Canadian government's response as being in the interests of Canadian workers, families, and the economy to protect Canadian jobs and companies. The US midterms are scheduled for November and will determine which political party controls both branches of the US Congress."
               }
             ]
           },
@@ -2400,17 +1946,17 @@
           },
           "finishReason": "stop",
           "usage": {
-            "prompt_tokens": 1932,
-            "completion_tokens": 297,
-            "total_tokens": 2229,
+            "prompt_tokens": 1702,
+            "completion_tokens": 322,
+            "total_tokens": 2024,
             "prompt_tokens_details": {
               "cached_tokens": 0
             },
-            "neurons": 25.66363525390625
+            "neurons": 24.254545211791992
           },
-          "latencyMs": 3498,
+          "latencyMs": 4830,
           "safeHeaders": {
-            "cf-ray": "a4e47c364842db9e-LAX"
+            "cf-ray": "a4e982e918d2311a-IAD"
           },
           "complete": true,
           "structuralStatus": "valid_card",
@@ -2419,37 +1965,85 @@
       ]
     },
     {
-      "eventId": "event:692a1cf1f56ffe4e",
-      "title": "Star journalist Sohrab Hossain laid to rest",
+      "eventId": "event:00f4c4c77b5a395c",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "page 1 ends mid-sentence",
+          "page 1 exposes a citation/list marker"
+        ],
+        "wordCount": 75,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-22T15:24:56.838Z",
+          "finishedAt": "2026-10-22T15:25:01.849Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Two Syrian security personnel killed in raid targeting Daesh-linked cell near Lebanese border\", \"pages\": [{\"text\": \"Two Syrian security personnel were killed and five others wounded on Thursday during an operation targeting a Daesh-linked cell in Rankous, near the Lebanese border, according to security sources reported by Arab News. The Internal Security Forces stated the operation was conducted alongside the General Intelligence Service in the western Damascus countryside. An initial statement from the forces provided no details regarding the circumstances of the casualties or the specific outcome of the raid. 1\"}] ,\"uncertainties\": [\"The exact calendar date of the Thursday raid is not established by the available evidence.\", \"The initial statement from the Internal Security Forces gave no details on the circumstances of the casualties or the outcome of the operation.\"] }",
+          "parsed": {
+            "headline": "Two Syrian security personnel killed in raid targeting Daesh-linked cell near Lebanese border",
+            "pages": [
+              {
+                "text": "Two Syrian security personnel were killed and five others wounded on Thursday during an operation targeting a Daesh-linked cell in Rankous, near the Lebanese border, according to security sources reported by Arab News. The Internal Security Forces stated the operation was conducted alongside the General Intelligence Service in the western Damascus countryside. An initial statement from the forces provided no details regarding the circumstances of the casualties or the specific outcome of the raid. 1"
+              }
+            ],
+            "uncertainties": [
+              "The exact calendar date of the Thursday raid is not established by the available evidence.",
+              "The initial statement from the Internal Security Forces gave no details on the circumstances of the casualties or the outcome of the operation."
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1597,
+            "completion_tokens": 167,
+            "total_tokens": 1764,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 19.07272720336914
+          },
+          "latencyMs": 5011,
+          "safeHeaders": {
+            "cf-ray": "a4e983074ef2311a-IAD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:c67cc90ab39a3340",
+      "title": "UPDF opens fire on tourists, law enforcement personnel in Rangamati's Sajek: ISPR",
       "finalStatus": "accepted",
       "previousMatch": null,
       "contentVersion": 1,
-      "evidenceFingerprint": "bd5b98031e71d3a23729b9fb21a5f8bf41dc4e6192e06885669a29851535532a",
+      "evidenceFingerprint": "2ec8e373d7222f71c369daba000170226e110dfa80f934e4bd6e98b6cced187e",
       "allowedExactDates": [
-        "2004-01-01",
         "2026-10-21",
-        "2026-10-20"
+        "2026-10-22"
       ],
       "dateValidation": {
         "valid": true,
-        "generated_exact_dates": [
-          {
-            "raw": "October 21, 2026",
-            "date": "2026-10-21"
-          },
-          {
-            "raw": "January 1, 2004",
-            "date": "2004-01-01"
-          },
-          {
-            "raw": "October 20, 2026",
-            "date": "2026-10-20"
-          }
-        ],
+        "generated_exact_dates": [],
         "allowed_exact_dates": [
-          "2004-01-01",
           "2026-10-21",
-          "2026-10-20"
+          "2026-10-22"
         ],
         "unsupported_exact_dates": [],
         "weekday_date_pairs": [],
@@ -2466,119 +2060,189 @@
       "contentValidation": {
         "valid": true,
         "reasons": [],
-        "wordCount": 220,
-        "pageCount": 2
+        "wordCount": 158,
+        "pageCount": 1
       },
       "scope": {
         "fragments": [
           {
             "fragmentId": "F01",
-            "sourceId": "news:daily-star-bd:8e8cb71c1851852d64554f38",
+            "sourceId": "news:prothom-alo:a98bb96a2fe920730153901c",
             "membership": "central",
             "reason": "shares selected event actors/action or multiple high-specificity title terms"
           },
           {
             "fragmentId": "F02",
-            "sourceId": "news:daily-star-bd:8e8cb71c1851852d64554f38",
+            "sourceId": "news:prothom-alo:a98bb96a2fe920730153901c",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F03",
-            "sourceId": "news:daily-star-bd:8e8cb71c1851852d64554f38",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+            "sourceId": "news:prothom-alo:a98bb96a2fe920730153901c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
           },
           {
             "fragmentId": "F04",
-            "sourceId": "news:daily-star-bd:8e8cb71c1851852d64554f38",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+            "sourceId": "news:prothom-alo:a98bb96a2fe920730153901c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
           },
           {
             "fragmentId": "F05",
-            "sourceId": "news:daily-star-bd:8e8cb71c1851852d64554f38",
+            "sourceId": "news:prothom-alo:a98bb96a2fe920730153901c",
             "membership": "central",
             "reason": "shares selected event actors/action or multiple high-specificity title terms"
           },
           {
             "fragmentId": "F06",
-            "sourceId": "news:daily-star-bd:8e8cb71c1851852d64554f38",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+            "sourceId": "news:prothom-alo:a98bb96a2fe920730153901c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
           },
           {
             "fragmentId": "F07",
-            "sourceId": "news:daily-star-bd:8e8cb71c1851852d64554f38",
+            "sourceId": "news:prothom-alo:a98bb96a2fe920730153901c",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F08",
-            "sourceId": "news:daily-star-bd:8e8cb71c1851852d64554f38",
+            "sourceId": "news:prothom-alo:a98bb96a2fe920730153901c",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F09",
-            "sourceId": "news:daily-star-bd:8e8cb71c1851852d64554f38",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+            "sourceId": "news:prothom-alo:a98bb96a2fe920730153901c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
           },
           {
             "fragmentId": "F10",
-            "sourceId": "news:daily-star-bd:8e8cb71c1851852d64554f38",
-            "membership": "supporting_context",
-            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+            "sourceId": "news:prothom-alo:a98bb96a2fe920730153901c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
           },
           {
             "fragmentId": "F11",
-            "sourceId": "news:daily-star-bd:8e8cb71c1851852d64554f38",
+            "sourceId": "news:prothom-alo:a98bb96a2fe920730153901c",
             "membership": "supporting_context",
             "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           },
           {
             "fragmentId": "F12",
-            "sourceId": "news:daily-star-bd:8e8cb71c1851852d64554f38",
+            "sourceId": "news:financial-express-bd:9d0bf5c462bfaf42b2a6c08a",
             "membership": "central",
             "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:financial-express-bd:9d0bf5c462bfaf42b2a6c08a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:financial-express-bd:9d0bf5c462bfaf42b2a6c08a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F15",
+            "sourceId": "news:financial-express-bd:9d0bf5c462bfaf42b2a6c08a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F16",
+            "sourceId": "news:financial-express-bd:9d0bf5c462bfaf42b2a6c08a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F17",
+            "sourceId": "news:financial-express-bd:9d0bf5c462bfaf42b2a6c08a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F18",
+            "sourceId": "news:financial-express-bd:9d0bf5c462bfaf42b2a6c08a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F19",
+            "sourceId": "news:financial-express-bd:9d0bf5c462bfaf42b2a6c08a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F20",
+            "sourceId": "news:financial-express-bd:9d0bf5c462bfaf42b2a6c08a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F21",
+            "sourceId": "news:financial-express-bd:9d0bf5c462bfaf42b2a6c08a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F22",
+            "sourceId": "news:financial-express-bd:9d0bf5c462bfaf42b2a6c08a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F23",
+            "sourceId": "news:financial-express-bd:9d0bf5c462bfaf42b2a6c08a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
           }
         ]
       },
       "provenance": [
         {
-          "sourceId": "news:daily-star-bd:8e8cb71c1851852d64554f38",
-          "publisher": "The Daily Star Bangladesh",
-          "url": "https://thedailystar.net/news/bangladesh/obituary/news/star-journalist-sohrab-hossain-laid-rest-4304666",
+          "sourceId": "news:prothom-alo:a98bb96a2fe920730153901c",
+          "publisher": "Prothom Alo English",
+          "url": "https://en.prothomalo.com/bangladesh/local-news/a1lvntm310",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:financial-express-bd:9d0bf5c462bfaf42b2a6c08a",
+          "publisher": "The Financial Express Bangladesh",
+          "url": "https://thefinancialexpress.com.bd/crime/updf-opens-fire-on-tourists-law-enforces-in-sajek-ispr",
           "wireOrigin": null,
           "sourceType": "independent_reporting"
         }
       ],
       "image": {
-        "url": "https://www.thedailystar.net/sites/default/files/styles/social_share/public/2026-10/Sohrab%20Hossain.png",
-        "alt": "Star journalist Sohrab Hossain laid to rest",
+        "url": "https://media.prothomalo.com/prothomalo-english/2026-10-22/xfr4cqhz/Sajek-gunfire.avif",
+        "alt": "UPDF opens fire on tourists, law enforcement personnel in Rangamati's Sajek: ISPR",
         "status": "event-specific",
-        "source_url": "https://thedailystar.net/news/bangladesh/obituary/news/star-journalist-sohrab-hossain-laid-rest-4304666",
-        "attribution": "The Daily Star Bangladesh",
+        "source_url": "https://en.prothomalo.com/bangladesh/local-news/a1lvntm310",
+        "attribution": "Prothom Alo English",
         "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
       },
       "attempts": [
         {
-          "timestamp": "2026-10-22T00:46:32.341Z",
-          "finishedAt": "2026-10-22T00:46:44.971Z",
+          "timestamp": "2026-10-22T15:25:01.849Z",
+          "finishedAt": "2026-10-22T15:25:18.890Z",
           "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
           "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
           "httpStatus": 200,
           "internalErrors": [],
-          "rawStructuredText": "{\n  \"headline\": \"Journalist Sohrab Hossain laid to rest in Patuakhali, Bangladesh\",\n  \"pages\": [\n    {\n      \"text\": \"Md Sohrab Hossain, a correspondent for The Daily Star in Patuakhali for over 22 years and vice-president of the Patuakhali Press Club, was laid to rest on the morning of October 21, 2026, at his family graveyard in Auliapur, Patuakhali. His namaz-e-janaza was held at 10:00am at the Auliapur Sabina Akter High School grounds, attended by local residents, colleagues, fellow journalists, and relatives. During the service, his sons, Atikur Rahman and Sufian Molla, spoke. Representatives from various social, political, and professional organizations, including The Daily Star’s Content Editor Md Al-Amin and Patuakhali Press Club President Zakir Hossain, also paid their respects. Following the ceremony, Hossain was buried next to the grave of his elder brother, Maulana Wahab Molla. According to The Daily Star, Hossain joined the publication on January 1, 2004.\"\n    },\n    {\n      \"text\": \"Hossain died at Patuakhali Medical College Hospital on October 20, 2026, at the age of 55. A hospital death certificate listed cardiac arrest as the cause of death. Family members stated that on the morning of October 21, 2026, Hossain was riding a motorbike from his village home in Auliapur toward his residence at Banani Mor. At approximately 8:30am, he reportedly felt pain and stopped near the Molla bus stand before collapsing on the road. Local residents and family members transported him to the hospital, where he later died.\"\n    }\n  ]\n}",
+          "rawStructuredText": "{\n  \"headline\": \"Armed UPDF members allegedly fire on tourists and law enforcement in Sajek, Bangladesh\",\n  \"pages\": [\n    {\n      \"text\": \"Armed members of the United People's Democratic Front (UPDF) allegedly opened fire on tourists and law enforcement personnel in the Gangaram Bazaar area of Sajek, Rangamati district, according to the Inter-Services Public Relations (ISPR). The ISPR stated that approximately 30 to 40 rounds were fired at law enforcement and tourists around 11:00 AM on a Thursday. An army patrol team returned fire in self-defense and to ensure tourist safety, causing the armed individuals to flee the scene. No casualties were reported, and approximately 3,000 stranded tourists were subsequently evacuated safely to Khagrachari through coordinated efforts by the Bangladesh Army and police. The ISPR described the violence and blockade as apparently premeditated, alleging that the UPDF forcibly used local residents as human shields and coerced them into participating in the blockade. The statement noted that a faction of armed UPDF members had taken positions in the tourist area following ongoing security operations in parts of the Chittagong Hill Tracts.\"\n    }\n  ]\n}",
           "parsed": {
-            "headline": "Journalist Sohrab Hossain laid to rest in Patuakhali, Bangladesh",
+            "headline": "Armed UPDF members allegedly fire on tourists and law enforcement in Sajek, Bangladesh",
             "pages": [
               {
-                "text": "Md Sohrab Hossain, a correspondent for The Daily Star in Patuakhali for over 22 years and vice-president of the Patuakhali Press Club, was laid to rest on the morning of October 21, 2026, at his family graveyard in Auliapur, Patuakhali. His namaz-e-janaza was held at 10:00am at the Auliapur Sabina Akter High School grounds, attended by local residents, colleagues, fellow journalists, and relatives. During the service, his sons, Atikur Rahman and Sufian Molla, spoke. Representatives from various social, political, and professional organizations, including The Daily Star’s Content Editor Md Al-Amin and Patuakhali Press Club President Zakir Hossain, also paid their respects. Following the ceremony, Hossain was buried next to the grave of his elder brother, Maulana Wahab Molla. According to The Daily Star, Hossain joined the publication on January 1, 2004."
-              },
-              {
-                "text": "Hossain died at Patuakhali Medical College Hospital on October 20, 2026, at the age of 55. A hospital death certificate listed cardiac arrest as the cause of death. Family members stated that on the morning of October 21, 2026, Hossain was riding a motorbike from his village home in Auliapur toward his residence at Banani Mor. At approximately 8:30am, he reportedly felt pain and stopped near the Molla bus stand before collapsing on the road. Local residents and family members transported him to the hospital, where he later died."
+                "text": "Armed members of the United People's Democratic Front (UPDF) allegedly opened fire on tourists and law enforcement personnel in the Gangaram Bazaar area of Sajek, Rangamati district, according to the Inter-Services Public Relations (ISPR). The ISPR stated that approximately 30 to 40 rounds were fired at law enforcement and tourists around 11:00 AM on a Thursday. An army patrol team returned fire in self-defense and to ensure tourist safety, causing the armed individuals to flee the scene. No casualties were reported, and approximately 3,000 stranded tourists were subsequently evacuated safely to Khagrachari through coordinated efforts by the Bangladesh Army and police. The ISPR described the violence and blockade as apparently premeditated, alleging that the UPDF forcibly used local residents as human shields and coerced them into participating in the blockade. The statement noted that a faction of armed UPDF members had taken positions in the tourist area following ongoing security operations in parts of the Chittagong Hill Tracts."
               }
             ]
           },
@@ -2594,17 +2258,360 @@
           },
           "finishReason": "stop",
           "usage": {
-            "prompt_tokens": 1720,
-            "completion_tokens": 411,
-            "total_tokens": 2131,
+            "prompt_tokens": 3495,
+            "completion_tokens": 258,
+            "total_tokens": 3753,
             "prompt_tokens_details": {
-              "cached_tokens": 128
+              "cached_tokens": 0
             },
-            "neurons": 26.263635635375977
+            "neurons": 38.80908966064453
           },
-          "latencyMs": 12630,
+          "latencyMs": 17040,
           "safeHeaders": {
-            "cf-ray": "a4e47c4c2e22db9e-LAX"
+            "cf-ray": "a4e98326a899311a-IAD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:39dbdf3a2887e6a3",
+      "title": "Have scientists finally found a way to save the banana from disaster?",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "a7aa0e1dfd05b23d9a10325ad6c584772f8a38e3ca345c095c455184390d846d",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 202,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:guardian:fc12c94ff68c1dd884237bf6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:guardian:fc12c94ff68c1dd884237bf6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:guardian:fc12c94ff68c1dd884237bf6",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:guardian:fc12c94ff68c1dd884237bf6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:guardian:fc12c94ff68c1dd884237bf6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:guardian:fc12c94ff68c1dd884237bf6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:guardian:fc12c94ff68c1dd884237bf6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:guardian:fc12c94ff68c1dd884237bf6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:guardian:fc12c94ff68c1dd884237bf6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:guardian:fc12c94ff68c1dd884237bf6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:guardian:fc12c94ff68c1dd884237bf6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:guardian:fc12c94ff68c1dd884237bf6",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:guardian:fc12c94ff68c1dd884237bf6",
+          "publisher": "The Guardian Science",
+          "url": "https://theguardian.com/global-development/2026/oct/22/have-scientists-finally-found-a-way-to-save-the-banana-from-disaster",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.guim.co.uk/img/media/acd57c35350ea477e5e54107c57603bee7d5a111/127_0_1705_1365/master/1705.jpg?width=140&quality=85&auto=format&fit=max&s=e0064b0c35eecc61d9eb7666e6cf1427",
+        "alt": "Have scientists finally found a way to save the banana from disaster?",
+        "status": "event-specific",
+        "source_url": "https://theguardian.com/global-development/2026/oct/22/have-scientists-finally-found-a-way-to-save-the-banana-from-disaster",
+        "attribution": "The Guardian Science",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-22T15:25:18.891Z",
+          "finishedAt": "2026-10-22T15:25:24.476Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Yelloway research collaboration develops fully fertile Cavendish banana\", \"pages\": [{\"text\": \"Yelloway, a research collaboration between the banana company Chiquita and crop-improvement company KeyGene, announced this month that it has developed a fully fertile Cavendish banana. Because Cavendish bananas typically have three sets of chromosomes, they are usually sterile. The development of a fertile version may allow for cross-breeding to create new, commercially viable banana varieties that are resistant to disease. This follows reports of threats to the Cavendish, which is the variety most commonly found in global fruit bowls. Dr. Jose De Vega, an expert on crop genomics at the Earlham Institute in Norwich, noted that the Cavendish is under threat from diseases including Tropical Race 4 (TR4), a strain of Panama disease that has spread from Southeast Asia to Australia, Africa, the Middle East, and Latin America. De Vega cited a December 2025 report from Ecuador, the world's largest banana exporter, as a particularly worrying development regarding the disease. The threat to banana varieties impacts global supply chains and the food security of millions in the tropics who rely on bananas and plantains as a staple food and source of income. Globally, approximately 139 million tonnes of bananas are grown annually, making them the second most consumed fruit after the tomato.\"}]}",
+          "parsed": {
+            "headline": "Yelloway research collaboration develops fully fertile Cavendish banana",
+            "pages": [
+              {
+                "text": "Yelloway, a research collaboration between the banana company Chiquita and crop-improvement company KeyGene, announced this month that it has developed a fully fertile Cavendish banana. Because Cavendish bananas typically have three sets of chromosomes, they are usually sterile. The development of a fertile version may allow for cross-breeding to create new, commercially viable banana varieties that are resistant to disease. This follows reports of threats to the Cavendish, which is the variety most commonly found in global fruit bowls. Dr. Jose De Vega, an expert on crop genomics at the Earlham Institute in Norwich, noted that the Cavendish is under threat from diseases including Tropical Race 4 (TR4), a strain of Panama disease that has spread from Southeast Asia to Australia, Africa, the Middle East, and Latin America. De Vega cited a December 2025 report from Ecuador, the world's largest banana exporter, as a particularly worrying development regarding the disease. The threat to banana varieties impacts global supply chains and the food security of millions in the tropics who rely on bananas and plantains as a staple food and source of income. Globally, approximately 139 million tonnes of bananas are grown annually, making them the second most consumed fruit after the tomato."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1818,
+            "completion_tokens": 273,
+            "total_tokens": 2091,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 23.97272491455078
+          },
+          "latencyMs": 5585,
+          "safeHeaders": {
+            "cf-ray": "a4e9839119a0311a-IAD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:b47cb029872341ad",
+      "title": "U.S. and Israel are planning for a possible attack on Iran, source tells NPR",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "de964c3715e6132742c774a31efba1b20152d719445d2b4aa5372a3d0dac1204",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 215,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:npr:6059a50d0ef226f4aa4c1ece",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:npr:6059a50d0ef226f4aa4c1ece",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:npr:6059a50d0ef226f4aa4c1ece",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:npr:6059a50d0ef226f4aa4c1ece",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:npr:6059a50d0ef226f4aa4c1ece",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:npr:6059a50d0ef226f4aa4c1ece",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:npr:6059a50d0ef226f4aa4c1ece",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:npr:6059a50d0ef226f4aa4c1ece",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:npr:6059a50d0ef226f4aa4c1ece",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:npr:6059a50d0ef226f4aa4c1ece",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:npr:6059a50d0ef226f4aa4c1ece",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:npr:6059a50d0ef226f4aa4c1ece",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:npr:6059a50d0ef226f4aa4c1ece",
+          "publisher": "NPR World",
+          "url": "https://npr.org/2026/10/22/nx-s1-6011514/us-israel-iran-war",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://npr.brightspotcdn.com/dims3/default/strip/false/crop/8192x4608+0+428/resize/1400/quality/85/format/jpeg/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2F49%2F98%2F9041826c489783e12ef6068beb87%2Fgettyimages-2300727417.jpg",
+        "alt": "U.S. and Israel are planning for a possible attack on Iran, source tells NPR",
+        "status": "event-specific",
+        "source_url": "https://npr.org/2026/10/22/nx-s1-6011514/us-israel-iran-war",
+        "attribution": "NPR World",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-22T15:25:24.476Z",
+          "finishedAt": "2026-10-22T15:25:30.898Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"U.S. and Israel planning for possible attack on Iran, source tells NPR\",\n  \"pages\": [\n    {\n      \"text\": \"The United States and Israel are preparing plans for a possible attack on Iran in early November, following the U.S. midterm elections, according to a person briefed on war planning who spoke to NPR on Thursday. The source, who requested anonymity to discuss the preparations, stated that the U.S. is currently amassing forces in the region to be ready for an attack by early November, though these preparations could also serve as part of a campaign to pressure Iran into a diplomatic deal. 10/22/2026. According to the source, Israel had initially planned to strike Iran in mid-October, approximately two weeks before the Israeli elections on Oct. 27, but President Trump objected to that timing.\"\n    },\n    {\n      \"text\": \"In response to the reported planning, Iranian Foreign Minister Abbas Araghchi told Iranian state media on Thursday that the country is prepared for both diplomacy and war, stating that any scenario is conceivable, including an attack by the U.S. and Israel. Iranian state media also cited a security source claiming that if Iranian officials or civilian infrastructure are attacked, Iran would retaliate by targeting U.S. interests in the region, as well as the assets and infrastructure of countries participating in the war. Israeli Prime Minister Benjamin Netanyahu, who is seeking reelection, is campaigning on a threat to topple the Iranian regime.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "U.S. and Israel planning for possible attack on Iran, source tells NPR",
+            "pages": [
+              {
+                "text": "The United States and Israel are preparing plans for a possible attack on Iran in early November, following the U.S. midterm elections, according to a person briefed on war planning who spoke to NPR on Thursday. The source, who requested anonymity to discuss the preparations, stated that the U.S. is currently amassing forces in the region to be ready for an attack by early November, though these preparations could also serve as part of a campaign to pressure Iran into a diplomatic deal. 10/22/2026. According to the source, Israel had initially planned to strike Iran in mid-October, approximately two weeks before the Israeli elections on Oct. 27, but President Trump objected to that timing."
+              },
+              {
+                "text": "In response to the reported planning, Iranian Foreign Minister Abbas Araghchi told Iranian state media on Thursday that the country is prepared for both diplomacy and war, stating that any scenario is conceivable, including an attack by the U.S. and Israel. Iranian state media also cited a security source claiming that if Iranian officials or civilian infrastructure are attacked, Iran would retaliate by targeting U.S. interests in the region, as well as the assets and infrastructure of countries participating in the war. Israeli Prime Minister Benjamin Netanyahu, who is seeking reelection, is campaigning on a threat to topple the Iranian regime."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1762,
+            "completion_tokens": 331,
+            "total_tokens": 2093,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 25.045454025268555
+          },
+          "latencyMs": 6422,
+          "safeHeaders": {
+            "cf-ray": "a4e983b409ca311a-IAD"
           },
           "complete": true,
           "structuralStatus": "valid_card",
@@ -2616,18 +2623,8 @@
   "rejections": [
     {
       "stage": "evidence",
-      "eventId": "event:22ad557ffcb87998",
-      "reason": "central action or development is unclear"
-    },
-    {
-      "stage": "evidence",
-      "eventId": "event:03f7b2a766c00f88",
+      "eventId": "event:57915e875e156032",
       "reason": "too little complete accessible reporting"
-    },
-    {
-      "stage": "evidence",
-      "eventId": "event:acbab0f07872e0db",
-      "reason": "central action or development is unclear"
     },
     {
       "stage": "evidence",
@@ -2636,58 +2633,38 @@
     },
     {
       "stage": "evidence",
-      "eventId": "event:93f1fd29f4176935",
-      "reason": "too little complete accessible reporting; principal actor or institution is unclear"
-    },
-    {
-      "stage": "evidence",
-      "eventId": "event:f65d6e1ad2093890",
-      "reason": "too little complete accessible reporting; central action or development is unclear"
-    },
-    {
-      "stage": "evidence",
-      "eventId": "event:8a89faa80ccdf391",
-      "reason": "central action or development is unclear"
-    },
-    {
-      "stage": "evidence",
-      "eventId": "event:f9f271569f6f2d90",
-      "reason": "central action or development is unclear"
-    },
-    {
-      "stage": "evidence",
-      "eventId": "event:7b826369f5dfcfe4",
-      "reason": "evidence does not clearly support the central headline"
-    },
-    {
-      "stage": "evidence",
-      "eventId": "event:0b15f3751c9260b8",
-      "reason": "evidence does not clearly support the central headline"
-    },
-    {
-      "stage": "evidence",
-      "eventId": "event:762245c1a8fd3ec5",
-      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline"
-    },
-    {
-      "stage": "evidence",
-      "eventId": "event:c28a0581ea5c0edd",
+      "eventId": "event:68b3539c3a6871a4",
       "reason": "too little complete accessible reporting"
     },
     {
       "stage": "evidence",
-      "eventId": "event:16529044a8c8d2fd",
+      "eventId": "event:cd294f4b38d3ea2d",
       "reason": "central action or development is unclear"
     },
     {
       "stage": "evidence",
-      "eventId": "event:b272d470481537e1",
+      "eventId": "event:c7a4c63a71c9184f",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:ecdd393737c7abc2",
+      "reason": "principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:3f7bd5d80a9d4a03",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:007ba21e48c3679f",
       "reason": "central action or development is unclear"
     },
     {
       "stage": "evidence",
-      "eventId": "event:07b162f8c1456ff8",
-      "reason": "central action or development is unclear"
+      "eventId": "event:7594830af4c38135",
+      "reason": "too little complete accessible reporting"
     },
     {
       "stage": "evidence",
@@ -2701,18 +2678,18 @@
     },
     {
       "stage": "evidence",
-      "eventId": "event:e99e80f8ea90ba9c",
+      "eventId": "event:426fea4ab3a33a7e",
       "reason": "central action or development is unclear"
     },
     {
       "stage": "evidence",
-      "eventId": "event:b6eafb3e0ce109cf",
+      "eventId": "event:acbab0f07872e0db",
       "reason": "central action or development is unclear"
     },
     {
       "stage": "evidence",
-      "eventId": "event:0effb206941a181a",
-      "reason": "too little complete accessible reporting; central action or development is unclear"
+      "eventId": "event:d0ffc5b3f3ca89b3",
+      "reason": "central action or development is unclear"
     },
     {
       "stage": "evidence",
@@ -2721,59 +2698,48 @@
     },
     {
       "stage": "evidence",
-      "eventId": "event:c6e1c24b14d2a2d6",
+      "eventId": "event:da19de935bd081cb",
       "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
     },
     {
       "stage": "evidence",
-      "eventId": "event:b9638ce476850125",
-      "reason": "too little complete accessible reporting; central action or development is unclear"
-    },
-    {
-      "stage": "evidence",
-      "eventId": "event:1ec0fc34b4e1055d",
+      "eventId": "event:feaa573757dc2434",
       "reason": "central action or development is unclear"
     },
     {
       "stage": "evidence",
-      "eventId": "event:1bfe06647b602923",
+      "eventId": "event:dc9edd02452e22ee",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:b8cb8f51de9fd6a5",
       "reason": "central action or development is unclear"
     },
     {
       "stage": "evidence",
-      "eventId": "event:6e8546d4b6f8d948",
+      "eventId": "event:4fd503ea01a2c094",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6503c4bd0ba33417",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f3bf092d50a50b46",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:178fa0f22d0b8733",
       "reason": "central action or development is unclear"
     },
     {
       "stage": "evidence",
-      "eventId": "event:f70c3ce65d4f0cbe",
-      "reason": "evidence does not clearly support the central headline"
-    },
-    {
-      "stage": "evidence",
-      "eventId": "event:bc96ccdd1dadf092",
-      "reason": "central action or development is unclear"
-    },
-    {
-      "stage": "evidence",
-      "eventId": "event:eb6811044853bdc9",
-      "reason": "central action or development is unclear"
-    },
-    {
-      "stage": "evidence",
-      "eventId": "event:808fe809726a433c",
-      "reason": "central action or development is unclear"
-    },
-    {
-      "stage": "evidence",
-      "eventId": "event:bbf266e84422f403",
-      "reason": "central action or development is unclear"
-    },
-    {
-      "eventId": "event:7250cc5e2a2179d9",
-      "title": "President Mahama open to Russian security assistance in Sahel, says anyone fighting terrorism is welcome",
-      "stage": "unchanged",
-      "reason": "evidence fingerprint unchanged from published card"
+      "eventId": "event:eba748eb6aceb3a2",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
     },
     {
       "eventId": "event:ce83dc3a449e4113",
@@ -2788,152 +2754,164 @@
       "reason": "evidence fingerprint unchanged from published card"
     },
     {
-      "eventId": "event:ae8869eb7c294c65",
-      "title": "EU welcomes Syria’s continued cooperation with chemical weapons watchdog",
+      "eventId": "event:e8e6a8aa224d3822",
+      "title": "Oshawa’s voter turnout in 2022 was 18 per cent. Here’s your guide to voting this year",
       "stage": "unchanged",
       "reason": "evidence fingerprint unchanged from published card"
     },
     {
-      "eventId": "event:a1a8f71ccee618d4",
-      "title": "Israel opposition decries Netanyahu ‘circus’ after Iran threats",
+      "eventId": "event:1e4b67a29442c16a",
+      "title": "Deforestation in Brazil’s Amazon and Cerrado savanna at lowest rate ever recorded",
       "stage": "editorial-quality",
-      "reason": "adjusted selection score 27.92 is below the 30-point generation floor"
+      "reason": "adjusted selection score 29.29 is below the 30-point generation floor"
     },
     {
-      "eventId": "event:42bfe0aad05dc64f",
-      "title": "Russian drone attack kills two in Kyiv as residents survey damage",
+      "eventId": "event:bc4a98e127c9f289",
+      "title": "Israeli fire kills 3 people in Gaza, medics say",
       "stage": "editorial-quality",
-      "reason": "adjusted selection score 23.01 is below the 30-point generation floor"
+      "reason": "adjusted selection score 25.44 is below the 30-point generation floor"
     },
     {
       "eventId": "event:299c33a7a21614e6",
       "title": "In her riding, United Conservative Party leaders back Danielle Smith",
       "stage": "editorial-quality",
-      "reason": "adjusted selection score 20.84 is below the 30-point generation floor"
+      "reason": "adjusted selection score 14.18 is below the 30-point generation floor"
     },
     {
-      "eventId": "event:2f62b1f8b511cba9",
-      "title": "Dr Zanetor urges human oversight of AI in journalism, music industry",
+      "eventId": "event:be2c19ab6935d176",
+      "title": "Most BOJ watchers expect next interest rate hike in December",
       "stage": "editorial-quality",
-      "reason": "adjusted selection score 18.77 is below the 30-point generation floor"
+      "reason": "adjusted selection score 10.27 is below the 30-point generation floor"
     },
     {
-      "eventId": "event:5dfe8d3aacec2cfd",
-      "title": "Some US diplomats told to leave Saudi Arabia amid Houthi attacks",
+      "eventId": "event:700bd231b9b9106d",
+      "title": "State appeals Court of Appeal ruling suspending Hanan’s trial over charge sheet dispute",
       "stage": "editorial-quality",
-      "reason": "adjusted selection score 16.92 is below the 30-point generation floor"
+      "reason": "adjusted selection score 8.94 is below the 30-point generation floor"
     },
     {
-      "eventId": "event:10683cd6146d029b",
-      "title": "Nigeria’s parks chief stresses conservation gains amid struggle to protect wildlife",
+      "eventId": "event:2d5be6cbff99bc4a",
+      "title": "Bangladesh, Algeria agree to enhance energy cooperation, bilateral trade",
       "stage": "editorial-quality",
-      "reason": "adjusted selection score 9.83 is below the 30-point generation floor"
+      "reason": "adjusted selection score 3.27 is below the 30-point generation floor"
     },
     {
-      "eventId": "event:8ffc67332735cf3b",
-      "title": "Toronto's OCAD University to offer 150 scholarships to mark its 150th anniversary",
+      "eventId": "event:e005bf43620e385f",
+      "title": "Yemen: 75 new recruits killed in Houthi missile strike laid to rest",
       "stage": "editorial-quality",
-      "reason": "adjusted selection score 9.72 is below the 30-point generation floor"
+      "reason": "adjusted selection score 2.02 is below the 30-point generation floor"
     },
     {
-      "eventId": "event:df829421825b69b6",
-      "title": "Woman, 65, killed in shark attack at South African beach",
+      "eventId": "event:80e92e1099d053f4",
+      "title": "Russia bombards Kyiv with missiles hours after agreeing to resume talks with Ukraine",
       "stage": "editorial-quality",
-      "reason": "adjusted selection score 1.29 is below the 30-point generation floor"
+      "reason": "adjusted selection score -4.29 is below the 30-point generation floor"
     },
     {
-      "eventId": "event:7bb65bd5ee15531a",
-      "title": "Bank credit remains scarce in Bangladesh where climate risks are highest",
+      "eventId": "event:73beec7a83a744e5",
+      "title": "Carney, Erdogan launch ‘strong and resilient’ Canada-Turkiye partnership",
       "stage": "editorial-quality",
-      "reason": "adjusted selection score -1.18 is below the 30-point generation floor"
+      "reason": "adjusted selection score -9.1 is below the 30-point generation floor"
     },
     {
-      "eventId": "event:c79ac9ea2ed7bcbe",
-      "title": "UK-Oman partnership vital for safeguarding global trade: City’s lady mayor",
+      "eventId": "event:7fbf8a90cb7c29eb",
+      "title": "Jordan, Syria stress need for strategic partnership",
       "stage": "editorial-quality",
-      "reason": "adjusted selection score -2.58 is below the 30-point generation floor"
+      "reason": "adjusted selection score -12.12 is below the 30-point generation floor"
     },
     {
-      "eventId": "event:6a3d8c7f11b69404",
-      "title": "KNUST Engineering College launches 75th anniversary, eyes Gh¢40m innovation building",
+      "eventId": "event:3bc172d78789a4d5",
+      "title": "Extension officer urges farmers to maintain good agriculture practices",
       "stage": "editorial-quality",
-      "reason": "adjusted selection score -6.54 is below the 30-point generation floor"
+      "reason": "adjusted selection score -13.08 is below the 30-point generation floor"
     },
     {
-      "eventId": "event:3f7501ca8ef2dc6d",
-      "title": "US sanctions target Iran's rail sector as Tehran shifts cargo from sea routes to overland corridors",
+      "eventId": "event:692a1cf1f56ffe4e",
+      "title": "Star journalist Sohrab Hossain laid to rest",
       "stage": "editorial-quality",
-      "reason": "adjusted selection score -14.06 is below the 30-point generation floor"
+      "reason": "adjusted selection score -22.35 is below the 30-point generation floor"
     },
     {
-      "eventId": "event:4492488deae727d1",
-      "title": "Northern Alberta shows higher support for separation, especially in rural areas",
+      "eventId": "event:9c8d4076441c9d40",
+      "title": "UN expert urges Indonesia to reconsider involvement in Trump’s Gaza board",
       "stage": "editorial-quality",
-      "reason": "adjusted selection score -15.28 is below the 30-point generation floor"
+      "reason": "adjusted selection score -23.38 is below the 30-point generation floor"
     },
     {
-      "eventId": "event:506c137d641ac0af",
-      "title": "Labor, Coalition and crossbench MPs afraid at home and work after alleged attack on Helen Haines",
+      "eventId": "event:6527760429191bf6",
+      "title": "Ghana’s fiscal consolidation in 2025 largely driven by expenditure restraint, not revenue growth – ISSER",
       "stage": "editorial-quality",
-      "reason": "adjusted selection score -19.42 is below the 30-point generation floor"
+      "reason": "adjusted selection score -28.78 is below the 30-point generation floor"
     },
     {
-      "eventId": "event:e6e09e2a15e935d1",
-      "title": "Rev. Enoch Thompson inducted for second term as Ghana Baptist Convention President",
+      "eventId": "event:686c4f79ff3d1356",
+      "title": "'This war must end': UN and Swiss officials hold talks on Sudan conflict",
       "stage": "editorial-quality",
-      "reason": "adjusted selection score -25.87 is below the 30-point generation floor"
+      "reason": "adjusted selection score -29.67 is below the 30-point generation floor"
     },
     {
-      "eventId": "event:a6a46cfbe5b12efc",
-      "title": "Missiles hit Kyiv after Russia agrees to US call to resume Ukraine peace talks",
+      "eventId": "event:2d2caee34081e4e3",
+      "title": "Canada unveils $6.2bn plan to shield manufacturers as Trump trade tariffs bite",
       "stage": "editorial-quality",
-      "reason": "adjusted selection score -30.82 is below the 30-point generation floor"
+      "reason": "adjusted selection score -30.73 is below the 30-point generation floor"
     },
     {
-      "eventId": "event:a21180764917d8f6",
-      "title": "Over 125,000 killed in road crashes in nearly 12 years",
-      "stage": "editorial-quality",
-      "reason": "adjusted selection score -31.85 is below the 30-point generation floor"
-    },
-    {
-      "eventId": "event:21c3729c37b565b9",
-      "title": "Chow, 15 councillors criticize Bradford’s plan to spin off Toronto Water into public utility",
-      "stage": "editorial-quality",
-      "reason": "adjusted selection score -32.15 is below the 30-point generation floor"
-    },
-    {
-      "eventId": "event:b0086524c5623e8d",
-      "title": "Inflation pushes 8 to 10 million people below poverty line: Titumir",
+      "eventId": "event:e9865255add534e6",
+      "title": "President Mahama: ‘I’ll try to convince President Putin to have a ceasefire’",
       "stage": "content-structure",
-      "reason": "page 1 exposes a citation/list marker"
+      "reason": "summary is too thin for a self-contained beta card; page 1 ends mid-sentence; page 1 exposes a citation/list marker"
+    },
+    {
+      "eventId": "event:8f258d3c60f63e5d",
+      "title": "Some US diplomats told to leave Saudi Arabia amid Houthi attacks",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    },
+    {
+      "eventId": "event:e789531174717b06",
+      "title": "Egypt will 'defend Saudi territory' and won't attack Yemen, Sisi says",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    },
+    {
+      "eventId": "event:00f4c4c77b5a395c",
+      "title": "2 Syrian security personnel killed in raid targeting Daesh-linked cell near Lebanese border",
+      "stage": "content-structure",
+      "reason": "page 1 ends mid-sentence; page 1 exposes a citation/list marker"
+    },
+    {
+      "eventId": "event:d74b5819bed64bfb",
+      "title": "Two killed, three injured in highway collision in Narayanganj",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
     }
   ],
   "outcome": {
     "writerRequests": 8,
     "retries": 0,
-    "acceptedCards": 7,
-    "retainedCards": 118,
-    "skippedCards": 54,
-    "totalNeurons": 190.90908432006836,
-    "inputTokens": 13699,
-    "outputTokens": 2455,
-    "meanNeuronsPerAcceptedCard": 27.27,
-    "datasetBytes": 326264,
+    "acceptedCards": 6,
+    "retainedCards": 119,
+    "skippedCards": 48,
+    "totalNeurons": 196.0454502105713,
+    "inputTokens": 15163,
+    "outputTokens": 2134,
+    "meanNeuronsPerAcceptedCard": 32.67,
+    "datasetBytes": 324446,
     "thirdPartyCostUsd": 0,
     "imageStatus": {
-      "event-specific": 117,
-      "fallback": 3
+      "event-specific": 118,
+      "fallback": 2
     },
     "geographicDistribution": {
-      "Bangladesh": 26,
-      "Ghana": 24,
+      "Middle East": 29,
+      "Bangladesh": 25,
       "Canada": 19,
-      "GTA": 9,
-      "Syria": 10,
-      "Middle East": 28
+      "Ghana": 25,
+      "GTA": 10,
+      "Syria": 10
     }
   },
   "integrity": {
-    "datasetSha256": "586dd834c39a4143f2f1515625579d32686b1d5777bda7175e50a946e252ae51"
+    "datasetSha256": "bbcd0e7d6e82024a177f59b2e8bed9a4f4e7af3a6dab08b19220058a14aea86c"
   }
 }
