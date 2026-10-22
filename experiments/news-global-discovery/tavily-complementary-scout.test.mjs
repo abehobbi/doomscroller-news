@@ -1,10 +1,12 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { buildTavilyDiscoveryReport, TAVILY_COMPLEMENTARY_QUERIES } from './tavily-complementary-scout.mjs'
+import { buildTavilyDiscoveryReport, candidateRejectionReason, TAVILY_COMPLEMENTARY_QUERIES } from './tavily-complementary-scout.mjs'
 
-test('complementary Tavily discovery is fixed at five basic-credit searches', () => {
+test('complementary Tavily discovery is fixed at five distinct basic-credit roles', () => {
   assert.equal(TAVILY_COMPLEMENTARY_QUERIES.length, 5)
-  assert.deepEqual(new Set(TAVILY_COMPLEMENTARY_QUERIES.map(item => item.lane)), new Set(['world-major', 'priority-major', 'world-interesting', 'discovery']))
+  assert.equal(new Set(TAVILY_COMPLEMENTARY_QUERIES.map(item => item.role)).size, 5)
+  assert.deepEqual(new Set(TAVILY_COMPLEMENTARY_QUERIES.map(item => item.lane)), new Set(['world-major', 'priority-interesting', 'world-interesting', 'discovery']))
+  assert.ok(TAVILY_COMPLEMENTARY_QUERIES.every(item => /not |exclude|prefer /i.test(item.query)))
 })
 
 test('Tavily discovery normalizes duplicate URLs into the existing candidate shape', () => {
@@ -14,4 +16,23 @@ test('Tavily discovery normalizes duplicate URLs into the existing candidate sha
   ], { start: '2026-10-18', end: '2026-10-21' })
   assert.equal(report.provider, 'tavily'); assert.equal(report.creditsUsed, 2); assert.equal(report.uniqueCandidateCount, 1)
   assert.deepEqual(report.candidates[0].lanes, ['world-major', 'world-interesting'])
+})
+
+test('Tavily drops non-article result shapes before they consume shortlist space', () => {
+  const results = [
+    { title: 'Ministry of Lands Housing and Country Planning', url: 'https://example.gov/' },
+    { title: 'Company presents new pivotal trial data', url: 'https://example.com/releases/1' },
+    { title: 'Residents restore a century-old neighbourhood market', url: 'https://local.example/news/market-restoration' },
+    { title: 'Witness describes the harbour rescue', url: 'https://station.example/video/news/rescue/42' },
+  ]
+  assert.equal(candidateRejectionReason(results[0]), 'generic-index-title')
+  assert.equal(candidateRejectionReason(results[1]), 'promotional-or-press-release')
+  assert.equal(candidateRejectionReason(results[2]), null)
+  assert.equal(candidateRejectionReason(results[3]), 'video-only-result')
+
+  const report = buildTavilyDiscoveryReport([{ id: 'local', lane: 'world-interesting', creditsUsed: 1, results }], { start: '2026-10-18', end: '2026-10-21' })
+  assert.equal(report.rawResultCount, 4)
+  assert.equal(report.rejectedCandidateCount, 3)
+  assert.equal(report.uniqueCandidateCount, 1)
+  assert.deepEqual(report.rejectionCounts, { 'generic-index-title': 1, 'promotional-or-press-release': 1, 'video-only-result': 1 })
 })

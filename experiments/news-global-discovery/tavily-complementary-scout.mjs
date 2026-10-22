@@ -3,12 +3,27 @@ import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 
 export const TAVILY_COMPLEMENTARY_QUERIES = [
-  { id: 'tavily-world-consequential', lane: 'world-major', query: 'Most consequential concrete world news developments from the last 3 days that may be undercovered: government actions, conflict, law, economy, public health, disasters, human rights, or large direct human impact' },
-  { id: 'tavily-country-consequences', lane: 'world-major', query: 'Important country-level developments from the last 3 days outside the dominant global headlines, including outbreaks, court rulings, elections, inflation, protests, institutional failures, and civilian harm' },
-  { id: 'tavily-priority-regions', lane: 'priority-major', query: 'Consequential concrete news from the last 3 days in Syria, Bangladesh, Ghana, Canada, Toronto, or the wider Middle East; exclude speeches, publicity and opinion' },
-  { id: 'tavily-local-niche', lane: 'world-interesting', query: 'Genuinely fascinating small or niche local stories from the last 3 days about unusual places, livelihoods, culture, environmental change, animals, archaeology, or overlooked public problems' },
-  { id: 'tavily-discoveries', lane: 'discovery', query: 'Strong understandable scientific, medical, archaeology, nature, animal, climate, or space discoveries newly reported in the last 3 days' },
+  { id: 'tavily-undercovered-consequences', role: 'undercovered-public-impact', lane: 'world-major', query: 'Original local or regional reporting from the last 3 days about one concrete, consequential development outside the dominant international headlines: a court or regulator ruling, outbreak, labour action, institutional failure, civilian harm, public-service breakdown, or measurable economic shock. Return specific dated articles, not homepages, roundups, transcripts, videos, commentary, or press releases.' },
+  { id: 'tavily-priority-local-accountability', role: 'priority-local-recall', lane: 'priority-interesting', query: 'Original local reporting from the last 3 days in Syria, Bangladesh, Ghana, Canada, Toronto, or the wider Middle East about an overlooked public problem, abuse, livelihood, environmental burden, community response, or distinctive change in daily life. Prefer named places and affected people. Exclude speeches, publicity, ceremonies, partnerships, opinion, sport, and generic national summaries.' },
+  { id: 'tavily-small-place-change', role: 'small-place-local-reporting', lane: 'world-interesting', query: 'A specific, recently reported story from a village, island, neighbourhood, small town, fishery, farm, school, market, or local industry showing an unusual change in how people live or work. Prefer original local journalism with a named place and concrete event. Exclude tourism promotion, event listings, profiles without a new development, and institutional announcements.' },
+  { id: 'tavily-living-culture-heritage', role: 'living-culture-and-heritage', lane: 'world-interesting', query: 'A specific story newly reported in the last 3 days about a living tradition, cultural revival, historic site, craft, language, community memory, restoration, or heritage dispute that reveals something larger about a named place. Return reported articles, not calendars, travel guides, publicity, or ceremonial announcements.' },
+  { id: 'tavily-field-discoveries', role: 'accessible-field-discovery', lane: 'discovery', query: 'A concrete scientific, archaeological, historical, wildlife, ecology, medical, or space finding newly reported in the last 3 days, based on named researchers, fieldwork, a paper, excavation, tracking project, or official mission. Prefer accessible reporting with a clear finding. Exclude generic explainers, speculative releases, videos, and incremental specialist abstracts.' },
 ]
+
+const GENERIC_TITLE = /^(?:home|news|press releases?|international affairs forum|ministry of(?:\s+.+)?|latest news|top stories)$/i
+const PROMOTIONAL_TITLE = /\b(?:press release|to deliver (?:the )?(?:closing )?keynote|presents new pivotal trial data|sponsored content)\b/i
+
+export function candidateRejectionReason(result) {
+  const title = String(result?.title || '').trim()
+  let parsed
+  try { parsed = new URL(result?.url) } catch { return 'invalid-url' }
+  if (!title) return 'missing-title'
+  if (GENERIC_TITLE.test(title)) return 'generic-index-title'
+  if (PROMOTIONAL_TITLE.test(title)) return 'promotional-or-press-release'
+  if (/\.pdf$/i.test(parsed.pathname)) return 'non-article-pdf'
+  if (/\/(?:video|videos)\//i.test(parsed.pathname)) return 'video-only-result'
+  return null
+}
 
 function normalizeUrl(value) {
   try {
@@ -20,7 +35,13 @@ function normalizeUrl(value) {
 
 export function buildTavilyDiscoveryReport(searches, window) {
   const byUrl = new Map()
+  const rejectedCandidates = []
   for (const search of searches) for (const [index, result] of (search.results || []).entries()) {
+    const rejectionReason = candidateRejectionReason(result)
+    if (rejectionReason) {
+      rejectedCandidates.push({ queryId: search.id, title: String(result.title || '').trim(), url: String(result.url || ''), reason: rejectionReason })
+      continue
+    }
     const url = normalizeUrl(result.url)
     if (!url) continue
     const discovery = { lane: search.lane, region: null, queryId: search.id, position: index + 1 }
@@ -35,7 +56,8 @@ export function buildTavilyDiscoveryReport(searches, window) {
   return { schemaVersion: 1, createdAt: new Date().toISOString(), provider: 'tavily', requestedWindow: window,
     queryCount: searches.length, creditsUsed: searches.reduce((sum, item) => sum + Number(item.creditsUsed || 1), 0), costDollars: 0,
     rawResultCount: searches.reduce((sum, item) => sum + item.results.length, 0), uniqueCandidateCount: candidates.length,
-    searches: searches.map(({ results, ...item }) => ({ ...item, resultCount: results.length })), candidates }
+    rejectedCandidateCount: rejectedCandidates.length, rejectionCounts: Object.fromEntries([...new Set(rejectedCandidates.map(item => item.reason))].sort().map(reason => [reason, rejectedCandidates.filter(item => item.reason === reason).length])),
+    searches: searches.map(({ results, ...item }) => ({ ...item, resultCount: results.length })), rejectedCandidates, candidates }
 }
 
 async function main() {
