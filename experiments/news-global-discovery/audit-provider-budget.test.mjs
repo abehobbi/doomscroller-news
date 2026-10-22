@@ -6,14 +6,15 @@ import { FREE_ALLOWANCE_GUARD, summarizeProviderUsage } from './audit-provider-b
 test('one full daily run stays inside guarded Exa and Tavily monthly allowances', () => {
   const report = summarizeProviderUsage([
     { provider: 'exa', costDollars: 0.196 },
-    { provider: 'exa', costDollars: 0.056 },
-    { provider: 'tavily', creditsUsed: 10 },
-    { provider: 'tavily', creditsUsed: 4 },
-    { provider: 'tavily', creditsUsed: 8 },
+    { provider: 'exa', costDollars: 0.098 },
+    { provider: 'tavily', creditsUsed: 5 },
+    { provider: 'tavily', creditsUsed: 7 },
+    { provider: 'tavily', creditsUsed: 7 },
+    { provider: 'tavily', creditsUsed: 7 },
     { provider: 'tavily', creditsUsed: 3 },
   ])
   assert.equal(report.safeForDailyFullRun, true)
-  assert.deepEqual(report.projection, { exaMonthlyDollars: 7.812, tavilyMonthlyCredits: 775 })
+  assert.deepEqual(report.projection, { exaMonthlyDollars: 9.114, tavilyMonthlyCredits: 899 })
 })
 
 test('budget guard fails closed before either recurring allowance is exhausted', () => {
