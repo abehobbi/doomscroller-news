@@ -10,18 +10,27 @@ function destinationLane(card, evaluation) {
   return card.lane === 'priority-major' ? 'priority-interesting' : 'world-interesting'
 }
 
+function editorialRejectionReason(score) {
+  const evaluation = score?.evaluation
+  if (!evaluation) return 'missing complete editorial score'
+  if (evaluation.recommendation === 'reject' || score.editorialScore < 45) return evaluation.reason
+  if (evaluation.recommendation === 'possible' && (
+    score.editorialScore < 60
+    || evaluation.substantive_value < 3
+    || evaluation.distinctiveness < 3
+  )) return 'replaceable finalist did not meet the minimum substance and distinctiveness floor'
+  return null
+}
+
 export function applyEditorialScores(edition, scoreReport) {
   if (!scoreReport?.complete) throw new Error('Editorial scoring is incomplete; refusing to use partial model output.')
   const scores = new Map((scoreReport.results || []).map(result => [result.eventId, result]))
   const rejected = [], retained = []
   for (const card of edition.cards || []) {
     const score = scores.get(card.eventId)
-    if (!score?.evaluation) {
-      rejected.push({ eventId: card.eventId, headline: card.headline, reason: 'missing complete editorial score' })
-      continue
-    }
-    if (score.evaluation.recommendation === 'reject' || score.editorialScore < 45) {
-      rejected.push({ eventId: card.eventId, headline: card.headline, reason: score.evaluation.reason, editorialScore: score.editorialScore })
+    const rejectionReason = editorialRejectionReason(score)
+    if (rejectionReason) {
+      rejected.push({ eventId: card.eventId, headline: card.headline, reason: rejectionReason, editorialScore: score?.editorialScore })
       continue
     }
     retained.push({

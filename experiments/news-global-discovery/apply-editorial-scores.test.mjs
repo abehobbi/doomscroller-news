@@ -18,3 +18,13 @@ test('editorial gate rejects weak finalists, demotes false major labels and orde
 test('editorial gate fails closed on incomplete scoring', () => {
   assert.throws(() => applyEditorialScores({ cards: [] }, { complete: false }), /incomplete/)
 })
+
+test('replaceable possible stories need real substance while strong niche stories remain eligible', () => {
+  const edition = { createdAt: 'before', cards: [card('routine-school', 'world-interesting', 1), card('local-craft', 'priority-interesting', 2), card('strong-low-score', 'world-interesting', 3)] }
+  const routine = scored('routine-school', 59, 'possible'); routine.evaluation.substantive_value = 2; routine.evaluation.distinctiveness = 2
+  const craft = scored('local-craft', 78, 'possible'); craft.evaluation.substantive_value = 3; craft.evaluation.distinctiveness = 4
+  const strong = scored('strong-low-score', 58, 'strong'); strong.evaluation.substantive_value = 3; strong.evaluation.distinctiveness = 3
+  const result = applyEditorialScores(edition, { complete: true, candidateCount: 3, results: [routine, craft, strong] })
+  assert.deepEqual(result.cards.map(value => value.eventId), ['local-craft', 'strong-low-score'])
+  assert.deepEqual(result.editorialScoring.rejected.map(value => value.eventId), ['routine-school'])
+})
