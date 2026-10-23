@@ -8,6 +8,7 @@ import { publisherFamily, sourceFamilyFromEvidence } from './event-corroboration
 import { fetchPublicArticle } from './public-article.mjs'
 import { trustedContextDomain } from './enrich-generation-context.mjs'
 import { establishedPublisherDomain } from './selection-safeguards.mjs'
+import { headlinesExplicitlyConflict } from './select-five-lane-edition.mjs'
 
 const HIGH_RISK = /\b(?:attack(?:s|ed|ing)?|kill(?:s|ed|ing)?|deaths?|died|casualt(?:y|ies)|war|military|troops?|sanctions?|elections?|protests?|corrupt(?:ion)?|crimes?|courts?|police|detain(?:s|ed|ing)?|alleg(?:es|ed|ing|ation|ations)?|accus(?:es|ed|ing|ation|ations)?|strik(?:e|es|ing)|missiles?|drones?|ceasefire|hurricanes?|earthquakes?|floods?|outbreaks?)\b/i
 const MONTHS = new Map('january february march april may june july august september october november december'.split(' ').map((month, index) => [month, index]))
@@ -36,6 +37,10 @@ function publicationTime(member) {
 }
 
 export function evidenceMatchesTitle(title, evidence) {
+  const evidenceTitle = String(evidence || '').split('\n', 1)[0]
+  if (evidenceTitle && headlinesExplicitlyConflict({ title }, { title: evidenceTitle })) {
+    return { passes: false, sharedTerms: [], meaningfulSharedTerms: [], explicitConflict: true }
+  }
   const multilingualTokens = value => new Set(String(value || '').toLowerCase().normalize('NFKC').match(/[\p{L}\p{N}]{2,}/gu) || [])
   const headlineTerms = multilingualTokens(title)
   const evidenceTerms = multilingualTokens(String(evidence || '').slice(0, 5000))
@@ -44,7 +49,7 @@ export function evidenceMatchesTitle(title, evidence) {
     && !GENERIC_EVENT_TERMS.has(term) && !/^20\d{2}$/.test(term))
   const meaningfulSharedTerms = meaningfulHeadlineTerms.filter(term => evidenceTerms.has(term))
   const overlapPasses = sharedTerms.length >= Math.min(4, Math.max(2, Math.ceil(headlineTerms.size * 0.2)))
-  return { passes: overlapPasses && meaningfulSharedTerms.length >= 1, sharedTerms, meaningfulSharedTerms }
+  return { passes: overlapPasses && meaningfulSharedTerms.length >= 1, sharedTerms, meaningfulSharedTerms, explicitConflict: false }
 }
 
 export function reassessStoredSource(selection, source, context) {

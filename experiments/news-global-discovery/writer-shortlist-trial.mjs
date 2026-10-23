@@ -265,6 +265,7 @@ function normalizeNumberWords(value) {
     .replace(/\b(tk|bdt)\s*(\d+(?:\.\d+)?)\s*t\b/g, '$1 $2 trillion')
     .replace(/([£$€])\s*(\d+(?:\.\d+)?)\s*bn\b/g, '$1$2 billion')
     .replace(/([£$€])\s*(\d+(?:\.\d+)?)\s*m\b/g, '$1$2 million')
+    .replace(/\b(\d+(?:\.\d+)?)\s*b(?:n)?\b/g, '$1 billion')
     .replace(/\b(\d+(?:\.\d+)?)m\b(?=\s+(?:people|persons?|residents?|voters?|votes?|viewers?|users?|households?|families|workers?|jobs?|tonnes?|dollars?|pounds?|euros?)\b)/g, '$1 million')
     .replace(/من\s+سبعينيات\s+القرن\s+الماضي\s+إلى\s+تسعينياته/g, '1970 1990')
     .replace(/سبعينيات\s+القرن\s+الماضي/g, '1970')
@@ -378,7 +379,7 @@ export function auditCard(item, card) {
     ...writerPacketExactDates(item.temporalPacket.writer_facing),
   ])
   const dates = validateGeneratedDates(card, { allowed_exact_dates: [...allowedDates].map(date => ({ date })) })
-  const numbers = numericAudit(card, item.temporalPacket.writer_facing)
+  const numbers = numericAudit(card, { ...item.temporalPacket.writer_facing, verified_source_headline: item.sourceTitle })
   const relativeTime = relativeTimeAudit(card, item.temporalPacket.writer_facing)
   const headline = headlineAudit(card, item.temporalPacket.writer_facing)
   const geography = geographyAudit(card, item)

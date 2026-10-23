@@ -180,18 +180,27 @@ const EVENT_ANCHORS = new Set(['airport', 'attack', 'ceasefire', 'election', 'fl
 const ENTITY_ANCHORS = new Set(['icc', 'iaea', 'imf', 'nato', 'who'])
 const DISEASE_ANCHORS = new Set(['measle', 'ebola', 'cholera', 'dengue', 'mpox', 'malaria', 'covid', 'influenza', 'polio'])
 
+function namedLocations(value) {
+  return [...String(value || '').matchAll(/\b(?:at|in|near|outside)\s+([A-Z][\p{L}'-]{2,})/gu)]
+    .map(match => match[1].toLowerCase())
+}
+
 export function headlinesExplicitlyConflict(left, right) {
   const a = tokens(left.title), b = tokens(right.title)
   const placesA = [...a].filter(token => PLACE_ANCHORS.has(token))
   const placesB = [...b].filter(token => PLACE_ANCHORS.has(token))
   if (placesA.length && placesB.length && !placesA.some(place => placesB.includes(place))) return true
+  const namedPlacesA = namedLocations(left.title), namedPlacesB = namedLocations(right.title)
+  if (namedPlacesA.length && namedPlacesB.length && !namedPlacesA.some(place => namedPlacesB.includes(place))) return true
   const diseasesA = [...a].filter(token => DISEASE_ANCHORS.has(token))
   const diseasesB = [...b].filter(token => DISEASE_ANCHORS.has(token))
   if (diseasesA.length && diseasesB.length && !diseasesA.some(disease => diseasesB.includes(disease))) return true
   const numbersA = [...String(left.title || '').matchAll(/\b\d{1,4}\b/g)].map(match => match[0])
   const numbersB = [...String(right.title || '').matchAll(/\b\d{1,4}\b/g)].map(match => match[0])
   const sharedEventAnchors = [...a].filter(token => b.has(token) && EVENT_ANCHORS.has(token)).length
-  if (numbersA.length && numbersB.length && !numbersA.some(value => numbersB.includes(value)) && sharedEventAnchors < 2) return true
+  const bothDescribeCurrencyAmounts = /(?:[$£€]|\b(?:tk|bdt|usd|cad|eur|gbp)\b)/i.test(left.title || '')
+    && /(?:[$£€]|\b(?:tk|bdt|usd|cad|eur|gbp)\b)/i.test(right.title || '')
+  if (numbersA.length && numbersB.length && !numbersA.some(value => numbersB.includes(value)) && sharedEventAnchors < 2 && !bothDescribeCurrencyAmounts) return true
   return false
 }
 

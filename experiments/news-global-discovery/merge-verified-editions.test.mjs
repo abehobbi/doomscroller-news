@@ -50,6 +50,16 @@ test('does not merge separate infrastructure projects in the same country', () =
   assert.equal(result.cards.length, 2)
 })
 
+test('consolidates one investment reported in equivalent currencies', () => {
+  const taka = card('taka', 'Japan to invest Tk 774.7 billion in Bangladesh', 'https://one.test/taka')
+  taka.pages = [{ text: 'Japan will invest one trillion yen, or USD 6.35 billion, in Bangladesh private-sector projects over five years.' }]
+  const dollars = card('dollars', 'Japan to arrange $6.35b in private investment', 'https://two.test/dollars', 2)
+  dollars.pages = [{ text: 'Japan will arrange one trillion yen ($6.35 billion) in private-sector investment in Bangladesh over five years.' }]
+  const result = mergeVerifiedEditions([{ cards: [taka, dollars] }, { cards: [] }])
+  assert.equal(result.cards.length, 1)
+  assert.deepEqual(result.cards[0].sourceEventIds, ['taka', 'dollars'])
+})
+
 test('retains event aliases when a stronger representative replaces the first card', () => {
   const original = card('original', 'Six Ukrainian energy sites hit by Russia since Trump announced ceasefire, Zelensky says', 'https://one.test/a')
   const broader = card('broader', 'Russian attacks hit Ukrainian energy sites after ceasefire announcement', 'https://two.test/b', 3)

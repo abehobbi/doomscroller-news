@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { auditWriterTemporalExposure, buildWriterSafeTemporalPacket, normalizeTemporalFact } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
-import { bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, geographyAudit, isProviderQuotaDeferral, LANES, normalizeExplicitToday, numericAudit, partitionWriterExposure, providerDeferredResult, relativeTimeAudit, writerEvidencePreflight, writerMetadataAudit } from './writer-shortlist-trial.mjs'
+import { auditCard, bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, geographyAudit, isProviderQuotaDeferral, LANES, normalizeExplicitToday, numericAudit, partitionWriterExposure, providerDeferredResult, relativeTimeAudit, writerEvidencePreflight, writerMetadataAudit } from './writer-shortlist-trial.mjs'
 
 test('quota circuit breaker recognizes provider signals and preserves untouched finalists', () => {
   assert.equal(isProviderQuotaDeferral({ httpStatus: 429 }), true)
@@ -138,6 +138,22 @@ test('numeric audit rejects arithmetic totals derived from separate incidents', 
   assert.deepEqual(numericAudit(aggregated, packet).unsupportedNumbers, ['13 people', '311'])
 })
 
+test('card audit accepts an exact amount stated in the verified source headline', () => {
+  const item = {
+    sourceTitle: 'Bangladesh seeks $3.77b on top of World Bank loans for LNG imports',
+    temporalPacket: {
+      writer_facing: {
+        coreFactualPropositions: ['Bangladesh requested $2.77 billion in project financing and $1 billion in budget support.'],
+        temporal_facts_writer_may_state: { unresolved_relative_time: [] },
+      },
+      allowed_exact_dates: [],
+      internal_audit: { original_relative_expressions: [], deterministic_temporal_context: {} },
+    },
+  }
+  const card = { headline: 'Bangladesh seeks $3.77 billion from the World Bank', pages: [{ text: 'The request includes $2.77 billion in projects and $1 billion in budget support.' }] }
+  assert.equal(auditCard(item, card).audits.numbers.valid, true)
+})
+
 test('relative-time audit rejects a next-week claim absent from the packet', () => {
   const packet = { temporal_facts_writer_may_state: { unresolved_relative_time: [] } }
   const card = { headline: 'Trial update', pages: [{ text: 'The trial is scheduled to begin next week.' }] }
@@ -167,6 +183,15 @@ test('writer-safe temporal normalization removes relative timing that cannot be 
   const result = normalizeTemporalFact('Next week, K will go on trial in Hamburg. A judge refused to extradite him last year.', { publicationTime: '2026-10-10T12:00:00Z', timeZone: 'Europe/Berlin' })
   assert.equal(result.normalized_fact, 'K will go on trial in Hamburg. A judge refused to extradite him.')
   assert.deepEqual(result.resolutions.map(value => value.resolution_status), ['unresolved', 'unresolved'])
+})
+
+test('future-facing weekday wording resolves forward while completed events resolve backward', () => {
+  const future = normalizeTemporalFact('Polls will close on Sunday.', { publicationTime: '2026-10-23T12:00:00Z', timeZone: 'UTC' })
+  const past = normalizeTemporalFact('Supporters rallied on Thursday.', { publicationTime: '2026-10-23T12:00:00Z', timeZone: 'UTC' })
+  const mixed = normalizeTemporalFact('Supporters rallied on Thursday ahead of elections this weekend.', { publicationTime: '2026-10-23T12:00:00Z', timeZone: 'UTC' })
+  assert.equal(future.normalized_fact, 'Polls will close on October 25, 2026.')
+  assert.equal(past.normalized_fact, 'Supporters rallied on October 22, 2026.')
+  assert.equal(mixed.normalized_fact, 'Supporters rallied on October 22, 2026 ahead of elections this weekend.')
 })
 
 test('explicit parenthetical dates resolve today in either day-month order', () => {
@@ -215,8 +240,8 @@ test('writer-safe packet normalizes relative timing in the central story title',
     primaryNarrativeSource: { sourceId: 'p1', completeFactualPropositions: [] },
     coreFactualPropositions: [], secondarySourceAdditions: [], curatorInstructions: [],
   }, { sourceTimezone: 'America/Toronto' })
-  assert.equal(result.writer_facing.central_event_to_explain.selected_story, 'Ontario will remove bike lanes on October 6, 2026')
-  assert.equal(result.writer_facing.writer_focus_instructions[0], 'CENTRAL EVENT TO EXPLAIN: Ontario will remove bike lanes on October 6, 2026')
+  assert.equal(result.writer_facing.central_event_to_explain.selected_story, 'Ontario will remove bike lanes on October 13, 2026')
+  assert.equal(result.writer_facing.writer_focus_instructions[0], 'CENTRAL EVENT TO EXPLAIN: Ontario will remove bike lanes on October 13, 2026')
   assert.equal(result.internal_audit.original_relative_expressions.some(value => value.raw_expression.toLowerCase() === 'on tuesday'), false)
 })
 

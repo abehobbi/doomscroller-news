@@ -31,6 +31,13 @@ test('shared amounts do not merge unrelated science and public spending stories'
   assert.equal(candidatesDescribeSameThread(fossil, hospital), false)
 })
 
+test('equivalent investment amounts in different currencies do not split one event', () => {
+  assert.equal(candidatesDescribeSameThread(
+    { title: "Japan to invest approximately Tk 774.7 billion in Bangladesh's private sector" },
+    { title: 'Japan to arrange $6.35 billion in private investment for Bangladesh' },
+  ), true)
+})
+
 test('different disease outbreaks in different countries never become one event thread', () => {
   assert.equal(candidatesDescribeSameThread(
     { title: 'Measles death toll in Bangladesh reaches 1,196 after 7 more children die' },

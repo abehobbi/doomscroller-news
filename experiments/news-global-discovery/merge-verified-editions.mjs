@@ -38,10 +38,21 @@ function linkedInfrastructureConsequence(left, right) {
   return hasDirectionalLink && candidatesDescribeSameThread({ title: leftContext }, { title: rightContext })
 }
 
+function linkedCurrencyInvestment(left, right) {
+  const context = card => `${card.headline || ''} ${(card.pages?.[0]?.text || '').slice(0, 1600)}`
+  const leftContext = context(left), rightContext = context(right)
+  const currency = /(?:[$£€]|\b(?:tk|bdt|usd|cad|eur|gbp|yen)\b)/i
+  const investment = /\binvest(?:ment|s|ed|ing)?\b/i
+  return currency.test(leftContext) && currency.test(rightContext)
+    && investment.test(leftContext) && investment.test(rightContext)
+    && candidatesDescribeSameThread({ title: leftContext }, { title: rightContext })
+}
+
 function sameEvent(left, right) {
   if (canonical(left.primaryUrl) && canonical(left.primaryUrl) === canonical(right.primaryUrl)) return true
   if (normalizedHeadline(left.headline) && normalizedHeadline(left.headline) === normalizedHeadline(right.headline)) return true
   if (linkedInfrastructureConsequence(left, right)) return true
+  if (linkedCurrencyInvestment(left, right)) return true
   if (headlinesExplicitlyConflict({ title: left.headline }, { title: right.headline })) return false
   return candidatesDescribeSameThread({ title: left.headline }, { title: right.headline })
 }

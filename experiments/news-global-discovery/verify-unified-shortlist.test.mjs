@@ -32,6 +32,15 @@ test('generic election and violence terms cannot corroborate different events', 
   ).passes, true)
 })
 
+test('a different named location cannot corroborate a generic attack headline', () => {
+  const result = evidenceMatchesTitle(
+    'Drone attack on market in Abyei, Sudan kills at least 153',
+    'Russian drone attack kills two in Kyiv, Ukraine\nTwo people were killed when a drone struck a residential building in Kyiv.',
+  )
+  assert.equal(result.passes, false)
+  assert.equal(result.explicitConflict, true)
+})
+
 test('Arabic headlines match Arabic article evidence and the Arabic Al Jazeera domain is trusted', () => {
   const title = 'حرف حلب التراثية تقاوم الاندثار وتستعيد بريقها بلمسات معاصرة'
   const evidence = 'اختتم في مدينة حلب السورية معرض المهن الحرفية والتراثية القديمة بهدف الحفاظ على الحرف المهددة بالاندثار وتطويرها بلمسات معاصرة.'
