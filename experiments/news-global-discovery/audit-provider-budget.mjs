@@ -4,7 +4,7 @@ import { pathToFileURL } from 'node:url'
 
 export const FREE_ALLOWANCE_GUARD = Object.freeze({
   exaMonthlyDollars: 9.25,
-  tavilyMonthlyCredits: 900,
+  tavilyMonthlyCredits: 950,
   longestMonthDays: 31,
   fullRunsPerDay: 1,
 })

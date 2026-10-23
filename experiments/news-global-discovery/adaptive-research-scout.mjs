@@ -6,7 +6,8 @@ import { buildTavilyDiscoveryReport } from './tavily-complementary-scout.mjs'
 
 export const MODEL = '@cf/google/gemma-4-26b-a4b-it'
 export const ROUND_SIZES = Object.freeze([3, 2])
-export const MAX_TAVILY_CREDITS = 5
+export const TAVILY_CREDITS_PER_SEARCH = 2
+export const MAX_TAVILY_CREDITS = 10
 export const ALLOWED_LANES = new Set(['world-interesting', 'priority-interesting', 'discovery'])
 const PRIORITY_REGIONS = ['Syria', 'Middle East', 'Bangladesh', 'Ghana', 'Canada', 'GTA']
 const REGION_TERMS = Object.freeze({
@@ -109,7 +110,7 @@ export async function planQueries({ context, priorSearches = [], count, round, f
 }
 
 async function searchTavily(definition, window, apiKey, fetchImpl = fetch) {
-  const response = await fetchImpl('https://api.tavily.com/search', { method: 'POST', headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ query: definition.query, search_depth: 'basic', max_results: 20, topic: 'news', start_date: window.start.slice(0, 10), end_date: window.end.slice(0, 10), include_published_date: true, filter_by_published_date: true, include_answer: false, include_raw_content: false, include_images: false, include_usage: true, safe_search: true }) })
+  const response = await fetchImpl('https://api.tavily.com/search', { method: 'POST', headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ query: definition.query, search_depth: 'advanced', max_results: 20, topic: 'news', start_date: window.start.slice(0, 10), end_date: window.end.slice(0, 10), include_published_date: true, filter_by_published_date: true, include_answer: false, include_raw_content: false, include_images: false, include_usage: true, safe_search: true }) })
   const raw = await response.text(), payload = parseStrict(raw)
   if (!response.ok) throw new Error(`${definition.id}: HTTP ${response.status}`)
   const rawResults = payload?.results || [], results = rawResults.filter(result => resultMatchesRegion(result, definition.region))
@@ -140,7 +141,7 @@ async function main() {
     const plan = await planQueries({ context: { requestedWindow: window, pool }, priorSearches: prior, count, round: index + 1 })
     plannerCalls.push({ round: index + 1, queryCount: count, usage: plan.usage, returnedModel: plan.returnedModel, queries: plan.queries })
     for (const item of plan.queries) {
-      if (searches.reduce((sum, value) => sum + value.creditsUsed, 0) >= MAX_TAVILY_CREDITS) throw new Error('Adaptive discovery stopped before exceeding its Tavily credit ceiling')
+      if (searches.reduce((sum, value) => sum + value.creditsUsed, 0) + TAVILY_CREDITS_PER_SEARCH > MAX_TAVILY_CREDITS) throw new Error('Adaptive discovery stopped before exceeding its Tavily credit ceiling')
       searches.push(await searchTavily({ ...item, id: `adaptive-r${index + 1}-${item.id}` }, window, tavilyKey))
     }
   }

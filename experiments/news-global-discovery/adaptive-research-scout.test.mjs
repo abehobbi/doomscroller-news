@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { auditPlannedQueries, compactDiscoveryContext, compactRoundResults, MAX_TAVILY_CREDITS, normalizePlannedQueries, resultMatchesRegion, ROUND_SIZES } from './adaptive-research-scout.mjs'
+import { auditPlannedQueries, compactDiscoveryContext, compactRoundResults, MAX_TAVILY_CREDITS, normalizePlannedQueries, resultMatchesRegion, ROUND_SIZES, TAVILY_CREDITS_PER_SEARCH } from './adaptive-research-scout.mjs'
 
 const make = (id, lane, region, query) => ({ id, lane, region, blind_spot: 'undercovered local life', rationale: 'fills a demonstrated omission', query })
 
-test('adaptive planner is bounded to five Tavily searches across two rounds', () => {
-  assert.deepEqual(ROUND_SIZES, [3, 2]); assert.equal(ROUND_SIZES.reduce((sum, value) => sum + value, 0), MAX_TAVILY_CREDITS)
+test('adaptive planner is bounded to five advanced Tavily searches across two rounds', () => {
+  assert.deepEqual(ROUND_SIZES, [3, 2]); assert.equal(ROUND_SIZES.reduce((sum, value) => sum + value, 0) * TAVILY_CREDITS_PER_SEARCH, MAX_TAVILY_CREDITS)
 })
 
 test('coverage digest exposes lane and region gaps without article bodies', () => {
