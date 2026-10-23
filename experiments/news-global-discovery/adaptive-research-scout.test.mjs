@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { auditPlannedQueries, compactDiscoveryContext, compactRoundResults, MAX_TAVILY_CREDITS, resultMatchesRegion, ROUND_SIZES } from './adaptive-research-scout.mjs'
+import { auditPlannedQueries, compactDiscoveryContext, compactRoundResults, MAX_TAVILY_CREDITS, normalizePlannedQueries, resultMatchesRegion, ROUND_SIZES } from './adaptive-research-scout.mjs'
 
 const make = (id, lane, region, query) => ({ id, lane, region, blind_spot: 'undercovered local life', rationale: 'fills a demonstrated omission', query })
 
@@ -38,6 +38,13 @@ test('priority-region results cannot inherit a false geographic label', () => {
   assert.equal(resultMatchesRegion({ title: 'Accra market traders protect a historic craft', content: '', url: 'https://example.com/story' }, 'Ghana'), true)
   assert.equal(resultMatchesRegion({ title: 'Siege of Taiz deepens food insecurity', content: 'Yemeni families face shortages', url: 'https://example.com/story' }, 'Ghana'), false)
   assert.equal(resultMatchesRegion({ title: 'A neighborhood clinic changes its hours', content: 'Residents in Mississauga responded', url: 'https://example.com/story' }, 'GTA'), true)
+})
+
+test('non-priority planner metadata is canonicalized without weakening priority validation', () => {
+  const normalized = normalizePlannedQueries([make('field', 'discovery', 'Ghana', 'biologists document a previously unknown animal behavior')])
+  assert.equal(normalized[0].region, null)
+  const priority = normalizePlannedQueries([make('ghana', 'priority-interesting', 'Ghana', 'coastal Ghana fishers restore a threatened local livelihood')])
+  assert.equal(priority[0].region, 'Ghana')
 })
 
 test('second-round feedback contains only bounded search-result metadata', () => {

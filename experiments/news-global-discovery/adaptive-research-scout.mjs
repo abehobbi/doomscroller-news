@@ -76,6 +76,10 @@ export function auditPlannedQueries(queries, expectedCount, priorQueries = []) {
   return { valid: true, reason: null }
 }
 
+export function normalizePlannedQueries(queries) {
+  return Array.isArray(queries) ? queries.map(item => ({ ...item, region: item?.lane === 'priority-interesting' ? item.region : null })) : queries
+}
+
 export function resultMatchesRegion(result, region) {
   if (!region) return true
   const haystack = `${result?.title || ''} ${result?.content || ''} ${result?.url || ''}`.toLowerCase()
@@ -98,9 +102,10 @@ export async function planQueries({ context, priorSearches = [], count, round, f
   const raw = await response.text(), body = parseStrict(raw)
   if (!response.ok || body?.success === false) throw new Error(`adaptive planner round ${round}: HTTP ${response.status}`)
   const exposed = exposedResponse(body), parsed = typeof exposed === 'string' ? parseStrict(exposed) : exposed
-  const audit = auditPlannedQueries(parsed?.queries, count, priorSearches.map(item => item.query))
+  const queries = normalizePlannedQueries(parsed?.queries)
+  const audit = auditPlannedQueries(queries, count, priorSearches.map(item => item.query))
   if (!audit.valid) throw new Error(`adaptive planner round ${round}: ${audit.reason}`)
-  return { queries: parsed.queries, usage: body?.result?.usage ?? body?.usage ?? null, returnedModel: body?.result?.model ?? null }
+  return { queries, usage: body?.result?.usage ?? body?.usage ?? null, returnedModel: body?.result?.model ?? null }
 }
 
 async function searchTavily(definition, window, apiKey, fetchImpl = fetch) {
