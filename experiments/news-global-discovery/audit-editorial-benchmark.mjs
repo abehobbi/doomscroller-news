@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-function normalize(value) {
+export function normalizeBenchmarkText(value) {
   return String(value ?? "")
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -13,7 +13,7 @@ function normalize(value) {
 }
 
 function cardText(card) {
-  return normalize([
+  return normalizeBenchmarkText([
     card?.headline,
     card?.title,
     card?.dek,
@@ -22,9 +22,9 @@ function cardText(card) {
   ].filter(Boolean).join(" "));
 }
 
-function matchesCase(text, benchmarkCase) {
+export function matchesBenchmarkCase(text, benchmarkCase) {
   return benchmarkCase.match.every((alternatives) =>
-    alternatives.some((term) => text.includes(normalize(term))),
+    alternatives.some((term) => text.includes(normalizeBenchmarkText(term))),
   );
 }
 
@@ -32,7 +32,7 @@ export function auditEditorialBenchmark(edition, benchmark) {
   const cards = Array.isArray(edition?.cards) ? edition.cards : [];
   const indexed = cards.map((card) => ({ card, text: cardText(card) }));
   const results = benchmark.cases.map((benchmarkCase) => {
-    const found = indexed.find(({ text }) => matchesCase(text, benchmarkCase));
+    const found = indexed.find(({ text }) => matchesBenchmarkCase(text, benchmarkCase));
     return {
       id: benchmarkCase.id,
       tier: benchmarkCase.tier,
