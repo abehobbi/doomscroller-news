@@ -13,6 +13,11 @@ test('coverage digest exposes lane and region gaps without article bodies', () =
   assert.equal(digest.candidateCount, 2); assert.deepEqual(digest.laneCounts, { 'world-interesting': 1, 'priority-interesting': 1 }); assert.deepEqual(digest.regionCounts, { Ghana: 1 }); assert.equal(digest.headlines.length, 2)
 })
 
+test('planner context is bounded even when discovery returns hundreds of candidates', () => {
+  const digest = compactDiscoveryContext([{ candidates: Array.from({ length: 300 }, (_, index) => ({ title: `Distinct story ${index}`, lanes: ['world-interesting'], priorityRegions: [] })) }])
+  assert.equal(digest.candidateCount, 300); assert.equal(digest.headlines.length, 80)
+})
+
 test('planned queries must be distinct, lane-correct and region-correct', () => {
   const valid = [make('local', 'world-interesting', null, 'a small-place livelihood change'), make('syria', 'priority-interesting', 'Syria', 'local cultural life in Syria'), make('field', 'discovery', null, 'a new archaeological field finding')]
   assert.equal(auditPlannedQueries(valid, 3).valid, true)
