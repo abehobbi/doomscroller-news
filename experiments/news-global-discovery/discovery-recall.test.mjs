@@ -52,3 +52,10 @@ test('the free publisher safety net includes arts coverage missed by broad searc
   assert.equal(guardianArts?.feedUrl, 'https://www.theguardian.com/artanddesign/rss')
   assert.match(guardianArts?.limitations || '', /editorial-value/i)
 })
+
+test('the free publisher safety net uses an official current Canada feed without stale ABC feeds', () => {
+  const globalNewsCanada = SOURCES.find(source => source.id === 'global-news-canada')
+  assert.equal(globalNewsCanada?.feedUrl, 'https://globalnews.ca/canada/feed/')
+  assert.equal(globalNewsCanada?.sourceType, 'independent_reporting')
+  assert.equal(SOURCES.some(source => /abc\.net\.au/i.test(source.feedUrl)), false)
+})
