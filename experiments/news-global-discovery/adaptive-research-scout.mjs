@@ -9,12 +9,22 @@ export const ROUND_SIZES = Object.freeze([3, 2])
 export const MAX_TAVILY_CREDITS = 5
 export const ALLOWED_LANES = new Set(['world-interesting', 'priority-interesting', 'discovery'])
 const PRIORITY_REGIONS = ['Syria', 'Middle East', 'Bangladesh', 'Ghana', 'Canada', 'GTA']
+const REGION_TERMS = Object.freeze({
+  Syria: ['syria', 'syrian'],
+  'Middle East': ['middle east', 'syria', 'syrian', 'lebanon', 'lebanese', 'jordan', 'jordanian', 'palestine', 'palestinian', 'israel', 'israeli', 'iraq', 'iraqi', 'yemen', 'yemeni', 'oman', 'omani', 'qatar', 'qatari', 'bahrain', 'kuwait', 'saudi', 'emirati', 'uae'],
+  Bangladesh: ['bangladesh', 'bangladeshi', 'dhaka', 'chattogram', 'chittagong', 'sylhet', 'khulna', 'rajshahi'],
+  Ghana: ['ghana', 'ghanaian', 'accra', 'kumasi', 'tamale'],
+  Canada: ['canada', 'canadian', 'ontario', 'quebec', 'alberta', 'british columbia', 'manitoba', 'saskatchewan', 'nova scotia', 'new brunswick', 'newfoundland', 'nunavut', 'yukon'],
+  GTA: ['greater toronto', 'toronto', 'mississauga', 'brampton', 'markham', 'vaughan', 'richmond hill', 'pickering', 'ajax', 'durham', 'peel', 'york region', 'halton'],
+})
 
 const SYSTEM_PROMPT = `You are the adaptive research planner for Doomscroller News. Identify valuable stories the current search pool is likely to have OMITTED, then write precise web-search queries that can find them.
 
 Prioritize distinctive original local reporting from small places and undercovered countries; ordinary life, livelihoods, exploitation, public services, environment, culture, identity, living traditions, crafts, language, heritage, community change, rescues and unusual human stories; Syria, the wider Middle East, Bangladesh, Ghana, Canada and the GTA without padding; and accessible archaeology, history, science, nature, medicine and field discoveries with a concrete new finding.
 
-Avoid dominant headlines already present, generic topic searches, speeches, ceremonies, publicity, partnerships, event listings, tourism, sport, celebrity news, opinion and vague explainers. Every query must demand a concrete article published inside the supplied date window. Search different editorial blind spots rather than variations of one idea. Do not invent a story; construct queries broad enough to discover real reporting but specific enough to escape generic rankings.`
+Avoid dominant headlines already present, generic topic searches, speeches, ceremonies, publicity, partnerships, event listings, tourism, sport, celebrity news, opinion and vague explainers. Search different editorial blind spots rather than variations of one idea. Do not invent a story.
+
+The search service already applies the supplied publication window. Write each query as ONE short natural-language search of 6-16 words, with one concrete angle. Never include dates, Boolean operators such as OR/AND, parentheses, quotation marks, long synonym lists or instructions like "find an article". A priority-region query must name its region. Round 1 must contain exactly one priority-interesting, one world-interesting and one discovery query. Round 2 must contain exactly one world-interesting and one discovery query.`
 
 function schema(count) {
   return { name: 'doomscroller_adaptive_queries', strict: true, schema: {
@@ -24,7 +34,7 @@ function schema(count) {
         properties: {
           id: { type: 'string', minLength: 4, maxLength: 60 }, lane: { type: 'string', enum: [...ALLOWED_LANES] },
           region: { type: ['string', 'null'], enum: [null, ...PRIORITY_REGIONS] }, blind_spot: { type: 'string', minLength: 8, maxLength: 120 },
-          query: { type: 'string', minLength: 40, maxLength: 700 }, rationale: { type: 'string', minLength: 8, maxLength: 180 },
+          query: { type: 'string', minLength: 20, maxLength: 140 }, rationale: { type: 'string', minLength: 8, maxLength: 180 },
         },
       },
     } },
@@ -56,8 +66,20 @@ export function auditPlannedQueries(queries, expectedCount, priorQueries = []) {
   if (queries.some(item => !ALLOWED_LANES.has(item?.lane))) return { valid: false, reason: 'disallowed lane' }
   if (queries.some(item => item.lane === 'priority-interesting' && !PRIORITY_REGIONS.includes(item.region))) return { valid: false, reason: 'priority query lacks a supported region' }
   if (queries.some(item => item.lane !== 'priority-interesting' && item.region !== null)) return { valid: false, reason: 'non-priority query has a priority region' }
-  if (queries.some(item => String(item.query || '').length < 40)) return { valid: false, reason: 'query is too generic' }
+  const words = queries.map(item => String(item.query || '').trim().split(/\s+/).filter(Boolean).length)
+  if (words.some(count => count < 6 || count > 16)) return { valid: false, reason: 'query must contain 6-16 words' }
+  if (queries.some(item => /\b(?:OR|AND)\b|[()"']|\b20\d{2}\b/.test(String(item.query || '')))) return { valid: false, reason: 'query contains search operators or dates' }
+  if (queries.some(item => item.region && !REGION_TERMS[item.region].some(term => String(item.query).toLowerCase().includes(term)))) return { valid: false, reason: 'priority query does not name its region' }
+  const laneCounts = Object.fromEntries([...ALLOWED_LANES].map(lane => [lane, queries.filter(item => item.lane === lane).length]))
+  if (expectedCount === 3 && [...ALLOWED_LANES].some(lane => laneCounts[lane] !== 1)) return { valid: false, reason: 'round one must cover all three depth lanes' }
+  if (expectedCount === 2 && (laneCounts['world-interesting'] !== 1 || laneCounts.discovery !== 1)) return { valid: false, reason: 'round two must cover world-interesting and discovery' }
   return { valid: true, reason: null }
+}
+
+export function resultMatchesRegion(result, region) {
+  if (!region) return true
+  const haystack = `${result?.title || ''} ${result?.content || ''} ${result?.url || ''}`.toLowerCase()
+  return REGION_TERMS[region].some(term => haystack.includes(term))
 }
 
 function credentials() {
@@ -85,7 +107,8 @@ async function searchTavily(definition, window, apiKey, fetchImpl = fetch) {
   const response = await fetchImpl('https://api.tavily.com/search', { method: 'POST', headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ query: definition.query, search_depth: 'basic', max_results: 20, topic: 'news', start_date: window.start.slice(0, 10), end_date: window.end.slice(0, 10), include_published_date: true, filter_by_published_date: true, include_answer: false, include_raw_content: false, include_images: false, include_usage: true, safe_search: true }) })
   const raw = await response.text(), payload = parseStrict(raw)
   if (!response.ok) throw new Error(`${definition.id}: HTTP ${response.status}`)
-  return { ...definition, role: 'adaptive-recall', requestId: payload?.request_id || null, creditsUsed: Number(payload?.usage?.credits || 1), results: payload?.results || [] }
+  const rawResults = payload?.results || [], results = rawResults.filter(result => resultMatchesRegion(result, definition.region))
+  return { ...definition, role: 'adaptive-recall', requestId: payload?.request_id || null, creditsUsed: Number(payload?.usage?.credits || 1), rawResultCount: rawResults.length, regionRejectedCount: rawResults.length - results.length, results }
 }
 
 export function compactRoundResults(searches) {

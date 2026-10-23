@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { auditPlannedQueries, compactDiscoveryContext, compactRoundResults, MAX_TAVILY_CREDITS, ROUND_SIZES } from './adaptive-research-scout.mjs'
+import { auditPlannedQueries, compactDiscoveryContext, compactRoundResults, MAX_TAVILY_CREDITS, resultMatchesRegion, ROUND_SIZES } from './adaptive-research-scout.mjs'
 
-const make = (id, lane, region, topic) => ({ id, lane, region, blind_spot: 'undercovered local life', rationale: 'fills a demonstrated omission', query: `Find a concrete original article published inside the supplied date window about ${topic}, excluding publicity, opinion, sport and generic summaries.` })
+const make = (id, lane, region, query) => ({ id, lane, region, blind_spot: 'undercovered local life', rationale: 'fills a demonstrated omission', query })
 
 test('adaptive planner is bounded to five Tavily searches across two rounds', () => {
   assert.deepEqual(ROUND_SIZES, [3, 2]); assert.equal(ROUND_SIZES.reduce((sum, value) => sum + value, 0), MAX_TAVILY_CREDITS)
@@ -19,12 +19,25 @@ test('planner context is bounded even when discovery returns hundreds of candida
 })
 
 test('planned queries must be distinct, lane-correct and region-correct', () => {
-  const valid = [make('local', 'world-interesting', null, 'a small-place livelihood change'), make('syria', 'priority-interesting', 'Syria', 'local cultural life in Syria'), make('field', 'discovery', null, 'a new archaeological field finding')]
+  const valid = [make('local', 'world-interesting', null, 'small town livelihood change reported by local journalists'), make('syria', 'priority-interesting', 'Syria', 'Syrian artisans revive a threatened traditional craft'), make('field', 'discovery', null, 'archaeologists announce a newly excavated ancient settlement')]
   assert.equal(auditPlannedQueries(valid, 3).valid, true)
   assert.equal(auditPlannedQueries([valid[0], { ...valid[0], id: 'copy' }], 2).reason, 'duplicate adaptive query')
   assert.equal(auditPlannedQueries([{ ...valid[1], region: null }], 1).reason, 'priority query lacks a supported region')
   assert.equal(auditPlannedQueries([{ ...valid[0], region: 'Ghana' }], 1).reason, 'non-priority query has a priority region')
   assert.equal(auditPlannedQueries([valid[0]], 1, [valid[0].query]).reason, 'query repeats an earlier round')
+})
+
+test('planner rejects operator-heavy searches and preserves both obscure lanes', () => {
+  const secondRound = [make('local', 'world-interesting', null, 'remote island residents restore their only freshwater source'), make('field', 'discovery', null, 'biologists document a previously unknown animal behavior')]
+  assert.equal(auditPlannedQueries(secondRound, 2).valid, true)
+  assert.equal(auditPlannedQueries([{ ...secondRound[0], query: 'local crafts OR heritage OR livelihoods news 2026' }, secondRound[1]], 2).reason, 'query contains search operators or dates')
+  assert.equal(auditPlannedQueries([secondRound[0], { ...secondRound[1], lane: 'world-interesting' }], 2).reason, 'round two must cover world-interesting and discovery')
+})
+
+test('priority-region results cannot inherit a false geographic label', () => {
+  assert.equal(resultMatchesRegion({ title: 'Accra market traders protect a historic craft', content: '', url: 'https://example.com/story' }, 'Ghana'), true)
+  assert.equal(resultMatchesRegion({ title: 'Siege of Taiz deepens food insecurity', content: 'Yemeni families face shortages', url: 'https://example.com/story' }, 'Ghana'), false)
+  assert.equal(resultMatchesRegion({ title: 'A neighborhood clinic changes its hours', content: 'Residents in Mississauga responded', url: 'https://example.com/story' }, 'GTA'), true)
 })
 
 test('second-round feedback contains only bounded search-result metadata', () => {
