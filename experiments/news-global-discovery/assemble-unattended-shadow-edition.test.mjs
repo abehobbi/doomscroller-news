@@ -27,6 +27,35 @@ test('quarantines the lower-ranked generated card when cards share a canonical s
   assert.equal(edition.requiresEditorialReview, true)
 })
 
+test('quarantines same-event headlines with a shared action and distinctive subject', () => {
+  const shortlist = { selected: [
+    input('a', 'world-major', 'Russia and Ukraine agree to local ceasefire in Oleshky'),
+    input('b', 'world-major', 'Melania Trump helped broker ceasefire in Russian-occupied Oleshky'),
+  ] }
+  const report = { expected: 2, resultCount: 2, totalNeurons: 90, results: [
+    accepted('a', 'world-major', 'Russia and Ukraine agree to local ceasefire in Oleshky to address humanitarian crisis', 'Local officials described a temporary pause so families could receive supplies.', 'https://source-a.test/oleshky'),
+    accepted('b', 'world-major', 'Melania Trump helped broker ceasefire in Russian-occupied Oleshky, White House says', 'The White House described diplomatic contacts that led to a humanitarian arrangement.', 'https://source-b.test/oleshky'),
+  ] }
+  const edition = assembleUnattendedShadowEdition(report, shortlist)
+  assert.equal(edition.overlaps.length, 1)
+  assert.equal(edition.overlaps[0].headlineThreadMatch, true)
+  assert.deepEqual(edition.cards.map(card => card.eventId), ['a'])
+})
+
+test('does not merge similar events whose headlines identify different locations', () => {
+  const shortlist = { selected: [
+    input('a', 'world-major', 'Ceasefire begins in Oleshky'),
+    input('b', 'world-major', 'Ceasefire begins in Khartoum'),
+  ] }
+  const report = { expected: 2, resultCount: 2, totalNeurons: 90, results: [
+    accepted('a', 'world-major', 'Ceasefire begins in Oleshky after talks', 'Local officials described a temporary pause so displaced families could collect medicine and leave damaged neighbourhoods safely.', 'https://source-a.test/ceasefire'),
+    accepted('b', 'world-major', 'Ceasefire begins in Khartoum after talks', 'Aid convoys crossed the capital while negotiators monitored compliance and reopened several roads for commercial traffic.', 'https://source-b.test/ceasefire'),
+  ] }
+  const edition = assembleUnattendedShadowEdition(report, shortlist)
+  assert.equal(edition.overlaps.length, 0)
+  assert.equal(edition.cards.length, 2)
+})
+
 test('retains an explicitly approved image exception without inventing an image', () => {
   const noImage = { ...input('a', 'world-major', 'Important inaccessible-image story'), image: null, imageException: { granted: true, reason: 'recovery exhausted' } }
   const shortlist = { selected: [noImage] }

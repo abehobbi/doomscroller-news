@@ -30,6 +30,7 @@ const WEAK_EVENT = /\b(?:invites?|calls? for|called for|urges?|urged|challenges?
 const CEREMONIAL_EVENT = /\b(?:cuts? (?:the )?sod|breaks? ground|groundbreaking)\b/i
 const CEREMONIAL_COMMISSION = /\b(?:commissions?|commissioned|inaugurates?|inaugurated|unveils?|unveiled)\b.{0,70}\b(?:borehole|classroom|school block|mural|statue|plaque|office|facility)\b|\b(?:borehole|classroom|school block|mural|statue|plaque|office|facility)\b.{0,70}\b(?:commissions?|commissioned|inaugurates?|inaugurated|unveils?|unveiled)\b/i
 const PUBLICITY_AGREEMENT = /\b(?:signs?|inks?|announces?|forms?|enters?)\b.{0,50}\b(?:partnership|memorandum|mou|cooperation agreement)\b|\bpartners? with\b|\bsigns?\b.{0,60}(?:\b(?:agreement|deal)\b.{0,80}\b(?:project|development|expansion|planned|phase|hub)\b|\b(?:project|development|expansion|planned|phase|hub)\b.{0,40}\b(?:agreement|deal)\b)/i
+const PROSPECTIVE_FACILITY = /\b(?:to|will|expected to)\s+open\b.{0,80}\b(?:centre|center|facility|office|campus|hub)\b/i
 const STATEMENT_ONLY = /\b(?:calls? for|urges?|reaffirms?|outlines?)\b.{0,100}\b(?:implementation|investment|initiative|plan|policy|support|cooperation|ceasefire|peace|navigation)\b/i
 const DELIVERED_CONSEQUENCE = /\b(?:funding (?:approved|released)|loan (?:approved|disbursed)|construction (?:begins|started)|opens? to (?:the )?public|starts? operations?|service begins|acquisition completed|workers? hired|homes? completed)\b/i
 const CONCRETE = /\b(?:kills?|dies?|dead|injur(?:y|ed|ies)|arrests?|convicts?|acquits?|bans?|blocks?|halts?|suspends?|overturns?|approves?|rejects?|signs?|strikes?|attacks?|evacuates?|sinks?|sank|sunk|traffick(?:ed|ing)?|layoffs?|displaced|floods?|earthquake|hurricane|outbreaks?|shortage|collapse|closes?|opens?|restores?|discovers?|found|reveals?|reports?|reaches? agreement|cuts?|rises?|falls?|first|record|investigat(?:es?|ion)|lawsuit|protest|sanctions?|election|ceasefire|troops?|war|famine|hunger|food insecurity|malnutrition)\b/i
@@ -124,6 +125,7 @@ export function lowConsequenceEvent(value) {
   const title = cleanTitle(value)
   return CEREMONIAL_EVENT.test(title)
     || CEREMONIAL_COMMISSION.test(title)
+    || (PROSPECTIVE_FACILITY.test(title) && !DELIVERED_CONSEQUENCE.test(title))
     || (PUBLICITY_AGREEMENT.test(title) && !DELIVERED_CONSEQUENCE.test(title))
     || (STATEMENT_ONLY.test(title) && !DELIVERED_CONSEQUENCE.test(title))
     || (WEAK_EVENT.test(title) && !CONCRETE.test(title) && !DISCOVERY_SIGNAL.test(title))
@@ -181,8 +183,16 @@ const ENTITY_ANCHORS = new Set(['icc', 'iaea', 'imf', 'nato', 'who'])
 const DISEASE_ANCHORS = new Set(['measle', 'ebola', 'cholera', 'dengue', 'mpox', 'malaria', 'covid', 'influenza', 'polio'])
 
 function namedLocations(value) {
-  return [...String(value || '').matchAll(/\b(?:at|in|near|outside)\s+([A-Z][\p{L}'-]{2,})/gu)]
+  const normalized = String(value || '').replace(/\b[A-Z][\p{L}']+-(?:occupied|controlled|held)\s+/gu, '')
+  return [...normalized.matchAll(/\b(?:at|in|near|outside)\s+([A-Z][\p{L}'-]{2,})/gu)]
     .map(match => match[1].toLowerCase())
+}
+
+export function headlinesShareNamedLocationAndEvent(left, right) {
+  const locationsA = namedLocations(left.title), locationsB = namedLocations(right.title)
+  if (!locationsA.some(location => locationsB.includes(location))) return false
+  const a = tokens(left.title), b = tokens(right.title)
+  return [...a].some(token => b.has(token) && EVENT_ANCHORS.has(token))
 }
 
 export function headlinesExplicitlyConflict(left, right) {
@@ -219,7 +229,12 @@ export function candidatesDescribeSameThread(left, right) {
   const sharedSpecificSubject = sharedTokens.some(token => token.length >= 7 && !GENERIC_CLUSTER_TERMS.has(token) && !PLACE_ANCHORS.has(token))
   const leftNumbers = new Set(String(left.title || '').match(/\b\d+\b/g) || [])
   const sharedNonYearNumber = [...(String(right.title || '').match(/\b\d+\b/g) || [])].some(value => leftNumbers.has(value) && !/^20\d{2}$/.test(value))
-  return ratio >= 0.55 || (sharedTokens.length >= 3 && ratio >= 0.33 && distinctive) || (sharedPlace && sharedEventAnchors >= 1 && sharedTokens.length >= 3) || (sharedEntity && sharedTokens.length >= 2) || (sharedSpecificSubject && sharedNonYearNumber)
+  return ratio >= 0.55
+    || (sharedTokens.length >= 3 && ratio >= 0.33 && distinctive)
+    || (sharedPlace && sharedEventAnchors >= 1 && sharedTokens.length >= 3)
+    || headlinesShareNamedLocationAndEvent(left, right)
+    || (sharedEntity && sharedTokens.length >= 2)
+    || (sharedSpecificSubject && sharedNonYearNumber)
 }
 
 export function clusterCandidates(scored) {
