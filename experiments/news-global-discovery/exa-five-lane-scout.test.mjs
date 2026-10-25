@@ -15,6 +15,12 @@ test('bounded full scans retain every lane and priority region before adding dep
   for (const region of ['Syria', 'Middle East', 'Bangladesh', 'Ghana', 'Canada', 'GTA']) assert.ok(selected.some(query => query.region === region))
 })
 
+test('a daily breadth scan can inspect twenty ranked candidates per query without changing query count', () => {
+  const queries = budgetQueries(selectedQueries('full'), 28)
+  assert.equal(queries.length, 28)
+  assert.ok(queries.every(query => query.id && query.lane))
+})
+
 test('lane filter still respects the requested scan family', () => {
   assert.equal(selectedQueries('major', ['discovery']).length, 0)
   assert.equal(selectedQueries('depth', ['discovery']).length, 4)
