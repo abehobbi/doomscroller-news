@@ -14,6 +14,14 @@ test('interesting-world discovery explicitly covers the missed editorial dimensi
   assert.equal(new Set(queries.map(query => query.theme)).size, queries.length)
 })
 
+test('daily discovery explicitly sweeps four undercovered world regions', () => {
+  const themes = new Set(FIVE_LANE_QUERIES.filter(query => query.lane === 'world-interesting').map(query => query.theme))
+  assert.deepEqual(
+    ['undercovered-africa', 'undercovered-asia-pacific', 'undercovered-europe', 'undercovered-americas'].filter(theme => themes.has(theme)),
+    ['undercovered-africa', 'undercovered-asia-pacific', 'undercovered-europe', 'undercovered-americas'],
+  )
+})
+
 test('priority-depth searches cover local life and exploitation without adding forced quotas', () => {
   const regions = new Map(FIVE_LANE_QUERIES.filter(query => query.lane === 'priority-interesting').map(query => [query.region, query]))
   for (const region of ['Syria', 'Middle East', 'Bangladesh', 'Ghana']) {
@@ -26,7 +34,7 @@ test('three daily scans separate major updates from depth discovery within the e
   assert.equal(selectedQueries('major').every(query => query.lane.includes('major')), true)
   assert.equal(selectedQueries('depth').every(query => !query.lane.includes('major')), true)
   assert.equal(selectedQueries('major').length, 12)
-  assert.equal(selectedQueries('depth').length, 22)
+  assert.equal(selectedQueries('depth').length, 26)
   assert.equal(dailySearchBudget().totalQueries, 26)
   assert.equal(NEWS_TIMEZONE, 'America/Toronto')
   assert.deepEqual(DAILY_CARD_GUIDELINE, { expectedMinimum: 30, hardMaximum: 65, paddingAllowed: false })
@@ -64,6 +72,9 @@ test('the free publisher safety net covers Toronto and specialist discovery gaps
   const cityNews = SOURCES.find(source => source.id === 'citynews-toronto')
   const physOrg = SOURCES.find(source => source.id === 'phys-org')
   const smithsonian = SOURCES.find(source => source.id === 'smithsonian-smart-news')
+  const archaeology = SOURCES.find(source => source.id === 'archaeology-magazine')
+  const liveScience = SOURCES.find(source => source.id === 'live-science')
+  const conversation = SOURCES.find(source => source.id === 'the-conversation-global')
 
   assert.equal(cityNews?.feedUrl, 'https://toronto.citynews.ca/feed/')
   assert.deepEqual(cityNews?.coverage, ['GTA'])
@@ -71,4 +82,7 @@ test('the free publisher safety net covers Toronto and specialist discovery gaps
   assert.match(physOrg?.limitations || '', /underlying research/i)
   assert.equal(smithsonian?.sourceType, 'specialist_reporting')
   assert.match(smithsonian?.limitations || '', /underlying-source attribution/i)
+  assert.equal(archaeology?.sourceType, 'specialist_reporting')
+  assert.equal(liveScience?.sourceType, 'specialist_reporting')
+  assert.equal(conversation?.sourceType, 'expert_analysis')
 })

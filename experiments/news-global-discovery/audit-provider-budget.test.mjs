@@ -17,6 +17,15 @@ test('one full daily run stays inside guarded Exa and Tavily monthly allowances'
   assert.deepEqual(report.projection, { exaMonthlyDollars: 6.944, tavilyMonthlyCredits: 930 })
 })
 
+test('expanded 28-query discovery remains below the guarded monthly Exa allowance', () => {
+  const report = summarizeProviderUsage([
+    { provider: 'exa', costDollars: 0.196 },
+    { provider: 'exa', costDollars: 0.056 },
+  ])
+  assert.equal(report.safeForDailyFullRun, true)
+  assert.equal(report.projection.exaMonthlyDollars, 7.812)
+})
+
 test('budget guard fails closed before either recurring allowance is exhausted', () => {
   const exa = summarizeProviderUsage([{ provider: 'exa', costDollars: 0.31 }])
   const tavily = summarizeProviderUsage([{ provider: 'tavily', creditsUsed: 31 }])
