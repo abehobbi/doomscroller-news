@@ -59,3 +59,16 @@ test('the free publisher safety net uses an official current Canada feed without
   assert.equal(globalNewsCanada?.sourceType, 'independent_reporting')
   assert.equal(SOURCES.some(source => /abc\.net\.au/i.test(source.feedUrl)), false)
 })
+
+test('the free publisher safety net covers Toronto and specialist discovery gaps', () => {
+  const cityNews = SOURCES.find(source => source.id === 'citynews-toronto')
+  const physOrg = SOURCES.find(source => source.id === 'phys-org')
+  const smithsonian = SOURCES.find(source => source.id === 'smithsonian-smart-news')
+
+  assert.equal(cityNews?.feedUrl, 'https://toronto.citynews.ca/feed/')
+  assert.deepEqual(cityNews?.coverage, ['GTA'])
+  assert.equal(physOrg?.sourceType, 'specialist_reporting')
+  assert.match(physOrg?.limitations || '', /underlying research/i)
+  assert.equal(smithsonian?.sourceType, 'specialist_reporting')
+  assert.match(smithsonian?.limitations || '', /underlying-source attribution/i)
+})

@@ -66,6 +66,18 @@ test('generic attack wording cannot admit evidence from a different country', ()
   assert.equal(cards.length, 0)
 })
 
+test('a multi-event roundup cannot borrow evidence and an image from separate stories', () => {
+  const title = 'Attack in the West Bank kills 2 Israeli soldiers, and other Mideast news'
+  const source = (domain, sourceTitle) => ({ accepted: true, trusted: true, domain, url: `https://${domain}/story`, title: sourceTitle, publishedAt: '2026-10-23T10:00:00Z', evidenceText: `${sourceTitle}. Additional reporting describes the separate event.`, sharedTerms: ['israeli', 'news'], imageUrl: `https://${domain}/image.jpg` })
+  const sources = [
+    source('arabnews.com', 'Protests erupt across Syria after Israeli forces kill man with Down syndrome'),
+    source('theworld.org', 'Migrant workers find strength amid Israeli strikes in Lebanon'),
+  ]
+  const selection = { id: 'roundup', assignedLane: 'priority-major', adjustedScore: 140, representative: { title, publishedAt: '2026-10-23T10:00:00Z', priorityRegions: ['Middle East'], url: 'https://apnews.com/roundup' }, members: [{ title, priorityRegions: ['Middle East'] }] }
+  const verification = { ready: [{ eventId: 'roundup', readiness: { ready: true, image: { sourceUrl: sources[0].url } }, sources }], repairQueue: [], rejected: [] }
+  assert.deepEqual(assembleVerifiedCards({ selections: [selection] }, verification, { results: [] }), [])
+})
+
 test('verified local-source evidence restores a lost Ghana classification', () => {
   const title = 'NAGRAT disputes party decision over school leadership'
   const source = { accepted: true, trusted: true, domain: 'myjoyonline.com', url: 'https://myjoyonline.com/story', title, publishedAt: '2026-10-20T05:00:00Z', evidenceText: 'The National Association of Graduate Teachers said the decision affects confidence in institutions in Ghana.', sharedTerms: ['nagrat', 'challenges', 'party', 'decision'], imageUrl: 'https://myjoyonline.com/image.jpg' }

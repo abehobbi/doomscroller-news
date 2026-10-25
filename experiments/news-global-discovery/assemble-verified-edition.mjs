@@ -90,7 +90,7 @@ export function assembleVerifiedCards(shortlist, verification, repairs) {
     const verified = verifiedItem(selection.id, verification, repairs)
     const acceptedSources = verified.sources.filter(source => source.accepted && source.trusted
       && !headlinesExplicitlyConflict({ title: selection.representative.title }, { title: source.title || '' })
-      && (candidatesDescribeSameThread({ title: selection.representative.title }, { title: source.title || '' }) || (source.sharedTerms || []).length >= 4))
+      && candidatesDescribeSameThread({ title: selection.representative.title }, { title: source.title || '' }))
       .map(source => ({ ...source, family: sourceFamilyFromEvidence(source.domain, source.evidenceText, source.title) }))
     if (!acceptedSources.length) return []
     const finalGate = readiness({ representative: { title: selection.representative.title }, assignedLane: selection.assignedLane }, acceptedSources.map(source => ({ ...source, accepted: true })))

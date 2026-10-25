@@ -45,6 +45,31 @@ test('different disease outbreaks in different countries never become one event 
   ), false)
 })
 
+test('multi-event news roundups cannot absorb separate regional stories', () => {
+  const roundup = { title: 'Attack in the West Bank kills 2 Israeli soldiers, and other Mideast news' }
+  assert.equal(candidatesDescribeSameThread(
+    roundup,
+    { title: 'Protests erupt across Syria after Israeli forces kill man with Down syndrome' },
+  ), false)
+  assert.equal(candidatesDescribeSameThread(
+    roundup,
+    { title: 'Migrant workers find strength amid Israeli strikes in Lebanon' },
+  ), false)
+  assert.equal(candidatesDescribeSameThread(
+    roundup,
+    { title: 'World News in Brief: UN team tours the West Bank and Russian attacks intensify' },
+  ), false)
+  assert.ok(scoreCandidate(candidate(roundup.title, ['priority-major'], ['Middle East']), '2026-10-23T10:00:00Z').score < 0)
+  assert.equal(candidatesDescribeSameThread(
+    { title: 'Protests erupt across Syria after Israeli forces kill man with Down syndrome' },
+    { title: 'Israel launches collective punishment campaign in Hebron after two soldiers killed' },
+  ), false)
+  assert.equal(candidatesDescribeSameThread(
+    { title: 'Protests erupt across Syria after Israeli forces kill man with Down syndrome' },
+    { title: 'Residents protest Israeli incursions in Quneitra' },
+  ), true)
+})
+
 test('rescue and body-recovery updates for the same named vessel remain one event thread', () => {
   assert.equal(candidatesDescribeSameThread(
     { title: 'Joint rescue effort saved 69 MV Barima survivors' },

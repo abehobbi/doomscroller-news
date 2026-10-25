@@ -24,6 +24,7 @@ const QUERY_REGIONS = new Map(FIVE_LANE_QUERIES.map(query => [query.id, query.re
 const PRIORITY_REGION_MINIMUMS = { Syria: 2, 'Middle East': 2, Bangladesh: 2, Ghana: 2, Canada: 2, GTA: 1 }
 const PRIORITY_REGIONS = Object.keys(PRIORITY_REGION_MINIMUMS)
 
+const MULTI_EVENT_TITLE = /\b(?:news in brief|news roundup|and other .{0,35} news)\b/i
 const HARD_REJECT = /\b(?:daily mail|tourism|travel guide|things to do|event calendar|press release|sponsored|opinion|podcast|newsletter|award ceremony|wins? \d+ international awards?|celebrity|football|soccer|basketball|tickets?|lottery results?|horoscope|weather forecast|stock picks?|coupon|shopping deal|habitat fair|big sales|return to winning ways|go(?:es)? top .{0,60}(?:defeat|season)|first defeat of (?:the )?season)\b|\b(?:property|housing|trade|sales?)\s+(?:expo|fair)\b|\bagreement\b.{0,80}\b(?:hold|holding|host|hosting)\b.{0,80}\b(?:meeting|conference|summit)s?\b|\b(?:fc|sc)\b.{0,80}\b(?:defeat|winning|league|match)\b/i
 const GENERIC_PAGE = /\b(?:home|front page|latest news|breaking news|all news|directory|annual report|meeting packet|minutes|agenda|live updates?)\b/i
 const WEAK_EVENT = /\b(?:invites?|calls? for|called for|urges?|urged|challenges?|challenged|highlights? (?:the )?need for|emphasi[sz]es? (?:the )?need for|efforts? (?:are )?needed to|must (?:go|move|extend) beyond|plans? to|could|may|set to|expected to|celebrates?|festival to be held|(?:will|to) launch|launches? initiative|cuts? (?:the )?sod|breaks? ground|groundbreaking|shares? thoughts?|reacts? to|commends?|praises?|welcomes?|reaffirms?|showcas(?:e|es|ed|ing)|partner(?:s|ed|ing)? with|weighs? in|misses? court|open for|ready to|vows? to)\b|\bsays?\s+(?:professor|minister|official|expert)\b|\bprof(?:essor|\.)?\s+[A-Z]/i
@@ -86,6 +87,7 @@ function normalizeToken(token) {
     ['zelenskyy', 'ukraine'], ['zelensky', 'ukraine'],
     ['moscow', 'russia'], ['putin', 'russia'],
     ['attack', 'strike'], ['attacks', 'strike'], ['attacked', 'strike'],
+    ['israeli', 'israel'],
   ])
   if (aliases.has(token)) return aliases.get(token)
   if (token.length > 5 && token.endsWith('ies')) return `${token.slice(0, -3)}y`
@@ -151,7 +153,7 @@ export function scoreCandidate(candidate, reportCreatedAt) {
   if (lowConsequence) { score -= 50; reasons.push('low-consequence statement, publicity, or prospective framing') }
   else if (WEAK_EVENT.test(title)) { score -= 8; reasons.push('statement, invitation, or prospective framing') }
   if (GENERIC_PAGE.test(title)) { score -= 30; reasons.push('generic or rolling page') }
-  if (HARD_REJECT.test(`${title} ${domain}`)) { score -= 80; reasons.push('hard editorial rejection') }
+  if (HARD_REJECT.test(`${title} ${domain}`) || MULTI_EVENT_TITLE.test(title)) { score -= 80; reasons.push('hard editorial rejection') }
   if (COPY_MARKERS.test(candidate.title) && tier !== 'strong') { score -= 4; reasons.push('possible derivative or republished copy') }
   const published = Date.parse(candidate.publishedAt || '')
   const created = Date.parse(reportCreatedAt || '')
@@ -177,15 +179,20 @@ const GENERIC_CLUSTER_TERMS = new Set([
   'government', 'leader', 'lawsuit', 'million', 'minister', 'people', 'president',
   'report', 'state', 'supreme', 'world', 'year',
 ])
-const PLACE_ANCHORS = new Set(['saudiarabia', 'sudan', 'ukraine', 'india', 'bangladesh', 'ghana', 'syria', 'canada', 'nepal', 'gaza', 'lebanon', 'congo'])
+const PLACE_ANCHORS = new Set(['saudiarabia', 'sudan', 'ukraine', 'india', 'bangladesh', 'ghana', 'syria', 'canada', 'nepal', 'gaza', 'lebanon', 'congo', 'israel', 'westbank'])
 const EVENT_ANCHORS = new Set(['airport', 'attack', 'ceasefire', 'election', 'flood', 'mine', 'protest', 'strike'])
 const ENTITY_ANCHORS = new Set(['icc', 'iaea', 'imf', 'nato', 'who'])
 const DISEASE_ANCHORS = new Set(['measle', 'ebola', 'cholera', 'dengue', 'mpox', 'malaria', 'covid', 'influenza', 'polio'])
 
 function namedLocations(value) {
   const normalized = String(value || '').replace(/\b[A-Z][\p{L}']+-(?:occupied|controlled|held)\s+/gu, '')
-  return [...normalized.matchAll(/\b(?:at|in|near|outside)\s+([A-Z][\p{L}'-]{2,})/gu)]
+  const aliases = new Map([
+    ['damascus', 'syria'], ['daraa', 'syria'], ['quneitra', 'syria'], ['raqqa', 'syria'],
+    ['hebron', 'westbank'], ['jenin', 'westbank'],
+  ])
+  return [...normalized.matchAll(/\b(?:at|in|near|outside|across|throughout)\s+([A-Z][\p{L}'-]{2,})/gu)]
     .map(match => match[1].toLowerCase())
+    .map(location => aliases.get(location) || location)
 }
 
 export function headlinesShareNamedLocationAndEvent(left, right) {
@@ -215,6 +222,9 @@ export function headlinesExplicitlyConflict(left, right) {
 }
 
 export function candidatesDescribeSameThread(left, right) {
+  if (MULTI_EVENT_TITLE.test(left.title || '') || MULTI_EVENT_TITLE.test(right.title || '')) {
+    return cleanTitle(left.title) === cleanTitle(right.title)
+  }
   const leftVessels = namedVessels(left.title), rightVessels = namedVessels(right.title)
   if ([...leftVessels].some(name => rightVessels.has(name))) return true
   const a = tokens(left.title), b = tokens(right.title)
