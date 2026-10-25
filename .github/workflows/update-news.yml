@@ -178,6 +178,8 @@ jobs:
         run: node experiments/news-global-discovery/writer-shortlist-trial.mjs --shortlist ${{ env.RUN_ROOT }}/writer/WRITER_SHORTLIST.json --verification ${{ env.RUN_ROOT }}/writer/WRITER_VERIFICATION.json --all-selected --retry-rejected --output-dir ${{ env.RUN_ROOT }}/writer/generated
       - name: Assemble and audit the unattended shadow edition
         run: node experiments/news-global-discovery/assemble-unattended-shadow-edition.mjs --writer-report ${{ env.RUN_ROOT }}/writer/generated/TRIAL_REPORT.json --shortlist ${{ env.RUN_ROOT }}/writer/WRITER_SHORTLIST.json --output-dir ${{ env.RUN_ROOT }}/final
+      - name: Score 24-hour daily-edition readiness
+        run: node experiments/news-global-discovery/audit-daily-shadow-readiness.mjs --edition ${{ env.RUN_ROOT }}/final/UNATTENDED_SHADOW_EDITION.json --discovery ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --budget ${{ env.RUN_ROOT }}/PROVIDER_BUDGET.json --output ${{ env.RUN_ROOT }}/DAILY_READINESS.json
       - name: Diagnose coverage against the independent October 23 comparison
         run: >-
           node experiments/news-global-discovery/diagnose-editorial-benchmark.mjs
