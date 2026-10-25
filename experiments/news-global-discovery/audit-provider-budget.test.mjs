@@ -26,6 +26,20 @@ test('expanded 28-query discovery remains below the guarded monthly Exa allowanc
   assert.equal(report.projection.exaMonthlyDollars, 7.812)
 })
 
+test('expanded discovery plus six Exa second chances remains below the monthly guard', () => {
+  const report = summarizeProviderUsage([
+    { provider: 'exa', costDollars: 0.196 },
+    { provider: 'exa', costDollars: 0.056 },
+    { provider: 'exa', costDollars: 0.021 },
+    { provider: 'exa', costDollars: 0.021 },
+    { provider: 'tavily', creditsUsed: 10 },
+    { provider: 'tavily', creditsUsed: 7 },
+    { provider: 'tavily', creditsUsed: 7 },
+  ])
+  assert.equal(report.safeForDailyFullRun, true)
+  assert.deepEqual(report.projection, { exaMonthlyDollars: 9.114, tavilyMonthlyCredits: 744 })
+})
+
 test('budget guard fails closed before either recurring allowance is exhausted', () => {
   const exa = summarizeProviderUsage([{ provider: 'exa', costDollars: 0.31 }])
   const tavily = summarizeProviderUsage([{ provider: 'tavily', creditsUsed: 31 }])

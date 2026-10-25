@@ -4,8 +4,8 @@ import { auditPlannedQueries, compactDiscoveryContext, compactRoundResults, MAX_
 
 const make = (id, lane, region, query) => ({ id, lane, region, blind_spot: 'undercovered local life', rationale: 'fills a demonstrated omission', query })
 
-test('adaptive planner converts ten Tavily credits into ten breadth searches', () => {
-  assert.deepEqual(ROUND_SIZES, [6, 4]); assert.equal(TAVILY_CREDITS_PER_SEARCH, 1); assert.equal(ROUND_SIZES.reduce((sum, value) => sum + value, 0) * TAVILY_CREDITS_PER_SEARCH, MAX_TAVILY_CREDITS)
+test('adaptive planner uses five deep Tavily searches across two rounds', () => {
+  assert.deepEqual(ROUND_SIZES, [3, 2]); assert.equal(TAVILY_CREDITS_PER_SEARCH, 2); assert.equal(ROUND_SIZES.reduce((sum, value) => sum + value, 0) * TAVILY_CREDITS_PER_SEARCH, MAX_TAVILY_CREDITS)
 })
 
 test('coverage digest exposes lane and region gaps without article bodies', () => {
@@ -27,24 +27,11 @@ test('planned queries must be distinct, lane-correct and region-correct', () => 
   assert.equal(auditPlannedQueries([valid[0]], 1, [valid[0].query]).reason, 'query repeats an earlier round')
 })
 
-test('expanded rounds cover all depth lanes and distinct priority regions', () => {
-  const firstRound = [
-    make('world-1', 'world-interesting', null, 'remote island residents restore their only freshwater source'),
-    make('world-2', 'world-interesting', null, 'local reporters reveal hidden costs of a mining boom'),
-    make('syria', 'priority-interesting', 'Syria', 'Syrian artisans revive a threatened traditional weaving practice'),
-    make('ghana', 'priority-interesting', 'Ghana', 'Ghana coastal fishers document a changing marine livelihood'),
-    make('science-1', 'discovery', null, 'archaeologists identify an unknown settlement through ancient pollen'),
-    make('science-2', 'discovery', null, 'biologists document a newly observed animal cooperation behavior'),
-  ]
-  assert.equal(auditPlannedQueries(firstRound, 6).valid, true)
-  assert.equal(auditPlannedQueries([...firstRound.slice(0, 3), { ...firstRound[3], region: 'Syria', query: 'Syria coastal fishers document a changing marine livelihood' }, ...firstRound.slice(4)], 6).reason, 'priority queries repeat a region within one round')
-})
-
 test('planner rejects operator-heavy searches and preserves both obscure lanes', () => {
-  const secondRound = [make('local-1', 'world-interesting', null, 'remote island residents restore their only freshwater source'), make('local-2', 'world-interesting', null, 'small town workers expose an overlooked environmental burden'), make('ghana', 'priority-interesting', 'Ghana', 'Ghana farming community adapts a threatened local livelihood'), make('field', 'discovery', null, 'biologists document a previously unknown animal behavior')]
-  assert.equal(auditPlannedQueries(secondRound, 4).valid, true)
-  assert.equal(auditPlannedQueries([{ ...secondRound[0], query: 'local crafts OR heritage OR livelihoods news 2026' }, ...secondRound.slice(1)], 4).reason, 'query contains search operators or dates')
-  assert.equal(auditPlannedQueries([secondRound[0], { ...secondRound[1], lane: 'discovery' }, secondRound[2], secondRound[3]], 4).reason, 'round two must contain one priority, two world-interesting and one discovery query')
+  const secondRound = [make('local', 'world-interesting', null, 'remote island residents restore their only freshwater source'), make('field', 'discovery', null, 'biologists document a previously unknown animal behavior')]
+  assert.equal(auditPlannedQueries(secondRound, 2).valid, true)
+  assert.equal(auditPlannedQueries([{ ...secondRound[0], query: 'local crafts OR heritage OR livelihoods news 2026' }, secondRound[1]], 2).reason, 'query contains search operators or dates')
+  assert.equal(auditPlannedQueries([secondRound[0], { ...secondRound[1], lane: 'world-interesting' }], 2).reason, 'round two must cover world-interesting and discovery')
 })
 
 test('priority-region results cannot inherit a false geographic label', () => {

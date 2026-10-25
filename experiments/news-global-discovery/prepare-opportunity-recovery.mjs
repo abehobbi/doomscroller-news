@@ -14,12 +14,26 @@ const blocker = item => {
 export function prepareOpportunityRecovery(verification, repairs, maximum = 6) {
   const latest = new Map([...(verification.repairQueue || []), ...(verification.rejected || [])].map(item => [item.eventId, item]))
   for (const repair of repairs) for (const item of repair.results || []) latest.set(item.eventId, item)
-  const repairQueue = [...latest.values()]
+  const ranked = [...latest.values()]
     .filter(item => !item.readiness?.ready && !stale(item) && highPotential(item))
     .sort((left, right) => Number(right.selectionScore || 0) - Number(left.selectionScore || 0))
-    .slice(0, maximum)
-    .map(item => ({ ...item, opportunityRecovery: { attempt: 2, blocker: blocker(item) } }))
-  return { schemaVersion: 1, createdAt: new Date().toISOString(), counts: { candidates: repairQueue.length }, repairQueue, ready: [], rejected: [] }
+  const repairQueue = []
+  for (const item of ranked) {
+    if (repairQueue.length >= maximum) break
+    if (!repairQueue.some(selected => selected.lane === item.lane)) repairQueue.push(item)
+  }
+  for (const item of ranked) {
+    if (repairQueue.length >= maximum) break
+    if (!repairQueue.includes(item)) repairQueue.push(item)
+  }
+  return {
+    schemaVersion: 1,
+    createdAt: new Date().toISOString(),
+    counts: { candidates: repairQueue.length },
+    repairQueue: repairQueue.map(item => ({ ...item, opportunityRecovery: { attempt: 2, blocker: blocker(item) } })),
+    ready: [],
+    rejected: [],
+  }
 }
 
 async function main() {

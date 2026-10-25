@@ -195,6 +195,16 @@ function namedLocations(value) {
     .map(location => aliases.get(location) || location)
 }
 
+const EXPLICIT_GEOGRAPHIES = [
+  ['alaska', /\balaska(?:n)?\b/i], ['britishcolumbia', /\b(?:british columbia|b\.c\.)\b/i],
+  ['ontario', /\bontario\b/i], ['quebec', /\bquebec\b/i], ['alberta', /\balberta\b/i],
+  ['newmexico', /\bnew mexico\b/i], ['newyork', /\bnew york\b/i], ['california', /\bcalifornia\b/i],
+  ['romania', /\bromania(?:n)?\b/i], ['serbia', /\bserbia(?:n)?\b/i], ['poland', /\bpol(?:and|ish)\b/i],
+  ['tunisia', /\btunisia(?:n)?\b/i], ['gambia', /\b(?:the )?gambia(?:n)?\b/i],
+  ['liechtenstein', /\bliechtenstein\b/i], ['bougainville', /\bbougainville\b/i],
+]
+const explicitGeographies = value => EXPLICIT_GEOGRAPHIES.filter(([, pattern]) => pattern.test(String(value || ''))).map(([id]) => id)
+
 export function headlinesShareNamedLocationAndEvent(left, right) {
   const locationsA = namedLocations(left.title), locationsB = namedLocations(right.title)
   if (!locationsA.some(location => locationsB.includes(location))) return false
@@ -209,6 +219,8 @@ export function headlinesExplicitlyConflict(left, right) {
   if (placesA.length && placesB.length && !placesA.some(place => placesB.includes(place))) return true
   const namedPlacesA = namedLocations(left.title), namedPlacesB = namedLocations(right.title)
   if (namedPlacesA.length && namedPlacesB.length && !namedPlacesA.some(place => namedPlacesB.includes(place))) return true
+  const explicitA = explicitGeographies(left.title), explicitB = explicitGeographies(right.title)
+  if (explicitA.length && explicitB.length && !explicitA.some(place => explicitB.includes(place))) return true
   const diseasesA = [...a].filter(token => DISEASE_ANCHORS.has(token))
   const diseasesB = [...b].filter(token => DISEASE_ANCHORS.has(token))
   if (diseasesA.length && diseasesB.length && !diseasesA.some(disease => diseasesB.includes(disease))) return true

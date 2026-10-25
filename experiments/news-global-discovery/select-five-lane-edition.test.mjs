@@ -70,6 +70,12 @@ test('multi-event news roundups cannot absorb separate regional stories', () => 
   ), true)
 })
 
+test('different election stories in British Columbia and Alaska never cluster', () => {
+  const bc = candidate('B.C. election results: Live numbers from the 2026 vote', 'https://globalnews.ca/bc-election')
+  const alaska = candidate('Trump asks court to block Alaska Senate results certification', 'https://theguardian.com/alaska-election')
+  assert.equal(candidatesDescribeSameThread(bc, alaska), false)
+})
+
 test('rescue and body-recovery updates for the same named vessel remain one event thread', () => {
   assert.equal(candidatesDescribeSameThread(
     { title: 'Joint rescue effort saved 69 MV Barima survivors' },

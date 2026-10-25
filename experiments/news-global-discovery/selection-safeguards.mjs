@@ -15,6 +15,9 @@ const ESTABLISHED = new Set([
   'thenationalnews.com', 'thepointer.com', 'toronto.citynews.ca', 'vanityfair.com', 'wired.com',
   'abcnews.com', 'independent.co.uk', 'mbcradio.com', 'rferl.org', 'washingtonpost.com',
   'aa.com.tr', 'crossriverwatch.com', 'frontline.thehindu.com', 'scroll.in',
+  'thehindu.com', 'theworld.org', 'middleeasteye.net', 'newlinesmag.com', 'scientificamerican.com',
+  'nigeriahealthwatch.com', 'democracynow.org', 'pulse.com.gh', 'saharareporters.com',
+  'futuroinvestigates.org', 'discoverwildlife.com', 'letemps.ch',
 ])
 const RESEARCH_OR_INSTITUTIONAL = new Set([
   'nature.com', 'news.uchicago.edu', 'phys.org', 'medicalxpress.com', 'researchmatters.in',

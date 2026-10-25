@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { mergeSources, pendingRepairCandidates, repairCandidates, repairObjective, repairSearchQuery, searchForRepair, secondChanceQuery } from './repair-unified-shortlist.mjs'
+import { isWorthRepairing, mergeSources, pendingRepairCandidates, repairCandidates, repairObjective, repairSearchQuery, searchForRepair, secondChanceQuery } from './repair-unified-shortlist.mjs'
 import { isTrustedDomain } from './verify-unified-shortlist.mjs'
 
 test('repair candidates are bounded and ordered by selection strength', () => {
@@ -21,6 +21,21 @@ test('source-ready major leads needing corroboration outrank weaker publicity re
   assert.equal(repairCandidates(report, 1)[0].eventId, 'outbreak')
 })
 
+test('bounded repairs reserve one opportunity for every editorial lane', () => {
+  const lanes = ['priority-major', 'world-major', 'priority-interesting', 'world-interesting', 'discovery']
+  const report = { repairQueue: lanes.flatMap((lane, index) => [
+    { eventId: `${lane}-top`, lane, selectionScore: 150 - index, readiness: { highRisk: lane.includes('major'), acceptedSourceCount: 1, reasons: [] } },
+    { eventId: `${lane}-other`, lane, selectionScore: 80 - index, readiness: { highRisk: false, acceptedSourceCount: 0, reasons: [] } },
+  ]) }
+  assert.deepEqual(new Set(repairCandidates(report, 7).map(item => item.lane)), new Set(lanes))
+})
+
+test('repair budget skips routine rolling election pages and isolated road deaths', () => {
+  assert.equal(isWorthRepairing({ headline: 'Live numbers: find your riding and local candidates' }), false)
+  assert.equal(isWorthRepairing({ headline: 'Driver killed in Highway 404 collision' }), false)
+  assert.equal(isWorthRepairing({ headline: 'School bus crash kills driver and forces mass evacuation' }), true)
+})
+
 test('source merging removes exact family and URL duplicates without hiding independent reports', () => {
   const source = domain => ({ domain, url: `https://${domain}/story` })
   const merged = mergeSources([source('bbc.com')], [source('bbc.com'), source('reuters.com')])
@@ -31,6 +46,9 @@ test('repair reassessment recognizes newly vetted publishers without another sea
   assert.equal(isTrustedDomain('mbcradio.com'), true)
   assert.equal(isTrustedDomain('washingtonpost.com'), true)
   assert.equal(isTrustedDomain('rferl.org'), true)
+  assert.equal(isTrustedDomain('pulse.com.gh'), true)
+  assert.equal(isTrustedDomain('scientificamerican.com'), true)
+  assert.equal(isTrustedDomain('theworld.org'), true)
 })
 
 test('checkpoint resume skips already completed repair candidates', () => {

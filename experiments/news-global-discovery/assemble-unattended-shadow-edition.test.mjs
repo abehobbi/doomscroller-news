@@ -1,9 +1,14 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { assembleUnattendedShadowEdition, failedAuditChecks, normalizeGeneratedRouting, rejectionCategory } from './assemble-unattended-shadow-edition.mjs'
+import { assembleUnattendedShadowEdition, failedAuditChecks, hasCompleteHeadline, normalizeGeneratedRouting, rejectionCategory } from './assemble-unattended-shadow-edition.mjs'
 
 const input = (eventId, lane, headline) => ({ eventId, lane, headline, publishedAt: '2026-10-12T12:00:00Z', priorityRegions: [], image: { url: `https://img.test/${eventId}.jpg`, publisher: 'img.test' }, primarySource: { url: `https://source.test/${eventId}` } })
 const accepted = (eventId, lane, headline, text, url = `https://source.test/${eventId}`) => ({ eventId, lane, sourceTitle: headline, status: 'accepted', card: { headline, pages: [{ text }], uncertainties: [] }, sources: [{ publisher: 'source.test', url }], audits: { content: { valid: true } }, provider: { complete: true } })
+
+test('incomplete generated headlines cannot enter an edition', () => {
+  assert.equal(hasCompleteHeadline('Tourism agency orchestrated campaign to '), false)
+  assert.equal(hasCompleteHeadline('Tourism agency orchestrated a campaign to influence visitors'), true)
+})
 
 test('assembles accepted cards and preserves deterministic rejections', () => {
   const shortlist = { selected: [input('a', 'world-major', 'Airport attack'), input('b', 'discovery', 'Fossil study')] }

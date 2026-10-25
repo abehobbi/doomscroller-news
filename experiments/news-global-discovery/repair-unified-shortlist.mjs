@@ -8,6 +8,13 @@ import { inspectSource, readiness, reassessStoredSource } from './verify-unified
 const EXA_API_URL = 'https://api.exa.ai/search'
 const TAVILY_API_URL = 'https://api.tavily.com/search'
 const EXCLUDED_DOMAINS = ['facebook.com', 'instagram.com', 'linkedin.com', 'pinterest.com', 'tiktok.com', 'youtube.com', 'x.com']
+const LOW_VALUE_REPAIR = /\b(?:live numbers|find your riding|local candidates|where to vote|polls? (?:open|close))\b|\b(?:person|driver|man|woman)\s+(?:is\s+)?(?:dead|dies?|killed)\b.{0,60}\b(?:crash|collision)\b/i
+const OVERRIDING_PUBLIC_IMPACT = /\b(?:multiple|several|at least \d+|mass casualty|school bus|train|plane|bridge|evacuat|state of emergency)\b/i
+
+export function isWorthRepairing(item) {
+  const context = `${item.headline || ''} ${item.evidence || ''}`
+  return !LOW_VALUE_REPAIR.test(context) || OVERRIDING_PUBLIC_IMPACT.test(context)
+}
 
 function parseArgs(argv) {
   const options = { input: null, pool: null, outputDir: null, maximum: 12, provider: 'exa', dryRun: false, reassessOnly: false }
@@ -36,15 +43,23 @@ function canonicalUrl(value) {
 }
 
 export function repairCandidates(report, maximum = 12) {
-  return [...report.repairQueue]
+  const ranked = [...report.repairQueue]
     .filter(item => !item.readiness.reasons.some(reason => /reporting period that ended/.test(reason)))
+    .filter(isWorthRepairing)
     .sort((left, right) => {
       const utility = item => Number(item.selectionScore || 0)
         + (String(item.lane || '').includes('major') ? 45 : 0)
         + (item.readiness?.highRisk && Number(item.readiness?.acceptedSourceCount || 0) >= 1 ? 35 : 0)
       return utility(right) - utility(left)
     })
-    .slice(0, maximum)
+  if (maximum < 5) return ranked.slice(0, maximum)
+  const laneOrder = ['priority-major', 'world-major', 'priority-interesting', 'world-interesting', 'discovery']
+  const selected = laneOrder.map(lane => ranked.find(item => item.lane === lane)).filter(Boolean)
+  for (const item of ranked) {
+    if (selected.length >= maximum) break
+    if (!selected.includes(item)) selected.push(item)
+  }
+  return selected.slice(0, maximum)
 }
 
 export function repairSearchQuery(item) {

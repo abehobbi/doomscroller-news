@@ -66,9 +66,14 @@ export function failedAuditChecks(audits = {}) {
     .map(([name]) => name)
 }
 
+export function hasCompleteHeadline(headline) {
+  const value = String(headline || '').trim()
+  return value.length >= 12 && !/\b(?:a|an|and|as|at|by|for|from|in|into|of|on|or|the|to|with)$/i.test(value)
+}
+
 export function assembleUnattendedShadowEdition(writerReport, shortlist) {
   const inputs = new Map((shortlist.selected || []).map(item => [item.eventId, item]))
-  const accepted = (writerReport.results || []).filter(result => result.status === 'accepted')
+  const accepted = (writerReport.results || []).filter(result => result.status === 'accepted' && hasCompleteHeadline(result.card?.headline))
   const rejected = (writerReport.results || []).filter(result => result.status !== 'accepted').map(result => ({
     eventId: result.eventId,
     sourceTitle: result.sourceTitle,
@@ -78,6 +83,13 @@ export function assembleUnattendedShadowEdition(writerReport, shortlist) {
     providerStatus: result.provider?.httpStatus || null,
     providerCode: result.provider?.internalErrors?.[0]?.code || null,
   }))
+  rejected.push(...(writerReport.results || []).filter(result => result.status === 'accepted' && !hasCompleteHeadline(result.card?.headline)).map(result => ({
+    eventId: result.eventId,
+    sourceTitle: result.sourceTitle,
+    failedChecks: ['incomplete headline'],
+    complete: true,
+    category: 'check-rejected',
+  })))
   const rankedCards = rankFrontPage(accepted.map(result => {
     const input = inputs.get(result.eventId)
     if (!input?.image?.url && !input?.imageException?.granted) throw new Error(`Accepted card ${result.eventId} has neither a verified publisher image nor an approved image exception`)
