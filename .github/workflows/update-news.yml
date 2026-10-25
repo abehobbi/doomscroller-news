@@ -42,7 +42,7 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Verify isolated News tests
-        run: npm run news:test && npm run news:adaptive:test
+        run: npm run news:test && npm run news:adaptive:test && npm run news:comparison:test
       - name: Verify saved free-tier credentials
         shell: bash
         run: |
@@ -180,6 +180,8 @@ jobs:
         run: node experiments/news-global-discovery/assemble-unattended-shadow-edition.mjs --writer-report ${{ env.RUN_ROOT }}/writer/generated/TRIAL_REPORT.json --shortlist ${{ env.RUN_ROOT }}/writer/WRITER_SHORTLIST.json --output-dir ${{ env.RUN_ROOT }}/final
       - name: Score 24-hour daily-edition readiness
         run: node experiments/news-global-discovery/audit-daily-shadow-readiness.mjs --edition ${{ env.RUN_ROOT }}/final/UNATTENDED_SHADOW_EDITION.json --discovery ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --budget ${{ env.RUN_ROOT }}/PROVIDER_BUDGET.json --output ${{ env.RUN_ROOT }}/DAILY_READINESS.json
+      - name: Prepare blind independent-comparison prompt
+        run: node experiments/news-global-discovery/build-blind-comparison-prompt.mjs --discovery ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --output ${{ env.RUN_ROOT }}/CHATGPT_COMPARISON_PROMPT.txt
       - name: Diagnose coverage against the independent October 23 comparison
         run: >-
           node experiments/news-global-discovery/diagnose-editorial-benchmark.mjs
