@@ -7,11 +7,12 @@ const API_URL = 'https://api.exa.ai/search'
 const EXCLUDE_DOMAINS = ['facebook.com', 'instagram.com', 'linkedin.com', 'pinterest.com', 'tiktok.com', 'tripadvisor.com', 'youtube.com', 'x.com']
 
 function parseArgs(argv) {
-  const options = { scan: 'full', lanes: [], days: 3, resultsPerQuery: 10, maxQueries: null, output: null, dryRun: false }
+  const options = { scan: 'full', lanes: [], hours: null, days: 3, resultsPerQuery: 10, maxQueries: null, output: null, dryRun: false }
   for (let i = 0; i < argv.length; i += 1) {
     if (argv[i] === '--scan') options.scan = argv[++i]
     else if (argv[i] === '--lanes') options.lanes = argv[++i].split(',').map(value => value.trim()).filter(Boolean)
     else if (argv[i] === '--days') options.days = Number(argv[++i])
+    else if (argv[i] === '--hours') options.hours = Number(argv[++i])
     else if (argv[i] === '--results-per-query') options.resultsPerQuery = Number(argv[++i])
     else if (argv[i] === '--max-queries') options.maxQueries = Number(argv[++i])
     else if (argv[i] === '--output') options.output = argv[++i]
@@ -21,6 +22,7 @@ function parseArgs(argv) {
   const knownLanes = new Set(FIVE_LANE_QUERIES.map(query => query.lane))
   if (options.lanes.some(lane => !knownLanes.has(lane))) throw new Error('--lanes contains an unknown editorial lane')
   if (!Number.isFinite(options.days) || options.days < 1) throw new Error('--days must be at least 1')
+  if (options.hours !== null && (!Number.isFinite(options.hours) || options.hours < 1 || options.hours > 168)) throw new Error('--hours must be from 1 to 168')
   if (!Number.isInteger(options.resultsPerQuery) || options.resultsPerQuery < 1 || options.resultsPerQuery > 100) throw new Error('--results-per-query must be an integer from 1 to 100')
   if (options.maxQueries !== null && (!Number.isInteger(options.maxQueries) || options.maxQueries < 1)) throw new Error('--max-queries must be a positive integer')
   return options
@@ -168,7 +170,7 @@ async function main() {
   const apiKey = process.env.EXA_API_KEY
   if (!apiKey) throw new Error('EXA_API_KEY is not set. No requests were made.')
   const end = new Date()
-  const start = new Date(end.getTime() - options.days * 86_400_000)
+  const start = new Date(end.getTime() - (options.hours ?? options.days * 24) * 3_600_000)
   const window = { start: start.toISOString(), end: end.toISOString() }
   const searches = []
   for (const query of queries) {

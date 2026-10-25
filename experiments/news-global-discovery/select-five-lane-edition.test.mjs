@@ -25,6 +25,12 @@ test('a concrete consequential headline can recover a major lane even when a fee
   assert.ok(hunger.lanes.includes('world-major'))
 })
 
+test('research results discovered by both broad and science searches remain Discovery', () => {
+  const scored = scoreCandidate(candidate('NASA asteroid Bennu samples reveal details about Solar System formation 4.5 billion years ago', ['world-major', 'discovery']), '2026-10-13T10:00:00Z')
+  const selection = selectEdition([{ id: 'bennu', representative: scored, members: [scored], lanes: scored.lanes }], 1)
+  assert.equal(selection.selected[0].assignedLane, 'discovery')
+})
+
 test('shared amounts do not merge unrelated science and public spending stories', () => {
   const fossil = { title: 'The fossil record may be missing 200 million years of animal history' }
   const hospital = { title: 'Ghana allocates 200 million cedis for police hospital expansion' }

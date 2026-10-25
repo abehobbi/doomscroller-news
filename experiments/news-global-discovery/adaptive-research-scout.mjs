@@ -126,9 +126,11 @@ async function readJson(file) { return JSON.parse(await fs.readFile(file, 'utf8'
 async function main() {
   const args = process.argv.slice(2), values = flag => { const found = []; for (let i = 0; i < args.length; i += 1) if (args[i] === flag) found.push(args[++i]); return found }
   const inputs = values('--input'), output = values('--output')[0], scan = values('--scan')[0] || 'full'
+  const hours = Number(values('--hours')[0] || 72)
   if (!inputs.length || !output) throw new Error('at least one --input and --output are required')
+  if (!Number.isFinite(hours) || hours < 1 || hours > 168) throw new Error('--hours must be from 1 to 168')
   if (args.includes('--dry-run')) { process.stdout.write(`${JSON.stringify({ rounds: ROUND_SIZES, maximumTavilyCredits: MAX_TAVILY_CREDITS }, null, 2)}\n`); return }
-  const end = new Date(), start = new Date(end.getTime() - 3 * 86_400_000), window = { start: start.toISOString(), end: end.toISOString() }
+  const end = new Date(), start = new Date(end.getTime() - hours * 3_600_000), window = { start: start.toISOString(), end: end.toISOString() }
   if (scan === 'major') {
     const report = buildTavilyDiscoveryReport([], window); report.mode = 'adaptive-research-skipped-for-major-scan'; report.planner = { model: MODEL, calls: [], totalNeurons: 0 }
     await fs.mkdir(path.dirname(output), { recursive: true }); await fs.writeFile(output, `${JSON.stringify(report, null, 2)}\n`)

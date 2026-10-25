@@ -37,6 +37,7 @@ const DELIVERED_CONSEQUENCE = /\b(?:funding (?:approved|released)|loan (?:approv
 const CONCRETE = /\b(?:kills?|dies?|dead|injur(?:y|ed|ies)|arrests?|convicts?|acquits?|bans?|blocks?|halts?|suspends?|overturns?|approves?|rejects?|signs?|strikes?|attacks?|evacuates?|sinks?|sank|sunk|traffick(?:ed|ing)?|layoffs?|displaced|floods?|earthquake|hurricane|outbreaks?|shortage|collapse|closes?|opens?|restores?|discovers?|found|reveals?|reports?|reaches? agreement|cuts?|rises?|falls?|first|record|investigat(?:es?|ion)|lawsuit|protest|sanctions?|election|ceasefire|troops?|war|famine|hunger|food insecurity|malnutrition)\b/i
 const HUMAN_TEXTURE = /\b(?:village|community|famil(?:y|ies)|residents?|women|children|youths?|artisans?|farmers?|fishers?|workers?|craft|tradition|harvest|livelihood|neighbou?rhood|small town|Indigenous|tribal|refugee|market|water|wildlife|chimpanzees?|mosquitoes?|mangrove|forest|river|wetland|school|education|housing|tenant|hospital|theatre|portrait|literature|clothing|class|debt|sanitation|poultry|rescue|sailors?|mining|extraction)\b/i
 const DISCOVERY_SIGNAL = /\b(?:study|researchers?|scientists?|fossil|archaeolog|paleontolog|species|planet|space|Webb|brain|genome|microbes?|quantum|clock|ancient|excavat|Nature|journal|trial|mice|stars?|galaxy|evolution)\b/i
+const RESEARCH_RESULT = /\b(?:study|research(?:ers?)?|scientists?|analysis|samples?|evidence|findings?|fossil|archaeolog|paleontolog|genome|quantum|ancient|stars?|galaxy|evolution)\b/i
 const COPY_MARKERS = /(?:\|\s*(?:AP News|Reuters|BBC News|CBC News|Al Jazeera)|-Xinhua|Africa Newsroom\s*\/\s*Press release)/i
 const WEAK_DOMAINS = [
   'dailymail.com', 'economictimes.indiatimes.com', 'timesofindia.indiatimes.com',
@@ -274,8 +275,9 @@ export function clusterCandidates(scored) {
 }
 
 function bestLaneFor(cluster, counts, phase) {
-  const majorLanes = cluster.lanes.filter(lane => lane.includes('major'))
-  const eligibleLanes = majorLanes.length ? majorLanes : cluster.lanes
+  const researchDiscovery = cluster.lanes.includes('discovery') && RESEARCH_RESULT.test(cluster.representative.title)
+  const majorLanes = researchDiscovery ? [] : cluster.lanes.filter(lane => lane.includes('major'))
+  const eligibleLanes = researchDiscovery ? cluster.lanes.filter(lane => !lane.includes('major')) : majorLanes.length ? majorLanes : cluster.lanes
   return eligibleLanes
     .filter(lane => phase === 'open' || counts[lane] < LANE_LIMITS[lane].maximum)
     .map(lane => {

@@ -18,9 +18,12 @@ const ESTABLISHED = new Set([
   'thehindu.com', 'theworld.org', 'middleeasteye.net', 'newlinesmag.com', 'scientificamerican.com',
   'nigeriahealthwatch.com', 'democracynow.org', 'pulse.com.gh', 'saharareporters.com',
   'futuroinvestigates.org', 'discoverwildlife.com', 'letemps.ch',
+  'telegraph.co.uk', 'axios.com', 'tpr.org', 'rappler.com', 'canadiangeographic.ca',
+  '3news.com', 'afp.com', 'cebudailynews.inquirer.net', 'theweathernetwork.com',
 ])
 const RESEARCH_OR_INSTITUTIONAL = new Set([
   'nature.com', 'news.uchicago.edu', 'phys.org', 'medicalxpress.com', 'researchmatters.in',
+  'knust.edu.gh', 'adb.org', 'gov.uk',
   'theconversation.com', 'space.com', 'huggingface.co', 'wwt.org.uk',
 ])
 const REPLACE_SOURCE = new Set(['scienmag.com', 'techtimes.com', 'torontosun.com'])

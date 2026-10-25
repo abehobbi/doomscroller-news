@@ -8,6 +8,13 @@ test('vetted specialist science publishers satisfy the trusted-source gate', () 
   assert.equal(isTrustedDomain('scitechupdates.com'), false)
 })
 
+test('vetted regional and public-interest publishers satisfy the trusted-source gate', () => {
+  for (const domain of ['rappler.com', 'tpr.org', 'canadiangeographic.ca', '3news.com', 'cebudailynews.inquirer.net', 'knust.edu.gh', 'adb.org']) {
+    assert.equal(isTrustedDomain(domain), true, domain)
+  }
+  assert.equal(isTrustedDomain('unknown-regional-blog.example'), false)
+})
+
 test('source evidence must overlap the selected event', () => {
   assert.equal(evidenceMatchesTitle('Riyadh airport hit by missile attack', 'A missile struck the Riyadh international airport during the attack.').passes, true)
   assert.equal(evidenceMatchesTitle('Riyadh airport hit by missile attack', 'A museum opened an exhibition about ancient pottery.').passes, false)
