@@ -65,7 +65,16 @@ export function repairCandidates(report, maximum = 12) {
 export function repairSearchQuery(item) {
   const evidence = item.sources.find(source => source.evidenceText)?.evidenceText?.slice(0, 900) || ''
   const secondChance = Number(item.opportunityRecovery?.attempt || 0) >= 2
+  const needsCorroboration = item.readiness?.reasons?.some(reason => /two independent trusted source families/i.test(reason))
+  // Pasting a long first article into a corroboration query biases search
+  // toward copies of that article. Use the factual headline and explicitly
+  // seek an independent account on every corroboration attempt.
+  if (needsCorroboration) return `${cleanHeadline(item.headline)} independent report official statement`.trim()
   return secondChance ? secondChanceQuery(item) : `${item.headline} ${evidence}`.trim()
+}
+
+function cleanHeadline(value) {
+  return String(value || '').replace(/\s*[|–—-]\s*(?:Reuters|AP|BBC|CNN|The Guardian|Al Jazeera|Nature.*)$/i, '').trim()
 }
 
 async function searchExa(apiKey, item) {
@@ -111,7 +120,7 @@ export async function searchForRepair(provider, apiKey, item) {
 }
 
 export function secondChanceQuery(item) {
-  const headline = String(item.headline || '').replace(/\s*[|–—-]\s*(?:Reuters|AP|BBC|CNN|The Guardian|Al Jazeera|Nature.*)$/i, '').trim()
+  const headline = cleanHeadline(item.headline)
   const blocker = item.opportunityRecovery?.blocker
   if (blocker === 'corroboration') return `${headline} independent report official statement`
   if (blocker === 'image') return `${headline} news photos`

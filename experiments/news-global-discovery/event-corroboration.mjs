@@ -44,6 +44,10 @@ function article(item) {
 }
 
 export function compareCandidateEvents(left, right) {
+  const deterministic = compareEvents(article(left), article(right))
+  // A targeted recovery query is only a discovery hint. It must never override
+  // concrete evidence that the returned pages describe different events.
+  if (deterministic.reason === 'explicit event locations conflict') return deterministic
   const recoveryKey = value => String(value || '').match(/^gap-(.+)-[0-9a-f]{10}$/)?.[1] || null
   const leftRecoveryKey = recoveryKey(left?.selection?.id)
   const rightRecoveryKey = recoveryKey(right?.selection?.id)
@@ -54,15 +58,19 @@ export function compareCandidateEvents(left, right) {
       return keyTokens.filter(token => [...tokens].some(candidate => candidate === token || (Math.min(candidate.length, token.length) >= 7 && (candidate.startsWith(token) || token.startsWith(candidate))))).length
     }
     const required = Math.min(2, keyTokens.length)
-    if (topicMatches(left) >= required && topicMatches(right) >= required) {
+    const titles = overlap(article(left).title, article(right).title)
+    const distinctive = distinctiveOverlap(article(left).title, article(right).title)
+    // Results from one recovery search can include regional roundups and
+    // adjacent developments. Require the two headlines themselves to share a
+    // meaningful event anchor before treating the query key as corroboration.
+    if (topicMatches(left) >= required && topicMatches(right) >= required
+      && (titles.shared >= 1 || distinctive >= 1)) {
       return { relation: 'same-event', score: 100, reason: `same targeted recovery event (${leftRecoveryKey})` }
     }
   }
   const leftVessels = namedVessels(article(left).title), rightVessels = namedVessels(article(right).title)
   const sharedVessel = [...leftVessels].find(name => rightVessels.has(name))
   if (sharedVessel) return { relation: 'same-event', score: 90, reason: `same named vessel (${sharedVessel})` }
-  const deterministic = compareEvents(article(left), article(right))
-  if (deterministic.reason === 'explicit event locations conflict') return deterministic
   const leftAcronyms = headlineAcronyms(article(left).title), rightAcronyms = headlineAcronyms(article(right).title)
   if (leftAcronyms.size && rightAcronyms.size && ![...leftAcronyms].some(value => rightAcronyms.has(value))) {
     return { relation: 'distinct-or-uncertain', score: 0, reason: 'conflicting named organizations in headlines' }

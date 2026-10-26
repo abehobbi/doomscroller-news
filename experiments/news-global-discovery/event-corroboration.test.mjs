@@ -56,6 +56,12 @@ test('a false-positive page from a targeted recovery query remains a separate ev
   assert.equal(compareCandidateEvents(target, unrelated).relation, 'distinct-or-uncertain')
 })
 
+test('a regional live blog cannot corroborate a specific recovery event merely by sharing query terms', () => {
+  const target = item('gap-syria-quneitra-incursion-1111111111', 'Israeli forces set up checkpoint and bulldoze farmland in Quneitra', 'Israeli forces entered the village of Saida al-Hanout in Quneitra and established a temporary checkpoint.', 'arabnews.com')
+  const roundup = item('gap-syria-quneitra-incursion-2222222222', 'Iran war live: Trump rules out strikes today; Israeli forces raid Hebron', 'The regional live blog reports developments in Iran, Gaza and a military raid in Hebron.', 'theguardian.com')
+  assert.equal(compareCandidateEvents(target, roundup).relation, 'distinct-or-uncertain')
+})
+
 test('shared background about one port does not merge different operator negotiations', () => {
   const dp = item('dp', 'DP World gets 15-year concession to operate New Mooring Container Terminal', 'Bangladesh signed a concession with DP World for the New Mooring Container Terminal. The government is reforming Chattogram port operations.', 'one.test')
   const psa = item('psa', 'Govt in talks with Singapore PSA to operate more Ctg Port terminals', 'The government is negotiating with PSA about different Chattogram port terminals while reforms continue across the port.', 'two.test')

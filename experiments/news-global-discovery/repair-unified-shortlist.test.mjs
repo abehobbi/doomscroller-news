@@ -75,6 +75,15 @@ test('repair search query keeps first-pass evidence but second chances stay conc
   assert.equal(repairSearchQuery(second), 'Major event')
 })
 
+test('first-pass corroboration searches avoid source-copy bias from pasted evidence', () => {
+  const item = {
+    headline: 'Attackers kill health worker responding to Ebola case | Reuters',
+    readiness: { reasons: ['high-risk event lacks two independent trusted source families'] },
+    sources: [{ evidenceText: 'A long block of wording from the first publisher that should not be copied into search.' }],
+  }
+  assert.equal(repairSearchQuery(item), 'Attackers kill health worker responding to Ebola case independent report official statement')
+})
+
 test('Tavily repair uses one basic credit and normalizes publication dates', async () => {
   const originalFetch = globalThis.fetch
   globalThis.fetch = async (_url, request) => {
