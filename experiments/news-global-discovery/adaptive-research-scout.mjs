@@ -97,16 +97,23 @@ function exposedResponse(body) { return body?.result?.response ?? body?.result?.
 
 export async function planQueries({ context, priorSearches = [], count, round, fetchImpl = fetch }) {
   const { accountId, token } = credentials()
-  const request = { messages: [{ role: 'system', content: SYSTEM_PROMPT }, { role: 'user', content: JSON.stringify({ round, requested_query_count: count, date_window: context.requestedWindow, current_pool: context.pool, prior_adaptive_results: priorSearches }) }],
-    temperature: 0.25, max_completion_tokens: 1200, response_format: { type: 'json_schema', json_schema: schema(count) }, chat_template_kwargs: { enable_thinking: false }, store: false }
-  const response = await fetchImpl(`https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/${MODEL}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify(request), signal: AbortSignal.timeout(110_000) })
-  const raw = await response.text(), body = parseStrict(raw)
-  if (!response.ok || body?.success === false) throw new Error(`adaptive planner round ${round}: HTTP ${response.status}`)
-  const exposed = exposedResponse(body), parsed = typeof exposed === 'string' ? parseStrict(exposed) : exposed
-  const queries = normalizePlannedQueries(parsed?.queries)
-  const audit = auditPlannedQueries(queries, count, priorSearches.map(item => item.query))
-  if (!audit.valid) throw new Error(`adaptive planner round ${round}: ${audit.reason}`)
-  return { queries, usage: body?.result?.usage ?? body?.usage ?? null, returnedModel: body?.result?.model ?? null }
+  const expectedShape = count === 3
+    ? 'exactly one priority-interesting, one world-interesting and one discovery query'
+    : 'exactly one world-interesting and one discovery query, with no priority-interesting query'
+  let priorFailure = null
+  for (let attempt = 1; attempt <= 2; attempt += 1) {
+    const request = { messages: [{ role: 'system', content: SYSTEM_PROMPT }, { role: 'user', content: JSON.stringify({ round, requested_query_count: count, required_lane_shape: expectedShape, validation_retry: priorFailure, date_window: context.requestedWindow, current_pool: context.pool, prior_adaptive_results: priorSearches }) }],
+      temperature: 0.25, max_completion_tokens: 1200, response_format: { type: 'json_schema', json_schema: schema(count) }, chat_template_kwargs: { enable_thinking: false }, store: false }
+    const response = await fetchImpl(`https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/${MODEL}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify(request), signal: AbortSignal.timeout(110_000) })
+    const raw = await response.text(), body = parseStrict(raw)
+    if (!response.ok || body?.success === false) throw new Error(`adaptive planner round ${round}: HTTP ${response.status}`)
+    const exposed = exposedResponse(body), parsed = typeof exposed === 'string' ? parseStrict(exposed) : exposed
+    const queries = normalizePlannedQueries(parsed?.queries)
+    const audit = auditPlannedQueries(queries, count, priorSearches.map(item => item.query))
+    if (audit.valid) return { queries, usage: body?.result?.usage ?? body?.usage ?? null, returnedModel: body?.result?.model ?? null, attempts: attempt }
+    priorFailure = audit.reason
+  }
+  throw new Error(`adaptive planner round ${round}: ${priorFailure}`)
 }
 
 async function searchTavily(definition, window, apiKey, fetchImpl = fetch) {

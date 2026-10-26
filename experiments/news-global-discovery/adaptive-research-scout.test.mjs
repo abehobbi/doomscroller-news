@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { auditPlannedQueries, compactDiscoveryContext, compactRoundResults, MAX_TAVILY_CREDITS, normalizePlannedQueries, resultMatchesRegion, ROUND_SIZES, TAVILY_CREDITS_PER_SEARCH } from './adaptive-research-scout.mjs'
+import { auditPlannedQueries, compactDiscoveryContext, compactRoundResults, MAX_TAVILY_CREDITS, MODEL, normalizePlannedQueries, planQueries, resultMatchesRegion, ROUND_SIZES, TAVILY_CREDITS_PER_SEARCH } from './adaptive-research-scout.mjs'
 
 const make = (id, lane, region, query) => ({ id, lane, region, blind_spot: 'undercovered local life', rationale: 'fills a demonstrated omission', query })
 
@@ -50,4 +50,21 @@ test('non-priority planner metadata is canonicalized without weakening priority 
 test('second-round feedback contains only bounded search-result metadata', () => {
   const compact = compactRoundResults([{ query: 'q', lane: 'world-interesting', region: null, blind_spot: 'local life', results: Array.from({ length: 20 }, (_, index) => ({ title: `Story ${index}`, url: `https://example.com/${index}`, published_date: '2026-10-23' })) }])
   assert.equal(compact[0].results.length, 12); assert.deepEqual(Object.keys(compact[0].results[0]), ['title', 'url', 'published_at'])
+})
+
+test('planner retries one malformed lane mix before any Tavily search', async () => {
+  const previous = { account: process.env.CLOUDFLARE_ACCOUNT_ID, token: process.env.CLOUDFLARE_API_TOKEN, confirmed: process.env.FREE_PLAN_CONFIRMED }
+  process.env.CLOUDFLARE_ACCOUNT_ID = 'account'; process.env.CLOUDFLARE_API_TOKEN = 'token'; process.env.FREE_PLAN_CONFIRMED = 'yes'
+  const invalid = { queries: [make('wrong', 'priority-interesting', 'Ghana', 'Ghana coastal families restore a threatened traditional livelihood'), make('local', 'world-interesting', null, 'remote island residents restore their only freshwater source')] }
+  const valid = { queries: [make('local', 'world-interesting', null, 'remote island residents restore their only freshwater source'), make('field', 'discovery', null, 'biologists document a previously unknown animal behavior')] }
+  const payloads = [invalid, valid]; const requests = []
+  const fetchImpl = async (_url, options) => { requests.push(JSON.parse(options.body)); return { ok: true, status: 200, text: async () => JSON.stringify({ success: true, result: { response: JSON.stringify(payloads.shift()), usage: { neurons: 1 }, model: MODEL } }) } }
+  try {
+    const result = await planQueries({ context: { requestedWindow: {}, pool: {} }, count: 2, round: 3, fetchImpl })
+    assert.equal(result.attempts, 2); assert.equal(requests.length, 2); assert.equal(JSON.parse(requests[1].messages[1].content).validation_retry, 'two-query rounds must cover world-interesting and discovery')
+  } finally {
+    for (const [key, value] of [['CLOUDFLARE_ACCOUNT_ID', previous.account], ['CLOUDFLARE_API_TOKEN', previous.token], ['FREE_PLAN_CONFIRMED', previous.confirmed]]) {
+      if (value === undefined) delete process.env[key]; else process.env[key] = value
+    }
+  }
 })
