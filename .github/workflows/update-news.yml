@@ -78,7 +78,7 @@ jobs:
       - name: Deduplicate, rank, and balance candidates
         run: >-
           node experiments/news-global-discovery/select-five-lane-edition.mjs
-          --input ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --count 160
+          --input ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --count 240
           --output-dir ${{ env.RUN_ROOT }}/selection
       - name: Verify source evidence, freshness, event identity, and images
         run: >-

@@ -53,7 +53,7 @@ test('batch helper is deterministic', () => {
 })
 
 test('batch audit requires every expected id exactly once', () => {
-  const evaluation = id => ({ id, lane_fit: 4, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, recommendation: 'strong', strongest_fact: 'Fact', reason: 'Reason' })
+  const evaluation = id => ({ id, lane_fit: 4, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, concrete_new_development: true, underlying_event_fresh: true, single_coherent_event: true, publicity_or_commentary: false, recommendation: 'strong', strongest_fact: 'Fact', reason: 'Reason' })
   assert.equal(auditBatch({ evaluations: [evaluation('E001'), evaluation('E002')] }, ['E001', 'E002']).valid, true)
   assert.equal(auditBatch({ evaluations: [evaluation('E001'), evaluation('E001')] }, ['E001', 'E002']).valid, false)
 })
@@ -69,7 +69,7 @@ test('only exact-id or provider-truncation failures receive one bounded retry', 
 })
 
 test('scoring retries a duplicate-id response once and accounts for both attempts', async t => {
-  const evaluation = id => ({ id, lane_fit: 4, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, recommendation: 'strong', strongest_fact: 'Fact', reason: 'Reason' })
+  const evaluation = id => ({ id, lane_fit: 4, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, concrete_new_development: true, underlying_event_fresh: true, single_coherent_event: true, publicity_or_commentary: false, recommendation: 'strong', strongest_fact: 'Fact', reason: 'Reason' })
   const responses = [
     { result: { response: { evaluations: [evaluation('E001'), evaluation('E001')] }, choices: [{ finish_reason: 'stop' }], usage: { neurons: 2, prompt_tokens: 10, completion_tokens: 4 } } },
     { result: { response: { evaluations: [evaluation('E001'), evaluation('E002')] }, choices: [{ finish_reason: 'stop' }], usage: { neurons: 3, prompt_tokens: 11, completion_tokens: 5 } } },
@@ -109,7 +109,7 @@ test('scoring retries a duplicate-id response once and accounts for both attempt
 })
 
 test('resume accepts evaluations only from batches that passed as a whole', () => {
-  const evaluation = id => ({ id, lane_fit: 4, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, recommendation: 'strong', strongest_fact: 'Fact', reason: 'Reason' })
+  const evaluation = id => ({ id, lane_fit: 4, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, concrete_new_development: true, underlying_event_fresh: true, single_coherent_event: true, publicity_or_commentary: false, recommendation: 'strong', strongest_fact: 'Fact', reason: 'Reason' })
   const report = { calls: [
     { complete: false, evaluations: [evaluation('E001')] },
     { complete: true, evaluations: [evaluation('E002')] },

@@ -30,3 +30,13 @@ test('qualification removes duplicate cards and trims unrelated context pages', 
   assert.equal(qualified.cards.find(value => value.eventId === 'a').pages.length, 1)
   assert.equal(qualified.removed[0].eventId, 'b')
 })
+
+test('overlap audit catches sequential angles on the same election thread', () => {
+  const cards = [
+    card('result', 'Lula wins Brazil presidential election', 'The election authority declared Lula the winner after ballots were counted.', 'https://one.example/result'),
+    card('extension', 'Brazil extends voting in presidential election after long queues', 'Polling hours were extended before the same presidential result was declared.', 'https://two.example/extension'),
+  ]
+  const pairs = auditEditorialOverlap(cards)
+  assert.equal(pairs.length, 1)
+  assert.equal(pairs[0].eventThreadMatch, true)
+})

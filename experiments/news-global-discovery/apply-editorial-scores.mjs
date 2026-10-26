@@ -4,6 +4,7 @@ import { pathToFileURL } from 'node:url'
 
 import { auditEdition } from './assemble-verified-edition.mjs'
 import { rankFrontPage } from './final-edition-ranker.mjs'
+import { normalizeGeneratedRouting } from './assemble-unattended-shadow-edition.mjs'
 
 function destinationLane(card, evaluation) {
   if (!evaluation || evaluation.lane_fit > 2 || !card.lane.endsWith('major')) return card.lane
@@ -23,6 +24,10 @@ function isStatementOnlyPossible(score) {
 function editorialRejectionReason(score) {
   const evaluation = score?.evaluation
   if (!evaluation) return 'missing complete editorial score'
+  if (evaluation.underlying_event_fresh === false) return 'the underlying event or finding predates the edition window without a material new development'
+  if (evaluation.single_coherent_event === false) return 'candidate combines unrelated developments that must not become one card'
+  if (evaluation.publicity_or_commentary === true) return 'routine publicity, commentary or ceremonial material should not consume edition space'
+  if (evaluation.concrete_new_development === false) return 'no concrete new action, consequence, finding or documented change is supported'
   if (evaluation.recommendation === 'reject' || score.editorialScore < 45) return evaluation.reason
   if (isStatementOnlyPossible(score)) return 'the strongest fact is political or institutional messaging without a concrete new development'
   if (evaluation.recommendation === 'possible' && (
@@ -44,9 +49,12 @@ export function applyEditorialScores(edition, scoreReport) {
       rejected.push({ eventId: card.eventId, headline: card.headline, reason: rejectionReason, editorialScore: score?.editorialScore })
       continue
     }
+    const evidence = (card.pages || []).map(page => page.text).join(' ')
+    const routed = normalizeGeneratedRouting(destinationLane(card, score.evaluation), card.priorityRegions, card.headline, card.headline, evidence)
     retained.push({
       ...card,
-      lane: destinationLane(card, score.evaluation),
+      lane: routed.lane,
+      priorityRegions: routed.priorityRegions,
       selectionScore: score.editorialScore,
       editorialSelection: { score: score.editorialScore, ...score.evaluation },
     })

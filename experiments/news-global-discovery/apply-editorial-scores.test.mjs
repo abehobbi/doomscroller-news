@@ -4,7 +4,7 @@ import test from 'node:test'
 import { applyEditorialScores } from './apply-editorial-scores.mjs'
 
 const card = (eventId, lane, rank) => ({ eventId, lane, headline: eventId, frontPageRank: rank, pages: [{ text: 'Verified evidence.' }], priorityRegions: [], acceptedSources: [] })
-const scored = (eventId, editorialScore, recommendation = 'strong', laneFit = 5) => ({ eventId, editorialScore, evaluation: { recommendation, lane_fit: laneFit, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, strongest_fact: 'Fact', reason: 'Reason' } })
+const scored = (eventId, editorialScore, recommendation = 'strong', laneFit = 5) => ({ eventId, editorialScore, evaluation: { recommendation, lane_fit: laneFit, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, concrete_new_development: true, underlying_event_fresh: true, single_coherent_event: true, publicity_or_commentary: false, strongest_fact: 'Fact', reason: 'Reason' } })
 
 test('editorial gate rejects weak finalists, demotes false major labels and orders peers by score', () => {
   const edition = { createdAt: 'before', cards: [card('weak', 'world-interesting', 1), card('museum', 'world-major', 2), card('best', 'world-interesting', 3), card('good', 'world-interesting', 4)] }
@@ -38,4 +38,22 @@ test('possible statement-only stories are rejected while statements reporting co
   const result = applyEditorialScores(edition, { complete: true, candidateCount: 2, results: [willingness, signedLaw] })
   assert.deepEqual(result.cards.map(value => value.eventId), ['signed-law'])
   assert.deepEqual(result.editorialScoring.rejected.map(value => value.eventId), ['willingness'])
+})
+
+test('integrity gates reject stale recycling, publicity and bundled unrelated events', () => {
+  const edition = { createdAt: 'before', cards: [card('stale', 'discovery', 1), card('publicity', 'priority-interesting', 2), card('bundle', 'world-major', 3), card('local-life', 'priority-interesting', 4)] }
+  const stale = scored('stale', 85); stale.evaluation.underlying_event_fresh = false
+  const publicity = scored('publicity', 85); publicity.evaluation.publicity_or_commentary = true
+  const bundle = scored('bundle', 85); bundle.evaluation.single_coherent_event = false
+  const localLife = scored('local-life', 85)
+  const result = applyEditorialScores(edition, { complete: true, candidateCount: 4, results: [stale, publicity, bundle, localLife] })
+  assert.deepEqual(result.cards.map(value => value.eventId), ['local-life'])
+})
+
+test('priority geography is normalized before the writer and edition audit', () => {
+  const ghana = card('ghana-story', 'world-interesting', 1)
+  ghana.headline = 'Ghana cocoa farmers adopt a new drought-resistant method'
+  const result = applyEditorialScores({ createdAt: 'before', cards: [ghana] }, { complete: true, candidateCount: 1, results: [scored('ghana-story', 85)] })
+  assert.equal(result.cards[0].lane, 'priority-interesting')
+  assert.deepEqual(result.cards[0].priorityRegions, ['Ghana'])
 })

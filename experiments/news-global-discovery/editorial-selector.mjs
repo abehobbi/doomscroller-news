@@ -148,6 +148,12 @@ Score every dimension from 0 (absent/bad) to 5 (exceptional):
 
 Use recommendation "strong" only when you would actively choose the story; "possible" when worthwhile but replaceable; "reject" when it should not consume scarce feed space. Identify the single strongest supported fact. Keep reasons concise.
 
+Also make four explicit integrity judgments. These are gates, not stylistic preferences:
+- concrete_new_development: true only when the evidence contains a new action, consequence, finding or documented change—not merely a speech, opinion, appeal, publicity partnership, planned ceremony, fair, anniversary or institutional self-promotion.
+- underlying_event_fresh: true only when the event/finding itself is fresh for the supplied edition time. A newly posted article recycling an old study or describing an event that already occurred outside the window is false unless it contains a material new development.
+- single_coherent_event: false when the candidate bundles unrelated developments or organizations that should be separate cards.
+- publicity_or_commentary: true for generic commentary, advocacy without a new event, routine partnership publicity, ceremonial announcements and promotional event notices. Humanly revealing local culture, livelihood and community reporting is not publicity merely because it is small.
+
 Return exactly one evaluation for every supplied candidate. Copy each supplied candidate ID exactly once; never invent, omit, or repeat an ID.`
 
 export function scoreSchema(maxItems = 10) {
@@ -161,7 +167,7 @@ export function scoreSchema(maxItems = 10) {
           type: 'array', minItems: 1, maxItems,
           items: {
             type: 'object', additionalProperties: false,
-            required: ['id', 'lane_fit', 'substantive_value', 'intrinsic_interest', 'distinctiveness', 'clarity', 'freshness_specificity', 'recommendation', 'strongest_fact', 'reason'],
+            required: ['id', 'lane_fit', 'substantive_value', 'intrinsic_interest', 'distinctiveness', 'clarity', 'freshness_specificity', 'concrete_new_development', 'underlying_event_fresh', 'single_coherent_event', 'publicity_or_commentary', 'recommendation', 'strongest_fact', 'reason'],
             properties: {
               id: { type: 'string' },
               lane_fit: { type: 'integer', minimum: 0, maximum: 5 },
@@ -170,6 +176,10 @@ export function scoreSchema(maxItems = 10) {
               distinctiveness: { type: 'integer', minimum: 0, maximum: 5 },
               clarity: { type: 'integer', minimum: 0, maximum: 5 },
               freshness_specificity: { type: 'integer', minimum: 0, maximum: 5 },
+              concrete_new_development: { type: 'boolean' },
+              underlying_event_fresh: { type: 'boolean' },
+              single_coherent_event: { type: 'boolean' },
+              publicity_or_commentary: { type: 'boolean' },
               recommendation: { type: 'string', enum: ['strong', 'possible', 'reject'] },
               strongest_fact: { type: 'string', maxLength: 240 },
               reason: { type: 'string', maxLength: 240 },
@@ -204,6 +214,8 @@ export function auditBatch(parsed, expectedIds) {
   const scoresValid = evaluations.every(value => ['lane_fit', 'substantive_value', 'intrinsic_interest', 'distinctiveness', 'clarity', 'freshness_specificity']
     .every(key => Number.isInteger(value[key]) && value[key] >= 0 && value[key] <= 5))
   if (!scoresValid) return { valid: false, reason: 'score outside integer 0-5 range' }
+  const integrityValid = evaluations.every(value => ['concrete_new_development', 'underlying_event_fresh', 'single_coherent_event', 'publicity_or_commentary'].every(key => typeof value[key] === 'boolean'))
+  if (!integrityValid) return { valid: false, reason: 'integrity judgment missing' }
   if (!evaluations.every(value => ['strong', 'possible', 'reject'].includes(value.recommendation) && value.strongest_fact && value.reason)) return { valid: false, reason: 'recommendation or explanation missing' }
   return { valid: true, reason: null }
 }

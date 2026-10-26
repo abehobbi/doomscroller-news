@@ -2,7 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { rankFrontPage } from './final-edition-ranker.mjs'
-import { headlinesShareNamedLocationAndEvent } from './select-five-lane-edition.mjs'
+import { candidatesDescribeSameThread, headlinesShareNamedLocationAndEvent } from './select-five-lane-edition.mjs'
 
 const STOP = new Set('the a an and or of to in on for with as at by from is are was were be been this that it its their they he she his her have has had will would could should after before amid into over under about'.split(' '))
 const tokens = value => new Set(String(value || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/ +/).filter(word => word.length > 3 && !STOP.has(word)))
@@ -18,7 +18,8 @@ export function auditEditorialOverlap(cards, threshold = 0.16) {
     const aTerms = tokens(cardText(a)), bTerms = tokens(cardText(b)), intersection = [...aTerms].filter(term => bTerms.has(term)).length
     const similarity = intersection / Math.max(1, aTerms.size + bTerms.size - intersection)
     const headlineThreadMatch = headlinesShareNamedLocationAndEvent({ title: a.headline }, { title: b.headline })
-    if (sharedUrls.length || similarity >= threshold || headlineThreadMatch) pairs.push({
+    const eventThreadMatch = candidatesDescribeSameThread({ title: a.headline }, { title: b.headline })
+    if (sharedUrls.length || similarity >= threshold || headlineThreadMatch || eventThreadMatch) pairs.push({
       leftEventId: a.eventId,
       rightEventId: b.eventId,
       leftHeadline: a.headline,
@@ -26,6 +27,7 @@ export function auditEditorialOverlap(cards, threshold = 0.16) {
       sharedUrls,
       similarity: Number(similarity.toFixed(3)),
       headlineThreadMatch,
+      eventThreadMatch,
       requiresReview: true,
     })
   }
