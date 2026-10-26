@@ -5,9 +5,9 @@ import { parseStrict } from '../../artifacts/summary-feasibility/round-9/strict-
 import { buildTavilyDiscoveryReport } from './tavily-complementary-scout.mjs'
 
 export const MODEL = '@cf/google/gemma-4-26b-a4b-it'
-export const ROUND_SIZES = Object.freeze([3, 2])
+export const ROUND_SIZES = Object.freeze([3, 3, 2])
 export const TAVILY_CREDITS_PER_SEARCH = 2
-export const MAX_TAVILY_CREDITS = 10
+export const MAX_TAVILY_CREDITS = 16
 export const ALLOWED_LANES = new Set(['world-interesting', 'priority-interesting', 'discovery'])
 const PRIORITY_REGIONS = ['Syria', 'Middle East', 'Bangladesh', 'Ghana', 'Canada', 'GTA']
 const REGION_TERMS = Object.freeze({
@@ -25,7 +25,7 @@ Prioritize distinctive original local reporting from small places and undercover
 
 Avoid dominant headlines already present, generic topic searches, speeches, ceremonies, publicity, partnerships, event listings, tourism, sport, celebrity news, opinion and vague explainers. Search different editorial blind spots rather than variations of one idea. Do not invent a story.
 
-The search service already applies the supplied publication window. Write each query as ONE short natural-language search of 6-16 words, with one concrete angle. Never include dates, Boolean operators such as OR/AND, parentheses, quotation marks, long synonym lists or instructions like "find an article". A priority-region query must name its region. Round 1 must contain exactly one priority-interesting, one world-interesting and one discovery query. Round 2 must contain exactly one world-interesting and one discovery query.`
+The search service already applies the supplied publication window. Write each query as ONE short natural-language search of 6-16 words, with one concrete angle. Never include dates, Boolean operators such as OR/AND, parentheses, quotation marks, long synonym lists or instructions like "find an article". A priority-region query must name its region. Every three-query round must contain exactly one priority-interesting, one world-interesting and one discovery query. A two-query round must contain exactly one world-interesting and one discovery query.`
 
 function schema(count) {
   return { name: 'doomscroller_adaptive_queries', strict: true, schema: {
@@ -72,8 +72,8 @@ export function auditPlannedQueries(queries, expectedCount, priorQueries = []) {
   if (queries.some(item => /\b(?:OR|AND)\b|[()"']|\b20\d{2}\b/.test(String(item.query || '')))) return { valid: false, reason: 'query contains search operators or dates' }
   if (queries.some(item => item.region && !REGION_TERMS[item.region].some(term => String(item.query).toLowerCase().includes(term)))) return { valid: false, reason: 'priority query does not name its region' }
   const laneCounts = Object.fromEntries([...ALLOWED_LANES].map(lane => [lane, queries.filter(item => item.lane === lane).length]))
-  if (expectedCount === 3 && [...ALLOWED_LANES].some(lane => laneCounts[lane] !== 1)) return { valid: false, reason: 'round one must cover all three depth lanes' }
-  if (expectedCount === 2 && (laneCounts['world-interesting'] !== 1 || laneCounts.discovery !== 1)) return { valid: false, reason: 'round two must cover world-interesting and discovery' }
+  if (expectedCount === 3 && [...ALLOWED_LANES].some(lane => laneCounts[lane] !== 1)) return { valid: false, reason: 'three-query rounds must cover all three depth lanes' }
+  if (expectedCount === 2 && (laneCounts['world-interesting'] !== 1 || laneCounts.discovery !== 1)) return { valid: false, reason: 'two-query rounds must cover world-interesting and discovery' }
   return { valid: true, reason: null }
 }
 

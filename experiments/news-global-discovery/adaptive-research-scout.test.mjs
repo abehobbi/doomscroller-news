@@ -4,8 +4,8 @@ import { auditPlannedQueries, compactDiscoveryContext, compactRoundResults, MAX_
 
 const make = (id, lane, region, query) => ({ id, lane, region, blind_spot: 'undercovered local life', rationale: 'fills a demonstrated omission', query })
 
-test('adaptive planner uses five deep Tavily searches across two rounds', () => {
-  assert.deepEqual(ROUND_SIZES, [3, 2]); assert.equal(TAVILY_CREDITS_PER_SEARCH, 2); assert.equal(ROUND_SIZES.reduce((sum, value) => sum + value, 0) * TAVILY_CREDITS_PER_SEARCH, MAX_TAVILY_CREDITS)
+test('adaptive planner uses eight deep Tavily searches across three rounds', () => {
+  assert.deepEqual(ROUND_SIZES, [3, 3, 2]); assert.equal(TAVILY_CREDITS_PER_SEARCH, 2); assert.equal(ROUND_SIZES.reduce((sum, value) => sum + value, 0) * TAVILY_CREDITS_PER_SEARCH, MAX_TAVILY_CREDITS)
 })
 
 test('coverage digest exposes lane and region gaps without article bodies', () => {
@@ -31,7 +31,7 @@ test('planner rejects operator-heavy searches and preserves both obscure lanes',
   const secondRound = [make('local', 'world-interesting', null, 'remote island residents restore their only freshwater source'), make('field', 'discovery', null, 'biologists document a previously unknown animal behavior')]
   assert.equal(auditPlannedQueries(secondRound, 2).valid, true)
   assert.equal(auditPlannedQueries([{ ...secondRound[0], query: 'local crafts OR heritage OR livelihoods news 2026' }, secondRound[1]], 2).reason, 'query contains search operators or dates')
-  assert.equal(auditPlannedQueries([secondRound[0], { ...secondRound[1], lane: 'world-interesting' }], 2).reason, 'round two must cover world-interesting and discovery')
+  assert.equal(auditPlannedQueries([secondRound[0], { ...secondRound[1], lane: 'world-interesting' }], 2).reason, 'two-query rounds must cover world-interesting and discovery')
 })
 
 test('priority-region results cannot inherit a false geographic label', () => {

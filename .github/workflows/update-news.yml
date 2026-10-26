@@ -56,7 +56,7 @@ jobs:
       - name: Discover fresh baseline candidates
         run: >-
           node experiments/news-global-discovery/exa-five-lane-scout.mjs
-          --scan ${{ inputs.scan }} --hours ${{ inputs.window_hours }} --results-per-query 20 --max-queries 28
+          --scan ${{ inputs.scan }} --hours ${{ inputs.window_hours }} --results-per-query 10 --max-queries 28
           --output ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
       - name: Collect publisher-feed safety net
         run: node experiments/news-global-discovery/source-seed-depth-scout.mjs --output-dir ${{ env.RUN_ROOT }}/publisher
