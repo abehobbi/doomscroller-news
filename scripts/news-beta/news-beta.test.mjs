@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { validateNewsBetaDataset, articlesForFeed } from '../../src/news/schema.js'
 import {
-  applyBetaSelectionPolicy, buildDiscoveryPool, classifyCardRegions, classifyPriorityRegions, clearsGenerationQualityFloor,
+  applyBetaSelectionPolicy, buildDiscoveryPool, buildPublisherDiscoveryCandidates, classifyCardRegions, classifyPriorityRegions, clearsGenerationQualityFloor,
   consolidatePublishedCards, diversityRerank, htmlListingItems, isEditoriallyEligibleTitle, sanitizeRetainedCard,
   newsSitemapItems, selectActiveFeedCards, wordpressJsonItems,
 } from './pipeline.mjs'
@@ -17,6 +17,17 @@ const card = (id, overrides = {}) => ({
   sources: [{ name: 'Publisher', url: `https://example.com/${id}`, role: 'primary', publishedAt: '2026-09-25T10:00:00Z' }],
   geography: ['World'], topics: [], first_seen: '2026-09-25T10:00:00Z', updated_at: '2026-09-25T10:00:00Z',
   generated_at: '2026-09-25T10:01:00Z', evidence_fingerprint: 'a'.repeat(64), content_version: 1, ...overrides,
+})
+
+test('publisher discovery exposes every fresh event while evidence extraction stays separately bounded', () => {
+  const events = Array.from({ length: 220 }, (_, index) => ({
+    id: `event-${index}`,
+    primary: { title: `Distinct publisher story ${index}`, url: `https://publisher.test/${index}`, sourceName: 'Publisher', imageUrl: index % 2 ? null : `https://publisher.test/${index}.jpg`, imageAlt: null },
+  }))
+  const discovery = buildPublisherDiscoveryCandidates(events)
+  assert.equal(discovery.length, 220)
+  assert.equal(discovery[219].event.id, 'event-219')
+  assert.equal(discovery[0].image.sourceUrl, 'https://publisher.test/0')
 })
 
 test('public HTML listings yield dated publisher articles and original images', () => {

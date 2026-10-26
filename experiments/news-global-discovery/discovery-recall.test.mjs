@@ -61,6 +61,12 @@ test('the free publisher safety net includes arts coverage missed by broad searc
   assert.match(guardianArts?.limitations || '', /editorial-value/i)
 })
 
+test('the free publisher safety net includes place-specific global development reporting', () => {
+  const source = SOURCES.find(item => item.id === 'guardian-global-development')
+  assert.equal(source?.feedUrl, 'https://www.theguardian.com/global-development/rss')
+  assert.match(source?.limitations || '', /place-specific/i)
+})
+
 test('the free publisher safety net uses an official current Canada feed without stale ABC feeds', () => {
   const globalNewsCanada = SOURCES.find(source => source.id === 'global-news-canada')
   assert.equal(globalNewsCanada?.feedUrl, 'https://globalnews.ca/canada/feed/')

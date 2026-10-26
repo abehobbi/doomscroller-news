@@ -493,6 +493,18 @@ export function buildDiscoveryPool(events, { maximum = 160, perFeed = 4 } = {}) 
   return selected
 }
 
+export function buildPublisherDiscoveryCandidates(events) {
+  return events.map(event => ({
+    event,
+    image: {
+      url: event.primary.imageUrl || null,
+      alt: event.primary.imageAlt || event.primary.title,
+      sourceUrl: event.primary.url,
+      attribution: event.primary.sourceName,
+    },
+  }))
+}
+
 export async function buildEvidenceBatch({ now = Date.now() } = {}) {
   const retrievedAt = new Date(now).toISOString()
   const discoveries = await Promise.all(SOURCES.map(source => discover(source, retrievedAt)))
@@ -542,15 +554,11 @@ export async function buildEvidenceBatch({ now = Date.now() } = {}) {
   const reranked = diversityRerank(prepared)
   return {
     retrievedAt, sourceStatus, knownSourceFailures: KNOWN_SOURCE_FAILURES,
-    discoveryCandidates: evidencePool.map(event => ({
-      event,
-      image: {
-        url: event.primary.imageUrl || null,
-        alt: event.primary.imageAlt || event.primary.title,
-        sourceUrl: event.primary.url,
-        attribution: event.primary.sourceName,
-      },
-    })),
+    // Discovery must expose every fresh publisher event so the unified global
+    // selector can compare it with Exa and Tavily. Only article snapshotting
+    // remains bounded by buildDiscoveryPool; otherwise a pre-selection cap can
+    // erase strong local and regional stories before lane balancing begins.
+    discoveryCandidates: buildPublisherDiscoveryCandidates(events),
     candidates: prepared,
     selected: reranked.selected, reranker: { adjustments: reranked.adjustments, distribution: reranked.distribution },
     evidenceRejected,
