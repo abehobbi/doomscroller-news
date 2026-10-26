@@ -68,3 +68,19 @@ test('planner retries one malformed lane mix before any Tavily search', async ()
     }
   }
 })
+
+test('planner retries malformed model JSON before any Tavily search', async () => {
+  const previous = { account: process.env.CLOUDFLARE_ACCOUNT_ID, token: process.env.CLOUDFLARE_API_TOKEN, confirmed: process.env.FREE_PLAN_CONFIRMED }
+  process.env.CLOUDFLARE_ACCOUNT_ID = 'account'; process.env.CLOUDFLARE_API_TOKEN = 'token'; process.env.FREE_PLAN_CONFIRMED = 'yes'
+  const valid = { queries: [make('local', 'world-interesting', null, 'remote island residents restore their only freshwater source'), make('field', 'discovery', null, 'biologists document a previously unknown animal behavior')] }
+  const responses = ['{"queries":[', JSON.stringify(valid)]; const requests = []
+  const fetchImpl = async (_url, options) => { requests.push(JSON.parse(options.body)); return { ok: true, status: 200, text: async () => JSON.stringify({ success: true, result: { response: responses.shift(), usage: { neurons: 1 }, model: MODEL } }) } }
+  try {
+    const result = await planQueries({ context: { requestedWindow: {}, pool: {} }, count: 2, round: 3, fetchImpl })
+    assert.equal(result.attempts, 2); assert.equal(requests.length, 2); assert.equal(JSON.parse(requests[1].messages[1].content).validation_retry, 'response was not valid JSON')
+  } finally {
+    for (const [key, value] of [['CLOUDFLARE_ACCOUNT_ID', previous.account], ['CLOUDFLARE_API_TOKEN', previous.token], ['FREE_PLAN_CONFIRMED', previous.confirmed]]) {
+      if (value === undefined) delete process.env[key]; else process.env[key] = value
+    }
+  }
+})
