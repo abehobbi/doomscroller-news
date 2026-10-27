@@ -78,7 +78,10 @@ export function mergeVerifiedEditions(editions) {
     }
   })
   const ranked = rankFrontPage(cards), audit = auditEdition(ranked)
-  return { schemaVersion: 1, createdAt: new Date().toISOString(), sourceEditionCount: editions.length, cards: ranked, audit }
+  const starts = editions.map(edition => edition.requestedWindow?.start).filter(Boolean).sort()
+  const ends = editions.map(edition => edition.requestedWindow?.end).filter(Boolean).sort()
+  const requestedWindow = starts.length && ends.length ? { start: starts[0], end: ends.at(-1) } : null
+  return { schemaVersion: 1, createdAt: new Date().toISOString(), requestedWindow, sourceEditionCount: editions.length, cards: ranked, audit }
 }
 
 async function main() {

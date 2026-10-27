@@ -170,7 +170,7 @@ async function main() {
   const excludedAfterContaminationCheck = shortlist.selections
     .filter(selection => verifiedEventIds(verification, repairs).has(selection.id) && !cardIds.has(selection.id))
     .map(selection => ({ eventId: selection.id, headline: selection.representative.title, reason: 'valid supporting evidence fell below the final same-event source or image requirement after removing unrelated cluster members' }))
-  const output = { schemaVersion: 1, createdAt: new Date().toISOString(), sources: options, audit, excludedAfterContaminationCheck, cards }
+  const output = { schemaVersion: 1, createdAt: new Date().toISOString(), requestedWindow: verification.requestedWindow || null, sources: options, audit, excludedAfterContaminationCheck, cards }
   await fs.mkdir(options.outputDir, { recursive: true })
   await Promise.all([
     fs.writeFile(path.join(options.outputDir, 'VERIFIED_EDITION.json'), `${JSON.stringify(output, null, 2)}\n`),

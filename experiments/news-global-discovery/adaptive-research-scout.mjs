@@ -8,7 +8,12 @@ export const MODEL = '@cf/google/gemma-4-26b-a4b-it'
 export const ROUND_SIZES = Object.freeze([3, 3, 2])
 export const TAVILY_CREDITS_PER_SEARCH = 2
 export const MAX_TAVILY_CREDITS = 16
-export const ALLOWED_LANES = new Set(['world-interesting', 'priority-interesting', 'discovery'])
+export const ALLOWED_LANES = new Set(['world-major', 'priority-major', 'world-interesting', 'priority-interesting', 'discovery'])
+export const ROUND_LANE_SHAPES = Object.freeze([
+  ['priority-interesting', 'priority-major', 'world-major'],
+  ['priority-interesting', 'priority-major', 'discovery'],
+  ['priority-interesting', 'world-interesting'],
+])
 const PRIORITY_REGIONS = ['Syria', 'Middle East', 'Bangladesh', 'Ghana', 'Canada', 'GTA']
 const REGION_TERMS = Object.freeze({
   Syria: ['syria', 'syrian'],
@@ -23,9 +28,9 @@ const SYSTEM_PROMPT = `You are the adaptive research planner for Doomscroller Ne
 
 Prioritize distinctive original local reporting from small places and undercovered countries; ordinary life, livelihoods, exploitation, public services, environment, culture, identity, living traditions, crafts, language, heritage, community change, rescues and unusual human stories; Syria, the wider Middle East, Bangladesh, Ghana, Canada and the GTA without padding; and accessible archaeology, history, science, nature, medicine and field discoveries with a concrete new finding.
 
-Avoid dominant headlines already present, generic topic searches, speeches, ceremonies, publicity, partnerships, event listings, tourism, sport, celebrity news, opinion and vague explainers. Search different editorial blind spots rather than variations of one idea. Do not invent a story.
+Avoid dominant headlines already present, speeches, ceremonies, publicity, partnerships, event listings, tourism, sport, celebrity news, opinion and vague explainers. Search different editorial blind spots rather than variations of one idea. Do not invent or presuppose a particular story, village, occupation, discovery or outcome. Priority-region searches should broadly sweep concrete current reporting about accountability, labour, public services, health, environment, livelihoods and local consequences in that region.
 
-The search service already applies the supplied publication window. Write each query as ONE short natural-language search of 6-16 words, with one concrete angle. Never include dates, Boolean operators such as OR/AND, parentheses, quotation marks, long synonym lists or instructions like "find an article". A priority-region query must name its region. Every three-query round must contain exactly one priority-interesting, one world-interesting and one discovery query. A two-query round must contain exactly one world-interesting and one discovery query.`
+The search service already applies the supplied publication window. Write each query as ONE short natural-language search of 6-16 words. Never include dates, Boolean operators such as OR/AND, parentheses, quotation marks, long synonym lists or instructions like "find an article". A priority-region query must name its region. Across the run, priority queries must cover different regions. Follow the required lane shape supplied for the current round exactly.`
 
 function schema(count) {
   return { name: 'doomscroller_adaptive_queries', strict: true, schema: {
@@ -58,27 +63,30 @@ export function compactDiscoveryContext(reports, { maximumHeadlines = 80 } = {})
   return { candidateCount: candidates.length, laneCounts, regionCounts, headlines }
 }
 
-export function auditPlannedQueries(queries, expectedCount, priorQueries = []) {
+export function auditPlannedQueries(queries, expectedCount, priorQueries = [], round = expectedCount === 2 ? 3 : 1) {
   if (!Array.isArray(queries) || queries.length !== expectedCount) return { valid: false, reason: 'wrong query count' }
   const normalized = queries.map(item => String(item?.query || '').toLowerCase().replace(/\s+/g, ' ').trim())
   if (new Set(normalized).size !== normalized.length) return { valid: false, reason: 'duplicate adaptive query' }
-  const prior = new Set(priorQueries.map(value => String(value).toLowerCase().replace(/\s+/g, ' ').trim()))
+  const prior = new Set(priorQueries.map(value => String(value?.query || value).toLowerCase().replace(/\s+/g, ' ').trim()))
   if (normalized.some(value => prior.has(value))) return { valid: false, reason: 'query repeats an earlier round' }
   if (queries.some(item => !ALLOWED_LANES.has(item?.lane))) return { valid: false, reason: 'disallowed lane' }
-  if (queries.some(item => item.lane === 'priority-interesting' && !PRIORITY_REGIONS.includes(item.region))) return { valid: false, reason: 'priority query lacks a supported region' }
-  if (queries.some(item => item.lane !== 'priority-interesting' && item.region !== null)) return { valid: false, reason: 'non-priority query has a priority region' }
+  const isPriorityLane = lane => lane === 'priority-interesting' || lane === 'priority-major'
+  if (queries.some(item => isPriorityLane(item.lane) && !PRIORITY_REGIONS.includes(item.region))) return { valid: false, reason: 'priority query lacks a supported region' }
+  if (queries.some(item => !isPriorityLane(item.lane) && item.region !== null)) return { valid: false, reason: 'non-priority query has a priority region' }
   const words = queries.map(item => String(item.query || '').trim().split(/\s+/).filter(Boolean).length)
   if (words.some(count => count < 6 || count > 16)) return { valid: false, reason: 'query must contain 6-16 words' }
   if (queries.some(item => /\b(?:OR|AND)\b|[()"']|\b20\d{2}\b/.test(String(item.query || '')))) return { valid: false, reason: 'query contains search operators or dates' }
   if (queries.some(item => item.region && !REGION_TERMS[item.region].some(term => String(item.query).toLowerCase().includes(term)))) return { valid: false, reason: 'priority query does not name its region' }
-  const laneCounts = Object.fromEntries([...ALLOWED_LANES].map(lane => [lane, queries.filter(item => item.lane === lane).length]))
-  if (expectedCount === 3 && [...ALLOWED_LANES].some(lane => laneCounts[lane] !== 1)) return { valid: false, reason: 'three-query rounds must cover all three depth lanes' }
-  if (expectedCount === 2 && (laneCounts['world-interesting'] !== 1 || laneCounts.discovery !== 1)) return { valid: false, reason: 'two-query rounds must cover world-interesting and discovery' }
+  const expectedLanes = ROUND_LANE_SHAPES[round - 1]
+  if (!expectedLanes || expectedLanes.length !== expectedCount || [...expectedLanes].sort().join('|') !== queries.map(item => item.lane).sort().join('|')) return { valid: false, reason: `round ${round} has the wrong lane mix` }
+  const priorityRegions = queries.filter(item => isPriorityLane(item.lane)).map(item => item.region)
+  const priorRegions = new Set(priorQueries.filter(item => isPriorityLane(item?.lane)).map(item => item.region))
+  if (new Set(priorityRegions).size !== priorityRegions.length || priorityRegions.some(region => priorRegions.has(region))) return { valid: false, reason: 'priority searches must cover distinct regions across rounds' }
   return { valid: true, reason: null }
 }
 
 export function normalizePlannedQueries(queries) {
-  return Array.isArray(queries) ? queries.map(item => ({ ...item, region: item?.lane === 'priority-interesting' ? item.region : null })) : queries
+  return Array.isArray(queries) ? queries.map(item => ({ ...item, region: item?.lane === 'priority-interesting' || item?.lane === 'priority-major' ? item.region : null })) : queries
 }
 
 export function resultMatchesRegion(result, region) {
@@ -97,9 +105,7 @@ function exposedResponse(body) { return body?.result?.response ?? body?.result?.
 
 export async function planQueries({ context, priorSearches = [], count, round, fetchImpl = fetch }) {
   const { accountId, token } = credentials()
-  const expectedShape = count === 3
-    ? 'exactly one priority-interesting, one world-interesting and one discovery query'
-    : 'exactly one world-interesting and one discovery query, with no priority-interesting query'
+  const expectedShape = ROUND_LANE_SHAPES[round - 1].join(', ')
   let priorFailure = null
   for (let attempt = 1; attempt <= 3; attempt += 1) {
     const request = { messages: [{ role: 'system', content: SYSTEM_PROMPT }, { role: 'user', content: JSON.stringify({ round, requested_query_count: count, required_lane_shape: expectedShape, validation_retry: priorFailure, date_window: context.requestedWindow, current_pool: context.pool, prior_adaptive_results: priorSearches }) }],
@@ -112,7 +118,7 @@ export async function planQueries({ context, priorSearches = [], count, round, f
     try { parsed = typeof exposed === 'string' ? parseStrict(exposed) : exposed }
     catch { priorFailure = 'response was not valid JSON'; continue }
     const queries = normalizePlannedQueries(parsed?.queries)
-    const audit = auditPlannedQueries(queries, count, priorSearches.map(item => item.query))
+    const audit = auditPlannedQueries(queries, count, priorSearches, round)
     if (audit.valid) return { queries, usage: body?.result?.usage ?? body?.usage ?? null, returnedModel: body?.result?.model ?? null, attempts: attempt }
     priorFailure = audit.reason
   }

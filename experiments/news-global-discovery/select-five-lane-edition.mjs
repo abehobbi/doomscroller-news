@@ -25,7 +25,7 @@ const PRIORITY_REGION_MINIMUMS = { Syria: 2, 'Middle East': 2, Bangladesh: 2, Gh
 const PRIORITY_REGIONS = Object.keys(PRIORITY_REGION_MINIMUMS)
 
 const MULTI_EVENT_TITLE = /\b(?:news in brief|news roundup|and other .{0,35} news)\b/i
-const HARD_REJECT = /\b(?:daily mail|tourism|travel guide|things to do|event calendar|press release|sponsored|opinion|podcast|newsletter|award ceremony|wins? \d+ international awards?|celebrity|football|soccer|basketball|tickets?|lottery results?|horoscope|weather forecast|stock picks?|coupon|shopping deal|habitat fair|big sales|return to winning ways|go(?:es)? top .{0,60}(?:defeat|season)|first defeat of (?:the )?season)\b|\b(?:property|housing|trade|sales?)\s+(?:expo|fair)\b|\bagreement\b.{0,80}\b(?:hold|holding|host|hosting)\b.{0,80}\b(?:meeting|conference|summit)s?\b|\b(?:fc|sc)\b.{0,80}\b(?:defeat|winning|league|match)\b/i
+const HARD_REJECT = /\b(?:daily mail|tourism|travel guide|things to do|event calendar|press release|sponsored|opinion|podcast|newsletter|award ceremony|wins? \d+ international awards?|celebrity|football|soccer|basketball|tickets?|lottery results?|horoscope|weather forecast|stock picks?|coupon|shopping deal|habitat fair|big sales|return to winning ways|go(?:es)? top .{0,60}(?:defeat|season)|first defeat of (?:the )?season|not a vote for|takeaways? from .{0,50} election|what .{0,40} (?:win|victory) means)\b|\b(?:property|housing|trade|sales?)\s+(?:expo|fair)\b|\bagreement\b.{0,80}\b(?:hold|holding|host|hosting)\b.{0,80}\b(?:meeting|conference|summit)s?\b|\b(?:fc|sc)\b.{0,80}\b(?:defeat|winning|league|match)\b/i
 const GENERIC_PAGE = /\b(?:home|front page|latest news|breaking news|all news|directory|annual report|meeting packet|minutes|agenda|live updates?)\b/i
 const WEAK_EVENT = /\b(?:invites?|calls? for|called for|urges?|urged|challenges?|challenged|highlights? (?:the )?need for|emphasi[sz]es? (?:the )?need for|efforts? (?:are )?needed to|must (?:go|move|extend) beyond|plans? to|could|may|set to|expected to|celebrates?|festival to be held|(?:will|to) launch|launches? initiative|cuts? (?:the )?sod|breaks? ground|groundbreaking|shares? thoughts?|reacts? to|commends?|praises?|welcomes?|reaffirms?|showcas(?:e|es|ed|ing)|partner(?:s|ed|ing)? with|weighs? in|misses? court|open for|ready to|vows? to)\b|\bsays?\s+(?:professor|minister|official|expert)\b|\bprof(?:essor|\.)?\s+[A-Z]/i
 const CEREMONIAL_EVENT = /\b(?:cuts? (?:the )?sod|breaks? ground|groundbreaking)\b/i
@@ -35,6 +35,10 @@ const PROSPECTIVE_FACILITY = /\b(?:to|will|expected to)\s+open\b.{0,80}\b(?:cent
 const STATEMENT_ONLY = /\b(?:calls? for|urges?|reaffirms?|outlines?)\b.{0,100}\b(?:implementation|investment|initiative|plan|policy|support|cooperation|ceasefire|peace|navigation)\b/i
 const DELIVERED_CONSEQUENCE = /\b(?:funding (?:approved|released)|loan (?:approved|disbursed)|construction (?:begins|started)|opens? to (?:the )?public|starts? operations?|service begins|acquisition completed|workers? hired|homes? completed)\b/i
 const CONCRETE = /\b(?:kills?|dies?|dead|injur(?:y|ed|ies)|arrests?|convicts?|acquits?|bans?|blocks?|halts?|suspends?|overturns?|approves?|rejects?|signs?|strikes?|attacks?|evacuates?|sinks?|sank|sunk|traffick(?:ed|ing)?|layoffs?|displaced|floods?|earthquake|hurricane|outbreaks?|shortage|collapse|closes?|opens?|restores?|discovers?|found|reveals?|reports?|reaches? agreement|cuts?|rises?|falls?|first|record|investigat(?:es?|ion)|lawsuit|protest|sanctions?|election|ceasefire|troops?|war|famine|hunger|food insecurity|malnutrition)\b/i
+const GTA_CITY = /\b(?:toronto|mississauga|brampton|markham|vaughan)\b/i
+const MAYORAL_OFFICE = /\b(?:mayor|mayors|mayoral)\b/i
+const ELECTION_OUTCOME = /\b(?:wins?|won|re-?elects?|elected|topples?|defeats?)\b/i
+const gtaMajorElectionResult = title => GTA_CITY.test(title) && MAYORAL_OFFICE.test(title) && ELECTION_OUTCOME.test(title)
 const HUMAN_TEXTURE = /\b(?:village|community|famil(?:y|ies)|residents?|women|children|youths?|artisans?|farmers?|fishers?|workers?|craft|tradition|harvest|livelihood|neighbou?rhood|small town|Indigenous|tribal|refugee|market|water|wildlife|chimpanzees?|mosquitoes?|mangrove|forest|river|wetland|school|education|housing|tenant|hospital|theatre|portrait|literature|clothing|class|debt|sanitation|poultry|rescue|sailors?|mining|extraction)\b/i
 const DISCOVERY_SIGNAL = /\b(?:study|researchers?|scientists?|fossil|archaeolog|paleontolog|species|planet|space|Webb|brain|genome|microbes?|quantum|clock|ancient|excavat|Nature|journal|trial|mice|stars?|galaxy|evolution)\b/i
 const RESEARCH_RESULT = /\b(?:study|research(?:ers?)?|scientists?|analysis|samples?|evidence|findings?|fossil|archaeolog|paleontolog|genome|quantum|ancient|stars?|galaxy|evolution)\b/i
@@ -122,7 +126,7 @@ function domainTier(domain) {
 
 function laneScore(lane, title) {
   if (lane === 'discovery') return DISCOVERY_SIGNAL.test(title) ? 15 : -12
-  if (lane.includes('major')) return CONCRETE.test(title) && majorEligible(title) ? 15 : -30
+  if (lane.includes('major')) return (CONCRETE.test(title) && majorEligible(title)) || gtaMajorElectionResult(title) ? 15 : -30
   return HUMAN_TEXTURE.test(title) ? 14 : 2
 }
 
@@ -144,7 +148,7 @@ export function scoreCandidate(candidate, reportCreatedAt) {
   let score = 42
   if (tier === 'strong') { score += 13; reasons.push('established or specialist source') }
   if (tier === 'weak') { score -= 18; reasons.push('weak or derivative source') }
-  if (CONCRETE.test(title)) { score += 8; reasons.push('concrete development') }
+  if (CONCRETE.test(title) || gtaMajorElectionResult(title)) { score += 8; reasons.push('concrete development') }
   if (HUMAN_TEXTURE.test(title)) { score += 8; reasons.push('human or place-specific core') }
   if (DISCOVERY_SIGNAL.test(title)) { score += 5; reasons.push('specific research or discovery signal') }
   if (/\d/.test(title)) score += 2
@@ -164,11 +168,11 @@ export function scoreCandidate(candidate, reportCreatedAt) {
   if (ageHours !== null) score += ageHours <= 30 ? 5 : ageHours <= 54 ? 2 : 0
   const inferredRegions = PRIORITY_REGIONS.filter(region => regionMatchesText(region, title))
   const priorityRegions = [...new Set([...(candidate.priorityRegions || []), ...candidate.queryIds.map(id => QUERY_REGIONS.get(id)).filter(Boolean), ...inferredRegions].filter(region => regionMatchesText(region, title)))]
-  const inferredMajorLane = majorEligible(title) && CONCRETE.test(title) && !lowConsequence
+  const inferredMajorLane = ((majorEligible(title) && CONCRETE.test(title)) || gtaMajorElectionResult(title)) && !lowConsequence
     ? (priorityRegions.length ? 'priority-major' : 'world-major')
     : null
   const normalizedLanes = [...candidate.lanes, inferredMajorLane].filter(Boolean)
-    .filter(lane => !lane.includes('major') || majorEligible(title))
+    .filter(lane => !lane.includes('major') || majorEligible(title) || gtaMajorElectionResult(title))
     .map(lane => !priorityRegions.length && lane.startsWith('priority-') ? lane.replace('priority-', 'world-')
       : priorityRegions.length && lane === 'world-major' ? 'priority-major' : lane)
   const eligibleLanes = [...new Set(normalizedLanes)]
@@ -193,8 +197,15 @@ function namedLocations(value) {
     ['damascus', 'syria'], ['daraa', 'syria'], ['quneitra', 'syria'], ['raqqa', 'syria'],
     ['hebron', 'westbank'], ['jenin', 'westbank'],
   ])
-  return [...normalized.matchAll(/\b(?:at|in|near|outside|across|throughout)\s+([A-Z][\p{L}'-]{2,})/gu)]
-    .map(match => match[1].toLowerCase())
+  const prepositional = [...normalized.matchAll(/\b(?:at|in|near|outside|across|throughout)\s+([A-Z][\p{L}'-]{2,})/gu)].map(match => match[1])
+  const mayoral = [
+    ...normalized.matchAll(/\b([A-Z][\p{L}-]{2,})(?:'s|’s)\s+mayoral\b/gu),
+    ...normalized.matchAll(/\b([A-Z][\p{L}'-]{2,}),\s*[A-Z][a-z.]*,\s+mayoral\b/gu),
+    ...normalized.matchAll(/\b([A-Z][\p{L}'-]{2,})\s+mayoral\b/gu),
+  ].map(match => match[1])
+  const electingCity = normalized.match(/^([A-Z][\p{L}'-]{2,})\s+(?:re-?elects|elects)\b/u)?.[1]
+  return [...new Set([...prepositional, ...mayoral, ...(electingCity ? [electingCity] : [])])]
+    .map(location => location.toLowerCase())
     .map(location => aliases.get(location) || location)
 }
 
@@ -270,7 +281,11 @@ export function clusterCandidates(scored) {
     else clusters.push({ id: `event-${String(clusters.length + 1).padStart(3, '0')}`, members: [candidate], representative: candidate })
   }
   return clusters.map(cluster => {
-    const representative = [...cluster.members].sort((a, b) => Math.max(...Object.values(b.laneScores)) - Math.max(...Object.values(a.laneScores)))[0]
+    const representative = [...cluster.members].sort((a, b) =>
+      Math.max(...Object.values(b.laneScores)) - Math.max(...Object.values(a.laneScores))
+      || Number(a.ageHours ?? Number.POSITIVE_INFINITY) - Number(b.ageHours ?? Number.POSITIVE_INFINITY)
+      || Number(Boolean(b.image)) - Number(Boolean(a.image))
+      || Number(a.bestPosition ?? Number.POSITIVE_INFINITY) - Number(b.bestPosition ?? Number.POSITIVE_INFINITY))[0]
     const lanes = [...new Set(cluster.members.flatMap(item => item.lanes))]
     return { ...cluster, representative, lanes }
   })
@@ -304,7 +319,7 @@ export function selectEdition(clusters, count) {
       const assignment = bestLaneFor(cluster, counts, phase)
       if (!assignment) return []
       const rawDomainPenalty = domainDiversityPenalty(domainCounts.get(cluster.representative.domain) || 0)
-      const domainPenalty = assignment.lane.includes('major') ? Math.min(8, rawDomainPenalty) : rawDomainPenalty
+      const domainPenalty = assignment.lane.includes('major') || assignment.lane.startsWith('priority-') ? Math.min(8, rawDomainPenalty) : rawDomainPenalty
       const regions = cluster.members.flatMap(member => member.priorityRegions || [])
       const largestRegionGap = Math.max(0, ...regions.map(region => Math.max(0, (PRIORITY_REGION_MINIMUMS[region] || 0) - (regionCounts.get(region) || 0))))
       const regionBonus = assignment.lane.startsWith('priority-') ? largestRegionGap * 14 : 0

@@ -269,7 +269,7 @@ async function main() {
   const rejectedIds = new Set(rejected.map(item => item.eventId))
   const repairQueue = inspected.filter(item => !item.readiness.ready && !rejectedIds.has(item.eventId))
   const report = {
-    schemaVersion: 1, createdAt: new Date().toISOString(), sourceShortlist: process.argv[inputIndex + 1], sourcePool: process.argv[poolIndex + 1],
+    schemaVersion: 1, createdAt: new Date().toISOString(), sourceShortlist: process.argv[inputIndex + 1], sourcePool: process.argv[poolIndex + 1], requestedWindow: pool.requestedWindow || null,
     counts: { inspected: inspected.length, ready: ready.length, repair: repairQueue.length, rejected: rejected.length },
     ready, repairQueue, rejected,
   }

@@ -107,6 +107,7 @@ export function prepareVerifiedEditorialFixture(edition, { includedLanes = ALL_E
     headline: card.headline,
     evidence: compactEvidence((card.pages || []).map(page => page.text).join(' ')),
     publishedAt: card.publishedAt,
+    editionWindow: edition.requestedWindow || null,
     baselineSelected: true,
     baselineRank: card.frontPageRank || card.shortlistOrder || index + 1,
     source: { publisher: card.acceptedSources?.[0]?.domain || null, url: card.primaryUrl },
@@ -237,14 +238,14 @@ export function resumableEvaluations(report, candidateIds) {
 
 export async function scoreBatch(candidates, batchIndex) {
   const { accountId, token } = credentials()
-  const publicCandidates = candidates.map(({ blindId, lane, priorityRegions, headline, evidence, publishedAt }) => ({ id: blindId, lane, priority_regions: priorityRegions, headline, evidence, published_at: publishedAt }))
+  const publicCandidates = candidates.map(({ blindId, lane, priorityRegions, headline, evidence, publishedAt, editionWindow }) => ({ id: blindId, lane, priority_regions: priorityRegions, headline, evidence, published_at: publishedAt, edition_window: editionWindow || null }))
   const expectedIds = candidates.map(value => value.blindId)
   const attempts = []
   for (let attempt = 0; attempt <= SELECTOR_CONFIGURATION.structuralRetries; attempt += 1) {
     const request = {
       messages: [
         { role: 'system', content: EDITORIAL_RUBRIC },
-        { role: 'user', content: JSON.stringify({ required_ids: expectedIds, instruction: 'Return every required ID exactly once. The evaluations array length must equal the required_ids length. Keep strongest_fact and reason to one concise sentence each, no more than 30 words.', candidates: publicCandidates }) },
+        { role: 'user', content: JSON.stringify({ required_ids: expectedIds, instruction: 'Return every required ID exactly once. The evaluations array length must equal the required_ids length. Keep strongest_fact and reason to one concise sentence each, no more than 30 words. Use each candidate edition_window as the strict underlying-event freshness boundary; publication inside it does not make an earlier event fresh.', candidates: publicCandidates }) },
       ],
       temperature: SELECTOR_CONFIGURATION.temperature,
       max_completion_tokens: SELECTOR_CONFIGURATION.maxCompletionTokens,

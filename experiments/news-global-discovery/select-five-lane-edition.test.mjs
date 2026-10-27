@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { MAX_REVIEW_CANDIDATES, candidatesDescribeSameThread, domainDiversityPenalty, lowConsequenceEvent, parseArgs, scoreCandidate, selectEdition } from './select-five-lane-edition.mjs'
+import { MAX_REVIEW_CANDIDATES, candidatesDescribeSameThread, clusterCandidates, domainDiversityPenalty, lowConsequenceEvent, parseArgs, scoreCandidate, selectEdition } from './select-five-lane-edition.mjs'
 
 const candidate = (title, lanes, priorityRegions = []) => ({
   title, lanes, priorityRegions, url: 'https://bbc.com/story', publishedAt: '2026-10-13T08:00:00Z',
@@ -86,6 +86,33 @@ test('different election stories in British Columbia and Alaska never cluster', 
   const bc = candidate('B.C. election results: Live numbers from the 2026 vote', 'https://globalnews.ca/bc-election')
   const alaska = candidate('Trump asks court to block Alaska Senate results certification', 'https://theguardian.com/alaska-election')
   assert.equal(candidatesDescribeSameThread(bc, alaska), false)
+})
+
+test('different municipal election winners never collapse into one city event', () => {
+  assert.equal(candidatesDescribeSameThread(
+    { title: "Olivia Chow wins Toronto's mayoral race" },
+    { title: 'Fred Francis wins Windsor, Ont., mayoral race' },
+  ), false)
+  assert.equal(candidatesDescribeSameThread(
+    { title: 'Toronto re-elects Olivia Chow as mayor' },
+    { title: 'Alvin Tedjo wins mayoral election in Mississauga' },
+  ), false)
+})
+
+test('a fresh report represents a cluster when editorial scores tie', () => {
+  const old = { ...candidate("Toronto re-elects Olivia Chow as mayor", ['priority-interesting'], ['GTA']), ageHours: 83, laneScores: { 'priority-interesting': 70 }, score: 70 }
+  const fresh = { ...candidate("Olivia Chow wins Toronto's mayoral race", ['priority-interesting'], ['GTA']), ageHours: 5, laneScores: { 'priority-interesting': 70 }, score: 70, image: null }
+  const cluster = clusterCandidates([old, fresh]).find(item => item.members.length === 2)
+  assert.equal(cluster.representative.title, "Olivia Chow wins Toronto's mayoral race")
+})
+
+test('major GTA mayoral results receive consequential priority treatment', () => {
+  const chow = scoreCandidate(candidate("Olivia Chow wins Toronto's mayoral race", ['priority-interesting'], ['GTA']), '2026-10-27T05:00:00Z')
+  const tedjo = scoreCandidate(candidate('Alvin Tedjo topples current and former mayors in Mississauga', ['priority-interesting'], ['GTA']), '2026-10-27T05:00:00Z')
+  assert.ok(chow.lanes.includes('priority-major'))
+  assert.ok(tedjo.lanes.includes('priority-major'))
+  assert.equal(scoreCandidate(candidate('Olivia Chow’s mayoral win was not a vote for Toronto’s status quo', ['priority-interesting'], ['GTA']), '2026-10-27T05:00:00Z').lowConsequence, false)
+  assert.ok(scoreCandidate(candidate('Olivia Chow’s mayoral win was not a vote for Toronto’s status quo', ['priority-interesting'], ['GTA']), '2026-10-27T05:00:00Z').score < 0)
 })
 
 test('rescue and body-recovery updates for the same named vessel remain one event thread', () => {

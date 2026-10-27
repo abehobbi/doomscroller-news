@@ -37,8 +37,8 @@ test('selected-only fixture omits qualified reserves for a bounded final-edition
   assert.deepEqual(fixture.candidates.map(value => value.eventId), ['selected'])
 })
 
-test('verified finalists can be converted into a blind all-lane editorial fixture', () => {
-  const fixture = prepareVerifiedEditorialFixture({ cards: [{
+test('verified finalists can be converted into a blind all-lane editorial fixture with the strict edition window', () => {
+  const fixture = prepareVerifiedEditorialFixture({ requestedWindow: { start: '2026-10-19T12:00:00Z', end: '2026-10-20T12:00:00Z' }, cards: [{
     eventId: 'verified', lane: 'world-major', headline: 'A specific verified development', publishedAt: '2026-10-20T12:00:00Z',
     priorityRegions: [], primaryUrl: 'https://example.com/story', acceptedSources: [{ domain: 'example.com' }],
     pages: [{ text: 'Officials documented a specific recent development affecting many residents. The verified evidence identifies the decision, the people involved, and the immediate consequences. A second paragraph supplies enough concrete context for editorial review.' }],
@@ -46,6 +46,7 @@ test('verified finalists can be converted into a blind all-lane editorial fixtur
   assert.equal(fixture.candidates.length, 1)
   assert.equal(fixture.candidates[0].eventId, 'verified')
   assert.equal(fixture.candidates[0].source.publisher, 'example.com')
+  assert.deepEqual(fixture.candidates[0].editionWindow, { start: '2026-10-19T12:00:00Z', end: '2026-10-20T12:00:00Z' })
 })
 
 test('batch helper is deterministic', () => {
