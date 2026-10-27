@@ -21,8 +21,8 @@ function destinationLane(card, evaluation) {
 
 const STATEMENT_ONLY_CUE = /\b(?:says?|said|states?|stated|declares?|declared|calls?\s+for|urges?|warns?|welcomes?|open\s+to|wants?|backs?|supports?|opposes?|pledges?|promises?|aims?|expects?|predicts?|believes?|questions?|criticises?|criticizes?)\b/i
 const CONCRETE_DEVELOPMENT_CUE = /\b(?:signed|enacted|approved|adopted|passed|launched|opened|began|started|deployed|allocated|released|awarded|funded|filed|ordered|arrested|charged|resigned|appointed|elected|won|killed|injured|displaced|discovered|identified|published|recorded|confirmed|cancelled|canceled|closed|reopened|delivered|arrived|completed|broke\s+ground)\b/i
-const DETERMINISTIC_LOW_VALUE = /\b(?:innovation fair|trade fair|study delegation|delegation (?:studies|visits|tours)|seeks? (?:cooperation|collaboration|partnership|support) to (?:establish|build|develop|launch)|ballon d['’]or|wins? (?:the )?(?:men['’]s|women['’]s)? award|friendly match|league table)\b/i
-const EXPLICIT_STALE_FINDING = /\b(?:study|research|paper|findings?|discovery|report)\s+(?:was|were|originally)?\s*(?:published|released|announced|unveiled|reported)\s+(?:in|on)\s+(?:january|february|march|april|may|june|july|august|september|october|november|december)\s+20(?:0\d|1\d|2[0-5])\b/i
+const DETERMINISTIC_LOW_VALUE = /\b(?:innovation fair|trade fair|study delegation|delegation (?:studies|visits|tours)|seeks? (?:cooperation|collaboration|partnership|support) to (?:establish|build|develop|launch)|agree(?:s|d)? to (?:(?:continue|hold|resume) (?:talks|dialogue|discussions)|more talks)|ballon d['’]or|wins? (?:the )?(?:men['’]s|women['’]s)? award|friendly match|league table)\b/i
+const EXPLICIT_STALE_FINDING = /\b(?:study|research|paper|findings?|discovery|report)\b[^\n.]{0,140}\b(?:published|released|announced|unveiled|reported)\b[^\n.]{0,140}\b(?:in|on)\s+(?:january|february|march|april|may|june|july|august|september|october|november|december)\s+20(?:0\d|1\d|2[0-5])\b/i
 
 function isStatementOnlyPossible(score) {
   const evaluation = score?.evaluation

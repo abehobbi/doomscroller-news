@@ -74,3 +74,12 @@ test('deterministic gate catches routine events and explicitly old findings even
   assert.equal(result.cards.length, 0)
   assert.equal(result.editorialScoring.rejected.length, 2)
 })
+
+test('deterministic gate catches old findings with journal attribution and talk-only diplomacy', () => {
+  const old = card('old-journal', 'world-interesting', 1); old.headline = 'Bird behaviour surprises researchers'; old.pages = [{ text: 'The findings, published in the journal People and Nature in December 2025, showed a consistent effect.' }]
+  const talks = card('talks-only', 'world-major', 2); talks.headline = 'Four countries agree to more talks for regional peace'; talks.pages = [{ text: 'Officials issued a statement saying dialogue would continue.' }]
+  const result = applyEditorialScores({ createdAt: 'before', cards: [old, talks] }, { complete: true, candidateCount: 2, results: [scored('old-journal', 90), scored('talks-only', 90)] })
+  assert.equal(result.cards.length, 0)
+  assert.match(result.editorialScoring.rejected.find(item => item.eventId === 'old-journal').reason, /old underlying finding/)
+  assert.match(result.editorialScoring.rejected.find(item => item.eventId === 'talks-only').reason, /routine sport, publicity, delegation or aspirational cooperation/)
+})
