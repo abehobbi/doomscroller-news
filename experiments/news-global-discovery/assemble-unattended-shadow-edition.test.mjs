@@ -126,6 +126,17 @@ test('routes generated priority-region headlines back into priority lanes', () =
   )
 })
 
+test('foreign event geography defeats incidental priority-region background', () => {
+  assert.deepEqual(
+    normalizeGeneratedRouting('world-interesting', [], 'Possible praetorium found at Roman fortress in Bulgaria', 'Roman fortress discovery in Bulgaria', 'Later background compares the site with Jordan and Oman.'),
+    { lane: 'world-interesting', priorityRegions: [] },
+  )
+  assert.deepEqual(
+    normalizeGeneratedRouting('priority-interesting', ['Canada'], 'Canadian-backed potash mine in Brazil dries up sacred springs', 'Canadian-backed mine in Brazil', 'The project is in Brazil and affects the Indigenous Mura people.'),
+    { lane: 'world-interesting', priorityRegions: [] },
+  )
+})
+
 test('distinguishes provider quota deferrals from editorial rejection', () => {
   assert.equal(rejectionCategory({ provider: { httpStatus: 429, internalErrors: [{ code: 4006 }] } }), 'provider-deferred')
   assert.equal(rejectionCategory({ status: 'deferred', provider: { structuralStatus: 'provider_deferred' } }), 'provider-deferred')

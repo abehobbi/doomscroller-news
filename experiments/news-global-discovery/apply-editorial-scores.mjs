@@ -6,6 +6,14 @@ import { auditEdition } from './assemble-verified-edition.mjs'
 import { rankFrontPage } from './final-edition-ranker.mjs'
 import { normalizeGeneratedRouting } from './assemble-unattended-shadow-edition.mjs'
 
+const LANE_MAXIMUMS = Object.freeze({
+  'world-major': 15,
+  'priority-major': 15,
+  'world-interesting': 20,
+  'priority-interesting': 15,
+  discovery: 8,
+})
+
 function destinationLane(card, evaluation) {
   if (!evaluation || evaluation.lane_fit > 2 || !card.lane.endsWith('major')) return card.lane
   return card.lane === 'priority-major' ? 'priority-interesting' : 'world-interesting'
@@ -13,6 +21,8 @@ function destinationLane(card, evaluation) {
 
 const STATEMENT_ONLY_CUE = /\b(?:says?|said|states?|stated|declares?|declared|calls?\s+for|urges?|warns?|welcomes?|open\s+to|wants?|backs?|supports?|opposes?|pledges?|promises?|aims?|expects?|predicts?|believes?|questions?|criticises?|criticizes?)\b/i
 const CONCRETE_DEVELOPMENT_CUE = /\b(?:signed|enacted|approved|adopted|passed|launched|opened|began|started|deployed|allocated|released|awarded|funded|filed|ordered|arrested|charged|resigned|appointed|elected|won|killed|injured|displaced|discovered|identified|published|recorded|confirmed|cancelled|canceled|closed|reopened|delivered|arrived|completed|broke\s+ground)\b/i
+const DETERMINISTIC_LOW_VALUE = /\b(?:innovation fair|trade fair|study delegation|delegation (?:studies|visits|tours)|seeks? (?:cooperation|collaboration|partnership|support) to (?:establish|build|develop|launch)|ballon d['’]or|wins? (?:the )?(?:men['’]s|women['’]s)? award|friendly match|league table)\b/i
+const EXPLICIT_STALE_FINDING = /\b(?:study|research|paper|findings?|discovery|report)\s+(?:was|were|originally)?\s*(?:published|released|announced|unveiled|reported)\s+(?:in|on)\s+(?:january|february|march|april|may|june|july|august|september|october|november|december)\s+20(?:0\d|1\d|2[0-5])\b/i
 
 function isStatementOnlyPossible(score) {
   const evaluation = score?.evaluation
@@ -21,9 +31,12 @@ function isStatementOnlyPossible(score) {
   return STATEMENT_ONLY_CUE.test(strongestFact) && !CONCRETE_DEVELOPMENT_CUE.test(strongestFact)
 }
 
-function editorialRejectionReason(score) {
+function editorialRejectionReason(score, card) {
   const evaluation = score?.evaluation
   if (!evaluation) return 'missing complete editorial score'
+  const evidence = `${card?.headline || ''} ${(card?.pages || []).map(page => page.text).join(' ')}`
+  if (DETERMINISTIC_LOW_VALUE.test(card?.headline || '')) return 'deterministic editorial gate rejected routine sport, publicity, delegation or aspirational cooperation'
+  if (EXPLICIT_STALE_FINDING.test(evidence)) return 'deterministic freshness gate found an explicitly old underlying finding'
   if (evaluation.underlying_event_fresh === false) return 'the underlying event or finding predates the edition window without a material new development'
   if (evaluation.single_coherent_event === false) return 'candidate combines unrelated developments that must not become one card'
   if (evaluation.publicity_or_commentary === true) return 'routine publicity, commentary or ceremonial material should not consume edition space'
@@ -44,7 +57,7 @@ export function applyEditorialScores(edition, scoreReport) {
   const rejected = [], retained = []
   for (const card of edition.cards || []) {
     const score = scores.get(card.eventId)
-    const rejectionReason = editorialRejectionReason(score)
+    const rejectionReason = editorialRejectionReason(score, card)
     if (rejectionReason) {
       rejected.push({ eventId: card.eventId, headline: card.headline, reason: rejectionReason, editorialScore: score?.editorialScore })
       continue
@@ -60,7 +73,18 @@ export function applyEditorialScores(edition, scoreReport) {
     })
   }
   retained.sort((left, right) => right.selectionScore - left.selectionScore || Number(left.frontPageRank || 999) - Number(right.frontPageRank || 999))
-  const cards = rankFrontPage(retained), audit = auditEdition(cards)
+  const laneCounts = Object.fromEntries(Object.keys(LANE_MAXIMUMS).map(lane => [lane, 0]))
+  const withinMaximums = []
+  for (const card of retained) {
+    const maximum = LANE_MAXIMUMS[card.lane]
+    if (maximum !== undefined && laneCounts[card.lane] >= maximum) {
+      rejected.push({ eventId: card.eventId, headline: card.headline, reason: `${card.lane} reached its hard category maximum of ${maximum}`, editorialScore: card.selectionScore })
+      continue
+    }
+    laneCounts[card.lane] = Number(laneCounts[card.lane] || 0) + 1
+    withinMaximums.push(card)
+  }
+  const cards = rankFrontPage(withinMaximums), audit = auditEdition(cards)
   return {
     ...edition, createdAt: new Date().toISOString(), sourceEditionCreatedAt: edition.createdAt,
     editorialScoring: { model: scoreReport.configuration?.model || null, candidateCount: scoreReport.candidateCount, rejected },

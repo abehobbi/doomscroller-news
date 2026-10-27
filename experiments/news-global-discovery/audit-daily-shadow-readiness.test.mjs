@@ -22,3 +22,12 @@ test('thirty cards cannot hide category deficits or a three-day window', () => {
   assert.equal(result.strongDailySuccess, false)
   assert.deepEqual(result.laneGaps, { 'priority-interesting': 4, discovery: 4 })
 })
+
+test('a category over its product maximum cannot earn strong daily success', () => {
+  const laneCounts = { 'world-major': 10, 'priority-major': 8, 'world-interesting': 10, 'priority-interesting': 6, discovery: 9 }
+  const cards = Array.from({ length: 43 }, (_, index) => ({ headline: `Complete headline ${index}`, primaryUrl: `https://example.com/${index}`, sources: [{ url: `https://example.com/${index}` }], image: { url: `https://example.com/${index}.jpg` } }))
+  const result = auditDailyShadowReadiness({ cards, audit: { laneCounts } }, { requestedWindow: { start: '2026-10-25T00:00:00Z', end: '2026-10-26T00:00:00Z' } }, { safeForDailyFullRun: true })
+  assert.equal(result.checks.categoryMaximums, false)
+  assert.deepEqual(result.laneOverages, { discovery: 1 })
+  assert.equal(result.strongDailySuccess, false)
+})

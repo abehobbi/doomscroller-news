@@ -9,6 +9,13 @@ export const DAILY_LANE_MINIMUMS = Object.freeze({
   'priority-interesting': 6,
   discovery: 4,
 })
+export const DAILY_LANE_MAXIMUMS = Object.freeze({
+  'world-major': 15,
+  'priority-major': 15,
+  'world-interesting': 20,
+  'priority-interesting': 15,
+  discovery: 8,
+})
 
 const INCOMPLETE_HEADLINE = /\b(?:a|an|and|as|at|by|for|from|in|into|of|on|or|the|to|with)$/i
 
@@ -21,6 +28,9 @@ export function auditDailyShadowReadiness(edition, discovery, budget) {
   const laneGaps = Object.fromEntries(Object.entries(DAILY_LANE_MINIMUMS)
     .map(([lane, minimum]) => [lane, Math.max(0, minimum - Number(laneCounts[lane] || 0))])
     .filter(([, gap]) => gap > 0))
+  const laneOverages = Object.fromEntries(Object.entries(DAILY_LANE_MAXIMUMS)
+    .map(([lane, maximum]) => [lane, Math.max(0, Number(laneCounts[lane] || 0) - maximum)])
+    .filter(([, overage]) => overage > 0))
   const malformedHeadlines = cards.filter(card => !String(card.headline || '').trim() || INCOMPLETE_HEADLINE.test(String(card.headline).trim())).map(card => card.headline)
   const missingSources = cards.filter(card => !card.primaryUrl || !(card.sources || []).length).map(card => card.headline)
   const missingImages = cards.filter(card => !card.image?.url && !card.imageException?.granted).map(card => card.headline)
@@ -28,6 +38,7 @@ export function auditDailyShadowReadiness(edition, discovery, budget) {
     exactDailyWindow: windowHours !== null && Math.abs(windowHours - 24) < 0.05,
     acceptedMinimum: cards.length >= 30,
     categoryMinimums: Object.keys(laneGaps).length === 0,
+    categoryMaximums: Object.keys(laneOverages).length === 0,
     hardMaximum: cards.length <= 65,
     completeHeadlines: malformedHeadlines.length === 0,
     sourceComplete: missingSources.length === 0,
@@ -41,6 +52,7 @@ export function auditDailyShadowReadiness(edition, discovery, budget) {
     totalCards: cards.length,
     laneCounts,
     laneGaps,
+    laneOverages,
     checks,
     viableDailyEdition: checks.exactDailyWindow && checks.acceptedMinimum && checks.hardMaximum && checks.completeHeadlines && checks.sourceComplete && checks.imageComplete && checks.recurringBudgetSafe,
     strongDailySuccess: Object.values(checks).every(Boolean),

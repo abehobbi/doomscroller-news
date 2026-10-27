@@ -57,3 +57,20 @@ test('priority geography is normalized before the writer and edition audit', () 
   assert.equal(result.cards[0].lane, 'priority-interesting')
   assert.deepEqual(result.cards[0].priorityRegions, ['Ghana'])
 })
+
+test('hard category maximums are enforced after editorial routing', () => {
+  const cards = Array.from({ length: 10 }, (_, index) => card(`science-${index}`, 'discovery', index + 1))
+  const scores = cards.map((value, index) => scored(value.eventId, 100 - index))
+  const result = applyEditorialScores({ createdAt: 'before', cards }, { complete: true, candidateCount: 10, results: scores })
+  assert.equal(result.cards.length, 8)
+  assert.equal(result.audit.laneCounts.discovery, 8)
+  assert.equal(result.editorialScoring.rejected.filter(value => /hard category maximum/.test(value.reason)).length, 2)
+})
+
+test('deterministic gate catches routine events and explicitly old findings even when model scores them strong', () => {
+  const fair = card('fair', 'priority-interesting', 1); fair.headline = 'CSIR Innovation Fair connects researchers with commercial partners'
+  const old = card('old-study', 'discovery', 2); old.headline = 'Urban birds respond differently to women and men'; old.pages = [{ text: 'The study was published in December 2025.' }]
+  const result = applyEditorialScores({ createdAt: 'before', cards: [fair, old] }, { complete: true, candidateCount: 2, results: [scored('fair', 90), scored('old-study', 90)] })
+  assert.equal(result.cards.length, 0)
+  assert.equal(result.editorialScoring.rejected.length, 2)
+})
