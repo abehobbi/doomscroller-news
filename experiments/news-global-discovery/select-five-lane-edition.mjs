@@ -51,7 +51,9 @@ const STRONG_DOMAINS = [
   'thedailystar.net', 'tbsnews.net', 'dhakatribune.com', 'myjoyonline.com', 'citinewsroom.com',
 ]
 
-function parseArgs(argv) {
+export const MAX_REVIEW_CANDIDATES = 240
+
+export function parseArgs(argv) {
   const options = { input: null, outputDir: null, count: 65 }
   for (let index = 0; index < argv.length; index += 1) {
     if (argv[index] === '--input') options.input = argv[++index]
@@ -59,7 +61,7 @@ function parseArgs(argv) {
     else if (argv[index] === '--count') options.count = Number(argv[++index])
   }
   if (!options.input || !options.outputDir) throw new Error('--input and --output-dir are required')
-  if (!Number.isInteger(options.count) || options.count < 1 || options.count > 160) throw new Error('--count must be an integer from 1 to 160')
+  if (!Number.isInteger(options.count) || options.count < 1 || options.count > MAX_REVIEW_CANDIDATES) throw new Error(`--count must be an integer from 1 to ${MAX_REVIEW_CANDIDATES}`)
   return options
 }
 

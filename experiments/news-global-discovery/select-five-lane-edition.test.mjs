@@ -1,10 +1,16 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { candidatesDescribeSameThread, domainDiversityPenalty, lowConsequenceEvent, scoreCandidate, selectEdition } from './select-five-lane-edition.mjs'
+import { MAX_REVIEW_CANDIDATES, candidatesDescribeSameThread, domainDiversityPenalty, lowConsequenceEvent, parseArgs, scoreCandidate, selectEdition } from './select-five-lane-edition.mjs'
 
 const candidate = (title, lanes, priorityRegions = []) => ({
   title, lanes, priorityRegions, url: 'https://bbc.com/story', publishedAt: '2026-10-13T08:00:00Z',
   queryIds: [], bestPosition: 1, image: 'https://bbc.com/image.jpg',
+})
+
+test('workflow-scale candidate review accepts 240 but preserves a hard ceiling', () => {
+  assert.equal(MAX_REVIEW_CANDIDATES, 240)
+  assert.equal(parseArgs(['--input', 'in.json', '--output-dir', 'out', '--count', '240']).count, 240)
+  assert.throws(() => parseArgs(['--input', 'in.json', '--output-dir', 'out', '--count', '241']), /1 to 240/)
 })
 
 test('major events in priority geography count as priority-major when found by a major-news search', () => {
