@@ -15,6 +15,7 @@ export const ROUND_LANE_SHAPES = Object.freeze([
   ['priority-interesting', 'world-interesting'],
 ])
 const PRIORITY_REGIONS = ['Syria', 'Middle East', 'Bangladesh', 'Ghana', 'Canada', 'GTA']
+const REGION_QUERY_NAMES = Object.freeze({ 'Middle East': 'Middle East', GTA: 'Greater Toronto', Syria: 'Syria', Bangladesh: 'Bangladesh', Ghana: 'Ghana', Canada: 'Canada' })
 const REGION_TERMS = Object.freeze({
   Syria: ['syria', 'syrian'],
   'Middle East': ['middle east', 'syria', 'syrian', 'lebanon', 'lebanese', 'jordan', 'jordanian', 'palestine', 'palestinian', 'israel', 'israeli', 'iraq', 'iraqi', 'yemen', 'yemeni', 'oman', 'omani', 'qatar', 'qatari', 'bahrain', 'kuwait', 'saudi', 'emirati', 'uae'],
@@ -89,6 +90,28 @@ export function normalizePlannedQueries(queries) {
   return Array.isArray(queries) ? queries.map(item => ({ ...item, region: item?.lane === 'priority-interesting' || item?.lane === 'priority-major' ? item.region : null })) : queries
 }
 
+export function repairRepeatedPriorityRegions(queries, priorQueries = [], regionCounts = {}) {
+  const isPriorityLane = lane => lane === 'priority-interesting' || lane === 'priority-major'
+  const used = new Set(priorQueries.filter(item => isPriorityLane(item?.lane)).map(item => item.region))
+  const available = PRIORITY_REGIONS.filter(region => !used.has(region)).sort((left, right) => Number(regionCounts[left] || 0) - Number(regionCounts[right] || 0) || PRIORITY_REGIONS.indexOf(left) - PRIORITY_REGIONS.indexOf(right))
+  return queries.map(item => {
+    if (!isPriorityLane(item?.lane)) return item
+    if (PRIORITY_REGIONS.includes(item.region) && !used.has(item.region)) { used.add(item.region); return item }
+    const region = available.find(candidate => !used.has(candidate))
+    if (!region) return item
+    used.add(region)
+    const queryName = REGION_QUERY_NAMES[region]
+    return {
+      ...item,
+      id: `unused-${region.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+      region,
+      blind_spot: `undercovered current reporting from ${region}`,
+      query: `${queryName} recent accountability public services health labour environment livelihoods local consequences`,
+      rationale: `Deterministic fallback preserves distinct priority-region coverage after planner repetition`,
+    }
+  })
+}
+
 export function resultMatchesRegion(result, region) {
   if (!region) return true
   const haystack = `${result?.title || ''} ${result?.content || ''} ${result?.url || ''}`.toLowerCase()
@@ -120,6 +143,11 @@ export async function planQueries({ context, priorSearches = [], count, round, f
     const queries = normalizePlannedQueries(parsed?.queries)
     const audit = auditPlannedQueries(queries, count, priorSearches, round)
     if (audit.valid) return { queries, usage: body?.result?.usage ?? body?.usage ?? null, returnedModel: body?.result?.model ?? null, attempts: attempt }
+    if (attempt === 3 && audit.reason === 'priority searches must cover distinct regions across rounds') {
+      const repaired = repairRepeatedPriorityRegions(queries, priorSearches, context?.pool?.regionCounts)
+      const repairedAudit = auditPlannedQueries(repaired, count, priorSearches, round)
+      if (repairedAudit.valid) return { queries: repaired, usage: body?.result?.usage ?? body?.usage ?? null, returnedModel: body?.result?.model ?? null, attempts: attempt, deterministicRepair: audit.reason }
+    }
     priorFailure = audit.reason
   }
   throw new Error(`adaptive planner round ${round}: ${priorFailure}`)

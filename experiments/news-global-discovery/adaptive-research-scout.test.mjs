@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { auditPlannedQueries, compactDiscoveryContext, compactRoundResults, MAX_TAVILY_CREDITS, MODEL, normalizePlannedQueries, planQueries, resultMatchesRegion, ROUND_LANE_SHAPES, ROUND_SIZES, TAVILY_CREDITS_PER_SEARCH } from './adaptive-research-scout.mjs'
+import { auditPlannedQueries, compactDiscoveryContext, compactRoundResults, MAX_TAVILY_CREDITS, MODEL, normalizePlannedQueries, planQueries, repairRepeatedPriorityRegions, resultMatchesRegion, ROUND_LANE_SHAPES, ROUND_SIZES, TAVILY_CREDITS_PER_SEARCH } from './adaptive-research-scout.mjs'
 
 const make = (id, lane, region, query) => ({ id, lane, region, blind_spot: 'undercovered local life', rationale: 'fills a demonstrated omission', query })
 
@@ -52,6 +52,31 @@ test('non-priority planner metadata is canonicalized without weakening priority 
   assert.equal(priority[0].region, 'Ghana')
   const priorityMajor = normalizePlannedQueries([make('bangladesh', 'priority-major', 'Bangladesh', 'Bangladesh government accountability health and labour developments')])
   assert.equal(priorityMajor[0].region, 'Bangladesh')
+})
+
+test('repeated priority regions are repaired with an unused undercovered regional sweep', () => {
+  const prior = [make('syria', 'priority-interesting', 'Syria', 'Syria recent accountability public services health labour and livelihoods'), make('ghana', 'priority-major', 'Ghana', 'Ghana recent accountability public services health labour and livelihoods')]
+  const planned = [make('repeat', 'priority-interesting', 'Syria', 'Syria recent accountability environment health labour and local consequences'), make('world', 'world-interesting', null, 'underreported local accountability public services and livelihood consequences worldwide')]
+  const repaired = repairRepeatedPriorityRegions(planned, prior, { Bangladesh: 8, Canada: 4, GTA: 3, 'Middle East': 1 })
+  assert.equal(repaired[0].region, 'Middle East')
+  assert.match(repaired[0].query, /Middle East/)
+  assert.equal(auditPlannedQueries(repaired, 2, prior, 3).valid, true)
+})
+
+test('planner deterministically repairs repeated priority coverage after bounded retries', async () => {
+  const previous = { account: process.env.CLOUDFLARE_ACCOUNT_ID, token: process.env.CLOUDFLARE_API_TOKEN, confirmed: process.env.FREE_PLAN_CONFIRMED }
+  process.env.CLOUDFLARE_ACCOUNT_ID = 'account'; process.env.CLOUDFLARE_API_TOKEN = 'token'; process.env.FREE_PLAN_CONFIRMED = 'yes'
+  const repeated = { queries: [make('repeat', 'priority-interesting', 'Syria', 'Syria recent accountability environment health labour and local consequences'), make('world', 'world-interesting', null, 'underreported local accountability public services and livelihood consequences worldwide')] }
+  const prior = [make('syria', 'priority-interesting', 'Syria', 'Syria accountability public services health labour and livelihoods')]
+  const fetchImpl = async () => ({ ok: true, status: 200, text: async () => JSON.stringify({ success: true, result: { response: JSON.stringify(repeated), usage: { neurons: 1 }, model: MODEL } }) })
+  try {
+    const result = await planQueries({ context: { requestedWindow: {}, pool: { regionCounts: { Ghana: 1 } } }, priorSearches: prior, count: 2, round: 3, fetchImpl })
+    assert.equal(result.attempts, 3); assert.equal(result.deterministicRepair, 'priority searches must cover distinct regions across rounds'); assert.equal(result.queries[0].region, 'Middle East')
+  } finally {
+    for (const [key, value] of [['CLOUDFLARE_ACCOUNT_ID', previous.account], ['CLOUDFLARE_API_TOKEN', previous.token], ['FREE_PLAN_CONFIRMED', previous.confirmed]]) {
+      if (value === undefined) delete process.env[key]; else process.env[key] = value
+    }
+  }
 })
 
 test('second-round feedback contains only bounded search-result metadata', () => {
