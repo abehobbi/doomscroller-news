@@ -135,6 +135,10 @@ test('foreign event geography defeats incidental priority-region background', ()
     normalizeGeneratedRouting('priority-interesting', ['Canada'], 'Canadian-backed potash mine in Brazil dries up sacred springs', 'Canadian-backed mine in Brazil', 'The project is in Brazil and affects the Indigenous Mura people.'),
     { lane: 'world-interesting', priorityRegions: [] },
   )
+  assert.deepEqual(
+    normalizeGeneratedRouting('priority-major', ['Middle East'], 'UK sanctions 15 Sudanese commanders over attacks on civilians'),
+    { lane: 'world-major', priorityRegions: [] },
+  )
 })
 
 test('foreign event location in central evidence defeats publisher-location inference', () => {

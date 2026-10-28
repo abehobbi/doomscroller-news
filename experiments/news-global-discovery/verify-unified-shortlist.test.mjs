@@ -92,6 +92,17 @@ test('contested political evidence cannot bypass corroboration through a neutral
   assert.ok(result.reasons.includes('high-risk event lacks two independent trusted source families'))
 })
 
+test('ordinary civic reporting is not made high-risk by incidental article vocabulary', () => {
+  const source = {
+    accepted: true, trusted: true, family: 'publisher-a', imageUrl: 'https://example.com/image.jpg',
+    url: 'https://example.com/story', domain: 'example.com', title: 'Olivia Chow wins Toronto mayoral election',
+    evidenceText: 'Police managed traffic near the court while a protest elsewhere in the city ended peacefully.',
+  }
+  const result = readiness({ representative: { title: source.title } }, [source])
+  assert.equal(result.highRisk, false)
+  assert.equal(result.ready, true)
+})
+
 test('animal language inside discovery evidence does not turn peer-reviewed research into a conflict event', () => {
   const source = {
     accepted: true, trusted: true, family: 'publisher:bbc.com', imageUrl: 'https://example.com/fossil.jpg',

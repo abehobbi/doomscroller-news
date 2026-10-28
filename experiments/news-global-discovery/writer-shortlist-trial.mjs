@@ -372,6 +372,17 @@ export function writerMetadataAudit(card) {
   return { valid: exposed.length === 0, exposed }
 }
 
+export function uncertaintyAudit(card, item) {
+  const centralClaim = [item?.sourceTitle, card?.headline].filter(Boolean).join('\n')
+  const contested = /\b(?:alleg(?:e|ed|es|ation|ations)|claim(?:s|ed)?|reportedly|unconfirmed|disputed|according to exit polls?|exit polls? (?:show|suggest|indicate))\b/i.test(centralClaim)
+  const uncertainties = (card?.uncertainties || []).filter(value => String(value || '').trim())
+  return {
+    valid: !contested || uncertainties.length > 0,
+    contested,
+    reason: contested && !uncertainties.length ? 'a contested central claim requires an explicit uncertainty note' : null,
+  }
+}
+
 export function auditCard(item, card) {
   const content = validateCardContent(card)
   const allowedDates = new Set([
@@ -384,8 +395,9 @@ export function auditCard(item, card) {
   const headline = headlineAudit(card, item.temporalPacket.writer_facing)
   const geography = geographyAudit(card, item)
   const metadata = writerMetadataAudit(card)
-  const audits = { content, dates, numbers, relativeTime, headline, geography, metadata, writerExposure: auditWriterTemporalExposure(item.temporalPacket) }
-  return { audits, valid: content.valid && dates.valid && numbers.valid && relativeTime.valid && headline.valid && geography.valid && metadata.valid && audits.writerExposure.passes }
+  const uncertainty = uncertaintyAudit(card, item)
+  const audits = { content, dates, numbers, relativeTime, headline, geography, metadata, uncertainty, writerExposure: auditWriterTemporalExposure(item.temporalPacket) }
+  return { audits, valid: content.valid && dates.valid && numbers.valid && relativeTime.valid && headline.valid && geography.valid && metadata.valid && uncertainty.valid && audits.writerExposure.passes }
 }
 
 function reportFor(items, results, options, complete) {

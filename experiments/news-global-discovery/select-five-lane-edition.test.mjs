@@ -82,6 +82,21 @@ test('multi-event news roundups cannot absorb separate regional stories', () => 
   ), true)
 })
 
+test('shared regional actors do not merge distinct consequential actions', () => {
+  assert.equal(candidatesDescribeSameThread(
+    { title: 'Houthis claim missile strike on Saudi refinery' },
+    { title: 'Iran, Saudi Arabia and Turkey open regional security dialogue' },
+  ), false)
+  assert.equal(candidatesDescribeSameThread(
+    { title: 'Toronto vehicle used in abduction investigation' },
+    { title: 'Toronto suspects impersonated detective and judge in fraud scheme' },
+  ), false)
+  assert.equal(candidatesDescribeSameThread(
+    { title: 'Local ceasefire holds in Russian-occupied Oleshky' },
+    { title: 'Finnish and Norwegian leaders hold rare call with Putin' },
+  ), false)
+})
+
 test('different election stories in British Columbia and Alaska never cluster', () => {
   const bc = candidate('B.C. election results: Live numbers from the 2026 vote', 'https://globalnews.ca/bc-election')
   const alaska = candidate('Trump asks court to block Alaska Senate results certification', 'https://theguardian.com/alaska-election')

@@ -10,7 +10,7 @@ import { trustedContextDomain } from './enrich-generation-context.mjs'
 import { establishedPublisherDomain } from './selection-safeguards.mjs'
 import { headlinesExplicitlyConflict } from './select-five-lane-edition.mjs'
 
-const HIGH_RISK = /\b(?:attack(?:s|ed|ing)?|kill(?:s|ed|ing)?|deaths?|died|casualt(?:y|ies)|war|military|troops?|sanctions?|elections?|protests?|corrupt(?:ion)?|crimes?|courts?|police|detain(?:s|ed|ing)?|alleg(?:es|ed|ing|ation|ations)?|accus(?:es|ed|ing|ation|ations)?|strik(?:e|es|ing)|missiles?|drones?|ceasefire|hurricanes?|earthquakes?|floods?|outbreaks?)\b/i
+const HIGH_RISK = /(?:\b(?:attack(?:s|ed|ing)?|kill(?:s|ed|ing)?|deaths?|died|casualt(?:y|ies)|war crimes?|corrupt(?:ion)?|fraud|alleg(?:es|ed|ing|ation|ations)?|accus(?:es|ed|ing|ation|ations)?|strik(?:e|es|ing)|missiles?|drones?|ceasefire|hurricanes?|cyclones?|earthquakes?|floods?|outbreaks?)\b|\b(?:voters?|names?)\b.{0,45}\b(?:removed|purged|disenfranchised)\b)/i
 const MONTHS = new Map('january february march april may june july august september october november december'.split(' ').map((month, index) => [month, index]))
 const REGISTERED_DOMAINS = new Set(SOURCES.map(source => {
   try { return new URL(source.sourceUrl).hostname.replace(/^www\./, '') } catch { return null }
@@ -186,9 +186,11 @@ export function readiness(selection, sources) {
   const trustedGroups = groups.filter(group => group.some(source => source.trusted))
   const imageSource = accepted.find(source => source.imageUrl)
   const discoveryLane = (selection.assignedLane || selection.lane) === 'discovery'
-  const riskText = discoveryLane
-    ? [selection.representative.title, ...accepted.map(source => source.title)].filter(Boolean).join('\n')
-    : [selection.representative.title, ...accepted.flatMap(source => [source.title, source.evidenceText?.slice(0, 1600)])].filter(Boolean).join('\n')
+  // Risk classification belongs to the event being selected. Incidental words in
+  // a long article body must not turn an otherwise ordinary local story into a
+  // two-publisher event; the representative and supporting headlines are the
+  // bounded, auditable statement of that event.
+  const riskText = [selection.representative.title, ...accepted.map(source => source.title)].filter(Boolean).join('\n')
   const highRisk = HIGH_RISK.test(riskText)
   const reasons = []
   if (!accepted.length) reasons.push('no accessible, relevant and fresh source evidence')

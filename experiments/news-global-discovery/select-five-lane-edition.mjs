@@ -187,7 +187,7 @@ const GENERIC_CLUSTER_TERMS = new Set([
   'report', 'state', 'supreme', 'world', 'year',
 ])
 const PLACE_ANCHORS = new Set(['saudiarabia', 'sudan', 'ukraine', 'india', 'bangladesh', 'ghana', 'syria', 'canada', 'nepal', 'gaza', 'lebanon', 'congo', 'israel', 'westbank'])
-const EVENT_ANCHORS = new Set(['airport', 'attack', 'ceasefire', 'election', 'flood', 'mine', 'protest', 'strike'])
+const EVENT_ANCHORS = new Set(['airport', 'attack', 'ceasefire', 'election', 'flood', 'mine', 'protest', 'sanction', 'strike'])
 const ENTITY_ANCHORS = new Set(['icc', 'iaea', 'imf', 'nato', 'who'])
 const DISEASE_ANCHORS = new Set(['measle', 'ebola', 'cholera', 'dengue', 'mpox', 'malaria', 'covid', 'influenza', 'polio'])
 
@@ -269,7 +269,7 @@ export function candidatesDescribeSameThread(left, right) {
     || (sharedTokens.length >= 3 && ratio >= 0.33 && distinctive)
     || (sharedPlace && sharedEventAnchors >= 1 && sharedTokens.length >= 3)
     || headlinesShareNamedLocationAndEvent(left, right)
-    || (sharedEntity && sharedTokens.length >= 2)
+    || (sharedEntity && sharedEventAnchors >= 1 && sharedTokens.length >= 2)
     || (sharedSpecificSubject && sharedNonYearNumber)
 }
 
