@@ -2,10 +2,10 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import { buildTavilyDiscoveryReport, candidateRejectionReason, TAVILY_COMPLEMENTARY_QUERIES } from './tavily-complementary-scout.mjs'
 
-test('complementary Tavily discovery is fixed at five distinct basic-credit roles', () => {
-  assert.equal(TAVILY_COMPLEMENTARY_QUERIES.length, 5)
-  assert.equal(new Set(TAVILY_COMPLEMENTARY_QUERIES.map(item => item.role)).size, 5)
-  assert.deepEqual(new Set(TAVILY_COMPLEMENTARY_QUERIES.map(item => item.lane)), new Set(['world-major', 'priority-interesting', 'world-interesting', 'discovery']))
+test('complementary Tavily discovery uses eight distinct basic-credit roles', () => {
+  assert.equal(TAVILY_COMPLEMENTARY_QUERIES.length, 8)
+  assert.equal(new Set(TAVILY_COMPLEMENTARY_QUERIES.map(item => item.role)).size, 8)
+  assert.deepEqual(new Set(TAVILY_COMPLEMENTARY_QUERIES.map(item => item.lane)), new Set(['world-major', 'priority-major', 'priority-interesting', 'world-interesting', 'discovery']))
   assert.ok(TAVILY_COMPLEMENTARY_QUERIES.every(item => /not |exclude|prefer /i.test(item.query)))
 })
 

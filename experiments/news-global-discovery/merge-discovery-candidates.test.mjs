@@ -18,6 +18,15 @@ test('publisher candidates retain priority geography and receive an editorial la
   assert.equal(candidate.image, 'https://example.com/image.jpg')
 })
 
+test('Egypt is classified as Middle East and consequential policy actions remain major-eligible', () => {
+  assert.equal(regionMatchesText('Middle East', 'Egypt shuts down independent news outlet Mada Masr'), true)
+  assert.equal(majorEligible('Egypt shuts down independent news outlet Mada Masr'), true)
+  assert.equal(majorEligible('Bank of Canada raises interest rate after central bank decision'), true)
+  assert.equal(majorEligible('Cyclone makes deadly landfall'), true)
+  assert.equal(majorEligible('Government rolls back methane regulations'), true)
+  assert.equal(majorEligible('Proposal to build a million-square-foot funeral complex raises concern'), false)
+})
+
 test('canonical URL overlap merges Exa and publisher-feed discovery before selection', () => {
   const exa = { candidates: [{ title: 'Ghana farmers restore a community wetland', url: 'https://www.example.com/story', lanes: ['world-interesting'], priorityRegions: [], queryIds: ['open'], bestPosition: 3 }], rawResultCount: 1 }
   const source = { candidates: [feedItem()], counts: { freshArticles: 1 } }

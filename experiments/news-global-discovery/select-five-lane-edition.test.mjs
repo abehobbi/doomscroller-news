@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { MAX_REVIEW_CANDIDATES, candidatesDescribeSameThread, clusterCandidates, domainDiversityPenalty, lowConsequenceEvent, parseArgs, scoreCandidate, selectEdition } from './select-five-lane-edition.mjs'
+import { MAX_REVIEW_CANDIDATES, candidatesDescribeSameThread, clusterCandidates, domainDiversityPenalty, lowConsequenceEvent, parseArgs, scoreCandidate, selectEdition, uncoveredThemeBonus } from './select-five-lane-edition.mjs'
 
 const candidate = (title, lanes, priorityRegions = []) => ({
   title, lanes, priorityRegions, url: 'https://bbc.com/story', publishedAt: '2026-10-13T08:00:00Z',
@@ -191,4 +191,29 @@ test('publisher diversity remains a preference rather than an exclusion wall', (
   assert.equal(domainDiversityPenalty(1), 0)
   assert.equal(domainDiversityPenalty(3), 28)
   assert.equal(domainDiversityPenalty(20), 28)
+})
+
+test('strong uncovered search themes receive a bounded review bonus without forcing weak material', () => {
+  const strong = { representative: { score: 62, laneScores: { 'world-interesting': 70 } }, members: [{ queryIds: ['undercovered-water'], lowConsequence: false }] }
+  const weak = { representative: { score: 35, laneScores: { 'world-interesting': 44 } }, members: [{ queryIds: ['publicity'], lowConsequence: false }] }
+  const ceremonial = { representative: { score: 80, laneScores: { 'priority-interesting': 85 } }, members: [{ queryIds: ['ceremony'], lowConsequence: true }] }
+  const editorial = { representative: { score: 62, laneScores: { 'world-interesting': 70 } }, members: [{ queryIds: ['world-public-services'], lowConsequence: false }] }
+  assert.equal(uncoveredThemeBonus(strong, new Set()), 0)
+  assert.equal(uncoveredThemeBonus(editorial, new Set()), 9)
+  assert.equal(uncoveredThemeBonus(editorial, new Set(['world-public-services'])), 0)
+  assert.equal(uncoveredThemeBonus(weak, new Set()), 0)
+  assert.equal(uncoveredThemeBonus(ceremonial, new Set()), 0)
+})
+
+test('publisher feeds can recover major and discovery lanes from the reported event itself', () => {
+  const createdAt = '2026-10-29T04:30:00Z'
+  const rate = scoreCandidate({ ...candidate('Bank of Canada raises key interest rate to 2.5 per cent', ['priority-interesting'], ['Canada']), queryIds: ['publisher-feed:citynews-toronto'] }, createdAt)
+  const pressFreedom = scoreCandidate({ ...candidate('Egypt shuts down independent news outlet Mada Masr', ['world-interesting']), queryIds: ['publisher-feed:guardian-world'] }, createdAt)
+  const archaeology = scoreCandidate({ ...candidate('Bronze Age sword discovered in an Italian lake after 3,300 years', ['world-interesting']), queryIds: ['publisher-feed:live-science'] }, createdAt)
+  assert.ok(rate.lanes.includes('priority-major'))
+  assert.ok(pressFreedom.lanes.includes('priority-major'))
+  assert.ok(pressFreedom.priorityRegions.includes('Middle East'))
+  assert.ok(archaeology.lanes.includes('discovery'))
+  const legalTrial = scoreCandidate({ ...candidate("'Crypto King' addresses jury at fraud trial", ['world-interesting']), queryIds: ['publisher-feed:cbc-toronto'] }, createdAt)
+  assert.equal(legalTrial.lanes.includes('discovery'), false)
 })

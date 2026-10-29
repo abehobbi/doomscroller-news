@@ -21,6 +21,7 @@ const LANE_LIMITS = {
   discovery: { minimum: 4, preferred: 6, maximum: 8 },
 }
 const QUERY_REGIONS = new Map(FIVE_LANE_QUERIES.map(query => [query.id, query.region]).filter(([, region]) => region))
+const EDITORIAL_THEME_IDS = new Set(FIVE_LANE_QUERIES.map(query => query.id))
 const PRIORITY_REGION_MINIMUMS = { Syria: 2, 'Middle East': 2, Bangladesh: 2, Ghana: 2, Canada: 2, GTA: 1 }
 const PRIORITY_REGIONS = Object.keys(PRIORITY_REGION_MINIMUMS)
 
@@ -34,14 +35,15 @@ const PUBLICITY_AGREEMENT = /\b(?:signs?|inks?|announces?|forms?|enters?)\b.{0,5
 const PROSPECTIVE_FACILITY = /\b(?:to|will|expected to)\s+open\b.{0,80}\b(?:centre|center|facility|office|campus|hub)\b/i
 const STATEMENT_ONLY = /\b(?:calls? for|urges?|reaffirms?|outlines?)\b.{0,100}\b(?:implementation|investment|initiative|plan|policy|support|cooperation|ceasefire|peace|navigation)\b/i
 const DELIVERED_CONSEQUENCE = /\b(?:funding (?:approved|released)|loan (?:approved|disbursed)|construction (?:begins|started)|opens? to (?:the )?public|starts? operations?|service begins|acquisition completed|workers? hired|homes? completed)\b/i
-const CONCRETE = /\b(?:kills?|dies?|dead|injur(?:y|ed|ies)|arrests?|convicts?|acquits?|bans?|blocks?|halts?|suspends?|overturns?|approves?|rejects?|signs?|strikes?|attacks?|evacuates?|sinks?|sank|sunk|traffick(?:ed|ing)?|layoffs?|displaced|floods?|earthquake|hurricane|outbreaks?|shortage|collapse|closes?|opens?|restores?|discovers?|found|reveals?|reports?|reaches? agreement|cuts?|rises?|falls?|first|record|investigat(?:es?|ion)|lawsuit|protest|sanctions?|election|ceasefire|troops?|war|famine|hunger|food insecurity|malnutrition)\b/i
+const CONCRETE = /\b(?:kills?|dies?|dead|deadly|injur(?:y|ed|ies)|arrests?|convicts?|acquits?|bans?|blocks?|halts?|suspends?|overturns?|approves?|rejects?|signs?|strikes?|attacks?|evacuates?|sinks?|sank|sunk|traffick(?:ed|ing)?|layoffs?|displaced|floods?|earthquake|hurricane|cyclone|landfall|outbreaks?|shortage|collapse|closes?|opens?|shuts?|restores?|discovers?|found|reveals?|reports?|reaches? agreement|cuts?|raises?|rises?|falls?|rolls? back|terminates?|repeals?|first|record|investigat(?:es?|ion)|lawsuit|protest|sanctions?|election|ceasefire|troops?|war|famine|hunger|food insecurity|malnutrition)\b/i
 const GTA_CITY = /\b(?:toronto|mississauga|brampton|markham|vaughan)\b/i
 const MAYORAL_OFFICE = /\b(?:mayor|mayors|mayoral)\b/i
 const ELECTION_OUTCOME = /\b(?:wins?|won|re-?elects?|elected|topples?|defeats?)\b/i
 const gtaMajorElectionResult = title => GTA_CITY.test(title) && MAYORAL_OFFICE.test(title) && ELECTION_OUTCOME.test(title)
 const HUMAN_TEXTURE = /\b(?:village|community|famil(?:y|ies)|residents?|women|children|youths?|artisans?|farmers?|fishers?|workers?|craft|tradition|harvest|livelihood|neighbou?rhood|small town|Indigenous|tribal|refugee|market|water|wildlife|chimpanzees?|mosquitoes?|mangrove|forest|river|wetland|school|education|housing|tenant|hospital|theatre|portrait|literature|clothing|class|debt|sanitation|poultry|rescue|sailors?|mining|extraction)\b/i
-const DISCOVERY_SIGNAL = /\b(?:study|researchers?|scientists?|fossil|archaeolog|paleontolog|species|planet|space|Webb|brain|genome|microbes?|quantum|clock|ancient|excavat|Nature|journal|trial|mice|stars?|galaxy|evolution)\b/i
-const RESEARCH_RESULT = /\b(?:study|research(?:ers?)?|scientists?|analysis|samples?|evidence|findings?|fossil|archaeolog|paleontolog|genome|quantum|ancient|stars?|galaxy|evolution)\b/i
+const DISCOVERY_SIGNAL = /\b(?:study|researchers?|scientists?|fossil|archaeolog|paleontolog|species|planet|space|Webb|brain|genome|microbes?|quantum|clock|ancient|bronze age|iron age|stone age|excavat|Nature|journal|clinical trial|mice|stars?|galaxy|evolution)\b/i
+const RESEARCH_RESULT = /\b(?:study|research(?:ers?)?|scientists?|analysis|samples?|evidence|findings?|fossil|archaeolog|paleontolog|species|genome|quantum|ancient|bronze age|iron age|stone age|stars?|galaxy|evolution)\b/i
+const DISCOVERY_SOURCE_QUERY = /(?:science|archaeolog|nature|research|paleontolog)/i
 const COPY_MARKERS = /(?:\|\s*(?:AP News|Reuters|BBC News|CBC News|Al Jazeera)|-Xinhua|Africa Newsroom\s*\/\s*Press release)/i
 const WEAK_DOMAINS = [
   'dailymail.com', 'economictimes.indiatimes.com', 'timesofindia.indiatimes.com',
@@ -171,7 +173,10 @@ export function scoreCandidate(candidate, reportCreatedAt) {
   const inferredMajorLane = ((majorEligible(title) && CONCRETE.test(title)) || gtaMajorElectionResult(title)) && !lowConsequence
     ? (priorityRegions.length ? 'priority-major' : 'world-major')
     : null
-  const normalizedLanes = [...candidate.lanes, inferredMajorLane].filter(Boolean)
+  const inferredDiscoveryLane = RESEARCH_RESULT.test(title)
+    && (DISCOVERY_SIGNAL.test(title) || candidate.queryIds.some(queryId => DISCOVERY_SOURCE_QUERY.test(queryId)))
+    && !inferredMajorLane ? 'discovery' : null
+  const normalizedLanes = [...candidate.lanes, inferredMajorLane, inferredDiscoveryLane].filter(Boolean)
     .filter(lane => !lane.includes('major') || majorEligible(title) || gtaMajorElectionResult(title))
     .map(lane => !priorityRegions.length && lane.startsWith('priority-') ? lane.replace('priority-', 'world-')
       : priorityRegions.length && lane === 'world-major' ? 'priority-major' : lane)
@@ -309,10 +314,20 @@ export function domainDiversityPenalty(existingCount) {
   return Math.min(28, Math.max(0, Number(existingCount || 0) - 1) * 14)
 }
 
+export function uncoveredThemeBonus(cluster, coveredQueryIds) {
+  const queryIds = [...new Set(cluster.members.flatMap(member => member.queryIds || []))]
+    .filter(queryId => EDITORIAL_THEME_IDS.has(queryId) || String(queryId).startsWith('tavily-'))
+  const uncovered = queryIds.filter(queryId => !coveredQueryIds.has(queryId)).length
+  if (!uncovered) return 0
+  const baseScore = Math.max(...Object.values(cluster.representative.laneScores || {}), Number(cluster.representative.score || 0))
+  if (baseScore < 48 || cluster.members.every(member => member.lowConsequence)) return 0
+  return Math.min(18, 9 + Math.max(0, uncovered - 1) * 3)
+}
+
 export function selectEdition(clusters, count) {
   const selected = []
   const counts = Object.fromEntries(LANE_ORDER.map(lane => [lane, 0]))
-  const domainCounts = new Map(), regionCounts = new Map()
+  const domainCounts = new Map(), regionCounts = new Map(), coveredQueryIds = new Set()
   const remaining = clusters.filter(cluster => !cluster.members.every(member => member.lowConsequence) && Math.max(...Object.values(cluster.representative.laneScores)) >= 32)
   const choose = phase => {
     const choices = remaining.flatMap(cluster => {
@@ -323,8 +338,9 @@ export function selectEdition(clusters, count) {
       const regions = cluster.members.flatMap(member => member.priorityRegions || [])
       const largestRegionGap = Math.max(0, ...regions.map(region => Math.max(0, (PRIORITY_REGION_MINIMUMS[region] || 0) - (regionCounts.get(region) || 0))))
       const regionBonus = assignment.lane.startsWith('priority-') ? largestRegionGap * 14 : 0
+      const themeBonus = uncoveredThemeBonus(cluster, coveredQueryIds)
       const agePenalty = cluster.representative.ageHours !== null && cluster.representative.ageHours > 72 ? 30 : 0
-      return [{ cluster, lane: assignment.lane, adjusted: assignment.adjusted + regionBonus - domainPenalty - agePenalty }]
+      return [{ cluster, lane: assignment.lane, adjusted: assignment.adjusted + regionBonus + themeBonus - domainPenalty - agePenalty }]
     }).sort((a, b) => b.adjusted - a.adjusted)
     const choice = choices[0]
     if (!choice) return false
@@ -332,6 +348,7 @@ export function selectEdition(clusters, count) {
     counts[choice.lane] += 1
     domainCounts.set(choice.cluster.representative.domain, (domainCounts.get(choice.cluster.representative.domain) || 0) + 1)
     for (const region of choice.cluster.members.flatMap(member => member.priorityRegions || [])) regionCounts.set(region, (regionCounts.get(region) || 0) + 1)
+    for (const queryId of choice.cluster.members.flatMap(member => member.queryIds || [])) coveredQueryIds.add(queryId)
     remaining.splice(remaining.indexOf(choice.cluster), 1)
     return true
   }
