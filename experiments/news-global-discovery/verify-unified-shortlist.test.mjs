@@ -1,11 +1,17 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { evidenceMatchesTitle, explicitReportingPeriodEnd, independentSourceGroups, isTrustedDomain, readiness, sourceFreshness } from './verify-unified-shortlist.mjs'
+import { evidenceMatchesTitle, explicitReportingPeriodEnd, independentSourceGroups, isTrustedDomain, readiness, sourceFreshness, usablePublisherImageUrl } from './verify-unified-shortlist.mjs'
 
 test('vetted specialist science publishers satisfy the trusted-source gate', () => {
   assert.equal(isTrustedDomain('skyatnightmagazine.com'), true)
   assert.equal(isTrustedDomain('psypost.org'), true)
   assert.equal(isTrustedDomain('scitechupdates.com'), false)
+})
+
+test('author avatars cannot satisfy the publisher-image requirement', () => {
+  assert.equal(usablePublisherImageUrl('https://secure.gravatar.com/avatar/abc?s=96'), false)
+  assert.equal(usablePublisherImageUrl('https://publisher.example/avatar/reporter.jpg'), false)
+  assert.equal(usablePublisherImageUrl('https://publisher.example/news/train-crash.jpg'), true)
 })
 
 test('vetted regional and public-interest publishers satisfy the trusted-source gate', () => {

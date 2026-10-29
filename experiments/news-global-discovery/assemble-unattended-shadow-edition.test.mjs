@@ -139,6 +139,15 @@ test('foreign event geography defeats incidental priority-region background', ()
     normalizeGeneratedRouting('priority-major', ['Middle East'], 'UK sanctions 15 Sudanese commanders over attacks on civilians'),
     { lane: 'world-major', priorityRegions: [] },
   )
+  assert.deepEqual(
+    normalizeGeneratedRouting('priority-major', ['Middle East'], 'Serbian police shoot attacker outside Israeli embassy in Belgrade'),
+    { lane: 'world-major', priorityRegions: [] },
+  )
+})
+
+test('routine by-election process and retrospective election analysis do not occupy major lanes', () => {
+  assert.deepEqual(normalizeGeneratedRouting('priority-major', ['Bangladesh'], 'Voting underway in Thakurgaon-1 by-election in Bangladesh'), { lane: 'priority-interesting', priorityRegions: ['Bangladesh'] })
+  assert.deepEqual(normalizeGeneratedRouting('world-major', [], "Resentment and fear drove voting shifts in Brazil's presidential election"), { lane: 'world-interesting', priorityRegions: [] })
 })
 
 test('foreign event location in central evidence defeats publisher-location inference', () => {

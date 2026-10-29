@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { auditWriterTemporalExposure, buildWriterSafeTemporalPacket, normalizeTemporalFact } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
-import { auditCard, bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, geographyAudit, isProviderQuotaDeferral, LANES, normalizeExplicitToday, numericAudit, partitionWriterExposure, providerDeferredResult, relativeTimeAudit, uncertaintyAudit, writerEvidencePreflight, writerMetadataAudit } from './writer-shortlist-trial.mjs'
+import { auditCard, bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, futureCompletedEventAudit, geographyAudit, isProviderQuotaDeferral, LANES, normalizeExplicitToday, numericAudit, partitionWriterExposure, providerDeferredResult, relativeTimeAudit, uncertaintyAudit, writerEvidencePreflight, writerMetadataAudit } from './writer-shortlist-trial.mjs'
 
 test('quota circuit breaker recognizes provider signals and preserves untouched finalists', () => {
   assert.equal(isProviderQuotaDeferral({ httpStatus: 429 }), true)
@@ -19,6 +19,13 @@ test('contested central claims require an explicit uncertainty note', () => {
   assert.equal(uncertaintyAudit(card, item).valid, false)
   assert.equal(uncertaintyAudit({ ...card, uncertainties: ['Saudi authorities had not independently confirmed the claimed strike.'] }, item).valid, true)
   assert.equal(uncertaintyAudit({ headline: 'City council approves new transit route', uncertainties: [] }, {}).valid, true)
+})
+
+test('completed events cannot be assigned dates after their source was published', () => {
+  const item = { temporalPacket: { internal_audit: { publication_timestamp: '2026-10-28T12:00:00Z' } } }
+  assert.equal(futureCompletedEventAudit({ headline: 'Candidate lost election on November 1, 2026', pages: [] }, item).valid, false)
+  assert.equal(futureCompletedEventAudit({ headline: 'Voting will begin on November 1, 2026', pages: [] }, item).valid, true)
+  assert.equal(futureCompletedEventAudit({ headline: 'Candidate lost election on October 25, 2026', pages: [] }, item).valid, true)
 })
 
 test('trial chooses one multi-source candidate from every lane and prefers Syria in a priority tie', () => {

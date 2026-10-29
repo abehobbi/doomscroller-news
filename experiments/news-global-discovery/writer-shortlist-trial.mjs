@@ -383,6 +383,26 @@ export function uncertaintyAudit(card, item) {
   }
 }
 
+export function futureCompletedEventAudit(card, item) {
+  const publication = Date.parse(item?.temporalPacket?.internal_audit?.publication_timestamp || '')
+  if (!Number.isFinite(publication)) return { valid: true, violations: [] }
+  const publicationDay = new Date(publication).toISOString().slice(0, 10)
+  const text = [card?.headline, ...(card?.pages || []).map(page => page.text)].filter(Boolean).join(' ')
+  const monthNames = 'January|February|March|April|May|June|July|August|September|October|November|December'
+  const matches = [...text.matchAll(new RegExp(`\\b(${monthNames})\\s+(\\d{1,2}),\\s+(\\d{4})\\b`, 'gi'))]
+  const completed = /\b(?:arrived|began|cancelled|canceled|closed|defeated|died|ended|fled|happened|injured|killed|landed|left|lost|occurred|opened|resigned|returned|shot|signed|struck|won)\b/i
+  const violations = matches.flatMap(match => {
+    const parsed = new Date(`${match[1]} ${match[2]}, ${match[3]} UTC`)
+    if (!Number.isFinite(parsed.getTime()) || parsed.toISOString().slice(0, 10) <= publicationDay) return []
+    const sentenceStart = Math.max(text.lastIndexOf('.', match.index) + 1, 0)
+    const nextPeriod = text.indexOf('.', match.index + match[0].length)
+    const sentenceEnd = nextPeriod < 0 ? text.length : nextPeriod + 1
+    const sentence = text.slice(sentenceStart, sentenceEnd).trim()
+    return completed.test(sentence) ? [{ date: parsed.toISOString().slice(0, 10), publicationDay, sentence }] : []
+  })
+  return { valid: violations.length === 0, violations }
+}
+
 export function auditCard(item, card) {
   const content = validateCardContent(card)
   const allowedDates = new Set([
@@ -396,8 +416,9 @@ export function auditCard(item, card) {
   const geography = geographyAudit(card, item)
   const metadata = writerMetadataAudit(card)
   const uncertainty = uncertaintyAudit(card, item)
-  const audits = { content, dates, numbers, relativeTime, headline, geography, metadata, uncertainty, writerExposure: auditWriterTemporalExposure(item.temporalPacket) }
-  return { audits, valid: content.valid && dates.valid && numbers.valid && relativeTime.valid && headline.valid && geography.valid && metadata.valid && uncertainty.valid && audits.writerExposure.passes }
+  const futureCompletedEvent = futureCompletedEventAudit(card, item)
+  const audits = { content, dates, numbers, relativeTime, headline, geography, metadata, uncertainty, futureCompletedEvent, writerExposure: auditWriterTemporalExposure(item.temporalPacket) }
+  return { audits, valid: content.valid && dates.valid && numbers.valid && relativeTime.valid && headline.valid && geography.valid && metadata.valid && uncertainty.valid && futureCompletedEvent.valid && audits.writerExposure.passes }
 }
 
 function reportFor(items, results, options, complete) {

@@ -22,6 +22,17 @@ function domainOf(value) {
   try { return new URL(value).hostname.replace(/^www\./, '') } catch { return '' }
 }
 
+export function usablePublisherImageUrl(value) {
+  try {
+    const url = new URL(value)
+    const host = url.hostname.replace(/^www\./, '').toLowerCase()
+    if (host === 'gravatar.com' || host.endsWith('.gravatar.com')) return false
+    return !/(?:^|\/)(?:avatars?|profile-pictures?|author-images?)(?:\/|$)/i.test(url.pathname)
+  } catch {
+    return false
+  }
+}
+
 export function isTrustedDomain(domain) {
   if (domain === 'aljazeera.net' || domain.endsWith('.aljazeera.net')) return true
   return trustedContextDomain(domain) || establishedPublisherDomain(domain)
@@ -184,7 +195,7 @@ export function readiness(selection, sources) {
   const accepted = sources.filter(source => source.accepted)
   const groups = independentSourceGroups(sources)
   const trustedGroups = groups.filter(group => group.some(source => source.trusted))
-  const imageSource = accepted.find(source => source.imageUrl)
+  const imageSource = accepted.find(source => usablePublisherImageUrl(source.imageUrl))
   const discoveryLane = (selection.assignedLane || selection.lane) === 'discovery'
   // Risk classification belongs to the event being selected. Incidental words in
   // a long article body must not turn an otherwise ordinary local story into a

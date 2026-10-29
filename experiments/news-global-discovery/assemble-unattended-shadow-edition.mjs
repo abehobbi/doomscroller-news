@@ -17,7 +17,7 @@ const UNAMBIGUOUS_EVIDENCE_REGION = {
   Canada: /(?:\b(?:canada|canadian|ontario|quebec|alberta|manitoba|saskatchewan|nova scotia|new brunswick|newfoundland|british columbia|yukon|nunavut|toronto|montreal|vancouver|ottawa|calgary|edmonton)\b|\bb\.c\.(?=\s|$|[,;:]))/i,
   GTA: /\b(?:greater toronto|gta|toronto|mississauga|brampton|markham|vaughan|scarborough|etobicoke|pickering|ajax|oshawa|oakville|burlington|durham region|durham,? ontario)\b/i,
 }
-const EXPLICIT_NON_PRIORITY_GEOGRAPHY = /(?:\b(?:afghanistan|albania|algeria|argentina|australia|austria|belarus|belgium|bolivia|bosnia|botswana|brazil|bulgaria|cambodia|cameroon|chile|china|colombia|croatia|cuba|czechia|denmark|ecuador|eritrea|ethiopia|ethiopian|fiji|finland|france|gambia|georgia|germany|greece|guatemala|guinea|haiti|hungary|iceland|india|indonesia|ireland|italy|japan|kenya|liberia|libya|malawi|malaysia|mali|mexico|morocco|mozambique|myanmar|nepal|netherlands|new zealand|nigeria|norway|pakistan|panama|peru|philippines|poland|portugal|romania|russia|senegal|serbia|singapore|somalia|south africa|south korea|spain|sri lanka|sudan|sudanese|sweden|switzerland|taiwan|tanzania|thailand|tunisia|uganda|ukraine|united kingdom|united states|venezuela|vietnam|zambia|zimbabwe)\b|\bU\.S\.(?=\s|$|[,;:]))/i
+const EXPLICIT_NON_PRIORITY_GEOGRAPHY = /(?:\b(?:afghanistan|albania|algeria|argentina|australia|austria|belarus|belgium|bolivia|bosnia|botswana|brazil|bulgaria|cambodia|cameroon|chile|china|colombia|croatia|cuba|czechia|denmark|ecuador|eritrea|ethiopia|ethiopian|fiji|finland|france|gambia|georgia|germany|greece|guatemala|guinea|haiti|hungary|iceland|india|indonesia|ireland|italy|japan|kenya|liberia|libya|malawi|malaysia|mali|mexico|morocco|mozambique|myanmar|nepal|netherlands|new zealand|nigeria|norway|pakistan|panama|peru|philippines|poland|portugal|romania|russia|senegal|serbia|serbian|singapore|somalia|south africa|south korea|spain|sri lanka|sudan|sudanese|sweden|switzerland|taiwan|tanzania|thailand|tunisia|uganda|ukraine|united kingdom|united states|venezuela|vietnam|zambia|zimbabwe)\b|\bU\.S\.(?=\s|$|[,;:]))/i
 const EXTERNAL_BACKING_ONLY = /\b(?:canadian|syrian|bangladeshi|ghanaian|israeli|iranian|saudi|qatari|emirati|turkish)[ -](?:backed|owned|funded|financed|based)\b/i
 
 function regionMatchesGeneratedContext(region, headlineContext, evidence) {
@@ -31,9 +31,11 @@ function regionMatchesGeneratedContext(region, headlineContext, evidence) {
 export function normalizeGeneratedRouting(lane, priorityRegions, headline, sourceHeadline = '', sourceEvidence = '') {
   const headlineContext = `${sourceHeadline} ${headline}`
   const centralEvidence = String(sourceEvidence || '').slice(0, 1600).replace(/\bKunming-Montreal\b/gi, '')
-  const headlineRegions = EXTERNAL_BACKING_ONLY.test(headlineContext) ? [] : PRIORITY_REGIONS.filter(region => regionMatchesText(region, headlineContext))
-  const explicitForeignLocation = headlineRegions.length === 0 && EXPLICIT_NON_PRIORITY_GEOGRAPHY.test(`${headlineContext} ${centralEvidence.slice(0, 600)}`)
-  const confirmed = (priorityRegions || []).filter(region => !EXTERNAL_BACKING_ONLY.test(headlineContext) && (region === 'GTA'
+  const detectedHeadlineRegions = EXTERNAL_BACKING_ONLY.test(headlineContext) ? [] : PRIORITY_REGIONS.filter(region => regionMatchesText(region, headlineContext))
+  const foreignDiplomaticSite = /\b(?:embassy|consulate)\b/i.test(headlineContext) && EXPLICIT_NON_PRIORITY_GEOGRAPHY.test(headlineContext)
+  const headlineRegions = foreignDiplomaticSite ? [] : detectedHeadlineRegions
+  const explicitForeignLocation = (headlineRegions.length === 0 || foreignDiplomaticSite) && EXPLICIT_NON_PRIORITY_GEOGRAPHY.test(`${headlineContext} ${centralEvidence.slice(0, 600)}`)
+  const confirmed = (priorityRegions || []).filter(region => !foreignDiplomaticSite && !EXTERNAL_BACKING_ONLY.test(headlineContext) && (region === 'GTA'
     ? regionMatchesText(region, headlineContext)
     : regionMatchesText(region, headlineContext) || (!explicitForeignLocation && UNAMBIGUOUS_EVIDENCE_REGION[region]?.test(String(sourceEvidence || '').replace(/\bKunming-Montreal\b/gi, '')))))
   // Once a headline clearly identifies the event's priority geography, do not
@@ -49,6 +51,10 @@ export function normalizeGeneratedRouting(lane, priorityRegions, headline, sourc
   if (regions.length && lane === 'world-interesting') normalizedLane = 'priority-interesting'
   if (!regions.length && lane === 'priority-major') normalizedLane = 'world-major'
   if (!regions.length && lane === 'priority-interesting') normalizedLane = 'world-interesting'
+  const routineByElection = /(?:\b(?:voting (?:is )?underway|polls? (?:open|opens)|voters? head to polls?)\b[^.]{0,100}\bby-election\b|\bby-election\b[^.]{0,100}\b(?:voting (?:is )?underway|polls? (?:open|opens)|voters? head to polls?)\b)/i.test(headlineContext)
+  const retrospectiveElectionAnalysis = /\b(?:drove|shaped|explains?|why|how)\b[^.]{0,100}\b(?:election|voting|vote)\b/i.test(headlineContext)
+  if ((routineByElection || retrospectiveElectionAnalysis) && normalizedLane === 'world-major') normalizedLane = 'world-interesting'
+  if ((routineByElection || retrospectiveElectionAnalysis) && normalizedLane === 'priority-major') normalizedLane = 'priority-interesting'
   if (BREAKING_MAJOR_HEADLINE.test(headline) && normalizedLane === 'world-interesting') normalizedLane = 'world-major'
   if (BREAKING_MAJOR_HEADLINE.test(headline) && normalizedLane === 'priority-interesting') normalizedLane = 'priority-major'
   return { lane: normalizedLane, priorityRegions: regions }
