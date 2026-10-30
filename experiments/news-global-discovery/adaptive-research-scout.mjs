@@ -7,7 +7,30 @@ import { buildTavilyDiscoveryReport } from './tavily-complementary-scout.mjs'
 export const MODEL = '@cf/google/gemma-4-26b-a4b-it'
 export const ROUND_SIZES = Object.freeze([3, 3, 2])
 export const TAVILY_CREDITS_PER_SEARCH = 2
-export const MAX_TAVILY_CREDITS = 16
+export const FIXED_RECALL_QUERIES = Object.freeze([
+  {
+    id: 'fixed-wire-accountability', lane: 'world-major', region: null,
+    blind_spot: 'original wire investigations and consequential public-interest reporting',
+    query: 'consequential investigation court ruling outbreak central bank labour public impact',
+    rationale: 'Recover high-value Reuters and AP reporting when publisher feeds are unavailable',
+    includeDomains: ['reuters.com', 'apnews.com'],
+  },
+  {
+    id: 'fixed-bangladesh-ghana-local', lane: 'priority-interesting', region: null,
+    blind_spot: 'Bangladesh and Ghana local accountability labour and public services',
+    query: 'Bangladesh Ghana accountability labour public services livelihoods environment local consequences',
+    rationale: 'Guarantee a sweep of strong priority-region publishers for concrete local reporting',
+    includeDomains: ['thedailystar.net', 'en.prothomalo.com', 'tbsnews.net', 'bdnews24.com', 'citinewsroom.com', 'graphic.com.gh', 'myjoyonline.com'],
+  },
+  {
+    id: 'fixed-syria-middle-east-canada-local', lane: 'priority-interesting', region: null,
+    blind_spot: 'Syria Middle East and Canada local accountability and human consequences',
+    query: 'Syria Middle East Canada accountability public services livelihoods local consequences',
+    rationale: 'Guarantee a second priority-region sweep beyond dominant conflict and national headlines',
+    includeDomains: ['sana.sy', 'english.enabbaladi.net', 'syriadirect.org', 'aljazeera.com', 'cbc.ca', 'globalnews.ca', 'toronto.citynews.ca'],
+  },
+])
+export const MAX_TAVILY_CREDITS = (ROUND_SIZES.reduce((sum, count) => sum + count, 0) + FIXED_RECALL_QUERIES.length) * TAVILY_CREDITS_PER_SEARCH
 export const ALLOWED_LANES = new Set(['world-major', 'priority-major', 'world-interesting', 'priority-interesting', 'discovery'])
 export const ROUND_LANE_SHAPES = Object.freeze([
   ['priority-interesting', 'priority-major', 'world-major'],
@@ -49,19 +72,32 @@ function schema(count) {
 }
 
 export function compactDiscoveryContext(reports, { maximumHeadlines = 80 } = {}) {
-  const candidates = reports.flatMap(report => report?.candidates || []), laneCounts = {}, regionCounts = {}
+  const candidates = reports.flatMap(report => report?.candidates || []), laneCounts = {}, regionCounts = {}, publisherCounts = {}
+  const publisher = candidate => {
+    try { return new URL(candidate?.url).hostname.replace(/^www\./, '') } catch { return 'unknown' }
+  }
   for (const candidate of candidates) {
     for (const lane of candidate.lanes || []) laneCounts[lane] = (laneCounts[lane] || 0) + 1
     for (const region of candidate.priorityRegions || []) regionCounts[region] = (regionCounts[region] || 0) + 1
+    const domain = publisher(candidate); publisherCounts[domain] = (publisherCounts[domain] || 0) + 1
   }
   const seen = new Set(), headlines = []
-  for (const candidate of candidates) {
+  const add = candidate => {
     const title = String(candidate.title || '').replace(/\s+/g, ' ').trim(), key = title.toLowerCase()
-    if (!title || seen.has(key)) continue
-    seen.add(key); headlines.push({ title, lanes: candidate.lanes || [], regions: candidate.priorityRegions || [] })
-    if (headlines.length >= maximumHeadlines) break
+    if (!title || seen.has(key) || headlines.length >= maximumHeadlines) return
+    seen.add(key); headlines.push({ title, lanes: candidate.lanes || [], regions: candidate.priorityRegions || [], publisher: publisher(candidate) })
   }
-  return { candidateCount: candidates.length, laneCounts, regionCounts, headlines }
+  candidates.slice(0, Math.min(30, maximumHeadlines)).forEach(add)
+  const diversityRanked = [...candidates].sort((left, right) => {
+    const rarity = candidate => {
+      const laneRarity = Math.min(...(candidate.lanes || ['unknown']).map(lane => laneCounts[lane] || candidates.length))
+      const regionRarity = (candidate.priorityRegions || []).length ? Math.min(...candidate.priorityRegions.map(region => regionCounts[region] || candidates.length)) : candidates.length
+      return laneRarity + regionRarity + (publisherCounts[publisher(candidate)] || candidates.length)
+    }
+    return rarity(left) - rarity(right) || String(left.title || '').localeCompare(String(right.title || ''))
+  })
+  diversityRanked.forEach(add)
+  return { candidateCount: candidates.length, laneCounts, regionCounts, publisherCounts, headlines }
 }
 
 export function auditPlannedQueries(queries, expectedCount, priorQueries = [], round = expectedCount === 2 ? 3 : 1) {
@@ -209,8 +245,10 @@ export async function planQueries({ context, priorSearches = [], count, round, f
   throw new Error(`adaptive planner round ${round}: ${priorFailure}`)
 }
 
-async function searchTavily(definition, window, apiKey, fetchImpl = fetch) {
-  const response = await fetchImpl('https://api.tavily.com/search', { method: 'POST', headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ query: definition.query, search_depth: 'advanced', max_results: 20, topic: 'news', start_date: window.start.slice(0, 10), end_date: window.end.slice(0, 10), include_published_date: true, filter_by_published_date: true, include_answer: false, include_raw_content: false, include_images: false, include_usage: true, safe_search: true }) })
+export async function searchTavily(definition, window, apiKey, fetchImpl = fetch) {
+  const request = { query: definition.query, search_depth: 'advanced', max_results: 20, topic: 'news', start_date: window.start.slice(0, 10), end_date: window.end.slice(0, 10), include_published_date: true, filter_by_published_date: true, include_answer: false, include_raw_content: false, include_images: false, include_usage: true, safe_search: true }
+  if (definition.includeDomains?.length) request.include_domains = definition.includeDomains
+  const response = await fetchImpl('https://api.tavily.com/search', { method: 'POST', headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' }, body: JSON.stringify(request) })
   const raw = await response.text(), payload = parseStrict(raw)
   if (!response.ok) throw new Error(`${definition.id}: HTTP ${response.status}`)
   const rawResults = payload?.results || [], results = rawResults.filter(result => resultMatchesRegion(result, definition.region))
@@ -246,6 +284,10 @@ async function main() {
       if (searches.reduce((sum, value) => sum + value.creditsUsed, 0) + TAVILY_CREDITS_PER_SEARCH > MAX_TAVILY_CREDITS) throw new Error('Adaptive discovery stopped before exceeding its Tavily credit ceiling')
       searches.push(await searchTavily({ ...item, id: `adaptive-r${index + 1}-${item.id}` }, window, tavilyKey))
     }
+  }
+  for (const item of FIXED_RECALL_QUERIES) {
+    if (searches.reduce((sum, value) => sum + value.creditsUsed, 0) + TAVILY_CREDITS_PER_SEARCH > MAX_TAVILY_CREDITS) throw new Error('Adaptive discovery stopped before exceeding its Tavily credit ceiling')
+    searches.push(await searchTavily(item, window, tavilyKey))
   }
   const report = buildTavilyDiscoveryReport(searches, window)
   report.mode = 'adaptive-research'; report.planner = { model: MODEL, calls: plannerCalls, totalNeurons: plannerCalls.reduce((sum, call) => sum + Number(call.usage?.neurons || 0), 0) }

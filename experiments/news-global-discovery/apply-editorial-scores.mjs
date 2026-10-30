@@ -15,7 +15,11 @@ const LANE_MAXIMUMS = Object.freeze({
 })
 
 function destinationLane(card, evaluation) {
-  if (!evaluation || evaluation.lane_fit > 2 || !card.lane.endsWith('major')) return card.lane
+  const recommended = evaluation?.recommended_lane
+  if (recommended === 'discovery') return 'discovery'
+  const priority = (card.priorityRegions || []).length > 0
+  if (recommended) return `${priority ? 'priority' : 'world'}-${recommended.endsWith('major') && evaluation.major_qualification === true ? 'major' : 'interesting'}`
+  if (!evaluation || (evaluation.lane_fit > 2 && evaluation.major_qualification !== false) || !card.lane.endsWith('major')) return card.lane
   return card.lane === 'priority-major' ? 'priority-interesting' : 'world-interesting'
 }
 
@@ -23,6 +27,7 @@ const STATEMENT_ONLY_CUE = /\b(?:says?|said|states?|stated|declares?|declared|ca
 const CONCRETE_DEVELOPMENT_CUE = /\b(?:signed|enacted|approved|adopted|passed|launched|opened|began|started|deployed|allocated|released|awarded|funded|filed|ordered|arrested|charged|resigned|appointed|elected|won|killed|injured|displaced|discovered|identified|published|recorded|confirmed|cancelled|canceled|closed|reopened|delivered|arrived|completed|broke\s+ground)\b/i
 const DETERMINISTIC_LOW_VALUE = /\b(?:innovation fair|trade fair|study delegation|delegation (?:studies|visits|tours)|seeks? (?:cooperation|collaboration|partnership|support) to (?:establish|build|develop|launch)|agree(?:s|d)? to (?:(?:continue|hold|resume) (?:talks|dialogue|discussions)|more talks)|ballon d['’]or|wins? (?:the )?(?:men['’]s|women['’]s)? award|friendly match|league table)\b/i
 const EXPLICIT_STALE_FINDING = /\b(?:study|research|paper|findings?|discovery|report)\b[^\n.]{0,140}\b(?:published|released|announced|unveiled|reported)\b[^\n.]{0,140}\b(?:in|on)\s+(?:january|february|march|april|may|june|july|august|september|october|november|december)\s+20(?:0\d|1\d|2[0-5])\b/i
+const DISCOVERY_HEADLINE = /\b(?:archaeolog|fossil|scientists? (?:find|found|discover|map|develop|document)|researchers? (?:find|found|discover|document)|study finds?|new (?:x-ray|telescope|genetic|neuroscience) method|terra-?cotta|exoplanet|asteroids?|ancient (?:human|animal|site|settlement))\b/i
 
 function isStatementOnlyPossible(score) {
   const evaluation = score?.evaluation
@@ -40,11 +45,12 @@ function editorialRejectionReason(score, card) {
   if (evaluation.underlying_event_fresh === false) return 'the underlying event or finding predates the edition window without a material new development'
   if (evaluation.single_coherent_event === false) return 'candidate combines unrelated developments that must not become one card'
   if (evaluation.publicity_or_commentary === true) return 'routine publicity, commentary or ceremonial material should not consume edition space'
+  if (evaluation.future_or_conditional_only === true) return 'proposal, preparedness assurance, planned action or conditional future event has no separate material development yet'
   if (evaluation.concrete_new_development === false) return 'no concrete new action, consequence, finding or documented change is supported'
   if (evaluation.recommendation === 'reject' || score.editorialScore < 45) return evaluation.reason
   if (isStatementOnlyPossible(score)) return 'the strongest fact is political or institutional messaging without a concrete new development'
   if (evaluation.recommendation === 'possible' && (
-    score.editorialScore < 60
+    score.editorialScore < 70
     || evaluation.substantive_value < 3
     || evaluation.distinctiveness < 3
   )) return 'replaceable finalist did not meet the minimum substance and distinctiveness floor'
@@ -63,7 +69,8 @@ export function applyEditorialScores(edition, scoreReport) {
       continue
     }
     const evidence = (card.pages || []).map(page => page.text).join(' ')
-    const routed = normalizeGeneratedRouting(destinationLane(card, score.evaluation), card.priorityRegions, card.headline, card.headline, evidence)
+    const independentlyRoutedLane = DISCOVERY_HEADLINE.test(card.headline || '') ? 'discovery' : destinationLane(card, score.evaluation)
+    const routed = normalizeGeneratedRouting(independentlyRoutedLane, card.priorityRegions, card.headline, card.headline, evidence)
     retained.push({
       ...card,
       lane: routed.lane,

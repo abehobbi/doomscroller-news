@@ -25,3 +25,8 @@ test('lane filter still respects the requested scan family', () => {
   assert.equal(selectedQueries('major', ['discovery']).length, 0)
   assert.equal(selectedQueries('depth', ['discovery']).length, 4)
 })
+
+test('daily queries explicitly cover the comparison-proven recall blind spots', () => {
+  const text = selectedQueries('full').map(query => `${query.query} ${query.objective}`).join(' ').toLowerCase()
+  for (const signal of ['outbreak assessment', 'leadership change', 'original investigation', 'labour action', 'public-service failure', 'sanitation failure', 'eyewitness disclosure']) assert.match(text, new RegExp(signal))
+})

@@ -54,7 +54,7 @@ test('batch helper is deterministic', () => {
 })
 
 test('batch audit requires every expected id exactly once', () => {
-  const evaluation = id => ({ id, lane_fit: 4, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, concrete_new_development: true, underlying_event_fresh: true, single_coherent_event: true, publicity_or_commentary: false, recommendation: 'strong', strongest_fact: 'Fact', reason: 'Reason' })
+  const evaluation = id => ({ id, recommended_lane: 'world-interesting', major_qualification: false, future_or_conditional_only: false, lane_fit: 4, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, concrete_new_development: true, underlying_event_fresh: true, single_coherent_event: true, publicity_or_commentary: false, recommendation: 'strong', strongest_fact: 'Fact', reason: 'Reason' })
   assert.equal(auditBatch({ evaluations: [evaluation('E001'), evaluation('E002')] }, ['E001', 'E002']).valid, true)
   assert.equal(auditBatch({ evaluations: [evaluation('E001'), evaluation('E001')] }, ['E001', 'E002']).valid, false)
 })
@@ -70,7 +70,7 @@ test('only exact-id or provider-truncation failures receive one bounded retry', 
 })
 
 test('scoring retries a duplicate-id response once and accounts for both attempts', async t => {
-  const evaluation = id => ({ id, lane_fit: 4, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, concrete_new_development: true, underlying_event_fresh: true, single_coherent_event: true, publicity_or_commentary: false, recommendation: 'strong', strongest_fact: 'Fact', reason: 'Reason' })
+  const evaluation = id => ({ id, recommended_lane: 'world-major', major_qualification: true, future_or_conditional_only: false, lane_fit: 4, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, concrete_new_development: true, underlying_event_fresh: true, single_coherent_event: true, publicity_or_commentary: false, recommendation: 'strong', strongest_fact: 'Fact', reason: 'Reason' })
   const responses = [
     { result: { response: { evaluations: [evaluation('E001'), evaluation('E001')] }, choices: [{ finish_reason: 'stop' }], usage: { neurons: 2, prompt_tokens: 10, completion_tokens: 4 } } },
     { result: { response: { evaluations: [evaluation('E001'), evaluation('E002')] }, choices: [{ finish_reason: 'stop' }], usage: { neurons: 3, prompt_tokens: 11, completion_tokens: 5 } } },
@@ -110,7 +110,7 @@ test('scoring retries a duplicate-id response once and accounts for both attempt
 })
 
 test('resume accepts evaluations only from batches that passed as a whole', () => {
-  const evaluation = id => ({ id, lane_fit: 4, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, concrete_new_development: true, underlying_event_fresh: true, single_coherent_event: true, publicity_or_commentary: false, recommendation: 'strong', strongest_fact: 'Fact', reason: 'Reason' })
+  const evaluation = id => ({ id, recommended_lane: 'world-interesting', major_qualification: false, future_or_conditional_only: false, lane_fit: 4, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, concrete_new_development: true, underlying_event_fresh: true, single_coherent_event: true, publicity_or_commentary: false, recommendation: 'strong', strongest_fact: 'Fact', reason: 'Reason' })
   const report = { calls: [
     { complete: false, evaluations: [evaluation('E001')] },
     { complete: true, evaluations: [evaluation('E002')] },
@@ -121,11 +121,13 @@ test('resume accepts evaluations only from batches that passed as a whole', () =
 test('major-lane rubric recognizes targeted attacks on elected officials as potentially institutional news', () => {
   assert.match(EDITORIAL_RUBRIC, /targeted attack on an elected official can have democratic and institutional significance/i)
   assert.match(EDITORIAL_RUBRIC, /Copy each supplied candidate ID exactly once/i)
+  assert.match(EDITORIAL_RUBRIC, /supplied lane is a hypothesis/i)
+  assert.match(EDITORIAL_RUBRIC, /Priority-region relevance alone never qualifies a story as major/i)
 })
 
 test('computed score uses fixed editorial weights and combined ranking stays within lanes', () => {
-  const high = { lane_fit: 5, substantive_value: 5, intrinsic_interest: 5, distinctiveness: 5, clarity: 5, freshness_specificity: 5 }
-  const low = { lane_fit: 1, substantive_value: 1, intrinsic_interest: 1, distinctiveness: 1, clarity: 1, freshness_specificity: 1 }
+  const high = { recommended_lane: 'world-interesting', major_qualification: false, future_or_conditional_only: false, lane_fit: 5, substantive_value: 5, intrinsic_interest: 5, distinctiveness: 5, clarity: 5, freshness_specificity: 5 }
+  const low = { recommended_lane: 'world-interesting', major_qualification: false, future_or_conditional_only: false, lane_fit: 1, substantive_value: 1, intrinsic_interest: 1, distinctiveness: 1, clarity: 1, freshness_specificity: 1 }
   assert.equal(computedScore(high), 100)
   assert.equal(computedScore(low), 20)
   const fixture = { candidates: [

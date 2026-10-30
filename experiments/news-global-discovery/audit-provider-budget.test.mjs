@@ -17,6 +17,15 @@ test('one full daily run stays inside guarded Exa and Tavily monthly allowances'
   assert.deepEqual(report.projection, { exaMonthlyDollars: 8.246, tavilyMonthlyCredits: 930 })
 })
 
+test('eleven advanced recall searches plus bounded repairs stay free in a 31-day month', () => {
+  const report = summarizeProviderUsage([
+    { provider: 'tavily', creditsUsed: 22 },
+    { provider: 'tavily', creditsUsed: 7 },
+  ])
+  assert.equal(report.safeForDailyFullRun, true)
+  assert.deepEqual(report.projection, { exaMonthlyDollars: 0, tavilyMonthlyCredits: 899 })
+})
+
 test('expanded 28-query discovery remains below the guarded monthly Exa allowance', () => {
   const report = summarizeProviderUsage([
     { provider: 'exa', costDollars: 0.196 },

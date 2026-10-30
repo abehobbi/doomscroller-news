@@ -4,11 +4,12 @@ import test from 'node:test'
 import { applyEditorialScores } from './apply-editorial-scores.mjs'
 
 const card = (eventId, lane, rank) => ({ eventId, lane, headline: eventId, frontPageRank: rank, pages: [{ text: 'Verified evidence.' }], priorityRegions: [], acceptedSources: [] })
-const scored = (eventId, editorialScore, recommendation = 'strong', laneFit = 5) => ({ eventId, editorialScore, evaluation: { recommendation, lane_fit: laneFit, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, concrete_new_development: true, underlying_event_fresh: true, single_coherent_event: true, publicity_or_commentary: false, strongest_fact: 'Fact', reason: 'Reason' } })
+const scored = (eventId, editorialScore, recommendation = 'strong', laneFit = 5, recommendedLane = 'world-interesting') => ({ eventId, editorialScore, evaluation: { recommendation, recommended_lane: recommendedLane, major_qualification: recommendedLane.endsWith('major'), future_or_conditional_only: false, lane_fit: laneFit, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, concrete_new_development: true, underlying_event_fresh: true, single_coherent_event: true, publicity_or_commentary: false, strongest_fact: 'Fact', reason: 'Reason' } })
 
 test('editorial gate rejects weak finalists, demotes false major labels and orders peers by score', () => {
   const edition = { createdAt: 'before', cards: [card('weak', 'world-interesting', 1), card('museum', 'world-major', 2), card('best', 'world-interesting', 3), card('good', 'world-interesting', 4)] }
   const scoreReport = { complete: true, configuration: { model: 'test' }, candidateCount: 4, results: [scored('weak', 30, 'reject'), scored('museum', 75, 'strong', 2), scored('best', 95), scored('good', 70)] }
+  scoreReport.results.find(value => value.eventId === 'museum').evaluation.recommended_lane = 'world-interesting'
   const result = applyEditorialScores(edition, scoreReport)
   assert.deepEqual(result.cards.map(value => value.eventId), ['best', 'museum', 'good'])
   assert.equal(result.cards.find(value => value.eventId === 'museum').lane, 'world-interesting')
@@ -33,11 +34,29 @@ test('possible statement-only stories are rejected while statements reporting co
   const edition = { createdAt: 'before', cards: [card('willingness', 'priority-interesting', 1), card('signed-law', 'priority-major', 2)] }
   const willingness = scored('willingness', 65, 'possible')
   willingness.evaluation.strongest_fact = 'President Mahama stated he is open to foreign security assistance in the Sahel.'
-  const signedLaw = scored('signed-law', 65, 'possible')
+  const signedLaw = scored('signed-law', 72, 'possible')
   signedLaw.evaluation.strongest_fact = 'The president said the newly enacted labour law was signed on Tuesday.'
   const result = applyEditorialScores(edition, { complete: true, candidateCount: 2, results: [willingness, signedLaw] })
   assert.deepEqual(result.cards.map(value => value.eventId), ['signed-law'])
   assert.deepEqual(result.editorialScoring.rejected.map(value => value.eventId), ['willingness'])
+})
+
+test('independent lane judgment routes research to discovery and demotes false major stories', () => {
+  const archaeology = card('archaeology', 'world-major', 1); archaeology.headline = 'Fingerprints on terra-cotta warriors suggest women and children helped make them'
+  const preparedness = card('preparedness', 'priority-major', 2); preparedness.priorityRegions = ['Ghana']; preparedness.headline = 'Ghana says it is ready to respond to Ebola'
+  const archaeologyScore = scored('archaeology', 96, 'strong', 1, 'discovery')
+  const preparednessScore = scored('preparedness', 76, 'strong', 2, 'priority-interesting'); preparednessScore.evaluation.major_qualification = false
+  const result = applyEditorialScores({ createdAt: 'before', cards: [archaeology, preparedness] }, { complete: true, candidateCount: 2, results: [archaeologyScore, preparednessScore] })
+  assert.equal(result.cards.find(value => value.eventId === 'archaeology').lane, 'discovery')
+  assert.equal(result.cards.find(value => value.eventId === 'preparedness').lane, 'priority-interesting')
+})
+
+test('conditional future actions are rejected even when the scorer otherwise likes them', () => {
+  const threatened = card('threatened-strike', 'priority-interesting', 1)
+  const score = scored('threatened-strike', 88, 'strong', 5, 'priority-interesting'); score.evaluation.future_or_conditional_only = true
+  const result = applyEditorialScores({ createdAt: 'before', cards: [threatened] }, { complete: true, candidateCount: 1, results: [score] })
+  assert.equal(result.cards.length, 0)
+  assert.match(result.editorialScoring.rejected[0].reason, /conditional future event/)
 })
 
 test('integrity gates reject stale recycling, publicity and bundled unrelated events', () => {
@@ -60,7 +79,7 @@ test('priority geography is normalized before the writer and edition audit', () 
 
 test('hard category maximums are enforced after editorial routing', () => {
   const cards = Array.from({ length: 10 }, (_, index) => card(`science-${index}`, 'discovery', index + 1))
-  const scores = cards.map((value, index) => scored(value.eventId, 100 - index))
+  const scores = cards.map((value, index) => scored(value.eventId, 100 - index, 'strong', 5, 'discovery'))
   const result = applyEditorialScores({ createdAt: 'before', cards }, { complete: true, candidateCount: 10, results: scores })
   assert.equal(result.cards.length, 8)
   assert.equal(result.audit.laneCounts.discovery, 8)

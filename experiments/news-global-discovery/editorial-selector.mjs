@@ -7,6 +7,7 @@ import { parseStrict } from '../../artifacts/summary-feasibility/round-9/strict-
 export const MODEL = '@cf/google/gemma-4-26b-a4b-it'
 export const INCLUDED_LANES = new Set(['world-interesting', 'priority-interesting', 'discovery'])
 export const ALL_EDITORIAL_LANES = new Set(['world-major', 'priority-major', ...INCLUDED_LANES])
+export const RECOMMENDED_LANES = Object.freeze([...ALL_EDITORIAL_LANES])
 export const SELECTOR_CONFIGURATION = Object.freeze({
   model: MODEL,
   temperature: 0.1,
@@ -132,6 +133,8 @@ export function chunks(values, size) {
 
 export const EDITORIAL_RUBRIC = `You are an exacting editorial selector for a personal news product. Judge only the supplied evidence. Do not add facts from memory. Publisher identity has already been evaluated separately and is intentionally hidden.
 
+The supplied lane is a hypothesis, not an instruction. First decide what the story actually is, then choose recommended_lane independently. Do not reward a discovery, local feature or routine regional update for being pre-labelled major.
+
 The lanes have different purposes:
 - world-major: a concrete fresh development with broad consequence, urgency or serious human/institutional impact. A suspected or confirmed targeted attack on an elected official can have democratic and institutional significance even when one person is physically harmed; judge the evidence for targeting and wider implications rather than treating it automatically as personal tragedy. A speech, expression of willingness, forecast or political message without a concrete action, decision, disclosure or measurable change should be rejected rather than merely penalized.
 - priority-major: the same consequential-news bar for Syria, the wider Middle East, Bangladesh, Ghana, Canada or the GTA. Regional relevance routes the story; it does not make a routine announcement major. Reject statement-only diplomacy and political messaging unless the evidence contains a concrete new action or consequence independent of the statement.
@@ -148,6 +151,8 @@ Score every dimension from 0 (absent/bad) to 5 (exceptional):
 - freshness_specificity: a specific recent report/development/finding, rather than generic background or recycled material.
 
 Use recommendation "strong" only when you would actively choose the story; "possible" when worthwhile but replaceable; "reject" when it should not consume scarce feed space. Identify the single strongest supported fact. Keep reasons concise.
+
+Set major_qualification true only for a concrete fresh development with broad consequence, urgency, serious human harm, major institutional change or substantial public impact. Priority-region relevance alone never qualifies a story as major. Scientific, archaeological, wildlife and historical findings belong in discovery even when unusually fascinating. Set future_or_conditional_only true for an ordinary proposal, planned protest, threatened strike, projected completion, appeal, preparedness assurance or urged boycott when no separate material action or consequence has happened yet. A binding decision or leadership resignation announcement can itself be a concrete development and is not automatically future-only.
 
 Also make four explicit integrity judgments. These are gates, not stylistic preferences:
 - concrete_new_development: true only when the evidence contains a new action, consequence, finding or documented change—not merely a speech, opinion, appeal, publicity partnership, planned ceremony, fair, anniversary or institutional self-promotion.
@@ -168,9 +173,12 @@ export function scoreSchema(maxItems = 10) {
           type: 'array', minItems: 1, maxItems,
           items: {
             type: 'object', additionalProperties: false,
-            required: ['id', 'lane_fit', 'substantive_value', 'intrinsic_interest', 'distinctiveness', 'clarity', 'freshness_specificity', 'concrete_new_development', 'underlying_event_fresh', 'single_coherent_event', 'publicity_or_commentary', 'recommendation', 'strongest_fact', 'reason'],
+            required: ['id', 'recommended_lane', 'major_qualification', 'future_or_conditional_only', 'lane_fit', 'substantive_value', 'intrinsic_interest', 'distinctiveness', 'clarity', 'freshness_specificity', 'concrete_new_development', 'underlying_event_fresh', 'single_coherent_event', 'publicity_or_commentary', 'recommendation', 'strongest_fact', 'reason'],
             properties: {
               id: { type: 'string' },
+              recommended_lane: { type: 'string', enum: RECOMMENDED_LANES },
+              major_qualification: { type: 'boolean' },
+              future_or_conditional_only: { type: 'boolean' },
               lane_fit: { type: 'integer', minimum: 0, maximum: 5 },
               substantive_value: { type: 'integer', minimum: 0, maximum: 5 },
               intrinsic_interest: { type: 'integer', minimum: 0, maximum: 5 },
@@ -217,6 +225,7 @@ export function auditBatch(parsed, expectedIds) {
   if (!scoresValid) return { valid: false, reason: 'score outside integer 0-5 range' }
   const integrityValid = evaluations.every(value => ['concrete_new_development', 'underlying_event_fresh', 'single_coherent_event', 'publicity_or_commentary'].every(key => typeof value[key] === 'boolean'))
   if (!integrityValid) return { valid: false, reason: 'integrity judgment missing' }
+  if (!evaluations.every(value => RECOMMENDED_LANES.includes(value.recommended_lane) && typeof value.major_qualification === 'boolean' && typeof value.future_or_conditional_only === 'boolean')) return { valid: false, reason: 'independent lane judgment missing' }
   if (!evaluations.every(value => ['strong', 'possible', 'reject'].includes(value.recommendation) && value.strongest_fact && value.reason)) return { valid: false, reason: 'recommendation or explanation missing' }
   return { valid: true, reason: null }
 }

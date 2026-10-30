@@ -1,11 +1,15 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { auditPlannedQueries, compactDiscoveryContext, compactRoundResults, deterministicFallbackQueries, MAX_TAVILY_CREDITS, MODEL, normalizePlannedQueries, planQueries, repairRepeatedPriorityRegions, resultMatchesRegion, ROUND_LANE_SHAPES, ROUND_SIZES, TAVILY_CREDITS_PER_SEARCH } from './adaptive-research-scout.mjs'
+import { auditPlannedQueries, compactDiscoveryContext, compactRoundResults, deterministicFallbackQueries, FIXED_RECALL_QUERIES, MAX_TAVILY_CREDITS, MODEL, normalizePlannedQueries, planQueries, repairRepeatedPriorityRegions, resultMatchesRegion, ROUND_LANE_SHAPES, ROUND_SIZES, searchTavily, TAVILY_CREDITS_PER_SEARCH } from './adaptive-research-scout.mjs'
 
 const make = (id, lane, region, query) => ({ id, lane, region, blind_spot: 'undercovered local life', rationale: 'fills a demonstrated omission', query })
 
-test('adaptive planner uses eight deep Tavily searches across three rounds', () => {
-  assert.deepEqual(ROUND_SIZES, [3, 3, 2]); assert.equal(TAVILY_CREDITS_PER_SEARCH, 2); assert.equal(ROUND_SIZES.reduce((sum, value) => sum + value, 0) * TAVILY_CREDITS_PER_SEARCH, MAX_TAVILY_CREDITS)
+test('adaptive planner plus fixed recall uses eleven deep searches within the monthly guard', () => {
+  assert.deepEqual(ROUND_SIZES, [3, 3, 2]); assert.equal(TAVILY_CREDITS_PER_SEARCH, 2)
+  assert.equal((ROUND_SIZES.reduce((sum, value) => sum + value, 0) + FIXED_RECALL_QUERIES.length) * TAVILY_CREDITS_PER_SEARCH, MAX_TAVILY_CREDITS)
+  assert.equal(MAX_TAVILY_CREDITS, 22)
+  assert.ok(MAX_TAVILY_CREDITS + 7 <= 30)
+  assert.deepEqual(FIXED_RECALL_QUERIES[0].includeDomains, ['reuters.com', 'apnews.com'])
   assert.deepEqual(ROUND_LANE_SHAPES, [
     ['priority-interesting', 'priority-major', 'world-major'],
     ['priority-interesting', 'priority-major', 'discovery'],
@@ -13,14 +17,34 @@ test('adaptive planner uses eight deep Tavily searches across three rounds', () 
   ])
 })
 
+test('fixed recall searches send publisher-domain constraints to Tavily', async () => {
+  let request
+  const fetchImpl = async (_url, options) => {
+    request = JSON.parse(options.body)
+    return { ok: true, status: 200, text: async () => JSON.stringify({ request_id: 'test', usage: { credits: 2 }, results: [] }) }
+  }
+  await searchTavily(FIXED_RECALL_QUERIES[0], { start: '2026-10-29T00:00:00Z', end: '2026-10-30T00:00:00Z' }, 'test', fetchImpl)
+  assert.deepEqual(request.include_domains, ['reuters.com', 'apnews.com'])
+  assert.equal(request.search_depth, 'advanced')
+  assert.equal(request.filter_by_published_date, true)
+})
+
 test('coverage digest exposes lane and region gaps without article bodies', () => {
-  const digest = compactDiscoveryContext([{ candidates: [{ title: 'Village revives a river craft', lanes: ['world-interesting'], priorityRegions: [] }, { title: 'Accra market workers organize', lanes: ['priority-interesting'], priorityRegions: ['Ghana'] }] }])
-  assert.equal(digest.candidateCount, 2); assert.deepEqual(digest.laneCounts, { 'world-interesting': 1, 'priority-interesting': 1 }); assert.deepEqual(digest.regionCounts, { Ghana: 1 }); assert.equal(digest.headlines.length, 2)
+  const digest = compactDiscoveryContext([{ candidates: [{ title: 'Village revives a river craft', url: 'https://local.example/a', lanes: ['world-interesting'], priorityRegions: [] }, { title: 'Accra market workers organize', url: 'https://ghana.example/b', lanes: ['priority-interesting'], priorityRegions: ['Ghana'] }] }])
+  assert.equal(digest.candidateCount, 2); assert.deepEqual(digest.laneCounts, { 'world-interesting': 1, 'priority-interesting': 1 }); assert.deepEqual(digest.regionCounts, { Ghana: 1 }); assert.deepEqual(digest.publisherCounts, { 'local.example': 1, 'ghana.example': 1 }); assert.equal(digest.headlines.length, 2)
 })
 
 test('planner context is bounded even when discovery returns hundreds of candidates', () => {
   const digest = compactDiscoveryContext([{ candidates: Array.from({ length: 300 }, (_, index) => ({ title: `Distinct story ${index}`, lanes: ['world-interesting'], priorityRegions: [] })) }])
   assert.equal(digest.candidateCount, 300); assert.equal(digest.headlines.length, 80)
+})
+
+test('coverage digest preserves rare publishers and lanes beyond the first thirty candidates', () => {
+  const common = Array.from({ length: 50 }, (_, index) => ({ title: `Common story ${index}`, url: `https://common.example/${index}`, lanes: ['world-major'], priorityRegions: [] }))
+  const rare = { title: 'Rare district labour investigation', url: 'https://rare.example/story', lanes: ['priority-interesting'], priorityRegions: ['Bangladesh'] }
+  const digest = compactDiscoveryContext([{ candidates: [...common, rare] }], { maximumHeadlines: 35 })
+  assert.ok(digest.headlines.some(item => item.title === rare.title))
+  assert.ok(digest.headlines.some(item => item.publisher === 'rare.example'))
 })
 
 test('planned queries must be distinct, lane-correct and region-correct', () => {
