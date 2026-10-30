@@ -33,8 +33,8 @@ export const FIXED_RECALL_QUERIES = Object.freeze([
 export const MAX_TAVILY_CREDITS = (ROUND_SIZES.reduce((sum, count) => sum + count, 0) + FIXED_RECALL_QUERIES.length) * TAVILY_CREDITS_PER_SEARCH
 export const ALLOWED_LANES = new Set(['world-major', 'priority-major', 'world-interesting', 'priority-interesting', 'discovery'])
 export const ROUND_LANE_SHAPES = Object.freeze([
-  ['priority-interesting', 'priority-major', 'world-major'],
-  ['priority-interesting', 'priority-major', 'discovery'],
+  ['world-interesting', 'priority-major', 'world-major'],
+  ['priority-interesting', 'world-interesting', 'discovery'],
   ['priority-interesting', 'world-interesting'],
 ])
 const PRIORITY_REGIONS = ['Syria', 'Middle East', 'Bangladesh', 'Ghana', 'Canada', 'GTA']

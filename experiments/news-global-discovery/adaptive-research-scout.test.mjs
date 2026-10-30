@@ -11,10 +11,12 @@ test('adaptive planner plus fixed recall uses eleven deep searches within the mo
   assert.ok(MAX_TAVILY_CREDITS + 4 + 4 <= 30)
   assert.deepEqual(FIXED_RECALL_QUERIES[0].includeDomains, ['reuters.com', 'apnews.com'])
   assert.deepEqual(ROUND_LANE_SHAPES, [
-    ['priority-interesting', 'priority-major', 'world-major'],
-    ['priority-interesting', 'priority-major', 'discovery'],
+    ['world-interesting', 'priority-major', 'world-major'],
+    ['priority-interesting', 'world-interesting', 'discovery'],
     ['priority-interesting', 'world-interesting'],
   ])
+  assert.equal(ROUND_LANE_SHAPES.flat().filter(lane => lane === 'world-interesting').length, 3)
+  assert.equal(ROUND_LANE_SHAPES.flat().filter(lane => lane === 'priority-interesting').length, 2)
 })
 
 test('fixed recall searches send publisher-domain constraints to Tavily', async () => {
@@ -48,7 +50,7 @@ test('coverage digest preserves rare publishers and lanes beyond the first thirt
 })
 
 test('planned queries must be distinct, lane-correct and region-correct', () => {
-  const valid = [make('syria', 'priority-interesting', 'Syria', 'Syrian accountability public services livelihoods and local consequences'), make('ghana', 'priority-major', 'Ghana', 'Ghana government accountability labour health and environmental developments'), make('major', 'world-major', null, 'consequential global conflict election court and public health developments')]
+  const valid = [make('local', 'world-interesting', null, 'underreported local accountability public services livelihood and cultural change worldwide'), make('ghana', 'priority-major', 'Ghana', 'Ghana government accountability labour health and environmental developments'), make('major', 'world-major', null, 'consequential global conflict election court and public health developments')]
   assert.equal(auditPlannedQueries(valid, 3).valid, true)
   assert.equal(auditPlannedQueries([valid[0], { ...valid[0], id: 'copy' }], 2).reason, 'duplicate adaptive query')
   assert.equal(auditPlannedQueries([{ ...valid[1], region: null }], 1).reason, 'priority query lacks a supported region')
@@ -101,7 +103,7 @@ test('deterministic fallback preserves lane shape and unused priority regions', 
   const fallback = deterministicFallbackQueries(2, prior, { Bangladesh: 5, Canada: 2, GTA: 4, 'Middle East': 1 })
   assert.equal(auditPlannedQueries(fallback, 3, prior, 2).valid, true)
   assert.deepEqual(fallback.map(item => item.lane), ROUND_LANE_SHAPES[1])
-  assert.deepEqual(fallback.filter(item => item.region).map(item => item.region), ['Middle East', 'Canada'])
+  assert.deepEqual(fallback.filter(item => item.region).map(item => item.region), ['Middle East'])
 })
 
 test('planner deterministically repairs repeated priority coverage after bounded retries', async () => {
