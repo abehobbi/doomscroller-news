@@ -116,3 +116,23 @@ test('planner retries malformed model JSON before any Tavily search', async () =
     }
   }
 })
+
+test('planner retries a transient provider failure before abandoning the edition', async () => {
+  const previous = { account: process.env.CLOUDFLARE_ACCOUNT_ID, token: process.env.CLOUDFLARE_API_TOKEN, confirmed: process.env.FREE_PLAN_CONFIRMED }
+  process.env.CLOUDFLARE_ACCOUNT_ID = 'account'; process.env.CLOUDFLARE_API_TOKEN = 'token'; process.env.FREE_PLAN_CONFIRMED = 'yes'
+  const valid = { queries: [make('ghana', 'priority-interesting', 'Ghana', 'Ghana accountability public services environment and livelihood reporting'), make('local', 'world-interesting', null, 'underreported local accountability public services and livelihood consequences worldwide')] }
+  let calls = 0
+  const fetchImpl = async () => {
+    calls += 1
+    if (calls === 1) return { ok: false, status: 500, text: async () => 'temporary upstream failure' }
+    return { ok: true, status: 200, text: async () => JSON.stringify({ success: true, result: { response: JSON.stringify(valid), usage: { neurons: 1 }, model: MODEL } }) }
+  }
+  try {
+    const result = await planQueries({ context: { requestedWindow: {}, pool: {} }, count: 2, round: 3, fetchImpl })
+    assert.equal(result.attempts, 2); assert.equal(calls, 2)
+  } finally {
+    for (const [key, value] of [['CLOUDFLARE_ACCOUNT_ID', previous.account], ['CLOUDFLARE_API_TOKEN', previous.token], ['FREE_PLAN_CONFIRMED', previous.confirmed]]) {
+      if (value === undefined) delete process.env[key]; else process.env[key] = value
+    }
+  }
+})

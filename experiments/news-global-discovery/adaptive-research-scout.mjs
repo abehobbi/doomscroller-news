@@ -134,8 +134,14 @@ export async function planQueries({ context, priorSearches = [], count, round, f
     const request = { messages: [{ role: 'system', content: SYSTEM_PROMPT }, { role: 'user', content: JSON.stringify({ round, requested_query_count: count, required_lane_shape: expectedShape, validation_retry: priorFailure, date_window: context.requestedWindow, current_pool: context.pool, prior_adaptive_results: priorSearches }) }],
       temperature: 0.25, max_completion_tokens: 1200, response_format: { type: 'json_schema', json_schema: schema(count) }, chat_template_kwargs: { enable_thinking: false }, store: false }
     const response = await fetchImpl(`https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/${MODEL}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify(request), signal: AbortSignal.timeout(110_000) })
-    const raw = await response.text(), body = parseStrict(raw)
-    if (!response.ok || body?.success === false) throw new Error(`adaptive planner round ${round}: HTTP ${response.status}`)
+    const raw = await response.text()
+    let body = null
+    try { body = parseStrict(raw) } catch {}
+    if (!response.ok || body?.success === false) {
+      const retryable = response.status === 429 || response.status >= 500
+      if (retryable && attempt < 3) { priorFailure = `temporary provider HTTP ${response.status}`; continue }
+      throw new Error(`adaptive planner round ${round}: HTTP ${response.status}`)
+    }
     const exposed = exposedResponse(body)
     let parsed
     try { parsed = typeof exposed === 'string' ? parseStrict(exposed) : exposed }
