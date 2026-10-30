@@ -3,8 +3,9 @@ import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 
 export const TORONTO_ZONE = 'America/Toronto'
-export const DAILY_LOCAL_TIME = '20:30'
-export const DAILY_UTC_CRONS = Object.freeze(['30 0 * * *', '30 1 * * *'])
+export const MORNING_LOCAL_TIME = '08:30'
+export const EVENING_LOCAL_TIME = '20:30'
+export const DAILY_UTC_CRONS = Object.freeze(['30 0 * * *', '30 1 * * *', '30 12 * * *', '30 13 * * *'])
 
 function utcOffsetHours(date) {
   const part = new Intl.DateTimeFormat('en-CA', {
@@ -17,21 +18,26 @@ function utcOffsetHours(date) {
   return match[1] === '-' ? -value : value
 }
 
-export function expectedDailyCron(date = new Date()) {
-  const [hour, minute] = DAILY_LOCAL_TIME.split(':').map(Number)
+export function expectedCron(localTime, date = new Date()) {
+  const [hour, minute] = localTime.split(':').map(Number)
   const utcHour = (hour - utcOffsetHours(date) + 24) % 24
   return `${minute} ${utcHour} * * *`
 }
 
+export const expectedDailyCron = (date = new Date()) => expectedCron(MORNING_LOCAL_TIME, date)
+
 export function resolveNewsRun({ event, cron = '', manualScan = 'full', manualWindow = '24', manualPublish = false, productionEnabled = false, now = new Date() }) {
   if (event === 'workflow_dispatch') {
-    return { run: true, scan: manualScan, windowHours: String(manualWindow), publish: Boolean(manualPublish), reason: 'manual dispatch' }
+    return { run: true, scan: manualScan, windowHours: String(manualWindow), publish: Boolean(manualPublish), editionMode: manualScan === 'major' ? 'major-update' : 'daily', reason: 'manual dispatch' }
   }
-  if (event !== 'schedule') return { run: false, scan: 'full', windowHours: '24', publish: false, reason: 'unsupported event' }
-  if (!productionEnabled) return { run: false, scan: 'full', windowHours: '24', publish: false, reason: 'NEWS_PRODUCTION_ENABLED is not true' }
-  const expected = expectedDailyCron(now)
-  if (cron !== expected) return { run: false, scan: 'full', windowHours: '24', publish: false, reason: `DST guard skipped ${cron}; expected ${expected}` }
-  return { run: true, scan: 'full', windowHours: '24', publish: true, reason: `daily ${DAILY_LOCAL_TIME} Toronto edition` }
+  const idle = reason => ({ run: false, scan: 'full', windowHours: '24', publish: false, editionMode: 'daily', reason })
+  if (event !== 'schedule') return idle('unsupported event')
+  if (!productionEnabled) return idle('NEWS_PRODUCTION_ENABLED is not true')
+  const morningCron = expectedCron(MORNING_LOCAL_TIME, now)
+  const eveningCron = expectedCron(EVENING_LOCAL_TIME, now)
+  if (cron === morningCron) return { run: true, scan: 'full', windowHours: '24', publish: true, editionMode: 'daily', reason: `daily ${MORNING_LOCAL_TIME} Toronto edition` }
+  if (cron === eveningCron) return { run: true, scan: 'major', windowHours: '12', publish: false, editionMode: 'major-update', reason: `major-news ${EVENING_LOCAL_TIME} Toronto update; publication remains locked pending update-aware promotion` }
+  return idle(`DST guard skipped ${cron}; expected ${morningCron} or ${eveningCron}`)
 }
 
 async function main() {

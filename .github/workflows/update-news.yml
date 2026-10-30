@@ -14,16 +14,18 @@ on:
         required: true
         type: choice
         default: '24'
-        options: ['24', '72']
+        options: ['12', '24', '72']
       publish_dataset:
         description: Publish only after every strong-readiness check passes
         required: true
         type: boolean
         default: false
   schedule:
-    # 20:30 America/Toronto. The plan job admits only the DST-correct one.
+    # 08:30 and 20:30 America/Toronto. The plan job admits only DST-correct jobs.
     - cron: '30 0 * * *'
     - cron: '30 1 * * *'
+    - cron: '30 12 * * *'
+    - cron: '30 13 * * *'
 
 concurrency:
   group: news-daily-edition
@@ -40,6 +42,7 @@ jobs:
       scan: ${{ steps.plan.outputs.scan }}
       window_hours: ${{ steps.plan.outputs.windowHours }}
       publish: ${{ steps.plan.outputs.publish }}
+      edition_mode: ${{ steps.plan.outputs.editionMode }}
     steps:
       - uses: actions/checkout@v4
       - id: plan
