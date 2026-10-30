@@ -125,7 +125,7 @@ jobs:
         run: >-
           node experiments/news-global-discovery/repair-unified-shortlist.mjs
           --input ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json
-          --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --maximum 7 --provider tavily
+          --pool ${{ env.RUN_ROOT }}/combined/COMBINED_DISCOVERY.json --maximum 4 --provider tavily
           --output-dir ${{ env.RUN_ROOT }}/repair
       - name: Prepare strongest unresolved opportunities for a targeted second chance
         run: node experiments/news-global-discovery/prepare-opportunity-recovery.mjs --verification ${{ env.RUN_ROOT }}/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/repair/SOURCE_REPAIR_REPORT.json --maximum 3 --output ${{ env.RUN_ROOT }}/opportunity-repair/OPPORTUNITY_QUEUE.json
@@ -157,7 +157,7 @@ jobs:
         run: node experiments/news-global-discovery/verify-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/gap/selection/ANSWER_KEY.json --pool ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json --output-dir ${{ env.RUN_ROOT }}/gap/verification
       - name: Repair strongest blocked gap candidates
         if: steps.gap.outputs.query_count != '0'
-        run: node experiments/news-global-discovery/repair-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json --pool ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json --maximum 7 --provider tavily --output-dir ${{ env.RUN_ROOT }}/gap/repair
+        run: node experiments/news-global-discovery/repair-unified-shortlist.mjs --input ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json --pool ${{ env.RUN_ROOT }}/gap/discovery/EXA_GAP_DISCOVERY.json --maximum 4 --provider tavily --output-dir ${{ env.RUN_ROOT }}/gap/repair
       - name: Prepare unresolved gap opportunities for a targeted second chance
         if: steps.gap.outputs.query_count != '0'
         run: node experiments/news-global-discovery/prepare-opportunity-recovery.mjs --verification ${{ env.RUN_ROOT }}/gap/verification/VERIFICATION_REPORT.json --repair ${{ env.RUN_ROOT }}/gap/repair/SOURCE_REPAIR_REPORT.json --maximum 3 --output ${{ env.RUN_ROOT }}/gap/opportunity-repair/OPPORTUNITY_QUEUE.json

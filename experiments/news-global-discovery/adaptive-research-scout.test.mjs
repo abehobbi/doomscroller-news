@@ -8,7 +8,7 @@ test('adaptive planner plus fixed recall uses eleven deep searches within the mo
   assert.deepEqual(ROUND_SIZES, [3, 3, 2]); assert.equal(TAVILY_CREDITS_PER_SEARCH, 2)
   assert.equal((ROUND_SIZES.reduce((sum, value) => sum + value, 0) + FIXED_RECALL_QUERIES.length) * TAVILY_CREDITS_PER_SEARCH, MAX_TAVILY_CREDITS)
   assert.equal(MAX_TAVILY_CREDITS, 22)
-  assert.ok(MAX_TAVILY_CREDITS + 7 <= 30)
+  assert.ok(MAX_TAVILY_CREDITS + 4 + 4 <= 30)
   assert.deepEqual(FIXED_RECALL_QUERIES[0].includeDomains, ['reuters.com', 'apnews.com'])
   assert.deepEqual(ROUND_LANE_SHAPES, [
     ['priority-interesting', 'priority-major', 'world-major'],

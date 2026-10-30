@@ -9,9 +9,9 @@ test('one full daily run stays inside guarded Exa and Tavily monthly allowances'
     { provider: 'exa', costDollars: 0.056 },
     { provider: 'exa', costDollars: 0.021 },
     { provider: 'exa', costDollars: 0.021 },
-    { provider: 'tavily', creditsUsed: 16 },
-    { provider: 'tavily', creditsUsed: 7 },
-    { provider: 'tavily', creditsUsed: 7 },
+    { provider: 'tavily', creditsUsed: 22 },
+    { provider: 'tavily', creditsUsed: 4 },
+    { provider: 'tavily', creditsUsed: 4 },
   ])
   assert.equal(report.safeForDailyFullRun, true)
   assert.deepEqual(report.projection, { exaMonthlyDollars: 8.246, tavilyMonthlyCredits: 930 })
@@ -41,9 +41,9 @@ test('expanded discovery plus six Exa second chances remains below the monthly g
     { provider: 'exa', costDollars: 0.056 },
     { provider: 'exa', costDollars: 0.021 },
     { provider: 'exa', costDollars: 0.021 },
-    { provider: 'tavily', creditsUsed: 16 },
-    { provider: 'tavily', creditsUsed: 7 },
-    { provider: 'tavily', creditsUsed: 7 },
+    { provider: 'tavily', creditsUsed: 22 },
+    { provider: 'tavily', creditsUsed: 4 },
+    { provider: 'tavily', creditsUsed: 4 },
   ])
   assert.equal(report.safeForDailyFullRun, true)
   assert.deepEqual(report.projection, { exaMonthlyDollars: 9.114, tavilyMonthlyCredits: 930 })
