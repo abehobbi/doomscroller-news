@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { auditPlannedQueries, compactDiscoveryContext, compactRoundResults, MAX_TAVILY_CREDITS, MODEL, normalizePlannedQueries, planQueries, repairRepeatedPriorityRegions, resultMatchesRegion, ROUND_LANE_SHAPES, ROUND_SIZES, TAVILY_CREDITS_PER_SEARCH } from './adaptive-research-scout.mjs'
+import { auditPlannedQueries, compactDiscoveryContext, compactRoundResults, deterministicFallbackQueries, MAX_TAVILY_CREDITS, MODEL, normalizePlannedQueries, planQueries, repairRepeatedPriorityRegions, resultMatchesRegion, ROUND_LANE_SHAPES, ROUND_SIZES, TAVILY_CREDITS_PER_SEARCH } from './adaptive-research-scout.mjs'
 
 const make = (id, lane, region, query) => ({ id, lane, region, blind_spot: 'undercovered local life', rationale: 'fills a demonstrated omission', query })
 
@@ -72,6 +72,14 @@ test('repeated priority regions are repaired with an unused undercovered regiona
   assert.equal(auditPlannedQueries(repaired, 2, prior, 3).valid, true)
 })
 
+test('deterministic fallback preserves lane shape and unused priority regions', () => {
+  const prior = [make('syria', 'priority-interesting', 'Syria', 'Syria accountability public services health labour and livelihoods'), make('ghana', 'priority-major', 'Ghana', 'Ghana accountability public services health labour and livelihoods')]
+  const fallback = deterministicFallbackQueries(2, prior, { Bangladesh: 5, Canada: 2, GTA: 4, 'Middle East': 1 })
+  assert.equal(auditPlannedQueries(fallback, 3, prior, 2).valid, true)
+  assert.deepEqual(fallback.map(item => item.lane), ROUND_LANE_SHAPES[1])
+  assert.deepEqual(fallback.filter(item => item.region).map(item => item.region), ['Middle East', 'Canada'])
+})
+
 test('planner deterministically repairs repeated priority coverage after bounded retries', async () => {
   const previous = { account: process.env.CLOUDFLARE_ACCOUNT_ID, token: process.env.CLOUDFLARE_API_TOKEN, confirmed: process.env.FREE_PLAN_CONFIRMED }
   process.env.CLOUDFLARE_ACCOUNT_ID = 'account'; process.env.CLOUDFLARE_API_TOKEN = 'token'; process.env.FREE_PLAN_CONFIRMED = 'yes'
@@ -139,6 +147,23 @@ test('planner retries a transient provider failure before abandoning the edition
   try {
     const result = await planQueries({ context: { requestedWindow: {}, pool: {} }, count: 2, round: 3, fetchImpl })
     assert.equal(result.attempts, 2); assert.equal(calls, 2)
+  } finally {
+    for (const [key, value] of [['CLOUDFLARE_ACCOUNT_ID', previous.account], ['CLOUDFLARE_API_TOKEN', previous.token], ['FREE_PLAN_CONFIRMED', previous.confirmed]]) {
+      if (value === undefined) delete process.env[key]; else process.env[key] = value
+    }
+  }
+})
+
+test('planner falls back deterministically after repeated duplicate searches', async () => {
+  const previous = { account: process.env.CLOUDFLARE_ACCOUNT_ID, token: process.env.CLOUDFLARE_API_TOKEN, confirmed: process.env.FREE_PLAN_CONFIRMED }
+  process.env.CLOUDFLARE_ACCOUNT_ID = 'account'; process.env.CLOUDFLARE_API_TOKEN = 'token'; process.env.FREE_PLAN_CONFIRMED = 'yes'
+  const prior = [make('syria', 'priority-interesting', 'Syria', 'Syria accountability public services health labour and livelihoods')]
+  const repeated = { queries: [make('repeat', 'priority-interesting', 'Ghana', prior[0].query), make('major', 'priority-major', 'Bangladesh', 'Bangladesh government accountability health labour and infrastructure developments'), make('field', 'discovery', null, 'recent archaeology ecology medicine field research discoveries overlooked worldwide')] }
+  const fetchImpl = async () => ({ ok: true, status: 200, text: async () => JSON.stringify({ success: true, result: { response: JSON.stringify(repeated), usage: { neurons: 1 }, model: MODEL } }) })
+  try {
+    const result = await planQueries({ context: { requestedWindow: {}, pool: { regionCounts: { 'Middle East': 1, Canada: 2 } } }, priorSearches: prior, count: 3, round: 2, fetchImpl })
+    assert.equal(result.attempts, 3); assert.equal(result.deterministicFallback, 'query repeats an earlier round')
+    assert.equal(auditPlannedQueries(result.queries, 3, prior, 2).valid, true)
   } finally {
     for (const [key, value] of [['CLOUDFLARE_ACCOUNT_ID', previous.account], ['CLOUDFLARE_API_TOKEN', previous.token], ['FREE_PLAN_CONFIRMED', previous.confirmed]]) {
       if (value === undefined) delete process.env[key]; else process.env[key] = value

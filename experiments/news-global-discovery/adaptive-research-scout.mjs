@@ -124,6 +124,35 @@ export function repairRepeatedPriorityRegions(queries, priorQueries = [], region
   })
 }
 
+export function deterministicFallbackQueries(round, priorQueries = [], regionCounts = {}) {
+  const lanes = ROUND_LANE_SHAPES[round - 1] || []
+  const usedRegions = new Set(priorQueries.filter(item => item?.region).map(item => item.region))
+  const availableRegions = PRIORITY_REGIONS.filter(region => !usedRegions.has(region))
+    .sort((a, b) => Number(regionCounts[a] || 0) - Number(regionCounts[b] || 0) || a.localeCompare(b))
+  let regionIndex = 0
+  const worldQueries = {
+    'world-major': 'undercovered global court regulation infrastructure disaster public impact developments',
+    'world-interesting': 'undercovered local livelihoods culture environment public services community changes worldwide',
+    discovery: 'recent archaeology ecology medicine field research discoveries overlooked worldwide',
+  }
+  return lanes.map((lane, index) => {
+    const priority = lane === 'priority-interesting' || lane === 'priority-major'
+    const region = priority ? availableRegions[regionIndex++] : null
+    if (priority && !region) throw new Error(`adaptive planner round ${round}: no unused priority region remains for deterministic fallback`)
+    const query = priority
+      ? `${REGION_QUERY_NAMES[region]} recent accountability public services health labour environment local consequences`
+      : worldQueries[lane]
+    return {
+      id: `fallback-r${round}-${index + 1}`,
+      lane,
+      region,
+      blind_spot: priority ? `undercovered current reporting from ${region}` : `undercovered ${lane} reporting`,
+      query,
+      rationale: 'Deterministic fallback preserves lane and regional breadth after bounded planner failures',
+    }
+  })
+}
+
 export function resultMatchesRegion(result, region) {
   if (!region) return true
   const haystack = `${result?.title || ''} ${result?.content || ''} ${result?.url || ''}`.toLowerCase()
@@ -152,6 +181,10 @@ export async function planQueries({ context, priorSearches = [], count, round, f
     if (!response.ok || body?.success === false) {
       const retryable = response.status === 429 || response.status >= 500
       if (retryable && attempt < 3) { priorFailure = `temporary provider HTTP ${response.status}`; continue }
+      if (retryable) {
+        const queries = deterministicFallbackQueries(round, priorSearches, context?.pool?.regionCounts)
+        return { queries, usage: null, returnedModel: null, attempts: attempt, deterministicFallback: `temporary provider HTTP ${response.status}` }
+      }
       throw new Error(`adaptive planner round ${round}: HTTP ${response.status}`)
     }
     const exposed = exposedResponse(body)
@@ -165,6 +198,11 @@ export async function planQueries({ context, priorSearches = [], count, round, f
       const repaired = repairRepeatedPriorityRegions(queries, priorSearches, context?.pool?.regionCounts)
       const repairedAudit = auditPlannedQueries(repaired, count, priorSearches, round)
       if (repairedAudit.valid) return { queries: repaired, usage: body?.result?.usage ?? body?.usage ?? null, returnedModel: body?.result?.model ?? null, attempts: attempt, deterministicRepair: audit.reason }
+    }
+    if (attempt === 3) {
+      const fallback = deterministicFallbackQueries(round, priorSearches, context?.pool?.regionCounts)
+      const fallbackAudit = auditPlannedQueries(fallback, count, priorSearches, round)
+      if (fallbackAudit.valid) return { queries: fallback, usage: body?.result?.usage ?? body?.usage ?? null, returnedModel: body?.result?.model ?? null, attempts: attempt, deterministicFallback: audit.reason }
     }
     priorFailure = audit.reason
   }
