@@ -257,6 +257,8 @@ jobs:
           --readiness downloaded-run/DAILY_READINESS.json
           --output public/news/beta-feed.json
           --control public/news/beta-control.json
+          --mode ${{ needs.plan.outputs.edition_mode }}
+          --base public/news/beta-feed.json
           --release-authorized
       - name: Validate hosted dataset schema
         run: node scripts/news-beta/validate-news-beta.mjs public/news/beta-feed.json

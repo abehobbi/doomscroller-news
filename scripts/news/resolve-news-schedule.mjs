@@ -36,7 +36,7 @@ export function resolveNewsRun({ event, cron = '', manualScan = 'full', manualWi
   const morningCron = expectedCron(MORNING_LOCAL_TIME, now)
   const eveningCron = expectedCron(EVENING_LOCAL_TIME, now)
   if (cron === morningCron) return { run: true, scan: 'full', windowHours: '24', publish: true, editionMode: 'daily', reason: `daily ${MORNING_LOCAL_TIME} Toronto edition` }
-  if (cron === eveningCron) return { run: true, scan: 'major', windowHours: '12', publish: false, editionMode: 'major-update', reason: `major-news ${EVENING_LOCAL_TIME} Toronto update; publication remains locked pending update-aware promotion` }
+  if (cron === eveningCron) return { run: true, scan: 'major', windowHours: '12', publish: true, editionMode: 'major-update', reason: `major-news ${EVENING_LOCAL_TIME} Toronto update` }
   return idle(`DST guard skipped ${cron}; expected ${morningCron} or ${eveningCron}`)
 }
 

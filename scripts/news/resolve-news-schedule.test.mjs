@@ -9,7 +9,7 @@ test('Toronto schedule follows daylight saving without running both UTC crons', 
   const morning = resolveNewsRun({ event: 'schedule', cron: '30 12 * * *', productionEnabled: true, now: new Date('2026-07-01T12:00:00Z') })
   assert.deepEqual({ scan: morning.scan, windowHours: morning.windowHours, publish: morning.publish, editionMode: morning.editionMode }, { scan: 'full', windowHours: '24', publish: true, editionMode: 'daily' })
   const evening = resolveNewsRun({ event: 'schedule', cron: '30 0 * * *', productionEnabled: true, now: new Date('2026-07-01T12:00:00Z') })
-  assert.deepEqual({ scan: evening.scan, windowHours: evening.windowHours, publish: evening.publish, editionMode: evening.editionMode }, { scan: 'major', windowHours: '12', publish: false, editionMode: 'major-update' })
+  assert.deepEqual({ scan: evening.scan, windowHours: evening.windowHours, publish: evening.publish, editionMode: evening.editionMode }, { scan: 'major', windowHours: '12', publish: true, editionMode: 'major-update' })
   assert.equal(resolveNewsRun({ event: 'schedule', cron: '30 13 * * *', productionEnabled: true, now: new Date('2026-07-01T12:00:00Z') }).run, false)
 })
 
