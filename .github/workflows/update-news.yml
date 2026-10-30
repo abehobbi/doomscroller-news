@@ -1,4 +1,4 @@
-name: Run unattended News shadow pipeline
+name: Update Doomscroller News daily edition
 
 on:
   workflow_dispatch:
@@ -15,16 +15,48 @@ on:
         type: choice
         default: '24'
         options: ['24', '72']
+      publish_dataset:
+        description: Publish only after every strong-readiness check passes
+        required: true
+        type: boolean
+        default: false
+  schedule:
+    # 20:30 America/Toronto. The plan job admits only the DST-correct one.
+    - cron: '30 0 * * *'
+    - cron: '30 1 * * *'
 
 concurrency:
-  group: news-unattended-shadow
+  group: news-daily-edition
   cancel-in-progress: false
 
 permissions:
   contents: read
 
 jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.plan.outputs.run }}
+      scan: ${{ steps.plan.outputs.scan }}
+      window_hours: ${{ steps.plan.outputs.windowHours }}
+      publish: ${{ steps.plan.outputs.publish }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: plan
+        name: Resolve Toronto schedule and release lock
+        run: >-
+          node scripts/news/resolve-news-schedule.mjs
+          --event "${{ github.event_name }}"
+          --cron "${{ github.event.schedule }}"
+          --manual-scan "${{ inputs.scan }}"
+          --manual-window "${{ inputs.window_hours }}"
+          --manual-publish "${{ inputs.publish_dataset }}"
+          --production-enabled "${{ vars.NEWS_PRODUCTION_ENABLED }}"
+          --output "$GITHUB_OUTPUT"
+
   shadow:
+    needs: plan
+    if: needs.plan.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
@@ -56,15 +88,15 @@ jobs:
       - name: Discover fresh baseline candidates
         run: >-
           node experiments/news-global-discovery/exa-five-lane-scout.mjs
-          --scan ${{ inputs.scan }} --hours ${{ inputs.window_hours }} --results-per-query 10 --max-queries 28
+          --scan ${{ needs.plan.outputs.scan }} --hours ${{ needs.plan.outputs.window_hours }} --results-per-query 10 --max-queries 28
           --output ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
       - name: Collect publisher-feed safety net
         run: node experiments/news-global-discovery/source-seed-depth-scout.mjs --output-dir ${{ env.RUN_ROOT }}/publisher
       - name: Adaptively hunt for undercovered worthwhile stories
         run: >-
           node experiments/news-global-discovery/adaptive-research-scout.mjs
-          --scan ${{ inputs.scan }}
-          --hours ${{ inputs.window_hours }}
+          --scan ${{ needs.plan.outputs.scan }}
+          --hours ${{ needs.plan.outputs.window_hours }}
           --input ${{ env.RUN_ROOT }}/discovery/EXA_DISCOVERY.json
           --input ${{ env.RUN_ROOT }}/publisher/SOURCE_SEED_BATCH.json
           --output ${{ env.RUN_ROOT }}/tavily-discovery/TAVILY_DISCOVERY.json
@@ -196,3 +228,57 @@ jobs:
           path: ${{ env.RUN_ROOT }}
           retention-days: 14
           if-no-files-found: error
+
+  publish:
+    needs: [plan, shadow]
+    if: needs.plan.outputs.publish == 'true' && needs.shadow.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: news-unattended-shadow-${{ github.run_id }}
+          path: downloaded-run
+      - name: Convert only a strongly ready edition
+        run: >-
+          node scripts/news/promote-shadow-edition.mjs
+          --input downloaded-run/final/UNATTENDED_SHADOW_EDITION.json
+          --readiness downloaded-run/DAILY_READINESS.json
+          --output public/news/beta-feed.json
+          --control public/news/beta-control.json
+          --release-authorized
+      - name: Validate hosted dataset schema
+        run: node scripts/news-beta/validate-news-beta.mjs public/news/beta-feed.json
+      - name: Preserve the exact hosted edition
+        shell: bash
+        run: |
+          git config user.name doomscroller-news-bot
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add public/news/beta-feed.json public/news/beta-control.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish strongly ready News daily edition"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+      - name: Stage stable News endpoints
+        shell: bash
+        run: |
+          mkdir -p news-site/news
+          cp public/news/feed.json news-site/news/feed.json
+          cp public/news/beta-feed.json news-site/news/beta-feed.json
+          cp public/news/beta-control.json news-site/news/beta-control.json
+          printf '%s\n' '<!doctype html><title>Doomscroller News data</title><a href="news/feed.json">Stage 1 JSON</a> · <a href="news/beta-feed.json">Daily edition JSON</a>' > news-site/index.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: news-site
+      - name: Publish stable data files
+        id: deployment
+        uses: actions/deploy-pages@v4

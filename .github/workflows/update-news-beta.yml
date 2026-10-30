@@ -1,10 +1,8 @@
 name: Update isolated News beta
 on:
   workflow_dispatch:
-  schedule:
-    # Check at roughly 06:23 and 18:23 Toronto time during daylight saving.
-    # Each run keeps the rolling feed; it does not manufacture 20-30 new cards.
-    - cron: '23 10,22 * * *'
+  # The legacy rolling beta remains available for diagnosis only. Its schedule
+  # was retired when the source-verified five-lane daily edition replaced it.
 concurrency:
   group: doomscroller-news-update
   cancel-in-progress: false
