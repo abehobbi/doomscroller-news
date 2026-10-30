@@ -54,6 +54,15 @@ test('non-priority planner metadata is canonicalized without weakening priority 
   assert.equal(priorityMajor[0].region, 'Bangladesh')
 })
 
+test('planner query length is normalized before strict validation', () => {
+  const long = make('ghana', 'priority-interesting', 'Ghana', 'Ghana local accountability public services environment labour livelihoods culture community health education water sanitation reporting consequences')
+  const short = make('world', 'world-interesting', null, 'local consequences')
+  const normalized = normalizePlannedQueries([long, short])
+  assert.equal(normalized[0].query.split(/\s+/).length, 16)
+  assert.equal(normalized[1].query.split(/\s+/).length, 6)
+  assert.match(normalized[0].query, /^Ghana\b/)
+})
+
 test('repeated priority regions are repaired with an unused undercovered regional sweep', () => {
   const prior = [make('syria', 'priority-interesting', 'Syria', 'Syria recent accountability public services health labour and livelihoods'), make('ghana', 'priority-major', 'Ghana', 'Ghana recent accountability public services health labour and livelihoods')]
   const planned = [make('repeat', 'priority-interesting', 'Syria', 'Syria recent accountability environment health labour and local consequences'), make('world', 'world-interesting', null, 'underreported local accountability public services and livelihood consequences worldwide')]

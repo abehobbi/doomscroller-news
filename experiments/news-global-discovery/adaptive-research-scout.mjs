@@ -87,7 +87,19 @@ export function auditPlannedQueries(queries, expectedCount, priorQueries = [], r
 }
 
 export function normalizePlannedQueries(queries) {
-  return Array.isArray(queries) ? queries.map(item => ({ ...item, region: item?.lane === 'priority-interesting' || item?.lane === 'priority-major' ? item.region : null })) : queries
+  return Array.isArray(queries) ? queries.map(item => {
+    const words = String(item?.query || '').trim().split(/\s+/).filter(Boolean).slice(0, 16)
+    const padding = ['recent', 'local', 'accountability', 'public', 'impact', 'reporting']
+    for (const word of padding) {
+      if (words.length >= 6) break
+      if (!words.some(existing => existing.toLowerCase() === word)) words.push(word)
+    }
+    return {
+      ...item,
+      query: words.join(' '),
+      region: item?.lane === 'priority-interesting' || item?.lane === 'priority-major' ? item.region : null,
+    }
+  }) : queries
 }
 
 export function repairRepeatedPriorityRegions(queries, priorQueries = [], regionCounts = {}) {
