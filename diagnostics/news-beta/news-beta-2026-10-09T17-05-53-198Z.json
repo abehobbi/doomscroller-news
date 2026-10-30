@@ -1,0 +1,3331 @@
+{
+  "schema": "doomscroller.news-beta-diagnostics",
+  "schemaVersion": 1,
+  "batchId": "news-beta-2026-10-09T17-05-53-198Z",
+  "startedAt": "2026-10-09T17:04:31.029Z",
+  "finishedAt": "2026-10-09T17:05:53.198Z",
+  "durationMs": 82169,
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1024,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "discovery": {
+    "discoveredArticles": 835,
+    "freshArticles": 657,
+    "uniqueArticles": 626,
+    "eventCandidates": 591,
+    "evidencePoolArticles": 188,
+    "preparedEvents": 122,
+    "selectedEvents": 30,
+    "evidenceFailures": 38,
+    "sourceFailures": 3
+  },
+  "sourceStatus": [
+    {
+      "id": "sana-en",
+      "name": "SANA English",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "north-press-en",
+      "name": "North Press Agency",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "enab-baladi-en",
+      "name": "Enab Baladi English",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "syria-direct-en",
+      "name": "Syria Direct",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dhaka-tribune",
+      "name": "Dhaka Tribune",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "bd24live-en",
+      "name": "BD24Live English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "prothom-alo-en",
+      "name": "Prothom Alo English",
+      "status": "ok",
+      "itemCount": 5
+    },
+    {
+      "id": "financial-express-bd",
+      "name": "The Financial Express Bangladesh",
+      "status": "ok",
+      "itemCount": 28
+    },
+    {
+      "id": "daily-star-bd",
+      "name": "The Daily Star Bangladesh",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "The operation was aborted due to timeout"
+    },
+    {
+      "id": "myjoyonline",
+      "name": "MyJoyOnline",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "graphic-ghana",
+      "name": "Graphic Online",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "ghana-news-agency",
+      "name": "Ghana News Agency",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "toronto-city",
+      "name": "City of Toronto News",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "cbc-toronto",
+      "name": "CBC Toronto",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "cbc-canada",
+      "name": "CBC Canada",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "aljazeera-all",
+      "name": "Al Jazeera",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "arab-news",
+      "name": "Arab News",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "bbc-world",
+      "name": "BBC World",
+      "status": "ok",
+      "itemCount": 26
+    },
+    {
+      "id": "bbc-technology",
+      "name": "BBC Technology",
+      "status": "ok",
+      "itemCount": 21
+    },
+    {
+      "id": "bbc-science-environment",
+      "name": "BBC Science & Environment",
+      "status": "ok",
+      "itemCount": 41
+    },
+    {
+      "id": "guardian-world",
+      "name": "The Guardian World",
+      "status": "ok",
+      "itemCount": 45
+    },
+    {
+      "id": "guardian-science",
+      "name": "The Guardian Science",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "guardian-environment",
+      "name": "The Guardian Environment",
+      "status": "ok",
+      "itemCount": 34
+    },
+    {
+      "id": "npr-world",
+      "name": "NPR World",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "npr-science",
+      "name": "NPR Science",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dw-world",
+      "name": "DW World",
+      "status": "ok",
+      "itemCount": 138
+    },
+    {
+      "id": "africanews",
+      "name": "Africanews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "euronews",
+      "name": "Euronews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "global-voices",
+      "name": "Global Voices",
+      "status": "ok",
+      "itemCount": 15
+    },
+    {
+      "id": "japan-times",
+      "name": "The Japan Times",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "mongabay",
+      "name": "Mongabay",
+      "status": "ok",
+      "itemCount": 32
+    }
+  ],
+  "knownSourceFailures": [
+    {
+      "name": "Bangladesh Sangbad Sangstha",
+      "url": "https://www.bssnews.net/feed",
+      "status": "blocked",
+      "detail": "Cloudflare challenge returned HTTP 403 to the bounded collector."
+    },
+    {
+      "name": "The Indian Express feeds",
+      "url": "https://indianexpress.com/rss/",
+      "status": "blocked_in_cloud",
+      "detail": "Official feeds work locally but return HTTP 403 from GitHub Actions, so the automatic collector does not depend on them."
+    },
+    {
+      "name": "The Business Standard",
+      "url": "https://www.tbsnews.net/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "Feed served 2019–2021 items."
+    },
+    {
+      "name": "Ontario Newsroom",
+      "url": "https://news.ontario.ca/en/rss",
+      "status": "retired_from_registry",
+      "detail": "URL returns an HTML application shell, not RSS."
+    },
+    {
+      "name": "GhanaWeb",
+      "url": "https://www.ghanaweb.com/GhanaHomePage/NewsArchive/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "The publisher endpoint returned HTTP 404 in October 2026; MyJoyOnline and Graphic Online remain active Ghana sources."
+    }
+  ],
+  "reranker": {
+    "adjustments": [
+      {
+        "eventId": "event:8692c98f3a65f054",
+        "baseScore": 82.18,
+        "adjustment": 14,
+        "adjustedScore": 96.18,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:87f5bacfccf621ca",
+        "baseScore": 69.73,
+        "adjustment": 14,
+        "adjustedScore": 83.73,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:c4ff48c44a755210",
+        "baseScore": 69.19,
+        "adjustment": 14,
+        "adjustedScore": 83.19,
+        "contentType": "conflict",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:1e87a31ad1b22470",
+        "baseScore": 64.72,
+        "adjustment": 10,
+        "adjustedScore": 74.72,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Palestinian territories"
+      },
+      {
+        "eventId": "event:373ce3e39654012b",
+        "baseScore": 61.1,
+        "adjustment": 6,
+        "adjustedScore": 67.1,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:a93982ce04f3055d",
+        "baseScore": 39.56,
+        "adjustment": 18,
+        "adjustedScore": 57.56,
+        "contentType": "culture-science-education",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:d21966d4d2d4f384",
+        "baseScore": 45.73,
+        "adjustment": 10,
+        "adjustedScore": 55.73,
+        "contentType": "general",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:490e4adef76c165f",
+        "baseScore": 39.46,
+        "adjustment": 14,
+        "adjustedScore": 53.46,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:d06e69b38f5d9a4d",
+        "baseScore": 34.66,
+        "adjustment": 18,
+        "adjustedScore": 52.66,
+        "contentType": "culture-science-education",
+        "regions": [
+          "World"
+        ],
+        "country": "France"
+      },
+      {
+        "eventId": "event:ba9f94f9626bb31b",
+        "baseScore": 43.79,
+        "adjustment": 7,
+        "adjustedScore": 50.79,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:7c267ddca2f4b0e7",
+        "baseScore": 43.94,
+        "adjustment": -2,
+        "adjustedScore": 41.94,
+        "contentType": "conflict",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:3529398b35b1956d",
+        "baseScore": 71.24,
+        "adjustment": -34,
+        "adjustedScore": 37.239999999999995,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:2cb3bf2d0328481e",
+        "baseScore": 56.69,
+        "adjustment": -23,
+        "adjustedScore": 33.69,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:06ed86c5e698f159",
+        "baseScore": 57.74,
+        "adjustment": -29,
+        "adjustedScore": 28.740000000000002,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:265341f3f8e85d5c",
+        "baseScore": 48.73,
+        "adjustment": -21,
+        "adjustedScore": 27.729999999999997,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:2d157e8a3a6b6de2",
+        "baseScore": 43.55,
+        "adjustment": -25,
+        "adjustedScore": 18.549999999999997,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:a609d5e6c0c427c2",
+        "baseScore": 37.7,
+        "adjustment": -28,
+        "adjustedScore": 9.700000000000003,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "Ethiopia"
+      },
+      {
+        "eventId": "event:4a43e7c639e762cc",
+        "baseScore": 50.73,
+        "adjustment": -46,
+        "adjustedScore": 4.729999999999997,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "France"
+      },
+      {
+        "eventId": "event:ecb6f41e7e26d6c5",
+        "baseScore": 42.41,
+        "adjustment": -40,
+        "adjustedScore": 2.4099999999999966,
+        "contentType": "general",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:a4443d54a163e1c7",
+        "baseScore": 34.69,
+        "adjustment": -35,
+        "adjustedScore": -0.3100000000000023,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:79ee33e369cc4733",
+        "baseScore": 53.64,
+        "adjustment": -56,
+        "adjustedScore": -2.3599999999999994,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Iran"
+      },
+      {
+        "eventId": "event:ff1d92e96d05ec82",
+        "baseScore": 45.74,
+        "adjustment": -49,
+        "adjustedScore": -3.259999999999998,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "United States"
+      },
+      {
+        "eventId": "event:0302d392178bb760",
+        "baseScore": 46.88,
+        "adjustment": -52,
+        "adjustedScore": -5.119999999999997,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:b382daae92980250",
+        "baseScore": 55.82,
+        "adjustment": -69,
+        "adjustedScore": -13.18,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:47f8b7bfa93d374e",
+        "baseScore": 47.8,
+        "adjustment": -70,
+        "adjustedScore": -22.200000000000003,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "Ukraine"
+      },
+      {
+        "eventId": "event:a6e49a8649e671df",
+        "baseScore": 37.46,
+        "adjustment": -63,
+        "adjustedScore": -25.54,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:9d823d6251737d87",
+        "baseScore": 39.59,
+        "adjustment": -68,
+        "adjustedScore": -28.409999999999997,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:fa46b8bc8167b910",
+        "baseScore": 39.68,
+        "adjustment": -70,
+        "adjustedScore": -30.32,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "India"
+      },
+      {
+        "eventId": "event:6cf5edbb2c26222b",
+        "baseScore": 52,
+        "adjustment": -91,
+        "adjustedScore": -39,
+        "contentType": "conflict",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:f6d4445ac573a26b",
+        "baseScore": 41.31,
+        "adjustment": -85,
+        "adjustedScore": -43.69,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      }
+    ],
+    "distribution": {
+      "regions": {
+        "Middle East": 9,
+        "GTA": 4,
+        "Canada": 6,
+        "Ghana": 5,
+        "World": 6,
+        "Bangladesh": 4,
+        "Syria": 2
+      },
+      "countries": {
+        "Yemen": 3,
+        "GTA": 4,
+        "Ghana": 5,
+        "Palestinian territories": 1,
+        "World": 2,
+        "Canada": 2,
+        "Bangladesh": 4,
+        "France": 2,
+        "Syria": 2,
+        "Ethiopia": 1,
+        "Iran": 1,
+        "United States": 1,
+        "Ukraine": 1,
+        "India": 1
+      },
+      "contentTypes": {
+        "conflict": 8,
+        "general": 8,
+        "culture-science-education": 3,
+        "economy-or-public-life": 4,
+        "diplomacy-or-speech": 7
+      },
+      "publishers": {
+        "The Guardian World": 3,
+        "CBC Toronto": 3,
+        "Ghana News Agency": 1,
+        "Africanews": 3,
+        "MyJoyOnline": 2,
+        "The Japan Times": 1,
+        "CBC Canada": 2,
+        "Mongabay": 1,
+        "Arab News": 3,
+        "North Press Agency": 2,
+        "The Financial Express Bangladesh": 2,
+        "DW World": 1,
+        "Graphic Online": 2,
+        "Prothom Alo English": 1,
+        "NPR World": 1,
+        "City of Toronto News": 1,
+        "Euronews": 1
+      }
+    }
+  },
+  "selectedEvents": [
+    {
+      "eventId": "event:8692c98f3a65f054",
+      "title": "Three Saudis killed in Riyadh airport attack claimed by Houthis",
+      "score": 82.18,
+      "adjustedScore": 96.18,
+      "rank": 1,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.18,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:87f5bacfccf621ca",
+      "title": "Not sure who to vote for? These municipal election resources can help you decide",
+      "score": 69.73,
+      "adjustedScore": 83.73,
+      "rank": 2,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 17.73,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 22,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:c4ff48c44a755210",
+      "title": "Caretaker killed in second Polish school attack in two days",
+      "score": 69.19,
+      "adjustedScore": 83.19,
+      "rank": 3,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.19,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:1e87a31ad1b22470",
+      "title": "Over 20,000 Palestinian students and education workers killed in Gaza war",
+      "score": 64.72,
+      "adjustedScore": 74.72,
+      "rank": 4,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 13.72,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:373ce3e39654012b",
+      "title": "Health Ministry declares Yellow Fever outbreak in Upper West Region",
+      "score": 61.1,
+      "adjustedScore": 67.1,
+      "rank": 5,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.1,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:a93982ce04f3055d",
+      "title": "Inside the deadlock at the world’s top climate science body",
+      "score": 39.56,
+      "adjustedScore": 57.56,
+      "rank": 6,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.56,
+        "importance": 18,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:d21966d4d2d4f384",
+      "title": "The Alberta question: How separatists took hold of the province’s governing party",
+      "score": 45.73,
+      "adjustedScore": 55.73,
+      "rank": 7,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 17.73,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:490e4adef76c165f",
+      "title": "Dhaka’s waste-to-energy plant face backlash over air pollution",
+      "score": 39.46,
+      "adjustedScore": 53.46,
+      "rank": 8,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.46,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 7,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:d06e69b38f5d9a4d",
+      "title": "Two Renoir paintings stolen in France recovered: mayor",
+      "score": 34.66,
+      "adjustedScore": 52.66,
+      "rank": 9,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.66,
+        "importance": 0,
+        "interestingness": 4,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 5,
+        "localTexture": 0,
+        "editorialBonus": 5,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:ba9f94f9626bb31b",
+      "title": "Iraq rejects Syria’s request for 4,000 IS detainees",
+      "score": 43.79,
+      "adjustedScore": 50.79,
+      "rank": 10,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 18.79,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:7c267ddca2f4b0e7",
+      "title": "Attack on journalists at RU: Probe panel recommends suspension of 4 students",
+      "score": 43.94,
+      "adjustedScore": 41.94,
+      "rank": 11,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.94,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:3529398b35b1956d",
+      "title": "Saudi coalition vows 'firm' response after airport attack kills 3",
+      "score": 71.24,
+      "adjustedScore": 37.24,
+      "rank": 12,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.24,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:2cb3bf2d0328481e",
+      "title": "Ashaiman Municipal Assembly lobbies for completion of storm-drain project",
+      "score": 56.69,
+      "adjustedScore": 33.69,
+      "rank": 13,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.69,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 18,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:06ed86c5e698f159",
+      "title": "Bradford inches closer to Chow's lead in Toronto's mayoral election, new poll suggests",
+      "score": 57.74,
+      "adjustedScore": 28.74,
+      "rank": 14,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 19.74,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:265341f3f8e85d5c",
+      "title": "Cop31 host urges wealthy countries to spend ‘much more’ on climate than defence",
+      "score": 48.73,
+      "adjustedScore": 27.73,
+      "rank": 15,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.73,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:2d157e8a3a6b6de2",
+      "title": "Syrian presidential adviser Mazloum Abdi says integration nears completion",
+      "score": 43.55,
+      "adjustedScore": 18.55,
+      "rank": 16,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 18.55,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:a609d5e6c0c427c2",
+      "title": "Tigray war: Why peace talks may fail before they even begin {Africanews Debates}",
+      "score": 37.7,
+      "adjustedScore": 9.7,
+      "rank": 17,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.7,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:4a43e7c639e762cc",
+      "title": "Palestinians set to delay legislative elections due to worsening conditions, letter says",
+      "score": 50.73,
+      "adjustedScore": 4.73,
+      "rank": 18,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.73,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:ecb6f41e7e26d6c5",
+      "title": "Man who started northern Sask. wildfire sentenced to 6 years",
+      "score": 42.41,
+      "adjustedScore": 2.41,
+      "rank": 19,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 14.41,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:a4443d54a163e1c7",
+      "title": "‘Jamaat secretary general owns 700 auto-rickshaws’: Jamaat seeks evidence from DNCC administrator",
+      "score": 34.69,
+      "adjustedScore": -0.31,
+      "rank": 20,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.69,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:79ee33e369cc4733",
+      "title": "Trump says U.S. won't attack Iran before midterms. And, ICE agent shoots man in NYC",
+      "score": 53.64,
+      "adjustedScore": -2.36,
+      "rank": 21,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.64,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:ff1d92e96d05ec82",
+      "title": "Trump establishes committee to investigate Fed governor Lisa Cook",
+      "score": 45.74,
+      "adjustedScore": -3.26,
+      "rank": 22,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.74,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:0302d392178bb760",
+      "title": "Former Deputy Trade and Industry Minister Nana Ama Dokua called to Ghana Bar",
+      "score": 46.88,
+      "adjustedScore": -5.12,
+      "rank": 23,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.88,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:b382daae92980250",
+      "title": "How to watch CBC Toronto's live election night special",
+      "score": 55.82,
+      "adjustedScore": -13.18,
+      "rank": 24,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 19.82,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": -25,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 19,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:47f8b7bfa93d374e",
+      "title": "At least 33 people killed in strikes on Ukrainian public buses",
+      "score": 47.8,
+      "adjustedScore": -22.2,
+      "rank": 25,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.8,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:a6e49a8649e671df",
+      "title": "1,568 new lawyers called to the Ghana Bar",
+      "score": 37.46,
+      "adjustedScore": -25.54,
+      "rank": 26,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.46,
+        "importance": 0,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:9d823d6251737d87",
+      "title": "BCDP conference calls for climate investment mobilisation",
+      "score": 39.59,
+      "adjustedScore": -28.41,
+      "rank": 27,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.59,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:fa46b8bc8167b910",
+      "title": "India in talks with Saudi Arabia for investment in strategic port projects",
+      "score": 39.68,
+      "adjustedScore": -30.32,
+      "rank": 28,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.68,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:6cf5edbb2c26222b",
+      "title": "Advance voting in Toronto’s 2026 municipal election begins tomorrow",
+      "score": 52,
+      "adjustedScore": -39,
+      "rank": 29,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 0,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 22,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:f6d4445ac573a26b",
+      "title": "Houthi missile strikes on Riyadh airport kill three, including airline captain",
+      "score": 41.31,
+      "adjustedScore": -43.69,
+      "rank": 30,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.31,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    }
+  ],
+  "invalidPreviousCardsRemoved": [],
+  "crossEventOverlap": [
+    {
+      "packet_event_id": "event:8692c98f3a65f054",
+      "other_event_id": "event:c4ff48c44a755210",
+      "fragment_id": "F46",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=two,killed,attack; entities=; actions=kill,attack"
+    },
+    {
+      "packet_event_id": "event:8692c98f3a65f054",
+      "other_event_id": "event:3529398b35b1956d",
+      "fragment_id": "F01",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=attack,saudi,airport; entities=; actions=attack,kill"
+    },
+    {
+      "packet_event_id": "event:8692c98f3a65f054",
+      "other_event_id": "event:3529398b35b1956d",
+      "fragment_id": "F04",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=attack,airport,saudi; entities=; actions=attack"
+    },
+    {
+      "packet_event_id": "event:8692c98f3a65f054",
+      "other_event_id": "event:3529398b35b1956d",
+      "fragment_id": "F10",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=airport,after,attack; entities=; actions=attack"
+    },
+    {
+      "packet_event_id": "event:8692c98f3a65f054",
+      "other_event_id": "event:3529398b35b1956d",
+      "fragment_id": "F37",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=saudi,airport,after; entities=; actions=kill,attack"
+    },
+    {
+      "packet_event_id": "event:3529398b35b1956d",
+      "other_event_id": "event:8692c98f3a65f054",
+      "fragment_id": "F02",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=three,killed,attack,riyadh,airport; entities=; actions=kill,attack"
+    },
+    {
+      "packet_event_id": "event:3529398b35b1956d",
+      "other_event_id": "event:8692c98f3a65f054",
+      "fragment_id": "F05",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=riyadh,airport,killed,three; entities=; actions=attack,kill"
+    },
+    {
+      "packet_event_id": "event:3529398b35b1956d",
+      "other_event_id": "event:8692c98f3a65f054",
+      "fragment_id": "F14",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=riyadh,airport,houthis,killed,three; entities=; actions=attack,kill"
+    }
+  ],
+  "generation": [
+    {
+      "eventId": "event:87f5bacfccf621ca",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "page 1 exposes a citation/list marker"
+        ],
+        "wordCount": 176,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-09T17:05:04.865Z",
+          "finishedAt": "2026-10-09T17:05:09.509Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Civic organizations provide resources ahead of Toronto municipal election\", \"pages\": [{\"text\": \"With Toronto's municipal election just over two weeks away, various civic organizations are offering resources to inform voters. The election features more than 50 candidates running for mayor and multiple councillors in each ward, with platforms addressing issues such as housing, transit affordability, and public safety. 1. The Toronto Public Library (TPL) has launched a citywide initiative called Celebrate Democracy to assist residents in learning about the democratic process and candidates. The initiative includes the interactive website KnowYourVote.to, which allows residents to find candidates in their wards and compare positions on issues like housing and public safety. 2. The TPL is also hosting events focused on misinformation, trust in institutions, and voter engagement. Nan Davies, the TPL's manager of learning and community engagement, stated the initiative aims to help people feel more connected to the city and democracy, noting the library provides unbiased, free information as a neutral resource. 3. Programming is designed for all ages, including specific elements for children and teens, as well as an election information campaign on TikTok aimed at younger voters.\"}]}",
+          "parsed": {
+            "headline": "Civic organizations provide resources ahead of Toronto municipal election",
+            "pages": [
+              {
+                "text": "With Toronto's municipal election just over two weeks away, various civic organizations are offering resources to inform voters. The election features more than 50 candidates running for mayor and multiple councillors in each ward, with platforms addressing issues such as housing, transit affordability, and public safety. 1. The Toronto Public Library (TPL) has launched a citywide initiative called Celebrate Democracy to assist residents in learning about the democratic process and candidates. The initiative includes the interactive website KnowYourVote.to, which allows residents to find candidates in their wards and compare positions on issues like housing and public safety. 2. The TPL is also hosting events focused on misinformation, trust in institutions, and voter engagement. Nan Davies, the TPL's manager of learning and community engagement, stated the initiative aims to help people feel more connected to the city and democracy, noting the library provides unbiased, free information as a neutral resource. 3. Programming is designed for all ages, including specific elements for children and teens, as well as an election information campaign on TikTok aimed at younger voters."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1454,
+            "completion_tokens": 243,
+            "total_tokens": 1697,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 19.845455169677734
+          },
+          "latencyMs": 4644,
+          "safeHeaders": {
+            "cf-ray": "a47ef7d5bda5979e-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:373ce3e39654012b",
+      "title": "Health Ministry declares Yellow Fever outbreak in Upper West Region",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "3e4ede502be55f5b38cf149420888deb665ec566870aec82f22fb09967215770",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 280,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:myjoyonline:91a6399be56ea4b4baaeb3b8",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:myjoyonline:91a6399be56ea4b4baaeb3b8",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:myjoyonline:91a6399be56ea4b4baaeb3b8",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:myjoyonline:91a6399be56ea4b4baaeb3b8",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:myjoyonline:91a6399be56ea4b4baaeb3b8",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:myjoyonline:91a6399be56ea4b4baaeb3b8",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:myjoyonline:91a6399be56ea4b4baaeb3b8",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:myjoyonline:91a6399be56ea4b4baaeb3b8",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:myjoyonline:91a6399be56ea4b4baaeb3b8",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:myjoyonline:91a6399be56ea4b4baaeb3b8",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:myjoyonline:91a6399be56ea4b4baaeb3b8",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:myjoyonline:d493238e03d16e3823ddd938",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:myjoyonline:d493238e03d16e3823ddd938",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:myjoyonline:d493238e03d16e3823ddd938",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F15",
+            "sourceId": "news:myjoyonline:d493238e03d16e3823ddd938",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F16",
+            "sourceId": "news:myjoyonline:d493238e03d16e3823ddd938",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F17",
+            "sourceId": "news:myjoyonline:d493238e03d16e3823ddd938",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F18",
+            "sourceId": "news:myjoyonline:d493238e03d16e3823ddd938",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F19",
+            "sourceId": "news:myjoyonline:d493238e03d16e3823ddd938",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F20",
+            "sourceId": "news:myjoyonline:d493238e03d16e3823ddd938",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F21",
+            "sourceId": "news:myjoyonline:d493238e03d16e3823ddd938",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F22",
+            "sourceId": "news:myjoyonline:d493238e03d16e3823ddd938",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F23",
+            "sourceId": "news:myjoyonline:d493238e03d16e3823ddd938",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F24",
+            "sourceId": "news:ghana-news-agency:cafaebd62cf90de64669c11d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F25",
+            "sourceId": "news:ghana-news-agency:cafaebd62cf90de64669c11d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F26",
+            "sourceId": "news:ghana-news-agency:cafaebd62cf90de64669c11d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F27",
+            "sourceId": "news:ghana-news-agency:cafaebd62cf90de64669c11d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F28",
+            "sourceId": "news:ghana-news-agency:cafaebd62cf90de64669c11d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F29",
+            "sourceId": "news:ghana-news-agency:cafaebd62cf90de64669c11d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F30",
+            "sourceId": "news:ghana-news-agency:cafaebd62cf90de64669c11d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F31",
+            "sourceId": "news:ghana-news-agency:cafaebd62cf90de64669c11d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F32",
+            "sourceId": "news:ghana-news-agency:cafaebd62cf90de64669c11d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F33",
+            "sourceId": "news:ghana-news-agency:cafaebd62cf90de64669c11d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F34",
+            "sourceId": "news:ghana-news-agency:cafaebd62cf90de64669c11d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F35",
+            "sourceId": "news:ghana-news-agency:cafaebd62cf90de64669c11d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:myjoyonline:91a6399be56ea4b4baaeb3b8",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/health-ministry-declares-yellow-fever-outbreak-in-upper-west-region",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:myjoyonline:d493238e03d16e3823ddd938",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/approved-vaccine-for-yellow-fever-to-be-rolled-out-in-upper-west-next-week-ghs",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:ghana-news-agency:cafaebd62cf90de64669c11d",
+          "publisher": "Ghana News Agency",
+          "url": "https://gna.org.gh/2026/10/health-minister-confirms-three-yellow-fever-cases-in-upper-west",
+          "wireOrigin": null,
+          "sourceType": "public_service_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.myjoyonline.com/wp-content/uploads/2026/10/image-996.png",
+        "alt": "Yellow Fever",
+        "status": "event-specific",
+        "source_url": "https://myjoyonline.com/health-ministry-declares-yellow-fever-outbreak-in-upper-west-region",
+        "attribution": "MyJoyOnline",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-09T17:05:09.510Z",
+          "finishedAt": "2026-10-09T17:05:15.916Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Ghana health ministry declares yellow fever outbreak in Upper West Region\", \"pages\": [{\"text\": \"The Ministry of Health has declared a yellow fever outbreak in parts of the Upper West Region of Ghana following the laboratory confirmation of three cases, all of which resulted in deaths. Health Minister Kwabena Mintah Akandoh announced the declaration in Accra, stating that the confirmed cases were identified out of 450 suspected cases. The confirmation followed testing of samples at the Institut Pasteur, a World Health Organisation (WHO)-accredited laboratory in Dakar, Senegal. According to the Ministry, reports of suspected cases presenting with fever, jaundice, and bleeding in health facilities in Sissala West and Wa West dated back to September 9. Dr. Franklin Asiedu-Bekoe, Director of Public Health, previously noted that seven districts in the region had reported cases, with Sissala East, Sissala West, and Wa West identified as areas of particular concern. The Ministry of Health is working through the Ghana Health Service and in partnership with the WHO to coordinate the response. The Ghana Health Service is scheduled to begin a mass vaccination campaign in the affected region next week, targeting individuals aged nine months to 60 years in the Sissala East, Sissala West, and Wa West districts. In response to the outbreak, the Ministry has activated National and Regional Public Health Emergency Operations Centres and deployed Rapid Response Teams for surveillance and case finding. Other implemented measures include promoting the use of insecticide-treated bed nets and repellents, strengthening case management at designated facilities, and intensifying community engagement. The Minister advised the public that yellow fever is not transmitted through direct person-to-person contact and urged citizens to report to health facilities if they experience sudden fever, headache, muscle pain, yellowing of the eyes or skin, or unusual bleeding.\"}]}",
+          "parsed": {
+            "headline": "Ghana health ministry declares yellow fever outbreak in Upper West Region",
+            "pages": [
+              {
+                "text": "The Ministry of Health has declared a yellow fever outbreak in parts of the Upper West Region of Ghana following the laboratory confirmation of three cases, all of which resulted in deaths. Health Minister Kwabena Mintah Akandoh announced the declaration in Accra, stating that the confirmed cases were identified out of 450 suspected cases. The confirmation followed testing of samples at the Institut Pasteur, a World Health Organisation (WHO)-accredited laboratory in Dakar, Senegal. According to the Ministry, reports of suspected cases presenting with fever, jaundice, and bleeding in health facilities in Sissala West and Wa West dated back to September 9. Dr. Franklin Asiedu-Bekoe, Director of Public Health, previously noted that seven districts in the region had reported cases, with Sissala East, Sissala West, and Wa West identified as areas of particular concern. The Ministry of Health is working through the Ghana Health Service and in partnership with the WHO to coordinate the response. The Ghana Health Service is scheduled to begin a mass vaccination campaign in the affected region next week, targeting individuals aged nine months to 60 years in the Sissala East, Sissala West, and Wa West districts. In response to the outbreak, the Ministry has activated National and Regional Public Health Emergency Operations Centres and deployed Rapid Response Teams for surveillance and case finding. Other implemented measures include promoting the use of insecticide-treated bed nets and repellents, strengthening case management at designated facilities, and intensifying community engagement. The Minister advised the public that yellow fever is not transmitted through direct person-to-person contact and urged citizens to report to health facilities if they experience sudden fever, headache, muscle pain, yellowing of the eyes or skin, or unusual bleeding."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 3084,
+            "completion_tokens": 377,
+            "total_tokens": 3461,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 38.31818389892578
+          },
+          "latencyMs": 6406,
+          "safeHeaders": {
+            "cf-ray": "a47ef7f28fd3979e-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:a93982ce04f3055d",
+      "title": "Inside the deadlock at the world’s top climate science body",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "a88400a64e7b4f9109ffc8e3a1d7c2303bcb8235ac044bae0caff634377e7e70",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 143,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:japan-times:dae1eaca4a2d6a9ee9f802c0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:japan-times:dae1eaca4a2d6a9ee9f802c0",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:japan-times:dae1eaca4a2d6a9ee9f802c0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:japan-times:dae1eaca4a2d6a9ee9f802c0",
+          "publisher": "The Japan Times",
+          "url": "https://japantimes.co.jp/environment/2026/10/09/climate-change/ipcc-deadlock",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.japantimes.co.jp/japantimes/uploads/images/2026/10/09/567790.jpg",
+        "alt": "Inside the deadlock at the world’s top climate science body",
+        "status": "event-specific",
+        "source_url": "https://japantimes.co.jp/environment/2026/10/09/climate-change/ipcc-deadlock",
+        "attribution": "The Japan Times",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-09T17:05:15.918Z",
+          "finishedAt": "2026-10-09T17:05:19.436Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"IPCC members reach impasse over timeline for next climate science review\",\n  \"pages\": [\n    {\n      \"text\": \"Members of the Intergovernmental Panel on Climate Change (IPCC), the world’s leading authority on climate change, have been unable to agree on a timeline to publish its next review of the latest science regarding global warming. According to interviews with more than a dozen current and former IPCC scientists, government negotiators, and meeting observers, the debate over publication dates has continued for nearly three years. Such assessments from the IPCC have informed every major United Nations climate agreement for three decades. The impasse could result in countries deciding on future phases of action without a consensus on critical issues, including the extent to which some global warming might be reversible. The dispute reflects rifts between wealthy industrialized nations, major emerging economies, and poorer nations concerning how to respond to warming temperatures and how much of the burden should be shouldered by different countries.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "IPCC members reach impasse over timeline for next climate science review",
+            "pages": [
+              {
+                "text": "Members of the Intergovernmental Panel on Climate Change (IPCC), the world’s leading authority on climate change, have been unable to agree on a timeline to publish its next review of the latest science regarding global warming. According to interviews with more than a dozen current and former IPCC scientists, government negotiators, and meeting observers, the debate over publication dates has continued for nearly three years. Such assessments from the IPCC have informed every major United Nations climate agreement for three decades. The impasse could result in countries deciding on future phases of action without a consensus on critical issues, including the extent to which some global warming might be reversible. The dispute reflects rifts between wealthy industrialized nations, major emerging economies, and poorer nations concerning how to respond to warming temperatures and how much of the burden should be shouldered by different countries."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1117,
+            "completion_tokens": 209,
+            "total_tokens": 1326,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 15.854544639587402
+          },
+          "latencyMs": 3518,
+          "safeHeaders": {
+            "cf-ray": "a47ef81a8dfc979e-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:d21966d4d2d4f384",
+      "title": "The Alberta question: How separatists took hold of the province’s governing party",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "1ffc1e8d18df4905cc8c672607a61cb69811a053de06993435f4c46a6615980c",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 88,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:cbc:5dc5bf1c09a6b480b5d78da1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:cbc:5dc5bf1c09a6b480b5d78da1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:cbc:5dc5bf1c09a6b480b5d78da1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:cbc:5dc5bf1c09a6b480b5d78da1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:cbc:5dc5bf1c09a6b480b5d78da1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:cbc:5dc5bf1c09a6b480b5d78da1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:cbc:5dc5bf1c09a6b480b5d78da1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:cbc:5dc5bf1c09a6b480b5d78da1",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:cbc:5dc5bf1c09a6b480b5d78da1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:cbc:5dc5bf1c09a6b480b5d78da1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:cbc:5dc5bf1c09a6b480b5d78da1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:cbc:5dc5bf1c09a6b480b5d78da1",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:cbc:5dc5bf1c09a6b480b5d78da1",
+          "publisher": "CBC Canada",
+          "url": "https://cbc.ca/news/canada/the-alberta-question-9.7371294?cmp=rss",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.cbc.ca/ais/418f0b8c-a07f-498a-98b5-0293deb25d13,1791307173169/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C0%2C1920%2C1080%29%3B",
+        "alt": "The Alberta question: How separatists took hold of the province’s governing party",
+        "status": "event-specific",
+        "source_url": "https://cbc.ca/news/canada/the-alberta-question-9.7371294?cmp=rss",
+        "attribution": "CBC Canada",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-09T17:05:19.436Z",
+          "finishedAt": "2026-10-09T17:05:23.265Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Separatist sentiment addressed at United Conservative Party annual general meeting in Alberta\",\n  \"pages\": [\n    {\n      \"text\": \"During the United Conservative Party’s 2025 annual general meeting in Edmonton, Alberta, a member of the party raised the issue of provincial independence. While sitting on stage with her cabinet, Premier Danielle Smith was approached by Jeff Rath, a constitutional lawyer, UCP member, and figure in the Alberta independence movement. Rath asked the room how many members favored a free and independent Alberta, an inquiry that was met with an ovation from the crowd. Smith responded by stating, 'Well, I support an independent Alberta within a united Canada.'\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Separatist sentiment addressed at United Conservative Party annual general meeting in Alberta",
+            "pages": [
+              {
+                "text": "During the United Conservative Party’s 2025 annual general meeting in Edmonton, Alberta, a member of the party raised the issue of provincial independence. While sitting on stage with her cabinet, Premier Danielle Smith was approached by Jeff Rath, a constitutional lawyer, UCP member, and figure in the Alberta independence movement. Rath asked the room how many members favored a free and independent Alberta, an inquiry that was met with an ovation from the crowd. Smith responded by stating, 'Well, I support an independent Alberta within a united Canada.'"
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1217,
+            "completion_tokens": 157,
+            "total_tokens": 1374,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 15.345454216003418
+          },
+          "latencyMs": 3828,
+          "safeHeaders": {
+            "cf-ray": "a47ef8308ec5979e-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:490e4adef76c165f",
+      "title": "Dhaka’s waste-to-energy plant face backlash over air pollution",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "dfabe343320def36ae2c865b9fce5ec29b4c573d5fa030bc30916587dbfdfc87",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 235,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:mongabay:6aa7aa4bd7843991c94cf62b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:mongabay:6aa7aa4bd7843991c94cf62b",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:mongabay:6aa7aa4bd7843991c94cf62b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:mongabay:6aa7aa4bd7843991c94cf62b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:mongabay:6aa7aa4bd7843991c94cf62b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:mongabay:6aa7aa4bd7843991c94cf62b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:mongabay:6aa7aa4bd7843991c94cf62b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:mongabay:6aa7aa4bd7843991c94cf62b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:mongabay:6aa7aa4bd7843991c94cf62b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:mongabay:6aa7aa4bd7843991c94cf62b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:mongabay:6aa7aa4bd7843991c94cf62b",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:mongabay:6aa7aa4bd7843991c94cf62b",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:mongabay:6aa7aa4bd7843991c94cf62b",
+          "publisher": "Mongabay",
+          "url": "https://news.mongabay.com/short-article/2026/10/dhakas-waste-to-energy-plant-face-backlash-over-air-pollution",
+          "wireOrigin": null,
+          "sourceType": "specialist_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://imgs.mongabay.com/wp-content/uploads/sites/20/2026/10/09065421/Aminbazar-landfill-Photo-01-768x512.jpg",
+        "alt": "Dhaka’s waste-to-energy plant face backlash over air pollution",
+        "status": "event-specific",
+        "source_url": "https://news.mongabay.com/short-article/2026/10/dhakas-waste-to-energy-plant-face-backlash-over-air-pollution",
+        "attribution": "Mongabay",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-09T17:05:23.265Z",
+          "finishedAt": "2026-10-09T17:05:29.196Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Communities oppose waste-to-energy plant near Dhaka, Bangladesh\",\n  \"pages\": [\n    {\n      \"text\": \"Construction of a $467 million power plant designed to incinerate municipal waste for electricity near Dhaka, Bangladesh, is facing opposition from nearby communities over potential health risks from toxic air pollution, according to a report by Eyamin Sajid for Mongabay. The project, which is being overseen by the Dhaka North City Corporation and owned by the China Machinery Engineering Corporation (CMEC), is slated for completion in December 2028. The facility is intended to incinerate up to 3,000 metric tons of waste daily to generate up to 42.5 megawatts of electricity. Densely populated communities and several schools are located less than a mile from the site. Local farmers, including rice and vegetable grower Md Naim, told Mongabay that unmanaged trash fires at the current dumpsite already cause headaches and breathing difficulties due to smoke and ash.\"\n    },\n    {\n      \"text\": \"An environmental impact assessment for the project states the incinerator will produce 74.8 metric tons of airborne fly ash daily. Additionally, an analysis by environmental groups indicates the plant will generate 39.56 metric tons of toxic substances annually, including heavy metals, dioxins, and furans, alongside 73,576 metric tons of solid waste. Hasan Mehedi, secretary of the Bangladesh Working Group on Ecology and Development (BWGED), stated that regular operation of the plant could lead to respiratory and lung-related problems, eye irritation, fatigue, and long-term health issues for local residents, particularly children and the elderly, due to chronic exposure to air pollution.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Communities oppose waste-to-energy plant near Dhaka, Bangladesh",
+            "pages": [
+              {
+                "text": "Construction of a $467 million power plant designed to incinerate municipal waste for electricity near Dhaka, Bangladesh, is facing opposition from nearby communities over potential health risks from toxic air pollution, according to a report by Eyamin Sajid for Mongabay. The project, which is being overseen by the Dhaka North City Corporation and owned by the China Machinery Engineering Corporation (CMEC), is slated for completion in December 2028. The facility is intended to incinerate up to 3,000 metric tons of waste daily to generate up to 42.5 megawatts of electricity. Densely populated communities and several schools are located less than a mile from the site. Local farmers, including rice and vegetable grower Md Naim, told Mongabay that unmanaged trash fires at the current dumpsite already cause headaches and breathing difficulties due to smoke and ash."
+              },
+              {
+                "text": "An environmental impact assessment for the project states the incinerator will produce 74.8 metric tons of airborne fly ash daily. Additionally, an analysis by environmental groups indicates the plant will generate 39.56 metric tons of toxic substances annually, including heavy metals, dioxins, and furans, alongside 73,576 metric tons of solid waste. Hasan Mehedi, secretary of the Bangladesh Working Group on Ecology and Development (BWGED), stated that regular operation of the plant could lead to respiratory and lung-related problems, eye irritation, fatigue, and long-term health issues for local residents, particularly children and the elderly, due to chronic exposure to air pollution."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1615,
+            "completion_tokens": 374,
+            "total_tokens": 1989,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 24.881816864013672
+          },
+          "latencyMs": 5931,
+          "safeHeaders": {
+            "cf-ray": "a47ef8487b32979e-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:d06e69b38f5d9a4d",
+      "title": "Two Renoir paintings stolen in France recovered: mayor",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "f033add39e37771cf2f56a1280b27b71878e270a3f9cc46703b49fa4d8f5c269",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 197,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:arab-news:cfbe33755c7d4ec510933f58",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:arab-news:cfbe33755c7d4ec510933f58",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:arab-news:cfbe33755c7d4ec510933f58",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:arab-news:cfbe33755c7d4ec510933f58",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:arab-news:cfbe33755c7d4ec510933f58",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:arab-news:cfbe33755c7d4ec510933f58",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:arab-news:cfbe33755c7d4ec510933f58",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:arab-news:cfbe33755c7d4ec510933f58",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:arab-news:cfbe33755c7d4ec510933f58",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:arab-news:cfbe33755c7d4ec510933f58",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:bbc:6c0eeeba176f0dfc58b3ed31",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:bbc:6c0eeeba176f0dfc58b3ed31",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:bbc:6c0eeeba176f0dfc58b3ed31",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:bbc:6c0eeeba176f0dfc58b3ed31",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F15",
+            "sourceId": "news:bbc:6c0eeeba176f0dfc58b3ed31",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F16",
+            "sourceId": "news:bbc:6c0eeeba176f0dfc58b3ed31",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F17",
+            "sourceId": "news:bbc:6c0eeeba176f0dfc58b3ed31",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F18",
+            "sourceId": "news:bbc:6c0eeeba176f0dfc58b3ed31",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F19",
+            "sourceId": "news:bbc:6c0eeeba176f0dfc58b3ed31",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F20",
+            "sourceId": "news:bbc:6c0eeeba176f0dfc58b3ed31",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F21",
+            "sourceId": "news:bbc:6c0eeeba176f0dfc58b3ed31",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F22",
+            "sourceId": "news:bbc:6c0eeeba176f0dfc58b3ed31",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:arab-news:cfbe33755c7d4ec510933f58",
+          "publisher": "Arab News",
+          "url": "https://arabnews.com/world/two-renoir-paintings-stolen-in-france-recovered-mayor-3005446",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:bbc:6c0eeeba176f0dfc58b3ed31",
+          "publisher": "BBC World",
+          "url": "https://bbc.co.uk/news/articles/cwkg50v1vn07o",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://assets.maestronewsroom.com/media/shared/wires/reuters/20261005/373a07422c4a-2026-09-30T103333Z_1287371848_RC2KTNAWIYSH_RTRMADP_3_ART-AUCTION-BLAQUIER-ARRIETA-COLLECTION.JPG",
+        "alt": "Two Renoir paintings stolen in France recovered: mayor",
+        "status": "event-specific",
+        "source_url": "https://arabnews.com/world/two-renoir-paintings-stolen-in-france-recovered-mayor-3005446",
+        "attribution": "Arab News",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-09T17:05:29.197Z",
+          "finishedAt": "2026-10-09T17:05:33.413Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Two Renoir paintings recovered after theft from museum in Cagnes-sur-Mer, France\", \"pages\": [{\"text\": \"Two paintings by French impressionist Pierre-Auguste Renoir have been recovered approximately one month after they were stolen from a museum in southern France, according to the mayor of Cagnes-sur-Mer. The recovered works are titled *Portrait of Madame Colonna Romano* (1910) and *Jeune fille au puits* (1886).  The paintings were stolen in September when thieves entered the Renoir Museum by cutting through a fence and smashing a window. The suspects used an electric saw to cut through frame mountings and initially fled with four paintings, though they abandoned two of them in the museum's garden during their escape.  Bryan Masson, the mayor of Cagnes-sur-Mer and a member of France's National Rally, stated that the recovery provides immense relief and noted that the works are part of the city's history and cultural heritage. While the town hall initially planned to provide further details on the recovery on Friday, a planned press conference was cancelled.  Regarding the investigation, a source close to the probe told AFP that five people had been arrested, while the town hall confirmed in a statement that six suspects have been arrested in relation to the heist. No official statement has been released by the police.\"}]}",
+          "parsed": {
+            "headline": "Two Renoir paintings recovered after theft from museum in Cagnes-sur-Mer, France",
+            "pages": [
+              {
+                "text": "Two paintings by French impressionist Pierre-Auguste Renoir have been recovered approximately one month after they were stolen from a museum in southern France, according to the mayor of Cagnes-sur-Mer. The recovered works are titled *Portrait of Madame Colonna Romano* (1910) and *Jeune fille au puits* (1886).  The paintings were stolen in September when thieves entered the Renoir Museum by cutting through a fence and smashing a window. The suspects used an electric saw to cut through frame mountings and initially fled with four paintings, though they abandoned two of them in the museum's garden during their escape.  Bryan Masson, the mayor of Cagnes-sur-Mer and a member of France's National Rally, stated that the recovery provides immense relief and noted that the works are part of the city's history and cultural heritage. While the town hall initially planned to provide further details on the recovery on Friday, a planned press conference was cancelled.  Regarding the investigation, a source close to the probe told AFP that five people had been arrested, while the town hall confirmed in a statement that six suspects have been arrested in relation to the heist. No official statement has been released by the police."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2125,
+            "completion_tokens": 289,
+            "total_tokens": 2414,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 27.200000762939453
+          },
+          "latencyMs": 4217,
+          "safeHeaders": {
+            "cf-ray": "a47ef86d8da1979e-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:ba9f94f9626bb31b",
+      "title": "Iraq rejects Syria’s request for 4,000 IS detainees",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "a48f43962d6405385c55cbbdd66f2e8356b6f5f2ec342e14e4d157769c9687f8",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 284,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:north-press:e1348c08fab02be4222385dd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:north-press:e1348c08fab02be4222385dd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:north-press:e1348c08fab02be4222385dd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:north-press:e1348c08fab02be4222385dd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:north-press:e1348c08fab02be4222385dd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:north-press:e1348c08fab02be4222385dd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:north-press:e1348c08fab02be4222385dd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:north-press:e1348c08fab02be4222385dd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:north-press:e1348c08fab02be4222385dd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:north-press:e1348c08fab02be4222385dd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:north-press:e1348c08fab02be4222385dd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:north-press:e1348c08fab02be4222385dd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:north-press:e1348c08fab02be4222385dd",
+          "publisher": "North Press Agency",
+          "url": "https://npasyria.com/en/142455",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://npasyria.com/en/wp-content/uploads/2026/10/194751_IMG-20240911-WA0005-750x430-1.jpg",
+        "alt": "Iraq rejects Syria’s request for 4,000 IS detainees",
+        "status": "event-specific",
+        "source_url": "https://npasyria.com/en/142455",
+        "attribution": "North Press Agency",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-09T17:05:33.413Z",
+          "finishedAt": "2026-10-09T17:05:40.375Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Iraq rejects Syria's request to repatriate 4,000 suspected ISIS detainees\", \"pages\": \n[\n  {\"text\": \"Iraq has rejected a request from Syria to repatriate approximately 4,000 Syrian detainees suspected of links to the Islamic State (ISIS), according to Iraqi National Security Advisor Qasim al-Aboudi. The detainees were transferred from Syrian detention facilities to Iraqi custody earlier this year. Al-Aboudi told The Associated Press that Damascus requested the Syrian nationals be handed over for trial in Syria, but Baghdad declined the request. A recent meeting involving Iraqi, Syrian, and U.S. officials addressed the fate of the detainees. Al-Aboudi stated that hundreds of the Syrians currently held in Iraq are believed to be senior members of ISIS. He noted that Iraq is conducting investigations and that anyone proven to have committed crimes in Iraq will be tried under Iraqi law. Al-Aboudi added that detainees from countries that do not impose the death penalty would not face capital punishment in Iraq, and those convicted could potentially be transferred to their home countries to serve remaining sentences if prisoner-transfer agreements are in place.\"} ,\n  {\"text\": \"Regarding the status of other detainees, al-Aboudi said Iraq has already returned approximately 50 Syrian detainees after determining they were not members of ISIS. Iraqi authorities have also identified about 400 Syrian detainees who were not affiliated with the group and could be released. Additionally, al-Aboudi stated that Baghdad has requested $500 million from the United States and other members of the international coalition against ISIS to assist with detention and prison-security costs. While the coalition has expressed willingness to provide support, Iraq has not yet received the funding. This detainee issue follows the end of the United States' 12-year military mission against ISIS in Iraq, with the final U.S. troops withdrawing from the country at the end of September.\"}\n]\n}",
+          "parsed": {
+            "headline": "Iraq rejects Syria's request to repatriate 4,000 suspected ISIS detainees",
+            "pages": [
+              {
+                "text": "Iraq has rejected a request from Syria to repatriate approximately 4,000 Syrian detainees suspected of links to the Islamic State (ISIS), according to Iraqi National Security Advisor Qasim al-Aboudi. The detainees were transferred from Syrian detention facilities to Iraqi custody earlier this year. Al-Aboudi told The Associated Press that Damascus requested the Syrian nationals be handed over for trial in Syria, but Baghdad declined the request. A recent meeting involving Iraqi, Syrian, and U.S. officials addressed the fate of the detainees. Al-Aboudi stated that hundreds of the Syrians currently held in Iraq are believed to be senior members of ISIS. He noted that Iraq is conducting investigations and that anyone proven to have committed crimes in Iraq will be tried under Iraqi law. Al-Aboudi added that detainees from countries that do not impose the death penalty would not face capital punishment in Iraq, and those convicted could potentially be transferred to their home countries to serve remaining sentences if prisoner-transfer agreements are in place."
+              },
+              {
+                "text": "Regarding the status of other detainees, al-Aboudi said Iraq has already returned approximately 50 Syrian detainees after determining they were not members of ISIS. Iraqi authorities have also identified about 400 Syrian detainees who were not affiliated with the group and could be released. Additionally, al-Aboudi stated that Baghdad has requested $500 million from the United States and other members of the international coalition against ISIS to assist with detention and prison-security costs. While the coalition has expressed willingness to provide support, Iraq has not yet received the funding. This detainee issue follows the end of the United States' 12-year military mission against ISIS in Iraq, with the final U.S. troops withdrawing from the country at the end of September."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1513,
+            "completion_tokens": 412,
+            "total_tokens": 1925,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 24.990909576416016
+          },
+          "latencyMs": 6962,
+          "safeHeaders": {
+            "cf-ray": "a47ef887d91b979e-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:7c267ddca2f4b0e7",
+      "title": "Attack on journalists at RU: Probe panel recommends suspension of 4 students",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "50b1ff23cb5e57e1d06680c55804002a03024d14a880e3bbfa2db8d53f026f57",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 234,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:financial-express-bd:a14b303f3124a6003cf164a0",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:financial-express-bd:a14b303f3124a6003cf164a0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:financial-express-bd:a14b303f3124a6003cf164a0",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:financial-express-bd:a14b303f3124a6003cf164a0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:financial-express-bd:a14b303f3124a6003cf164a0",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:financial-express-bd:a14b303f3124a6003cf164a0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:financial-express-bd:a14b303f3124a6003cf164a0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:financial-express-bd:a14b303f3124a6003cf164a0",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:financial-express-bd:a14b303f3124a6003cf164a0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:financial-express-bd:a14b303f3124a6003cf164a0",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:financial-express-bd:a14b303f3124a6003cf164a0",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:financial-express-bd:a14b303f3124a6003cf164a0",
+          "publisher": "The Financial Express Bangladesh",
+          "url": "https://thefinancialexpress.com.bd/national/attack-on-journalists-at-ru-probe-panel-recommends-suspension-of-4-students",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://thefe-bd.sgp1.cdn.digitaloceanspaces.com/posts/176383/ru-09.jpg",
+        "alt": "Attack on journalists at RU: Probe panel recommends suspension of 4 students",
+        "status": "event-specific",
+        "source_url": "https://thefinancialexpress.com.bd/national/attack-on-journalists-at-ru-probe-panel-recommends-suspension-of-4-students",
+        "attribution": "The Financial Express Bangladesh",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-09T17:05:40.376Z",
+          "finishedAt": "2026-10-09T17:05:46.123Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Probe panel recommends suspension of four students following attack on journalists at Rajshahi University, Bangladesh\",\n  \"pages\": [\n    {\n      \"text\": \"A five-member probe committee at Rajshahi University (RU) in Bangladesh has recommended the suspension of four students following an October 4 attack on journalists at Shaheed Ziaur Rahman Hall. The attack, which occurred while journalists were performing professional duties, resulted in injuries to at least 10 people, including four journalists, according to Vice-Chancellor Prof Dr Md Faridul Islam. The university administration received the investigation report around midnight on Thursday, and the Vice-Chancellor presented the findings to journalists on Friday. The committee was originally formed by the university administration to identify those involved in the incident after a meeting with journalists, with the Vice-Chancellor directing a report be submitted within 72 hours. The probe panel recommended the suspension of Ahsan Habib, Vice President of the RU unit of Jatiyatabadi Chhatra Dal (JCD); Hasibul Hasan, Joint General Secretary; Ariful Islam, General Secretary of the Ziaur Rahman Hall Students’ Union; and JCD activist Bishal Chakraborty.\"\n    },\n    {\n      \"text\": \"In addition to the recommended suspensions, the committee advised further investigation into allegations against four other students before taking action: Rakibul Islam, assistant cultural affairs secretary of the RU Central Students’ Union (RUCSU); Takbir Ahmed Emon, vice president of the RU unit of JCD; Syed Sajharul Islam, joint general secretary; and JCD activist Tanim Rahman. The committee also recommended issuing warnings to Bulbul Rahman and Shariful Islam, both vice-presidents of the university unit of JCD, and Shahriar Alam, an assistant office secretary.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Probe panel recommends suspension of four students following attack on journalists at Rajshahi University, Bangladesh",
+            "pages": [
+              {
+                "text": "A five-member probe committee at Rajshahi University (RU) in Bangladesh has recommended the suspension of four students following an October 4 attack on journalists at Shaheed Ziaur Rahman Hall. The attack, which occurred while journalists were performing professional duties, resulted in injuries to at least 10 people, including four journalists, according to Vice-Chancellor Prof Dr Md Faridul Islam. The university administration received the investigation report around midnight on Thursday, and the Vice-Chancellor presented the findings to journalists on Friday. The committee was originally formed by the university administration to identify those involved in the incident after a meeting with journalists, with the Vice-Chancellor directing a report be submitted within 72 hours. The probe panel recommended the suspension of Ahsan Habib, Vice President of the RU unit of Jatiyatabadi Chhatra Dal (JCD); Hasibul Hasan, Joint General Secretary; Ariful Islam, General Secretary of the Ziaur Rahman Hall Students’ Union; and JCD activist Bishal Chakraborty."
+              },
+              {
+                "text": "In addition to the recommended suspensions, the committee advised further investigation into allegations against four other students before taking action: Rakibul Islam, assistant cultural affairs secretary of the RU Central Students’ Union (RUCSU); Takbir Ahmed Emon, vice president of the RU unit of JCD; Syed Sajharul Islam, joint general secretary; and JCD activist Tanim Rahman. The committee also recommended issuing warnings to Bulbul Rahman and Shariful Islam, both vice-presidents of the university unit of JCD, and Shahriar Alam, an assistant office secretary."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2163,
+            "completion_tokens": 383,
+            "total_tokens": 2546,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 30.109088897705078
+          },
+          "latencyMs": 5747,
+          "safeHeaders": {
+            "cf-ray": "a47ef8b368f4979e-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:2cb3bf2d0328481e",
+      "title": "Ashaiman Municipal Assembly lobbies for completion of storm-drain project",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "178432437dda05701dda258778dc571ce18fb07d514605b3387f4d5f5b4c79e7",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 234,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:graphic-ghana:613deadff97e6fb769cfca39",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:graphic-ghana:613deadff97e6fb769cfca39",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:graphic-ghana:613deadff97e6fb769cfca39",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:graphic-ghana:613deadff97e6fb769cfca39",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:graphic-ghana:613deadff97e6fb769cfca39",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:graphic-ghana:613deadff97e6fb769cfca39",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:graphic-ghana:613deadff97e6fb769cfca39",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:graphic-ghana:613deadff97e6fb769cfca39",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:graphic-ghana:613deadff97e6fb769cfca39",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:graphic-ghana:613deadff97e6fb769cfca39",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:graphic-ghana:613deadff97e6fb769cfca39",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:graphic-ghana:613deadff97e6fb769cfca39",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:graphic-ghana:613deadff97e6fb769cfca39",
+          "publisher": "Graphic Online",
+          "url": "https://graphic.com.gh/news/general-news/ghana-news-ashaiman-municipal-assembly-lobbies-for-completion-of-storm-drain-project.html",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.graphic.com.gh/images/2026/Oct/09/volunteers.jpg",
+        "alt": "Ashaiman Municipal Assembly lobbies for completion of storm-drain project",
+        "status": "event-specific",
+        "source_url": "https://graphic.com.gh/news/general-news/ghana-news-ashaiman-municipal-assembly-lobbies-for-completion-of-storm-drain-project.html",
+        "attribution": "Graphic Online",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-09T17:05:46.123Z",
+          "finishedAt": "2026-10-09T17:05:53.110Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Ashaiman Municipal Assembly lobbies for completion of storm-drain project in Ghana\",\n  \"pages\": [\n    {\n      \"text\": \"The Ashaiman Municipal Assembly in Ghana is appealing to authorities, including the Hydrological Services Agency, to complete a storm-drain project at the Gbemi Stream to mitigate flood risks. Freeman Tsekpo, the Municipal Chief Executive (MCE), stated that funding is the primary obstacle to finishing the construction. According to the Assembly, only approximately 150 metres of the planned storm drain approaching the Starlight Bridge has been completed since work began following the construction of the bridge in 2020, leaving a critical section of the watercourse unconstructed. The Assembly noted that periodic desilting of the existing drain does not provide a permanent solution to the municipality's flooding challenges. Ashaiman has experienced major flooding in 2010, with further incidents reported in 2018 and 2024. Mr. Tsekpo noted that extensive dredging and desilting at the Ajei Kojo underbridge helped prevent major flooding during heavy rains in 2025 and 2026, but emphasized that such measures cannot replace a properly engineered storm-drain system.\"\n    },\n    {\n      \"text\": \"The Gbemi Stream also faces challenges from indiscriminate dumping. During a recent Municipal Assembly clean-up exercise, workers and machines were deployed to remove refuse from the watercourse. Mr. Tsekpo reported that residents living along the drain have used parts of it as a refuse dump, which reduces the capacity of the watercourse and increases the risk of obstruction during heavy rainfall. The Assembly is currently using additional workers and machinery to remove the refuse from the site.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Ashaiman Municipal Assembly lobbies for completion of storm-drain project in Ghana",
+            "pages": [
+              {
+                "text": "The Ashaiman Municipal Assembly in Ghana is appealing to authorities, including the Hydrological Services Agency, to complete a storm-drain project at the Gbemi Stream to mitigate flood risks. Freeman Tsekpo, the Municipal Chief Executive (MCE), stated that funding is the primary obstacle to finishing the construction. According to the Assembly, only approximately 150 metres of the planned storm drain approaching the Starlight Bridge has been completed since work began following the construction of the bridge in 2020, leaving a critical section of the watercourse unconstructed. The Assembly noted that periodic desilting of the existing drain does not provide a permanent solution to the municipality's flooding challenges. Ashaiman has experienced major flooding in 2010, with further incidents reported in 2018 and 2024. Mr. Tsekpo noted that extensive dredging and desilting at the Ajei Kojo underbridge helped prevent major flooding during heavy rains in 2025 and 2026, but emphasized that such measures cannot replace a properly engineered storm-drain system."
+              },
+              {
+                "text": "The Gbemi Stream also faces challenges from indiscriminate dumping. During a recent Municipal Assembly clean-up exercise, workers and machines were deployed to remove refuse from the watercourse. Mr. Tsekpo reported that residents living along the drain have used parts of it as a refuse dump, which reduces the capacity of the watercourse and increases the risk of obstruction during heavy rainfall. The Assembly is currently using additional workers and machinery to remove the refuse from the site."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1719,
+            "completion_tokens": 377,
+            "total_tokens": 2096,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "neurons": 25.3272705078125
+          },
+          "latencyMs": 6987,
+          "safeHeaders": {
+            "cf-ray": "a47ef8d74d23979e-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "stage": "evidence",
+      "eventId": "event:40a0983b6e9bc8f3",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:fd0c26ce8637e1a4",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:587d0d79075fb44a",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:70ed6f0599a1ccfc",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4cd6817c5396fc67",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:1b609356dd37c9bf",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:35de31bcc66e8cca",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:069c7f3388878f39",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0da621ad91068db7",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0d88049b098dd09b",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:81749ba7ee38dab2",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:fbe83a2a5cc3f4c0",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:ab48b0ac131cb5e7",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:1085625c1b0eeb47",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:26e741370953c85a",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:c902a9f425d0e38c",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:73c64e0d5fb64f7d",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e5434750a79bb850",
+      "reason": "too little complete accessible reporting; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:9ec7db8bf6f73ddf",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:fc932a5be7752336",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:467e39b8fb7d0aa1",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:1f025c4f556c35dd",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:7e62adb531405df6",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6743684f18e53ea1",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6371678a5e564462",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e0eff49c8949957d",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:734a09ac88a16030",
+      "reason": "principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:3133a25a800754a9",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:01764cf9ef32e93e",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0e7f2238025459cd",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:3269c8f96d86999c",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:9271d5c6aa551738",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:7ca112d49db72cf9",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f2876fe14601df28",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:52f6c38ec81690ed",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f7bda4f09e61d156",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:36d0576f7c9020b0",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:96b4dab709e00501",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "eventId": "event:1e87a31ad1b22470",
+      "title": "Over 20,000 Palestinian students and education workers killed in Gaza war",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:06ed86c5e698f159",
+      "title": "Bradford inches closer to Chow's lead in Toronto's mayoral election, new poll suggests",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 28.74 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:265341f3f8e85d5c",
+      "title": "Cop31 host urges wealthy countries to spend ‘much more’ on climate than defence",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 27.73 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:2d157e8a3a6b6de2",
+      "title": "Syrian presidential adviser Mazloum Abdi says integration nears completion",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 18.55 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:a609d5e6c0c427c2",
+      "title": "Tigray war: Why peace talks may fail before they even begin {Africanews Debates}",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 9.7 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:4a43e7c639e762cc",
+      "title": "Palestinians set to delay legislative elections due to worsening conditions, letter says",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 4.73 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:ecb6f41e7e26d6c5",
+      "title": "Man who started northern Sask. wildfire sentenced to 6 years",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 2.41 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:a4443d54a163e1c7",
+      "title": "‘Jamaat secretary general owns 700 auto-rickshaws’: Jamaat seeks evidence from DNCC administrator",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -0.31 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:79ee33e369cc4733",
+      "title": "Trump says U.S. won't attack Iran before midterms. And, ICE agent shoots man in NYC",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -2.36 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:ff1d92e96d05ec82",
+      "title": "Trump establishes committee to investigate Fed governor Lisa Cook",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -3.26 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:0302d392178bb760",
+      "title": "Former Deputy Trade and Industry Minister Nana Ama Dokua called to Ghana Bar",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -5.12 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:b382daae92980250",
+      "title": "How to watch CBC Toronto's live election night special",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -13.18 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:47f8b7bfa93d374e",
+      "title": "At least 33 people killed in strikes on Ukrainian public buses",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -22.2 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:a6e49a8649e671df",
+      "title": "1,568 new lawyers called to the Ghana Bar",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -25.54 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:9d823d6251737d87",
+      "title": "BCDP conference calls for climate investment mobilisation",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -28.41 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:fa46b8bc8167b910",
+      "title": "India in talks with Saudi Arabia for investment in strategic port projects",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -30.32 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:6cf5edbb2c26222b",
+      "title": "Advance voting in Toronto’s 2026 municipal election begins tomorrow",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -39 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:f6d4445ac573a26b",
+      "title": "Houthi missile strikes on Riyadh airport kill three, including airline captain",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -43.69 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:8692c98f3a65f054",
+      "title": "Three Saudis killed in Riyadh airport attack claimed by Houthis",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    },
+    {
+      "eventId": "event:87f5bacfccf621ca",
+      "title": "Not sure who to vote for? These municipal election resources can help you decide",
+      "stage": "content-structure",
+      "reason": "page 1 exposes a citation/list marker"
+    },
+    {
+      "eventId": "event:c4ff48c44a755210",
+      "title": "Caretaker killed in second Polish school attack in two days",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    },
+    {
+      "eventId": "event:3529398b35b1956d",
+      "title": "Saudi coalition vows 'firm' response after airport attack kills 3",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    }
+  ],
+  "outcome": {
+    "writerRequests": 9,
+    "retries": 0,
+    "acceptedCards": 8,
+    "retainedCards": 120,
+    "skippedCards": 60,
+    "totalNeurons": 221.87272453308105,
+    "inputTokens": 16007,
+    "outputTokens": 2821,
+    "meanNeuronsPerAcceptedCard": 27.73,
+    "datasetBytes": 325569,
+    "thirdPartyCostUsd": 0,
+    "imageStatus": {
+      "event-specific": 120
+    },
+    "geographicDistribution": {
+      "Ghana": 29,
+      "Bangladesh": 19,
+      "Syria": 9,
+      "Middle East": 30,
+      "Canada": 12,
+      "GTA": 6
+    }
+  },
+  "integrity": {
+    "datasetSha256": "cfed1bab83f4d7461977d8b28866bd9c28a5efae034f84956d9492501836908e"
+  }
+}

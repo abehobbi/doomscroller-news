@@ -1,0 +1,2910 @@
+{
+  "schema": "doomscroller.news-beta-diagnostics",
+  "schemaVersion": 1,
+  "batchId": "news-beta-2026-10-24T14-04-10-570Z",
+  "startedAt": "2026-10-24T14:03:05.312Z",
+  "finishedAt": "2026-10-24T14:04:10.570Z",
+  "durationMs": 65258,
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1024,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "discovery": {
+    "discoveredArticles": 826,
+    "freshArticles": 648,
+    "uniqueArticles": 615,
+    "eventCandidates": 580,
+    "evidencePoolArticles": 182,
+    "preparedEvents": 128,
+    "selectedEvents": 30,
+    "evidenceFailures": 32,
+    "sourceFailures": 3
+  },
+  "sourceStatus": [
+    {
+      "id": "sana-en",
+      "name": "SANA English",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "north-press-en",
+      "name": "North Press Agency",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "enab-baladi-en",
+      "name": "Enab Baladi English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "syria-direct-en",
+      "name": "Syria Direct",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dhaka-tribune",
+      "name": "Dhaka Tribune",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "bd24live-en",
+      "name": "BD24Live English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "prothom-alo-en",
+      "name": "Prothom Alo English",
+      "status": "ok",
+      "itemCount": 8
+    },
+    {
+      "id": "financial-express-bd",
+      "name": "The Financial Express Bangladesh",
+      "status": "ok",
+      "itemCount": 28
+    },
+    {
+      "id": "daily-star-bd",
+      "name": "The Daily Star Bangladesh",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "myjoyonline",
+      "name": "MyJoyOnline",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "graphic-ghana",
+      "name": "Graphic Online",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "ghana-news-agency",
+      "name": "Ghana News Agency",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "toronto-city",
+      "name": "City of Toronto News",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "cbc-toronto",
+      "name": "CBC Toronto",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "cbc-canada",
+      "name": "CBC Canada",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "aljazeera-all",
+      "name": "Al Jazeera",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "arab-news",
+      "name": "Arab News",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "bbc-world",
+      "name": "BBC World",
+      "status": "ok",
+      "itemCount": 29
+    },
+    {
+      "id": "bbc-technology",
+      "name": "BBC Technology",
+      "status": "ok",
+      "itemCount": 21
+    },
+    {
+      "id": "bbc-science-environment",
+      "name": "BBC Science & Environment",
+      "status": "ok",
+      "itemCount": 41
+    },
+    {
+      "id": "guardian-world",
+      "name": "The Guardian World",
+      "status": "ok",
+      "itemCount": 45
+    },
+    {
+      "id": "guardian-science",
+      "name": "The Guardian Science",
+      "status": "ok",
+      "itemCount": 27
+    },
+    {
+      "id": "guardian-environment",
+      "name": "The Guardian Environment",
+      "status": "ok",
+      "itemCount": 34
+    },
+    {
+      "id": "npr-world",
+      "name": "NPR World",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "npr-science",
+      "name": "NPR Science",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dw-world",
+      "name": "DW World",
+      "status": "ok",
+      "itemCount": 131
+    },
+    {
+      "id": "africanews",
+      "name": "Africanews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "euronews",
+      "name": "Euronews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "global-voices",
+      "name": "Global Voices",
+      "status": "ok",
+      "itemCount": 15
+    },
+    {
+      "id": "japan-times",
+      "name": "The Japan Times",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "mongabay",
+      "name": "Mongabay",
+      "status": "ok",
+      "itemCount": 32
+    }
+  ],
+  "knownSourceFailures": [
+    {
+      "name": "Bangladesh Sangbad Sangstha",
+      "url": "https://www.bssnews.net/feed",
+      "status": "blocked",
+      "detail": "Cloudflare challenge returned HTTP 403 to the bounded collector."
+    },
+    {
+      "name": "The Indian Express feeds",
+      "url": "https://indianexpress.com/rss/",
+      "status": "blocked_in_cloud",
+      "detail": "Official feeds work locally but return HTTP 403 from GitHub Actions, so the automatic collector does not depend on them."
+    },
+    {
+      "name": "The Business Standard",
+      "url": "https://www.tbsnews.net/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "Feed served 2019–2021 items."
+    },
+    {
+      "name": "Ontario Newsroom",
+      "url": "https://news.ontario.ca/en/rss",
+      "status": "retired_from_registry",
+      "detail": "URL returns an HTML application shell, not RSS."
+    },
+    {
+      "name": "GhanaWeb",
+      "url": "https://www.ghanaweb.com/GhanaHomePage/NewsArchive/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "The publisher endpoint returned HTTP 404 in October 2026; MyJoyOnline and Graphic Online remain active Ghana sources."
+    }
+  ],
+  "reranker": {
+    "adjustments": [
+      {
+        "eventId": "event:111ba962dd6236cf",
+        "baseScore": 77.08,
+        "adjustment": 14,
+        "adjustedScore": 91.08,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Jordan"
+      },
+      {
+        "eventId": "event:3186680e1d165950",
+        "baseScore": 76.22,
+        "adjustment": 14,
+        "adjustedScore": 90.22,
+        "contentType": "general",
+        "regions": [
+          "Canada",
+          "GTA"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:76abd5de4e61c45f",
+        "baseScore": 64.91,
+        "adjustment": 14,
+        "adjustedScore": 78.91,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:cb4578f66c095c2d",
+        "baseScore": 56.89,
+        "adjustment": 14,
+        "adjustedScore": 70.89,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:841e0bbe6927cd79",
+        "baseScore": 46.49,
+        "adjustment": 14,
+        "adjustedScore": 60.49,
+        "contentType": "general",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:a90950c602298db8",
+        "baseScore": 51.85,
+        "adjustment": 7,
+        "adjustedScore": 58.85,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:f9cf5f1814d9c79d",
+        "baseScore": 37.08,
+        "adjustment": 18,
+        "adjustedScore": 55.08,
+        "contentType": "culture-science-education",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:d1ff829b7c6e9b36",
+        "baseScore": 44.96,
+        "adjustment": 10,
+        "adjustedScore": 54.96,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:ab4cf41077467105",
+        "baseScore": 45.85,
+        "adjustment": 6,
+        "adjustedScore": 51.85,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:f3c36e8a13060e7c",
+        "baseScore": 58.41,
+        "adjustment": -10,
+        "adjustedScore": 48.41,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "France"
+      },
+      {
+        "eventId": "event:9e64706ce3f06fbf",
+        "baseScore": 71.75,
+        "adjustment": -26,
+        "adjustedScore": 45.75,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Jordan"
+      },
+      {
+        "eventId": "event:34057b77a580b668",
+        "baseScore": 44.42,
+        "adjustment": -2,
+        "adjustedScore": 42.42,
+        "contentType": "conflict",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:eae60c71ffce70fc",
+        "baseScore": 42.27,
+        "adjustment": -7,
+        "adjustedScore": 35.27,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "World"
+        ],
+        "country": "China"
+      },
+      {
+        "eventId": "event:b34ccc14e986caaa",
+        "baseScore": 53.74,
+        "adjustment": -23,
+        "adjustedScore": 30.740000000000002,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:7597270c51cba30b",
+        "baseScore": 38.73,
+        "adjustment": -19,
+        "adjustedScore": 19.729999999999997,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:6b12fcd44262e9da",
+        "baseScore": 42.06,
+        "adjustment": -23,
+        "adjustedScore": 19.060000000000002,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:f31238897221e11b",
+        "baseScore": 44.88,
+        "adjustment": -26,
+        "adjustedScore": 18.880000000000003,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "Ukraine"
+      },
+      {
+        "eventId": "event:01f6024b157e24fb",
+        "baseScore": 51.26,
+        "adjustment": -42,
+        "adjustedScore": 9.259999999999998,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Iran"
+      },
+      {
+        "eventId": "event:93c8afb0255100f7",
+        "baseScore": 45.79,
+        "adjustment": -41,
+        "adjustedScore": 4.789999999999999,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:f03a4e33ba27d745",
+        "baseScore": 36.39,
+        "adjustment": -33,
+        "adjustedScore": 3.3900000000000006,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:a6676a4543e426d3",
+        "baseScore": 53.99,
+        "adjustment": -57,
+        "adjustedScore": -3.009999999999998,
+        "contentType": "conflict",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:610d0424cc1e4f59",
+        "baseScore": 47.66,
+        "adjustment": -56,
+        "adjustedScore": -8.340000000000003,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:1c63361ba453ef22",
+        "baseScore": 37.49,
+        "adjustment": -51,
+        "adjustedScore": -13.509999999999998,
+        "contentType": "general",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:e7c66fc7329cdb52",
+        "baseScore": 64.74,
+        "adjustment": -79,
+        "adjustedScore": -14.260000000000005,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:29aa7624a77cb72b",
+        "baseScore": 35.06,
+        "adjustment": -52,
+        "adjustedScore": -16.939999999999998,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "Ukraine"
+      },
+      {
+        "eventId": "event:789beee3eb69d9cd",
+        "baseScore": 34.87,
+        "adjustment": -52,
+        "adjustedScore": -17.130000000000003,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:8d2ce47575042f1c",
+        "baseScore": 38.76,
+        "adjustment": -62,
+        "adjustedScore": -23.240000000000002,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Middle East"
+      },
+      {
+        "eventId": "event:7f9b49e3d6d8417f",
+        "baseScore": 38.91,
+        "adjustment": -67,
+        "adjustedScore": -28.090000000000003,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "Brazil"
+      },
+      {
+        "eventId": "event:bf4788c1f0b1d09e",
+        "baseScore": 43.54,
+        "adjustment": -77,
+        "adjustedScore": -33.46,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:63bffbbfc4005f34",
+        "baseScore": 40.62,
+        "adjustment": -83,
+        "adjustedScore": -42.38,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      }
+    ],
+    "distribution": {
+      "regions": {
+        "Middle East": 8,
+        "Canada": 5,
+        "GTA": 3,
+        "Ghana": 5,
+        "Syria": 2,
+        "World": 7,
+        "Bangladesh": 5
+      },
+      "countries": {
+        "Jordan": 2,
+        "GTA": 3,
+        "Israel": 2,
+        "Ghana": 5,
+        "Canada": 2,
+        "Syria": 2,
+        "World": 2,
+        "Bangladesh": 5,
+        "France": 1,
+        "China": 1,
+        "Ukraine": 2,
+        "Iran": 1,
+        "Middle East": 1,
+        "Brazil": 1
+      },
+      "contentTypes": {
+        "conflict": 7,
+        "general": 8,
+        "diplomacy-or-speech": 6,
+        "culture-science-education": 5,
+        "economy-or-public-life": 4
+      },
+      "publishers": {
+        "The Guardian World": 2,
+        "City of Toronto News": 1,
+        "NPR World": 1,
+        "MyJoyOnline": 3,
+        "CBC Canada": 2,
+        "North Press Agency": 1,
+        "Mongabay": 3,
+        "The Financial Express Bangladesh": 2,
+        "Graphic Online": 2,
+        "Arab News": 3,
+        "Prothom Alo English": 2,
+        "Africanews": 1,
+        "CBC Toronto": 2,
+        "Syria Direct": 1,
+        "Ghana News Agency": 1,
+        "The Japan Times": 1,
+        "Al Jazeera": 1,
+        "DW World": 1
+      }
+    }
+  },
+  "selectedEvents": [
+    {
+      "eventId": "event:111ba962dd6236cf",
+      "title": "Eight killed and 40 injured after gunmen open fire at church funeral in Jordan",
+      "score": 77.08,
+      "adjustedScore": 91.08,
+      "rank": 1,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.08,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:3186680e1d165950",
+      "title": "Voters head to the polls Monday for Toronto’s 2026 municipal election",
+      "score": 76.22,
+      "adjustedScore": 90.22,
+      "rank": 2,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 8.22,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 19,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada",
+        "GTA"
+      ]
+    },
+    {
+      "eventId": "event:76abd5de4e61c45f",
+      "title": "Israel orders closure of West Bank after soldiers kill 2 men behind an alleged attack",
+      "score": 64.91,
+      "adjustedScore": 78.91,
+      "rank": 3,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 12.91,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:cb4578f66c095c2d",
+      "title": "Africa launches West Africa research programme to speed up outbreak response",
+      "score": 56.89,
+      "adjustedScore": 70.89,
+      "rank": 4,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.89,
+        "importance": 6,
+        "interestingness": 12,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:841e0bbe6927cd79",
+      "title": "Will the Alberta referendum feed a more polarized immigration debate?",
+      "score": 46.49,
+      "adjustedScore": 60.49,
+      "rank": 5,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 18.49,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:a90950c602298db8",
+      "title": "Syria condemns attack on church in Jordan",
+      "score": 51.85,
+      "adjustedScore": 58.85,
+      "rank": 6,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 14.85,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": -30
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:f9cf5f1814d9c79d",
+      "title": "World Snow Leopard Day: Community action and new science foster coexistence with humans",
+      "score": 37.08,
+      "adjustedScore": 55.08,
+      "rank": 7,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 12.08,
+        "importance": 12,
+        "interestingness": 8,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 5,
+        "localTexture": 0,
+        "editorialBonus": 5,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:d1ff829b7c6e9b36",
+      "title": "Asif Nazrul hopes constitutional reform committee to deliver ‘biggest possible gains’",
+      "score": 44.96,
+      "adjustedScore": 54.96,
+      "rank": 8,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.96,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:ab4cf41077467105",
+      "title": "Beyond digital money: Henry Bruce’s ARU",
+      "score": 45.85,
+      "adjustedScore": 51.85,
+      "rank": 9,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.85,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:f3c36e8a13060e7c",
+      "title": "Deadly shooting near Paris is a ‘racist terrorist attack’, Macron says",
+      "score": 58.41,
+      "adjustedScore": 48.41,
+      "rank": 10,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 16.41,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:9e64706ce3f06fbf",
+      "title": "Jordan’s King Abdullah orders security forces to respond firmly to Karak church attack",
+      "score": 71.75,
+      "adjustedScore": 45.75,
+      "rank": 11,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.75,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:34057b77a580b668",
+      "title": "Murder, robbery and extortion; police also attacked during operations",
+      "score": 44.42,
+      "adjustedScore": 42.42,
+      "rank": 12,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.42,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:eae60c71ffce70fc",
+      "title": "China: Panic as 7.0-magnitude earthquake rocks Tibet",
+      "score": 42.27,
+      "adjustedScore": 35.27,
+      "rank": 13,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 12.27,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:b34ccc14e986caaa",
+      "title": "Oshawa Votes 2026: Where mayoral candidates stand on key issues",
+      "score": 53.74,
+      "adjustedScore": 30.74,
+      "rank": 14,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 18.74,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 11,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:7597270c51cba30b",
+      "title": "Syria reconnects to global finance, but ordinary Syrians are still struggling",
+      "score": 38.73,
+      "adjustedScore": 19.73,
+      "rank": 15,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 13.73,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:6b12fcd44262e9da",
+      "title": "Study highlights gaps in readiness for AI adoption across African Universities",
+      "score": 42.06,
+      "adjustedScore": 19.06,
+      "rank": 16,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.06,
+        "importance": 0,
+        "interestingness": 12,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:f31238897221e11b",
+      "title": "Melania Trump says she brokered truce in war-torn Ukrainian city",
+      "score": 44.88,
+      "adjustedScore": 18.88,
+      "rank": 17,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.88,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:01f6024b157e24fb",
+      "title": "Iranian president to meet Putin in Moscow: Iran media",
+      "score": 51.26,
+      "adjustedScore": 9.26,
+      "rank": 18,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.26,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:93c8afb0255100f7",
+      "title": "FIFA’s Infantino touts global re-election support amid resignation questions",
+      "score": 45.79,
+      "adjustedScore": 4.79,
+      "rank": 19,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.79,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:f03a4e33ba27d745",
+      "title": "Bangladesh’s climate migrants are arriving in cities unprepared to protect them",
+      "score": 36.39,
+      "adjustedScore": 3.39,
+      "rank": 20,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.39,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:a6676a4543e426d3",
+      "title": "Transit a 'glaring oversight' for Durham region candidates, some riders and advocates say",
+      "score": 53.99,
+      "adjustedScore": -3.01,
+      "rank": 21,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 18.99,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 11,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:610d0424cc1e4f59",
+      "title": "MCE engages Okada riders on new digital traffic enforcement system at Kpando",
+      "score": 47.66,
+      "adjustedScore": -8.34,
+      "rank": 22,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.66,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 14,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:1c63361ba453ef22",
+      "title": "Q&A: Premier Danielle Smith says she doesn’t need Alberta separatists’ support",
+      "score": 37.49,
+      "adjustedScore": -13.51,
+      "rank": 23,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 19.49,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:e7c66fc7329cdb52",
+      "title": "As a divided Israel prepares to go to the polls, can Netanyahu pull off his greatest political trick yet?",
+      "score": 64.74,
+      "adjustedScore": -14.26,
+      "rank": 24,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.74,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:29aa7624a77cb72b",
+      "title": "Russia, Ukraine agree to US-brokered, 1 city ceasefire",
+      "score": 35.06,
+      "adjustedScore": -16.94,
+      "rank": 25,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 15.06,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:789beee3eb69d9cd",
+      "title": "Artist Kamrul Hasan Lipu explores his roots in Yokohama solo exhibition",
+      "score": 34.87,
+      "adjustedScore": -17.13,
+      "rank": 26,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.87,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:8d2ce47575042f1c",
+      "title": "Startup Wrap: MENA attracts fresh funding across technology sectors",
+      "score": 38.76,
+      "adjustedScore": -23.24,
+      "rank": 27,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.76,
+        "importance": 0,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:7f9b49e3d6d8417f",
+      "title": "What if Flávio Bolsonaro wins? High stakes for the environment in Brazil’s 2026 elections (commentary)",
+      "score": 38.91,
+      "adjustedScore": -28.09,
+      "rank": 28,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 14.91,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:bf4788c1f0b1d09e",
+      "title": "Playback: Newsfile discussed Obuasi SHTS abuse case, GH₵49m S.A. evacuation and World Cup visa scandal",
+      "score": 43.54,
+      "adjustedScore": -33.46,
+      "rank": 29,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.54,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:63bffbbfc4005f34",
+      "title": "Call to fulfill climate finance commitments ahead of COP-31",
+      "score": 40.62,
+      "adjustedScore": -42.38,
+      "rank": 30,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.62,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    }
+  ],
+  "invalidPreviousCardsRemoved": [],
+  "crossEventOverlap": [
+    {
+      "packet_event_id": "event:76abd5de4e61c45f",
+      "other_event_id": "event:f3c36e8a13060e7c",
+      "fragment_id": "F01",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=near,shooting,attack; entities=; actions=attack"
+    },
+    {
+      "packet_event_id": "event:76abd5de4e61c45f",
+      "other_event_id": "event:9e64706ce3f06fbf",
+      "fragment_id": "F36",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=security,attack,forces; entities=; actions=attack"
+    },
+    {
+      "packet_event_id": "event:a90950c602298db8",
+      "other_event_id": "event:9e64706ce3f06fbf",
+      "fragment_id": "F03",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=attack,church,karak,jordan; entities=; actions=attack"
+    },
+    {
+      "packet_event_id": "event:a90950c602298db8",
+      "other_event_id": "event:9e64706ce3f06fbf",
+      "fragment_id": "F04",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=attack,church,jordan; entities=; actions=attack"
+    },
+    {
+      "packet_event_id": "event:9e64706ce3f06fbf",
+      "other_event_id": "event:a90950c602298db8",
+      "fragment_id": "F01",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=jordan,church,attack; entities=; actions=attack"
+    },
+    {
+      "packet_event_id": "event:9e64706ce3f06fbf",
+      "other_event_id": "event:a90950c602298db8",
+      "fragment_id": "F14",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=jordan,church,attack; entities=; actions=attack"
+    },
+    {
+      "packet_event_id": "event:9e64706ce3f06fbf",
+      "other_event_id": "event:a90950c602298db8",
+      "fragment_id": "F25",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=jordan,attack,church; entities=; actions=attack"
+    }
+  ],
+  "generation": [
+    {
+      "eventId": "event:47c335465948e686",
+      "title": "Voters head to the polls Monday for Toronto’s 2026 municipal election",
+      "finalStatus": "accepted",
+      "previousMatch": "same source URL",
+      "contentVersion": 2,
+      "evidenceFingerprint": "b2be2df5a09c06a878362c58d0388795029fe032e87b4b611d3b519c47fdd141",
+      "allowedExactDates": [
+        "2026-04-23",
+        "2026-10-17"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 17, 2026",
+            "date": "2026-10-17"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-04-23",
+          "2026-10-17"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 168,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:cbc:2d49292239b52e109d954b28",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:cbc:2d49292239b52e109d954b28",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F15",
+            "sourceId": "news:cbc:2d49292239b52e109d954b28",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F16",
+            "sourceId": "news:cbc:2d49292239b52e109d954b28",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F17",
+            "sourceId": "news:cbc:2d49292239b52e109d954b28",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F18",
+            "sourceId": "news:cbc:2d49292239b52e109d954b28",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F19",
+            "sourceId": "news:cbc:2d49292239b52e109d954b28",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F20",
+            "sourceId": "news:cbc:2d49292239b52e109d954b28",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F21",
+            "sourceId": "news:cbc:2d49292239b52e109d954b28",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F22",
+            "sourceId": "news:cbc:2d49292239b52e109d954b28",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F23",
+            "sourceId": "news:cbc:2d49292239b52e109d954b28",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F24",
+            "sourceId": "news:cbc:2d49292239b52e109d954b28",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:toronto-city:31e046bfa28ccf234d1816fd",
+          "publisher": "City of Toronto News",
+          "url": "https://toronto.ca/news/voters-head-to-the-polls-monday-for-torontos-2026-municipal-election",
+          "wireOrigin": null,
+          "sourceType": "primary_institutional"
+        },
+        {
+          "sourceId": "news:cbc:2d49292239b52e109d954b28",
+          "publisher": "CBC Canada",
+          "url": "https://cbc.ca/news/canada/british-columbia/british-columbia-bc-provincial-snap-election-how-to-vote-9.7392539?cmp=rss",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.toronto.ca/wp-content/themes/cot/img/share_toronto_twitter.jpg",
+        "alt": "Voters head to the polls Monday for Toronto’s 2026 municipal election",
+        "status": "event-specific",
+        "source_url": "https://toronto.ca/news/voters-head-to-the-polls-monday-for-torontos-2026-municipal-election",
+        "attribution": "City of Toronto News",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-24T14:03:24.458Z",
+          "finishedAt": "2026-10-24T14:03:26.472Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Voters head to the polls for Toronto’s 2026 municipal election\",\n  \"pages\": [\n    {\n      \"text\": \"Voters in Toronto, Canada, are scheduled to head to the polls on October 17, 2026, for the municipal election. According to the City of Toronto, voting places on election day will be open from 10 a.m. to 8 p.m. While voting places close at 8 p.m., any voter in line by that time will be permitted to vote. To avoid lineups, officials suggest considering voting during off-peak hours between 11 a.m. and 3 p.m.  To vote in person, individuals must show one piece of acceptable identification that includes their name and a qualifying Toronto address; photo identification is not required. Voters are also encouraged to bring a paper or digital Voter Information Card (VIC) to expedite the process. Eligible voters must vote at their assigned voting place as indicated on their VIC or the Toronto Elections webpage. To be eligible to vote, a person must vote in the ward where they live, and may only vote once regardless of how many properties they own or rent in Toronto.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Voters head to the polls for Toronto’s 2026 municipal election",
+            "pages": [
+              {
+                "text": "Voters in Toronto, Canada, are scheduled to head to the polls on October 17, 2026, for the municipal election. According to the City of Toronto, voting places on election day will be open from 10 a.m. to 8 p.m. While voting places close at 8 p.m., any voter in line by that time will be permitted to vote. To avoid lineups, officials suggest considering voting during off-peak hours between 11 a.m. and 3 p.m.  To vote in person, individuals must show one piece of acceptable identification that includes their name and a qualifying Toronto address; photo identification is not required. Voters are also encouraged to bring a paper or digital Voter Information Card (VIC) to expedite the process. Eligible voters must vote at their assigned voting place as indicated on their VIC or the Toronto Elections webpage. To be eligible to vote, a person must vote in the ward where they live, and may only vote once regardless of how many properties they own or rent in Toronto."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2166,
+            "completion_tokens": 269,
+            "total_tokens": 2435,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 27.027271270751953
+          },
+          "latencyMs": 2014,
+          "safeHeaders": {
+            "cf-ray": "a4f986561928f370-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:cb4578f66c095c2d",
+      "title": "Africa launches West Africa research programme to speed up outbreak response",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "56cb7292788d5abc818dd7888d1231a10a82f92827729667e92913e553c2c2bd",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 277,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:myjoyonline:ebd949bcb45d3afc93076520",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:myjoyonline:ebd949bcb45d3afc93076520",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:myjoyonline:ebd949bcb45d3afc93076520",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:myjoyonline:ebd949bcb45d3afc93076520",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:myjoyonline:ebd949bcb45d3afc93076520",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:myjoyonline:ebd949bcb45d3afc93076520",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:myjoyonline:ebd949bcb45d3afc93076520",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:myjoyonline:ebd949bcb45d3afc93076520",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:myjoyonline:ebd949bcb45d3afc93076520",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:myjoyonline:ebd949bcb45d3afc93076520",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:myjoyonline:ebd949bcb45d3afc93076520",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:myjoyonline:ebd949bcb45d3afc93076520",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:myjoyonline:ebd949bcb45d3afc93076520",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/africa-launches-west-africa-research-programme-to-speed-up-outbreak-response",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.myjoyonline.com/wp-content/uploads/2026/10/WhatsApp-Image-2026-10-22-at-17.36.09-1024x477.jpeg",
+        "alt": "outbreak",
+        "status": "event-specific",
+        "source_url": "https://myjoyonline.com/africa-launches-west-africa-research-programme-to-speed-up-outbreak-response",
+        "attribution": "MyJoyOnline",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-24T14:03:26.473Z",
+          "finishedAt": "2026-10-24T14:03:29.627Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"New research programme launched to strengthen West Africa outbreak response\",\n  \"pages\": [\n    {\n      \"text\": \"A new regional initiative, the Africa Research Preparedness Programme for West Africa, has been launched to strengthen preparedness for public health emergencies by connecting research institutions and enabling coordinated responses to disease outbreaks. The programme aims to address gaps in research coordination that experts say can delay critical interventions during outbreaks of diseases such as Ebola, Mpox, Lassa fever, and COVID-19. While skilled scientists and established research institutions exist across the continent, preparedness remains uneven, with some clinical trial sites facing challenges transitioning from routine research to emergency response. Shingai Machingaidze, Head of Africa Strategy and Engagement at the Coalition for Epidemic Preparedness Innovations (CEPI), stated the programme will adopt a hub-and-spoke model to connect existing research capabilities. This approach is intended to allow countries to work together on research protocols and evidence generation, with the goal of activating clinical research responses within 10 to 15 days of an outbreak.\"\n    },\n    {\n      \"text\": \"The initiative brings together several organizations involved in public health research, regulation, and outbreak preparedness, including the Africa Centres for Disease Control and Prevention (Africa CDC), the African Medicines Agency, the World Health Organization’s Regional Office for Africa, the Noguchi Memorial Institute for Medical Research, the Medical Research Council Unit The Gambia, the International Vaccine Institute (IVI), and CEPI. The collaboration is intended to provide a common platform for institutions across West Africa to align priorities, share expertise, and strengthen emergency research systems so that institutions can mobilize resources rather than working in isolation. Birkneh Tadesse, Associate Director-General of the International Vaccine Institute in South Korea, noted that operational research and clinical trials are important to efforts to develop vaccines and support responses to outbreaks, including Ebola.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "New research programme launched to strengthen West Africa outbreak response",
+            "pages": [
+              {
+                "text": "A new regional initiative, the Africa Research Preparedness Programme for West Africa, has been launched to strengthen preparedness for public health emergencies by connecting research institutions and enabling coordinated responses to disease outbreaks. The programme aims to address gaps in research coordination that experts say can delay critical interventions during outbreaks of diseases such as Ebola, Mpox, Lassa fever, and COVID-19. While skilled scientists and established research institutions exist across the continent, preparedness remains uneven, with some clinical trial sites facing challenges transitioning from routine research to emergency response. Shingai Machingaidze, Head of Africa Strategy and Engagement at the Coalition for Epidemic Preparedness Innovations (CEPI), stated the programme will adopt a hub-and-spoke model to connect existing research capabilities. This approach is intended to allow countries to work together on research protocols and evidence generation, with the goal of activating clinical research responses within 10 to 15 days of an outbreak."
+              },
+              {
+                "text": "The initiative brings together several organizations involved in public health research, regulation, and outbreak preparedness, including the Africa Centres for Disease Control and Prevention (Africa CDC), the African Medicines Agency, the World Health Organization’s Regional Office for Africa, the Noguchi Memorial Institute for Medical Research, the Medical Research Council Unit The Gambia, the International Vaccine Institute (IVI), and CEPI. The collaboration is intended to provide a common platform for institutions across West Africa to align priorities, share expertise, and strengthen emergency research systems so that institutions can mobilize resources rather than working in isolation. Birkneh Tadesse, Associate Director-General of the International Vaccine Institute in South Korea, noted that operational research and clinical trials are important to efforts to develop vaccines and support responses to outbreaks, including Ebola."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1655,
+            "completion_tokens": 400,
+            "total_tokens": 2055,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 25.954544067382812
+          },
+          "latencyMs": 3153,
+          "safeHeaders": {
+            "cf-ray": "a4f986627ef4f370-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:841e0bbe6927cd79",
+      "title": "Will the Alberta referendum feed a more polarized immigration debate?",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "5c8a9ea308d9c28a1ad6725e2528e4897fafba27346ace0db328e6e66f7a06eb",
+      "allowedExactDates": [
+        "2026-10-20",
+        "2026-10-21"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 21, 2026",
+            "date": "2026-10-21"
+          },
+          {
+            "raw": "October 20, 2026",
+            "date": "2026-10-20"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-20",
+          "2026-10-21"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 178,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:cbc:a0dceea849b47272739435cc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:cbc:a0dceea849b47272739435cc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:cbc:a0dceea849b47272739435cc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:cbc:a0dceea849b47272739435cc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:cbc:a0dceea849b47272739435cc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:cbc:a0dceea849b47272739435cc",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:cbc:a0dceea849b47272739435cc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:cbc:a0dceea849b47272739435cc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:cbc:a0dceea849b47272739435cc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:cbc:a0dceea849b47272739435cc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:cbc:a0dceea849b47272739435cc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:cbc:a0dceea849b47272739435cc",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:cbc:a0dceea849b47272739435cc",
+          "publisher": "CBC Canada",
+          "url": "https://cbc.ca/news/politics/alberta-referendum-immigration-carney-poilievre-analysis-9.7393811?cmp=rss",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.cbc.ca/ais/d67629af-c1ff-4345-8c03-ba3285c50dd6,1792795339143/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C315%2C6048%2C3402%29%3B",
+        "alt": "Will the Alberta referendum feed a more polarized immigration debate?",
+        "status": "event-specific",
+        "source_url": "https://cbc.ca/news/politics/alberta-referendum-immigration-carney-poilievre-analysis-9.7393811?cmp=rss",
+        "attribution": "CBC Canada",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-24T14:03:29.627Z",
+          "finishedAt": "2026-10-24T14:03:37.785Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Alberta voters reject constitutional amendments in 10-part referendum\",\n  \"pages\": [\n    {\n      \"text\": \"In a 10-part referendum held in Alberta, Canada, voters rejected all four questions regarding whether the province should pursue constitutional amendments. According to CBC Canada, the results included a rejection of a question about abolishing the Senate, which did not receive a simple majority of votes. Alberta Premier Danielle Smith noted at a news conference on October 21, 2026, that the results on immigration questions differed from the results on constitutional questions, suggesting voters may prefer to focus on areas where meaningful change can be made. Smith stated on October 20, 2026, that not every grievance Alberta has with Ottawa has been resolved and that political and constitutional battles remain ahead.\"\n    },\n    {\n      \"text\": \"Regarding the province's status within Canada, 75 per cent of voters chose the first option to remain in the country, a result described as more decisive than the 1980 referendum in Quebec. While 25 per cent of voters opted for another referendum, Abacus Data reported that making Alberta an independent country was the primary motivation for only 32 per cent of those who favored the second option.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Alberta voters reject constitutional amendments in 10-part referendum",
+            "pages": [
+              {
+                "text": "In a 10-part referendum held in Alberta, Canada, voters rejected all four questions regarding whether the province should pursue constitutional amendments. According to CBC Canada, the results included a rejection of a question about abolishing the Senate, which did not receive a simple majority of votes. Alberta Premier Danielle Smith noted at a news conference on October 21, 2026, that the results on immigration questions differed from the results on constitutional questions, suggesting voters may prefer to focus on areas where meaningful change can be made. Smith stated on October 20, 2026, that not every grievance Alberta has with Ottawa has been resolved and that political and constitutional battles remain ahead."
+              },
+              {
+                "text": "Regarding the province's status within Canada, 75 per cent of voters chose the first option to remain in the country, a result described as more decisive than the 1980 referendum in Quebec. While 25 per cent of voters opted for another referendum, Abacus Data reported that making Alberta an independent country was the primary motivation for only 32 per cent of those who favored the second option."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1732,
+            "completion_tokens": 284,
+            "total_tokens": 2016,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 23.490909576416016
+          },
+          "latencyMs": 8158,
+          "safeHeaders": {
+            "cf-ray": "a4f986763f24f370-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:d1ff829b7c6e9b36",
+      "title": "Asif Nazrul hopes constitutional reform committee to deliver ‘biggest possible gains’",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "429525a380c5dd9d2d043254971fc38c92ec4a9ea4e74fbf954cea94abb31374",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 256,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:financial-express-bd:f30d19707b25faa823842f66",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:financial-express-bd:f30d19707b25faa823842f66",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:financial-express-bd:f30d19707b25faa823842f66",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:financial-express-bd:f30d19707b25faa823842f66",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:financial-express-bd:f30d19707b25faa823842f66",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:financial-express-bd:f30d19707b25faa823842f66",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:financial-express-bd:f30d19707b25faa823842f66",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:financial-express-bd:f30d19707b25faa823842f66",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:financial-express-bd:f30d19707b25faa823842f66",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:financial-express-bd:f30d19707b25faa823842f66",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:financial-express-bd:f30d19707b25faa823842f66",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:financial-express-bd:f30d19707b25faa823842f66",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:financial-express-bd:f30d19707b25faa823842f66",
+          "publisher": "The Financial Express Bangladesh",
+          "url": "https://thefinancialexpress.com.bd/national/asif-nazrul-hopes-constitutional-reform-committee-to-deliver-biggest-possible-gains",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://thefe-bd.sgp1.cdn.digitaloceanspaces.com/posts/178602/constitution-body.jpg",
+        "alt": "Asif Nazrul hopes constitutional reform committee to deliver ‘biggest possible gains’",
+        "status": "event-specific",
+        "source_url": "https://thefinancialexpress.com.bd/national/asif-nazrul-hopes-constitutional-reform-committee-to-deliver-biggest-possible-gains",
+        "attribution": "The Financial Express Bangladesh",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-24T14:03:37.786Z",
+          "finishedAt": "2026-10-24T14:03:45.580Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Former law adviser expresses hope for constitutional reform committee in Bangladesh\",\n  \"pages\": [\n    {\n      \"text\": \"Professor Asif Nazrul, a former law adviser to the interim government in Bangladesh, stated that he hopes the parliamentary committee on constitutional reform will deliver the largest possible gains, even if the results fall short of the sweeping changes originally envisioned under the interim administration. Nazrul, who served under the interim government led by Nobel laureate Muhammad Yunus, expressed a desire for a constitution more advanced than the current version, noting that any positive change constitutes a reform. He stated that while the aim is to achieve the maximum possible progress, any achievement will be considered a gain. The July National Charter was previously adopted for state reform under the Yunus-led interim government. Following opposition street protests demanding the implementation of the Charter, the BNP government formed the current committee. While the committee has met with political parties, alliances, academics, teachers, eminent citizens, social and professional group leaders, women leaders, and stakeholders of the July Uprising, the opposition has sent no representatives.\"\n    },\n    {\n      \"text\": \"The committee's ninth meeting was held at the parliament complex, presided over by Home Minister Salahuddin Ahmed and attended by legal experts. During a meeting on Saturday, legal experts provided views regarding the drafting of a widely acceptable amendment, overall reform, and the strengthening of constitutional institutions. Previous efforts to form a Constitution Reform Council in accordance with a referendum verdict encountered difficulties at the beginning. Following the February 12 election, winners from the Bangladesh Nationalist Party (BNP) took oaths only as MPs, whereas winners from the Jamaat-e-Islami-led alliance took oaths for both roles.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Former law adviser expresses hope for constitutional reform committee in Bangladesh",
+            "pages": [
+              {
+                "text": "Professor Asif Nazrul, a former law adviser to the interim government in Bangladesh, stated that he hopes the parliamentary committee on constitutional reform will deliver the largest possible gains, even if the results fall short of the sweeping changes originally envisioned under the interim administration. Nazrul, who served under the interim government led by Nobel laureate Muhammad Yunus, expressed a desire for a constitution more advanced than the current version, noting that any positive change constitutes a reform. He stated that while the aim is to achieve the maximum possible progress, any achievement will be considered a gain. The July National Charter was previously adopted for state reform under the Yunus-led interim government. Following opposition street protests demanding the implementation of the Charter, the BNP government formed the current committee. While the committee has met with political parties, alliances, academics, teachers, eminent citizens, social and professional group leaders, women leaders, and stakeholders of the July Uprising, the opposition has sent no representatives."
+              },
+              {
+                "text": "The committee's ninth meeting was held at the parliament complex, presided over by Home Minister Salahuddin Ahmed and attended by legal experts. During a meeting on Saturday, legal experts provided views regarding the drafting of a widely acceptable amendment, overall reform, and the strengthening of constitutional institutions. Previous efforts to form a Constitution Reform Council in accordance with a referendum verdict encountered difficulties at the beginning. Following the February 12 election, winners from the Bangladesh Nationalist Party (BNP) took oaths only as MPs, whereas winners from the Jamaat-e-Islami-led alliance took oaths for both roles."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2066,
+            "completion_tokens": 369,
+            "total_tokens": 2435,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 28.845455169677734
+          },
+          "latencyMs": 7795,
+          "safeHeaders": {
+            "cf-ray": "a4f986a9297df370-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:ab4cf41077467105",
+      "title": "Beyond digital money: Henry Bruce’s ARU",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "da1f784d0227bce3aa478f66a3941ada05e4a9d2f1b45a1a1f6e0ffb0b99220d",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 184,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:graphic-ghana:4e1656f70614238ad24ef6e4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:graphic-ghana:4e1656f70614238ad24ef6e4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:graphic-ghana:4e1656f70614238ad24ef6e4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:graphic-ghana:4e1656f70614238ad24ef6e4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:graphic-ghana:4e1656f70614238ad24ef6e4",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:graphic-ghana:4e1656f70614238ad24ef6e4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:graphic-ghana:4e1656f70614238ad24ef6e4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:graphic-ghana:4e1656f70614238ad24ef6e4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:graphic-ghana:4e1656f70614238ad24ef6e4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:graphic-ghana:4e1656f70614238ad24ef6e4",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:graphic-ghana:4e1656f70614238ad24ef6e4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:graphic-ghana:4e1656f70614238ad24ef6e4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:graphic-ghana:4e1656f70614238ad24ef6e4",
+          "publisher": "Graphic Online",
+          "url": "https://graphic.com.gh/news/general-news/ghana-news-beyond-digital-money-henry-bruces-aru.html",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.graphic.com.gh/images/2026/Oct/24/Henry.jpg",
+        "alt": "Beyond digital money: Henry Bruce’s ARU",
+        "status": "event-specific",
+        "source_url": "https://graphic.com.gh/news/general-news/ghana-news-beyond-digital-money-henry-bruces-aru.html",
+        "attribution": "Graphic Online",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-24T14:03:45.581Z",
+          "finishedAt": "2026-10-24T14:03:53.274Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Ghanaian economist proposes African Reserve Unit to address intra-African trade costs\",\n  \"pages\": [\n    {\n      \"text\": \"Henry Bruce, a Ghanaian economist and commodity trader, has proposed the creation of the African Reserve Unit (ARU) as a solution to the complexities of continental trade. Bruce, who has approximately 22 years of experience trading diesel and petrol in West African markets and has worked in central banking, argues that the solution to trade challenges is not another digital currency. He suggests that much of the current focus on digital money involves fiat money moving faster on new rails, but that a faster system does not change the underlying reliance on external reserves to settle trade. Bruce notes that a dollar on a phone remains a dollar, and Africa continues to depend on the reserves of others to facilitate transactions. This proposal comes amid observations that intra-African trade is commonly estimated at around 15 per cent of the continent's total, partly due to the high costs associated with payment processes. He cites examples where a buyer in Accra holding cedis must pay a seller wanting dollars through banks in New York or London to settle trades, such as diesel shipments bound for Tema.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Ghanaian economist proposes African Reserve Unit to address intra-African trade costs",
+            "pages": [
+              {
+                "text": "Henry Bruce, a Ghanaian economist and commodity trader, has proposed the creation of the African Reserve Unit (ARU) as a solution to the complexities of continental trade. Bruce, who has approximately 22 years of experience trading diesel and petrol in West African markets and has worked in central banking, argues that the solution to trade challenges is not another digital currency. He suggests that much of the current focus on digital money involves fiat money moving faster on new rails, but that a faster system does not change the underlying reliance on external reserves to settle trade. Bruce notes that a dollar on a phone remains a dollar, and Africa continues to depend on the reserves of others to facilitate transactions. This proposal comes amid observations that intra-African trade is commonly estimated at around 15 per cent of the continent's total, partly due to the high costs associated with payment processes. He cites examples where a buyer in Accra holding cedis must pay a seller wanting dollars through banks in New York or London to settle trades, such as diesel shipments bound for Tema."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1276,
+            "completion_tokens": 258,
+            "total_tokens": 1534,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 18.636363983154297
+          },
+          "latencyMs": 7693,
+          "safeHeaders": {
+            "cf-ray": "a4f986d9eca8f370-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:34057b77a580b668",
+      "title": "Murder, robbery and extortion; police also attacked during operations",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "1036741939b7b1a2bfeb5c23bd933095337e1ad988eeb32a7cd0238842876028",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 263,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:prothom-alo:7d52bc89092467fdc0ef3743",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:prothom-alo:7d52bc89092467fdc0ef3743",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:prothom-alo:7d52bc89092467fdc0ef3743",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:prothom-alo:7d52bc89092467fdc0ef3743",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:prothom-alo:7d52bc89092467fdc0ef3743",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:prothom-alo:7d52bc89092467fdc0ef3743",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:prothom-alo:7d52bc89092467fdc0ef3743",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:prothom-alo:7d52bc89092467fdc0ef3743",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:prothom-alo:7d52bc89092467fdc0ef3743",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:prothom-alo:7d52bc89092467fdc0ef3743",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:prothom-alo:7d52bc89092467fdc0ef3743",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:prothom-alo:7d52bc89092467fdc0ef3743",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:prothom-alo:7d52bc89092467fdc0ef3743",
+          "publisher": "Prothom Alo English",
+          "url": "https://en.prothomalo.com/bangladesh/crime-and-law/doubc5sqjy",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://media.prothomalo.com/prothomalo-english/2026-10-24/369wj1oj/WhatsApp-Image-2026-10-24-at-17.05.57.jpeg",
+        "alt": "Murder, robbery and extortion; police also attacked during operations",
+        "status": "event-specific",
+        "source_url": "https://en.prothomalo.com/bangladesh/crime-and-law/doubc5sqjy",
+        "attribution": "Prothom Alo English",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-24T14:03:53.274Z",
+          "finishedAt": "2026-10-24T14:04:04.873Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Criminal activity and attacks on River Police rise across Bangladesh waterways\",\n  \"pages\": [\n    {\n      \"text\": \"River-related crimes and attacks on law enforcement are increasing across the 11 regions monitored by the River Police in Bangladesh, according to senior River Police officials. Reported activities include murder, robbery, kidnapping, piracy, extortion, drug smuggling, and illegal sand extraction. Officials told Prothom Alo that criminals are increasingly utilizing river routes because law enforcement surveillance is less extensive on the water than on land. Criminal activities have been reported on various vessels, including passenger trawlers, fishing boats, cargo vessels, and bulkheads. Boat workers have reportedly been beaten or hacked with machetes for refusing to pay extortion, while cargo vessels have been looted of goods such as fertilizer. Members of the River Police have also come under attack while conducting operations to prevent these crimes.\"\n    },\n    {\n      \"text\": \"Data regarding filed cases shows a significant increase in reported incidents. In 2024, 2,085 cases were filed involving murder, unnatural deaths, robbery, snatching, weapons, transportation of stolen goods, illegal sand extraction, kidnapping, extortion, and drug-related offences. In 2025, the number of cases rose to 3,399, an increase of 1,314 from the previous year. Between January and September of this year, an additional 505 cases were filed involving murder, robbery, kidnapping, piracy, and unnatural deaths. Combined, these figures represent a total of 5,989 cases recorded over the specified periods. In a specific incident on the night of 1 February last year, a 30-year-old fisherman named Md. Hossain was killed by pirate gunfire while fishing in the Meghna River near East Ilisha union in Bhola Sadar upazila; three other fishermen, identified as Abbas, Kanchan, and Sohel, were injured in the shooting.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Criminal activity and attacks on River Police rise across Bangladesh waterways",
+            "pages": [
+              {
+                "text": "River-related crimes and attacks on law enforcement are increasing across the 11 regions monitored by the River Police in Bangladesh, according to senior River Police officials. Reported activities include murder, robbery, kidnapping, piracy, extortion, drug smuggling, and illegal sand extraction. Officials told Prothom Alo that criminals are increasingly utilizing river routes because law enforcement surveillance is less extensive on the water than on land. Criminal activities have been reported on various vessels, including passenger trawlers, fishing boats, cargo vessels, and bulkheads. Boat workers have reportedly been beaten or hacked with machetes for refusing to pay extortion, while cargo vessels have been looted of goods such as fertilizer. Members of the River Police have also come under attack while conducting operations to prevent these crimes."
+              },
+              {
+                "text": "Data regarding filed cases shows a significant increase in reported incidents. In 2024, 2,085 cases were filed involving murder, unnatural deaths, robbery, snatching, weapons, transportation of stolen goods, illegal sand extraction, kidnapping, extortion, and drug-related offences. In 2025, the number of cases rose to 3,399, an increase of 1,314 from the previous year. Between January and September of this year, an additional 505 cases were filed involving murder, robbery, kidnapping, piracy, and unnatural deaths. Combined, these figures represent a total of 5,989 cases recorded over the specified periods. In a specific incident on the night of 1 February last year, a 30-year-old fisherman named Md. Hossain was killed by pirate gunfire while fishing in the Meghna River near East Ilisha union in Bhola Sadar upazila; three other fishermen, identified as Abbas, Kanchan, and Sohel, were injured in the shooting."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1982,
+            "completion_tokens": 427,
+            "total_tokens": 2409,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 29.66363525390625
+          },
+          "latencyMs": 11599,
+          "safeHeaders": {
+            "cf-ray": "a4f98709fa64f370-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:b34ccc14e986caaa",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "page 1 exposes a citation/list marker"
+        ],
+        "wordCount": 189,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-24T14:04:04.874Z",
+          "finishedAt": "2026-10-24T14:04:10.486Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Three sitting councillors compete for Oshawa mayoralty in upcoming municipal election\",\n  \"pages\": [\n    {\n      \"text\": \"Three sitting councillors are vying to replace outgoing Oshawa Mayor Dan Carter in the municipal election scheduled for Oct. 26 in Oshawa, Canada. Candidates include Ward 2 regional and city councillor Tito-Dante Marimpietri, city councillor Jim Lee, and Derek Giberson. 10. CBC Toronto reports that Marimpietri intends to grow the city's commercial and industrial tax base by attracting new businesses and investment to reduce the burden on residents. He has pledged to develop a budget framework to keep municipal tax increases at or below the rate of inflation and plans to review budget pressures, discretionary spending, and reserves for savings opportunities within his first 100 days in office. Jim Lee has also pledged to hold property tax increases at the rate of inflation. Derek Giberson stated that while municipal and regional governments have fewer tools than provincial and federal governments to address affordability, they can make a difference through housing. Giberson's focus is on delivering more affordable non-profit housing units to reduce the cost of living. He also supports maintaining free public services, such as libraries, while keeping paid programs affordable and offering reduced fees to those in need.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Three sitting councillors compete for Oshawa mayoralty in upcoming municipal election",
+            "pages": [
+              {
+                "text": "Three sitting councillors are vying to replace outgoing Oshawa Mayor Dan Carter in the municipal election scheduled for Oct. 26 in Oshawa, Canada. Candidates include Ward 2 regional and city councillor Tito-Dante Marimpietri, city councillor Jim Lee, and Derek Giberson. 10. CBC Toronto reports that Marimpietri intends to grow the city's commercial and industrial tax base by attracting new businesses and investment to reduce the burden on residents. He has pledged to develop a budget framework to keep municipal tax increases at or below the rate of inflation and plans to review budget pressures, discretionary spending, and reserves for savings opportunities within his first 100 days in office. Jim Lee has also pledged to hold property tax increases at the rate of inflation. Derek Giberson stated that while municipal and regional governments have fewer tools than provincial and federal governments to address affordability, they can make a difference through housing. Giberson's focus is on delivering more affordable non-profit housing units to reduce the cost of living. He also supports maintaining free public services, such as libraries, while keeping paid programs affordable and offering reduced fees to those in need."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1374,
+            "completion_tokens": 280,
+            "total_tokens": 1654,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 20.12727165222168
+          },
+          "latencyMs": 5612,
+          "safeHeaders": {
+            "cf-ray": "a4f987527c46f370-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "stage": "evidence",
+      "eventId": "event:4aeb6cc98dd30d67",
+      "reason": "principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e8b58b2fd3763adb",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:907674c3daddb657",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:ec655b8128376c7b",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e16726fb8b4e5c8a",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:c34b9df08519cab9",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:3210368f9b2d1541",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:38e395c6e70f0931",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:28a16190ec774098",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:c9d748baf914ef04",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:87a9a8b4eb71697e",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:961b91420081cc6a",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:eeb4fc418a197a79",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e6d37ce1f750e31e",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6b517b03fbbb15f2",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:98c9ccae76f20b17",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:27521eeb01c506c1",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:eef025c0da196822",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:a90c21ff2e8eb09a",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:fc0c72432d7dc218",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0a21af2fce3a7edd",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0d287443aaa6ae9b",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:9213b2d378aece8f",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:cbd56733437870b0",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:61cc9151823608ce",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:eed5b607ab021159",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4d0cb4c44fc0a7d5",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:852ae20b14f4fe70",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:fd7741302656d8cc",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4b18d95c5e9fd50d",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:55f956b72c5277de",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:d8c6040c5a2fee44",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "eventId": "event:111ba962dd6236cf",
+      "title": "Eight killed and 40 injured after gunmen open fire at church funeral in Jordan",
+      "stage": "writer-safety",
+      "reason": "unsafe temporal metadata exposure"
+    },
+    {
+      "eventId": "event:f9cf5f1814d9c79d",
+      "title": "World Snow Leopard Day: Community action and new science foster coexistence with humans",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:eae60c71ffce70fc",
+      "title": "China: Panic as 7.0-magnitude earthquake rocks Tibet",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:7597270c51cba30b",
+      "title": "Syria reconnects to global finance, but ordinary Syrians are still struggling",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 19.73 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:6b12fcd44262e9da",
+      "title": "Study highlights gaps in readiness for AI adoption across African Universities",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 19.06 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:f31238897221e11b",
+      "title": "Melania Trump says she brokered truce in war-torn Ukrainian city",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 18.88 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:01f6024b157e24fb",
+      "title": "Iranian president to meet Putin in Moscow: Iran media",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 9.26 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:93c8afb0255100f7",
+      "title": "FIFA’s Infantino touts global re-election support amid resignation questions",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 4.79 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:f03a4e33ba27d745",
+      "title": "Bangladesh’s climate migrants are arriving in cities unprepared to protect them",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 3.39 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:a6676a4543e426d3",
+      "title": "Transit a 'glaring oversight' for Durham region candidates, some riders and advocates say",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -3.01 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:610d0424cc1e4f59",
+      "title": "MCE engages Okada riders on new digital traffic enforcement system at Kpando",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -8.34 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:1c63361ba453ef22",
+      "title": "Q&A: Premier Danielle Smith says she doesn’t need Alberta separatists’ support",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -13.51 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:e7c66fc7329cdb52",
+      "title": "As a divided Israel prepares to go to the polls, can Netanyahu pull off his greatest political trick yet?",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -14.26 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:29aa7624a77cb72b",
+      "title": "Russia, Ukraine agree to US-brokered, 1 city ceasefire",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -16.94 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:789beee3eb69d9cd",
+      "title": "Artist Kamrul Hasan Lipu explores his roots in Yokohama solo exhibition",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -17.13 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:8d2ce47575042f1c",
+      "title": "Startup Wrap: MENA attracts fresh funding across technology sectors",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -23.24 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:7f9b49e3d6d8417f",
+      "title": "What if Flávio Bolsonaro wins? High stakes for the environment in Brazil’s 2026 elections (commentary)",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -28.09 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:bf4788c1f0b1d09e",
+      "title": "Playback: Newsfile discussed Obuasi SHTS abuse case, GH₵49m S.A. evacuation and World Cup visa scandal",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -33.46 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:63bffbbfc4005f34",
+      "title": "Call to fulfill climate finance commitments ahead of COP-31",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -42.38 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:76abd5de4e61c45f",
+      "title": "Israel orders closure of West Bank after soldiers kill 2 men behind an alleged attack",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    },
+    {
+      "eventId": "event:a90950c602298db8",
+      "title": "Syria condemns attack on church in Jordan",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    },
+    {
+      "eventId": "event:f3c36e8a13060e7c",
+      "title": "Deadly shooting near Paris is a ‘racist terrorist attack’, Macron says",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    },
+    {
+      "eventId": "event:9e64706ce3f06fbf",
+      "title": "Jordan’s King Abdullah orders security forces to respond firmly to Karak church attack",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    },
+    {
+      "eventId": "event:b34ccc14e986caaa",
+      "title": "Oshawa Votes 2026: Where mayoral candidates stand on key issues",
+      "stage": "content-structure",
+      "reason": "page 1 exposes a citation/list marker"
+    }
+  ],
+  "outcome": {
+    "writerRequests": 7,
+    "retries": 0,
+    "acceptedCards": 6,
+    "retainedCards": 119,
+    "skippedCards": 56,
+    "totalNeurons": 173.74545097351074,
+    "inputTokens": 12251,
+    "outputTokens": 2287,
+    "meanNeuronsPerAcceptedCard": 28.96,
+    "datasetBytes": 322533,
+    "thirdPartyCostUsd": 0,
+    "imageStatus": {
+      "event-specific": 116,
+      "fallback": 4
+    },
+    "geographicDistribution": {
+      "Bangladesh": 28,
+      "Ghana": 25,
+      "Canada": 16,
+      "GTA": 6,
+      "Middle East": 29,
+      "Syria": 10
+    }
+  },
+  "integrity": {
+    "datasetSha256": "b7c6c8a6fafd1530491042292122eb2b8efaafd7c5e8d0f924ef71357023523d"
+  }
+}

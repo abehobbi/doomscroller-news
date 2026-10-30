@@ -1,0 +1,2751 @@
+{
+  "schema": "doomscroller.news-beta-diagnostics",
+  "schemaVersion": 1,
+  "batchId": "news-beta-2026-10-09T02-20-15-997Z",
+  "startedAt": "2026-10-09T02:19:16.422Z",
+  "finishedAt": "2026-10-09T02:20:15.997Z",
+  "durationMs": 59575,
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1024,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "discovery": {
+    "discoveredArticles": 841,
+    "freshArticles": 666,
+    "uniqueArticles": 637,
+    "eventCandidates": 601,
+    "evidencePoolArticles": 187,
+    "preparedEvents": 110,
+    "selectedEvents": 30,
+    "evidenceFailures": 50,
+    "sourceFailures": 4
+  },
+  "sourceStatus": [
+    {
+      "id": "sana-en",
+      "name": "SANA English",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "north-press-en",
+      "name": "North Press Agency",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "enab-baladi-en",
+      "name": "Enab Baladi English",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "syria-direct-en",
+      "name": "Syria Direct",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dhaka-tribune",
+      "name": "Dhaka Tribune",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "bd24live-en",
+      "name": "BD24Live English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "prothom-alo-en",
+      "name": "Prothom Alo English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "No valid feed items"
+    },
+    {
+      "id": "financial-express-bd",
+      "name": "The Financial Express Bangladesh",
+      "status": "ok",
+      "itemCount": 28
+    },
+    {
+      "id": "daily-star-bd",
+      "name": "The Daily Star Bangladesh",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "myjoyonline",
+      "name": "MyJoyOnline",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "graphic-ghana",
+      "name": "Graphic Online",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "ghana-news-agency",
+      "name": "Ghana News Agency",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "toronto-city",
+      "name": "City of Toronto News",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "cbc-toronto",
+      "name": "CBC Toronto",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "cbc-canada",
+      "name": "CBC Canada",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "aljazeera-all",
+      "name": "Al Jazeera",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "arab-news",
+      "name": "Arab News",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "bbc-world",
+      "name": "BBC World",
+      "status": "ok",
+      "itemCount": 36
+    },
+    {
+      "id": "bbc-technology",
+      "name": "BBC Technology",
+      "status": "ok",
+      "itemCount": 21
+    },
+    {
+      "id": "bbc-science-environment",
+      "name": "BBC Science & Environment",
+      "status": "ok",
+      "itemCount": 42
+    },
+    {
+      "id": "guardian-world",
+      "name": "The Guardian World",
+      "status": "ok",
+      "itemCount": 45
+    },
+    {
+      "id": "guardian-science",
+      "name": "The Guardian Science",
+      "status": "ok",
+      "itemCount": 26
+    },
+    {
+      "id": "guardian-environment",
+      "name": "The Guardian Environment",
+      "status": "ok",
+      "itemCount": 34
+    },
+    {
+      "id": "npr-world",
+      "name": "NPR World",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "npr-science",
+      "name": "NPR Science",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dw-world",
+      "name": "DW World",
+      "status": "ok",
+      "itemCount": 137
+    },
+    {
+      "id": "africanews",
+      "name": "Africanews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "euronews",
+      "name": "Euronews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "global-voices",
+      "name": "Global Voices",
+      "status": "ok",
+      "itemCount": 15
+    },
+    {
+      "id": "japan-times",
+      "name": "The Japan Times",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "mongabay",
+      "name": "Mongabay",
+      "status": "ok",
+      "itemCount": 32
+    }
+  ],
+  "knownSourceFailures": [
+    {
+      "name": "Bangladesh Sangbad Sangstha",
+      "url": "https://www.bssnews.net/feed",
+      "status": "blocked",
+      "detail": "Cloudflare challenge returned HTTP 403 to the bounded collector."
+    },
+    {
+      "name": "The Indian Express feeds",
+      "url": "https://indianexpress.com/rss/",
+      "status": "blocked_in_cloud",
+      "detail": "Official feeds work locally but return HTTP 403 from GitHub Actions, so the automatic collector does not depend on them."
+    },
+    {
+      "name": "The Business Standard",
+      "url": "https://www.tbsnews.net/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "Feed served 2019–2021 items."
+    },
+    {
+      "name": "Ontario Newsroom",
+      "url": "https://news.ontario.ca/en/rss",
+      "status": "retired_from_registry",
+      "detail": "URL returns an HTML application shell, not RSS."
+    },
+    {
+      "name": "GhanaWeb",
+      "url": "https://www.ghanaweb.com/GhanaHomePage/NewsArchive/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "The publisher endpoint returned HTTP 404 in October 2026; MyJoyOnline and Graphic Online remain active Ghana sources."
+    }
+  ],
+  "reranker": {
+    "adjustments": [
+      {
+        "eventId": "event:373c8478bfec0b0b",
+        "baseScore": 75.52,
+        "adjustment": 14,
+        "adjustedScore": 89.52,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:1e87a31ad1b22470",
+        "baseScore": 68.41,
+        "adjustment": 14,
+        "adjustedScore": 82.41,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Palestinian territories"
+      },
+      {
+        "eventId": "event:97424e4561c7eed3",
+        "baseScore": 54.31,
+        "adjustment": 14,
+        "adjustedScore": 68.31,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:7ea2f79cdf3b1f94",
+        "baseScore": 66.47,
+        "adjustment": -4,
+        "adjustedScore": 62.47,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "Ethiopia"
+      },
+      {
+        "eventId": "event:ecb6f41e7e26d6c5",
+        "baseScore": 46.1,
+        "adjustment": 14,
+        "adjustedScore": 60.1,
+        "contentType": "general",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:79e23463723ccabb",
+        "baseScore": 53.07,
+        "adjustment": 6,
+        "adjustedScore": 59.07,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:6cf5edbb2c26222b",
+        "baseScore": 52,
+        "adjustment": 6,
+        "adjustedScore": 58,
+        "contentType": "conflict",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:4d698d06fa6076f3",
+        "baseScore": 70.21,
+        "adjustment": -13,
+        "adjustedScore": 57.209999999999994,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Iran"
+      },
+      {
+        "eventId": "event:eb4a18ef5c2e2a5c",
+        "baseScore": 47.67,
+        "adjustment": 0,
+        "adjustedScore": 47.67,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:36404e1dce7f6873",
+        "baseScore": 37.05,
+        "adjustment": 10,
+        "adjustedScore": 47.05,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:66915252e364dbc5",
+        "baseScore": 61.92,
+        "adjustment": -18,
+        "adjustedScore": 43.92,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "United States"
+      },
+      {
+        "eventId": "event:2777d90c66e9f117",
+        "baseScore": 36.59,
+        "adjustment": -2,
+        "adjustedScore": 34.59,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:5c0e37c2f320b977",
+        "baseScore": 37.42,
+        "adjustment": -7,
+        "adjustedScore": 30.42,
+        "contentType": "culture-science-education",
+        "regions": [
+          "World"
+        ],
+        "country": "United Kingdom"
+      },
+      {
+        "eventId": "event:9fb9cabea371f3a6",
+        "baseScore": 42.67,
+        "adjustment": -19,
+        "adjustedScore": 23.67,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:9d5c622b0afc36a3",
+        "baseScore": 36.74,
+        "adjustment": -15,
+        "adjustedScore": 21.740000000000002,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:ce11463fc554be3d",
+        "baseScore": 41.09,
+        "adjustment": -22,
+        "adjustedScore": 19.090000000000003,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "China"
+      },
+      {
+        "eventId": "event:becba938977d1a6c",
+        "baseScore": 44.72,
+        "adjustment": -29,
+        "adjustedScore": 15.719999999999999,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:91fb90494618a87e",
+        "baseScore": 55.27,
+        "adjustment": -45,
+        "adjustedScore": 10.270000000000003,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "Brazil"
+      },
+      {
+        "eventId": "event:423d5735e6d78926",
+        "baseScore": 69.25,
+        "adjustment": -61,
+        "adjustedScore": 8.25,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Lebanon"
+      },
+      {
+        "eventId": "event:096322b176f5763c",
+        "baseScore": 34.42,
+        "adjustment": -38,
+        "adjustedScore": -3.5799999999999983,
+        "contentType": "culture-science-education",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:983c7d550c040df0",
+        "baseScore": 51.08,
+        "adjustment": -56,
+        "adjustedScore": -4.920000000000002,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:f20eeeb0ddc23c39",
+        "baseScore": 52.41,
+        "adjustment": -59,
+        "adjustedScore": -6.590000000000003,
+        "contentType": "general",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:6481b1ac5ba1224d",
+        "baseScore": 34.65,
+        "adjustment": -48,
+        "adjustedScore": -13.350000000000001,
+        "contentType": "general",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:ee84c86751e56515",
+        "baseScore": 35.61,
+        "adjustment": -57,
+        "adjustedScore": -21.39,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "Ukraine"
+      },
+      {
+        "eventId": "event:8c871ad7296ea44c",
+        "baseScore": 50.54,
+        "adjustment": -72,
+        "adjustedScore": -21.46,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:e45bdff2d3282939",
+        "baseScore": 34.47,
+        "adjustment": -57,
+        "adjustedScore": -22.53,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:5c5fddc3c7ffd076",
+        "baseScore": 37.76,
+        "adjustment": -67,
+        "adjustedScore": -29.240000000000002,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:c3fec305ce296833",
+        "baseScore": 45.31,
+        "adjustment": -85,
+        "adjustedScore": -39.69,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "United Arab Emirates"
+      },
+      {
+        "eventId": "event:68c972bfa4e16374",
+        "baseScore": 34.21,
+        "adjustment": -78,
+        "adjustedScore": -43.79,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:c4840b367b73eda7",
+        "baseScore": 61.19,
+        "adjustment": -109,
+        "adjustedScore": -47.81,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Palestinian territories"
+      }
+    ],
+    "distribution": {
+      "regions": {
+        "Middle East": 10,
+        "Ghana": 5,
+        "World": 8,
+        "Canada": 5,
+        "GTA": 3,
+        "Syria": 2,
+        "Bangladesh": 2
+      },
+      "countries": {
+        "Israel": 2,
+        "Palestinian territories": 2,
+        "Ghana": 5,
+        "Ethiopia": 1,
+        "Canada": 2,
+        "GTA": 3,
+        "Iran": 1,
+        "Syria": 2,
+        "Bangladesh": 2,
+        "United States": 1,
+        "United Kingdom": 1,
+        "China": 1,
+        "Brazil": 1,
+        "Lebanon": 1,
+        "World": 2,
+        "Ukraine": 1,
+        "Yemen": 1,
+        "United Arab Emirates": 1
+      },
+      "contentTypes": {
+        "conflict": 8,
+        "diplomacy-or-speech": 6,
+        "general": 9,
+        "economy-or-public-life": 4,
+        "culture-science-education": 3
+      },
+      "publishers": {
+        "Arab News": 4,
+        "Africanews": 2,
+        "Graphic Online": 2,
+        "The Guardian World": 3,
+        "CBC Canada": 2,
+        "MyJoyOnline": 2,
+        "City of Toronto News": 1,
+        "NPR World": 2,
+        "Mongabay": 1,
+        "The Financial Express Bangladesh": 1,
+        "The Guardian Environment": 2,
+        "North Press Agency": 1,
+        "CBC Toronto": 2,
+        "DW World": 1,
+        "Al Jazeera": 1,
+        "Euronews": 1,
+        "Ghana News Agency": 1,
+        "BBC World": 1
+      }
+    }
+  },
+  "selectedEvents": [
+    {
+      "eventId": "event:373c8478bfec0b0b",
+      "title": "Gaza rescuers say Israeli fire kills seven",
+      "score": 75.52,
+      "adjustedScore": 89.52,
+      "rank": 1,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.52,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:1e87a31ad1b22470",
+      "title": "Over 20,000 Palestinian students and education workers killed in Gaza war",
+      "score": 68.41,
+      "adjustedScore": 82.41,
+      "rank": 2,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.41,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:97424e4561c7eed3",
+      "title": "President directs GH¢1bn into Housing Fund - It’s to tackle 1.8m deficit",
+      "score": 54.31,
+      "adjustedScore": 68.31,
+      "rank": 3,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.31,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:7ea2f79cdf3b1f94",
+      "title": "Ethiopia launches drone attack against Eritrean troops who crossed into Tigray",
+      "score": 66.47,
+      "adjustedScore": 62.47,
+      "rank": 4,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.47,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:ecb6f41e7e26d6c5",
+      "title": "Man who started northern Sask. wildfire sentenced to 6 years",
+      "score": 46.1,
+      "adjustedScore": 60.1,
+      "rank": 5,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 18.1,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:79e23463723ccabb",
+      "title": "Public cautioned against transactions over Borteyman land as Supreme Court rules in favour of Sino Africa",
+      "score": 53.07,
+      "adjustedScore": 59.07,
+      "rank": 6,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.07,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:6cf5edbb2c26222b",
+      "title": "Advance voting in Toronto’s 2026 municipal election begins tomorrow",
+      "score": 52,
+      "adjustedScore": 58,
+      "rank": 7,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 0,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 22,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:4d698d06fa6076f3",
+      "title": "Putin tells Iran leader will ‘do everything’ to help end war",
+      "score": 70.21,
+      "adjustedScore": 57.21,
+      "rank": 8,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.21,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:eb4a18ef5c2e2a5c",
+      "title": "Syrian general accused of atrocities is protected by U.S. and Lebanon, NPR and BBC find",
+      "score": 47.67,
+      "adjustedScore": 47.67,
+      "rank": 9,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 15.67,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:36404e1dce7f6873",
+      "title": "Did two of the lemurs stolen in Bangladesh end up in India? Officials are investigating",
+      "score": 37.05,
+      "adjustedScore": 47.05,
+      "rank": 10,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.05,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 5,
+        "localTexture": 0,
+        "editorialBonus": 5,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:66915252e364dbc5",
+      "title": "Hegseth falsely claims Obama called 2009 Fort Hood attack ‘workplace violence’ – US politics live",
+      "score": 61.92,
+      "adjustedScore": 43.92,
+      "rank": 11,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.92,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:2777d90c66e9f117",
+      "title": "US to increase Rohingya humanitarian assistance",
+      "score": 36.59,
+      "adjustedScore": 34.59,
+      "rank": 12,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.59,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:5c0e37c2f320b977",
+      "title": "Britons kept in dark about scale of climate crisis, say viewers of ‘first-of-its-kind’ emergency briefing",
+      "score": 37.42,
+      "adjustedScore": 30.42,
+      "rank": 13,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 15.42,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:9fb9cabea371f3a6",
+      "title": "Turkey accuses Israel of military escalation in southern Syria",
+      "score": 42.67,
+      "adjustedScore": 23.67,
+      "rank": 14,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 17.67,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:9d5c622b0afc36a3",
+      "title": "Ontario will officially begin removing Toronto bike lanes on Tuesday",
+      "score": 36.74,
+      "adjustedScore": 21.74,
+      "rank": 15,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 18.74,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:ce11463fc554be3d",
+      "title": "EU envoy in Beijing for talks to calm trade tensions",
+      "score": 41.09,
+      "adjustedScore": 19.09,
+      "rank": 16,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.09,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:becba938977d1a6c",
+      "title": "Sam George pushes back on FBI claim over Ghana cybercrime operation",
+      "score": 44.72,
+      "adjustedScore": 15.72,
+      "rank": 17,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.72,
+        "importance": 0,
+        "interestingness": 4,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:91fb90494618a87e",
+      "title": "Flávio Bolsonaro’s advance in Brazil’s election is grim jolt for climate campaigners",
+      "score": 55.27,
+      "adjustedScore": 10.27,
+      "rank": 18,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 12.27,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:423d5735e6d78926",
+      "title": "Israeli army says one soldier killed, three wounded in south Lebanon",
+      "score": 69.25,
+      "adjustedScore": 8.25,
+      "rank": 19,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.25,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:096322b176f5763c",
+      "title": "This is one of Norway’s most pristine fjords. So why is it being used as a dumping site for mine waste?",
+      "score": 34.42,
+      "adjustedScore": -3.58,
+      "rank": 20,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 14.42,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:983c7d550c040df0",
+      "title": "Mahama commends Trade Minister for championing Ghana’s industrial growth",
+      "score": 51.08,
+      "adjustedScore": -4.92,
+      "rank": 21,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.08,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:f20eeeb0ddc23c39",
+      "title": "Israeli settlers take Palestinian olives, and their harvest traditions",
+      "score": 52.41,
+      "adjustedScore": -6.59,
+      "rank": 22,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.41,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 5,
+        "localTexture": 14,
+        "editorialBonus": 19,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:6481b1ac5ba1224d",
+      "title": "'Isolated, lapse in judgment,' says Banff National Park superintendent who violated National Parks Act",
+      "score": 34.65,
+      "adjustedScore": -13.35,
+      "rank": 23,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 19.65,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 7,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:ee84c86751e56515",
+      "title": "Former ambassador on NATO's meeting in Ukraine and the ongoing war",
+      "score": 35.61,
+      "adjustedScore": -21.39,
+      "rank": 24,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 15.61,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:8c871ad7296ea44c",
+      "title": "Houthis claim missile strikes on Riyadh airport as explosions heard in Saudi capital",
+      "score": 50.54,
+      "adjustedScore": -21.46,
+      "rank": 25,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.54,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:e45bdff2d3282939",
+      "title": "Volta youth farmers commend Agric Minister, appeal for markets for cassava growers",
+      "score": 34.47,
+      "adjustedScore": -22.53,
+      "rank": 26,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.47,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:5c5fddc3c7ffd076",
+      "title": "Oshawa mayoral candidates focus on homeless, downtown concerns at debate",
+      "score": 37.76,
+      "adjustedScore": -29.24,
+      "rank": 27,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 19.76,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:c3fec305ce296833",
+      "title": "Saudi Arabia and UAE agree to strengthen power grid and rail connectivity",
+      "score": 45.31,
+      "adjustedScore": -39.69,
+      "rank": 28,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.31,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:68c972bfa4e16374",
+      "title": "Protesters blame 'vulture funds' for Spain's housing crisis",
+      "score": 34.21,
+      "adjustedScore": -43.79,
+      "rank": 29,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.21,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:c4840b367b73eda7",
+      "title": "Israelis mourn October 7 attack as Palestinians in Gaza live in ruins of war",
+      "score": 61.19,
+      "adjustedScore": -47.81,
+      "rank": 30,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 10.19,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    }
+  ],
+  "invalidPreviousCardsRemoved": [],
+  "crossEventOverlap": [],
+  "generation": [
+    {
+      "eventId": "event:373c8478bfec0b0b",
+      "title": "Gaza rescuers say Israeli fire kills seven",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "a341c818972a57923a5ce016ebcd771bc7057b9dd217e5a127cc7d37c27e8fe6",
+      "allowedExactDates": [
+        "2023-10-07",
+        "2026-10-07"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [
+          "2023-10-07",
+          "2026-10-07"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 144,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:arab-news:5f43e995d9e7384c16c4bee7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:arab-news:5f43e995d9e7384c16c4bee7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:arab-news:5f43e995d9e7384c16c4bee7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:arab-news:5f43e995d9e7384c16c4bee7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:arab-news:5f43e995d9e7384c16c4bee7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:arab-news:5f43e995d9e7384c16c4bee7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:arab-news:5f43e995d9e7384c16c4bee7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:arab-news:5f43e995d9e7384c16c4bee7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:arab-news:5f43e995d9e7384c16c4bee7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:arab-news:5f43e995d9e7384c16c4bee7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:arab-news:5f43e995d9e7384c16c4bee7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:arab-news:5f43e995d9e7384c16c4bee7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:arab-news:5f43e995d9e7384c16c4bee7",
+          "publisher": "Arab News",
+          "url": "https://arabnews.com/middle-east/gaza-rescuers-say-israeli-fire-kills-seven-3005373",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://assets.maestronewsroom.com/media/shared/wires/ap/20261008/d089521b8469-Israel_Palestinians_Gaza_56751--af464.jpg",
+        "alt": "Gaza rescuers say Israeli fire kills seven",
+        "status": "event-specific",
+        "source_url": "https://arabnews.com/middle-east/gaza-rescuers-say-israeli-fire-kills-seven-3005373",
+        "attribution": "Arab News",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-09T02:19:44.897Z",
+          "finishedAt": "2026-10-09T02:19:48.945Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Gaza rescuers report seven killed in separate Israeli strikes\",\n  \"pages\": [\n    {\n      \"text\": \"Gaza’s civil defense rescue service reported on Thursday that seven people were killed in separate Israeli strikes throughout the day. Six of the seven fatalities occurred in various parts of Gaza City, while one person was killed by Israeli fire southeast of Deir Al-Balah in central Gaza, according to the rescue service. The Israeli army told AFP that three of the targeted individuals were “military operatives in terrorist organizations,” though the military stated it was checking reports regarding the other four victims. Specific incidents in Gaza City included a drone strike on a car that killed two people, a drone attack on a tent in a displaced persons encampment that killed one person, an aircraft bombing of a residential building that killed a woman and a child, and artillery shelling that killed a woman, according to the rescue service, Al-Shifa hospital, and health officials.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Gaza rescuers report seven killed in separate Israeli strikes",
+            "pages": [
+              {
+                "text": "Gaza’s civil defense rescue service reported on Thursday that seven people were killed in separate Israeli strikes throughout the day. Six of the seven fatalities occurred in various parts of Gaza City, while one person was killed by Israeli fire southeast of Deir Al-Balah in central Gaza, according to the rescue service. The Israeli army told AFP that three of the targeted individuals were “military operatives in terrorist organizations,” though the military stated it was checking reports regarding the other four victims. Specific incidents in Gaza City included a drone strike on a car that killed two people, a drone attack on a tent in a displaced persons encampment that killed one person, an aircraft bombing of a residential building that killed a woman and a child, and artillery shelling that killed a woman, according to the rescue service, Al-Shifa hospital, and health officials."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1737,
+            "completion_tokens": 213,
+            "total_tokens": 1950,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 21.600000381469727
+          },
+          "latencyMs": 4049,
+          "safeHeaders": {
+            "cf-ray": "a479e6f5bd8cd59a-SJC"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:ecb6f41e7e26d6c5",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "summary is too thin for a self-contained beta card"
+        ],
+        "wordCount": 50,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-09T02:19:48.947Z",
+          "finishedAt": "2026-10-09T02:19:51.326Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Man sentenced to six years for starting Ditch 2 wildfire in Saskatchewan, Canada\",\n  \"pages\": [\n    {\n      \"text\": \"Jason Halkett has been sentenced to six years in prison for starting the fire that became last year's Ditch 2 wildfire in northern Saskatchewan. Judge Jeffrey Lubyk handed down the sentence on Thursday in Montreal Lake provincial court. Halkett pleaded guilty earlier this year to arson causing damage to property.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Man sentenced to six years for starting Ditch 2 wildfire in Saskatchewan, Canada",
+            "pages": [
+              {
+                "text": "Jason Halkett has been sentenced to six years in prison for starting the fire that became last year's Ditch 2 wildfire in northern Saskatchewan. Judge Jeffrey Lubyk handed down the sentence on Thursday in Montreal Lake provincial court. Halkett pleaded guilty earlier this year to arson causing damage to property."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 924,
+            "completion_tokens": 110,
+            "total_tokens": 1034,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 11.399999618530273
+          },
+          "latencyMs": 2379,
+          "safeHeaders": {
+            "cf-ray": "a479e70eecf5d59a-SJC"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:79e23463723ccabb",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "page 1 ends mid-sentence"
+        ],
+        "wordCount": 124,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-09T02:19:51.326Z",
+          "finishedAt": "2026-10-09T02:19:55.581Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Supreme Court rules in favor of Sino Africa regarding Borteyman land in Ghana\", \"pages\": [{\"text\": \"The Supreme Court of Ghana delivered a judgment on June 3, 2026, overturning a majority decision from the Court of Appeal dated March 27, 2025, regarding two parcels of land in Borteyman, also known as Nungua Farms, in Tema within the Greater Accra Region. The land, which covers approximately 328.877 acres, was the subject of Civil Appeal No. J4/44/2025. According to a public notice issued by Sino Africa Development Company Limited on October 8, 2026, the court declared legal title in favor of Sino Africa, though this is subject to the possessory rights of the first and second defendants, Royal Bell Investments Limited and Terraform Development Limited. Sino Africa's entitlement to recover possession is also subject to the claims of those two companies. 10/08/2026\"}] }",
+          "parsed": {
+            "headline": "Supreme Court rules in favor of Sino Africa regarding Borteyman land in Ghana",
+            "pages": [
+              {
+                "text": "The Supreme Court of Ghana delivered a judgment on June 3, 2026, overturning a majority decision from the Court of Appeal dated March 27, 2025, regarding two parcels of land in Borteyman, also known as Nungua Farms, in Tema within the Greater Accra Region. The land, which covers approximately 328.877 acres, was the subject of Civil Appeal No. J4/44/2025. According to a public notice issued by Sino Africa Development Company Limited on October 8, 2026, the court declared legal title in favor of Sino Africa, though this is subject to the possessory rights of the first and second defendants, Royal Bell Investments Limited and Terraform Development Limited. Sino Africa's entitlement to recover possession is also subject to the claims of those two companies. 10/08/2026"
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1986,
+            "completion_tokens": 222,
+            "total_tokens": 2208,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 24.109088897705078
+          },
+          "latencyMs": 4255,
+          "safeHeaders": {
+            "cf-ray": "a479e71dcf76d59a-SJC"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:eb4a18ef5c2e2a5c",
+      "title": "Syrian general accused of atrocities is protected by U.S. and Lebanon, NPR and BBC find",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "ec7bfb5f5b052ed747a9afc8d8b3e7fae0eb47e658b970ee13d8aa18cfe52644",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 207,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:npr:c434a7a3b8663cebe3140911",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:npr:c434a7a3b8663cebe3140911",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:npr:c434a7a3b8663cebe3140911",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:npr:c434a7a3b8663cebe3140911",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:npr:c434a7a3b8663cebe3140911",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:npr:c434a7a3b8663cebe3140911",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:npr:c434a7a3b8663cebe3140911",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:npr:c434a7a3b8663cebe3140911",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:npr:c434a7a3b8663cebe3140911",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:npr:c434a7a3b8663cebe3140911",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:npr:c434a7a3b8663cebe3140911",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:npr:c434a7a3b8663cebe3140911",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:bbc:eb1c83522752b62aa5badd40",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:bbc:eb1c83522752b62aa5badd40",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F15",
+            "sourceId": "news:bbc:eb1c83522752b62aa5badd40",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F16",
+            "sourceId": "news:bbc:eb1c83522752b62aa5badd40",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F17",
+            "sourceId": "news:bbc:eb1c83522752b62aa5badd40",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F18",
+            "sourceId": "news:bbc:eb1c83522752b62aa5badd40",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F19",
+            "sourceId": "news:bbc:eb1c83522752b62aa5badd40",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F20",
+            "sourceId": "news:bbc:eb1c83522752b62aa5badd40",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F21",
+            "sourceId": "news:bbc:eb1c83522752b62aa5badd40",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:npr:c434a7a3b8663cebe3140911",
+          "publisher": "NPR World",
+          "url": "https://npr.org/2026/10/08/nx-s1-5993637/syrian-general-lebanon-fbi-austin-tice",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:bbc:eb1c83522752b62aa5badd40",
+          "publisher": "BBC World",
+          "url": "https://bbc.co.uk/news/articles/c81dldewl5gwo",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://npr.brightspotcdn.com/dims3/default/strip/false/crop/6276x3531+0+138/resize/1400/quality/85/format/jpeg/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2Fad%2F33%2Fd7e5bc5646e0bd0322bac6e3c769%2Fbassam.jpg",
+        "alt": "Syrian general accused of atrocities is protected by U.S. and Lebanon, NPR and BBC find",
+        "status": "event-specific",
+        "source_url": "https://npr.org/2026/10/08/nx-s1-5993637/syrian-general-lebanon-fbi-austin-tice",
+        "attribution": "NPR World",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-09T02:19:55.581Z",
+          "finishedAt": "2026-10-09T02:20:01.446Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Former Syrian general accused of atrocities is protected in Lebanon by U.S. and Lebanese authorities\",\n  \"pages\": [\n    {\n      \"text\": \"A joint investigation by the BBC and NPR has found that Bassam al-Hassan, a former Syrian general and senior advisor to former President Bashar al-Assad, is living in Lebanon under the protection and financial support of American and Lebanese authorities. Hassan, who oversaw Syria's chemical weapons program and faces U.S. sanctions and international warrants for crimes against humanity, moved to Beirut following the collapse of the Assad regime in 2024. According to four anonymous sources familiar with the arrangement, Hassan is being bankrolled and protected due to his willingness to provide intelligence, including information regarding the 2012 abduction of American journalist Austin Tice in Syria. The BBC reviewed records of a meeting between Hassan, Lebanese security officials, and representatives from the FBI and CIA in which Hassan was offered residency, protection, and assistance with living needs. Sources stated that Hassan receives money through an intermediary to make the funds harder to trace. While officials from two branches of Syria's new government have expressed a desire to have Hassan returned to face trial, the BBC reports that U.S. authorities want him kept in Lebanon. The FBI declined to comment on the findings, directing inquiries to a previous statement regarding its focus on establishing facts around the Tice case.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Former Syrian general accused of atrocities is protected in Lebanon by U.S. and Lebanese authorities",
+            "pages": [
+              {
+                "text": "A joint investigation by the BBC and NPR has found that Bassam al-Hassan, a former Syrian general and senior advisor to former President Bashar al-Assad, is living in Lebanon under the protection and financial support of American and Lebanese authorities. Hassan, who oversaw Syria's chemical weapons program and faces U.S. sanctions and international warrants for crimes against humanity, moved to Beirut following the collapse of the Assad regime in 2024. According to four anonymous sources familiar with the arrangement, Hassan is being bankrolled and protected due to his willingness to provide intelligence, including information regarding the 2012 abduction of American journalist Austin Tice in Syria. The BBC reviewed records of a meeting between Hassan, Lebanese security officials, and representatives from the FBI and CIA in which Hassan was offered residency, protection, and assistance with living needs. Sources stated that Hassan receives money through an intermediary to make the funds harder to trace. While officials from two branches of Syria's new government have expressed a desire to have Hassan returned to face trial, the BBC reports that U.S. authorities want him kept in Lebanon. The FBI declined to comment on the findings, directing inquiries to a previous statement regarding its focus on establishing facts around the Tice case."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2235,
+            "completion_tokens": 307,
+            "total_tokens": 2542,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 28.69091033935547
+          },
+          "latencyMs": 5865,
+          "safeHeaders": {
+            "cf-ray": "a479e7386d17d59a-SJC"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:66915252e364dbc5",
+      "title": "Hegseth falsely claims Obama called 2009 Fort Hood attack ‘workplace violence’ – US politics live",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "2c7b056dbe6d5a4e43e3af3a83eb4fd30460d784a3ac0ec3ccaeba224dd9a524",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 69,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:guardian:acca8024a42338e364d50878",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:guardian:acca8024a42338e364d50878",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:guardian:acca8024a42338e364d50878",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:guardian:acca8024a42338e364d50878",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:guardian:acca8024a42338e364d50878",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:guardian:acca8024a42338e364d50878",
+          "publisher": "The Guardian World",
+          "url": "https://theguardian.com/us-news/live/2026/oct/08/uss-lincoln-san-diego-donald-trump-republicans-democrats-us-politics-latest-news",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.guim.co.uk/img/media/f9eb5b70bde94bd9b328ff82cf999bee96de89a8/470_0_4208_3366/master/4208.jpg?width=140&quality=85&auto=format&fit=max&s=5042686352cbbf7347d6e4c8d3c24d4e",
+        "alt": "Hegseth falsely claims Obama called 2009 Fort Hood attack ‘workplace violence’ – US politics live",
+        "status": "event-specific",
+        "source_url": "https://theguardian.com/us-news/live/2026/oct/08/uss-lincoln-san-diego-donald-trump-republicans-democrats-us-politics-latest-news",
+        "attribution": "The Guardian World",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-09T02:20:01.447Z",
+          "finishedAt": "2026-10-09T02:20:04.878Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"US Defense Secretary Pete Hegseth announces execution plan for Fort Hood shooter while making false claim regarding Barack Obama\",\n  \"pages\": [\n    {\n      \"text\": \"Speaking to influencer Jack Posobiec, US Defense Secretary Pete Hegseth announced that Nidal Hasan, a former army psychiatrist, will be executed by firing squad. Hasan killed 12 soldiers and one civilian during an attack at Fort Hood in 2009. During the discussion, Hegseth falsely claimed that former president Barack Obama downplayed the 2009 attack by calling it “workplace violence” instead of terrorism, according to reporting by The Guardian World.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "US Defense Secretary Pete Hegseth announces execution plan for Fort Hood shooter while making false claim regarding Barack Obama",
+            "pages": [
+              {
+                "text": "Speaking to influencer Jack Posobiec, US Defense Secretary Pete Hegseth announced that Nidal Hasan, a former army psychiatrist, will be executed by firing squad. Hasan killed 12 soldiers and one civilian during an attack at Fort Hood in 2009. During the discussion, Hegseth falsely claimed that former president Barack Obama downplayed the 2009 attack by calling it “workplace violence” instead of terrorism, according to reporting by The Guardian World."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1273,
+            "completion_tokens": 153,
+            "total_tokens": 1426,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 15.745454788208008
+          },
+          "latencyMs": 3432,
+          "safeHeaders": {
+            "cf-ray": "a479e75d0b3ed59a-SJC"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:2777d90c66e9f117",
+      "title": "US to increase Rohingya humanitarian assistance",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "84f679653f44f72dbdc7b4738ea74536cbe2aa29b9e94e61a66e14e15c4f77ed",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 97,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:financial-express-bd:dca37551d74e3343ac18e35d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:financial-express-bd:dca37551d74e3343ac18e35d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:financial-express-bd:dca37551d74e3343ac18e35d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:financial-express-bd:dca37551d74e3343ac18e35d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:financial-express-bd:dca37551d74e3343ac18e35d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:financial-express-bd:dca37551d74e3343ac18e35d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:financial-express-bd:dca37551d74e3343ac18e35d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:financial-express-bd:dca37551d74e3343ac18e35d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:financial-express-bd:dca37551d74e3343ac18e35d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:financial-express-bd:dca37551d74e3343ac18e35d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:financial-express-bd:dca37551d74e3343ac18e35d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:financial-express-bd:dca37551d74e3343ac18e35d",
+          "publisher": "The Financial Express Bangladesh",
+          "url": "https://thefinancialexpress.com.bd/national/us-to-increase-rohingya-humanitarian-assistance",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://thefe-bd.sgp1.cdn.digitaloceanspaces.com/posts/176282/9781.jpg",
+        "alt": "US to increase Rohingya humanitarian assistance",
+        "status": "event-specific",
+        "source_url": "https://thefinancialexpress.com.bd/national/us-to-increase-rohingya-humanitarian-assistance",
+        "attribution": "The Financial Express Bangladesh",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-09T02:20:04.879Z",
+          "finishedAt": "2026-10-09T02:20:07.646Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"United States to increase humanitarian assistance for Rohingyas in Bangladesh\",\n  \"pages\": [\n    {\n      \"text\": \"The United States has decided to increase financial assistance for the Rohingya population sheltered in Bangladesh, according to a report by BSS via The Financial Express Bangladesh. Eric Geelan, the Charge d'Affaires (CDA) ad interim at the US embassy, conveyed the decision during a courtesy call on Shama Obaed Islam, the State Minister for Foreign Affairs, at the Ministry of Foreign Affairs in Dhaka on Thursday. The move is intended to reaffirm Washington's continued humanitarian support for the forcibly displaced Myanmar nationals as Bangladesh seeks international support to address the protracted Rohingya crisis and growing humanitarian needs.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "United States to increase humanitarian assistance for Rohingyas in Bangladesh",
+            "pages": [
+              {
+                "text": "The United States has decided to increase financial assistance for the Rohingya population sheltered in Bangladesh, according to a report by BSS via The Financial Express Bangladesh. Eric Geelan, the Charge d'Affaires (CDA) ad interim at the US embassy, conveyed the decision during a courtesy call on Shama Obaed Islam, the State Minister for Foreign Affairs, at the Ministry of Foreign Affairs in Dhaka on Thursday. The move is intended to reaffirm Washington's continued humanitarian support for the forcibly displaced Myanmar nationals as Bangladesh seeks international support to address the protracted Rohingya crisis and growing humanitarian needs."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2046,
+            "completion_tokens": 162,
+            "total_tokens": 2208,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "neurons": 22.436363220214844
+          },
+          "latencyMs": 2768,
+          "safeHeaders": {
+            "cf-ray": "a479e7728a49d59a-SJC"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:5c0e37c2f320b977",
+      "title": "Britons kept in dark about scale of climate crisis, say viewers of ‘first-of-its-kind’ emergency briefing",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "032b4575ca0b1d5a2db912619922a65e75ed16e8102d2b815fa4c9b16e577a44",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 288,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:guardian:8546828b71528b993770719a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:guardian:8546828b71528b993770719a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:guardian:8546828b71528b993770719a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:guardian:8546828b71528b993770719a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:guardian:8546828b71528b993770719a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:guardian:8546828b71528b993770719a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:guardian:8546828b71528b993770719a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:guardian:8546828b71528b993770719a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:guardian:8546828b71528b993770719a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:guardian:8546828b71528b993770719a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:guardian:8546828b71528b993770719a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:guardian:8546828b71528b993770719a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:guardian:8546828b71528b993770719a",
+          "publisher": "The Guardian Environment",
+          "url": "https://theguardian.com/environment/2026/oct/08/britons-kept-in-dark-scale-of-climate-crisis-first-of-its-kind-emergency-briefing",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.guim.co.uk/img/media/a4bf9f2d66919e93a27dbaad74442a677c8bc864/403_0_3750_3000/master/3750.jpg?width=140&quality=85&auto=format&fit=max&s=c4a170acad33fa42b0eea6447535f9f5",
+        "alt": "Britons kept in dark about scale of climate crisis, say viewers of ‘first-of-its-kind’ emergency briefing",
+        "status": "event-specific",
+        "source_url": "https://theguardian.com/environment/2026/oct/08/britons-kept-in-dark-scale-of-climate-crisis-first-of-its-kind-emergency-briefing",
+        "attribution": "The Guardian Environment",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-09T02:20:07.647Z",
+          "finishedAt": "2026-10-09T02:20:15.910Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Researchers say Britons are not being fully informed about climate and nature crisis\",\n  \"pages\": [\n    {\n      \"text\": \"Researchers say the British government must be honest about the scale of threats posed by climate and nature breakdown, following a study of viewers of the People’s Emergency Briefing. According to the research, 93% of 13,000 people surveyed said the public is not being fully informed about the climate crisis and nature loss. Professor Lorraine Whitmarsh of the University of Bath, who led the research, stated that while most people are aware of some climate risks, the “second-order risks” regarding food supplies, national security, and impacts on the NHS are not as obvious. The briefing, which was held last November at Central Hall in Westminster, featured nine experts providing assessments on the changes required for the UK to adapt to a changing climate and ecological landscape. The event was described as a “first-of-its-kind national emergency briefing.”\"\n    },\n    {\n      \"text\": \"The People’s Emergency Briefing was a crowdfunded film outlining threats to public health, the economy, and food security. It has been viewed by an estimated 185,000 people across more than 3,400 screenings. Of those surveyed, 87% said watching the film increased their motivation to act, and the film is associated with a “substantial shift” in environmental concern and understanding. Additionally, 89% of respondents stated the government should respond to the crisis with emergency-level mobilisation comparable to the second world war or the Covid-19 pandemic. Professor Mike Berners-Lee, chair of the National Emergency Briefing, noted that the public understood the Covid-19 threat when trusted with facts. The team is calling for a televised, primetime emergency briefing fronted by the prime minister and delivered by independent experts. The government has previously faced accusations of hiding information after refusing to publish a report from UK intelligence officers regarding the national security impacts of ecosystem collapse.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Researchers say Britons are not being fully informed about climate and nature crisis",
+            "pages": [
+              {
+                "text": "Researchers say the British government must be honest about the scale of threats posed by climate and nature breakdown, following a study of viewers of the People’s Emergency Briefing. According to the research, 93% of 13,000 people surveyed said the public is not being fully informed about the climate crisis and nature loss. Professor Lorraine Whitmarsh of the University of Bath, who led the research, stated that while most people are aware of some climate risks, the “second-order risks” regarding food supplies, national security, and impacts on the NHS are not as obvious. The briefing, which was held last November at Central Hall in Westminster, featured nine experts providing assessments on the changes required for the UK to adapt to a changing climate and ecological landscape. The event was described as a “first-of-its-kind national emergency briefing.”"
+              },
+              {
+                "text": "The People’s Emergency Briefing was a crowdfunded film outlining threats to public health, the economy, and food security. It has been viewed by an estimated 185,000 people across more than 3,400 screenings. Of those surveyed, 87% said watching the film increased their motivation to act, and the film is associated with a “substantial shift” in environmental concern and understanding. Additionally, 89% of respondents stated the government should respond to the crisis with emergency-level mobilisation comparable to the second world war or the Covid-19 pandemic. Professor Mike Berners-Lee, chair of the National Emergency Briefing, noted that the public understood the Covid-19 threat when trusted with facts. The team is calling for a televised, primetime emergency briefing fronted by the prime minister and delivered by independent experts. The government has previously faced accusations of hiding information after refusing to publish a report from UK intelligence officers regarding the national security impacts of ecosystem collapse."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1834,
+            "completion_tokens": 441,
+            "total_tokens": 2275,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "neurons": 28.118181228637695
+          },
+          "latencyMs": 8263,
+          "safeHeaders": {
+            "cf-ray": "a479e783c843d59a-SJC"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "stage": "evidence",
+      "eventId": "event:fabf5c7d8adfdb69",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:a1fe0e43963111f7",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:16df1231e91fa02d",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0d88049b098dd09b",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:ab48b0ac131cb5e7",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e0eff49c8949957d",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:01764cf9ef32e93e",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e2409fd12f142f92",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:8cb906d2e7a87f1d",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e026e53f3747c2e9",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:73c64e0d5fb64f7d",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:a1176cd7634e8084",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e5434750a79bb850",
+      "reason": "too little complete accessible reporting; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:9ec7db8bf6f73ddf",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:94621a78b958b111",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:fc932a5be7752336",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0f4d1bd7a981f9ca",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4a3abc66f46a69a7",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:22944f4fe32c56bd",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:7d40427e6cd95207",
+      "reason": "too little complete accessible reporting; principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:5c545104233cb711",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:115d9ba80e6d2b31",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:bcb43d71d4ac4ce6",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:38072113886348d6",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4eaa1f6576b84e46",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:783101cdfdd70efb",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:de3ab5ead6a4e2e2",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:7ca112d49db72cf9",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:bc8aed32bf59981f",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4aa5b9f4c37dab87",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:994e02fb23070ed6",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:c705d1a91fc48604",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:9c7c304b2f33c2bc",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:d974c282003e5e7c",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:708bbf723e41dd40",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:762598c6521077f0",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0739220aa31d46b7",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:9746533709bacc7e",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:cf9e7765e7ae12e7",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:b8005ee1fc0be294",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:fe4f7ac7c030f611",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4a0ca142f1ef47bc",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:a8e9acd7b78607be",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:8ab13387e39a6a49",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:5ce3878eb92154c3",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:5488b040c8f19b84",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:531d0516edc0c714",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e6f8820ef1f29d9c",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:2bb26fd11b52cef2",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:53d0c3c4b90f2336",
+      "reason": "principal actor or institution is unclear"
+    },
+    {
+      "eventId": "event:1e87a31ad1b22470",
+      "title": "Over 20,000 Palestinian students and education workers killed in Gaza war",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:97424e4561c7eed3",
+      "title": "President directs GH¢1bn into Housing Fund - It’s to tackle 1.8m deficit",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:7ea2f79cdf3b1f94",
+      "title": "Ethiopia launches drone attack against Eritrean troops who crossed into Tigray",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:6cf5edbb2c26222b",
+      "title": "Advance voting in Toronto’s 2026 municipal election begins tomorrow",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:4d698d06fa6076f3",
+      "title": "Putin tells Iran leader will ‘do everything’ to help end war",
+      "stage": "writer-safety",
+      "reason": "unsafe temporal metadata exposure"
+    },
+    {
+      "eventId": "event:36404e1dce7f6873",
+      "title": "Did two of the lemurs stolen in Bangladesh end up in India? Officials are investigating",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:9fb9cabea371f3a6",
+      "title": "Turkey accuses Israel of military escalation in southern Syria",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 23.67 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:9d5c622b0afc36a3",
+      "title": "Ontario will officially begin removing Toronto bike lanes on Tuesday",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 21.74 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:ce11463fc554be3d",
+      "title": "EU envoy in Beijing for talks to calm trade tensions",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 19.09 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:becba938977d1a6c",
+      "title": "Sam George pushes back on FBI claim over Ghana cybercrime operation",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 15.72 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:91fb90494618a87e",
+      "title": "Flávio Bolsonaro’s advance in Brazil’s election is grim jolt for climate campaigners",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 10.27 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:423d5735e6d78926",
+      "title": "Israeli army says one soldier killed, three wounded in south Lebanon",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 8.25 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:096322b176f5763c",
+      "title": "This is one of Norway’s most pristine fjords. So why is it being used as a dumping site for mine waste?",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -3.58 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:983c7d550c040df0",
+      "title": "Mahama commends Trade Minister for championing Ghana’s industrial growth",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -4.92 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:f20eeeb0ddc23c39",
+      "title": "Israeli settlers take Palestinian olives, and their harvest traditions",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -6.59 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:6481b1ac5ba1224d",
+      "title": "'Isolated, lapse in judgment,' says Banff National Park superintendent who violated National Parks Act",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -13.35 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:ee84c86751e56515",
+      "title": "Former ambassador on NATO's meeting in Ukraine and the ongoing war",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -21.39 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:8c871ad7296ea44c",
+      "title": "Houthis claim missile strikes on Riyadh airport as explosions heard in Saudi capital",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -21.46 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:e45bdff2d3282939",
+      "title": "Volta youth farmers commend Agric Minister, appeal for markets for cassava growers",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -22.53 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:5c5fddc3c7ffd076",
+      "title": "Oshawa mayoral candidates focus on homeless, downtown concerns at debate",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -29.24 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:c3fec305ce296833",
+      "title": "Saudi Arabia and UAE agree to strengthen power grid and rail connectivity",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -39.69 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:68c972bfa4e16374",
+      "title": "Protesters blame 'vulture funds' for Spain's housing crisis",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -43.79 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:c4840b367b73eda7",
+      "title": "Israelis mourn October 7 attack as Palestinians in Gaza live in ruins of war",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -47.81 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:ecb6f41e7e26d6c5",
+      "title": "Man who started northern Sask. wildfire sentenced to 6 years",
+      "stage": "content-structure",
+      "reason": "summary is too thin for a self-contained beta card"
+    },
+    {
+      "eventId": "event:79e23463723ccabb",
+      "title": "Public cautioned against transactions over Borteyman land as Supreme Court rules in favour of Sino Africa",
+      "stage": "content-structure",
+      "reason": "page 1 ends mid-sentence"
+    }
+  ],
+  "outcome": {
+    "writerRequests": 7,
+    "retries": 0,
+    "acceptedCards": 5,
+    "retainedCards": 120,
+    "skippedCards": 75,
+    "totalNeurons": 152.0999984741211,
+    "inputTokens": 12035,
+    "outputTokens": 1608,
+    "meanNeuronsPerAcceptedCard": 30.42,
+    "datasetBytes": 324152,
+    "thirdPartyCostUsd": 0,
+    "imageStatus": {
+      "event-specific": 120
+    },
+    "geographicDistribution": {
+      "Bangladesh": 18,
+      "Syria": 8,
+      "Middle East": 30,
+      "Canada": 12,
+      "Ghana": 30,
+      "GTA": 7
+    }
+  },
+  "integrity": {
+    "datasetSha256": "ac495d2a995765ae8b562d0e1bfeed8fe186dbe23603c52aab3ce49de5620b89"
+  }
+}

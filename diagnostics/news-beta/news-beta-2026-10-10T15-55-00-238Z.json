@@ -1,0 +1,2458 @@
+{
+  "schema": "doomscroller.news-beta-diagnostics",
+  "schemaVersion": 1,
+  "batchId": "news-beta-2026-10-10T15-55-00-238Z",
+  "startedAt": "2026-10-10T15:54:21.421Z",
+  "finishedAt": "2026-10-10T15:55:00.238Z",
+  "durationMs": 38817,
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1024,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "discovery": {
+    "discoveredArticles": 850,
+    "freshArticles": 666,
+    "uniqueArticles": 633,
+    "eventCandidates": 584,
+    "evidencePoolArticles": 193,
+    "preparedEvents": 128,
+    "selectedEvents": 30,
+    "evidenceFailures": 32,
+    "sourceFailures": 2
+  },
+  "sourceStatus": [
+    {
+      "id": "sana-en",
+      "name": "SANA English",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "north-press-en",
+      "name": "North Press Agency",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "enab-baladi-en",
+      "name": "Enab Baladi English",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "syria-direct-en",
+      "name": "Syria Direct",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dhaka-tribune",
+      "name": "Dhaka Tribune",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "bd24live-en",
+      "name": "BD24Live English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "prothom-alo-en",
+      "name": "Prothom Alo English",
+      "status": "ok",
+      "itemCount": 6
+    },
+    {
+      "id": "financial-express-bd",
+      "name": "The Financial Express Bangladesh",
+      "status": "ok",
+      "itemCount": 28
+    },
+    {
+      "id": "daily-star-bd",
+      "name": "The Daily Star Bangladesh",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "myjoyonline",
+      "name": "MyJoyOnline",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "graphic-ghana",
+      "name": "Graphic Online",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "ghana-news-agency",
+      "name": "Ghana News Agency",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "toronto-city",
+      "name": "City of Toronto News",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "cbc-toronto",
+      "name": "CBC Toronto",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "cbc-canada",
+      "name": "CBC Canada",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "aljazeera-all",
+      "name": "Al Jazeera",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "arab-news",
+      "name": "Arab News",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "bbc-world",
+      "name": "BBC World",
+      "status": "ok",
+      "itemCount": 29
+    },
+    {
+      "id": "bbc-technology",
+      "name": "BBC Technology",
+      "status": "ok",
+      "itemCount": 21
+    },
+    {
+      "id": "bbc-science-environment",
+      "name": "BBC Science & Environment",
+      "status": "ok",
+      "itemCount": 41
+    },
+    {
+      "id": "guardian-world",
+      "name": "The Guardian World",
+      "status": "ok",
+      "itemCount": 45
+    },
+    {
+      "id": "guardian-science",
+      "name": "The Guardian Science",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "guardian-environment",
+      "name": "The Guardian Environment",
+      "status": "ok",
+      "itemCount": 34
+    },
+    {
+      "id": "npr-world",
+      "name": "NPR World",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "npr-science",
+      "name": "NPR Science",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dw-world",
+      "name": "DW World",
+      "status": "ok",
+      "itemCount": 139
+    },
+    {
+      "id": "africanews",
+      "name": "Africanews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "euronews",
+      "name": "Euronews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "global-voices",
+      "name": "Global Voices",
+      "status": "ok",
+      "itemCount": 15
+    },
+    {
+      "id": "japan-times",
+      "name": "The Japan Times",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "mongabay",
+      "name": "Mongabay",
+      "status": "ok",
+      "itemCount": 32
+    }
+  ],
+  "knownSourceFailures": [
+    {
+      "name": "Bangladesh Sangbad Sangstha",
+      "url": "https://www.bssnews.net/feed",
+      "status": "blocked",
+      "detail": "Cloudflare challenge returned HTTP 403 to the bounded collector."
+    },
+    {
+      "name": "The Indian Express feeds",
+      "url": "https://indianexpress.com/rss/",
+      "status": "blocked_in_cloud",
+      "detail": "Official feeds work locally but return HTTP 403 from GitHub Actions, so the automatic collector does not depend on them."
+    },
+    {
+      "name": "The Business Standard",
+      "url": "https://www.tbsnews.net/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "Feed served 2019–2021 items."
+    },
+    {
+      "name": "Ontario Newsroom",
+      "url": "https://news.ontario.ca/en/rss",
+      "status": "retired_from_registry",
+      "detail": "URL returns an HTML application shell, not RSS."
+    },
+    {
+      "name": "GhanaWeb",
+      "url": "https://www.ghanaweb.com/GhanaHomePage/NewsArchive/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "The publisher endpoint returned HTTP 404 in October 2026; MyJoyOnline and Graphic Online remain active Ghana sources."
+    }
+  ],
+  "reranker": {
+    "adjustments": [
+      {
+        "eventId": "event:9989f1f5ad8f7ccd",
+        "baseScore": 76.27,
+        "adjustment": 14,
+        "adjustedScore": 90.27,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Palestinian territories"
+      },
+      {
+        "eventId": "event:f527f626ab30c8a1",
+        "baseScore": 70.98,
+        "adjustment": 14,
+        "adjustedScore": 84.98,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:87f5bacfccf621ca",
+        "baseScore": 64.02,
+        "adjustment": 14,
+        "adjustedScore": 78.02,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:fca815fe5c588b63",
+        "baseScore": 60.64,
+        "adjustment": 14,
+        "adjustedScore": 74.64,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:07bfd93e83cdb332",
+        "baseScore": 68.71,
+        "adjustment": -4,
+        "adjustedScore": 64.71,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "Ukraine"
+      },
+      {
+        "eventId": "event:a11a2cb0c8aebe00",
+        "baseScore": 58,
+        "adjustment": 6,
+        "adjustedScore": 64,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:9fc2fef6947efdcc",
+        "baseScore": 70.19,
+        "adjustment": -15,
+        "adjustedScore": 55.19,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:7eb25b5632542403",
+        "baseScore": 50.43,
+        "adjustment": 0,
+        "adjustedScore": 50.43,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "China"
+      },
+      {
+        "eventId": "event:d21966d4d2d4f384",
+        "baseScore": 40.02,
+        "adjustment": 10,
+        "adjustedScore": 50.02,
+        "contentType": "general",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:0854368b807cbea1",
+        "baseScore": 34.67,
+        "adjustment": 14,
+        "adjustedScore": 48.67,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:df45f20a17c619ac",
+        "baseScore": 64.84,
+        "adjustment": -26,
+        "adjustedScore": 38.84,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:cde492e6d7588f01",
+        "baseScore": 44.05,
+        "adjustment": -6,
+        "adjustedScore": 38.05,
+        "contentType": "conflict",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:cef317cff3de360a",
+        "baseScore": 45.64,
+        "adjustment": -15,
+        "adjustedScore": 30.64,
+        "contentType": "general",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:5c0b13356c36c71f",
+        "baseScore": 50.77,
+        "adjustment": -28,
+        "adjustedScore": 22.770000000000003,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:06ed86c5e698f159",
+        "baseScore": 52.03,
+        "adjustment": -33,
+        "adjustedScore": 19.03,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:d34601fee5e49497",
+        "baseScore": 46.84,
+        "adjustment": -29,
+        "adjustedScore": 17.840000000000003,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:c3df274edd4568f5",
+        "baseScore": 51.04,
+        "adjustment": -34,
+        "adjustedScore": 17.04,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Middle East"
+      },
+      {
+        "eventId": "event:265341f3f8e85d5c",
+        "baseScore": 43.03,
+        "adjustment": -36,
+        "adjustedScore": 7.030000000000001,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:c61fc0b2a7ad8c43",
+        "baseScore": 34.43,
+        "adjustment": -33,
+        "adjustedScore": 1.4299999999999997,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:b458a0125001088d",
+        "baseScore": 40.87,
+        "adjustment": -44,
+        "adjustedScore": -3.1300000000000026,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:ca1bce760a4a49f0",
+        "baseScore": 45.46,
+        "adjustment": -49,
+        "adjustedScore": -3.539999999999999,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "Brazil"
+      },
+      {
+        "eventId": "event:ba2b12de0c56f78b",
+        "baseScore": 69.47,
+        "adjustment": -77,
+        "adjustedScore": -7.530000000000001,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Iran"
+      },
+      {
+        "eventId": "event:7f5ac932c1285e42",
+        "baseScore": 37.43,
+        "adjustment": -46,
+        "adjustedScore": -8.57,
+        "contentType": "culture-science-education",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:e7c26623f028c86a",
+        "baseScore": 34.93,
+        "adjustment": -50,
+        "adjustedScore": -15.07,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:82ff17208a3b8c60",
+        "baseScore": 38.15,
+        "adjustment": -54,
+        "adjustedScore": -15.850000000000001,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "India"
+      },
+      {
+        "eventId": "event:ba9f94f9626bb31b",
+        "baseScore": 38.09,
+        "adjustment": -58,
+        "adjustedScore": -19.909999999999997,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:3d8749063675b2d1",
+        "baseScore": 50.66,
+        "adjustment": -77,
+        "adjustedScore": -26.340000000000003,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:1e87a31ad1b22470",
+        "baseScore": 59.01,
+        "adjustment": -96,
+        "adjustedScore": -36.99,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Palestinian territories"
+      },
+      {
+        "eventId": "event:b6dd78ea3bcc26d1",
+        "baseScore": 36.02,
+        "adjustment": -79,
+        "adjustedScore": -42.98,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:c2c6e5c1dd92cd92",
+        "baseScore": 51.97,
+        "adjustment": -100,
+        "adjustedScore": -48.03,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      }
+    ],
+    "distribution": {
+      "regions": {
+        "Middle East": 9,
+        "GTA": 4,
+        "Canada": 5,
+        "Ghana": 6,
+        "World": 6,
+        "Bangladesh": 4,
+        "Syria": 2
+      },
+      "countries": {
+        "Palestinian territories": 2,
+        "Yemen": 2,
+        "GTA": 4,
+        "Ghana": 6,
+        "Ukraine": 1,
+        "Israel": 1,
+        "China": 1,
+        "Canada": 1,
+        "Bangladesh": 4,
+        "Syria": 2,
+        "World": 2,
+        "Middle East": 1,
+        "Brazil": 1,
+        "Iran": 1,
+        "India": 1
+      },
+      "contentTypes": {
+        "conflict": 8,
+        "general": 9,
+        "diplomacy-or-speech": 7,
+        "economy-or-public-life": 3,
+        "culture-science-education": 3
+      },
+      "publishers": {
+        "NPR World": 2,
+        "Euronews": 1,
+        "CBC Toronto": 3,
+        "MyJoyOnline": 3,
+        "The Guardian World": 3,
+        "Graphic Online": 2,
+        "Al Jazeera": 1,
+        "DW World": 1,
+        "CBC Canada": 2,
+        "The Financial Express Bangladesh": 2,
+        "Arab News": 3,
+        "Prothom Alo English": 1,
+        "North Press Agency": 2,
+        "BBC World": 1,
+        "The Daily Star Bangladesh": 1,
+        "Ghana News Agency": 1,
+        "Africanews": 1
+      }
+    }
+  },
+  "selectedEvents": [
+    {
+      "eventId": "event:9989f1f5ad8f7ccd",
+      "title": "Photos: What a year of ceasefire in Gaza looks like",
+      "score": 76.27,
+      "adjustedScore": 90.27,
+      "rank": 1,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.27,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:f527f626ab30c8a1",
+      "title": "Evacuations and injuries reported at Riyadh airport after another alleged Houthi attack",
+      "score": 70.98,
+      "adjustedScore": 84.98,
+      "rank": 2,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.98,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:87f5bacfccf621ca",
+      "title": "Not sure who to vote for? These municipal election resources can help you decide",
+      "score": 64.02,
+      "adjustedScore": 78.02,
+      "rank": 3,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 12.02,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 22,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:fca815fe5c588b63",
+      "title": "UK-Ghana Trade & Investment Summit: Trade Resource Centre to help businesses maximise UK-Ghana trade opportunities",
+      "score": 60.64,
+      "adjustedScore": 74.64,
+      "rank": 4,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.64,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:07bfd93e83cdb332",
+      "title": "Ukraine hit by deadly Russian strikes as ‘thanks’ for Trump diesel deal, Zelenskyy says",
+      "score": 68.71,
+      "adjustedScore": 64.71,
+      "rank": 5,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.71,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:a11a2cb0c8aebe00",
+      "title": "President Mahama inspects ‘Nkokɔ Nketenkete’ processing plant at Bechem - Says Bechem will become chicken capital",
+      "score": 58,
+      "adjustedScore": 64,
+      "rank": 6,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:9fc2fef6947efdcc",
+      "title": "Child among seven killed by Israel in Gaza on ‘ceasefire’ anniversary",
+      "score": 70.19,
+      "adjustedScore": 55.19,
+      "rank": 7,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.19,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:7eb25b5632542403",
+      "title": "Taiwan to boost military spending to 'deter war' with China",
+      "score": 50.43,
+      "adjustedScore": 50.43,
+      "rank": 8,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.43,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:d21966d4d2d4f384",
+      "title": "The Alberta question: How separatists took hold of the province’s governing party",
+      "score": 40.02,
+      "adjustedScore": 50.02,
+      "rank": 9,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 12.02,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:0854368b807cbea1",
+      "title": "Winners of BRAC Bank-Samakal Literary Award 2024-2025 announced",
+      "score": 34.67,
+      "adjustedScore": 48.67,
+      "rank": 10,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.67,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:df45f20a17c619ac",
+      "title": "Passengers told to confirm flight status before heading to Riyadh airport",
+      "score": 64.84,
+      "adjustedScore": 38.84,
+      "rank": 11,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.84,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:cde492e6d7588f01",
+      "title": "Police officers in Khulna asked not to travel alone at night",
+      "score": 44.05,
+      "adjustedScore": 38.05,
+      "rank": 12,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.05,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:cef317cff3de360a",
+      "title": "UN Records 280 Israeli Incursion-Related Incidents in Syria in September",
+      "score": 45.64,
+      "adjustedScore": 30.64,
+      "rank": 13,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 14.64,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:5c0b13356c36c71f",
+      "title": "Woman injures three people in third Poland school knife attack in a week",
+      "score": 50.77,
+      "adjustedScore": 22.77,
+      "rank": 14,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.77,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:06ed86c5e698f159",
+      "title": "Bradford inches closer to Chow's lead in Toronto's mayoral election, new poll suggests",
+      "score": 52.03,
+      "adjustedScore": 19.03,
+      "rank": 15,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 14.03,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:d34601fee5e49497",
+      "title": "Alfred Sakyi Inducted as Methodist Church Lay President",
+      "score": 46.84,
+      "adjustedScore": 17.84,
+      "rank": 16,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.84,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:c3df274edd4568f5",
+      "title": "Saudi Arabia’s Jabal Sayid discovery puts rare-earth ambitions to the test",
+      "score": 51.04,
+      "adjustedScore": 17.04,
+      "rank": 17,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.04,
+        "importance": 0,
+        "interestingness": 8,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 10,
+        "localTexture": 0,
+        "editorialBonus": 10,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:265341f3f8e85d5c",
+      "title": "Cop31 host urges wealthy countries to spend ‘much more’ on climate than defence",
+      "score": 43.03,
+      "adjustedScore": 7.03,
+      "rank": 18,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 13.03,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:c61fc0b2a7ad8c43",
+      "title": "Forex reserves reach $37b despite economic challenges: State minister",
+      "score": 34.43,
+      "adjustedScore": 1.43,
+      "rank": 19,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.43,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:b458a0125001088d",
+      "title": "Special Initiatives Minister urges Wa Technical Institute to enrol more girls as EU-backed solar training lab opens",
+      "score": 40.87,
+      "adjustedScore": -3.13,
+      "rank": 20,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.87,
+        "importance": 6,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:ca1bce760a4a49f0",
+      "title": "Brazil’s Lula scraps gasoline tax ahead of runoff election",
+      "score": 45.46,
+      "adjustedScore": -3.54,
+      "rank": 21,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.46,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:ba2b12de0c56f78b",
+      "title": "Three Saudis killed in Riyadh airport attack claimed by Houthis",
+      "score": 69.47,
+      "adjustedScore": -7.53,
+      "rank": 22,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 12.47,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:7f5ac932c1285e42",
+      "title": "Halton police are turning to AI to help hire, train 911 call takers",
+      "score": 37.43,
+      "adjustedScore": -8.57,
+      "rank": 23,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 15.43,
+        "importance": 0,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:e7c26623f028c86a",
+      "title": "Veteran journalist Amir Khasru passes away",
+      "score": 34.93,
+      "adjustedScore": -15.07,
+      "rank": 24,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.93,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:82ff17208a3b8c60",
+      "title": "India cracks down on youth protests as anger grows against Modi and election chief",
+      "score": 38.15,
+      "adjustedScore": -15.85,
+      "rank": 25,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.15,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:ba9f94f9626bb31b",
+      "title": "Iraq rejects Syria’s request for 4,000 IS detainees",
+      "score": 38.09,
+      "adjustedScore": -19.91,
+      "rank": 26,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 13.09,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:3d8749063675b2d1",
+      "title": "Keta, Anloga urged to include Adolescent girls in flood plans",
+      "score": 50.66,
+      "adjustedScore": -26.34,
+      "rank": 27,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.66,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 11,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:1e87a31ad1b22470",
+      "title": "Over 20,000 Palestinian students and education workers killed in Gaza war",
+      "score": 59.01,
+      "adjustedScore": -36.99,
+      "rank": 28,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 8.01,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:b6dd78ea3bcc26d1",
+      "title": "Could Quebec's new government derail plans for Alto's high-speed train project?",
+      "score": 36.02,
+      "adjustedScore": -42.98,
+      "rank": 29,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 18.02,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:c2c6e5c1dd92cd92",
+      "title": "World Cup visa scandal: Senyo Hosi says issue goes beyond calls for Sports Minister’s resignation",
+      "score": 51.97,
+      "adjustedScore": -48.03,
+      "rank": 30,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.97,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    }
+  ],
+  "invalidPreviousCardsRemoved": [],
+  "crossEventOverlap": [
+    {
+      "packet_event_id": "event:9989f1f5ad8f7ccd",
+      "other_event_id": "event:9fc2fef6947efdcc",
+      "fragment_id": "F01",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=killed,ceasefire,gaza; entities=israel; actions=kill"
+    },
+    {
+      "packet_event_id": "event:df45f20a17c619ac",
+      "other_event_id": "event:f527f626ab30c8a1",
+      "fragment_id": "F03",
+      "membership": "supporting_context",
+      "reason": "fragment overlaps other central event: terms=after,airport,houthi; entities=; actions=attack"
+    },
+    {
+      "packet_event_id": "event:df45f20a17c619ac",
+      "other_event_id": "event:f527f626ab30c8a1",
+      "fragment_id": "F04",
+      "membership": "supporting_context",
+      "reason": "fragment overlaps other central event: terms=another,attack,airport; entities=; actions=attack"
+    }
+  ],
+  "generation": [
+    {
+      "eventId": "event:a11a2cb0c8aebe00",
+      "title": "President Mahama inspects ‘Nkokɔ Nketenkete’ processing plant at Bechem - Says Bechem will become chicken capital",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "95487168a035bcca36ea52003668cb2ad46981518ce91011a6b8cf425bb8bdf0",
+      "allowedExactDates": [
+        "2025-11-27"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "November 27, 2025",
+            "date": "2025-11-27"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2025-11-27"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 215,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:graphic-ghana:222c488a664ee160a29b1ad8",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:graphic-ghana:222c488a664ee160a29b1ad8",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:graphic-ghana:222c488a664ee160a29b1ad8",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:graphic-ghana:222c488a664ee160a29b1ad8",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:myjoyonline:51c162fd4adcee215f57749d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:myjoyonline:51c162fd4adcee215f57749d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:myjoyonline:51c162fd4adcee215f57749d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:myjoyonline:51c162fd4adcee215f57749d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:myjoyonline:51c162fd4adcee215f57749d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:myjoyonline:51c162fd4adcee215f57749d",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:myjoyonline:51c162fd4adcee215f57749d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:myjoyonline:51c162fd4adcee215f57749d",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:graphic-ghana:222c488a664ee160a29b1ad8",
+          "publisher": "Graphic Online",
+          "url": "https://graphic.com.gh/news/general-news/ghana-news-president-mahama-inspects-nkok-nketenkete-processing-plant-at-bechem-says-bechem-will-become-chicken-capital.html",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:myjoyonline:51c162fd4adcee215f57749d",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/bechem-to-become-chicken-capital-of-ghana-mahama-projects",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.graphic.com.gh/images/2026/Oct/10/Mahama.jpg",
+        "alt": "President Mahama inspects ‘Nkokɔ Nketenkete’ processing plant at Bechem - Says Bechem will become chicken capital",
+        "status": "event-specific",
+        "source_url": "https://graphic.com.gh/news/general-news/ghana-news-president-mahama-inspects-nkok-nketenkete-processing-plant-at-bechem-says-bechem-will-become-chicken-capital.html",
+        "attribution": "Graphic Online",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-10T15:54:39.043Z",
+          "finishedAt": "2026-10-10T15:54:42.368Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"President Mahama inspects poultry processing plant construction in Bechem, Ghana\",\n  \"pages\": [\n    {\n      \"text\": \"President John Dramani Mahama inspected ongoing construction of the Poultry, Meat and Feed Processing Plant in Bechem, located in the Ahafo Region of Ghana. The inspection was conducted as part of the first day of the President's two-day Resetting Ghana tour of the Ahafo Region. During the visit, Mahama stated that once the factory is operational, it is projected to position Bechem as the chicken capital of Ghana and create jobs for more people. He advised local youth to enter the poultry farming industry to utilize the factory's market. The President noted that the Nkokɔ Nketenkete initiative was started to ensure a value chain for the poultry industry prior to the commencement of factory work. Mahama, who cut the sod for the project on November 27, 2025, expressed satisfaction with the progress, reporting that work has reached approximately 50 per cent completion. He commended the project's consultants, Architecture and Engineering Services Limited (AESL), for their work. The facility is expected to be ready for commissioning by the end of the first quarter of 2027. Separately, the Minister of Food and Agriculture, Eric Opoku, stated that following the launch of the Nkokɔ Nketenkete initiative under the Feed Ghana Programme, Ghana's domestic poultry production increased from 4.6 per cent to 22 per cent as of May 2026.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "President Mahama inspects poultry processing plant construction in Bechem, Ghana",
+            "pages": [
+              {
+                "text": "President John Dramani Mahama inspected ongoing construction of the Poultry, Meat and Feed Processing Plant in Bechem, located in the Ahafo Region of Ghana. The inspection was conducted as part of the first day of the President's two-day Resetting Ghana tour of the Ahafo Region. During the visit, Mahama stated that once the factory is operational, it is projected to position Bechem as the chicken capital of Ghana and create jobs for more people. He advised local youth to enter the poultry farming industry to utilize the factory's market. The President noted that the Nkokɔ Nketenkete initiative was started to ensure a value chain for the poultry industry prior to the commencement of factory work. Mahama, who cut the sod for the project on November 27, 2025, expressed satisfaction with the progress, reporting that work has reached approximately 50 per cent completion. He commended the project's consultants, Architecture and Engineering Services Limited (AESL), for their work. The facility is expected to be ready for commissioning by the end of the first quarter of 2027. Separately, the Minister of Food and Agriculture, Eric Opoku, stated that following the launch of the Nkokɔ Nketenkete initiative under the Feed Ghana Programme, Ghana's domestic poultry production increased from 4.6 per cent to 22 per cent as of May 2026."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1734,
+            "completion_tokens": 336,
+            "total_tokens": 2070,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 24.92727279663086
+          },
+          "latencyMs": 3325,
+          "safeHeaders": {
+            "cf-ray": "a486ce0a3e4ac75d-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:7eb25b5632542403",
+      "title": "Taiwan to boost military spending to 'deter war' with China",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "faacf97295a6cf3062fa87a35e43f1fc7452c2827491610d6e0152190e15890c",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 122,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:dw:b7f06ff794d039da993f0f15",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:dw:b7f06ff794d039da993f0f15",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:dw:b7f06ff794d039da993f0f15",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:dw:b7f06ff794d039da993f0f15",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:dw:b7f06ff794d039da993f0f15",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:dw:b7f06ff794d039da993f0f15",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:dw:b7f06ff794d039da993f0f15",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:dw:b7f06ff794d039da993f0f15",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:dw:b7f06ff794d039da993f0f15",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:dw:b7f06ff794d039da993f0f15",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:dw:b7f06ff794d039da993f0f15",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:dw:b7f06ff794d039da993f0f15",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:dw:b7f06ff794d039da993f0f15",
+          "publisher": "DW World",
+          "url": "https://dw.com/en/taiwan-to-boost-military-spending-to-deter-war-with-china/a-79625346?maca=en-rss-en-all-1573-rdf",
+          "wireOrigin": null,
+          "sourceType": "public_service_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://static.dw.com/image/79626001_6.jpg",
+        "alt": "President Lai Ching-te said his country cherishes peace but will not give up freedom in his National Day address",
+        "status": "event-specific",
+        "source_url": "https://dw.com/en/taiwan-to-boost-military-spending-to-deter-war-with-china/a-79625346?maca=en-rss-en-all-1573-rdf",
+        "attribution": "DW World",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-10T15:54:42.369Z",
+          "finishedAt": "2026-10-10T15:54:46.634Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Taiwan to increase defense spending to deter war with China\", \"pages\": [{\"text\": \"President Lai Ching-te announced in a National Day speech that Taiwan is boosting defense spending to deter war with China. Speaking outside the Presidential Office in Taipei, Lai stated that the aim of increasing investment in national defense is to deter war rather than to provoke. He accused China of using military and grey-zone activities to change the status quo across the Taiwan Strait and warned that peace cannot be taken for granted. Beijing claims the self-governed island as part of its territory and has not ruled out using force to bring it under its control. Lai's government has allocated a record NT$1.1 trillion ($34.5 billion) for defense spending in 2027, an amount equivalent to more than 3% of the island's GDP.\"}] }",
+          "parsed": {
+            "headline": "Taiwan to increase defense spending to deter war with China",
+            "pages": [
+              {
+                "text": "President Lai Ching-te announced in a National Day speech that Taiwan is boosting defense spending to deter war with China. Speaking outside the Presidential Office in Taipei, Lai stated that the aim of increasing investment in national defense is to deter war rather than to provoke. He accused China of using military and grey-zone activities to change the status quo across the Taiwan Strait and warned that peace cannot be taken for granted. Beijing claims the self-governed island as part of its territory and has not ruled out using force to bring it under its control. Lai's government has allocated a record NT$1.1 trillion ($34.5 billion) for defense spending in 2027, an amount equivalent to more than 3% of the island's GDP."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1651,
+            "completion_tokens": 182,
+            "total_tokens": 1833,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 19.972726821899414
+          },
+          "latencyMs": 4265,
+          "safeHeaders": {
+            "cf-ray": "a486ce1edcc6c75d-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:0854368b807cbea1",
+      "title": "Winners of BRAC Bank-Samakal Literary Award 2024-2025 announced",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "51797d6addc23d0031881fb5c9d103a115475146e417f1fb8a73642c9a182cd5",
+      "allowedExactDates": [
+        "2026-10-09"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 9, 2026",
+            "date": "2026-10-09"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-09"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 238,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:financial-express-bd:b4d23aadf8e3cc242cffae32",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:financial-express-bd:b4d23aadf8e3cc242cffae32",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:financial-express-bd:b4d23aadf8e3cc242cffae32",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:financial-express-bd:b4d23aadf8e3cc242cffae32",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:financial-express-bd:b4d23aadf8e3cc242cffae32",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:financial-express-bd:b4d23aadf8e3cc242cffae32",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:financial-express-bd:b4d23aadf8e3cc242cffae32",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:financial-express-bd:b4d23aadf8e3cc242cffae32",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:financial-express-bd:b4d23aadf8e3cc242cffae32",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:financial-express-bd:b4d23aadf8e3cc242cffae32",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:financial-express-bd:b4d23aadf8e3cc242cffae32",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:financial-express-bd:b4d23aadf8e3cc242cffae32",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:financial-express-bd:b4d23aadf8e3cc242cffae32",
+          "publisher": "The Financial Express Bangladesh",
+          "url": "https://thefinancialexpress.com.bd/trade/winners-of-brac-bank-samakal-literary-award-2024-2025-announced",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://thefe-bd.sgp1.cdn.digitaloceanspaces.com/merged/merged_b3c28b0e49dd4dbf6c2192f4fd79a211.jpg",
+        "alt": "Winners of BRAC Bank-Samakal Literary Award 2024-2025 announced",
+        "status": "event-specific",
+        "source_url": "https://thefinancialexpress.com.bd/trade/winners-of-brac-bank-samakal-literary-award-2024-2025-announced",
+        "attribution": "The Financial Express Bangladesh",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-10T15:54:46.634Z",
+          "finishedAt": "2026-10-10T15:54:50.183Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Winners of BRAC Bank-Samakal Literary Awards 2024-2025 announced in Dhaka, Bangladesh\",\n  \"pages\": [\n    {\n      \"text\": \"The winners of the BRAC Bank-Samakal Literary Awards for 2024 and 2025 were announced at a ceremony held at the Pan Pacific Sonargaon Hotel in Dhaka on October 9, 2026, according to a press release. The awards, organized by BRAC Bank and Daily Samakal, aim to promote Bangla literature and inspire writers. The ceremony featured Chief Guest Dr. Wahiduddin Mahmud, an eminent economist and adviser to the caretaker government, alongside various media and banking executives and literary figures. The Lifetime Achievement Award, which includes a Tk. 5 lakh prize, was presented to writer Prof Serajul Islam Choudhury for 2024 and novelist Selina Hossain for 2025. Other prize categories included the essay, autobiography, travel, and translation category (Tk. 3 lakh), the poetry and novel category (Tk. 3 lakh), and the Young Writer Award (Tk. 2 lakh). All winners also received a crest and citation.\"\n    },\n    {\n      \"text\": \"For the 2024 BRAC Bank–Daily Samakal Literary Award, Abul Ahsan Choudhury won in the essay, autobiography, travel, and translation category for the book “Vidyasagar, Bankimchandra, Rabindranath and Musolman Samaj.” Anwara Syed Haq won in the poetry and novel category for “Shomoy Bohiya Gelo,” and Nizam Biswas received the Young Writer Award for “Jolmakorer Noukabaich.” For the 2025 awards, Nasreen Jahan won in the essay, autobiography, travel, and translation category for “Paloker Chinhogulo,” Shaheen Akhtar won in the poetry and novel category for “Manchitra,” and Mahbub Mayukh Rishad received the Young Writer Award for “Cyanide Phool.”\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Winners of BRAC Bank-Samakal Literary Awards 2024-2025 announced in Dhaka, Bangladesh",
+            "pages": [
+              {
+                "text": "The winners of the BRAC Bank-Samakal Literary Awards for 2024 and 2025 were announced at a ceremony held at the Pan Pacific Sonargaon Hotel in Dhaka on October 9, 2026, according to a press release. The awards, organized by BRAC Bank and Daily Samakal, aim to promote Bangla literature and inspire writers. The ceremony featured Chief Guest Dr. Wahiduddin Mahmud, an eminent economist and adviser to the caretaker government, alongside various media and banking executives and literary figures. The Lifetime Achievement Award, which includes a Tk. 5 lakh prize, was presented to writer Prof Serajul Islam Choudhury for 2024 and novelist Selina Hossain for 2025. Other prize categories included the essay, autobiography, travel, and translation category (Tk. 3 lakh), the poetry and novel category (Tk. 3 lakh), and the Young Writer Award (Tk. 2 lakh). All winners also received a crest and citation."
+              },
+              {
+                "text": "For the 2024 BRAC Bank–Daily Samakal Literary Award, Abul Ahsan Choudhury won in the essay, autobiography, travel, and translation category for the book “Vidyasagar, Bankimchandra, Rabindranath and Musolman Samaj.” Anwara Syed Haq won in the poetry and novel category for “Shomoy Bohiya Gelo,” and Nizam Biswas received the Young Writer Award for “Jolmakorer Noukabaich.” For the 2025 awards, Nasreen Jahan won in the essay, autobiography, travel, and translation category for “Paloker Chinhogulo,” Shaheen Akhtar won in the poetry and novel category for “Manchitra,” and Mahbub Mayukh Rishad received the Young Writer Award for “Cyanide Phool.”"
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2353,
+            "completion_tokens": 449,
+            "total_tokens": 2802,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 33.6363639831543
+          },
+          "latencyMs": 3548,
+          "safeHeaders": {
+            "cf-ray": "a486ce397ae0c75d-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:cde492e6d7588f01",
+      "title": "Police officers in Khulna asked not to travel alone at night",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "b7069270a62f108dbf3abf2681cfa539ba74944ee7b3ee8e2761b64847178630",
+      "allowedExactDates": [
+        "2026-10-09",
+        "2026-10-08",
+        "2026-10-06",
+        "2026-10-05"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 9, 2026",
+            "date": "2026-10-09"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-09",
+          "2026-10-08",
+          "2026-10-06",
+          "2026-10-05"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 300,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:prothom-alo:d7a90efb68a259b1e921fc73",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:prothom-alo:d7a90efb68a259b1e921fc73",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:prothom-alo:d7a90efb68a259b1e921fc73",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:prothom-alo:d7a90efb68a259b1e921fc73",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:prothom-alo:d7a90efb68a259b1e921fc73",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:prothom-alo:d7a90efb68a259b1e921fc73",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:prothom-alo:d7a90efb68a259b1e921fc73",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:prothom-alo:d7a90efb68a259b1e921fc73",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:prothom-alo:d7a90efb68a259b1e921fc73",
+          "publisher": "Prothom Alo English",
+          "url": "https://en.prothomalo.com/bangladesh/local-news/9gqpf1jfuq",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://media.prothomalo.com/prothomalo-english/2026-10-10/2uzkz4z1/Khulna-police-super-office.avif",
+        "alt": "Police officers in Khulna asked not to travel alone at night",
+        "status": "event-specific",
+        "source_url": "https://en.prothomalo.com/bangladesh/local-news/9gqpf1jfuq",
+        "attribution": "Prothom Alo English",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-10T15:54:50.183Z",
+          "finishedAt": "2026-10-10T15:54:57.775Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Police in Khulna, Bangladesh, instructed not to travel alone at night\", \"pages\": [{\"text\": \"Police in the Khulna district of Bangladesh have been instructed not to travel alone at night following a knife attack that seriously injured a police inspector in Khulna city. The directive was issued in an official letter signed by the superintendent of police of the District Special Branch (DSB) on the night of October 9, 2026. The letter noted that special operations are underway in the Rupsa, Terokhada, Dighalia, and Batiaghata police station areas in response to the current law and order situation and several recent incidents, including attacks by criminals on law enforcement personnel. Unit in-charges were directed to take necessary measures to ensure the personal safety of personnel engaged in special operations and other duties. Copies of the directive were sent to all relevant offices and police stations under the district police. Khulna Superintendent of Police Sarker Omar Faruk told Prothom Alo that the restriction was imposed to prevent police personnel from falling victim to muggers while returning home after duty. When asked if the directive suggested police insecurity, Faruk stated the internal letter's main purpose is to ensure no personnel fall victim to muggers. The instruction follows an incident on October 9, 2026, at approximately 2:30 a.m., when 43-year-old Police Inspector Shah Alam was attacked by muggers in front of Khulna Collegiate School on Khan Jahan Ali Road. According to police sources, Alam was traveling by rickshaw in plain clothes after conducting a special operation in Rupsa upazila when three muggers intercepted him and attempted to snatch his money and mobile phones. When he resisted, the attackers struck both his wrists with a sharp machete. Alam was rescued by police and taken to a hospital, but as his condition deteriorated, he was transferred to a private hospital in Dhaka, where he remains under treatment in critical condition.\"}] }",
+          "parsed": {
+            "headline": "Police in Khulna, Bangladesh, instructed not to travel alone at night",
+            "pages": [
+              {
+                "text": "Police in the Khulna district of Bangladesh have been instructed not to travel alone at night following a knife attack that seriously injured a police inspector in Khulna city. The directive was issued in an official letter signed by the superintendent of police of the District Special Branch (DSB) on the night of October 9, 2026. The letter noted that special operations are underway in the Rupsa, Terokhada, Dighalia, and Batiaghata police station areas in response to the current law and order situation and several recent incidents, including attacks by criminals on law enforcement personnel. Unit in-charges were directed to take necessary measures to ensure the personal safety of personnel engaged in special operations and other duties. Copies of the directive were sent to all relevant offices and police stations under the district police. Khulna Superintendent of Police Sarker Omar Faruk told Prothom Alo that the restriction was imposed to prevent police personnel from falling victim to muggers while returning home after duty. When asked if the directive suggested police insecurity, Faruk stated the internal letter's main purpose is to ensure no personnel fall victim to muggers. The instruction follows an incident on October 9, 2026, at approximately 2:30 a.m., when 43-year-old Police Inspector Shah Alam was attacked by muggers in front of Khulna Collegiate School on Khan Jahan Ali Road. According to police sources, Alam was traveling by rickshaw in plain clothes after conducting a special operation in Rupsa upazila when three muggers intercepted him and attempted to snatch his money and mobile phones. When he resisted, the attackers struck both his wrists with a sharp machete. Alam was rescued by police and taken to a hospital, but as his condition deteriorated, he was transferred to a private hospital in Dhaka, where he remains under treatment in critical condition."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2845,
+            "completion_tokens": 417,
+            "total_tokens": 3262,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 37.23636245727539
+          },
+          "latencyMs": 7592,
+          "safeHeaders": {
+            "cf-ray": "a486ce4fab4cc75d-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:cef317cff3de360a",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "summary is too thin for a self-contained beta card"
+        ],
+        "wordCount": 55,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-10T15:54:57.776Z",
+          "finishedAt": "2026-10-10T15:55:00.182Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"UN records approximately 280 Israeli incursion-related incidents in Syria during September\",\n  \"pages\": [\n    {\n      \"text\": \"The United Nations human rights office reported that around 280 incidents involving armed Israeli incursions into Syria were recorded during September. According to the Office of the UN High Commissioner for Human Rights, this represents the highest monthly figure since the beginning of 2026. The UN stated that these figures were based on open-source monitoring.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "UN records approximately 280 Israeli incursion-related incidents in Syria during September",
+            "pages": [
+              {
+                "text": "The United Nations human rights office reported that around 280 incidents involving armed Israeli incursions into Syria were recorded during September. According to the Office of the UN High Commissioner for Human Rights, this represents the highest monthly figure since the beginning of 2026. The UN stated that these figures were based on open-source monitoring."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1083,
+            "completion_tokens": 120,
+            "total_tokens": 1203,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 13.118181228637695
+          },
+          "latencyMs": 2406,
+          "safeHeaders": {
+            "cf-ray": "a486ce7f280dc75d-MSP"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "stage": "evidence",
+      "eventId": "event:99ab3365e8418728",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:b769b1077717e60e",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:818deb0e98725810",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:3eb5e1ebeb41d1be",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:587d0d79075fb44a",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:5f61258fb54ce0f9",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:1b609356dd37c9bf",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:cf23b8bc34068d72",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:35de31bcc66e8cca",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:069c7f3388878f39",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0d88049b098dd09b",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:81749ba7ee38dab2",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:ab48b0ac131cb5e7",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:50cc18c772b3eec2",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6c40c11f4bdde18b",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e0c5487736766df0",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4513f726cd7951a0",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:1f621179fff94c0b",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:73c64e0d5fb64f7d",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:908a79ae2d77d390",
+      "reason": "principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:9ec7db8bf6f73ddf",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e5434750a79bb850",
+      "reason": "too little complete accessible reporting; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:2f2c425fc44f0c67",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f5bca1f084b8fe99",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:1198f7042e93c28e",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6945f8de1fb640ba",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:7e62adb531405df6",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f8e4c5d596bd56de",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6a12fd6c36088f5d",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:78b33e073a2af330",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e131dcd0023311d5",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:9c990a0fe895cd37",
+      "reason": "principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "eventId": "event:87f5bacfccf621ca",
+      "title": "Not sure who to vote for? These municipal election resources can help you decide",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:fca815fe5c588b63",
+      "title": "UK-Ghana Trade & Investment Summit: Trade Resource Centre to help businesses maximise UK-Ghana trade opportunities",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:07bfd93e83cdb332",
+      "title": "Ukraine hit by deadly Russian strikes as ‘thanks’ for Trump diesel deal, Zelenskyy says",
+      "stage": "writer-safety",
+      "reason": "unsafe temporal metadata exposure"
+    },
+    {
+      "eventId": "event:d21966d4d2d4f384",
+      "title": "The Alberta question: How separatists took hold of the province’s governing party",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:5c0b13356c36c71f",
+      "title": "Woman injures three people in third Poland school knife attack in a week",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 22.77 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:06ed86c5e698f159",
+      "title": "Bradford inches closer to Chow's lead in Toronto's mayoral election, new poll suggests",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 19.03 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:d34601fee5e49497",
+      "title": "Alfred Sakyi Inducted as Methodist Church Lay President",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 17.84 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:c3df274edd4568f5",
+      "title": "Saudi Arabia’s Jabal Sayid discovery puts rare-earth ambitions to the test",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 17.04 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:265341f3f8e85d5c",
+      "title": "Cop31 host urges wealthy countries to spend ‘much more’ on climate than defence",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 7.03 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:c61fc0b2a7ad8c43",
+      "title": "Forex reserves reach $37b despite economic challenges: State minister",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 1.43 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:b458a0125001088d",
+      "title": "Special Initiatives Minister urges Wa Technical Institute to enrol more girls as EU-backed solar training lab opens",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -3.13 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:ca1bce760a4a49f0",
+      "title": "Brazil’s Lula scraps gasoline tax ahead of runoff election",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -3.54 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:ba2b12de0c56f78b",
+      "title": "Three Saudis killed in Riyadh airport attack claimed by Houthis",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -7.53 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:7f5ac932c1285e42",
+      "title": "Halton police are turning to AI to help hire, train 911 call takers",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -8.57 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:e7c26623f028c86a",
+      "title": "Veteran journalist Amir Khasru passes away",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -15.07 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:82ff17208a3b8c60",
+      "title": "India cracks down on youth protests as anger grows against Modi and election chief",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -15.85 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:ba9f94f9626bb31b",
+      "title": "Iraq rejects Syria’s request for 4,000 IS detainees",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -19.91 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:3d8749063675b2d1",
+      "title": "Keta, Anloga urged to include Adolescent girls in flood plans",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -26.34 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:1e87a31ad1b22470",
+      "title": "Over 20,000 Palestinian students and education workers killed in Gaza war",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -36.99 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:b6dd78ea3bcc26d1",
+      "title": "Could Quebec's new government derail plans for Alto's high-speed train project?",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -42.98 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:c2c6e5c1dd92cd92",
+      "title": "World Cup visa scandal: Senyo Hosi says issue goes beyond calls for Sports Minister’s resignation",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -48.03 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:9989f1f5ad8f7ccd",
+      "title": "Photos: What a year of ceasefire in Gaza looks like",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    },
+    {
+      "eventId": "event:f527f626ab30c8a1",
+      "title": "Evacuations and injuries reported at Riyadh airport after another alleged Houthi attack",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    },
+    {
+      "eventId": "event:9fc2fef6947efdcc",
+      "title": "Child among seven killed by Israel in Gaza on ‘ceasefire’ anniversary",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    },
+    {
+      "eventId": "event:df45f20a17c619ac",
+      "title": "Passengers told to confirm flight status before heading to Riyadh airport",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    },
+    {
+      "eventId": "event:cef317cff3de360a",
+      "title": "UN Records 280 Israeli Incursion-Related Incidents in Syria in September",
+      "stage": "content-structure",
+      "reason": "summary is too thin for a self-contained beta card"
+    }
+  ],
+  "outcome": {
+    "writerRequests": 5,
+    "retries": 0,
+    "acceptedCards": 4,
+    "retainedCards": 120,
+    "skippedCards": 58,
+    "totalNeurons": 128.89090728759766,
+    "inputTokens": 9666,
+    "outputTokens": 1504,
+    "meanNeuronsPerAcceptedCard": 32.22,
+    "datasetBytes": 325521,
+    "thirdPartyCostUsd": 0,
+    "imageStatus": {
+      "event-specific": 120
+    },
+    "geographicDistribution": {
+      "Bangladesh": 22,
+      "Ghana": 28,
+      "GTA": 6,
+      "Canada": 11,
+      "Syria": 8,
+      "Middle East": 28
+    }
+  },
+  "integrity": {
+    "datasetSha256": "965eeb207f6bb2a2e98edc8f796d87f50a1772109042b25319445eae58987074"
+  }
+}

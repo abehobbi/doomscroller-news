@@ -1,0 +1,2344 @@
+{
+  "schema": "doomscroller.news-beta-diagnostics",
+  "schemaVersion": 1,
+  "batchId": "news-beta-2026-10-10T01-50-02-733Z",
+  "startedAt": "2026-10-10T01:49:21.728Z",
+  "finishedAt": "2026-10-10T01:50:02.733Z",
+  "durationMs": 41004,
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1024,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "discovery": {
+    "discoveredArticles": 849,
+    "freshArticles": 669,
+    "uniqueArticles": 635,
+    "eventCandidates": 601,
+    "evidencePoolArticles": 183,
+    "preparedEvents": 126,
+    "selectedEvents": 30,
+    "evidenceFailures": 34,
+    "sourceFailures": 3
+  },
+  "sourceStatus": [
+    {
+      "id": "sana-en",
+      "name": "SANA English",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "north-press-en",
+      "name": "North Press Agency",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "enab-baladi-en",
+      "name": "Enab Baladi English",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "syria-direct-en",
+      "name": "Syria Direct",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dhaka-tribune",
+      "name": "Dhaka Tribune",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "bd24live-en",
+      "name": "BD24Live English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "prothom-alo-en",
+      "name": "Prothom Alo English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "No valid feed items"
+    },
+    {
+      "id": "financial-express-bd",
+      "name": "The Financial Express Bangladesh",
+      "status": "ok",
+      "itemCount": 28
+    },
+    {
+      "id": "daily-star-bd",
+      "name": "The Daily Star Bangladesh",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "myjoyonline",
+      "name": "MyJoyOnline",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "graphic-ghana",
+      "name": "Graphic Online",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "ghana-news-agency",
+      "name": "Ghana News Agency",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "toronto-city",
+      "name": "City of Toronto News",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "cbc-toronto",
+      "name": "CBC Toronto",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "cbc-canada",
+      "name": "CBC Canada",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "aljazeera-all",
+      "name": "Al Jazeera",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "arab-news",
+      "name": "Arab News",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "bbc-world",
+      "name": "BBC World",
+      "status": "ok",
+      "itemCount": 34
+    },
+    {
+      "id": "bbc-technology",
+      "name": "BBC Technology",
+      "status": "ok",
+      "itemCount": 21
+    },
+    {
+      "id": "bbc-science-environment",
+      "name": "BBC Science & Environment",
+      "status": "ok",
+      "itemCount": 41
+    },
+    {
+      "id": "guardian-world",
+      "name": "The Guardian World",
+      "status": "ok",
+      "itemCount": 45
+    },
+    {
+      "id": "guardian-science",
+      "name": "The Guardian Science",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "guardian-environment",
+      "name": "The Guardian Environment",
+      "status": "ok",
+      "itemCount": 34
+    },
+    {
+      "id": "npr-world",
+      "name": "NPR World",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "npr-science",
+      "name": "NPR Science",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dw-world",
+      "name": "DW World",
+      "status": "ok",
+      "itemCount": 139
+    },
+    {
+      "id": "africanews",
+      "name": "Africanews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "euronews",
+      "name": "Euronews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "global-voices",
+      "name": "Global Voices",
+      "status": "ok",
+      "itemCount": 15
+    },
+    {
+      "id": "japan-times",
+      "name": "The Japan Times",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "mongabay",
+      "name": "Mongabay",
+      "status": "ok",
+      "itemCount": 32
+    }
+  ],
+  "knownSourceFailures": [
+    {
+      "name": "Bangladesh Sangbad Sangstha",
+      "url": "https://www.bssnews.net/feed",
+      "status": "blocked",
+      "detail": "Cloudflare challenge returned HTTP 403 to the bounded collector."
+    },
+    {
+      "name": "The Indian Express feeds",
+      "url": "https://indianexpress.com/rss/",
+      "status": "blocked_in_cloud",
+      "detail": "Official feeds work locally but return HTTP 403 from GitHub Actions, so the automatic collector does not depend on them."
+    },
+    {
+      "name": "The Business Standard",
+      "url": "https://www.tbsnews.net/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "Feed served 2019–2021 items."
+    },
+    {
+      "name": "Ontario Newsroom",
+      "url": "https://news.ontario.ca/en/rss",
+      "status": "retired_from_registry",
+      "detail": "URL returns an HTML application shell, not RSS."
+    },
+    {
+      "name": "GhanaWeb",
+      "url": "https://www.ghanaweb.com/GhanaHomePage/NewsArchive/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "The publisher endpoint returned HTTP 404 in October 2026; MyJoyOnline and Graphic Online remain active Ghana sources."
+    }
+  ],
+  "reranker": {
+    "adjustments": [
+      {
+        "eventId": "event:8a9bb42729ff7437",
+        "baseScore": 79.99,
+        "adjustment": 14,
+        "adjustedScore": 93.99,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:1ace55bf0d99ea37",
+        "baseScore": 77.2,
+        "adjustment": 14,
+        "adjustedScore": 91.2,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Palestinian territories"
+      },
+      {
+        "eventId": "event:87f5bacfccf621ca",
+        "baseScore": 67.54,
+        "adjustment": 14,
+        "adjustedScore": 81.54,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:c4ff48c44a755210",
+        "baseScore": 67.01,
+        "adjustment": 14,
+        "adjustedScore": 81.01,
+        "contentType": "conflict",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:3dd0cda81036e189",
+        "baseScore": 74.42,
+        "adjustment": -3,
+        "adjustedScore": 71.42,
+        "contentType": "conflict",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:fca815fe5c588b63",
+        "baseScore": 64.16,
+        "adjustment": 6,
+        "adjustedScore": 70.16,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:d21966d4d2d4f384",
+        "baseScore": 43.54,
+        "adjustment": 14,
+        "adjustedScore": 57.54,
+        "contentType": "general",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:a93982ce04f3055d",
+        "baseScore": 37.38,
+        "adjustment": 18,
+        "adjustedScore": 55.38,
+        "contentType": "culture-science-education",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:490e4adef76c165f",
+        "baseScore": 37.27,
+        "adjustment": 14,
+        "adjustedScore": 51.27,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:4faf6bfed4f015cf",
+        "baseScore": 61.65,
+        "adjustment": -16,
+        "adjustedScore": 45.65,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "United States"
+      },
+      {
+        "eventId": "event:0a9aade04ef96a9c",
+        "baseScore": 73.46,
+        "adjustment": -28,
+        "adjustedScore": 45.459999999999994,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Russia"
+      },
+      {
+        "eventId": "event:bba2b25b74125183",
+        "baseScore": 39.14,
+        "adjustment": -2,
+        "adjustedScore": 37.14,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:2cb3bf2d0328481e",
+        "baseScore": 54.5,
+        "adjustment": -23,
+        "adjustedScore": 31.5,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:47f8b7bfa93d374e",
+        "baseScore": 45.61,
+        "adjustment": -19,
+        "adjustedScore": 26.61,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "Ukraine"
+      },
+      {
+        "eventId": "event:ba9f94f9626bb31b",
+        "baseScore": 41.61,
+        "adjustment": -19,
+        "adjustedScore": 22.61,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:06ed86c5e698f159",
+        "baseScore": 55.56,
+        "adjustment": -33,
+        "adjustedScore": 22.560000000000002,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:d4c6348215697df2",
+        "baseScore": 55.78,
+        "adjustment": -46,
+        "adjustedScore": 9.780000000000001,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "World"
+        ],
+        "country": "India"
+      },
+      {
+        "eventId": "event:40a0983b6e9bc8f3",
+        "baseScore": 57.52,
+        "adjustment": -49,
+        "adjustedScore": 8.520000000000003,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Iran"
+      },
+      {
+        "eventId": "event:cc7ab385d326da85",
+        "baseScore": 40.43,
+        "adjustment": -38,
+        "adjustedScore": 2.4299999999999997,
+        "contentType": "general",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:a609d5e6c0c427c2",
+        "baseScore": 35.51,
+        "adjustment": -35,
+        "adjustedScore": 0.509999999999998,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "Ethiopia"
+      },
+      {
+        "eventId": "event:b458a0125001088d",
+        "baseScore": 44.39,
+        "adjustment": -44,
+        "adjustedScore": 0.39000000000000057,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:3529398b35b1956d",
+        "baseScore": 62.05,
+        "adjustment": -73,
+        "adjustedScore": -10.950000000000003,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:4b4e1f48368c0dbe",
+        "baseScore": 36.32,
+        "adjustment": -48,
+        "adjustedScore": -11.68,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "World"
+        ],
+        "country": "China"
+      },
+      {
+        "eventId": "event:7f5ac932c1285e42",
+        "baseScore": 40.95,
+        "adjustment": -53,
+        "adjustedScore": -12.049999999999997,
+        "contentType": "culture-science-education",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:7c267ddca2f4b0e7",
+        "baseScore": 41.75,
+        "adjustment": -68,
+        "adjustedScore": -26.25,
+        "contentType": "conflict",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:a43153c2c11a5fa9",
+        "baseScore": 40.71,
+        "adjustment": -71,
+        "adjustedScore": -30.29,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:70d48b2d6ad38d8c",
+        "baseScore": 36.35,
+        "adjustment": -70,
+        "adjustedScore": -33.65,
+        "contentType": "general",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:2d157e8a3a6b6de2",
+        "baseScore": 41.36,
+        "adjustment": -76,
+        "adjustedScore": -34.64,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:265341f3f8e85d5c",
+        "baseScore": 46.55,
+        "adjustment": -87,
+        "adjustedScore": -40.45,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:f06bdeae070769ee",
+        "baseScore": 34.94,
+        "adjustment": -83,
+        "adjustedScore": -48.06,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      }
+    ],
+    "distribution": {
+      "regions": {
+        "Middle East": 8,
+        "GTA": 4,
+        "Canada": 7,
+        "Ghana": 5,
+        "Syria": 3,
+        "World": 7,
+        "Bangladesh": 3
+      },
+      "countries": {
+        "Yemen": 2,
+        "Palestinian territories": 1,
+        "GTA": 4,
+        "Ghana": 5,
+        "Syria": 3,
+        "Canada": 3,
+        "World": 2,
+        "Bangladesh": 3,
+        "United States": 1,
+        "Russia": 1,
+        "Ukraine": 1,
+        "India": 1,
+        "Iran": 1,
+        "Ethiopia": 1,
+        "China": 1
+      },
+      "contentTypes": {
+        "conflict": 8,
+        "diplomacy-or-speech": 6,
+        "general": 8,
+        "culture-science-education": 3,
+        "economy-or-public-life": 5
+      },
+      "publishers": {
+        "The Guardian World": 4,
+        "Arab News": 4,
+        "CBC Toronto": 3,
+        "Ghana News Agency": 1,
+        "MyJoyOnline": 2,
+        "CBC Canada": 2,
+        "The Japan Times": 1,
+        "Mongabay": 1,
+        "The Financial Express Bangladesh": 2,
+        "Graphic Online": 2,
+        "Africanews": 2,
+        "North Press Agency": 2,
+        "Euronews": 1,
+        "Al Jazeera": 1,
+        "DW World": 1,
+        "City of Toronto News": 1
+      }
+    }
+  },
+  "selectedEvents": [
+    {
+      "eventId": "event:8a9bb42729ff7437",
+      "title": "Three Saudis killed in Riyadh airport attack claimed by Houthis",
+      "score": 79.99,
+      "adjustedScore": 93.99,
+      "rank": 1,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.99,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:1ace55bf0d99ea37",
+      "title": "Gaza ceasefire exists ‘in name only’ as Palestinians endure dire conditions, 100 aid and rights groups warn",
+      "score": 77.2,
+      "adjustedScore": 91.2,
+      "rank": 2,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.2,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:87f5bacfccf621ca",
+      "title": "Not sure who to vote for? These municipal election resources can help you decide",
+      "score": 67.54,
+      "adjustedScore": 81.54,
+      "rank": 3,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 15.54,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 22,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:c4ff48c44a755210",
+      "title": "Caretaker killed in second Polish school attack in two days",
+      "score": 67.01,
+      "adjustedScore": 81.01,
+      "rank": 4,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 16.01,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:3dd0cda81036e189",
+      "title": "Lebanon says 6 wounded in attack that Israel says targeted pro-Iran Syrian operative",
+      "score": 74.42,
+      "adjustedScore": 71.42,
+      "rank": 5,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 18.42,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:fca815fe5c588b63",
+      "title": "UK-Ghana Trade & Investment Summit: Trade Resource Centre to help businesses maximise UK-Ghana trade opportunities",
+      "score": 64.16,
+      "adjustedScore": 70.16,
+      "rank": 6,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.16,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:d21966d4d2d4f384",
+      "title": "The Alberta question: How separatists took hold of the province’s governing party",
+      "score": 43.54,
+      "adjustedScore": 57.54,
+      "rank": 7,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 15.54,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:a93982ce04f3055d",
+      "title": "Inside the deadlock at the world’s top climate science body",
+      "score": 37.38,
+      "adjustedScore": 55.38,
+      "rank": 8,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 15.38,
+        "importance": 18,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:490e4adef76c165f",
+      "title": "Dhaka’s waste-to-energy plant face backlash over air pollution",
+      "score": 37.27,
+      "adjustedScore": 51.27,
+      "rank": 9,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.27,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 7,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:4faf6bfed4f015cf",
+      "title": "Trump takes suit against Hillary Clinton over 2016 election to Supreme Court",
+      "score": 61.65,
+      "adjustedScore": 45.65,
+      "rank": 10,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.65,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:0a9aade04ef96a9c",
+      "title": "Zelenskyy furious as Trump announces deal to buy Russian diesel",
+      "score": 73.46,
+      "adjustedScore": 45.46,
+      "rank": 11,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.46,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:bba2b25b74125183",
+      "title": "Bangladesh among finalists for AI climate award",
+      "score": 39.14,
+      "adjustedScore": 37.14,
+      "rank": 12,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.14,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:2cb3bf2d0328481e",
+      "title": "Ashaiman Municipal Assembly lobbies for completion of storm-drain project",
+      "score": 54.5,
+      "adjustedScore": 31.5,
+      "rank": 13,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.5,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 18,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:47f8b7bfa93d374e",
+      "title": "At least 33 people killed in strikes on Ukrainian public buses",
+      "score": 45.61,
+      "adjustedScore": 26.61,
+      "rank": 14,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 15.61,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:ba9f94f9626bb31b",
+      "title": "Iraq rejects Syria’s request for 4,000 IS detainees",
+      "score": 41.61,
+      "adjustedScore": 22.61,
+      "rank": 15,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 16.61,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:06ed86c5e698f159",
+      "title": "Bradford inches closer to Chow's lead in Toronto's mayoral election, new poll suggests",
+      "score": 55.56,
+      "adjustedScore": 22.56,
+      "rank": 16,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 17.56,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:d4c6348215697df2",
+      "title": "Delhi sealed off ahead of youth protest against Indian election chief",
+      "score": 55.78,
+      "adjustedScore": 9.78,
+      "rank": 17,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.78,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:40a0983b6e9bc8f3",
+      "title": "Putin offers help to end Iran war while Russia continues its own in Ukraine",
+      "score": 57.52,
+      "adjustedScore": 8.52,
+      "rank": 18,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 16.52,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:cc7ab385d326da85",
+      "title": "European states, Canada, Japan and UN back ICC against US sanctions",
+      "score": 40.43,
+      "adjustedScore": 2.43,
+      "rank": 19,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 18.43,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:a609d5e6c0c427c2",
+      "title": "Tigray war: Why peace talks may fail before they even begin {Africanews Debates}",
+      "score": 35.51,
+      "adjustedScore": 0.51,
+      "rank": 20,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 15.51,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:b458a0125001088d",
+      "title": "Special Initiatives Minister urges Wa Technical Institute to enrol more girls as EU-backed solar training lab opens",
+      "score": 44.39,
+      "adjustedScore": 0.39,
+      "rank": 21,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.39,
+        "importance": 6,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:3529398b35b1956d",
+      "title": "Saudi coalition vows 'firm' response after airport attack kills 3",
+      "score": 62.05,
+      "adjustedScore": -10.95,
+      "rank": 22,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.05,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:4b4e1f48368c0dbe",
+      "title": "China agrees to ‘halve’ hybrid car exports to EU in landmark deal",
+      "score": 36.32,
+      "adjustedScore": -11.68,
+      "rank": 23,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.32,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:7f5ac932c1285e42",
+      "title": "Halton police are turning to AI to help hire, train 911 call takers",
+      "score": 40.95,
+      "adjustedScore": -12.05,
+      "rank": 24,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 18.95,
+        "importance": 0,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:7c267ddca2f4b0e7",
+      "title": "Attack on journalists at RU: Probe panel recommends suspension of 4 students",
+      "score": 41.75,
+      "adjustedScore": -26.25,
+      "rank": 25,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 16.75,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:a43153c2c11a5fa9",
+      "title": "BoG caution banks against complacency over economic recovery",
+      "score": 40.71,
+      "adjustedScore": -30.29,
+      "rank": 26,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.71,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:70d48b2d6ad38d8c",
+      "title": "Alberta Court of Appeal says Ottawa's Impact Assessment Act is still unconstitutional",
+      "score": 36.35,
+      "adjustedScore": -33.65,
+      "rank": 27,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 18.35,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:2d157e8a3a6b6de2",
+      "title": "Syrian presidential adviser Mazloum Abdi says integration nears completion",
+      "score": 41.36,
+      "adjustedScore": -34.64,
+      "rank": 28,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 16.36,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:265341f3f8e85d5c",
+      "title": "Cop31 host urges wealthy countries to spend ‘much more’ on climate than defence",
+      "score": 46.55,
+      "adjustedScore": -40.45,
+      "rank": 29,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 16.55,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:f06bdeae070769ee",
+      "title": "Kids can vote for Toronto’s 2027 Tree of the Year and learn about the voting process during Kids Vote Weekend",
+      "score": 34.94,
+      "adjustedScore": -48.06,
+      "rank": 30,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 16.94,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    }
+  ],
+  "invalidPreviousCardsRemoved": [],
+  "crossEventOverlap": [
+    {
+      "packet_event_id": "event:8a9bb42729ff7437",
+      "other_event_id": "event:c4ff48c44a755210",
+      "fragment_id": "F29",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=two,killed,attack; entities=; actions=kill,attack"
+    }
+  ],
+  "generation": [
+    {
+      "eventId": "event:87f5bacfccf621ca",
+      "title": "Not sure who to vote for? These municipal election resources can help you decide",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "46d4c13b077539e92536f33fdd2f6b709a57850e1eac23cb01cc0292b9cbca4a",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 202,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:cbc:1e408883135f9a958b0d060e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:cbc:1e408883135f9a958b0d060e",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:cbc:1e408883135f9a958b0d060e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:cbc:1e408883135f9a958b0d060e",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:cbc:1e408883135f9a958b0d060e",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:cbc:1e408883135f9a958b0d060e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:cbc:1e408883135f9a958b0d060e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:cbc:1e408883135f9a958b0d060e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:cbc:1e408883135f9a958b0d060e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:cbc:1e408883135f9a958b0d060e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:cbc:1e408883135f9a958b0d060e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:cbc:1e408883135f9a958b0d060e",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:cbc:1e408883135f9a958b0d060e",
+          "publisher": "CBC Toronto",
+          "url": "https://cbc.ca/news/canada/toronto/toronto-voters-resources-municipal-election-9.7372865?cmp=rss",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.cbc.ca/ais/1.6697289,1729898637000/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C344%2C5982%2C3364%29%3B",
+        "alt": "Not sure who to vote for? These municipal election resources can help you decide",
+        "status": "event-specific",
+        "source_url": "https://cbc.ca/news/canada/toronto/toronto-voters-resources-municipal-election-9.7372865?cmp=rss",
+        "attribution": "CBC Toronto",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-10T01:49:42.267Z",
+          "finishedAt": "2026-10-10T01:49:48.013Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Civic organizations provide resources for upcoming Toronto municipal election\",\n  \"pages\": [\n    {\n      \"text\": \"With Toronto's municipal election just over two weeks away, various civic organizations are offering resources to inform voters. The election features more than 50 candidates running for mayor and multiple councillors in each ward, with platforms addressing issues such as housing, transit affordability, and public safety. According to CBC Toronto, these resources aim to assist residents in navigating the candidate field before election day.  The Toronto Public Library (TPL) has launched a citywide initiative called Celebrate Democracy to help residents learn about the democratic process and the candidates. A central component of this initiative is KnowYourVote.to, an interactive website designed for residents to find candidates in their specific wards and compare positions on key issues like housing and public safety. Nan Davies, TPL's manager of learning and community engagement, stated the initiative is intended to help people feel more connected to the city and democracy, noting that the library provides unbiased, free, and neutral information. The library's programming includes events focused on voter engagement, misinformation, and trust in institutions. These efforts are designed for all ages, including specific elements for children and teens, as well as an election information campaign on TikTok aimed at younger voters who consume news via social media.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Civic organizations provide resources for upcoming Toronto municipal election",
+            "pages": [
+              {
+                "text": "With Toronto's municipal election just over two weeks away, various civic organizations are offering resources to inform voters. The election features more than 50 candidates running for mayor and multiple councillors in each ward, with platforms addressing issues such as housing, transit affordability, and public safety. According to CBC Toronto, these resources aim to assist residents in navigating the candidate field before election day.  The Toronto Public Library (TPL) has launched a citywide initiative called Celebrate Democracy to help residents learn about the democratic process and the candidates. A central component of this initiative is KnowYourVote.to, an interactive website designed for residents to find candidates in their specific wards and compare positions on key issues like housing and public safety. Nan Davies, TPL's manager of learning and community engagement, stated the initiative is intended to help people feel more connected to the city and democracy, noting that the library provides unbiased, free, and neutral information. The library's programming includes events focused on voter engagement, misinformation, and trust in institutions. These efforts are designed for all ages, including specific elements for children and teens, as well as an election information campaign on TikTok aimed at younger voters who consume news via social media."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1454,
+            "completion_tokens": 287,
+            "total_tokens": 1741,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 21.045454025268555
+          },
+          "latencyMs": 5746,
+          "safeHeaders": {
+            "cf-ray": "a481f8535fcf4855-SEA"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:fca815fe5c588b63",
+      "title": "UK-Ghana Trade & Investment Summit: Trade Resource Centre to help businesses maximise UK-Ghana trade opportunities",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "c9fe7a45d6fc3fdd96ac9b0589b92b497f38ec79520be1e197fb2d744922eeed",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 278,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:myjoyonline:de250a3887ca66dbfb4af1aa",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:myjoyonline:de250a3887ca66dbfb4af1aa",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:myjoyonline:de250a3887ca66dbfb4af1aa",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:myjoyonline:de250a3887ca66dbfb4af1aa",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:myjoyonline:de250a3887ca66dbfb4af1aa",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:myjoyonline:de250a3887ca66dbfb4af1aa",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:myjoyonline:de250a3887ca66dbfb4af1aa",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:myjoyonline:de250a3887ca66dbfb4af1aa",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:myjoyonline:de250a3887ca66dbfb4af1aa",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:myjoyonline:de250a3887ca66dbfb4af1aa",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:myjoyonline:de250a3887ca66dbfb4af1aa",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:myjoyonline:de250a3887ca66dbfb4af1aa",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:myjoyonline:de250a3887ca66dbfb4af1aa",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/uk-ghana-trade-investment-summit-trade-resource-centre-to-help-businesses-maximise-uk-ghana-trade-opportunities",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.myjoyonline.com/wp-content/uploads/2026/10/WhatsApp-Image-2026-10-09-at-11.10.39-1024x683.jpeg",
+        "alt": "UK",
+        "status": "event-specific",
+        "source_url": "https://myjoyonline.com/uk-ghana-trade-investment-summit-trade-resource-centre-to-help-businesses-maximise-uk-ghana-trade-opportunities",
+        "attribution": "MyJoyOnline",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-10T01:49:48.015Z",
+          "finishedAt": "2026-10-10T01:49:50.994Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"UK-Ghana Trade Resource Centre launched at 2026 investment summit\",\n  \"pages\": [\n    {\n      \"text\": \"The UK-Ghana Chamber of Commerce (UKGCC), in partnership with the UK-Ghana Jobs and Economic Transformation (JET) Programme, has launched the UK-Ghana Trade Resource Centre. The launch was a major outcome of the UK-Ghana Trade & Investment Summit 2026, a three-day event involving government leaders, investors, and business executives under the theme, “A Decade of Trust, A Future Always On: Scaling the UK-Ghana Growth Partnership.” The Centre is designed as a market-access platform to help businesses identify opportunities, navigate export requirements, and build commercial partnerships between Ghana and the United Kingdom. Total bilateral trade between the two nations reached approximately £1.6 billion in the year to Q1 2026, though officials noted significant untapped opportunities remain for businesses in both countries. Adjoba Kyiamah, the Executive Director of the UKGCC, stated the Centre is a step toward addressing information and market-access challenges for businesses seeking to trade between the two nations. The platform aims to support firms in taking advantage of the UK-Ghana Trade Partnership Agreement (TPA) by providing guidance, market intelligence, and trade facilitation services.\"\n    },\n    {\n      \"text\": \"The Trade Resource Centre will provide specific services for different business types. For export-ready Ghanaian businesses, the Centre is intended to offer market-specific guidance, export readiness support, referrals to technical expertise, and connections to British buyers and commercial networks. It will also work with partners to identify firms and facilitate business matchmaking. For importers and UK businesses looking to source from Ghana, the Centre will provide access to industry networks, partner referrals, and commercial linkage support to improve trade flows. The Centre has been established as a core UKGCC function to help businesses navigate the bilateral trade landscape and maximize opportunities under the UK-Ghana TPA.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "UK-Ghana Trade Resource Centre launched at 2026 investment summit",
+            "pages": [
+              {
+                "text": "The UK-Ghana Chamber of Commerce (UKGCC), in partnership with the UK-Ghana Jobs and Economic Transformation (JET) Programme, has launched the UK-Ghana Trade Resource Centre. The launch was a major outcome of the UK-Ghana Trade & Investment Summit 2026, a three-day event involving government leaders, investors, and business executives under the theme, “A Decade of Trust, A Future Always On: Scaling the UK-Ghana Growth Partnership.” The Centre is designed as a market-access platform to help businesses identify opportunities, navigate export requirements, and build commercial partnerships between Ghana and the United Kingdom. Total bilateral trade between the two nations reached approximately £1.6 billion in the year to Q1 2026, though officials noted significant untapped opportunities remain for businesses in both countries. Adjoba Kyiamah, the Executive Director of the UKGCC, stated the Centre is a step toward addressing information and market-access challenges for businesses seeking to trade between the two nations. The platform aims to support firms in taking advantage of the UK-Ghana Trade Partnership Agreement (TPA) by providing guidance, market intelligence, and trade facilitation services."
+              },
+              {
+                "text": "The Trade Resource Centre will provide specific services for different business types. For export-ready Ghanaian businesses, the Centre is intended to offer market-specific guidance, export readiness support, referrals to technical expertise, and connections to British buyers and commercial networks. It will also work with partners to identify firms and facilitate business matchmaking. For importers and UK businesses looking to source from Ghana, the Centre will provide access to industry networks, partner referrals, and commercial linkage support to improve trade flows. The Centre has been established as a core UKGCC function to help businesses navigate the bilateral trade landscape and maximize opportunities under the UK-Ghana TPA."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1986,
+            "completion_tokens": 423,
+            "total_tokens": 2409,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 29.59090805053711
+          },
+          "latencyMs": 2980,
+          "safeHeaders": {
+            "cf-ray": "a481f8771a804855-SEA"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:4faf6bfed4f015cf",
+      "title": "Trump takes suit against Hillary Clinton over 2016 election to Supreme Court",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "72b450e3efbcdb9b74e5d1b107b586468dab3b5534c2fe62a821313a35d21ea5",
+      "allowedExactDates": [
+        "2026-10-09"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 9, 2026",
+            "date": "2026-10-09"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-09"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 223,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:arab-news:6a433d2df8a8e102b38a3c7c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:arab-news:6a433d2df8a8e102b38a3c7c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:arab-news:6a433d2df8a8e102b38a3c7c",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:arab-news:6a433d2df8a8e102b38a3c7c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:arab-news:6a433d2df8a8e102b38a3c7c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:arab-news:6a433d2df8a8e102b38a3c7c",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:arab-news:6a433d2df8a8e102b38a3c7c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:arab-news:6a433d2df8a8e102b38a3c7c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:arab-news:6a433d2df8a8e102b38a3c7c",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:arab-news:6a433d2df8a8e102b38a3c7c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:arab-news:6a433d2df8a8e102b38a3c7c",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:arab-news:6a433d2df8a8e102b38a3c7c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:arab-news:6a433d2df8a8e102b38a3c7c",
+          "publisher": "Arab News",
+          "url": "https://arabnews.com/world/trump-takes-suit-against-hillary-clinton-over-2016-election-to-supreme-court-3005562",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://assets.maestronewsroom.com/media/30f6532d-717b-4366-9158-9c455299fcd9/1791591872090-fe2f676c1e053992.jpg",
+        "alt": "Trump takes suit against Hillary Clinton over 2016 election to Supreme Court",
+        "status": "event-specific",
+        "source_url": "https://arabnews.com/world/trump-takes-suit-against-hillary-clinton-over-2016-election-to-supreme-court-3005562",
+        "attribution": "Arab News",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-10T01:49:50.995Z",
+          "finishedAt": "2026-10-10T01:49:58.705Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Trump asks US Supreme Court to revive dismissed lawsuit against Hillary Clinton\",\n  \"pages\": [\n    {\n      \"text\": \"On October 9, 2026, President Donald Trump asked the US Supreme Court to revive a dismissed lawsuit against his 2016 Democratic rival, Hillary Clinton. According to Arab News, Trump is accusing Clinton, former FBI Director James Comey, and others of conspiring to rig the 2016 election by linking his campaign to Russia. The lawsuit, which alleges racketeering and a conspiracy to commit injurious falsehood, was originally filed in a Florida federal court in 2022 while Trump was out of office. In the complaint, Trump alleged that Clinton and her allies used a “false narrative” regarding collusion with Russia to discredit his campaign. The legal action names several other defendants, including former British intelligence officer Christopher Steele and the Democratic National Committee.\"\n    },\n    {\n      \"text\": \"The appeal follows a dismissal by US District Judge Donald Middlebrooks, who cited numerous inadequacies in the suit, including that Trump waited too long to bring certain claims. Judge Middlebrooks also imposed nearly $1 million in sanctions against Trump and one of his lawyers, characterizing the suit as “frivolous.” A US appeals court subsequently upheld both the dismissal and the sanctions. While US government officials and an investigation led by former FBI chief Robert Mueller documented extensive contacts between the Trump campaign and Russian operatives seeking to influence the 2016 election, Trump has characterized the idea of Russian interference as a “hoax.”\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Trump asks US Supreme Court to revive dismissed lawsuit against Hillary Clinton",
+            "pages": [
+              {
+                "text": "On October 9, 2026, President Donald Trump asked the US Supreme Court to revive a dismissed lawsuit against his 2016 Democratic rival, Hillary Clinton. According to Arab News, Trump is accusing Clinton, former FBI Director James Comey, and others of conspiring to rig the 2016 election by linking his campaign to Russia. The lawsuit, which alleges racketeering and a conspiracy to commit injurious falsehood, was originally filed in a Florida federal court in 2022 while Trump was out of office. In the complaint, Trump alleged that Clinton and her allies used a “false narrative” regarding collusion with Russia to discredit his campaign. The legal action names several other defendants, including former British intelligence officer Christopher Steele and the Democratic National Committee."
+              },
+              {
+                "text": "The appeal follows a dismissal by US District Judge Donald Middlebrooks, who cited numerous inadequacies in the suit, including that Trump waited too long to bring certain claims. Judge Middlebrooks also imposed nearly $1 million in sanctions against Trump and one of his lawyers, characterizing the suit as “frivolous.” A US appeals court subsequently upheld both the dismissal and the sanctions. While US government officials and an investigation led by former FBI chief Robert Mueller documented extensive contacts between the Trump campaign and Russian operatives seeking to influence the 2016 election, Trump has characterized the idea of Russian interference as a “hoax.”"
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1922,
+            "completion_tokens": 343,
+            "total_tokens": 2265,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 26.827272415161133
+          },
+          "latencyMs": 7710,
+          "safeHeaders": {
+            "cf-ray": "a481f889bb0e4855-SEA"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:bba2b25b74125183",
+      "title": "Bangladesh among finalists for AI climate award",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "0e4f29be999685e45ff1a15957d3ced80032ffc3f9175931f6363b4100ba7bb6",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 105,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:financial-express-bd:618cda3abcc0f4f6f23cd4c5",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:financial-express-bd:618cda3abcc0f4f6f23cd4c5",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:financial-express-bd:618cda3abcc0f4f6f23cd4c5",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:financial-express-bd:618cda3abcc0f4f6f23cd4c5",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:financial-express-bd:618cda3abcc0f4f6f23cd4c5",
+          "publisher": "The Financial Express Bangladesh",
+          "url": "https://thefinancialexpress.com.bd/national/bangladesh-among-finalists-for-ai-climate-award",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://thefe-bd.sgp1.cdn.digitaloceanspaces.com/posts/176416/9993.jpg",
+        "alt": "Bangladesh among finalists for AI climate award",
+        "status": "event-specific",
+        "source_url": "https://thefinancialexpress.com.bd/national/bangladesh-among-finalists-for-ai-climate-award",
+        "attribution": "The Financial Express Bangladesh",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-10T01:49:58.705Z",
+          "finishedAt": "2026-10-10T01:50:02.643Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Bangladesh among finalists for 2026 AI for Climate Action Award\",\n  \"pages\": [\n    {\n      \"text\": \"Five AI-powered climate solutions from Bangladesh, Indonesia, Tanzania, and Mali have been selected as finalists for the 2026 AI for Climate Action Award, according to The Financial Express Bangladesh. The award is hosted by the UN Climate Change Technology Mechanism in partnership with the Korea International Cooperation Agency (KOICA). The program recognizes locally driven artificial intelligence applications designed to support climate change mitigation and adaptation in small island developing States (SIDS) and least developed countries (LDCs). The finalists are scheduled to showcase their innovations at the AI for Climate Action Forum 2026 in Phnom Penh, Cambodia, on 13–14 October, where the winner will be announced.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Bangladesh among finalists for 2026 AI for Climate Action Award",
+            "pages": [
+              {
+                "text": "Five AI-powered climate solutions from Bangladesh, Indonesia, Tanzania, and Mali have been selected as finalists for the 2026 AI for Climate Action Award, according to The Financial Express Bangladesh. The award is hosted by the UN Climate Change Technology Mechanism in partnership with the Korea International Cooperation Agency (KOICA). The program recognizes locally driven artificial intelligence applications designed to support climate change mitigation and adaptation in small island developing States (SIDS) and least developed countries (LDCs). The finalists are scheduled to showcase their innovations at the AI for Climate Action Forum 2026 in Phnom Penh, Cambodia, on 13–14 October, where the winner will be announced."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1657,
+            "completion_tokens": 186,
+            "total_tokens": 1843,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "neurons": 19.55454444885254
+          },
+          "latencyMs": 3938,
+          "safeHeaders": {
+            "cf-ray": "a481f8b9ee294855-SEA"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "stage": "evidence",
+      "eventId": "event:587d0d79075fb44a",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:5f61258fb54ce0f9",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:1b609356dd37c9bf",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:467e39b8fb7d0aa1",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:35de31bcc66e8cca",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:069c7f3388878f39",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0da621ad91068db7",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0d88049b098dd09b",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:81749ba7ee38dab2",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:ab48b0ac131cb5e7",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6c40c11f4bdde18b",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e0c5487736766df0",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4513f726cd7951a0",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:7ddf42753cc712f8",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:94c1d85a85b36ff5",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:73c64e0d5fb64f7d",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e5434750a79bb850",
+      "reason": "too little complete accessible reporting; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:9ec7db8bf6f73ddf",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:fd0c26ce8637e1a4",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:9c6006c392e0719c",
+      "reason": "too little complete accessible reporting; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:1f025c4f556c35dd",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:7e62adb531405df6",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:1d89b8162b5bcb67",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6743684f18e53ea1",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6371678a5e564462",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e0eff49c8949957d",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:734a09ac88a16030",
+      "reason": "principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:01764cf9ef32e93e",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0e7f2238025459cd",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:2168f269ea5656b4",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:1d5f0701f71daaa0",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:c59ce6cda183a6ae",
+      "reason": "evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:da3fc0e2115cae45",
+      "reason": "principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:233ceaabe49507a1",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "eventId": "event:1ace55bf0d99ea37",
+      "title": "Gaza ceasefire exists ‘in name only’ as Palestinians endure dire conditions, 100 aid and rights groups warn",
+      "stage": "writer-safety",
+      "reason": "unsafe temporal metadata exposure"
+    },
+    {
+      "eventId": "event:3dd0cda81036e189",
+      "title": "Lebanon says 6 wounded in attack that Israel says targeted pro-Iran Syrian operative",
+      "stage": "writer-safety",
+      "reason": "unsafe temporal metadata exposure"
+    },
+    {
+      "eventId": "event:d21966d4d2d4f384",
+      "title": "The Alberta question: How separatists took hold of the province’s governing party",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:a93982ce04f3055d",
+      "title": "Inside the deadlock at the world’s top climate science body",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:490e4adef76c165f",
+      "title": "Dhaka’s waste-to-energy plant face backlash over air pollution",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:0a9aade04ef96a9c",
+      "title": "Zelenskyy furious as Trump announces deal to buy Russian diesel",
+      "stage": "writer-safety",
+      "reason": "unsafe temporal metadata exposure"
+    },
+    {
+      "eventId": "event:2cb3bf2d0328481e",
+      "title": "Ashaiman Municipal Assembly lobbies for completion of storm-drain project",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:47f8b7bfa93d374e",
+      "title": "At least 33 people killed in strikes on Ukrainian public buses",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 26.61 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:ba9f94f9626bb31b",
+      "title": "Iraq rejects Syria’s request for 4,000 IS detainees",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 22.61 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:06ed86c5e698f159",
+      "title": "Bradford inches closer to Chow's lead in Toronto's mayoral election, new poll suggests",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 22.56 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:d4c6348215697df2",
+      "title": "Delhi sealed off ahead of youth protest against Indian election chief",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 9.78 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:40a0983b6e9bc8f3",
+      "title": "Putin offers help to end Iran war while Russia continues its own in Ukraine",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 8.52 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:cc7ab385d326da85",
+      "title": "European states, Canada, Japan and UN back ICC against US sanctions",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 2.43 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:a609d5e6c0c427c2",
+      "title": "Tigray war: Why peace talks may fail before they even begin {Africanews Debates}",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 0.51 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:b458a0125001088d",
+      "title": "Special Initiatives Minister urges Wa Technical Institute to enrol more girls as EU-backed solar training lab opens",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 0.39 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:3529398b35b1956d",
+      "title": "Saudi coalition vows 'firm' response after airport attack kills 3",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -10.95 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:4b4e1f48368c0dbe",
+      "title": "China agrees to ‘halve’ hybrid car exports to EU in landmark deal",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -11.68 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:7f5ac932c1285e42",
+      "title": "Halton police are turning to AI to help hire, train 911 call takers",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -12.05 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:7c267ddca2f4b0e7",
+      "title": "Attack on journalists at RU: Probe panel recommends suspension of 4 students",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -26.25 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:a43153c2c11a5fa9",
+      "title": "BoG caution banks against complacency over economic recovery",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -30.29 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:70d48b2d6ad38d8c",
+      "title": "Alberta Court of Appeal says Ottawa's Impact Assessment Act is still unconstitutional",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -33.65 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:2d157e8a3a6b6de2",
+      "title": "Syrian presidential adviser Mazloum Abdi says integration nears completion",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -34.64 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:265341f3f8e85d5c",
+      "title": "Cop31 host urges wealthy countries to spend ‘much more’ on climate than defence",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -40.45 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:f06bdeae070769ee",
+      "title": "Kids can vote for Toronto’s 2027 Tree of the Year and learn about the voting process during Kids Vote Weekend",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -48.06 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:8a9bb42729ff7437",
+      "title": "Three Saudis killed in Riyadh airport attack claimed by Houthis",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    },
+    {
+      "eventId": "event:c4ff48c44a755210",
+      "title": "Caretaker killed in second Polish school attack in two days",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    }
+  ],
+  "outcome": {
+    "writerRequests": 4,
+    "retries": 0,
+    "acceptedCards": 4,
+    "retainedCards": 120,
+    "skippedCards": 60,
+    "totalNeurons": 97.01817893981934,
+    "inputTokens": 7019,
+    "outputTokens": 1239,
+    "meanNeuronsPerAcceptedCard": 24.25,
+    "datasetBytes": 325005,
+    "thirdPartyCostUsd": 0,
+    "imageStatus": {
+      "event-specific": 120
+    },
+    "geographicDistribution": {
+      "Bangladesh": 20,
+      "Ghana": 28,
+      "GTA": 7,
+      "Canada": 13,
+      "Syria": 8,
+      "Middle East": 28
+    }
+  },
+  "integrity": {
+    "datasetSha256": "7de0095464e8e56b55d44b02db10a768c5dec2bb5cdf31653421e2ceeff81fec"
+  }
+}

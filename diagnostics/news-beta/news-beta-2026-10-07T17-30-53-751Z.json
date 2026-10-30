@@ -1,0 +1,3210 @@
+{
+  "schema": "doomscroller.news-beta-diagnostics",
+  "schemaVersion": 1,
+  "batchId": "news-beta-2026-10-07T17-30-53-751Z",
+  "startedAt": "2026-10-07T17:29:26.101Z",
+  "finishedAt": "2026-10-07T17:30:53.751Z",
+  "durationMs": 87648,
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1024,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "discovery": {
+    "discoveredArticles": 831,
+    "freshArticles": 611,
+    "uniqueArticles": 587,
+    "eventCandidates": 559,
+    "evidencePoolArticles": 180,
+    "preparedEvents": 122,
+    "selectedEvents": 30,
+    "evidenceFailures": 38,
+    "sourceFailures": 3
+  },
+  "sourceStatus": [
+    {
+      "id": "sana-en",
+      "name": "SANA English",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "north-press-en",
+      "name": "North Press Agency",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "enab-baladi-en",
+      "name": "Enab Baladi English",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "syria-direct-en",
+      "name": "Syria Direct",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dhaka-tribune",
+      "name": "Dhaka Tribune",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "bd24live-en",
+      "name": "BD24Live English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "prothom-alo-en",
+      "name": "Prothom Alo English",
+      "status": "ok",
+      "itemCount": 4
+    },
+    {
+      "id": "financial-express-bd",
+      "name": "The Financial Express Bangladesh",
+      "status": "ok",
+      "itemCount": 28
+    },
+    {
+      "id": "daily-star-bd",
+      "name": "The Daily Star Bangladesh",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "myjoyonline",
+      "name": "MyJoyOnline",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "graphic-ghana",
+      "name": "Graphic Online",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "ghana-news-agency",
+      "name": "Ghana News Agency",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "toronto-city",
+      "name": "City of Toronto News",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "cbc-toronto",
+      "name": "CBC Toronto",
+      "status": "ok",
+      "itemCount": 19
+    },
+    {
+      "id": "cbc-canada",
+      "name": "CBC Canada",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "aljazeera-all",
+      "name": "Al Jazeera",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "arab-news",
+      "name": "Arab News",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "bbc-world",
+      "name": "BBC World",
+      "status": "ok",
+      "itemCount": 21
+    },
+    {
+      "id": "bbc-technology",
+      "name": "BBC Technology",
+      "status": "ok",
+      "itemCount": 21
+    },
+    {
+      "id": "bbc-science-environment",
+      "name": "BBC Science & Environment",
+      "status": "ok",
+      "itemCount": 42
+    },
+    {
+      "id": "guardian-world",
+      "name": "The Guardian World",
+      "status": "ok",
+      "itemCount": 45
+    },
+    {
+      "id": "guardian-science",
+      "name": "The Guardian Science",
+      "status": "ok",
+      "itemCount": 29
+    },
+    {
+      "id": "guardian-environment",
+      "name": "The Guardian Environment",
+      "status": "ok",
+      "itemCount": 34
+    },
+    {
+      "id": "npr-world",
+      "name": "NPR World",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "npr-science",
+      "name": "NPR Science",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dw-world",
+      "name": "DW World",
+      "status": "ok",
+      "itemCount": 136
+    },
+    {
+      "id": "africanews",
+      "name": "Africanews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "euronews",
+      "name": "Euronews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "global-voices",
+      "name": "Global Voices",
+      "status": "ok",
+      "itemCount": 15
+    },
+    {
+      "id": "japan-times",
+      "name": "The Japan Times",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "mongabay",
+      "name": "Mongabay",
+      "status": "ok",
+      "itemCount": 32
+    }
+  ],
+  "knownSourceFailures": [
+    {
+      "name": "Bangladesh Sangbad Sangstha",
+      "url": "https://www.bssnews.net/feed",
+      "status": "blocked",
+      "detail": "Cloudflare challenge returned HTTP 403 to the bounded collector."
+    },
+    {
+      "name": "The Indian Express feeds",
+      "url": "https://indianexpress.com/rss/",
+      "status": "blocked_in_cloud",
+      "detail": "Official feeds work locally but return HTTP 403 from GitHub Actions, so the automatic collector does not depend on them."
+    },
+    {
+      "name": "The Business Standard",
+      "url": "https://www.tbsnews.net/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "Feed served 2019–2021 items."
+    },
+    {
+      "name": "Ontario Newsroom",
+      "url": "https://news.ontario.ca/en/rss",
+      "status": "retired_from_registry",
+      "detail": "URL returns an HTML application shell, not RSS."
+    },
+    {
+      "name": "GhanaWeb",
+      "url": "https://www.ghanaweb.com/GhanaHomePage/NewsArchive/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "The publisher endpoint returned HTTP 404 in October 2026; MyJoyOnline and Graphic Online remain active Ghana sources."
+    }
+  ],
+  "reranker": {
+    "adjustments": [
+      {
+        "eventId": "event:ee7d173939170bcc",
+        "baseScore": 80.38,
+        "adjustment": 14,
+        "adjustedScore": 94.38,
+        "contentType": "conflict",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:c4840b367b73eda7",
+        "baseScore": 76.4,
+        "adjustment": 14,
+        "adjustedScore": 90.4,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Palestinian territories"
+      },
+      {
+        "eventId": "event:ae01e481dc6aaa5f",
+        "baseScore": 74.98,
+        "adjustment": 10,
+        "adjustedScore": 84.98,
+        "contentType": "conflict",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:fac15a4b32524056",
+        "baseScore": 58.09,
+        "adjustment": 14,
+        "adjustedScore": 72.09,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:6cf5edbb2c26222b",
+        "baseScore": 60.15,
+        "adjustment": 6,
+        "adjustedScore": 66.15,
+        "contentType": "conflict",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:5ab6bedc875a8210",
+        "baseScore": 41.13,
+        "adjustment": 18,
+        "adjustedScore": 59.13,
+        "contentType": "culture-science-education",
+        "regions": [
+          "World"
+        ],
+        "country": "United Kingdom"
+      },
+      {
+        "eventId": "event:bd7c49ae8b802b37",
+        "baseScore": 45.63,
+        "adjustment": 12,
+        "adjustedScore": 57.63,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "China"
+      },
+      {
+        "eventId": "event:1d20ccc4fb735365",
+        "baseScore": 43.55,
+        "adjustment": 14,
+        "adjustedScore": 57.55,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:d9eb1a59e80299d1",
+        "baseScore": 50.48,
+        "adjustment": 6,
+        "adjustedScore": 56.48,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:9585528ab0f71942",
+        "baseScore": 70.89,
+        "adjustment": -19,
+        "adjustedScore": 51.89,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:0def312be6052abc",
+        "baseScore": 40.12,
+        "adjustment": 6,
+        "adjustedScore": 46.12,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:b85df7d8c5735be8",
+        "baseScore": 41.03,
+        "adjustment": 5,
+        "adjustedScore": 46.03,
+        "contentType": "culture-science-education",
+        "regions": [
+          "World"
+        ],
+        "country": "Japan"
+      },
+      {
+        "eventId": "event:83061a1c9ee6d7f9",
+        "baseScore": 54.35,
+        "adjustment": -14,
+        "adjustedScore": 40.35,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:93c6c4552e7dd0ca",
+        "baseScore": 45.63,
+        "adjustment": -19,
+        "adjustedScore": 26.630000000000003,
+        "contentType": "general",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:407ad5dad8b39a04",
+        "baseScore": 37.82,
+        "adjustment": -16,
+        "adjustedScore": 21.82,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "Kenya"
+      },
+      {
+        "eventId": "event:fdef24c09f6f6ba5",
+        "baseScore": 46.09,
+        "adjustment": -27,
+        "adjustedScore": 19.090000000000003,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:69cdd5a2a665a793",
+        "baseScore": 52.33,
+        "adjustment": -42,
+        "adjustedScore": 10.329999999999998,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:32ef4fd028d02c3c",
+        "baseScore": 42.37,
+        "adjustment": -33,
+        "adjustedScore": 9.369999999999997,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "Brazil"
+      },
+      {
+        "eventId": "event:01214b7b8a463fd4",
+        "baseScore": 51.49,
+        "adjustment": -48,
+        "adjustedScore": 3.490000000000002,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:85495a5f92566e20",
+        "baseScore": 37.91,
+        "adjustment": -36,
+        "adjustedScore": 1.9099999999999966,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:7350e65784e58f68",
+        "baseScore": 37.62,
+        "adjustment": -42,
+        "adjustedScore": -4.380000000000003,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "United Arab Emirates"
+      },
+      {
+        "eventId": "event:6f29fa52ee7e343b",
+        "baseScore": 34.78,
+        "adjustment": -41,
+        "adjustedScore": -6.219999999999999,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:646e048be3ed21c8",
+        "baseScore": 42.76,
+        "adjustment": -50,
+        "adjustedScore": -7.240000000000002,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:04ffe7cf587a222a",
+        "baseScore": 34.78,
+        "adjustment": -49,
+        "adjustedScore": -14.219999999999999,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:e7ebb722d067e3ec",
+        "baseScore": 48.88,
+        "adjustment": -65,
+        "adjustedScore": -16.119999999999997,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Middle East"
+      },
+      {
+        "eventId": "event:0cf9b145fdf1bdd3",
+        "baseScore": 37.37,
+        "adjustment": -62,
+        "adjustedScore": -24.630000000000003,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:57ce3a1a7341fa6b",
+        "baseScore": 45.42,
+        "adjustment": -71,
+        "adjustedScore": -25.58,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:bc8aed32bf59981f",
+        "baseScore": 52.27,
+        "adjustment": -78,
+        "adjustedScore": -25.729999999999997,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:4625dc6f7503154c",
+        "baseScore": 38.08,
+        "adjustment": -65,
+        "adjustedScore": -26.92,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "Ethiopia"
+      },
+      {
+        "eventId": "event:f57d449de94d4271",
+        "baseScore": 34.82,
+        "adjustment": -77,
+        "adjustedScore": -42.18,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Iran"
+      }
+    ],
+    "distribution": {
+      "regions": {
+        "Canada": 6,
+        "Middle East": 9,
+        "Syria": 3,
+        "Ghana": 5,
+        "GTA": 3,
+        "World": 7,
+        "Bangladesh": 3
+      },
+      "countries": {
+        "Canada": 3,
+        "Palestinian territories": 1,
+        "Syria": 3,
+        "Ghana": 5,
+        "GTA": 3,
+        "United Kingdom": 1,
+        "China": 1,
+        "Bangladesh": 3,
+        "Israel": 1,
+        "Japan": 1,
+        "Kenya": 1,
+        "Yemen": 1,
+        "Brazil": 1,
+        "United Arab Emirates": 1,
+        "World": 1,
+        "Middle East": 1,
+        "Ethiopia": 1,
+        "Iran": 1
+      },
+      "contentTypes": {
+        "conflict": 7,
+        "general": 8,
+        "culture-science-education": 5,
+        "diplomacy-or-speech": 4,
+        "economy-or-public-life": 6
+      },
+      "publishers": {
+        "The Guardian World": 3,
+        "Africanews": 1,
+        "North Press Agency": 3,
+        "Graphic Online": 2,
+        "City of Toronto News": 2,
+        "The Guardian Science": 2,
+        "The Financial Express Bangladesh": 2,
+        "MyJoyOnline": 2,
+        "Arab News": 3,
+        "Prothom Alo English": 1,
+        "CBC Canada": 2,
+        "Ghana News Agency": 2,
+        "DW World": 2,
+        "Mongabay": 1,
+        "Euronews": 1,
+        "NPR World": 1
+      }
+    }
+  },
+  "selectedEvents": [
+    {
+      "eventId": "event:ee7d173939170bcc",
+      "title": "Separatists win in Quebec – but does that bring separation from Canada any closer?",
+      "score": 80.38,
+      "adjustedScore": 94.38,
+      "rank": 1,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 18.38,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 5,
+        "localTexture": 0,
+        "editorialBonus": 17,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:c4840b367b73eda7",
+      "title": "Israelis mourn October 7 attack as Palestinians in Gaza live in ruins of war",
+      "score": 76.4,
+      "adjustedScore": 90.4,
+      "rank": 2,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.4,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:ae01e481dc6aaa5f",
+      "title": "Oil pipeline in Syria’s Hasakah targeted in sabotage attack",
+      "score": 74.98,
+      "adjustedScore": 84.98,
+      "rank": 3,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 19.98,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:fac15a4b32524056",
+      "title": "President Mahama directs Finance Minister to allocate GH¢1bn for Housing Fund in 2027 Budget",
+      "score": 58.09,
+      "adjustedScore": 72.09,
+      "rank": 4,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.09,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:6cf5edbb2c26222b",
+      "title": "Advance voting in Toronto’s 2026 municipal election begins tomorrow",
+      "score": 60.15,
+      "adjustedScore": 66.15,
+      "rank": 5,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 8.15,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 22,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:5ab6bedc875a8210",
+      "title": "Scientists who put faith in technology less likely to take climate action",
+      "score": 41.13,
+      "adjustedScore": 59.13,
+      "rank": 6,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.13,
+        "importance": 12,
+        "interestingness": 12,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:bd7c49ae8b802b37",
+      "title": "EU negotiators head to China hoping to curb cheap imports of hybrid electric cars",
+      "score": 45.63,
+      "adjustedScore": 57.63,
+      "rank": 7,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 16.63,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 5,
+        "localTexture": 0,
+        "editorialBonus": 5,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:1d20ccc4fb735365",
+      "title": "Central bank allows FC accounts for approved foreign loan proceeds",
+      "score": 43.55,
+      "adjustedScore": 57.55,
+      "rank": 8,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.55,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:d9eb1a59e80299d1",
+      "title": "NPP celebrates Bawumia on birthday, prays for 2028 election victory",
+      "score": 50.48,
+      "adjustedScore": 56.48,
+      "rank": 9,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.48,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:9585528ab0f71942",
+      "title": "Israeli war in Gaza killed more than 20,500 students since October 2023",
+      "score": 70.89,
+      "adjustedScore": 51.89,
+      "rank": 10,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.89,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:0def312be6052abc",
+      "title": "ECNEC approves 13 projects involving Tk 162 billion",
+      "score": 40.12,
+      "adjustedScore": 46.12,
+      "rank": 11,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.12,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:b85df7d8c5735be8",
+      "title": "Nobel prize in chemistry awarded for work on mirror-image molecules",
+      "score": 41.03,
+      "adjustedScore": 46.03,
+      "rank": 12,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.03,
+        "importance": 0,
+        "interestingness": 12,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 10,
+        "localTexture": 0,
+        "editorialBonus": 10,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:83061a1c9ee6d7f9",
+      "title": "UK removes former Syrian Economy Minister from sanctions list",
+      "score": 54.35,
+      "adjustedScore": 40.35,
+      "rank": 13,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 17.35,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:93c6c4552e7dd0ca",
+      "title": "Before a referendum, how a new PQ government could test Ottawa",
+      "score": 45.63,
+      "adjustedScore": 26.63,
+      "rank": 14,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 17.63,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:407ad5dad8b39a04",
+      "title": "Kenya confirms first Ebola case as virus ‘surges’ in DR Congo province",
+      "score": 37.82,
+      "adjustedScore": 21.82,
+      "rank": 15,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 12.82,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 5,
+        "localTexture": 0,
+        "editorialBonus": 13,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:fdef24c09f6f6ba5",
+      "title": "Digitalisation key to efficient maritime trade – Maritime Lawyer",
+      "score": 46.09,
+      "adjustedScore": 19.09,
+      "rank": 16,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.09,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:69cdd5a2a665a793",
+      "title": "Yemen's Houthis claim strikes on Aden, Riyadh airports",
+      "score": 52.33,
+      "adjustedScore": 10.33,
+      "rank": 17,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.33,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:32ef4fd028d02c3c",
+      "title": "Far-right election results in Brazil ‘bleak’ for Indigenous peoples, says Indigenous leader",
+      "score": 42.37,
+      "adjustedScore": 9.37,
+      "rank": 18,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 12.37,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:01214b7b8a463fd4",
+      "title": "El Shammah @ 40: Churches urged to promote national unity through faith, culture",
+      "score": 51.49,
+      "adjustedScore": 3.49,
+      "rank": 19,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.49,
+        "importance": 0,
+        "interestingness": 12,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 7,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:85495a5f92566e20",
+      "title": "RIP to Toronto's floating 'Inconvenience Store'",
+      "score": 37.91,
+      "adjustedScore": 1.91,
+      "rank": 20,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 19.91,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:7350e65784e58f68",
+      "title": "Souraya Noujaim appointed as director of Louvre Abu Dhabi",
+      "score": 37.62,
+      "adjustedScore": -4.38,
+      "rank": 21,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.62,
+        "importance": 0,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:6f29fa52ee7e343b",
+      "title": "Quebec separatists vow independence referendum after winning local elections but falling short of majority",
+      "score": 34.78,
+      "adjustedScore": -6.22,
+      "rank": 22,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 10.78,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:646e048be3ed21c8",
+      "title": "Where is Spain headed after the snap election announcement?",
+      "score": 42.76,
+      "adjustedScore": -7.24,
+      "rank": 23,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 16.76,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:04ffe7cf587a222a",
+      "title": "Footsteps Bangladesh to clean and restore 40-foot canal in Bosila",
+      "score": 34.78,
+      "adjustedScore": -14.22,
+      "rank": 24,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.78,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:e7ebb722d067e3ec",
+      "title": "3 years on, Israelis grapple with reports Netanyahu was warned before Oct. 7 attacks",
+      "score": 48.88,
+      "adjustedScore": -16.12,
+      "rank": 25,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.88,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:0cf9b145fdf1bdd3",
+      "title": "City of Toronto offers rare access to wastewater infrastructure to learn what happens when items are put down the drain",
+      "score": 37.37,
+      "adjustedScore": -24.63,
+      "rank": 26,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 19.37,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:57ce3a1a7341fa6b",
+      "title": "Bisa Kdei to launch annual Highlife music event ‘The Convention’",
+      "score": 45.42,
+      "adjustedScore": -25.58,
+      "rank": 27,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.42,
+        "importance": 0,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 7,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:bc8aed32bf59981f",
+      "title": "Syria’s al-Sharaa, Saudi Crown Prince discuss bilateral ties in Riyadh",
+      "score": 52.27,
+      "adjustedScore": -25.73,
+      "rank": 28,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 14.27,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:4625dc6f7503154c",
+      "title": "African Union, IGAD congratulate Ethiopian PM Abiy Ahmed on re-election",
+      "score": 38.08,
+      "adjustedScore": -26.92,
+      "rank": 29,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.08,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:f57d449de94d4271",
+      "title": "Iranian official says ‘illegal routes’ in Strait of Hormuz to soon be blocked",
+      "score": 34.82,
+      "adjustedScore": -42.18,
+      "rank": 30,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.82,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    }
+  ],
+  "invalidPreviousCardsRemoved": [],
+  "crossEventOverlap": [
+    {
+      "packet_event_id": "event:c4840b367b73eda7",
+      "other_event_id": "event:9585528ab0f71942",
+      "fragment_id": "F01",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=october,2023,killed,war,gaza; entities=; actions=kill"
+    },
+    {
+      "packet_event_id": "event:c4840b367b73eda7",
+      "other_event_id": "event:9585528ab0f71942",
+      "fragment_id": "F04",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=war,gaza,killed; entities=israel; actions=kill"
+    },
+    {
+      "packet_event_id": "event:c4840b367b73eda7",
+      "other_event_id": "event:9585528ab0f71942",
+      "fragment_id": "F16",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=2023,killed,war,gaza; entities=; actions=kill"
+    },
+    {
+      "packet_event_id": "event:c4840b367b73eda7",
+      "other_event_id": "event:9585528ab0f71942",
+      "fragment_id": "F19",
+      "membership": "central",
+      "reason": "fragment overlaps other central event: terms=israeli,gaza,killed; entities=israel; actions=kill"
+    }
+  ],
+  "generation": [
+    {
+      "eventId": "event:ee7d173939170bcc",
+      "title": "Separatists win in Quebec – but does that bring separation from Canada any closer?",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "00d5232aea4006dde9ef5066ba4cc5aa878c5974dce48e14f369cf4e597af124",
+      "allowedExactDates": [
+        "2026-10-05",
+        "2026-10-06"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 5, 2026",
+            "date": "2026-10-05"
+          },
+          {
+            "raw": "October 6, 2026",
+            "date": "2026-10-06"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-05",
+          "2026-10-06"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 243,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:cbc:e07e040a7a0ffec68c16a8c7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:cbc:e07e040a7a0ffec68c16a8c7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F15",
+            "sourceId": "news:cbc:e07e040a7a0ffec68c16a8c7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F16",
+            "sourceId": "news:cbc:e07e040a7a0ffec68c16a8c7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F17",
+            "sourceId": "news:cbc:e07e040a7a0ffec68c16a8c7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F18",
+            "sourceId": "news:cbc:e07e040a7a0ffec68c16a8c7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+          "publisher": "The Guardian World",
+          "url": "https://theguardian.com/world/2026/oct/07/quebec-election-canada-separatists-analysis",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:cbc:e07e040a7a0ffec68c16a8c7",
+          "publisher": "CBC Canada",
+          "url": "https://cbc.ca/player/play/9.7371995?cmp=rss",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.guim.co.uk/img/media/aa64b4e47580dd1fb652fde22f7eec6463f21ef2/808_0_6880_5504/master/6880.jpg?width=140&quality=85&auto=format&fit=max&s=2df58e52ff8d7394799b3835330d563a",
+        "alt": "Separatists win in Quebec – but does that bring separation from Canada any closer?",
+        "status": "event-specific",
+        "source_url": "https://theguardian.com/world/2026/oct/07/quebec-election-canada-separatists-analysis",
+        "attribution": "The Guardian World",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-07T17:29:45.626Z",
+          "finishedAt": "2026-10-07T17:29:53.666Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Parti Québécois wins election in Quebec, Canada\",\n  \"pages\": [\n    {\n      \"text\": \"The Parti Québécois (PQ) won the Quebec provincial election on October 5, 2026, gaining its first power in 14 years. Led by Paul St-Pierre Plamondon, the party added 56 seats to its roster and more than doubled its vote share compared to the 2022 election. Despite the victory, the PQ fell five seats short of a majority and secured approximately 28% of the popular vote, which polling analyst Philippe Fournier identified as the lowest percentage for any government in Canadian electoral history. This lack of a majority complicates the party's promise to hold a referendum on separating the French-speaking province from Canada after Donald Trump leaves office in 2028. On October 6, 2026, Plamondon announced he would prevent the lieutenant governor, who represents the British crown, from swearing in his new government.\"\n    },\n    {\n      \"text\": \"The election results reflect a province where the vast majority of voters chose parties that do not seek a referendum. According to reports from The Guardian World and CBC Canada, the PQ faces several challenges, including opposition to plans to reduce immigration levels from the business community and farmers, and initiatives to apply strict language laws to colleges and abolish the monarchy. While Plamondon pledged in his victory speech to be a “good-faith collaborator” with the rest of the country, the province's most popular politician remains Canadian Prime Minister Mark Carney, largely due to his resistance to Donald Trump. The PQ's rise follows the fall of the incumbent Coalition Avenir Québec.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Parti Québécois wins election in Quebec, Canada",
+            "pages": [
+              {
+                "text": "The Parti Québécois (PQ) won the Quebec provincial election on October 5, 2026, gaining its first power in 14 years. Led by Paul St-Pierre Plamondon, the party added 56 seats to its roster and more than doubled its vote share compared to the 2022 election. Despite the victory, the PQ fell five seats short of a majority and secured approximately 28% of the popular vote, which polling analyst Philippe Fournier identified as the lowest percentage for any government in Canadian electoral history. This lack of a majority complicates the party's promise to hold a referendum on separating the French-speaking province from Canada after Donald Trump leaves office in 2028. On October 6, 2026, Plamondon announced he would prevent the lieutenant governor, who represents the British crown, from swearing in his new government."
+              },
+              {
+                "text": "The election results reflect a province where the vast majority of voters chose parties that do not seek a referendum. According to reports from The Guardian World and CBC Canada, the PQ faces several challenges, including opposition to plans to reduce immigration levels from the business community and farmers, and initiatives to apply strict language laws to colleges and abolish the monarchy. While Plamondon pledged in his victory speech to be a “good-faith collaborator” with the rest of the country, the province's most popular politician remains Canadian Prime Minister Mark Carney, largely due to his resistance to Donald Trump. The PQ's rise follows the fall of the incumbent Coalition Avenir Québec."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2311,
+            "completion_tokens": 373,
+            "total_tokens": 2684,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 31.18181800842285
+          },
+          "latencyMs": 8040,
+          "safeHeaders": {
+            "cf-ray": "a46ea13c5c23a371-SEA"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:ae01e481dc6aaa5f",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "summary is too thin for a self-contained beta card"
+        ],
+        "wordCount": 54,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-07T17:29:53.668Z",
+          "finishedAt": "2026-10-07T17:29:55.026Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Oil pipeline damaged in sabotage attack near Tel Hamis, Syria\",\n  \"pages\": [\n    {\n      \"text\": \"An oil pipeline near Tel Hamis village in Syria’s northeastern Hasakah Governorate was damaged in a sabotage attack on Wednesday, according to the Syrian Petroleum Company (SPC). Following the incident, the SPC stated that its maintenance and emergency teams traveled to the site, secured the area, and isolated the damaged section to begin repairs.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Oil pipeline damaged in sabotage attack near Tel Hamis, Syria",
+            "pages": [
+              {
+                "text": "An oil pipeline near Tel Hamis village in Syria’s northeastern Hasakah Governorate was damaged in a sabotage attack on Wednesday, according to the Syrian Petroleum Company (SPC). Following the incident, the SPC stated that its maintenance and emergency teams traveled to the site, secured the area, and isolated the damaged section to begin repairs."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 988,
+            "completion_tokens": 111,
+            "total_tokens": 1099,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 12.009090423583984
+          },
+          "latencyMs": 1359,
+          "safeHeaders": {
+            "cf-ray": "a46ea16e7d03a371-SEA"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:fac15a4b32524056",
+      "title": "President Mahama directs Finance Minister to allocate GH¢1bn for Housing Fund in 2027 Budget",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "86abe5dcac58229b1aa9187bb847f2b77772ac0f818c7ae36da932c9d23eb68f",
+      "allowedExactDates": [
+        "2026-10-07"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 7, 2026",
+            "date": "2026-10-07"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-07"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 226,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:graphic-ghana:304969282261f8616603ee15",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:graphic-ghana:304969282261f8616603ee15",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:graphic-ghana:304969282261f8616603ee15",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:graphic-ghana:304969282261f8616603ee15",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:graphic-ghana:304969282261f8616603ee15",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:graphic-ghana:304969282261f8616603ee15",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:graphic-ghana:304969282261f8616603ee15",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:graphic-ghana:304969282261f8616603ee15",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:graphic-ghana:304969282261f8616603ee15",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:graphic-ghana:304969282261f8616603ee15",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:graphic-ghana:304969282261f8616603ee15",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:graphic-ghana:304969282261f8616603ee15",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:graphic-ghana:304969282261f8616603ee15",
+          "publisher": "Graphic Online",
+          "url": "https://graphic.com.gh/news/general-news/president-mahama-directs-finance-minister-to-allocate-ghc1bn-for-housing-fund-in-2027-budget.html",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.graphic.com.gh/images/2026/Mar/04/pres_mahama1.jpg",
+        "alt": "President Mahama directs Finance Minister to allocate GH¢1bn for Housing Fund in 2027 Budget",
+        "status": "event-specific",
+        "source_url": "https://graphic.com.gh/news/general-news/president-mahama-directs-finance-minister-to-allocate-ghc1bn-for-housing-fund-in-2027-budget.html",
+        "attribution": "Graphic Online",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-07T17:29:55.026Z",
+          "finishedAt": "2026-10-07T17:30:02.226Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"President Mahama directs Ghana's Finance Minister to allocate GH¢1bn for National Housing Fund in 2027 budget\",\n  \"pages\": [\n    {\n      \"text\": \"President John Dramani Mahama has directed the Minister of Finance to allocate GH¢1 billion in the 2027 Budget as the government’s contribution to a GH¢3 billion National Housing Fund (NHF). The announcement was made by President Mahama on October 7, 2026, during the opening of the maiden National Conference on Housing Finance in Accra, Ghana. The funds are intended to be used on a revolving basis to finance housing projects and expand access to affordable housing. According to the President, more than 1,000 people have been supported to own homes through interventions involving the Fund and partner financial institutions. Figures presented at the conference indicated that Ghana has a housing deficit of 1.8 million units.\"\n    },\n    {\n      \"text\": \"Addressing the housing challenge, President Mahama stated that the issue involves both the availability of houses and the ability of households to secure affordable financing. He noted that self-employed workers, such as traders, artisans, farmers, and transport operators, often face difficulties securing mortgages because they may lack the payslips or conventional banking records required by providers. Consequently, he urged financial institutions to develop alternative methods for assessing repayment capacity, such as using verifiable business cash flows and savings histories. Regarding current rates, the NHF’s Mortgage Scheme offers cedi-denominated mortgages at 8.4 per cent, a decrease from 13.5 per cent, while developer financing under the scheme is set at 10.4 per cent.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "President Mahama directs Ghana's Finance Minister to allocate GH¢1bn for National Housing Fund in 2027 budget",
+            "pages": [
+              {
+                "text": "President John Dramani Mahama has directed the Minister of Finance to allocate GH¢1 billion in the 2027 Budget as the government’s contribution to a GH¢3 billion National Housing Fund (NHF). The announcement was made by President Mahama on October 7, 2026, during the opening of the maiden National Conference on Housing Finance in Accra, Ghana. The funds are intended to be used on a revolving basis to finance housing projects and expand access to affordable housing. According to the President, more than 1,000 people have been supported to own homes through interventions involving the Fund and partner financial institutions. Figures presented at the conference indicated that Ghana has a housing deficit of 1.8 million units."
+              },
+              {
+                "text": "Addressing the housing challenge, President Mahama stated that the issue involves both the availability of houses and the ability of households to secure affordable financing. He noted that self-employed workers, such as traders, artisans, farmers, and transport operators, often face difficulties securing mortgages because they may lack the payslips or conventional banking records required by providers. Consequently, he urged financial institutions to develop alternative methods for assessing repayment capacity, such as using verifiable business cash flows and savings histories. Regarding current rates, the NHF’s Mortgage Scheme offers cedi-denominated mortgages at 8.4 per cent, a decrease from 13.5 per cent, while developer financing under the scheme is set at 10.4 per cent."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1746,
+            "completion_tokens": 368,
+            "total_tokens": 2114,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 25.909090042114258
+          },
+          "latencyMs": 7200,
+          "safeHeaders": {
+            "cf-ray": "a46ea176fb9ca371-SEA"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:5ab6bedc875a8210",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "page 1 exposes a citation/list marker"
+        ],
+        "wordCount": 226,
+        "pageCount": 1
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-07T17:30:02.227Z",
+          "finishedAt": "2026-10-07T17:30:10.367Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Study finds scientists with high faith in technology less likely to take climate action\", \"pages\": [{\"text\": \"A study from the London School of Economics, published in Environmental Research Letters, found that scientists who believe technology will largely solve the problems caused by the climate crisis are less likely to engage in civic action or lifestyle changes. This belief, referred to by researchers as “techno-optimism,” was observed among more than 9,000 scientists surveyed across 115 countries. According to the report, 27% of respondents agreed that technology will largely solve climate change problems, while 44% disagreed and 29% neither agreed nor disagreed. 1.  The study reported that “techno-optimist” scientists are 23% less likely to sign petitions or participate in protests than peers who doubt technology is the answer. They also reported engaging in less advocacy. 2.  These scientists were 18% less likely to make high-impact lifestyle changes, such as reducing flights, cutting car usage, or adopting a mostly vegan or vegetarian diet. 3.  Lead author Fabian Dablander stated that techno-optimism can lead to an over-reliance on unproven solutions at the expense of the socioeconomic transformations required to address the climate and nature crisis. Dablander noted that technological solutions are often politically attractive because they promise to address climate change without requiring changes to how people live and consume. 4.  The report found that techno-optimism was most prevalent among scientists working in the natural and applied sciences, as well as those with right-leaning political views.\"}]}",
+          "parsed": {
+            "headline": "Study finds scientists with high faith in technology less likely to take climate action",
+            "pages": [
+              {
+                "text": "A study from the London School of Economics, published in Environmental Research Letters, found that scientists who believe technology will largely solve the problems caused by the climate crisis are less likely to engage in civic action or lifestyle changes. This belief, referred to by researchers as “techno-optimism,” was observed among more than 9,000 scientists surveyed across 115 countries. According to the report, 27% of respondents agreed that technology will largely solve climate change problems, while 44% disagreed and 29% neither agreed nor disagreed. 1.  The study reported that “techno-optimist” scientists are 23% less likely to sign petitions or participate in protests than peers who doubt technology is the answer. They also reported engaging in less advocacy. 2.  These scientists were 18% less likely to make high-impact lifestyle changes, such as reducing flights, cutting car usage, or adopting a mostly vegan or vegetarian diet. 3.  Lead author Fabian Dablander stated that techno-optimism can lead to an over-reliance on unproven solutions at the expense of the socioeconomic transformations required to address the climate and nature crisis. Dablander noted that technological solutions are often politically attractive because they promise to address climate change without requiring changes to how people live and consume. 4.  The report found that techno-optimism was most prevalent among scientists working in the natural and applied sciences, as well as those with right-leaning political views."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1637,
+            "completion_tokens": 336,
+            "total_tokens": 1973,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 24.045454025268555
+          },
+          "latencyMs": 8140,
+          "safeHeaders": {
+            "cf-ray": "a46ea1a3f865a371-SEA"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:bd7c49ae8b802b37",
+      "title": "EU negotiators head to China hoping to curb cheap imports of hybrid electric cars",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "565cda0f44c15afc68115d189f3861a76db8f6209652327e1621955b1d39dfcf",
+      "allowedExactDates": [
+        "2026-10-02",
+        "2026-10-01"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 2, 2026",
+            "date": "2026-10-02"
+          },
+          {
+            "raw": "October 1, 2026",
+            "date": "2026-10-01"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-02",
+          "2026-10-01"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 257,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:guardian:5172919a9c2680e91d2a8857",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:guardian:5172919a9c2680e91d2a8857",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:guardian:5172919a9c2680e91d2a8857",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:guardian:5172919a9c2680e91d2a8857",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:guardian:5172919a9c2680e91d2a8857",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:guardian:5172919a9c2680e91d2a8857",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:guardian:5172919a9c2680e91d2a8857",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:guardian:5172919a9c2680e91d2a8857",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:guardian:5172919a9c2680e91d2a8857",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:guardian:5172919a9c2680e91d2a8857",
+            "membership": "separate_event",
+            "reason": "explicit transition introduces a different actor/action, country pairing or dated scene"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:guardian:5172919a9c2680e91d2a8857",
+            "membership": "separate_event",
+            "reason": "continuation of a separate event section in the source article"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:guardian:5172919a9c2680e91d2a8857",
+            "membership": "separate_event",
+            "reason": "continuation of a separate event section in the source article"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:guardian:5172919a9c2680e91d2a8857",
+          "publisher": "The Guardian World",
+          "url": "https://theguardian.com/business/2026/oct/07/eu-negotiators-head-to-china-hoping-to-curb-cheap-imports-of-hybrid-electric-cars",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.guim.co.uk/img/media/6769d2b168b667e4ba8bdb16b088d0aaeccffd89/779_0_4800_3840/master/4800.jpg?width=140&quality=85&auto=format&fit=max&s=a5b761d2d33369c040f4c0a9c7f6e6ce",
+        "alt": "EU negotiators head to China hoping to curb cheap imports of hybrid electric cars",
+        "status": "event-specific",
+        "source_url": "https://theguardian.com/business/2026/oct/07/eu-negotiators-head-to-china-hoping-to-curb-cheap-imports-of-hybrid-electric-cars",
+        "attribution": "The Guardian World",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-07T17:30:10.367Z",
+          "finishedAt": "2026-10-07T17:30:17.306Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"EU negotiators travel to China to discuss curbing hybrid electric car imports\",\n  \"pages\": [\n    {\n      \"text\": \"EU trade negotiators are traveling to China for two days of talks aimed at reaching a deal to curb the export of cheap hybrid electric cars into Europe. The negotiations, led by Trade Commissioner Maroš Šefčovič and his team, are scheduled to begin on Thursday and continue through October 2, 2026. Negotiators are reportedly seeking a “proof of concept” pilot agreement in the automotive sector that could potentially be scaled to other industries in future months. The effort seeks to address Beijing’s trade surplus, which has reached £1bn a day, and aims to achieve “tangible, meaningful and measurable” results ahead of an EU leaders' meeting in Brussels on October 1, 2026, where China is a high-priority agenda item. Sources indicate the mood in the talks has shifted as EU member states have increased demands for protection against Chinese imports that threaten domestic industries.\"\n    },\n    {\n      \"text\": \"Diplomatic efforts to prevent a full-scale trade war began in late June. Last month, the EU requested that China voluntarily restrict hybrid exports to address rising sales, warning that failure to do so could result in safeguards, such as quotas. Following the imposition of EU tariffs on Chinese electric vehicles in October 2024, there was an increase in the export of hybrid cars, which were not subject to those tariffs. While the EU has sought these restrictions, China's specific response to the request for voluntary limits is not known. Sources have noted historical difficulty in curbing Chinese exports to the EU due to the country's ability to pivot quickly when trade barriers are implemented.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "EU negotiators travel to China to discuss curbing hybrid electric car imports",
+            "pages": [
+              {
+                "text": "EU trade negotiators are traveling to China for two days of talks aimed at reaching a deal to curb the export of cheap hybrid electric cars into Europe. The negotiations, led by Trade Commissioner Maroš Šefčovič and his team, are scheduled to begin on Thursday and continue through October 2, 2026. Negotiators are reportedly seeking a “proof of concept” pilot agreement in the automotive sector that could potentially be scaled to other industries in future months. The effort seeks to address Beijing’s trade surplus, which has reached £1bn a day, and aims to achieve “tangible, meaningful and measurable” results ahead of an EU leaders' meeting in Brussels on October 1, 2026, where China is a high-priority agenda item. Sources indicate the mood in the talks has shifted as EU member states have increased demands for protection against Chinese imports that threaten domestic industries."
+              },
+              {
+                "text": "Diplomatic efforts to prevent a full-scale trade war began in late June. Last month, the EU requested that China voluntarily restrict hybrid exports to address rising sales, warning that failure to do so could result in safeguards, such as quotas. Following the imposition of EU tariffs on Chinese electric vehicles in October 2024, there was an increase in the export of hybrid cars, which were not subject to those tariffs. While the EU has sought these restrictions, China's specific response to the request for voluntary limits is not known. Sources have noted historical difficulty in curbing Chinese exports to the EU due to the country's ability to pivot quickly when trade barriers are implemented."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1749,
+            "completion_tokens": 377,
+            "total_tokens": 2126,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "neurons": 25.599998474121094
+          },
+          "latencyMs": 6939,
+          "safeHeaders": {
+            "cf-ray": "a46ea1d6df35a371-SEA"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:1d20ccc4fb735365",
+      "title": "Central bank allows FC accounts for approved foreign loan proceeds",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "5eb1cfb57456ffb088bd1e46f8310277906920a931e8d297c0dc075d2c4c3604",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 291,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:financial-express-bd:75593d35c1e1d6d29c8e0e80",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:financial-express-bd:75593d35c1e1d6d29c8e0e80",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:financial-express-bd:75593d35c1e1d6d29c8e0e80",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:financial-express-bd:75593d35c1e1d6d29c8e0e80",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:financial-express-bd:75593d35c1e1d6d29c8e0e80",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:financial-express-bd:75593d35c1e1d6d29c8e0e80",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:financial-express-bd:75593d35c1e1d6d29c8e0e80",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:financial-express-bd:75593d35c1e1d6d29c8e0e80",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:financial-express-bd:75593d35c1e1d6d29c8e0e80",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:financial-express-bd:75593d35c1e1d6d29c8e0e80",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:financial-express-bd:75593d35c1e1d6d29c8e0e80",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:financial-express-bd:75593d35c1e1d6d29c8e0e80",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:financial-express-bd:75593d35c1e1d6d29c8e0e80",
+          "publisher": "The Financial Express Bangladesh",
+          "url": "https://thefinancialexpress.com.bd/economy/central-bank-allows-fc-accounts-for-approved-foreign-loan-proceeds",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://thefe-bd.sgp1.cdn.digitaloceanspaces.com/posts/176024/bb-2-2.jpg",
+        "alt": "Central bank allows FC accounts for approved foreign loan proceeds",
+        "status": "event-specific",
+        "source_url": "https://thefinancialexpress.com.bd/economy/central-bank-allows-fc-accounts-for-approved-foreign-loan-proceeds",
+        "attribution": "The Financial Express Bangladesh",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-07T17:30:17.307Z",
+          "finishedAt": "2026-10-07T17:30:27.361Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Bangladesh Bank allows foreign currency accounts for approved foreign loan proceeds\",\n  \"pages\": [\n    {\n      \"text\": \"Bangladesh Bank (BB) has authorized designated authorized dealer (AD) banks to open and maintain foreign currency (FC) accounts for eligible private sector industrial borrowers to hold proceeds from approved foreign loans. According to a report by BSS, the central bank issued this instruction on a Wednesday to facilitate the cross-border settlement of payments related to these loans. Under the circular, private sector industrial enterprises in Bangladesh may access medium- and long-term external financing provided they receive prior approval from competent authorities. Authorized dealer banks are required to obtain and retain copies of specific approvals, such as those from the Scrutiny Committee on Foreign Loan or Supplier's Credit of the Invest Bangladesh Authority, or from the Standing Committee on Non-Concessional Loan (SCNCL) and Bangladesh Bank where applicable.\"\n    },\n    {\n      \"text\": \"Balances held in these FC accounts may be used for import payments following prevailing Import Policy Orders and foreign exchange regulations, as well as for bona fide service payments necessary for project implementation. For service payments, banks must conduct due diligence, including the deduction and payment of applicable taxes and VAT, and obtain competent authority approval where required. The circular also permits the encashment of foreign currency into Taka from these accounts for local procurement, subject to relevant approval provisions. These accounts may earn interest or profit based on the terms of the banker-customer relationship. Authorized dealer banks must report the utilization of loan proceeds to the Foreign Exchange Investment Department (FEID) of Bangladesh Bank on a quarterly basis, covering the quarters ending in December, March, June, and September. Once the drawdown and utilization of the loan proceeds are complete, the accounts must be closed and the FEID informed, though accounts may be maintained until maturity if the loan agreement requires fund retention for repayment.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Bangladesh Bank allows foreign currency accounts for approved foreign loan proceeds",
+            "pages": [
+              {
+                "text": "Bangladesh Bank (BB) has authorized designated authorized dealer (AD) banks to open and maintain foreign currency (FC) accounts for eligible private sector industrial borrowers to hold proceeds from approved foreign loans. According to a report by BSS, the central bank issued this instruction on a Wednesday to facilitate the cross-border settlement of payments related to these loans. Under the circular, private sector industrial enterprises in Bangladesh may access medium- and long-term external financing provided they receive prior approval from competent authorities. Authorized dealer banks are required to obtain and retain copies of specific approvals, such as those from the Scrutiny Committee on Foreign Loan or Supplier's Credit of the Invest Bangladesh Authority, or from the Standing Committee on Non-Concessional Loan (SCNCL) and Bangladesh Bank where applicable."
+              },
+              {
+                "text": "Balances held in these FC accounts may be used for import payments following prevailing Import Policy Orders and foreign exchange regulations, as well as for bona fide service payments necessary for project implementation. For service payments, banks must conduct due diligence, including the deduction and payment of applicable taxes and VAT, and obtain competent authority approval where required. The circular also permits the encashment of foreign currency into Taka from these accounts for local procurement, subject to relevant approval provisions. These accounts may earn interest or profit based on the terms of the banker-customer relationship. Authorized dealer banks must report the utilization of loan proceeds to the Foreign Exchange Investment Department (FEID) of Bangladesh Bank on a quarterly basis, covering the quarters ending in December, March, June, and September. Once the drawdown and utilization of the loan proceeds are complete, the accounts must be closed and the FEID informed, though accounts may be maintained until maturity if the loan agreement requires fund retention for repayment."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2228,
+            "completion_tokens": 406,
+            "total_tokens": 2634,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 31.327272415161133
+          },
+          "latencyMs": 10054,
+          "safeHeaders": {
+            "cf-ray": "a46ea2023990a371-SEA"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:d9eb1a59e80299d1",
+      "title": "NPP celebrates Bawumia on birthday, prays for 2028 election victory",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "b9782359b1525c7b96bbbb1cd88f92d20cbe6e921837cface774cc429b99ad30",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 165,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:myjoyonline:b754f15271d1b4bf949bd7bf",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:myjoyonline:b754f15271d1b4bf949bd7bf",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:myjoyonline:b754f15271d1b4bf949bd7bf",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:myjoyonline:b754f15271d1b4bf949bd7bf",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:myjoyonline:b754f15271d1b4bf949bd7bf",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:myjoyonline:b754f15271d1b4bf949bd7bf",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:myjoyonline:b754f15271d1b4bf949bd7bf",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:myjoyonline:b754f15271d1b4bf949bd7bf",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:myjoyonline:b754f15271d1b4bf949bd7bf",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:myjoyonline:b754f15271d1b4bf949bd7bf",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/npp-celebrates-bawumia-on-birthday-prays-for-2028-election-victory",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.myjoyonline.com/wp-content/uploads/2026/10/Bawumia.jpg",
+        "alt": "Bawumia",
+        "status": "event-specific",
+        "source_url": "https://myjoyonline.com/npp-celebrates-bawumia-on-birthday-prays-for-2028-election-victory",
+        "attribution": "MyJoyOnline",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-07T17:30:27.362Z",
+          "finishedAt": "2026-10-07T17:30:29.969Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Ghana's NPP celebrates Dr. Mahamudu Bawumia's birthday and expresses hope for 2028 election victory\",\n  \"pages\": [\n    {\n      \"text\": \"The New Patriotic Party (NPP) in Ghana has issued a message celebrating the birthday of Dr. Mahamudu Bawumia, the party's 2024 presidential candidate and former Vice President. In a statement released on behalf of the NPP's national leadership and membership, the party commended Dr. Bawumia for his years of service to the party and the Republic of Ghana, describing his public service journey as an inspiration to those within the party's political tradition and beyond. The NPP extended congratulations and offered prayers for Dr. Bawumia's health, strength, wisdom, courage, and divine favor regarding his future responsibilities. The party also expressed its hope that Dr. Bawumia would win the 2028 General Election to serve as President of the Republic of Ghana, stating, “May the good Lord guide your steps, bless the work of your hands, unite the Party behind our common purpose and, in accordance with His divine will, grant you victory in the 2028 General Election to serve as President of the Republic of Ghana.”\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Ghana's NPP celebrates Dr. Mahamudu Bawumia's birthday and expresses hope for 2028 election victory",
+            "pages": [
+              {
+                "text": "The New Patriotic Party (NPP) in Ghana has issued a message celebrating the birthday of Dr. Mahamudu Bawumia, the party's 2024 presidential candidate and former Vice President. In a statement released on behalf of the NPP's national leadership and membership, the party commended Dr. Bawumia for his years of service to the party and the Republic of Ghana, describing his public service journey as an inspiration to those within the party's political tradition and beyond. The NPP extended congratulations and offered prayers for Dr. Bawumia's health, strength, wisdom, courage, and divine favor regarding his future responsibilities. The party also expressed its hope that Dr. Bawumia would win the 2028 General Election to serve as President of the Republic of Ghana, stating, “May the good Lord guide your steps, bless the work of your hands, unite the Party behind our common purpose and, in accordance with His divine will, grant you victory in the 2028 General Election to serve as President of the Republic of Ghana.”"
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1555,
+            "completion_tokens": 278,
+            "total_tokens": 1833,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 21.718181610107422
+          },
+          "latencyMs": 2607,
+          "safeHeaders": {
+            "cf-ray": "a46ea2410a23a371-SEA"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:0def312be6052abc",
+      "title": "ECNEC approves 13 projects involving Tk 162 billion",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "f1c7a6add2129151cf627ca99bf832d6f7ca9519600136b523a98386137f243d",
+      "allowedExactDates": [
+        "2026-10-07"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 7, 2026",
+            "date": "2026-10-07"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-07"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 345,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:prothom-alo:f210200a175cdb4fdfae780a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:prothom-alo:f210200a175cdb4fdfae780a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:prothom-alo:f210200a175cdb4fdfae780a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:prothom-alo:f210200a175cdb4fdfae780a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:prothom-alo:f210200a175cdb4fdfae780a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:prothom-alo:f210200a175cdb4fdfae780a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:prothom-alo:f210200a175cdb4fdfae780a",
+          "publisher": "Prothom Alo English",
+          "url": "https://en.prothomalo.com/bangladesh/government/1ov7lip3sr",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://media.prothomalo.com/prothomalo-english/2026-10-07/xoihafcu/tr.webp",
+        "alt": "ECNEC approves 13 projects involving Tk 162 billion",
+        "status": "event-specific",
+        "source_url": "https://en.prothomalo.com/bangladesh/government/1ov7lip3sr",
+        "attribution": "Prothom Alo English",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-07T17:30:29.969Z",
+          "finishedAt": "2026-10-07T17:30:41.685Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"ECNEC approves 13 projects in Bangladesh totaling Tk 162 billion\",\n  \"pages\": [\n    {\n      \"text\": \"The Executive Committee of the National Economic Council (ECNEC) approved 13 projects involving a total cost of Tk 162 billion on October 7, 2026. The approval occurred during the committee's fifth meeting at the Bangladesh Secretariat, chaired by Prime Minister and ECNEC Chairman Tarique Rahman. Of the 13 projects, 10 are new, two are revised, and one involves an extension of an implementation period. State Minister for Planning Zonayed Abdur Rahim Saki briefed reporters following the meeting. The total funding for the approved projects includes Tk 106 billion from government funds, Tk 40.8 billion from project loans, and Tk 15.2 billion from the funds of concerned agencies. One of the approved projects is a Tk 24.9 billion plan to construct a 442-megawatt peak (MWp) solar power plant at Rampal in Bagerhat.\"\n    },\n    {\n      \"text\": \"The Rampal solar power plant project, proposed by the Power Division and to be implemented by the Bangladesh Power Development Board (BPDB), aims to increase renewable energy generation, diversify primary fuel sources, and reduce carbon emissions. The Planning Commission recommended implementation from September 2026 to March 2029. The plant will be built on 918.50 acres of land in Block-B of Rampal, which the BPDB previously acquired in 2012 for a coal-fired power plant. The Planning Commission stated that using this existing land would eliminate the need for fresh land acquisition and reduce costs. The project will be financed by the BPDB using Tk 3.74 billion from its own funds and Tk 21.23 billion from the Power Sector Development Fund. The latter loan carries a 2 per cent interest rate with a one-year grace period and a 16-year repayment period. Once implemented, the plant is expected to add 442 MW of electricity to the national grid and utilize existing transmission infrastructure from the nearby Rampal coal-fired power plant. The Planning Commission noted the project would support the government's target of reaching a 20 per cent renewable energy share in the total energy mix by 2030. Currently, solar power generation in the country stands at 797 MW out of a total on-grid capacity of 28,827 MW.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "ECNEC approves 13 projects in Bangladesh totaling Tk 162 billion",
+            "pages": [
+              {
+                "text": "The Executive Committee of the National Economic Council (ECNEC) approved 13 projects involving a total cost of Tk 162 billion on October 7, 2026. The approval occurred during the committee's fifth meeting at the Bangladesh Secretariat, chaired by Prime Minister and ECNEC Chairman Tarique Rahman. Of the 13 projects, 10 are new, two are revised, and one involves an extension of an implementation period. State Minister for Planning Zonayed Abdur Rahim Saki briefed reporters following the meeting. The total funding for the approved projects includes Tk 106 billion from government funds, Tk 40.8 billion from project loans, and Tk 15.2 billion from the funds of concerned agencies. One of the approved projects is a Tk 24.9 billion plan to construct a 442-megawatt peak (MWp) solar power plant at Rampal in Bagerhat."
+              },
+              {
+                "text": "The Rampal solar power plant project, proposed by the Power Division and to be implemented by the Bangladesh Power Development Board (BPDB), aims to increase renewable energy generation, diversify primary fuel sources, and reduce carbon emissions. The Planning Commission recommended implementation from September 2026 to March 2029. The plant will be built on 918.50 acres of land in Block-B of Rampal, which the BPDB previously acquired in 2012 for a coal-fired power plant. The Planning Commission stated that using this existing land would eliminate the need for fresh land acquisition and reduce costs. The project will be financed by the BPDB using Tk 3.74 billion from its own funds and Tk 21.23 billion from the Power Sector Development Fund. The latter loan carries a 2 per cent interest rate with a one-year grace period and a 16-year repayment period. Once implemented, the plant is expected to add 442 MW of electricity to the national grid and utilize existing transmission infrastructure from the nearby Rampal coal-fired power plant. The Planning Commission noted the project would support the government's target of reaching a 20 per cent renewable energy share in the total energy mix by 2030. Currently, solar power generation in the country stands at 797 MW out of a total on-grid capacity of 28,827 MW."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 3244,
+            "completion_tokens": 557,
+            "total_tokens": 3801,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 44.68181610107422
+          },
+          "latencyMs": 11716,
+          "safeHeaders": {
+            "cf-ray": "a46ea2515da2a371-SEA"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:b85df7d8c5735be8",
+      "title": "Nobel prize in chemistry awarded for work on mirror-image molecules",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "0bf49f06111bba78159a00aa6f9916ef91c9e97c50cf0bc0b238fada571d9394",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 207,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:guardian:dc2db02a7c1a356f01898a8f",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:guardian:dc2db02a7c1a356f01898a8f",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:guardian:dc2db02a7c1a356f01898a8f",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:guardian:dc2db02a7c1a356f01898a8f",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:guardian:dc2db02a7c1a356f01898a8f",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:guardian:dc2db02a7c1a356f01898a8f",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:guardian:dc2db02a7c1a356f01898a8f",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:guardian:dc2db02a7c1a356f01898a8f",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:guardian:dc2db02a7c1a356f01898a8f",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:guardian:dc2db02a7c1a356f01898a8f",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:guardian:dc2db02a7c1a356f01898a8f",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:guardian:dc2db02a7c1a356f01898a8f",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:guardian:dc2db02a7c1a356f01898a8f",
+          "publisher": "The Guardian Science",
+          "url": "https://theguardian.com/science/2026/oct/07/nobel-prize-chemistry-awarded-work-on-mirror-image-molecules",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.guim.co.uk/img/media/1b2a6783fa017ef433b83223da58675337c49ac2/1783_728_5692_4554/master/5692.jpg?width=140&quality=85&auto=format&fit=max&s=b046286c7304e6c5ed8bfb7d3b1a71d5",
+        "alt": "Nobel prize in chemistry awarded for work on mirror-image molecules",
+        "status": "event-specific",
+        "source_url": "https://theguardian.com/science/2026/oct/07/nobel-prize-chemistry-awarded-work-on-mirror-image-molecules",
+        "attribution": "The Guardian Science",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-07T17:30:41.686Z",
+          "finishedAt": "2026-10-07T17:30:49.053Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Two scientists awarded 2026 Nobel Prize in Chemistry for discoveries regarding mirror-image molecules\", \"pages\": [{\"text\": \"The Royal Swedish Academy of Sciences announced in Stockholm, Sweden, on Wednesday that the 2026 Nobel Prize in Chemistry has been awarded to Henri B Kagan of Paris-Sud University in France and Kensō Soai of Tokyo University of Science in Japan. The scientists received the prize for the discovery of nonlinear effects and autocatalysis in asymmetric organic synthesis, which demonstrated how chemical reactions can produce an overwhelming excess of one of two mirror-image forms of a molecule. The two recipients will each receive an equal share of a 12 million Swedish kronor prize, valued at approximately £900,000. This property, known as chirality, allows molecules to exist in two forms that contain the same atoms but act as mirror images of one another. While laboratory reactions typically produce equal quantities of both forms, the chemistry underpinning life is homochiral, meaning it is same-handed; for example, proteins are built almost exclusively from L-amino acids. Prof Andre Cobb, an organic chemist at King’s College London, noted that because many molecules in the body are chiral, the different versions of a drug can interact with the body in different ways, potentially leading to weakened or different drug effects. The drug thalidomide was cited as a potent example of these differing interactions.\"}]}",
+          "parsed": {
+            "headline": "Two scientists awarded 2026 Nobel Prize in Chemistry for discoveries regarding mirror-image molecules",
+            "pages": [
+              {
+                "text": "The Royal Swedish Academy of Sciences announced in Stockholm, Sweden, on Wednesday that the 2026 Nobel Prize in Chemistry has been awarded to Henri B Kagan of Paris-Sud University in France and Kensō Soai of Tokyo University of Science in Japan. The scientists received the prize for the discovery of nonlinear effects and autocatalysis in asymmetric organic synthesis, which demonstrated how chemical reactions can produce an overwhelming excess of one of two mirror-image forms of a molecule. The two recipients will each receive an equal share of a 12 million Swedish kronor prize, valued at approximately £900,000. This property, known as chirality, allows molecules to exist in two forms that contain the same atoms but act as mirror images of one another. While laboratory reactions typically produce equal quantities of both forms, the chemistry underpinning life is homochiral, meaning it is same-handed; for example, proteins are built almost exclusively from L-amino acids. Prof Andre Cobb, an organic chemist at King’s College London, noted that because many molecules in the body are chiral, the different versions of a drug can interact with the body in different ways, potentially leading to weakened or different drug effects. The drug thalidomide was cited as a potent example of these differing interactions."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1668,
+            "completion_tokens": 296,
+            "total_tokens": 1964,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "neurons": 22.654544830322266
+          },
+          "latencyMs": 7367,
+          "safeHeaders": {
+            "cf-ray": "a46ea29a9919a371-SEA"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:83061a1c9ee6d7f9",
+      "title": "UK removes former Syrian Economy Minister from sanctions list",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "05f794acf04f516660d0e446c2075fbdba16db262f91cffc63b4e1de8fcdefc0",
+      "allowedExactDates": [
+        "2026-10-06"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 6, 2026",
+            "date": "2026-10-06"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-06"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 96,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:north-press:bdc30b1399deb7c274ea8349",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:north-press:bdc30b1399deb7c274ea8349",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:north-press:bdc30b1399deb7c274ea8349",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:north-press:bdc30b1399deb7c274ea8349",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:north-press:bdc30b1399deb7c274ea8349",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:north-press:bdc30b1399deb7c274ea8349",
+          "publisher": "North Press Agency",
+          "url": "https://npasyria.com/en/142341",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://npasyria.com/en/wp-content/uploads/2026/10/image-92172212-750x430-1.jpg",
+        "alt": "UK removes former Syrian Economy Minister from sanctions list",
+        "status": "event-specific",
+        "source_url": "https://npasyria.com/en/142341",
+        "attribution": "North Press Agency",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-07T17:30:49.053Z",
+          "finishedAt": "2026-10-07T17:30:53.654Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"United Kingdom removes former Syrian Economy Minister from sanctions list\",\n  \"pages\": [\n    {\n      \"text\": \"The United Kingdom removed Houmam al-Jazairi, the former Syrian Minister of Economy and Foreign Trade, from its sanctions list on October 6, 2026, according to a notice from the UK Foreign, Commonwealth and Development Office. Al-Jazairi, who served as minister from 2014 to 2016, had been under UK sanctions since October 2014. The previous sanctions designation identified him as subject to a travel ban, an asset freeze, and director disqualification. The UK government's notice stated that the designation was revoked under the Syria sanctions regime, though British authorities did not provide specific reasons for the decision.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "United Kingdom removes former Syrian Economy Minister from sanctions list",
+            "pages": [
+              {
+                "text": "The United Kingdom removed Houmam al-Jazairi, the former Syrian Minister of Economy and Foreign Trade, from its sanctions list on October 6, 2026, according to a notice from the UK Foreign, Commonwealth and Development Office. Al-Jazairi, who served as minister from 2014 to 2016, had been under UK sanctions since October 2014. The previous sanctions designation identified him as subject to a travel ban, an asset freeze, and director disqualification. The UK government's notice stated that the designation was revoked under the Syria sanctions regime, though British authorities did not provide specific reasons for the decision."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1199,
+            "completion_tokens": 183,
+            "total_tokens": 1382,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 15.890909194946289
+          },
+          "latencyMs": 4601,
+          "safeHeaders": {
+            "cf-ray": "a46ea2c89a8fa371-SEA"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "stage": "evidence",
+      "eventId": "event:2ac1b6949b6d6ac0",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:a1fe0e43963111f7",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:c1e58c6e8baf23f3",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f7da493365d058eb",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0363230a572517a8",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:35943b969ba95662",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:31c64361a0f4cf4d",
+      "reason": "too little complete accessible reporting; principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:708bbf723e41dd40",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:8d4599fef88cf42d",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f9eaf2e0d53908a7",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:624cf7518a24845d",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:bd1d5e4834d59fa7",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:711494944a589509",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:581d1ffb22f3a857",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0262bf053b133c15",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:1406213a3ce05d10",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:1ccbb1d1554bc3df",
+      "reason": "evidence does not clearly support the central headline; principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:d1e63e2b9023b702",
+      "reason": "principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:35a673ed4663b3ed",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:c79ea1a936b1d2bb",
+      "reason": "principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:22944f4fe32c56bd",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:600df58bf9a59f7c",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:8d54469c0d6a0b3a",
+      "reason": "principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:1a571a8b7504c424",
+      "reason": "evidence does not clearly support the central headline; high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:2087fc1ca2b4aada",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:338be3b3dfbb48c3",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e6818d2c6da59da3",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6e9207f194c9987d",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:5f13f2d0c131050a",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f8ed21e736f89a6c",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f4ca0e8fd0a84966",
+      "reason": "principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0793bde885e0d5f8",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:dc5d36e9892481d4",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:7e74c29e0663b03f",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:27b13e491bec3338",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:635af53703d7d426",
+      "reason": "central action or development is unclear; high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:32f6b1262a7b9750",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:35a549ee27c9f6d7",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "eventId": "event:6cf5edbb2c26222b",
+      "title": "Advance voting in Toronto’s 2026 municipal election begins tomorrow",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:93c6c4552e7dd0ca",
+      "title": "Before a referendum, how a new PQ government could test Ottawa",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 26.63 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:407ad5dad8b39a04",
+      "title": "Kenya confirms first Ebola case as virus ‘surges’ in DR Congo province",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 21.82 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:fdef24c09f6f6ba5",
+      "title": "Digitalisation key to efficient maritime trade – Maritime Lawyer",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 19.09 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:69cdd5a2a665a793",
+      "title": "Yemen's Houthis claim strikes on Aden, Riyadh airports",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 10.33 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:32ef4fd028d02c3c",
+      "title": "Far-right election results in Brazil ‘bleak’ for Indigenous peoples, says Indigenous leader",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 9.37 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:01214b7b8a463fd4",
+      "title": "El Shammah @ 40: Churches urged to promote national unity through faith, culture",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 3.49 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:85495a5f92566e20",
+      "title": "RIP to Toronto's floating 'Inconvenience Store'",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 1.91 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:7350e65784e58f68",
+      "title": "Souraya Noujaim appointed as director of Louvre Abu Dhabi",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -4.38 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:6f29fa52ee7e343b",
+      "title": "Quebec separatists vow independence referendum after winning local elections but falling short of majority",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -6.22 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:646e048be3ed21c8",
+      "title": "Where is Spain headed after the snap election announcement?",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -7.24 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:04ffe7cf587a222a",
+      "title": "Footsteps Bangladesh to clean and restore 40-foot canal in Bosila",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -14.22 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:e7ebb722d067e3ec",
+      "title": "3 years on, Israelis grapple with reports Netanyahu was warned before Oct. 7 attacks",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -16.12 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:0cf9b145fdf1bdd3",
+      "title": "City of Toronto offers rare access to wastewater infrastructure to learn what happens when items are put down the drain",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -24.63 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:57ce3a1a7341fa6b",
+      "title": "Bisa Kdei to launch annual Highlife music event ‘The Convention’",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -25.58 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:bc8aed32bf59981f",
+      "title": "Syria’s al-Sharaa, Saudi Crown Prince discuss bilateral ties in Riyadh",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -25.73 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:4625dc6f7503154c",
+      "title": "African Union, IGAD congratulate Ethiopian PM Abiy Ahmed on re-election",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -26.92 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:f57d449de94d4271",
+      "title": "Iranian official says ‘illegal routes’ in Strait of Hormuz to soon be blocked",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -42.18 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:c4840b367b73eda7",
+      "title": "Israelis mourn October 7 attack as Palestinians in Gaza live in ruins of war",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    },
+    {
+      "eventId": "event:ae01e481dc6aaa5f",
+      "title": "Oil pipeline in Syria’s Hasakah targeted in sabotage attack",
+      "stage": "content-structure",
+      "reason": "summary is too thin for a self-contained beta card"
+    },
+    {
+      "eventId": "event:5ab6bedc875a8210",
+      "title": "Scientists who put faith in technology less likely to take climate action",
+      "stage": "content-structure",
+      "reason": "page 1 exposes a citation/list marker"
+    },
+    {
+      "eventId": "event:9585528ab0f71942",
+      "title": "Israeli war in Gaza killed more than 20,500 students since October 2023",
+      "stage": "event-scope",
+      "reason": "included evidence overlaps another selected central event"
+    }
+  ],
+  "outcome": {
+    "writerRequests": 10,
+    "retries": 0,
+    "acceptedCards": 8,
+    "retainedCards": 120,
+    "skippedCards": 60,
+    "totalNeurons": 255.01817512512207,
+    "inputTokens": 18325,
+    "outputTokens": 3285,
+    "meanNeuronsPerAcceptedCard": 31.88,
+    "datasetBytes": 321903,
+    "thirdPartyCostUsd": 0,
+    "imageStatus": {
+      "event-specific": 120
+    },
+    "geographicDistribution": {
+      "Syria": 8,
+      "Middle East": 28,
+      "Bangladesh": 15,
+      "Ghana": 36,
+      "Canada": 13,
+      "GTA": 9
+    }
+  },
+  "integrity": {
+    "datasetSha256": "68b043cf8a054cd9024690f33d881684a0e88b7c4a5c142e4f67a6df0ab535b5"
+  }
+}

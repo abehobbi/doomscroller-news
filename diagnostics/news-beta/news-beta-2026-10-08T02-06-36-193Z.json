@@ -1,0 +1,2994 @@
+{
+  "schema": "doomscroller.news-beta-diagnostics",
+  "schemaVersion": 1,
+  "batchId": "news-beta-2026-10-08T02-06-36-193Z",
+  "startedAt": "2026-10-08T02:05:30.358Z",
+  "finishedAt": "2026-10-08T02:06:36.193Z",
+  "durationMs": 65835,
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1024,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "discovery": {
+    "discoveredArticles": 830,
+    "freshArticles": 624,
+    "uniqueArticles": 599,
+    "eventCandidates": 568,
+    "evidencePoolArticles": 182,
+    "preparedEvents": 124,
+    "selectedEvents": 30,
+    "evidenceFailures": 36,
+    "sourceFailures": 3
+  },
+  "sourceStatus": [
+    {
+      "id": "sana-en",
+      "name": "SANA English",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "north-press-en",
+      "name": "North Press Agency",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "enab-baladi-en",
+      "name": "Enab Baladi English",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "syria-direct-en",
+      "name": "Syria Direct",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dhaka-tribune",
+      "name": "Dhaka Tribune",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "bd24live-en",
+      "name": "BD24Live English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "prothom-alo-en",
+      "name": "Prothom Alo English",
+      "status": "ok",
+      "itemCount": 1
+    },
+    {
+      "id": "financial-express-bd",
+      "name": "The Financial Express Bangladesh",
+      "status": "ok",
+      "itemCount": 28
+    },
+    {
+      "id": "daily-star-bd",
+      "name": "The Daily Star Bangladesh",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "myjoyonline",
+      "name": "MyJoyOnline",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "graphic-ghana",
+      "name": "Graphic Online",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "ghana-news-agency",
+      "name": "Ghana News Agency",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "toronto-city",
+      "name": "City of Toronto News",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "cbc-toronto",
+      "name": "CBC Toronto",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "cbc-canada",
+      "name": "CBC Canada",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "aljazeera-all",
+      "name": "Al Jazeera",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "arab-news",
+      "name": "Arab News",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "bbc-world",
+      "name": "BBC World",
+      "status": "ok",
+      "itemCount": 22
+    },
+    {
+      "id": "bbc-technology",
+      "name": "BBC Technology",
+      "status": "ok",
+      "itemCount": 21
+    },
+    {
+      "id": "bbc-science-environment",
+      "name": "BBC Science & Environment",
+      "status": "ok",
+      "itemCount": 42
+    },
+    {
+      "id": "guardian-world",
+      "name": "The Guardian World",
+      "status": "ok",
+      "itemCount": 45
+    },
+    {
+      "id": "guardian-science",
+      "name": "The Guardian Science",
+      "status": "ok",
+      "itemCount": 27
+    },
+    {
+      "id": "guardian-environment",
+      "name": "The Guardian Environment",
+      "status": "ok",
+      "itemCount": 34
+    },
+    {
+      "id": "npr-world",
+      "name": "NPR World",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "npr-science",
+      "name": "NPR Science",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dw-world",
+      "name": "DW World",
+      "status": "ok",
+      "itemCount": 138
+    },
+    {
+      "id": "africanews",
+      "name": "Africanews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "euronews",
+      "name": "Euronews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "global-voices",
+      "name": "Global Voices",
+      "status": "ok",
+      "itemCount": 15
+    },
+    {
+      "id": "japan-times",
+      "name": "The Japan Times",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "mongabay",
+      "name": "Mongabay",
+      "status": "ok",
+      "itemCount": 32
+    }
+  ],
+  "knownSourceFailures": [
+    {
+      "name": "Bangladesh Sangbad Sangstha",
+      "url": "https://www.bssnews.net/feed",
+      "status": "blocked",
+      "detail": "Cloudflare challenge returned HTTP 403 to the bounded collector."
+    },
+    {
+      "name": "The Indian Express feeds",
+      "url": "https://indianexpress.com/rss/",
+      "status": "blocked_in_cloud",
+      "detail": "Official feeds work locally but return HTTP 403 from GitHub Actions, so the automatic collector does not depend on them."
+    },
+    {
+      "name": "The Business Standard",
+      "url": "https://www.tbsnews.net/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "Feed served 2019–2021 items."
+    },
+    {
+      "name": "Ontario Newsroom",
+      "url": "https://news.ontario.ca/en/rss",
+      "status": "retired_from_registry",
+      "detail": "URL returns an HTML application shell, not RSS."
+    },
+    {
+      "name": "GhanaWeb",
+      "url": "https://www.ghanaweb.com/GhanaHomePage/NewsArchive/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "The publisher endpoint returned HTTP 404 in October 2026; MyJoyOnline and Graphic Online remain active Ghana sources."
+    }
+  ],
+  "reranker": {
+    "adjustments": [
+      {
+        "eventId": "event:312b9f70c2f39b8f",
+        "baseScore": 82.14,
+        "adjustment": 14,
+        "adjustedScore": 96.14,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:3aaf488eba3e9951",
+        "baseScore": 79.83,
+        "adjustment": 14,
+        "adjustedScore": 93.83,
+        "contentType": "conflict",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:ee7d173939170bcc",
+        "baseScore": 66.23,
+        "adjustment": 10,
+        "adjustedScore": 76.23,
+        "contentType": "conflict",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:fac15a4b32524056",
+        "baseScore": 55.94,
+        "adjustment": 14,
+        "adjustedScore": 69.94,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:a0b46648e718947e",
+        "baseScore": 53.23,
+        "adjustment": 12,
+        "adjustedScore": 65.22999999999999,
+        "contentType": "culture-science-education",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:6cf5edbb2c26222b",
+        "baseScore": 58,
+        "adjustment": 6,
+        "adjustedScore": 64,
+        "contentType": "conflict",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:5ab6bedc875a8210",
+        "baseScore": 38.98,
+        "adjustment": 18,
+        "adjustedScore": 56.98,
+        "contentType": "culture-science-education",
+        "regions": [
+          "World"
+        ],
+        "country": "United Kingdom"
+      },
+      {
+        "eventId": "event:8a731e17271fd05b",
+        "baseScore": 50.52,
+        "adjustment": 6,
+        "adjustedScore": 56.52,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:bf8693587015ea4b",
+        "baseScore": 74.25,
+        "adjustment": -19,
+        "adjustedScore": 55.25,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Palestinian territories"
+      },
+      {
+        "eventId": "event:124863309fa0b7cd",
+        "baseScore": 34.98,
+        "adjustment": 14,
+        "adjustedScore": 48.98,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:bd7c49ae8b802b37",
+        "baseScore": 43.48,
+        "adjustment": -1,
+        "adjustedScore": 42.48,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "China"
+      },
+      {
+        "eventId": "event:7702d70cd5fc2e76",
+        "baseScore": 59.34,
+        "adjustment": -20,
+        "adjustedScore": 39.34,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Iran"
+      },
+      {
+        "eventId": "event:b85df7d8c5735be8",
+        "baseScore": 38.88,
+        "adjustment": -6,
+        "adjustedScore": 32.88,
+        "contentType": "culture-science-education",
+        "regions": [
+          "World"
+        ],
+        "country": "Japan"
+      },
+      {
+        "eventId": "event:f5953f7f7d6ff4a1",
+        "baseScore": 73.61,
+        "adjustment": -42,
+        "adjustedScore": 31.61,
+        "contentType": "conflict",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:2e2eaa062bf1774f",
+        "baseScore": 47.05,
+        "adjustment": -19,
+        "adjustedScore": 28.049999999999997,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:358311b0ee5d3ab8",
+        "baseScore": 45.25,
+        "adjustment": -27,
+        "adjustedScore": 18.25,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:32ef4fd028d02c3c",
+        "baseScore": 40.22,
+        "adjustment": -29,
+        "adjustedScore": 11.219999999999999,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "Brazil"
+      },
+      {
+        "eventId": "event:7b0dfee8414fbec7",
+        "baseScore": 37.31,
+        "adjustment": -30,
+        "adjustedScore": 7.310000000000002,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:9585528ab0f71942",
+        "baseScore": 68.74,
+        "adjustment": -70,
+        "adjustedScore": -1.2600000000000051,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:01214b7b8a463fd4",
+        "baseScore": 49.34,
+        "adjustment": -52,
+        "adjustedScore": -2.6599999999999966,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:646e048be3ed21c8",
+        "baseScore": 40.61,
+        "adjustment": -48,
+        "adjustedScore": -7.390000000000001,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:0cf9b145fdf1bdd3",
+        "baseScore": 35.22,
+        "adjustment": -43,
+        "adjustedScore": -7.780000000000001,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:83061a1c9ee6d7f9",
+        "baseScore": 52.2,
+        "adjustment": -67,
+        "adjustedScore": -14.799999999999997,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:62b6b372b79deaa8",
+        "baseScore": 38.55,
+        "adjustment": -57,
+        "adjustedScore": -18.450000000000003,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "Kenya"
+      },
+      {
+        "eventId": "event:6f41c98c73edd118",
+        "baseScore": 43.55,
+        "adjustment": -70,
+        "adjustedScore": -26.450000000000003,
+        "contentType": "general",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:5510d65490d4deb1",
+        "baseScore": 39.77,
+        "adjustment": -67,
+        "adjustedScore": -27.229999999999997,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:e7ebb722d067e3ec",
+        "baseScore": 46.73,
+        "adjustment": -81,
+        "adjustedScore": -34.27,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Middle East"
+      },
+      {
+        "eventId": "event:d6565c66c05f1ea5",
+        "baseScore": 53.07,
+        "adjustment": -90,
+        "adjustedScore": -36.93,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "China"
+      },
+      {
+        "eventId": "event:ec667d607c2cf108",
+        "baseScore": 34.74,
+        "adjustment": -81,
+        "adjustedScore": -46.26,
+        "contentType": "general",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:72376c36bcf71b9c",
+        "baseScore": 42.53,
+        "adjustment": -92,
+        "adjustedScore": -49.47,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      }
+    ],
+    "distribution": {
+      "regions": {
+        "Middle East": 9,
+        "Syria": 3,
+        "Canada": 6,
+        "Ghana": 6,
+        "World": 8,
+        "GTA": 3,
+        "Bangladesh": 1
+      },
+      "countries": {
+        "Yemen": 2,
+        "Syria": 3,
+        "Canada": 3,
+        "Ghana": 6,
+        "World": 2,
+        "GTA": 3,
+        "United Kingdom": 1,
+        "Palestinian territories": 1,
+        "Bangladesh": 1,
+        "China": 2,
+        "Iran": 1,
+        "Japan": 1,
+        "Brazil": 1,
+        "Israel": 1,
+        "Kenya": 1,
+        "Middle East": 1
+      },
+      "contentTypes": {
+        "conflict": 8,
+        "general": 8,
+        "culture-science-education": 5,
+        "economy-or-public-life": 4,
+        "diplomacy-or-speech": 5
+      },
+      "publishers": {
+        "Arab News": 4,
+        "North Press Agency": 3,
+        "The Guardian World": 3,
+        "Graphic Online": 3,
+        "City of Toronto News": 2,
+        "The Guardian Science": 2,
+        "MyJoyOnline": 2,
+        "Africanews": 2,
+        "Prothom Alo English": 1,
+        "CBC Canada": 2,
+        "Ghana News Agency": 1,
+        "Mongabay": 1,
+        "CBC Toronto": 1,
+        "DW World": 1,
+        "NPR World": 1,
+        "Al Jazeera": 1
+      }
+    }
+  },
+  "selectedEvents": [
+    {
+      "eventId": "event:312b9f70c2f39b8f",
+      "title": "Three people killed and dozens injured in attacks on Riyadh and Abha airports",
+      "score": 82.14,
+      "adjustedScore": 96.14,
+      "rank": 1,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.14,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:3aaf488eba3e9951",
+      "title": "Oil pipeline in Syria’s Hasakah targeted in sabotage attack",
+      "score": 79.83,
+      "adjustedScore": 93.83,
+      "rank": 2,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 17.83,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:ee7d173939170bcc",
+      "title": "Separatists win in Quebec – but does that bring separation from Canada any closer?",
+      "score": 66.23,
+      "adjustedScore": 76.23,
+      "rank": 3,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 16.23,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:fac15a4b32524056",
+      "title": "President Mahama directs Finance Minister to allocate GH¢1bn for Housing Fund in 2027 Budget",
+      "score": 55.94,
+      "adjustedScore": 69.94,
+      "rank": 4,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 16.94,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:a0b46648e718947e",
+      "title": "‘Catastrophic wildfire loop’ after colonisation left parts of Australia more at risk from bushfires, study finds",
+      "score": 53.23,
+      "adjustedScore": 65.23,
+      "rank": 5,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.23,
+        "importance": 24,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:6cf5edbb2c26222b",
+      "title": "Advance voting in Toronto’s 2026 municipal election begins tomorrow",
+      "score": 58,
+      "adjustedScore": 64,
+      "rank": 6,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 6,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 22,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:5ab6bedc875a8210",
+      "title": "Scientists who put faith in technology less likely to take climate action",
+      "score": 38.98,
+      "adjustedScore": 56.98,
+      "rank": 7,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 14.98,
+        "importance": 12,
+        "interestingness": 12,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:8a731e17271fd05b",
+      "title": "Ex-Spurs player Vega set to run for FIFA president",
+      "score": 50.52,
+      "adjustedScore": 56.52,
+      "rank": 8,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.52,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:bf8693587015ea4b",
+      "title": "Israelis mourn October 7 attack as Palestinians in Gaza live in ruins of war",
+      "score": 74.25,
+      "adjustedScore": 55.25,
+      "rank": 9,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 16.25,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:124863309fa0b7cd",
+      "title": "2m people enter labour market each year, only 900,000 find jobs",
+      "score": 34.98,
+      "adjustedScore": 48.98,
+      "rank": 10,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.98,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:bd7c49ae8b802b37",
+      "title": "EU negotiators head to China hoping to curb cheap imports of hybrid electric cars",
+      "score": 43.48,
+      "adjustedScore": 42.48,
+      "rank": 11,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 14.48,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 5,
+        "localTexture": 0,
+        "editorialBonus": 5,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:7702d70cd5fc2e76",
+      "title": "ASEAN energy chiefs meet on fuel security as Iran war widens",
+      "score": 59.34,
+      "adjustedScore": 39.34,
+      "rank": 12,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.34,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:b85df7d8c5735be8",
+      "title": "Nobel prize in chemistry awarded for work on mirror-image molecules",
+      "score": 38.88,
+      "adjustedScore": 32.88,
+      "rank": 13,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 16.88,
+        "importance": 0,
+        "interestingness": 12,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 10,
+        "localTexture": 0,
+        "editorialBonus": 10,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:f5953f7f7d6ff4a1",
+      "title": "Syria says no plans to open new front in Yemen war",
+      "score": 73.61,
+      "adjustedScore": 31.61,
+      "rank": 14,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 18.61,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:2e2eaa062bf1774f",
+      "title": "Teen accused in school sword attack praised Nazis, talked about mass murder plans, court hears",
+      "score": 47.05,
+      "adjustedScore": 28.05,
+      "rank": 15,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 19.05,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:358311b0ee5d3ab8",
+      "title": "President Mahama announces GHS1bn allocation for revolving National Housing Fund",
+      "score": 45.25,
+      "adjustedScore": 18.25,
+      "rank": 16,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.25,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:32ef4fd028d02c3c",
+      "title": "Far-right election results in Brazil ‘bleak’ for Indigenous peoples, says Indigenous leader",
+      "score": 40.22,
+      "adjustedScore": 11.22,
+      "rank": 17,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 10.22,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:7b0dfee8414fbec7",
+      "title": "New documentary about Ridgeway Plaza tackles its negative reputation",
+      "score": 37.31,
+      "adjustedScore": 7.31,
+      "rank": 18,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 19.31,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:9585528ab0f71942",
+      "title": "Israeli war in Gaza killed more than 20,500 students since October 2023",
+      "score": 68.74,
+      "adjustedScore": -1.26,
+      "rank": 19,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.74,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:01214b7b8a463fd4",
+      "title": "El Shammah @ 40: Churches urged to promote national unity through faith, culture",
+      "score": 49.34,
+      "adjustedScore": -2.66,
+      "rank": 20,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.34,
+        "importance": 0,
+        "interestingness": 12,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 7,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:646e048be3ed21c8",
+      "title": "Where is Spain headed after the snap election announcement?",
+      "score": 40.61,
+      "adjustedScore": -7.39,
+      "rank": 21,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 14.61,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:0cf9b145fdf1bdd3",
+      "title": "City of Toronto offers rare access to wastewater infrastructure to learn what happens when items are put down the drain",
+      "score": 35.22,
+      "adjustedScore": -7.78,
+      "rank": 22,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 17.22,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:83061a1c9ee6d7f9",
+      "title": "UK removes former Syrian Economy Minister from sanctions list",
+      "score": 52.2,
+      "adjustedScore": -14.8,
+      "rank": 23,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 15.2,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:62b6b372b79deaa8",
+      "title": "Kenya: Health Minister insists no ebola outbreak in country",
+      "score": 38.55,
+      "adjustedScore": -18.45,
+      "rank": 24,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.55,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:6f41c98c73edd118",
+      "title": "Dryden, Ont., councillor 'absolutely still running' despite court order to pay city $17K",
+      "score": 43.55,
+      "adjustedScore": -26.45,
+      "rank": 25,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 18.55,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 11,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:5510d65490d4deb1",
+      "title": "Mahama wants banks to introduce affordable housing loans within six months",
+      "score": 39.77,
+      "adjustedScore": -27.23,
+      "rank": 26,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.77,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:e7ebb722d067e3ec",
+      "title": "3 years on, Israelis grapple with reports Netanyahu was warned before Oct. 7 attacks",
+      "score": 46.73,
+      "adjustedScore": -34.27,
+      "rank": 27,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.73,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:d6565c66c05f1ea5",
+      "title": "EU trade chief seeks to dial down China tensions",
+      "score": 53.07,
+      "adjustedScore": -36.93,
+      "rank": 28,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.07,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:ec667d607c2cf108",
+      "title": "Yemeni government forces claim 1,860 Houthis ‘neutralised’",
+      "score": 34.74,
+      "adjustedScore": -46.26,
+      "rank": 29,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.74,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:72376c36bcf71b9c",
+      "title": "FAO calls for investment in technology to transform agric sector",
+      "score": 42.53,
+      "adjustedScore": -49.47,
+      "rank": 30,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.53,
+        "importance": 0,
+        "interestingness": 12,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    }
+  ],
+  "invalidPreviousCardsRemoved": [],
+  "crossEventOverlap": [],
+  "generation": [
+    {
+      "eventId": "event:3aaf488eba3e9951",
+      "title": "Oil pipeline in Syria’s Hasakah targeted in sabotage attack",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "5e871b455635e4e45055156afd5e90da6a0cd837514ce4b2a96fc87cc02b73c5",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 69,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:north-press:c8c3d7d9ff4e340e83ec5d05",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:north-press:c8c3d7d9ff4e340e83ec5d05",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:arab-news:3cd22d252156203182f29488",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:arab-news:3cd22d252156203182f29488",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:north-press:c8c3d7d9ff4e340e83ec5d05",
+          "publisher": "North Press Agency",
+          "url": "https://npasyria.com/en/142369",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:arab-news:3cd22d252156203182f29488",
+          "publisher": "Arab News",
+          "url": "https://arabnews.com/middle-east/syria-says-northeast-pipeline-damaged-in-sabotage-attack-3005165",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://npasyria.com/en/wp-content/uploads/2026/10/%D9%86%D9%81%D8%B7-%D9%8A%D8%AA%D8%B7%D8%A7%D9%8A%D8%B1-%D9%85%D9%86-%D8%AE%D8%B7-%D9%86%D9%81%D8%B7%D9%8A-%D8%A8%D8%A7%D9%84%D9%82%D8%B1%D8%A8-%D9%85%D9%86-%D8%A8%D9%84%D8%AF%D8%A9-%D8%AA%D9%84-%D8%AD%D9%85%D9%8A%D8%B3-%D8%A8%D8%B1%D9%8A%D9%81-%D8%A7%D9%84%D9%82%D8%A7%D9%85%D8%B4%D9%84%D9%8A-%D9%86%D8%AA%D9%8A%D8%AC%D8%A9-%D8%A7%D8%B3%D8%AA%D9%87%D8%AF%D8%A7%D9%81%D9%87-750x430-1.jpg",
+        "alt": "Oil pipeline in Syria’s Hasakah targeted in sabotage attack",
+        "status": "event-specific",
+        "source_url": "https://npasyria.com/en/142369",
+        "attribution": "North Press Agency",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-08T02:05:45.900Z",
+          "finishedAt": "2026-10-08T02:05:48.700Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Oil pipeline damaged in sabotage attack in Syria’s Hasakah Governorate\",\n  \"pages\": [\n    {\n      \"text\": \"An oil pipeline near Tel Hamis village in northeastern Syria’s Hasakah Governorate was damaged in a sabotage attack on Wednesday, according to the Syrian Petroleum Company (SPC). The SPC stated that its maintenance and emergency teams traveled to the site, secured the area, and isolated the damaged section before beginning repairs. This incident follows other recent attacks on Syria’s energy infrastructure, marking the third such occurrence in recent weeks.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Oil pipeline damaged in sabotage attack in Syria’s Hasakah Governorate",
+            "pages": [
+              {
+                "text": "An oil pipeline near Tel Hamis village in northeastern Syria’s Hasakah Governorate was damaged in a sabotage attack on Wednesday, according to the Syrian Petroleum Company (SPC). The SPC stated that its maintenance and emergency teams traveled to the site, secured the area, and isolated the damaged section before beginning repairs. This incident follows other recent attacks on Syria’s energy infrastructure, marking the third such occurrence in recent weeks."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1279,
+            "completion_tokens": 130,
+            "total_tokens": 1409,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 15.172727584838867
+          },
+          "latencyMs": 2800,
+          "safeHeaders": {
+            "cf-ray": "a471951a3b6638bd-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:ee7d173939170bcc",
+      "title": "Separatists win in Quebec – but does that bring separation from Canada any closer?",
+      "finalStatus": "accepted",
+      "previousMatch": "same source URL",
+      "contentVersion": 2,
+      "evidenceFingerprint": "1cd3ab8d546dd55a3019da976fd98133e0afd08692905ceb19491b3963c83c59",
+      "allowedExactDates": [
+        "2026-10-05",
+        "2026-10-06"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 5, 2026",
+            "date": "2026-10-05"
+          },
+          {
+            "raw": "October 6, 2026",
+            "date": "2026-10-06"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-05",
+          "2026-10-06"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 264,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:guardian:f83496c9b55319f89757abcd",
+          "publisher": "The Guardian World",
+          "url": "https://theguardian.com/world/2026/oct/07/quebec-election-canada-separatists-analysis",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.guim.co.uk/img/media/aa64b4e47580dd1fb652fde22f7eec6463f21ef2/808_0_6880_5504/master/6880.jpg?width=140&quality=85&auto=format&fit=max&s=2df58e52ff8d7394799b3835330d563a",
+        "alt": "Separatists win in Quebec – but does that bring separation from Canada any closer?",
+        "status": "event-specific",
+        "source_url": "https://theguardian.com/world/2026/oct/07/quebec-election-canada-separatists-analysis",
+        "attribution": "The Guardian World",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-08T02:05:48.702Z",
+          "finishedAt": "2026-10-08T02:05:58.504Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Parti Québécois wins election in Quebec, Canada, but falls short of majority\",\n  \"pages\": [\n    {\n      \"text\": \"The Parti Québécois (PQ) won the Quebec election on October 5, 2026, gaining its first power in 14 years by adding 56 seats to its roster and more than doubling its vote share from the 2022 election. Despite the victory, the party fell five seats short of a majority, which complicates its promise to hold a referendum on separating the French-speaking province from Canada after Donald Trump leaves office in 2028. According to polling analyst Philippe Fournier, the PQ won with approximately 28% of the popular vote, the lowest percentage for any government in Canadian electoral history. The Guardian World reports that the vast majority of Quebec voters chose parties that do not seek a referendum, reflecting a 30-year aversion to such debates, particularly following trade tensions and tariffs from the Trump administration. The lack of a majority also impacts other PQ initiatives, such as plans to abolish the monarchy, apply strict language laws to provincial colleges, and reduce immigration levels, a move that has drawn opposition from the business community and farmers.\"\n    },\n    {\n      \"text\": \"PQ leader Paul St-Pierre Plamondon addressed the crowd in English during his victory speech, pledging to be a “good-faith collaborator” with the rest of Canada. On October 6, 2026, he announced he would prevent the lieutenant governor, representing the British crown, from swearing in his new government. The political landscape remains influenced by Canadian Prime Minister Mark Carney, who remains a popular figure in the province due to his resistance to Trump. The election results suggest that while the PQ has returned to power, the path toward provincial separation remains uncertain.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Parti Québécois wins election in Quebec, Canada, but falls short of majority",
+            "pages": [
+              {
+                "text": "The Parti Québécois (PQ) won the Quebec election on October 5, 2026, gaining its first power in 14 years by adding 56 seats to its roster and more than doubling its vote share from the 2022 election. Despite the victory, the party fell five seats short of a majority, which complicates its promise to hold a referendum on separating the French-speaking province from Canada after Donald Trump leaves office in 2028. According to polling analyst Philippe Fournier, the PQ won with approximately 28% of the popular vote, the lowest percentage for any government in Canadian electoral history. The Guardian World reports that the vast majority of Quebec voters chose parties that do not seek a referendum, reflecting a 30-year aversion to such debates, particularly following trade tensions and tariffs from the Trump administration. The lack of a majority also impacts other PQ initiatives, such as plans to abolish the monarchy, apply strict language laws to provincial colleges, and reduce immigration levels, a move that has drawn opposition from the business community and farmers."
+              },
+              {
+                "text": "PQ leader Paul St-Pierre Plamondon addressed the crowd in English during his victory speech, pledging to be a “good-faith collaborator” with the rest of Canada. On October 6, 2026, he announced he would prevent the lieutenant governor, representing the British crown, from swearing in his new government. The political landscape remains influenced by Canadian Prime Minister Mark Carney, who remains a popular figure in the province due to his resistance to Trump. The election results suggest that while the PQ has returned to power, the path toward provincial separation remains uncertain."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1947,
+            "completion_tokens": 398,
+            "total_tokens": 2345,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 28.55454444885254
+          },
+          "latencyMs": 9802,
+          "safeHeaders": {
+            "cf-ray": "a471952b6a7038bd-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:a0b46648e718947e",
+      "title": "‘Catastrophic wildfire loop’ after colonisation left parts of Australia more at risk from bushfires, study finds",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "67d8e5a691e2edb87c5146fe21311c8beb8060c091dfc075aa97ed26a95a8a79",
+      "allowedExactDates": [
+        "2026-10-07"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 7, 2026",
+            "date": "2026-10-07"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-07"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 275,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:guardian:f6eee343efca96996906ad41",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:guardian:f6eee343efca96996906ad41",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:guardian:f6eee343efca96996906ad41",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:guardian:f6eee343efca96996906ad41",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:guardian:f6eee343efca96996906ad41",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:guardian:f6eee343efca96996906ad41",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:guardian:f6eee343efca96996906ad41",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:guardian:f6eee343efca96996906ad41",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:guardian:f6eee343efca96996906ad41",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:guardian:f6eee343efca96996906ad41",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:guardian:f6eee343efca96996906ad41",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:guardian:f6eee343efca96996906ad41",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:guardian:f6eee343efca96996906ad41",
+          "publisher": "The Guardian World",
+          "url": "https://theguardian.com/environment/2026/oct/08/colonisation-wildfire-loop-australia-climate-bushfires",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.guim.co.uk/img/media/6745e0fdd708a7e366d9c264a1952fcf4501530b/244_0_3040_2432/master/3040.jpg?width=140&quality=85&auto=format&fit=max&s=fb7252d0c2843886b6a3da526ee937d2",
+        "alt": "‘Catastrophic wildfire loop’ after colonisation left parts of Australia more at risk from bushfires, study finds",
+        "status": "event-specific",
+        "source_url": "https://theguardian.com/environment/2026/oct/08/colonisation-wildfire-loop-australia-climate-bushfires",
+        "attribution": "The Guardian World",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-08T02:05:58.505Z",
+          "finishedAt": "2026-10-08T02:06:01.100Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Study finds land use changes after colonisation created a wildfire loop in south-east Australia\",\n  \"pages\": [\n    {\n      \"text\": \"Researchers have identified a “catastrophic wildfire loop” in south-east Australia, where land use changes following colonisation have increased susceptibility to climate-fuelled bushfires. According to a study published in Nature, the shift from open woodland to dense forest after 1788 led to more intense fires, a change consistent with the removal of the Gunaikurnai people from the land and the subsequent loss of cultural burning practices. Michael-Shawn Fletcher, a professor at the University of Melbourne and the study’s lead author, stated that land use changes occurred more than a century before climate changes, allowing shrubs to increase and fires to become hotter. These intense fires then trigger eucalypt recruitment, which in turn drives further fire. The research was conducted by a team working with the Gunaikurnai Land and Waters Aboriginal Corporation, an organisation representing traditional owners. The team reconstructed 1,000 years of vegetation and fire history at Purghagoolah, a lake in Croajingolong National Park in Gippsland, Victoria, by analysing pollen and charcoal particles in a metre-long sediment core. Fletcher noted that prior to colonisation, the area was a “cared for and managed landscape.” Cultural burning involves First Nations people using low-temperature fire to maintain landscapes through a “right time, right place” approach, which differs from government hazard reduction practices. While these practices are still used in parts of Australia as of October 7, 2026, Fletcher suggested the research provides scientific evidence for integrating Indigenous knowledge into modern fire management. Adam Morton, a fire scientist at the University of Tasmania who was not an author of the paper, described the research as significant to the understanding of landscape change resulting from the loss of Indigenous fire management.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Study finds land use changes after colonisation created a wildfire loop in south-east Australia",
+            "pages": [
+              {
+                "text": "Researchers have identified a “catastrophic wildfire loop” in south-east Australia, where land use changes following colonisation have increased susceptibility to climate-fuelled bushfires. According to a study published in Nature, the shift from open woodland to dense forest after 1788 led to more intense fires, a change consistent with the removal of the Gunaikurnai people from the land and the subsequent loss of cultural burning practices. Michael-Shawn Fletcher, a professor at the University of Melbourne and the study’s lead author, stated that land use changes occurred more than a century before climate changes, allowing shrubs to increase and fires to become hotter. These intense fires then trigger eucalypt recruitment, which in turn drives further fire. The research was conducted by a team working with the Gunaikurnai Land and Waters Aboriginal Corporation, an organisation representing traditional owners. The team reconstructed 1,000 years of vegetation and fire history at Purghagoolah, a lake in Croajingolong National Park in Gippsland, Victoria, by analysing pollen and charcoal particles in a metre-long sediment core. Fletcher noted that prior to colonisation, the area was a “cared for and managed landscape.” Cultural burning involves First Nations people using low-temperature fire to maintain landscapes through a “right time, right place” approach, which differs from government hazard reduction practices. While these practices are still used in parts of Australia as of October 7, 2026, Fletcher suggested the research provides scientific evidence for integrating Indigenous knowledge into modern fire management. Adam Morton, a fire scientist at the University of Tasmania who was not an author of the paper, described the research as significant to the understanding of landscape change resulting from the loss of Indigenous fire management."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1980,
+            "completion_tokens": 409,
+            "total_tokens": 2389,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 29.154544830322266
+          },
+          "latencyMs": 2595,
+          "safeHeaders": {
+            "cf-ray": "a4719568bc6938bd-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:5ab6bedc875a8210",
+      "title": "Scientists who put faith in technology less likely to take climate action",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "11872c02510f48acb51752e81c4b50e87b4d523125322e32fef28cfc4debbb21",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 257,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:guardian:b8bf57984e6618f9628d5e59",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:guardian:b8bf57984e6618f9628d5e59",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:guardian:b8bf57984e6618f9628d5e59",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:guardian:b8bf57984e6618f9628d5e59",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:guardian:b8bf57984e6618f9628d5e59",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:guardian:b8bf57984e6618f9628d5e59",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:guardian:b8bf57984e6618f9628d5e59",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:guardian:b8bf57984e6618f9628d5e59",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:guardian:b8bf57984e6618f9628d5e59",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:guardian:b8bf57984e6618f9628d5e59",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:guardian:b8bf57984e6618f9628d5e59",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:guardian:b8bf57984e6618f9628d5e59",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:guardian:b8bf57984e6618f9628d5e59",
+          "publisher": "The Guardian Science",
+          "url": "https://theguardian.com/environment/2026/oct/07/scientists-technology-less-likely-climate-crisis-action",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.guim.co.uk/img/media/12cc622b72243227a583bfa8c7ae6c1f62f88478/532_0_3328_2662/master/3328.jpg?width=140&quality=85&auto=format&fit=max&s=5cec99fdf3078c54dd524b871f193327",
+        "alt": "Scientists who put faith in technology less likely to take climate action",
+        "status": "event-specific",
+        "source_url": "https://theguardian.com/environment/2026/oct/07/scientists-technology-less-likely-climate-crisis-action",
+        "attribution": "The Guardian Science",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-08T02:06:01.100Z",
+          "finishedAt": "2026-10-08T02:06:07.799Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Study finds scientists with high faith in technology less likely to take climate action\",\n  \"pages\": [\n    {\n      \"text\": \"A study from the London School of Economics, published in Environmental Research Letters, found that scientists who believe technology will largely solve the problems caused by the climate crisis are less likely to engage in civic action or lifestyle changes. The research surveyed more than 9,000 scientists across 115 countries regarding their views on “techno-optimism.” Of those surveyed, 27% agreed that technology will largely solve climate change problems, while 44% disagreed and 29% neither agreed nor disagreed. The report found that techno-optimism was most prevalent among scientists working in applied and natural sciences and those with right-leaning political views. Lead author Fabian Dablander stated that the belief in technological solutions can lead to an over-reliance on unproven solutions at the expense of necessary socioeconomic transformations, noting that technological solutions are often politically attractive because they do not require changes to how people live and consume.\"\n    },\n    {\n      \"text\": \"According to the London School of Economics report, “techno-optimist” scientists are 23% less likely to sign petitions or participate in protests than peers who doubt technology is the answer. These scientists also reported engaging in less advocacy and fewer civic actions. Additionally, the study found that techno-optimists are 18% less likely to make high-impact lifestyle changes, such as reducing flights, cutting car usage, or adopting a mostly vegan or vegetarian diet. Dablander noted that while technology cannot substitute for broader societal changes and large-scale shifts in consumption, there is a tendency at the individual level for greater faith in technological solutions to go hand in hand with less engagement in climate action.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Study finds scientists with high faith in technology less likely to take climate action",
+            "pages": [
+              {
+                "text": "A study from the London School of Economics, published in Environmental Research Letters, found that scientists who believe technology will largely solve the problems caused by the climate crisis are less likely to engage in civic action or lifestyle changes. The research surveyed more than 9,000 scientists across 115 countries regarding their views on “techno-optimism.” Of those surveyed, 27% agreed that technology will largely solve climate change problems, while 44% disagreed and 29% neither agreed nor disagreed. The report found that techno-optimism was most prevalent among scientists working in applied and natural sciences and those with right-leaning political views. Lead author Fabian Dablander stated that the belief in technological solutions can lead to an over-reliance on unproven solutions at the expense of necessary socioeconomic transformations, noting that technological solutions are often politically attractive because they do not require changes to how people live and consume."
+              },
+              {
+                "text": "According to the London School of Economics report, “techno-optimist” scientists are 23% less likely to sign petitions or participate in protests than peers who doubt technology is the answer. These scientists also reported engaging in less advocacy and fewer civic actions. Additionally, the study found that techno-optimists are 18% less likely to make high-impact lifestyle changes, such as reducing flights, cutting car usage, or adopting a mostly vegan or vegetarian diet. Dablander noted that while technology cannot substitute for broader societal changes and large-scale shifts in consumption, there is a tendency at the individual level for greater faith in technological solutions to go hand in hand with less engagement in climate action."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1637,
+            "completion_tokens": 388,
+            "total_tokens": 2025,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 25.46363639831543
+          },
+          "latencyMs": 6699,
+          "safeHeaders": {
+            "cf-ray": "a4719578efab38bd-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:8a731e17271fd05b",
+      "title": "Ex-Spurs player Vega set to run for FIFA president",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "c535fa1ed62b794374b6fe1ce3395cbd96ad8866be7a4eda151087bec2bc8e8a",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 187,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:myjoyonline:79f6127a65bbd66dff960303",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:myjoyonline:79f6127a65bbd66dff960303",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:myjoyonline:79f6127a65bbd66dff960303",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:myjoyonline:79f6127a65bbd66dff960303",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:myjoyonline:79f6127a65bbd66dff960303",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:myjoyonline:79f6127a65bbd66dff960303",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:myjoyonline:79f6127a65bbd66dff960303",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:myjoyonline:79f6127a65bbd66dff960303",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:myjoyonline:79f6127a65bbd66dff960303",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:myjoyonline:79f6127a65bbd66dff960303",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:myjoyonline:79f6127a65bbd66dff960303",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:myjoyonline:79f6127a65bbd66dff960303",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:myjoyonline:79f6127a65bbd66dff960303",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/ex-spurs-player-vega-set-to-run-for-fifa-president",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.myjoyonline.com/wp-content/uploads/2026/10/image-807.png",
+        "alt": "Vega",
+        "status": "event-specific",
+        "source_url": "https://myjoyonline.com/ex-spurs-player-vega-set-to-run-for-fifa-president",
+        "attribution": "MyJoyOnline",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-08T02:06:07.799Z",
+          "finishedAt": "2026-10-08T02:06:13.637Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Former Tottenham Hotspur defender Ramon Vega intends to run for FIFA president\",\n  \"pages\": [\n    {\n      \"text\": \"Ramon Vega, a 55-year-old former Switzerland centre-back who played for Tottenham Hotspur, Celtic, and Watford, has announced his intention to stand as a candidate in next year's FIFA presidential election. Vega is the first person to confirm a challenge to current president Gianni Infantino. In a statement, Vega said he is standing to reunite the global football family, deliver reform, modernize FIFA, and rebuild trust in the game. He added that his life has prepared him to serve the sport, which he described as belonging to players, coaches, supporters, and communities rather than administrators. Since retiring from football in 2004, Vega has worked in finance. He previously considered running for the position in 2015 following the suspension of former president Sepp Blatter, and expressed intent to stand against Infantino four years later, though he did not secure the backing of five of FIFA's 211 member federations required to be included in the ballot. To qualify, candidates must be proposed by a member association, have played an active role in the game for two of the past five years, and pass an eligibility check by a review committee.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Former Tottenham Hotspur defender Ramon Vega intends to run for FIFA president",
+            "pages": [
+              {
+                "text": "Ramon Vega, a 55-year-old former Switzerland centre-back who played for Tottenham Hotspur, Celtic, and Watford, has announced his intention to stand as a candidate in next year's FIFA presidential election. Vega is the first person to confirm a challenge to current president Gianni Infantino. In a statement, Vega said he is standing to reunite the global football family, deliver reform, modernize FIFA, and rebuild trust in the game. He added that his life has prepared him to serve the sport, which he described as belonging to players, coaches, supporters, and communities rather than administrators. Since retiring from football in 2004, Vega has worked in finance. He previously considered running for the position in 2015 following the suspension of former president Sepp Blatter, and expressed intent to stand against Infantino four years later, though he did not secure the backing of five of FIFA's 211 member federations required to be included in the ballot. To qualify, candidates must be proposed by a member association, have played an active role in the game for two of the past five years, and pass an eligibility check by a review committee."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1745,
+            "completion_tokens": 287,
+            "total_tokens": 2032,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 23.690908432006836
+          },
+          "latencyMs": 5838,
+          "safeHeaders": {
+            "cf-ray": "a47195a2cb4e38bd-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:124863309fa0b7cd",
+      "title": "2m people enter labour market each year, only 900,000 find jobs",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "0f639a44361b2ee8a17082691c6326e3e61685441ae89d58ad0ee49a72cb407f",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 259,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:prothom-alo:d9e084ea2f3cb4a868d8ab9e",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:prothom-alo:d9e084ea2f3cb4a868d8ab9e",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:prothom-alo:d9e084ea2f3cb4a868d8ab9e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:prothom-alo:d9e084ea2f3cb4a868d8ab9e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:prothom-alo:d9e084ea2f3cb4a868d8ab9e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:prothom-alo:d9e084ea2f3cb4a868d8ab9e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:prothom-alo:d9e084ea2f3cb4a868d8ab9e",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:prothom-alo:d9e084ea2f3cb4a868d8ab9e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:prothom-alo:d9e084ea2f3cb4a868d8ab9e",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:prothom-alo:d9e084ea2f3cb4a868d8ab9e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:prothom-alo:d9e084ea2f3cb4a868d8ab9e",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:prothom-alo:d9e084ea2f3cb4a868d8ab9e",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:prothom-alo:d9e084ea2f3cb4a868d8ab9e",
+          "publisher": "Prothom Alo English",
+          "url": "https://en.prothomalo.com/business/local/5smy0kxtrp",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://media.prothomalo.com/prothomalo-english/2026-10-07/r2q028e6/labour-market.avif",
+        "alt": "2m people enter labour market each year, only 900,000 find jobs",
+        "status": "event-specific",
+        "source_url": "https://en.prothomalo.com/business/local/5smy0kxtrp",
+        "attribution": "Prothom Alo English",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-08T02:06:13.638Z",
+          "finishedAt": "2026-10-08T02:06:23.870Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Annual job creation in Bangladesh lags behind labor market entry, World Bank report finds\",\n  \"pages\": [\n    {\n      \"text\": \"Between 2016 and 2024, approximately 2 million people entered the labor market in Bangladesh each year, while only about 900,000 new jobs were created annually, according to a special chapter in the World Bank's 2026 Bangladesh Development update report. The report, titled “What Business Environment is Needed to Boost Employment,” notes that seven out of every 10 new jobs were in agriculture, while employment in the industrial sector decreased. For women, the report states that while 4.2 million new jobs were created in agriculture, industrial jobs decreased by 1.1 million and service sector jobs decreased by 800,000. Consequently, female labor force participation dropped from 42.8% in 2022 to 38.4% in 2024.\"\n    },\n    {\n      \"text\": \"The World Bank assessment describes a “productivity paradox” in Bangladesh, noting that while the economy grew at an average annual rate of 6% from fiscal year 2015-16 to 2024-25, progress in productivity, investment, and new business creation at the firm level has not kept pace. The report indicates that the top 10% of firms by productivity control 75% of total sales in the formal sector but account for only 15% of employment. Other businesses face obstacles including complex government procedures, lack of financing, unfair competition, and power shortages. Senior managers spend an average of 13% of their time dealing with government regulations, and 71% of firms experience power outages, which costs them approximately 9% of their annual sales. The report draws on data from the World Bank Enterprise Survey 2022, Business Ready 2025, Business of the State 2019, Bangladesh Country Private Sector Diagnostic 2025, and UNCTAD investment data.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Annual job creation in Bangladesh lags behind labor market entry, World Bank report finds",
+            "pages": [
+              {
+                "text": "Between 2016 and 2024, approximately 2 million people entered the labor market in Bangladesh each year, while only about 900,000 new jobs were created annually, according to a special chapter in the World Bank's 2026 Bangladesh Development update report. The report, titled “What Business Environment is Needed to Boost Employment,” notes that seven out of every 10 new jobs were in agriculture, while employment in the industrial sector decreased. For women, the report states that while 4.2 million new jobs were created in agriculture, industrial jobs decreased by 1.1 million and service sector jobs decreased by 800,000. Consequently, female labor force participation dropped from 42.8% in 2022 to 38.4% in 2024."
+              },
+              {
+                "text": "The World Bank assessment describes a “productivity paradox” in Bangladesh, noting that while the economy grew at an average annual rate of 6% from fiscal year 2015-16 to 2024-25, progress in productivity, investment, and new business creation at the firm level has not kept pace. The report indicates that the top 10% of firms by productivity control 75% of total sales in the formal sector but account for only 15% of employment. Other businesses face obstacles including complex government procedures, lack of financing, unfair competition, and power shortages. Senior managers spend an average of 13% of their time dealing with government regulations, and 71% of firms experience power outages, which costs them approximately 9% of their annual sales. The report draws on data from the World Bank Enterprise Survey 2022, Business Ready 2025, Business of the State 2019, Bangladesh Country Private Sector Diagnostic 2025, and UNCTAD investment data."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2741,
+            "completion_tokens": 460,
+            "total_tokens": 3201,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 37.4636344909668
+          },
+          "latencyMs": 10233,
+          "safeHeaders": {
+            "cf-ray": "a47195c74d8e38bd-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:7702d70cd5fc2e76",
+      "title": "ASEAN energy chiefs meet on fuel security as Iran war widens",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "46b4d9a9edb6f436e73ac7e887ae33dff47e1ce3a530c8a5f04a4a44d63cf959",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 290,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:arab-news:3900c4c29100b9afa8aebccd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:arab-news:3900c4c29100b9afa8aebccd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:arab-news:3900c4c29100b9afa8aebccd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:arab-news:3900c4c29100b9afa8aebccd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:arab-news:3900c4c29100b9afa8aebccd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:arab-news:3900c4c29100b9afa8aebccd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:arab-news:3900c4c29100b9afa8aebccd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:arab-news:3900c4c29100b9afa8aebccd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:arab-news:3900c4c29100b9afa8aebccd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:arab-news:3900c4c29100b9afa8aebccd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:arab-news:3900c4c29100b9afa8aebccd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:arab-news:3900c4c29100b9afa8aebccd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:arab-news:3900c4c29100b9afa8aebccd",
+          "publisher": "Arab News",
+          "url": "https://arabnews.com/world/asean-energy-chiefs-meet-on-fuel-security-as-iran-war-widens-3005050",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://assets.maestronewsroom.com/media/30f6532d-717b-4366-9158-9c455299fcd9/1791366794306-c624974631785c98.jpeg",
+        "alt": "ASEAN energy chiefs meet on fuel security as Iran war widens",
+        "status": "event-specific",
+        "source_url": "https://arabnews.com/world/asean-energy-chiefs-meet-on-fuel-security-as-iran-war-widens-3005050",
+        "attribution": "Arab News",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-08T02:06:23.871Z",
+          "finishedAt": "2026-10-08T02:06:31.944Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"ASEAN energy ministers meet in Manila to discuss fuel security amid Middle East conflict\", \"pages\": [{\"text\": \"Energy ministers from the Association of Southeast Asian Nations (ASEAN) gathered in Manila on Wednesday for talks regarding energy security. According to Arab News, the meeting aims to reduce the region's dependence on supply chains affected by the conflict between the United States, Israel, and Iran. Since February, US-Israeli attacks on Iran and retaliatory strikes by Tehran on American allies in the Gulf region have disrupted maritime access, shipping security, and energy transport costs through the Strait of Hormuz. Attacks on vessels near the Strait of Hormuz have intensified since September, while Houthi strikes targeting Saudi Arabia have increased pressure on the Bab Al-Mandab Strait waterway. The meeting occurs as oil prices have risen above $100 a barrel. ASEAN Secretary-General Dr. Kao Kim Hourn addressed the ministers, stating that geopolitical developments and supply disruptions affect energy markets, supply chains, and the reliability of energy supplies. A policy paper released last week by the ASEAN Centre for Energy warned that severe disruptions to Middle East supplies could put nearly 28 percent of the bloc's final oil consumption at risk. The region, which has a population of 700 million, imports over 55 percent of the crude for its refineries from the Middle East. Dependence on Middle East power imports varies among member states, ranging from approximately one-quarter of crude in some markets to more than four-fifths in others. Data from the ASEAN Centre for Energy indicates that petrol retail prices have increased by 76 percent in the Philippines and 68 percent in Cambodia, while diesel prices in Thailand surged by 70 percent. Additionally, supply shortages have triggered emergency contract suspensions at petrochemical companies in Singapore and Indonesia due to the movement of over a third of global urea exports through the Gulf.\"}]}",
+          "parsed": {
+            "headline": "ASEAN energy ministers meet in Manila to discuss fuel security amid Middle East conflict",
+            "pages": [
+              {
+                "text": "Energy ministers from the Association of Southeast Asian Nations (ASEAN) gathered in Manila on Wednesday for talks regarding energy security. According to Arab News, the meeting aims to reduce the region's dependence on supply chains affected by the conflict between the United States, Israel, and Iran. Since February, US-Israeli attacks on Iran and retaliatory strikes by Tehran on American allies in the Gulf region have disrupted maritime access, shipping security, and energy transport costs through the Strait of Hormuz. Attacks on vessels near the Strait of Hormuz have intensified since September, while Houthi strikes targeting Saudi Arabia have increased pressure on the Bab Al-Mandab Strait waterway. The meeting occurs as oil prices have risen above $100 a barrel. ASEAN Secretary-General Dr. Kao Kim Hourn addressed the ministers, stating that geopolitical developments and supply disruptions affect energy markets, supply chains, and the reliability of energy supplies. A policy paper released last week by the ASEAN Centre for Energy warned that severe disruptions to Middle East supplies could put nearly 28 percent of the bloc's final oil consumption at risk. The region, which has a population of 700 million, imports over 55 percent of the crude for its refineries from the Middle East. Dependence on Middle East power imports varies among member states, ranging from approximately one-quarter of crude in some markets to more than four-fifths in others. Data from the ASEAN Centre for Energy indicates that petrol retail prices have increased by 76 percent in the Philippines and 68 percent in Cambodia, while diesel prices in Thailand surged by 70 percent. Additionally, supply shortages have triggered emergency contract suspensions at petrochemical companies in Singapore and Indonesia due to the movement of over a third of global urea exports through the Gulf."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1900,
+            "completion_tokens": 387,
+            "total_tokens": 2287,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 27.8272705078125
+          },
+          "latencyMs": 8073,
+          "safeHeaders": {
+            "cf-ray": "a47196073ca638bd-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:f5953f7f7d6ff4a1",
+      "title": "Syria says no plans to open new front in Yemen war",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "c2bc0fdf60c8257125fd67298e39a1eed617ed1b30d0dfea6ec12ef06d0abe60",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 140,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:north-press:03933f8ccaeab8b17d43609a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:north-press:03933f8ccaeab8b17d43609a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:north-press:03933f8ccaeab8b17d43609a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:north-press:03933f8ccaeab8b17d43609a",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:north-press:03933f8ccaeab8b17d43609a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:north-press:03933f8ccaeab8b17d43609a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:north-press:03933f8ccaeab8b17d43609a",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:north-press:03933f8ccaeab8b17d43609a",
+          "publisher": "North Press Agency",
+          "url": "https://npasyria.com/en/142379",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://npasyria.com/en/wp-content/uploads/2026/10/images-41.jpg",
+        "alt": "Syria says no plans to open new front in Yemen war",
+        "status": "event-specific",
+        "source_url": "https://npasyria.com/en/142379",
+        "attribution": "North Press Agency",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-08T02:06:31.944Z",
+          "finishedAt": "2026-10-08T02:06:36.140Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Syria states it has no plans to open new fronts in Yemen war\", \"pages\": [{\"text\": \"Syria stated on Wednesday that it has no plans to open new fronts in the conflict in Yemen, despite reports suggesting the country was considering military assistance to Saudi Arabia. The Syrian Ministry of Information’s Foreign Media Department said the nation stands with Saudi Arabia against threats to its security and stability, but emphasized that its regional policy is based on peace, stability, and cooperation. This statement follows a Reuters report citing U.S. and Syrian officials who said Damascus was considering providing military assistance to Riyadh amid the escalating conflict with the Iran-backed Houthi movement. The ministry described its absolute priority as rebuilding the country, strengthening state institutions, and working with partners on reconstruction and improving living conditions for Syrians. It added that any military cooperation with partner countries would occur only through official channels and within existing bilateral frameworks.\"}]}",
+          "parsed": {
+            "headline": "Syria states it has no plans to open new fronts in Yemen war",
+            "pages": [
+              {
+                "text": "Syria stated on Wednesday that it has no plans to open new fronts in the conflict in Yemen, despite reports suggesting the country was considering military assistance to Saudi Arabia. The Syrian Ministry of Information’s Foreign Media Department said the nation stands with Saudi Arabia against threats to its security and stability, but emphasized that its regional policy is based on peace, stability, and cooperation. This statement follows a Reuters report citing U.S. and Syrian officials who said Damascus was considering providing military assistance to Riyadh amid the escalating conflict with the Iran-backed Houthi movement. The ministry described its absolute priority as rebuilding the country, strengthening state institutions, and working with partners on reconstruction and improving living conditions for Syrians. It added that any military cooperation with partner countries would occur only through official channels and within existing bilateral frameworks."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1383,
+            "completion_tokens": 191,
+            "total_tokens": 1574,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "neurons": 17.19999885559082
+          },
+          "latencyMs": 4196,
+          "safeHeaders": {
+            "cf-ray": "a4719639bd9238bd-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "stage": "evidence",
+      "eventId": "event:0d88049b098dd09b",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:2ac1b6949b6d6ac0",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f7da493365d058eb",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:fdef24c09f6f6ba5",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:bc8aed32bf59981f",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4aa5b9f4c37dab87",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:994e02fb23070ed6",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:d4eb76aaaf4daa9d",
+      "reason": "principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:708bbf723e41dd40",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:7247dc60b7da4c2f",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:26f38d42793d09d7",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e5434750a79bb850",
+      "reason": "too little complete accessible reporting; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:9ec7db8bf6f73ddf",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:bba298b24416ee38",
+      "reason": "evidence does not clearly support the central headline; principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:35c000c97cc5fd33",
+      "reason": "principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:35a673ed4663b3ed",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4a3abc66f46a69a7",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:22944f4fe32c56bd",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:2e45c48c60b87c87",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:ddca4bc023aa075b",
+      "reason": "too little complete accessible reporting; principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:2b4acb3da5c19fbb",
+      "reason": "too little complete accessible reporting; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:2087fc1ca2b4aada",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:d974c282003e5e7c",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e6818d2c6da59da3",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:d2c909bcd47309e6",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6e9207f194c9987d",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:5f13f2d0c131050a",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:8d4599fef88cf42d",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:b8c041ced5b158c1",
+      "reason": "high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:624cf7518a24845d",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:bd1d5e4834d59fa7",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e5f98604546ca080",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0793bde885e0d5f8",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:dc5d36e9892481d4",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:7e74c29e0663b03f",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:c9c7efd4bd6556d5",
+      "reason": "principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "eventId": "event:312b9f70c2f39b8f",
+      "title": "Three people killed and dozens injured in attacks on Riyadh and Abha airports",
+      "stage": "writer-safety",
+      "reason": "unsafe temporal metadata exposure"
+    },
+    {
+      "eventId": "event:fac15a4b32524056",
+      "title": "President Mahama directs Finance Minister to allocate GH¢1bn for Housing Fund in 2027 Budget",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:6cf5edbb2c26222b",
+      "title": "Advance voting in Toronto’s 2026 municipal election begins tomorrow",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:bf8693587015ea4b",
+      "title": "Israelis mourn October 7 attack as Palestinians in Gaza live in ruins of war",
+      "stage": "writer-safety",
+      "reason": "unsafe temporal metadata exposure"
+    },
+    {
+      "eventId": "event:bd7c49ae8b802b37",
+      "title": "EU negotiators head to China hoping to curb cheap imports of hybrid electric cars",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:b85df7d8c5735be8",
+      "title": "Nobel prize in chemistry awarded for work on mirror-image molecules",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:2e2eaa062bf1774f",
+      "title": "Teen accused in school sword attack praised Nazis, talked about mass murder plans, court hears",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 28.05 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:358311b0ee5d3ab8",
+      "title": "President Mahama announces GHS1bn allocation for revolving National Housing Fund",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 18.25 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:32ef4fd028d02c3c",
+      "title": "Far-right election results in Brazil ‘bleak’ for Indigenous peoples, says Indigenous leader",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 11.22 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:7b0dfee8414fbec7",
+      "title": "New documentary about Ridgeway Plaza tackles its negative reputation",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 7.31 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:9585528ab0f71942",
+      "title": "Israeli war in Gaza killed more than 20,500 students since October 2023",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -1.26 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:01214b7b8a463fd4",
+      "title": "El Shammah @ 40: Churches urged to promote national unity through faith, culture",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -2.66 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:646e048be3ed21c8",
+      "title": "Where is Spain headed after the snap election announcement?",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -7.39 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:0cf9b145fdf1bdd3",
+      "title": "City of Toronto offers rare access to wastewater infrastructure to learn what happens when items are put down the drain",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -7.78 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:83061a1c9ee6d7f9",
+      "title": "UK removes former Syrian Economy Minister from sanctions list",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -14.8 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:62b6b372b79deaa8",
+      "title": "Kenya: Health Minister insists no ebola outbreak in country",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -18.45 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:6f41c98c73edd118",
+      "title": "Dryden, Ont., councillor 'absolutely still running' despite court order to pay city $17K",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -26.45 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:5510d65490d4deb1",
+      "title": "Mahama wants banks to introduce affordable housing loans within six months",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -27.23 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:e7ebb722d067e3ec",
+      "title": "3 years on, Israelis grapple with reports Netanyahu was warned before Oct. 7 attacks",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -34.27 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:d6565c66c05f1ea5",
+      "title": "EU trade chief seeks to dial down China tensions",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -36.93 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:ec667d607c2cf108",
+      "title": "Yemeni government forces claim 1,860 Houthis ‘neutralised’",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -46.26 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:72376c36bcf71b9c",
+      "title": "FAO calls for investment in technology to transform agric sector",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -49.47 is below the 30-point generation floor"
+    }
+  ],
+  "outcome": {
+    "writerRequests": 8,
+    "retries": 0,
+    "acceptedCards": 8,
+    "retainedCards": 119,
+    "skippedCards": 58,
+    "totalNeurons": 204.52726554870605,
+    "inputTokens": 14612,
+    "outputTokens": 2650,
+    "meanNeuronsPerAcceptedCard": 25.57,
+    "datasetBytes": 323342,
+    "thirdPartyCostUsd": 0,
+    "imageStatus": {
+      "event-specific": 120
+    },
+    "geographicDistribution": {
+      "Syria": 9,
+      "Middle East": 30,
+      "Bangladesh": 16,
+      "Ghana": 35,
+      "Canada": 11,
+      "GTA": 7
+    }
+  },
+  "integrity": {
+    "datasetSha256": "066a06dedd9cd5c0e532fe338e69b509242e7c63148e2f131109a66aabccce4f"
+  }
+}

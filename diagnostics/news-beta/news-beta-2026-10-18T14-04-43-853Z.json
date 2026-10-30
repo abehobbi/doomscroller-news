@@ -1,0 +1,2699 @@
+{
+  "schema": "doomscroller.news-beta-diagnostics",
+  "schemaVersion": 1,
+  "batchId": "news-beta-2026-10-18T14-04-43-853Z",
+  "startedAt": "2026-10-18T14:03:58.912Z",
+  "finishedAt": "2026-10-18T14:04:43.853Z",
+  "durationMs": 44939,
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1024,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "discovery": {
+    "discoveredArticles": 839,
+    "freshArticles": 646,
+    "uniqueArticles": 618,
+    "eventCandidates": 585,
+    "evidencePoolArticles": 179,
+    "preparedEvents": 130,
+    "selectedEvents": 30,
+    "evidenceFailures": 30,
+    "sourceFailures": 3
+  },
+  "sourceStatus": [
+    {
+      "id": "sana-en",
+      "name": "SANA English",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "north-press-en",
+      "name": "North Press Agency",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "enab-baladi-en",
+      "name": "Enab Baladi English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "syria-direct-en",
+      "name": "Syria Direct",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dhaka-tribune",
+      "name": "Dhaka Tribune",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "bd24live-en",
+      "name": "BD24Live English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "prothom-alo-en",
+      "name": "Prothom Alo English",
+      "status": "ok",
+      "itemCount": 15
+    },
+    {
+      "id": "financial-express-bd",
+      "name": "The Financial Express Bangladesh",
+      "status": "ok",
+      "itemCount": 28
+    },
+    {
+      "id": "daily-star-bd",
+      "name": "The Daily Star Bangladesh",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "myjoyonline",
+      "name": "MyJoyOnline",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "graphic-ghana",
+      "name": "Graphic Online",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "ghana-news-agency",
+      "name": "Ghana News Agency",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "toronto-city",
+      "name": "City of Toronto News",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "cbc-toronto",
+      "name": "CBC Toronto",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "cbc-canada",
+      "name": "CBC Canada",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "aljazeera-all",
+      "name": "Al Jazeera",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "arab-news",
+      "name": "Arab News",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "bbc-world",
+      "name": "BBC World",
+      "status": "ok",
+      "itemCount": 29
+    },
+    {
+      "id": "bbc-technology",
+      "name": "BBC Technology",
+      "status": "ok",
+      "itemCount": 21
+    },
+    {
+      "id": "bbc-science-environment",
+      "name": "BBC Science & Environment",
+      "status": "ok",
+      "itemCount": 42
+    },
+    {
+      "id": "guardian-world",
+      "name": "The Guardian World",
+      "status": "ok",
+      "itemCount": 45
+    },
+    {
+      "id": "guardian-science",
+      "name": "The Guardian Science",
+      "status": "ok",
+      "itemCount": 27
+    },
+    {
+      "id": "guardian-environment",
+      "name": "The Guardian Environment",
+      "status": "ok",
+      "itemCount": 34
+    },
+    {
+      "id": "npr-world",
+      "name": "NPR World",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "npr-science",
+      "name": "NPR Science",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dw-world",
+      "name": "DW World",
+      "status": "ok",
+      "itemCount": 136
+    },
+    {
+      "id": "africanews",
+      "name": "Africanews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "euronews",
+      "name": "Euronews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "global-voices",
+      "name": "Global Voices",
+      "status": "ok",
+      "itemCount": 15
+    },
+    {
+      "id": "japan-times",
+      "name": "The Japan Times",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "mongabay",
+      "name": "Mongabay",
+      "status": "ok",
+      "itemCount": 32
+    }
+  ],
+  "knownSourceFailures": [
+    {
+      "name": "Bangladesh Sangbad Sangstha",
+      "url": "https://www.bssnews.net/feed",
+      "status": "blocked",
+      "detail": "Cloudflare challenge returned HTTP 403 to the bounded collector."
+    },
+    {
+      "name": "The Indian Express feeds",
+      "url": "https://indianexpress.com/rss/",
+      "status": "blocked_in_cloud",
+      "detail": "Official feeds work locally but return HTTP 403 from GitHub Actions, so the automatic collector does not depend on them."
+    },
+    {
+      "name": "The Business Standard",
+      "url": "https://www.tbsnews.net/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "Feed served 2019–2021 items."
+    },
+    {
+      "name": "Ontario Newsroom",
+      "url": "https://news.ontario.ca/en/rss",
+      "status": "retired_from_registry",
+      "detail": "URL returns an HTML application shell, not RSS."
+    },
+    {
+      "name": "GhanaWeb",
+      "url": "https://www.ghanaweb.com/GhanaHomePage/NewsArchive/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "The publisher endpoint returned HTTP 404 in October 2026; MyJoyOnline and Graphic Online remain active Ghana sources."
+    }
+  ],
+  "reranker": {
+    "adjustments": [
+      {
+        "eventId": "event:ce050cee4ce09156",
+        "baseScore": 73.87,
+        "adjustment": 14,
+        "adjustedScore": 87.87,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:370eee9405339fca",
+        "baseScore": 70.23,
+        "adjustment": 14,
+        "adjustedScore": 84.23,
+        "contentType": "conflict",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:50c589e8aeb36f93",
+        "baseScore": 70.11,
+        "adjustment": 14,
+        "adjustedScore": 84.11,
+        "contentType": "general",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:40d89c435412cebb",
+        "baseScore": 58.9,
+        "adjustment": 14,
+        "adjustedScore": 72.9,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:5d8fbcab1e393dde",
+        "baseScore": 53.83,
+        "adjustment": 14,
+        "adjustedScore": 67.83,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:fbb2fb95b84679d0",
+        "baseScore": 54.59,
+        "adjustment": 6,
+        "adjustedScore": 60.59,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:e4c88c881d9b8846",
+        "baseScore": 46.02,
+        "adjustment": 10,
+        "adjustedScore": 56.02,
+        "contentType": "conflict",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:48ca5a89926fb0f4",
+        "baseScore": 69.22,
+        "adjustment": -15,
+        "adjustedScore": 54.22,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:8565faee3a1825bf",
+        "baseScore": 49.98,
+        "adjustment": -2,
+        "adjustedScore": 47.98,
+        "contentType": "conflict",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:34c6362b44a2b817",
+        "baseScore": 43.64,
+        "adjustment": -4,
+        "adjustedScore": 39.64,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:c6981f6e8292a2e7",
+        "baseScore": 62.26,
+        "adjustment": -26,
+        "adjustedScore": 36.26,
+        "contentType": "conflict",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:e8cfda1b20b37d76",
+        "baseScore": 39.12,
+        "adjustment": -4,
+        "adjustedScore": 35.12,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "Ukraine"
+      },
+      {
+        "eventId": "event:234c7d6b4a005b11",
+        "baseScore": 53.48,
+        "adjustment": -29,
+        "adjustedScore": 24.479999999999997,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:209e87afcd7b8893",
+        "baseScore": 41.63,
+        "adjustment": -23,
+        "adjustedScore": 18.630000000000003,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:aae736f5a7911ddb",
+        "baseScore": 40.18,
+        "adjustment": -27,
+        "adjustedScore": 13.18,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Jordan"
+      },
+      {
+        "eventId": "event:6ff300ed13ef83c7",
+        "baseScore": 40.23,
+        "adjustment": -28,
+        "adjustedScore": 12.229999999999997,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "Iran"
+      },
+      {
+        "eventId": "event:5d32489a489417d4",
+        "baseScore": 34.74,
+        "adjustment": -27,
+        "adjustedScore": 7.740000000000002,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:8b0d1c38dd37fc61",
+        "baseScore": 42.71,
+        "adjustment": -44,
+        "adjustedScore": -1.2899999999999991,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:91edcc8066e510d6",
+        "baseScore": 50.73,
+        "adjustment": -54,
+        "adjustedScore": -3.270000000000003,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:47b5577c6354d8fb",
+        "baseScore": 39.47,
+        "adjustment": -44,
+        "adjustedScore": -4.530000000000001,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "Russia"
+      },
+      {
+        "eventId": "event:cba97fe0d1af7a96",
+        "baseScore": 40.79,
+        "adjustment": -48,
+        "adjustedScore": -7.210000000000001,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:5f92587feec7f1fc",
+        "baseScore": 34.66,
+        "adjustment": -52,
+        "adjustedScore": -17.340000000000003,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:50200681bf63ce75",
+        "baseScore": 47.66,
+        "adjustment": -69,
+        "adjustedScore": -21.340000000000003,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:667206815c771d95",
+        "baseScore": 50.12,
+        "adjustment": -74,
+        "adjustedScore": -23.880000000000003,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:109488509e52796c",
+        "baseScore": 38.6,
+        "adjustment": -63,
+        "adjustedScore": -24.4,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:2d884a696f6ed9c9",
+        "baseScore": 34.64,
+        "adjustment": -71,
+        "adjustedScore": -36.36,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:395a0c8904f5315a",
+        "baseScore": 57.24,
+        "adjustment": -96,
+        "adjustedScore": -38.76,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Palestinian territories"
+      },
+      {
+        "eventId": "event:1bb542de69f587c1",
+        "baseScore": 43.34,
+        "adjustment": -90,
+        "adjustedScore": -46.66,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Ghana",
+          "GTA",
+          "Canada"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:9d7f69e020d26f85",
+        "baseScore": 38.42,
+        "adjustment": -88,
+        "adjustedScore": -49.58,
+        "contentType": "general",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:e7f21b6214c8ee72",
+        "baseScore": 34.73,
+        "adjustment": -90,
+        "adjustedScore": -55.27,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      }
+    ],
+    "distribution": {
+      "regions": {
+        "Middle East": 8,
+        "Syria": 3,
+        "Ghana": 6,
+        "Bangladesh": 6,
+        "GTA": 4,
+        "Canada": 5,
+        "World": 6
+      },
+      "countries": {
+        "Israel": 2,
+        "Syria": 3,
+        "Ghana": 6,
+        "Bangladesh": 6,
+        "GTA": 3,
+        "Canada": 1,
+        "World": 3,
+        "Ukraine": 1,
+        "Jordan": 1,
+        "Iran": 1,
+        "Russia": 1,
+        "Yemen": 1,
+        "Palestinian territories": 1
+      },
+      "contentTypes": {
+        "conflict": 9,
+        "general": 6,
+        "diplomacy-or-speech": 6,
+        "culture-science-education": 3,
+        "economy-or-public-life": 6
+      },
+      "publishers": {
+        "Arab News": 4,
+        "North Press Agency": 2,
+        "Graphic Online": 2,
+        "Prothom Alo English": 2,
+        "CBC Toronto": 3,
+        "Ghana News Agency": 2,
+        "DW World": 1,
+        "The Guardian World": 2,
+        "The Daily Star Bangladesh": 2,
+        "Africanews": 2,
+        "Al Jazeera": 2,
+        "MyJoyOnline": 2,
+        "The Guardian Environment": 1,
+        "The Financial Express Bangladesh": 2,
+        "BBC World": 1
+      }
+    }
+  },
+  "selectedEvents": [
+    {
+      "eventId": "event:ce050cee4ce09156",
+      "title": "In shadow of war, Israelis to decide if hard-right turn is permanent",
+      "score": 73.87,
+      "adjustedScore": 87.87,
+      "rank": 1,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 16.87,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:370eee9405339fca",
+      "title": "Syrian army soldier killed while clearing mines near al-Tanf",
+      "score": 70.23,
+      "adjustedScore": 84.23,
+      "rank": 2,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 15.23,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:50c589e8aeb36f93",
+      "title": "Agbogbloshie waste evacuation exercise satisfactory — Ayariga",
+      "score": 70.11,
+      "adjustedScore": 84.11,
+      "rank": 3,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 13.11,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:40d89c435412cebb",
+      "title": "Cabinet approves proposal to relocate Secretariat to Sher-e-Bangla Nagar",
+      "score": 58.9,
+      "adjustedScore": 72.9,
+      "rank": 4,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.9,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:5d8fbcab1e393dde",
+      "title": "Chow, Bradford back on campaign trail as election race enters its final full week",
+      "score": 53.83,
+      "adjustedScore": 67.83,
+      "rank": 5,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 15.83,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:fbb2fb95b84679d0",
+      "title": "Commercialise research findings to drive industrialization – President Mahama advises CSIR",
+      "score": 54.59,
+      "adjustedScore": 60.59,
+      "rank": 6,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.59,
+        "importance": 12,
+        "interestingness": 12,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:e4c88c881d9b8846",
+      "title": "Canada: Major fire reported at military base in Alberta",
+      "score": 46.02,
+      "adjustedScore": 56.02,
+      "rank": 7,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 17.02,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:48ca5a89926fb0f4",
+      "title": "Israeli settlers attack European diplomats in West Bank",
+      "score": 69.22,
+      "adjustedScore": 54.22,
+      "rank": 8,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.22,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 26,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:8565faee3a1825bf",
+      "title": "17 killed in Kolkata Durga Puja stampede",
+      "score": 49.98,
+      "adjustedScore": 47.98,
+      "rank": 9,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 14.98,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:34c6362b44a2b817",
+      "title": "Frontline workers in DRC receive Ervebo vaccine amid growing Ebola outbreak",
+      "score": 43.64,
+      "adjustedScore": 39.64,
+      "rank": 10,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 13.64,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:c6981f6e8292a2e7",
+      "title": "Syria foils suspected Daesh plot as landmine blast kills soldier",
+      "score": 62.26,
+      "adjustedScore": 36.26,
+      "rank": 11,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 17.26,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:e8cfda1b20b37d76",
+      "title": "Russia’s war in Ukraine puts Europe on edge",
+      "score": 39.12,
+      "adjustedScore": 35.12,
+      "rank": 12,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.12,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:234c7d6b4a005b11",
+      "title": "Oshawa's growing homeless and addiction crisis takes centre stage in mayoral race",
+      "score": 53.48,
+      "adjustedScore": 24.48,
+      "rank": 13,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 18.48,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 11,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:209e87afcd7b8893",
+      "title": "Yagbonwura Cultural and Eco-Tourism Experience to showcase Savannah Region’s heritage and investment potential",
+      "score": 41.63,
+      "adjustedScore": 18.63,
+      "rank": 14,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.63,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 7,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:aae736f5a7911ddb",
+      "title": "Jordan-Israel border becomes new hotspot for sophisticated drug trade",
+      "score": 40.18,
+      "adjustedScore": 13.18,
+      "rank": 15,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.18,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:6ff300ed13ef83c7",
+      "title": "US voters want more action on global heating. Why are Democrats and Republicans staying silent?",
+      "score": 40.23,
+      "adjustedScore": 12.23,
+      "rank": 16,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 8.23,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:5d32489a489417d4",
+      "title": "Bank Asia wins WSBI SDG Award again",
+      "score": 34.74,
+      "adjustedScore": 7.74,
+      "rank": 17,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.74,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:8b0d1c38dd37fc61",
+      "title": "Government urged to invest in open science to improve public access to research",
+      "score": 42.71,
+      "adjustedScore": -1.29,
+      "rank": 18,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.71,
+        "importance": 0,
+        "interestingness": 12,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:91edcc8066e510d6",
+      "title": "Toronto Votes 2026: Your final-week guide to voting in this election",
+      "score": 50.73,
+      "adjustedScore": -3.27,
+      "rank": 19,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 12.73,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:47b5577c6354d8fb",
+      "title": "Oil facilities hit in deadly overnight attack on St Petersburg",
+      "score": 39.47,
+      "adjustedScore": -4.53,
+      "rank": 20,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.47,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:cba97fe0d1af7a96",
+      "title": "Egypt says to provide all necessary support to Saudi Arabia to defend its security",
+      "score": 40.79,
+      "adjustedScore": -7.21,
+      "rank": 21,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 18.79,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:5f92587feec7f1fc",
+      "title": "Only Tk 5.61b disbursed to reopen closed factories, despite Tk 200b allocation",
+      "score": 34.66,
+      "adjustedScore": -17.34,
+      "rank": 22,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.66,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:50200681bf63ce75",
+      "title": "SOS Children’s Villages says 124 of 140 Syrian children reunited with families",
+      "score": 47.66,
+      "adjustedScore": -21.34,
+      "rank": 23,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 12.66,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:667206815c771d95",
+      "title": "DRC accuses ex-president Kabila of planning 'general attack' on the country",
+      "score": 50.12,
+      "adjustedScore": -23.88,
+      "rank": 24,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.12,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:109488509e52796c",
+      "title": "Government appoints AI focal persons across ministries to drive national strategy",
+      "score": 38.6,
+      "adjustedScore": -24.4,
+      "rank": 25,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.6,
+        "importance": 0,
+        "interestingness": 8,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:2d884a696f6ed9c9",
+      "title": "BRAC Bank, IFPRI partner to expand digital financing",
+      "score": 34.64,
+      "adjustedScore": -36.36,
+      "rank": 26,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.64,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:395a0c8904f5315a",
+      "title": "‘I cannot carry all of this alone’: the couples kept apart by the war in Gaza",
+      "score": 57.24,
+      "adjustedScore": -38.76,
+      "rank": 27,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 12.24,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:1bb542de69f587c1",
+      "title": "Ghana Consulate in Toronto to launch DPE Canada 2027 on November 27",
+      "score": 43.34,
+      "adjustedScore": -46.66,
+      "rank": 28,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 19.34,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana",
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:9d7f69e020d26f85",
+      "title": "Omar attorneys say federal search violated judge’s restrictions, was ‘politically motivated’",
+      "score": 38.42,
+      "adjustedScore": -49.58,
+      "rank": 29,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.42,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:e7f21b6214c8ee72",
+      "title": "NCT deal: Ctg port workers postpone ‘hunger strike’",
+      "score": 34.73,
+      "adjustedScore": -55.27,
+      "rank": 30,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.73,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    }
+  ],
+  "invalidPreviousCardsRemoved": [],
+  "crossEventOverlap": [],
+  "generation": [
+    {
+      "eventId": "event:ce050cee4ce09156",
+      "title": "In shadow of war, Israelis to decide if hard-right turn is permanent",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "dd251e346caaecc2c0d3df6553e7bc6ed2972266d98c1c01a75f3817aa27def6",
+      "allowedExactDates": [
+        "2023-10-07"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 7, 2023",
+            "date": "2023-10-07"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2023-10-07"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 267,
+        "pageCount": 2
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:arab-news:37250ef5cc7461eb8ba5087b",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:arab-news:37250ef5cc7461eb8ba5087b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:arab-news:37250ef5cc7461eb8ba5087b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:arab-news:37250ef5cc7461eb8ba5087b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:arab-news:37250ef5cc7461eb8ba5087b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:arab-news:37250ef5cc7461eb8ba5087b",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:arab-news:37250ef5cc7461eb8ba5087b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:arab-news:37250ef5cc7461eb8ba5087b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:arab-news:37250ef5cc7461eb8ba5087b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:arab-news:37250ef5cc7461eb8ba5087b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:arab-news:37250ef5cc7461eb8ba5087b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:arab-news:37250ef5cc7461eb8ba5087b",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:arab-news:37250ef5cc7461eb8ba5087b",
+          "publisher": "Arab News",
+          "url": "https://arabnews.com/middle-east/in-shadow-of-war-israelis-to-decide-if-hard-right-turn-is-permanent-3006938",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://assets.maestronewsroom.com/media/30f6532d-717b-4366-9158-9c455299fcd9/1792286709295-abf77749fde8606f.jpg",
+        "alt": "In shadow of war, Israelis to decide if hard-right turn is permanent",
+        "status": "event-specific",
+        "source_url": "https://arabnews.com/middle-east/in-shadow-of-war-israelis-to-decide-if-hard-right-turn-is-permanent-3006938",
+        "attribution": "Arab News",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-18T14:04:13.996Z",
+          "finishedAt": "2026-10-18T14:04:21.489Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Israelis to vote in October 27 election regarding Prime Minister Netanyahu and national direction\", \"pages\": \n[\n  {\n    \"text\": \"In Israel, voters are scheduled to participate in an election on October 27 that may determine if the country moves toward hard-right nationalism. According to reporting by Arab News, the election serves as a verdict on veteran Prime Minister Benjamin Netanyahu, who is seeking a new mandate following a multi-front regional war initiated in response to the October 7, 2023, Hamas attack. Netanyahu, Israel's longest-serving prime minister, is currently in a tight race according to polls. He returned to power in December 2022, bringing ultra-nationalists into his government and attempting to rein in the judiciary, which is currently examining corruption charges against him. Netanyahu will turn 77 on October 21.\"\n  },\n  {\n    \"text\": \"The regional war led by Netanyahu has involved operations in Gaza, the occupation of part of Lebanon, and the bombardment of Iran with assistance from the United States. Arab News reports that the Gaza campaign has resulted in Israel facing pariah status in several Western countries, and Netanyahu faces an arrest warrant from the International Criminal Court. Domestically, the conflict has been described as divisive, potentially emboldening far-right allies seeking to reshape Israel into a religious-nationalist Jewish state. Gideon Rahat, a political scientist at the Hebrew University of Jerusalem and the Israel Democracy Institute, stated that the elections are about the future of the state in a literal sense. Under the current government, settlements have increased in the occupied West Bank, where settlers supported by National Security Minister Itamar Ben Gvir have attacked Palestinians with only occasional pushback from authorities. Rahat noted that a state without a monopoly on the use of force is a failed state.\"\n  }\n]\n}",
+          "parsed": {
+            "headline": "Israelis to vote in October 27 election regarding Prime Minister Netanyahu and national direction",
+            "pages": [
+              {
+                "text": "In Israel, voters are scheduled to participate in an election on October 27 that may determine if the country moves toward hard-right nationalism. According to reporting by Arab News, the election serves as a verdict on veteran Prime Minister Benjamin Netanyahu, who is seeking a new mandate following a multi-front regional war initiated in response to the October 7, 2023, Hamas attack. Netanyahu, Israel's longest-serving prime minister, is currently in a tight race according to polls. He returned to power in December 2022, bringing ultra-nationalists into his government and attempting to rein in the judiciary, which is currently examining corruption charges against him. Netanyahu will turn 77 on October 21."
+              },
+              {
+                "text": "The regional war led by Netanyahu has involved operations in Gaza, the occupation of part of Lebanon, and the bombardment of Iran with assistance from the United States. Arab News reports that the Gaza campaign has resulted in Israel facing pariah status in several Western countries, and Netanyahu faces an arrest warrant from the International Criminal Court. Domestically, the conflict has been described as divisive, potentially emboldening far-right allies seeking to reshape Israel into a religious-nationalist Jewish state. Gideon Rahat, a political scientist at the Hebrew University of Jerusalem and the Israel Democracy Institute, stated that the elections are about the future of the state in a literal sense. Under the current government, settlements have increased in the occupied West Bank, where settlers supported by National Security Minister Itamar Ben Gvir have attacked Palestinians with only occasional pushback from authorities. Rahat noted that a state without a monopoly on the use of force is a failed state."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1882,
+            "completion_tokens": 395,
+            "total_tokens": 2277,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 27.881816864013672
+          },
+          "latencyMs": 7493,
+          "safeHeaders": {
+            "cf-ray": "a4c8174b9d3fe1e7-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:40d89c435412cebb",
+      "title": "Cabinet approves proposal to relocate Secretariat to Sher-e-Bangla Nagar",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "69b19e1511b0bdd76f8d7ae6a925e58b4981975ffa5700d02771e10ba8499145",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 104,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:prothom-alo:9b8ca16ba4a16f59f44b4342",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:prothom-alo:9b8ca16ba4a16f59f44b4342",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:prothom-alo:9b8ca16ba4a16f59f44b4342",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:prothom-alo:9b8ca16ba4a16f59f44b4342",
+          "publisher": "Prothom Alo English",
+          "url": "https://en.prothomalo.com/bangladesh/mqbffep126",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://media.prothomalo.com/prothomalo-english/2026-10-18/efkhx8my/prothomalo-bangla2026-10-18xfg6uiq4PM-Cabinet-01.avif",
+        "alt": "Cabinet approves proposal to relocate Secretariat to Sher-e-Bangla Nagar",
+        "status": "event-specific",
+        "source_url": "https://en.prothomalo.com/bangladesh/mqbffep126",
+        "attribution": "Prothom Alo English",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-18T14:04:21.491Z",
+          "finishedAt": "2026-10-18T14:04:22.696Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Bangladesh Cabinet approves proposal to relocate Secretariat to Sher-e-Bangla Nagar\",\n  \"pages\": [\n    {\n      \"text\": \"The Bangladesh Cabinet has approved a proposal to relocate the Secretariat from Abdul Gani Road in the capital to Sher-e-Bangla Nagar, the site of the former trade fair grounds. The decision was made during a meeting chaired by Prime Minister Tarique Rahman at the Secretariat on Sunday afternoon, according to a report by Prothom Alo English. Cabinet Secretary Nasimul Ghani announced the decision during a subsequent press conference. This follows a previous decision in principle to relocate the Secretariat that was also made during a meeting chaired by the prime minister. Government offices are expected to begin operating at the new location in 2029.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Bangladesh Cabinet approves proposal to relocate Secretariat to Sher-e-Bangla Nagar",
+            "pages": [
+              {
+                "text": "The Bangladesh Cabinet has approved a proposal to relocate the Secretariat from Abdul Gani Road in the capital to Sher-e-Bangla Nagar, the site of the former trade fair grounds. The decision was made during a meeting chaired by Prime Minister Tarique Rahman at the Secretariat on Sunday afternoon, according to a report by Prothom Alo English. Cabinet Secretary Nasimul Ghani announced the decision during a subsequent press conference. This follows a previous decision in principle to relocate the Secretariat that was also made during a meeting chaired by the prime minister. Government offices are expected to begin operating at the new location in 2029."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1171,
+            "completion_tokens": 175,
+            "total_tokens": 1346,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 15.418182373046875
+          },
+          "latencyMs": 1206,
+          "safeHeaders": {
+            "cf-ray": "a4c8177a5f1de1e7-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:e4c88c881d9b8846",
+      "title": "Canada: Major fire reported at military base in Alberta",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "c9f7b644f97cf2e40dc798ff21002ae194ee7b59e5756b1328adaebdb3c52127",
+      "allowedExactDates": [
+        "2026-10-17"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 17, 2026",
+            "date": "2026-10-17"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-17"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 175,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:dw:5ca8aa86ae1ab633928ff0cb",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:dw:5ca8aa86ae1ab633928ff0cb",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:dw:5ca8aa86ae1ab633928ff0cb",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:dw:5ca8aa86ae1ab633928ff0cb",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:dw:5ca8aa86ae1ab633928ff0cb",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:dw:5ca8aa86ae1ab633928ff0cb",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:dw:5ca8aa86ae1ab633928ff0cb",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:dw:5ca8aa86ae1ab633928ff0cb",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:dw:5ca8aa86ae1ab633928ff0cb",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:dw:5ca8aa86ae1ab633928ff0cb",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:dw:5ca8aa86ae1ab633928ff0cb",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:dw:5ca8aa86ae1ab633928ff0cb",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:npr:f94315dbe024672b91d8c631",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:npr:f94315dbe024672b91d8c631",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F15",
+            "sourceId": "news:npr:f94315dbe024672b91d8c631",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F16",
+            "sourceId": "news:npr:f94315dbe024672b91d8c631",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F17",
+            "sourceId": "news:npr:f94315dbe024672b91d8c631",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F18",
+            "sourceId": "news:npr:f94315dbe024672b91d8c631",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F19",
+            "sourceId": "news:npr:f94315dbe024672b91d8c631",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F20",
+            "sourceId": "news:npr:f94315dbe024672b91d8c631",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F21",
+            "sourceId": "news:npr:f94315dbe024672b91d8c631",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F22",
+            "sourceId": "news:npr:f94315dbe024672b91d8c631",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F23",
+            "sourceId": "news:npr:f94315dbe024672b91d8c631",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F24",
+            "sourceId": "news:npr:f94315dbe024672b91d8c631",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F25",
+            "sourceId": "news:myjoyonline:7b0715ff6bd37fa29076d325",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F26",
+            "sourceId": "news:myjoyonline:7b0715ff6bd37fa29076d325",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F27",
+            "sourceId": "news:myjoyonline:7b0715ff6bd37fa29076d325",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F28",
+            "sourceId": "news:myjoyonline:7b0715ff6bd37fa29076d325",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F29",
+            "sourceId": "news:myjoyonline:7b0715ff6bd37fa29076d325",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F30",
+            "sourceId": "news:myjoyonline:7b0715ff6bd37fa29076d325",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F31",
+            "sourceId": "news:myjoyonline:7b0715ff6bd37fa29076d325",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F32",
+            "sourceId": "news:myjoyonline:7b0715ff6bd37fa29076d325",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F33",
+            "sourceId": "news:myjoyonline:7b0715ff6bd37fa29076d325",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F34",
+            "sourceId": "news:myjoyonline:7b0715ff6bd37fa29076d325",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F35",
+            "sourceId": "news:myjoyonline:7b0715ff6bd37fa29076d325",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F36",
+            "sourceId": "news:myjoyonline:7b0715ff6bd37fa29076d325",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:dw:5ca8aa86ae1ab633928ff0cb",
+          "publisher": "DW World",
+          "url": "https://dw.com/en/canada-major-fire-reported-at-military-base-in-alberta/a-79690515?maca=en-rss-en-all-1573-rdf",
+          "wireOrigin": null,
+          "sourceType": "public_service_reporting"
+        },
+        {
+          "sourceId": "news:npr:f94315dbe024672b91d8c631",
+          "publisher": "NPR World",
+          "url": "https://npr.org/2026/10/18/nx-s1-6007276/fire-alberta-deadly-canada-military-base",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:myjoyonline:7b0715ff6bd37fa29076d325",
+          "publisher": "MyJoyOnline",
+          "url": "https://myjoyonline.com/several-dead-or-injured-in-major-fire-at-canada-military-base",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://static.dw.com/image/79692055_6.jpg",
+        "alt": "Paramedics load an injured person into an ambulance at the Wainwright Health center after a fire at Canadian Forces Base Wainwright, outside of Wainwright, Alberta",
+        "status": "event-specific",
+        "source_url": "https://dw.com/en/canada-major-fire-reported-at-military-base-in-alberta/a-79690515?maca=en-rss-en-all-1573-rdf",
+        "attribution": "DW World",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-18T14:04:22.697Z",
+          "finishedAt": "2026-10-18T14:04:25.110Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Fatalities and injuries reported following major fire at military base in Alberta, Canada\", \"pages\": [{\"text\": \"A major fire sparked by a serious incident at Canadian Forces Base Wainwright in Alberta resulted in fatalities and injuries on October 17, 2026, according to Canadian Prime Minister Mark Carney and Defense Minister David McGuinty. The Royal Canadian Mounted Police reported being called shortly after 4 p.m. following reports of a fire in a training area at the base. The Municipal District of Wainwright stated the fire spread rapidly due to high winds, with the blaze crossing the base fence and being actively managed by emergency crews focused on protecting lives and structures. The region experienced wind gusts of up to 100km/h (62mph). While the exact cause and number of casualties have not been confirmed by officials, Global News cited unnamed military sources reporting that at least seven people were killed and dozens more injured after a gas line or gas well was hit during a live-fire training exercise. Defense Minister McGuinty described the situation as “very, very active and delicate” and noted that the Royal Canadian Mounted Police are involved in the investigation.\"}]}",
+          "parsed": {
+            "headline": "Fatalities and injuries reported following major fire at military base in Alberta, Canada",
+            "pages": [
+              {
+                "text": "A major fire sparked by a serious incident at Canadian Forces Base Wainwright in Alberta resulted in fatalities and injuries on October 17, 2026, according to Canadian Prime Minister Mark Carney and Defense Minister David McGuinty. The Royal Canadian Mounted Police reported being called shortly after 4 p.m. following reports of a fire in a training area at the base. The Municipal District of Wainwright stated the fire spread rapidly due to high winds, with the blaze crossing the base fence and being actively managed by emergency crews focused on protecting lives and structures. The region experienced wind gusts of up to 100km/h (62mph). While the exact cause and number of casualties have not been confirmed by officials, Global News cited unnamed military sources reporting that at least seven people were killed and dozens more injured after a gas line or gas well was hit during a live-fire training exercise. Defense Minister McGuinty described the situation as “very, very active and delicate” and noted that the Royal Canadian Mounted Police are involved in the investigation."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2825,
+            "completion_tokens": 243,
+            "total_tokens": 3068,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 32.30908966064453
+          },
+          "latencyMs": 2413,
+          "safeHeaders": {
+            "cf-ray": "a4c81781dc7be1e7-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:8565faee3a1825bf",
+      "title": "17 killed in Kolkata Durga Puja stampede",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "6440704463e57dfb97c9dda81c135f57197f27212b557a1b653906125d573755",
+      "allowedExactDates": [
+        "2026-10-17"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 17, 2026",
+            "date": "2026-10-17"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-17"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 227,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:daily-star-bd:2fbd770bbdfe13526c1829c2",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:daily-star-bd:2fbd770bbdfe13526c1829c2",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:daily-star-bd:2fbd770bbdfe13526c1829c2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:daily-star-bd:2fbd770bbdfe13526c1829c2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:daily-star-bd:2fbd770bbdfe13526c1829c2",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:daily-star-bd:2fbd770bbdfe13526c1829c2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:daily-star-bd:2fbd770bbdfe13526c1829c2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:daily-star-bd:2fbd770bbdfe13526c1829c2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:daily-star-bd:2fbd770bbdfe13526c1829c2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:daily-star-bd:2fbd770bbdfe13526c1829c2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:daily-star-bd:2fbd770bbdfe13526c1829c2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:daily-star-bd:2fbd770bbdfe13526c1829c2",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:daily-star-bd:2fbd770bbdfe13526c1829c2",
+          "publisher": "The Daily Star Bangladesh",
+          "url": "https://thedailystar.net/news/bangladesh/news/17-killed-kolkata-durga-puja-stampede-4301361",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.thedailystar.net/sites/default/files/styles/social_share/public/2026-10/puja.jpg",
+        "alt": "17 killed in Kolkata Durga Puja stampede",
+        "status": "event-specific",
+        "source_url": "https://thedailystar.net/news/bangladesh/news/17-killed-kolkata-durga-puja-stampede-4301361",
+        "attribution": "The Daily Star Bangladesh",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-18T14:04:25.111Z",
+          "finishedAt": "2026-10-18T14:04:31.214Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"At least 17 killed in Kolkata Durga Puja stampede\", \"pages\": [{\"text\": \"At least 17 people, including 13 women and a child, were killed and approximately two dozen others were injured during a stampede in Kolkata, India, on October 17, 2026, officials said. The incident occurred around 19:40 at the exit gate of the Sarada Park (Chor Bagan) Puja Pandal in the Girish Park Police Station area during the Hindu festival of Durga Puja. West Bengal’s Chief Minister Suvendhu Adhikari reported that the fatalities included a seven-year-old girl and noted that six bodies had been identified at the time of his statement. 25 others were reported injured outside a pavilion in the stampede. 19:40. According to a statement from the Kolkata Police, the stampede happened due to heavy crowds of visitors amid rain. A senior police official told AFP that an announcement caused commotion after it began raining at night, leading the crowd waiting outside the pandal (pavilion) to push, pull, and rush forward before falling to the ground. Witnesses reported that many people lost consciousness and were rushed to the Medical College and Hospital (MCH) on motorcycles. One witness attributed the tragedy to narrow entry and exit gates and a lack of lighting in the area. Indian Prime Minister Narendra Modi described the incident as extremely distressing and announced interim compensation of Rs 2 lakh for the families of the deceased and Rs 50,000 for each injured person.\"}]}",
+          "parsed": {
+            "headline": "At least 17 killed in Kolkata Durga Puja stampede",
+            "pages": [
+              {
+                "text": "At least 17 people, including 13 women and a child, were killed and approximately two dozen others were injured during a stampede in Kolkata, India, on October 17, 2026, officials said. The incident occurred around 19:40 at the exit gate of the Sarada Park (Chor Bagan) Puja Pandal in the Girish Park Police Station area during the Hindu festival of Durga Puja. West Bengal’s Chief Minister Suvendhu Adhikari reported that the fatalities included a seven-year-old girl and noted that six bodies had been identified at the time of his statement. 25 others were reported injured outside a pavilion in the stampede. 19:40. According to a statement from the Kolkata Police, the stampede happened due to heavy crowds of visitors amid rain. A senior police official told AFP that an announcement caused commotion after it began raining at night, leading the crowd waiting outside the pandal (pavilion) to push, pull, and rush forward before falling to the ground. Witnesses reported that many people lost consciousness and were rushed to the Medical College and Hospital (MCH) on motorcycles. One witness attributed the tragedy to narrow entry and exit gates and a lack of lighting in the area. Indian Prime Minister Narendra Modi described the incident as extremely distressing and announced interim compensation of Rs 2 lakh for the families of the deceased and Rs 50,000 for each injured person."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1584,
+            "completion_tokens": 329,
+            "total_tokens": 1913,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 23.372726440429688
+          },
+          "latencyMs": 6103,
+          "safeHeaders": {
+            "cf-ray": "a4c81790feffe1e7-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:c6981f6e8292a2e7",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "page 1 ends mid-sentence",
+          "page 2 ends mid-sentence"
+        ],
+        "wordCount": 230,
+        "pageCount": 2
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-18T14:04:31.214Z",
+          "finishedAt": "2026-10-18T14:04:37.923Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Syrian authorities report foiled Daesh plot and soldier death during mine clearance\", \"pages\": [{\"text\": \"Syrian authorities reported on October 17, 2026, that they foiled a suspected Daesh plot to attack a police patrol near Damascus. According to the Syrian state news agency SANA, the General Intelligence Department and Internal Security Forces arrested two suspects, identified by the initials M.K. and A.H., and seized an explosive device prepared for detonation. In a statement issued October 16, 2026, the Internal Security Forces noted that investigations are ongoing to determine the circumstances, scope, and links of the plot. This operation followed the dismantling of a separate Daesh-linked cell in the Al-Houla area of the Homs countryside, which authorities said had targeted places of worship and Internal Security Forces patrols. 1/2\" }, {\"text\": \"In a separate incident on October 17, 2026, a Syrian Arab Army soldier was killed and another was seriously wounded during mine-clearance operations in the Tanf area of the eastern Homs countryside. The Defense Ministry's Media and Communications Directorate told SANA that the soldiers were members of the Military Engineering Directorate dismantling mines and unexploded ordnance left by the ousted regime. This follows a July 28 incident near Kabina village in the northern Latakia countryside, where a mine left by the former regime killed one soldier and wounded another. These events occur as the administration of President Ahmed Al-Sharaa, a former rebel leader, works to rebuild state institutions following the December 2024 ouster of Bashar Assad. 2/2\"}]}",
+          "parsed": {
+            "headline": "Syrian authorities report foiled Daesh plot and soldier death during mine clearance",
+            "pages": [
+              {
+                "text": "Syrian authorities reported on October 17, 2026, that they foiled a suspected Daesh plot to attack a police patrol near Damascus. According to the Syrian state news agency SANA, the General Intelligence Department and Internal Security Forces arrested two suspects, identified by the initials M.K. and A.H., and seized an explosive device prepared for detonation. In a statement issued October 16, 2026, the Internal Security Forces noted that investigations are ongoing to determine the circumstances, scope, and links of the plot. This operation followed the dismantling of a separate Daesh-linked cell in the Al-Houla area of the Homs countryside, which authorities said had targeted places of worship and Internal Security Forces patrols. 1/2"
+              },
+              {
+                "text": "In a separate incident on October 17, 2026, a Syrian Arab Army soldier was killed and another was seriously wounded during mine-clearance operations in the Tanf area of the eastern Homs countryside. The Defense Ministry's Media and Communications Directorate told SANA that the soldiers were members of the Military Engineering Directorate dismantling mines and unexploded ordnance left by the ousted regime. This follows a July 28 incident near Kabina village in the northern Latakia countryside, where a mine left by the former regime killed one soldier and wounded another. These events occur as the administration of President Ahmed Al-Sharaa, a former rebel leader, works to rebuild state institutions following the December 2024 ouster of Bashar Assad. 2/2"
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2067,
+            "completion_tokens": 351,
+            "total_tokens": 2418,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 28.363636016845703
+          },
+          "latencyMs": 6709,
+          "safeHeaders": {
+            "cf-ray": "a4c817b71a9ce1e7-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:e8cfda1b20b37d76",
+      "title": "Russia’s war in Ukraine puts Europe on edge",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "53c5c43d139d3bc9e27e02628673d2c3acc6ab398108f127cc1d5499f5d709db",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 183,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:aljazeera:5646c5b7ea7f4095ce2e4eaf",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:aljazeera:5646c5b7ea7f4095ce2e4eaf",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:aljazeera:5646c5b7ea7f4095ce2e4eaf",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:aljazeera:5646c5b7ea7f4095ce2e4eaf",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:aljazeera:5646c5b7ea7f4095ce2e4eaf",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:aljazeera:5646c5b7ea7f4095ce2e4eaf",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:aljazeera:5646c5b7ea7f4095ce2e4eaf",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:aljazeera:5646c5b7ea7f4095ce2e4eaf",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:aljazeera:5646c5b7ea7f4095ce2e4eaf",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:aljazeera:5646c5b7ea7f4095ce2e4eaf",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:aljazeera:5646c5b7ea7f4095ce2e4eaf",
+          "publisher": "Al Jazeera",
+          "url": "https://aljazeera.com/video/talk-to-al-jazeera/2026/10/18/russias-war-in-ukraine-puts-europe-on-edge?traffic_source=rss",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.aljazeera.com/wp-content/uploads/2026/10/image-1792319463.jpg?resize=1920%2C1080&quality=80",
+        "alt": "Russia’s war in Ukraine puts Europe on edge",
+        "status": "event-specific",
+        "source_url": "https://aljazeera.com/video/talk-to-al-jazeera/2026/10/18/russias-war-in-ukraine-puts-europe-on-edge?traffic_source=rss",
+        "attribution": "Al Jazeera",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-18T14:04:37.923Z",
+          "finishedAt": "2026-10-18T14:04:43.759Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Growing fears in Europe regarding the spillover of Russia’s war in Ukraine\",\n  \"pages\": [\n    {\n      \"text\": \"European nations have expressed growing fears that Russia’s war in Ukraine could spread regionally and spill over into neighboring NATO members. Some countries argue the conflict has already expanded, citing instances of sabotage, cyberattacks, and drone incursions. European officials state that Moscow is targeting allies of Ukraine to facilitate intimidation, though the Kremlin denies these accusations. Polish Foreign Minister Radoslaw Sikorski has warned that Europe must be prepared to respond robustly to Russia’s hybrid attacks. Poland, which borders Ukraine, serves as a NATO logistics hub for both military and civilian support to its neighbor. The International Centre for Counterterrorism has identified Poland as the primary focus of Russia’s sabotage campaign in Europe. Additionally, research from Harvard indicates Poland is the country most targeted by cyberattacks, experiencing approximately four thousand politically motivated attacks per day. Following several reported airspace violations, Polish authorities have stated that further drone and missile strikes are likely. Sikorski noted that for the war to conclude, Russian President Vladimir Putin would have to admit that the full-scale invasion of Ukraine was a mistake and that his original goals are unachievable.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Growing fears in Europe regarding the spillover of Russia’s war in Ukraine",
+            "pages": [
+              {
+                "text": "European nations have expressed growing fears that Russia’s war in Ukraine could spread regionally and spill over into neighboring NATO members. Some countries argue the conflict has already expanded, citing instances of sabotage, cyberattacks, and drone incursions. European officials state that Moscow is targeting allies of Ukraine to facilitate intimidation, though the Kremlin denies these accusations. Polish Foreign Minister Radoslaw Sikorski has warned that Europe must be prepared to respond robustly to Russia’s hybrid attacks. Poland, which borders Ukraine, serves as a NATO logistics hub for both military and civilian support to its neighbor. The International Centre for Counterterrorism has identified Poland as the primary focus of Russia’s sabotage campaign in Europe. Additionally, research from Harvard indicates Poland is the country most targeted by cyberattacks, experiencing approximately four thousand politically motivated attacks per day. Following several reported airspace violations, Polish authorities have stated that further drone and missile strikes are likely. Sikorski noted that for the war to conclude, Russian President Vladimir Putin would have to admit that the full-scale invasion of Ukraine was a mistake and that his original goals are unachievable."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1239,
+            "completion_tokens": 270,
+            "total_tokens": 1509,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 18.62727165222168
+          },
+          "latencyMs": 5836,
+          "safeHeaders": {
+            "cf-ray": "a4c817e10c08e1e7-ORD"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "stage": "evidence",
+      "eventId": "event:e8ee6c1fc8c1ab33",
+      "reason": "principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:bba01b4b4f90c2c6",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e638ca794034ced1",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:02e047b0cb8380b5",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4b1b01f96bc8c22a",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:ea6552b0ba979fba",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0b4a3c89537f4b27",
+      "reason": "evidence does not clearly support the central headline; high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:e6786d6a9fc2e076",
+      "reason": "principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:558ab357a8d66543",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:3085d0b5e6d09269",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:69e732d4a9af80b1",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:49543e5003a7806f",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:144bcf6d7bdfab3f",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:b155dfae1e3fd999",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:47b4b020d3afc725",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:af19c06b44e8364f",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f478f54205e7e8b9",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:639295e9186c1a39",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:a84dddb15d0ea837",
+      "reason": "too little complete accessible reporting; principal actor or institution is unclear; high-risk or disputed claim lacks both independent corroboration and explicit attribution"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f1df8875c8984b63",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:560c5103921fb09b",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:5dd7dc9ee6d9382f",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:bc37ac8f6faf0671",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f90797d40cf871bf",
+      "reason": "principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:5dda9fd3623661fa",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:3ebffa3f26ae96db",
+      "reason": "principal actor or institution is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f923f87d47398dd2",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:281dbedc5b94e57f",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:a51e2d5f1be2a11a",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:7c912fee9921f0b4",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "eventId": "event:370eee9405339fca",
+      "title": "Syrian army soldier killed while clearing mines near al-Tanf",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:50c589e8aeb36f93",
+      "title": "Agbogbloshie waste evacuation exercise satisfactory — Ayariga",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:5d8fbcab1e393dde",
+      "title": "Chow, Bradford back on campaign trail as election race enters its final full week",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:fbb2fb95b84679d0",
+      "title": "Commercialise research findings to drive industrialization – President Mahama advises CSIR",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:0fb79eda9935e205",
+      "title": "Israeli settlers attack European diplomats in West Bank",
+      "stage": "writer-safety",
+      "reason": "unsafe temporal metadata exposure"
+    },
+    {
+      "eventId": "event:34c6362b44a2b817",
+      "title": "Frontline workers in DRC receive Ervebo vaccine amid growing Ebola outbreak",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:234c7d6b4a005b11",
+      "title": "Oshawa's growing homeless and addiction crisis takes centre stage in mayoral race",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 24.48 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:209e87afcd7b8893",
+      "title": "Yagbonwura Cultural and Eco-Tourism Experience to showcase Savannah Region’s heritage and investment potential",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 18.63 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:aae736f5a7911ddb",
+      "title": "Jordan-Israel border becomes new hotspot for sophisticated drug trade",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 13.18 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:6ff300ed13ef83c7",
+      "title": "US voters want more action on global heating. Why are Democrats and Republicans staying silent?",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 12.23 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:5d32489a489417d4",
+      "title": "Bank Asia wins WSBI SDG Award again",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 7.74 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:8b0d1c38dd37fc61",
+      "title": "Government urged to invest in open science to improve public access to research",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -1.29 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:91edcc8066e510d6",
+      "title": "Toronto Votes 2026: Your final-week guide to voting in this election",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -3.27 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:47b5577c6354d8fb",
+      "title": "Oil facilities hit in deadly overnight attack on St Petersburg",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -4.53 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:cba97fe0d1af7a96",
+      "title": "Egypt says to provide all necessary support to Saudi Arabia to defend its security",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -7.21 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:5f92587feec7f1fc",
+      "title": "Only Tk 5.61b disbursed to reopen closed factories, despite Tk 200b allocation",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -17.34 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:50200681bf63ce75",
+      "title": "SOS Children’s Villages says 124 of 140 Syrian children reunited with families",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -21.34 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:667206815c771d95",
+      "title": "DRC accuses ex-president Kabila of planning 'general attack' on the country",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -23.88 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:109488509e52796c",
+      "title": "Government appoints AI focal persons across ministries to drive national strategy",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -24.4 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:2d884a696f6ed9c9",
+      "title": "BRAC Bank, IFPRI partner to expand digital financing",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -36.36 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:395a0c8904f5315a",
+      "title": "‘I cannot carry all of this alone’: the couples kept apart by the war in Gaza",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -38.76 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:1bb542de69f587c1",
+      "title": "Ghana Consulate in Toronto to launch DPE Canada 2027 on November 27",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -46.66 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:9d7f69e020d26f85",
+      "title": "Omar attorneys say federal search violated judge’s restrictions, was ‘politically motivated’",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -49.58 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:e7f21b6214c8ee72",
+      "title": "NCT deal: Ctg port workers postpone ‘hunger strike’",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -55.27 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:c6981f6e8292a2e7",
+      "title": "Syria foils suspected Daesh plot as landmine blast kills soldier",
+      "stage": "content-structure",
+      "reason": "page 1 ends mid-sentence; page 2 ends mid-sentence"
+    }
+  ],
+  "outcome": {
+    "writerRequests": 6,
+    "retries": 0,
+    "acceptedCards": 5,
+    "retainedCards": 120,
+    "skippedCards": 55,
+    "totalNeurons": 145.97272300720215,
+    "inputTokens": 10768,
+    "outputTokens": 1763,
+    "meanNeuronsPerAcceptedCard": 29.19,
+    "datasetBytes": 324909,
+    "thirdPartyCostUsd": 0,
+    "imageStatus": {
+      "event-specific": 117,
+      "fallback": 3
+    },
+    "geographicDistribution": {
+      "Bangladesh": 27,
+      "Canada": 13,
+      "Middle East": 27,
+      "Ghana": 24,
+      "GTA": 6,
+      "Syria": 10
+    }
+  },
+  "integrity": {
+    "datasetSha256": "5f0b2c60f711cba8c5ef20c7c12dd18c709d934513f20643d3eaab8e8bc69e3f"
+  }
+}

@@ -1,0 +1,3486 @@
+{
+  "schema": "doomscroller.news-beta-diagnostics",
+  "schemaVersion": 1,
+  "batchId": "news-beta-2026-10-30T02-03-30-654Z",
+  "startedAt": "2026-10-30T02:01:48.152Z",
+  "finishedAt": "2026-10-30T02:03:30.654Z",
+  "durationMs": 102502,
+  "writerConfiguration": {
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "temperature": 0.2,
+    "maxCompletionTokens": 1024,
+    "responseFormat": "json_schema",
+    "thinking": false,
+    "retries": "date-only; maximum one",
+    "repair": false
+  },
+  "discovery": {
+    "discoveredArticles": 808,
+    "freshArticles": 620,
+    "uniqueArticles": 578,
+    "eventCandidates": 548,
+    "evidencePoolArticles": 181,
+    "preparedEvents": 136,
+    "selectedEvents": 30,
+    "evidenceFailures": 24,
+    "sourceFailures": 4
+  },
+  "sourceStatus": [
+    {
+      "id": "sana-en",
+      "name": "SANA English",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "north-press-en",
+      "name": "North Press Agency",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "enab-baladi-en",
+      "name": "Enab Baladi English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "syria-direct-en",
+      "name": "Syria Direct",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dhaka-tribune",
+      "name": "Dhaka Tribune",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "id": "bd24live-en",
+      "name": "BD24Live English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "fetch failed"
+    },
+    {
+      "id": "prothom-alo-en",
+      "name": "Prothom Alo English",
+      "status": "failed",
+      "itemCount": 0,
+      "error": "No valid feed items"
+    },
+    {
+      "id": "financial-express-bd",
+      "name": "The Financial Express Bangladesh",
+      "status": "ok",
+      "itemCount": 28
+    },
+    {
+      "id": "daily-star-bd",
+      "name": "The Daily Star Bangladesh",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "myjoyonline",
+      "name": "MyJoyOnline",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "graphic-ghana",
+      "name": "Graphic Online",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "ghana-news-agency",
+      "name": "Ghana News Agency",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "toronto-city",
+      "name": "City of Toronto News",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "cbc-toronto",
+      "name": "CBC Toronto",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "cbc-canada",
+      "name": "CBC Canada",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "aljazeera-all",
+      "name": "Al Jazeera",
+      "status": "ok",
+      "itemCount": 25
+    },
+    {
+      "id": "arab-news",
+      "name": "Arab News",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "bbc-world",
+      "name": "BBC World",
+      "status": "ok",
+      "itemCount": 28
+    },
+    {
+      "id": "bbc-technology",
+      "name": "BBC Technology",
+      "status": "ok",
+      "itemCount": 20
+    },
+    {
+      "id": "bbc-science-environment",
+      "name": "BBC Science & Environment",
+      "status": "ok",
+      "itemCount": 42
+    },
+    {
+      "id": "guardian-world",
+      "name": "The Guardian World",
+      "status": "ok",
+      "itemCount": 45
+    },
+    {
+      "id": "guardian-science",
+      "name": "The Guardian Science",
+      "status": "ok",
+      "itemCount": 27
+    },
+    {
+      "id": "guardian-environment",
+      "name": "The Guardian Environment",
+      "status": "ok",
+      "itemCount": 34
+    },
+    {
+      "id": "npr-world",
+      "name": "NPR World",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "npr-science",
+      "name": "NPR Science",
+      "status": "ok",
+      "itemCount": 10
+    },
+    {
+      "id": "dw-world",
+      "name": "DW World",
+      "status": "ok",
+      "itemCount": 122
+    },
+    {
+      "id": "africanews",
+      "name": "Africanews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "euronews",
+      "name": "Euronews",
+      "status": "ok",
+      "itemCount": 50
+    },
+    {
+      "id": "global-voices",
+      "name": "Global Voices",
+      "status": "ok",
+      "itemCount": 15
+    },
+    {
+      "id": "japan-times",
+      "name": "The Japan Times",
+      "status": "ok",
+      "itemCount": 30
+    },
+    {
+      "id": "mongabay",
+      "name": "Mongabay",
+      "status": "ok",
+      "itemCount": 32
+    }
+  ],
+  "knownSourceFailures": [
+    {
+      "name": "Bangladesh Sangbad Sangstha",
+      "url": "https://www.bssnews.net/feed",
+      "status": "blocked",
+      "detail": "Cloudflare challenge returned HTTP 403 to the bounded collector."
+    },
+    {
+      "name": "The Indian Express feeds",
+      "url": "https://indianexpress.com/rss/",
+      "status": "blocked_in_cloud",
+      "detail": "Official feeds work locally but return HTTP 403 from GitHub Actions, so the automatic collector does not depend on them."
+    },
+    {
+      "name": "The Business Standard",
+      "url": "https://www.tbsnews.net/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "Feed served 2019–2021 items."
+    },
+    {
+      "name": "Ontario Newsroom",
+      "url": "https://news.ontario.ca/en/rss",
+      "status": "retired_from_registry",
+      "detail": "URL returns an HTML application shell, not RSS."
+    },
+    {
+      "name": "GhanaWeb",
+      "url": "https://www.ghanaweb.com/GhanaHomePage/NewsArchive/rss.xml",
+      "status": "retired_from_registry",
+      "detail": "The publisher endpoint returned HTTP 404 in October 2026; MyJoyOnline and Graphic Online remain active Ghana sources."
+    }
+  ],
+  "reranker": {
+    "adjustments": [
+      {
+        "eventId": "event:c569b38703420111",
+        "baseScore": 91.01,
+        "adjustment": 14,
+        "adjustedScore": 105.01,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:9348f9f2cace7286",
+        "baseScore": 71.88,
+        "adjustment": 14,
+        "adjustedScore": 85.88,
+        "contentType": "general",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:b586cc86c6b74c9e",
+        "baseScore": 68.89,
+        "adjustment": 14,
+        "adjustedScore": 82.89,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:d24d0194f17c5f78",
+        "baseScore": 69.13,
+        "adjustment": 8,
+        "adjustedScore": 77.13,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:3e36904e7b435814",
+        "baseScore": 55.9,
+        "adjustment": 18,
+        "adjustedScore": 73.9,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "China"
+      },
+      {
+        "eventId": "event:254ce4d37e2d53fa",
+        "baseScore": 53.99,
+        "adjustment": 10,
+        "adjustedScore": 63.99,
+        "contentType": "general",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:9d5a0cd34dd859e5",
+        "baseScore": 59.82,
+        "adjustment": 0,
+        "adjustedScore": 59.82,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:1886825e678c73e2",
+        "baseScore": 42.89,
+        "adjustment": 14,
+        "adjustedScore": 56.89,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "United States"
+      },
+      {
+        "eventId": "event:601457f1ab9a2860",
+        "baseScore": 36.99,
+        "adjustment": 14,
+        "adjustedScore": 50.99,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:1a3c91409f59edc9",
+        "baseScore": 51.36,
+        "adjustment": -1,
+        "adjustedScore": 50.36,
+        "contentType": "general",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:bd230a8a238e5352",
+        "baseScore": 49.75,
+        "adjustment": -7,
+        "adjustedScore": 42.75,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "World"
+        ],
+        "country": "Japan"
+      },
+      {
+        "eventId": "event:fe1d33e532bac3e1",
+        "baseScore": 66.7,
+        "adjustment": -30,
+        "adjustedScore": 36.7,
+        "contentType": "conflict",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:7c4d695c2846c1b3",
+        "baseScore": 42.48,
+        "adjustment": -6,
+        "adjustedScore": 36.48,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:c0dfb3c4b1370c48",
+        "baseScore": 54.52,
+        "adjustment": -24,
+        "adjustedScore": 30.520000000000003,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:4e91034b7b528338",
+        "baseScore": 50.1,
+        "adjustment": -23,
+        "adjustedScore": 27.1,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:28d3ead786541eb6",
+        "baseScore": 53.84,
+        "adjustment": -31,
+        "adjustedScore": 22.840000000000003,
+        "contentType": "general",
+        "regions": [
+          "GTA",
+          "Canada"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:5964f88099572f04",
+        "baseScore": 53.38,
+        "adjustment": -33,
+        "adjustedScore": 20.380000000000003,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "Ukraine"
+      },
+      {
+        "eventId": "event:2510a9f05ade62e0",
+        "baseScore": 40.16,
+        "adjustment": -25,
+        "adjustedScore": 15.159999999999997,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Syria",
+          "Middle East"
+        ],
+        "country": "Syria"
+      },
+      {
+        "eventId": "event:4dbb6d830d827ee5",
+        "baseScore": 51.39,
+        "adjustment": -44,
+        "adjustedScore": 7.390000000000001,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:3a5a6f095c105fb4",
+        "baseScore": 61.25,
+        "adjustment": -55,
+        "adjustedScore": 6.25,
+        "contentType": "conflict",
+        "regions": [
+          "Canada"
+        ],
+        "country": "Canada"
+      },
+      {
+        "eventId": "event:9332625907f8c9c7",
+        "baseScore": 38.99,
+        "adjustment": -37,
+        "adjustedScore": 1.990000000000002,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:51ffb5c450d11655",
+        "baseScore": 49.84,
+        "adjustment": -52,
+        "adjustedScore": -2.1599999999999966,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      },
+      {
+        "eventId": "event:a8b66c43ad33aa13",
+        "baseScore": 42.25,
+        "adjustment": -46,
+        "adjustedScore": -3.75,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "World"
+        ],
+        "country": "World"
+      },
+      {
+        "eventId": "event:2216026e77c63d64",
+        "baseScore": 35.13,
+        "adjustment": -47,
+        "adjustedScore": -11.869999999999997,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "World"
+        ],
+        "country": "Russia"
+      },
+      {
+        "eventId": "event:b59a09ce162901bc",
+        "baseScore": 36.25,
+        "adjustment": -55,
+        "adjustedScore": -18.75,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Canada",
+          "GTA"
+        ],
+        "country": "GTA"
+      },
+      {
+        "eventId": "event:a0b848e200ba2e4a",
+        "baseScore": 40.46,
+        "adjustment": -62,
+        "adjustedScore": -21.54,
+        "contentType": "conflict",
+        "regions": [
+          "World"
+        ],
+        "country": "China"
+      },
+      {
+        "eventId": "event:1092354b4ce67ba6",
+        "baseScore": 56.3,
+        "adjustment": -79,
+        "adjustedScore": -22.700000000000003,
+        "contentType": "economy-or-public-life",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Israel"
+      },
+      {
+        "eventId": "event:c5c3f20ca7f044c1",
+        "baseScore": 36.93,
+        "adjustment": -64,
+        "adjustedScore": -27.07,
+        "contentType": "general",
+        "regions": [
+          "Bangladesh"
+        ],
+        "country": "Bangladesh"
+      },
+      {
+        "eventId": "event:ef27392a18ae8951",
+        "baseScore": 34.54,
+        "adjustment": -66,
+        "adjustedScore": -31.46,
+        "contentType": "diplomacy-or-speech",
+        "regions": [
+          "Middle East"
+        ],
+        "country": "Yemen"
+      },
+      {
+        "eventId": "event:9790f46724a3d01c",
+        "baseScore": 48.45,
+        "adjustment": -81,
+        "adjustedScore": -32.55,
+        "contentType": "culture-science-education",
+        "regions": [
+          "Ghana"
+        ],
+        "country": "Ghana"
+      }
+    ],
+    "distribution": {
+      "regions": {
+        "GTA": 3,
+        "Canada": 5,
+        "Middle East": 8,
+        "Ghana": 5,
+        "World": 8,
+        "Bangladesh": 4,
+        "Syria": 2
+      },
+      "countries": {
+        "GTA": 3,
+        "Israel": 4,
+        "Ghana": 5,
+        "Yemen": 2,
+        "China": 2,
+        "Canada": 2,
+        "United States": 1,
+        "Bangladesh": 4,
+        "Syria": 2,
+        "Japan": 1,
+        "World": 2,
+        "Ukraine": 1,
+        "Russia": 1
+      },
+      "contentTypes": {
+        "general": 7,
+        "diplomacy-or-speech": 6,
+        "conflict": 7,
+        "culture-science-education": 6,
+        "economy-or-public-life": 4
+      },
+      "publishers": {
+        "City of Toronto News": 1,
+        "Arab News": 3,
+        "Graphic Online": 3,
+        "The Guardian World": 3,
+        "CBC Canada": 1,
+        "The Guardian Environment": 1,
+        "The Daily Star Bangladesh": 2,
+        "North Press Agency": 2,
+        "The Japan Times": 1,
+        "Africanews": 2,
+        "The Financial Express Bangladesh": 2,
+        "MyJoyOnline": 2,
+        "CBC Toronto": 2,
+        "DW World": 1,
+        "NPR World": 1,
+        "The Guardian Science": 1,
+        "Mongabay": 1,
+        "Al Jazeera": 1
+      }
+    }
+  },
+  "selectedEvents": [
+    {
+      "eventId": "event:c569b38703420111",
+      "title": "Toronto City Clerk certifies 2026 Toronto municipal election results",
+      "score": 91.01,
+      "adjustedScore": 105.01,
+      "rank": 1,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 17.01,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 14,
+        "editorialBonus": 26,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:9348f9f2cace7286",
+      "title": "Netanyahu bloc leads Israel election but falls short of majority as Likud claims vote was ‘stolen’",
+      "score": 71.88,
+      "adjustedScore": 85.88,
+      "rank": 2,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.88,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:b586cc86c6b74c9e",
+      "title": "Ghana opens talks with Russia’s Rosatom for nuclear power plant - President Mahama reveals at Moscow summit",
+      "score": 68.89,
+      "adjustedScore": 82.89,
+      "rank": 3,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 16.89,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:d24d0194f17c5f78",
+      "title": "Turkiye stands with Saudi Arabia in face of Houthi attacks: Ambassador",
+      "score": 69.13,
+      "adjustedScore": 77.13,
+      "rank": 4,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.13,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:3e36904e7b435814",
+      "title": "Africa’s ‘unprecedented’ Ebola outbreak could reach UK, says top health official",
+      "score": 55.9,
+      "adjustedScore": 73.9,
+      "rank": 5,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 9.9,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 10,
+        "localTexture": 0,
+        "editorialBonus": 22,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:254ce4d37e2d53fa",
+      "title": "Edmonton and Calgary rejected her referendum. Does Danielle Smith have a city problem?",
+      "score": 53.99,
+      "adjustedScore": 63.99,
+      "rank": 6,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 15.99,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:9d5a0cd34dd859e5",
+      "title": "President Mahama commends Putin’s readiness to resume Ukraine talks",
+      "score": 59.82,
+      "adjustedScore": 59.82,
+      "rank": 7,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 16.82,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:1886825e678c73e2",
+      "title": "Trump’s cuts have exposed US to ‘cascade’ of El Niño dangers, experts warn",
+      "score": 42.89,
+      "adjustedScore": 56.89,
+      "rank": 8,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 6.89,
+        "importance": 24,
+        "interestingness": 12,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:601457f1ab9a2860",
+      "title": "Over 45% women face tech-facilitated violence: study",
+      "score": 36.99,
+      "adjustedScore": 50.99,
+      "rank": 9,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.99,
+        "importance": 0,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:1a3c91409f59edc9",
+      "title": "Floods displace hundreds of families in Syria, kill one in Raqqa",
+      "score": 51.36,
+      "adjustedScore": 50.36,
+      "rank": 10,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 15.36,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:bd230a8a238e5352",
+      "title": "Tokyo inflation exceeds BOJ’s 2% target before rate decision",
+      "score": 49.75,
+      "adjustedScore": 42.75,
+      "rank": 11,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 19.75,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:fe1d33e532bac3e1",
+      "title": "No clear winner in Israel's first election since the 2023 Hamas attack",
+      "score": 66.7,
+      "adjustedScore": 36.7,
+      "rank": 12,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.7,
+        "importance": 24,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:7c4d695c2846c1b3",
+      "title": "BNP’s Mirza Faisal wins Thakurgaon-1 by-election",
+      "score": 42.48,
+      "adjustedScore": 36.48,
+      "rank": 13,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.48,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:c0dfb3c4b1370c48",
+      "title": "Europe’s central bank chief, Christine Lagarde, steps down for ‘freedom of speech’",
+      "score": 54.52,
+      "adjustedScore": 30.52,
+      "rank": 14,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.52,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:4e91034b7b528338",
+      "title": "Ghana targets $1.2bn investment and 150,000 jobs under new textile policy",
+      "score": 50.1,
+      "adjustedScore": 27.1,
+      "rank": 15,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.1,
+        "importance": 12,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:28d3ead786541eb6",
+      "title": "Toronto's voter turnout numbers are in. Here's what they show",
+      "score": 53.84,
+      "adjustedScore": 22.84,
+      "rank": 16,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 18.84,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 7,
+        "editorialBonus": 11,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "GTA",
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:5964f88099572f04",
+      "title": "Ukraine: 14 killed in Russian drone strike on crowded Dnipro train station",
+      "score": 53.38,
+      "adjustedScore": 20.38,
+      "rank": 17,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 16.38,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:2510a9f05ade62e0",
+      "title": "Florida teen accused of making bombs for ISIS",
+      "score": 40.16,
+      "adjustedScore": 15.16,
+      "rank": 18,
+      "scoreParts": {
+        "region": 25,
+        "fresh": 15.16,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Syria",
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:4dbb6d830d827ee5",
+      "title": "GDP report to give insight before Election Day. And, Israel's election is deadlocked",
+      "score": 51.39,
+      "adjustedScore": 7.39,
+      "rank": 19,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 16.39,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 8,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:3a5a6f095c105fb4",
+      "title": "Carney, top EU official push Canada associate membership, wider alliance against Trump threats",
+      "score": 61.25,
+      "adjustedScore": 6.25,
+      "rank": 20,
+      "scoreParts": {
+        "region": 8,
+        "fresh": 19.25,
+        "importance": 30,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada"
+      ]
+    },
+    {
+      "eventId": "event:9332625907f8c9c7",
+      "title": "Nov 17-18 Dialogue: Dhaka to seek Hasina, Kamal’s extradition at talks with India",
+      "score": 38.99,
+      "adjustedScore": 1.99,
+      "rank": 21,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.99,
+        "importance": 6,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:51ffb5c450d11655",
+      "title": "Ghanaian neuroscientist honoured at Millennium Excellence Awards USA for Alzheimer’s blood test discovery",
+      "score": 49.84,
+      "adjustedScore": -2.16,
+      "rank": 22,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.84,
+        "importance": 0,
+        "interestingness": 12,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 5,
+        "localTexture": 0,
+        "editorialBonus": 5,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    },
+    {
+      "eventId": "event:a8b66c43ad33aa13",
+      "title": "Libya’s central bank targeted in overnight raid raising fresh concerns",
+      "score": 42.25,
+      "adjustedScore": -3.75,
+      "rank": 23,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 18.25,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 12,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 12,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:2216026e77c63d64",
+      "title": "Putin hails Elon Musk’s ‘genius’ amid plans for Russian version of Starlink",
+      "score": 35.13,
+      "adjustedScore": -11.87,
+      "rank": 24,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 12.13,
+        "importance": 12,
+        "interestingness": 0,
+        "multiSourceSignal": 7,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:b59a09ce162901bc",
+      "title": "Ontario education minister will allow trustees to be sworn in at supervised boards after all",
+      "score": 36.25,
+      "adjustedScore": -18.75,
+      "rank": 25,
+      "scoreParts": {
+        "region": 18,
+        "fresh": 18.25,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Canada",
+        "GTA"
+      ]
+    },
+    {
+      "eventId": "event:a0b848e200ba2e4a",
+      "title": "China’s record-breaking exports of clean tech are making a big dent in emissions, report says",
+      "score": 40.46,
+      "adjustedScore": -21.54,
+      "rank": 26,
+      "scoreParts": {
+        "region": 0,
+        "fresh": 17.46,
+        "importance": 6,
+        "interestingness": 4,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 8,
+        "discovery": 5,
+        "localTexture": 0,
+        "editorialBonus": 13,
+        "editorialPenalty": 0
+      },
+      "regions": []
+    },
+    {
+      "eventId": "event:1092354b4ce67ba6",
+      "title": "Netanyahu accused of smearing Arab voters to hold on to power",
+      "score": 56.3,
+      "adjustedScore": -22.7,
+      "rank": 27,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.3,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:c5c3f20ca7f044c1",
+      "title": "NCP to demonstrate at Shahbagh on Friday, calling on at least 3 ministers to resign",
+      "score": 36.93,
+      "adjustedScore": -27.07,
+      "rank": 28,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 17.93,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 4,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 4,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Bangladesh"
+      ]
+    },
+    {
+      "eventId": "event:ef27392a18ae8951",
+      "title": "Houthi forces claim six attacks on Saudi airports, oil facilities",
+      "score": 34.54,
+      "adjustedScore": -31.46,
+      "rank": 29,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 19.54,
+        "importance": 0,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Middle East"
+      ]
+    },
+    {
+      "eventId": "event:9790f46724a3d01c",
+      "title": "Trinity Theological Seminary gets first female President",
+      "score": 48.45,
+      "adjustedScore": -32.55,
+      "rank": 30,
+      "scoreParts": {
+        "region": 15,
+        "fresh": 15.45,
+        "importance": 18,
+        "interestingness": 0,
+        "multiSourceSignal": 0,
+        "lowValuePenalty": 0,
+        "consequence": 0,
+        "discovery": 0,
+        "localTexture": 0,
+        "editorialBonus": 0,
+        "editorialPenalty": 0
+      },
+      "regions": [
+        "Ghana"
+      ]
+    }
+  ],
+  "invalidPreviousCardsRemoved": [],
+  "crossEventOverlap": [],
+  "generation": [
+    {
+      "eventId": "event:b586cc86c6b74c9e",
+      "title": "Ghana opens talks with Russia’s Rosatom for nuclear power plant - President Mahama reveals at Moscow summit",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "71234f1db81f51e2072631c05d638ed0725aca122b2ed59e2dbac63ff0e6ccb7",
+      "allowedExactDates": [
+        "2026-10-29"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 29, 2026",
+            "date": "2026-10-29"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-29"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 131,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:graphic-ghana:0d1e2665396a550d9525f742",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:graphic-ghana:0d1e2665396a550d9525f742",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:graphic-ghana:0d1e2665396a550d9525f742",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:graphic-ghana:0d1e2665396a550d9525f742",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:graphic-ghana:0d1e2665396a550d9525f742",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:graphic-ghana:0d1e2665396a550d9525f742",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:graphic-ghana:0d1e2665396a550d9525f742",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:graphic-ghana:0d1e2665396a550d9525f742",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:graphic-ghana:0d1e2665396a550d9525f742",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:graphic-ghana:0d1e2665396a550d9525f742",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:graphic-ghana:0d1e2665396a550d9525f742",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:graphic-ghana:0d1e2665396a550d9525f742",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:ghana-news-agency:1c9618cce06aa9fd22862047",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:ghana-news-agency:1c9618cce06aa9fd22862047",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F15",
+            "sourceId": "news:ghana-news-agency:1c9618cce06aa9fd22862047",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F16",
+            "sourceId": "news:ghana-news-agency:1c9618cce06aa9fd22862047",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F17",
+            "sourceId": "news:ghana-news-agency:1c9618cce06aa9fd22862047",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F18",
+            "sourceId": "news:ghana-news-agency:1c9618cce06aa9fd22862047",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F19",
+            "sourceId": "news:ghana-news-agency:1c9618cce06aa9fd22862047",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F20",
+            "sourceId": "news:ghana-news-agency:1c9618cce06aa9fd22862047",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F21",
+            "sourceId": "news:ghana-news-agency:1c9618cce06aa9fd22862047",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F22",
+            "sourceId": "news:ghana-news-agency:1c9618cce06aa9fd22862047",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F23",
+            "sourceId": "news:ghana-news-agency:1c9618cce06aa9fd22862047",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F24",
+            "sourceId": "news:ghana-news-agency:1c9618cce06aa9fd22862047",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:graphic-ghana:0d1e2665396a550d9525f742",
+          "publisher": "Graphic Online",
+          "url": "https://graphic.com.gh/news/general-news/ghana-opens-talks-with-russias-rosatom-for-nuclear-power-plant-president-mahama-reveals-at-moscow-summit.html",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:ghana-news-agency:1c9618cce06aa9fd22862047",
+          "publisher": "Ghana News Agency",
+          "url": "https://gna.org.gh/2026/10/ghana-rosatom-start-talks-on-countrys-first-nuclear-power-station",
+          "wireOrigin": null,
+          "sourceType": "public_service_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.graphic.com.gh/",
+        "alt": "Ghana opens talks with Russia’s Rosatom for nuclear power plant - President Mahama reveals at Moscow summit",
+        "status": "event-specific",
+        "source_url": "https://graphic.com.gh/news/general-news/ghana-opens-talks-with-russias-rosatom-for-nuclear-power-plant-president-mahama-reveals-at-moscow-summit.html",
+        "attribution": "Graphic Online",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-30T02:02:24.261Z",
+          "finishedAt": "2026-10-30T02:02:28.663Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Ghana initiates discussions with Russia’s Rosatom for first nuclear power station\",\n  \"pages\": [\n    {\n      \"text\": \"Ghana has initiated discussions with Russia’s state nuclear energy corporation, Rosatom, regarding the establishment of the country’s first nuclear power station, President John Dramani Mahama disclosed. The announcement was made during his address at the Third Russia–Africa Summit in Moscow on October 29, 2026. President Mahama stated that Ghana is pursuing a diversified energy mix, including renewables, while advancing foundations for the peaceful use of nuclear energy to provide baseload capacity alongside existing hydropower and thermal sources. He noted that Russia possesses a comparative advantage in nuclear power and renewable energy that could yield results for Africa's industrialization. The President recalled that the Soviet Union provided Ghana with a two-megawatt nuclear reactor for research purposes in 1964 and that several Ghanaian nuclear scientists were trained in Russia to operate that reactor.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Ghana initiates discussions with Russia’s Rosatom for first nuclear power station",
+            "pages": [
+              {
+                "text": "Ghana has initiated discussions with Russia’s state nuclear energy corporation, Rosatom, regarding the establishment of the country’s first nuclear power station, President John Dramani Mahama disclosed. The announcement was made during his address at the Third Russia–Africa Summit in Moscow on October 29, 2026. President Mahama stated that Ghana is pursuing a diversified energy mix, including renewables, while advancing foundations for the peaceful use of nuclear energy to provide baseload capacity alongside existing hydropower and thermal sources. He noted that Russia possesses a comparative advantage in nuclear power and renewable energy that could yield results for Africa's industrialization. The President recalled that the Soviet Union provided Ghana with a two-megawatt nuclear reactor for research purposes in 1964 and that several Ghanaian nuclear scientists were trained in Russia to operate that reactor."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2559,
+            "completion_tokens": 215,
+            "total_tokens": 2774,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 29.12727165222168
+          },
+          "latencyMs": 4402,
+          "safeHeaders": {
+            "cf-ray": "a526d66ded09f6b1-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:d24d0194f17c5f78",
+      "title": "Turkiye stands with Saudi Arabia in face of Houthi attacks: Ambassador",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "31e53ab81d16e328f151af553229f5e8dfef096495d98c6ae4bc03ed1e685135",
+      "allowedExactDates": [
+        "2026-10-26",
+        "2026-10-28"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 26, 2026",
+            "date": "2026-10-26"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-26",
+          "2026-10-28"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 201,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:arab-news:2558392b400138a6511de941",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:arab-news:2558392b400138a6511de941",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:euronews:385dcce8cd8e17e7f57ff71c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:euronews:385dcce8cd8e17e7f57ff71c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:euronews:385dcce8cd8e17e7f57ff71c",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:euronews:385dcce8cd8e17e7f57ff71c",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:euronews:385dcce8cd8e17e7f57ff71c",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:euronews:385dcce8cd8e17e7f57ff71c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:euronews:385dcce8cd8e17e7f57ff71c",
+            "membership": "separate_event",
+            "reason": "explicit transition introduces a different actor/action, country pairing or dated scene"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:euronews:385dcce8cd8e17e7f57ff71c",
+            "membership": "separate_event",
+            "reason": "continuation of a separate event section in the source article"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:euronews:385dcce8cd8e17e7f57ff71c",
+            "membership": "separate_event",
+            "reason": "continuation of a separate event section in the source article"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:euronews:385dcce8cd8e17e7f57ff71c",
+            "membership": "separate_event",
+            "reason": "continuation of a separate event section in the source article"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:euronews:385dcce8cd8e17e7f57ff71c",
+            "membership": "separate_event",
+            "reason": "continuation of a separate event section in the source article"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:euronews:385dcce8cd8e17e7f57ff71c",
+            "membership": "separate_event",
+            "reason": "continuation of a separate event section in the source article"
+          },
+          {
+            "fragmentId": "F15",
+            "sourceId": "news:arab-news:b077e4b217180d025da599c9",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F16",
+            "sourceId": "news:arab-news:b077e4b217180d025da599c9",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F17",
+            "sourceId": "news:arab-news:b077e4b217180d025da599c9",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F18",
+            "sourceId": "news:arab-news:b077e4b217180d025da599c9",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F19",
+            "sourceId": "news:arab-news:b077e4b217180d025da599c9",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F20",
+            "sourceId": "news:arab-news:b077e4b217180d025da599c9",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F21",
+            "sourceId": "news:arab-news:b077e4b217180d025da599c9",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F22",
+            "sourceId": "news:arab-news:b077e4b217180d025da599c9",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F23",
+            "sourceId": "news:arab-news:b077e4b217180d025da599c9",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F24",
+            "sourceId": "news:arab-news:b077e4b217180d025da599c9",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:arab-news:2558392b400138a6511de941",
+          "publisher": "Arab News",
+          "url": "https://arabnews.com/saudi-arabia/turkiye-stands-with-saudi-arabia-in-face-of-houthi-attacks-ambassador-3008853",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:euronews:385dcce8cd8e17e7f57ff71c",
+          "publisher": "Euronews",
+          "url": "https://euronews.com/2026/10/27/egypts-parliament-approves-military-support-for-saudi-arabia-amid-houthi-attacks",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:arab-news:b077e4b217180d025da599c9",
+          "publisher": "Arab News",
+          "url": "https://arabnews.com/saudi-arabia/south-korean-president-spanish-pm-condemn-houthi-attacks-on-saudi-arabia-3008915",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://assets.maestronewsroom.com/media/30f6532d-717b-4366-9158-9c455299fcd9/1793277366164-84b85bec38a42354.jpeg",
+        "alt": "Turkiye stands with Saudi Arabia in face of Houthi attacks: Ambassador",
+        "status": "event-specific",
+        "source_url": "https://arabnews.com/saudi-arabia/turkiye-stands-with-saudi-arabia-in-face-of-houthi-attacks-ambassador-3008853",
+        "attribution": "Arab News",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-30T02:02:28.664Z",
+          "finishedAt": "2026-10-30T02:02:35.692Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Turkish ambassador expresses solidarity with Saudi Arabia following Houthi attacks\", \"pages\": \n[\n  {\n    \"text\": \"Emrullah Isler, Turkiye’s Ambassador to Saudi Arabia, stated that Turkiye stands with the Kingdom in the face of what he described as unlawful and inhumane attacks by the Houthi militia. These statements follow multiple attacks on Saudi Arabia, including an October 10 missile and drone strike on King Khalid International Airport in Riyadh that killed at least 13 people and injured dozens, and a recent attack on King Fahd International Airport in Dammam that killed two people. In response to the wave of attacks by the Houthis, Egypt’s parliament on October 26, 2026, authorized President Abdel Fattah el-Sisi to provide military assistance to defend Saudi Arabia if requested. The decision passed with a two-thirds majority in the House of Representatives, allowing el-Sisi, in coordination with Riyadh, to take measures to protect Saudi territory, sovereignty, and holy sites. The Egyptian parliament's statement did not specify the type of assistance or announce the deployment of troops. President el-Sisi previously stated that any Egyptian military role would be limited to defending Saudi territory and borders, ruling out attacks on Yemen. On October 17, Yahya al-Raei, speaker of the Houthi-controlled parliament in Sanaa, warned Egypt that military involvement would endanger Egypt’s own security and stability.\"\n  }\n]}",
+          "parsed": {
+            "headline": "Turkish ambassador expresses solidarity with Saudi Arabia following Houthi attacks",
+            "pages": [
+              {
+                "text": "Emrullah Isler, Turkiye’s Ambassador to Saudi Arabia, stated that Turkiye stands with the Kingdom in the face of what he described as unlawful and inhumane attacks by the Houthi militia. These statements follow multiple attacks on Saudi Arabia, including an October 10 missile and drone strike on King Khalid International Airport in Riyadh that killed at least 13 people and injured dozens, and a recent attack on King Fahd International Airport in Dammam that killed two people. In response to the wave of attacks by the Houthis, Egypt’s parliament on October 26, 2026, authorized President Abdel Fattah el-Sisi to provide military assistance to defend Saudi Arabia if requested. The decision passed with a two-thirds majority in the House of Representatives, allowing el-Sisi, in coordination with Riyadh, to take measures to protect Saudi territory, sovereignty, and holy sites. The Egyptian parliament's statement did not specify the type of assistance or announce the deployment of troops. President el-Sisi previously stated that any Egyptian military role would be limited to defending Saudi territory and borders, ruling out attacks on Yemen. On October 17, Yahya al-Raei, speaker of the Houthi-controlled parliament in Sanaa, warned Egypt that military involvement would endanger Egypt’s own security and stability."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2329,
+            "completion_tokens": 316,
+            "total_tokens": 2645,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 29.790908813476562
+          },
+          "latencyMs": 7028,
+          "safeHeaders": {
+            "cf-ray": "a526d6893bc6f6b1-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:0242279e3c680a74",
+      "title": "Africa’s ‘unprecedented’ Ebola outbreak could reach UK, says top health official",
+      "finalStatus": "accepted",
+      "previousMatch": "same source URL",
+      "contentVersion": 2,
+      "evidenceFingerprint": "b91ac4305a3154c0d9938780301ece90de64f0bc86402dbcaad98707050ebf86",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 86,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:guardian:6dbae2bdfca228da54ca5793",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:guardian:6dbae2bdfca228da54ca5793",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:guardian:6dbae2bdfca228da54ca5793",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:guardian:6dbae2bdfca228da54ca5793",
+          "publisher": "The Guardian World",
+          "url": "https://theguardian.com/global-development/2026/oct/28/africa-ebola-outbreak-could-reach-uk-says-top-health-official",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.guim.co.uk/img/media/4c8a92421c88cf3bb5c2743cd8f6b4900e511a1f/538_0_4583_3667/master/4583.jpg?width=140&quality=85&auto=format&fit=max&s=4eca9873ee9ecb59fb15e289980ef771",
+        "alt": "Africa’s ‘unprecedented’ Ebola outbreak could reach UK, says top health official",
+        "status": "event-specific",
+        "source_url": "https://theguardian.com/global-development/2026/oct/28/africa-ebola-outbreak-could-reach-uk-says-top-health-official",
+        "attribution": "The Guardian World",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-30T02:02:35.693Z",
+          "finishedAt": "2026-10-30T02:02:38.567Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Africa CDC official warns Ebola outbreak could reach UK\",\n  \"pages\": [\n    {\n      \"text\": \"Dr. Jean Kaseya, the director general of the Africa Centres for Disease Control and Prevention (CDC), has warned that an unprecedented Ebola outbreak in Africa could reach the United Kingdom and other countries. Kaseya stated that countries are not safe unless they take appropriate measures, comparing the potential spread of the illness to the Covid-19 pandemic. He noted that more funding must be secured to increase preparedness and possible treatment to prevent such a spread. The current outbreak has reached 10,000 cases and almost 5,000 deaths.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Africa CDC official warns Ebola outbreak could reach UK",
+            "pages": [
+              {
+                "text": "Dr. Jean Kaseya, the director general of the Africa Centres for Disease Control and Prevention (CDC), has warned that an unprecedented Ebola outbreak in Africa could reach the United Kingdom and other countries. Kaseya stated that countries are not safe unless they take appropriate measures, comparing the potential spread of the illness to the Covid-19 pandemic. He noted that more funding must be secured to increase preparedness and possible treatment to prevent such a spread. The current outbreak has reached 10,000 cases and almost 5,000 deaths."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1098,
+            "completion_tokens": 156,
+            "total_tokens": 1254,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 14.236364364624023
+          },
+          "latencyMs": 2875,
+          "safeHeaders": {
+            "cf-ray": "a526d6b52da7f6b1-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:254ce4d37e2d53fa",
+      "finalStatus": "content_structure_failure",
+      "contentValidation": {
+        "valid": false,
+        "reasons": [
+          "summary is too thin for a self-contained beta card",
+          "page 1 ends mid-sentence",
+          "page 2 is too thin",
+          "page 2 ends mid-sentence",
+          "page 3 is too thin",
+          "page 3 ends mid-sentence"
+        ],
+        "wordCount": 36,
+        "pageCount": 3
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-30T02:02:38.568Z",
+          "finishedAt": "2026-10-30T02:02:40.766Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Edmonton and Calgary reject referendum questions in Alberta\",\n  \"pages\": [\n    {\n      \"text\": \"Voters in Alberta's two largest cities rejected a series of 10 referendum questions, highlighting a divide between urban and rural residents. In Edmonton, voters returned a \"},{\"text\":\"no\"},{\"text\":\" vote across all questions. In Calgary, voters collectively voted \"}]\n    }",
+          "parsed": {
+            "headline": "Edmonton and Calgary reject referendum questions in Alberta",
+            "pages": [
+              {
+                "text": "Voters in Alberta's two largest cities rejected a series of 10 referendum questions, highlighting a divide between urban and rural residents. In Edmonton, voters returned a "
+              },
+              {
+                "text": "no"
+              },
+              {
+                "text": " vote across all questions. In Calgary, voters collectively voted "
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1692,
+            "completion_tokens": 94,
+            "total_tokens": 1786,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 17.945453643798828
+          },
+          "latencyMs": 2198,
+          "safeHeaders": {
+            "cf-ray": "a526d6c72d8cf6b1-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:aef7b6d08e4f0716",
+      "title": "President Mahama commends Putin’s readiness to resume Ukraine talks",
+      "finalStatus": "accepted",
+      "previousMatch": "same source URL",
+      "contentVersion": 2,
+      "evidenceFingerprint": "83ac11b8ff61d04634eaa6564e21b588d7c5f780c5b205a6397e32f4e630c544",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 87,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:graphic-ghana:1cf9c6fa84a9162437447b39",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:graphic-ghana:1cf9c6fa84a9162437447b39",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:graphic-ghana:1cf9c6fa84a9162437447b39",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:graphic-ghana:1cf9c6fa84a9162437447b39",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:graphic-ghana:1cf9c6fa84a9162437447b39",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:graphic-ghana:1cf9c6fa84a9162437447b39",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:graphic-ghana:1cf9c6fa84a9162437447b39",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:graphic-ghana:1cf9c6fa84a9162437447b39",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:graphic-ghana:1cf9c6fa84a9162437447b39",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:graphic-ghana:1cf9c6fa84a9162437447b39",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:graphic-ghana:1cf9c6fa84a9162437447b39",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:graphic-ghana:1cf9c6fa84a9162437447b39",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:graphic-ghana:1cf9c6fa84a9162437447b39",
+          "publisher": "Graphic Online",
+          "url": "https://graphic.com.gh/news/general-news/president-mahama-commends-putins-readiness-to-resume-ukraine-talks.html",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.graphic.com.gh/images/2026/Oct/26/866990488_1838645964247086_6303260166867610202_n.jpg",
+        "alt": "President Mahama commends Putin’s readiness to resume Ukraine talks",
+        "status": "event-specific",
+        "source_url": "https://graphic.com.gh/news/general-news/president-mahama-commends-putins-readiness-to-resume-ukraine-talks.html",
+        "attribution": "Graphic Online",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-30T02:02:40.766Z",
+          "finishedAt": "2026-10-30T02:02:49.442Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"President Mahama commends Russian President Putin's readiness to resume Ukraine talks\",\n  \"pages\": [\n    {\n      \"text\": \"Addressing the Third Russia–Africa Summit in Moscow, Ghanaian President John Dramani Mahama commended Russian President Vladimir Putin for his willingness to resume trilateral talks regarding the conflict with Ukraine. Mahama expressed appreciation for Putin's call for a lasting peace agreement and security for both Russia and Ukraine, stating that global conflicts cause death, suffering, and disruptions to global logistics and value chains. While calling for conflicts to be resolved amicably, Mahama reaffirmed Ghana’s policy of non-alignment, noting that the country seeks partnerships that advance its development priorities.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "President Mahama commends Russian President Putin's readiness to resume Ukraine talks",
+            "pages": [
+              {
+                "text": "Addressing the Third Russia–Africa Summit in Moscow, Ghanaian President John Dramani Mahama commended Russian President Vladimir Putin for his willingness to resume trilateral talks regarding the conflict with Ukraine. Mahama expressed appreciation for Putin's call for a lasting peace agreement and security for both Russia and Ukraine, stating that global conflicts cause death, suffering, and disruptions to global logistics and value chains. While calling for conflicts to be resolved amicably, Mahama reaffirmed Ghana’s policy of non-alignment, noting that the country seeks partnerships that advance its development priorities."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1602,
+            "completion_tokens": 155,
+            "total_tokens": 1757,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 18.790908813476562
+          },
+          "latencyMs": 8676,
+          "safeHeaders": {
+            "cf-ray": "a526d6d4edcbf6b1-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:601457f1ab9a2860",
+      "title": "Over 45% women face tech-facilitated violence: study",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "4b282bf3eb10bb6f66aa8b23a537c1f1b5397041c5e9824399c95aa765c8e203",
+      "allowedExactDates": [
+        "2026-10-29"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 29, 2026",
+            "date": "2026-10-29"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-29"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 318,
+        "pageCount": 3
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:daily-star-bd:60f0ec8f0e09df1203dea024",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:daily-star-bd:60f0ec8f0e09df1203dea024",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:daily-star-bd:60f0ec8f0e09df1203dea024",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:daily-star-bd:60f0ec8f0e09df1203dea024",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:daily-star-bd:60f0ec8f0e09df1203dea024",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:daily-star-bd:60f0ec8f0e09df1203dea024",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:daily-star-bd:60f0ec8f0e09df1203dea024",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:daily-star-bd:60f0ec8f0e09df1203dea024",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:daily-star-bd:60f0ec8f0e09df1203dea024",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:daily-star-bd:60f0ec8f0e09df1203dea024",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:daily-star-bd:60f0ec8f0e09df1203dea024",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:daily-star-bd:60f0ec8f0e09df1203dea024",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:daily-star-bd:60f0ec8f0e09df1203dea024",
+          "publisher": "The Daily Star Bangladesh",
+          "url": "https://thedailystar.net/news/bangladesh/news/over-45-women-face-tech-facilitated-violence-study-4311101",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.thedailystar.net/sites/default/files/styles/social_share/public/2026-10/tech.jpg",
+        "alt": "Over 45% women face tech-facilitated violence: study",
+        "status": "event-specific",
+        "source_url": "https://thedailystar.net/news/bangladesh/news/over-45-women-face-tech-facilitated-violence-study-4311101",
+        "attribution": "The Daily Star Bangladesh",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-30T02:02:49.443Z",
+          "finishedAt": "2026-10-30T02:02:58.999Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Study finds over 45% of surveyed women in Bangladesh face technology-facilitated gender-based violence\",\n  \"pages\": [\n    {\n      \"text\": \"A study launched on October 29, 2026, reported that approximately 45.5 percent of surveyed women in Bangladesh faced technology-facilitated gender-based violence (TFGBV). According to the findings, 34.2 percent of respondents experienced two or more overlapping forms of abuse, while 14.8 percent reported three or more. The research, titled “Abuse Beyond the Screen: A Study on Technology-Facilitated Gender-Based Violence in Bangladesh,” was jointly conducted by Bangladesh Mahila Parishad and Digitally Right Limited with support from the Embassy of Sweden. The results were presented in Dhaka by Abdullah Titir, head of research at Digitally Right Limited, and Afroja Arman, senior training and research officer at Bangladesh Mahila Parishad. The study also cited 2025 data from the Bangladesh Bureau of Statistics (BBS) and UNFPA, which indicated that 8.3 percent of women surveyed had experienced TFGBV at some point in their lives.\"\n    },\n    {\n      \"text\": \"The mixed-method study was conducted from January 7 to 13, surveying 521 women and girls aged 15 and above across Dhaka, Chattogram, Barishal, Rajshahi, and Sylhet. The respondent group included four key-informant interviews and eight in-depth interviews with survivors. Age demographics included those aged 15 to 24 (29 percent), 25 to 34 (27.8 percent), 35 to 44 (20.3 percent), 45 to 54 (14.8 percent), and 55 and above (8.1 percent). Among active internet users surveyed, 63.7 percent reported experiencing TFGBV, with 57.4 percent reporting such violence within the previous 12 months. The study noted that 67 percent of the 71 percent of respondents who were active internet users had never received formal online safety guidance or training.\"\n    },\n    {\n      \"text\": \"The study identified specific types of abuse: harassment and gender-based abuse affected 52.7 percent, economic exploitation and fraud affected 37.1 percent, sexual and image-based abuse affected 24.5 percent, and identity misuse or abuse involving fake IDs affected 17.3 percent. Vulnerability varied by demographic, with 49 percent of respondents aged 15 to 24 reporting TFGBV and 76.7 percent of university-educated women reporting the violence.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Study finds over 45% of surveyed women in Bangladesh face technology-facilitated gender-based violence",
+            "pages": [
+              {
+                "text": "A study launched on October 29, 2026, reported that approximately 45.5 percent of surveyed women in Bangladesh faced technology-facilitated gender-based violence (TFGBV). According to the findings, 34.2 percent of respondents experienced two or more overlapping forms of abuse, while 14.8 percent reported three or more. The research, titled “Abuse Beyond the Screen: A Study on Technology-Facilitated Gender-Based Violence in Bangladesh,” was jointly conducted by Bangladesh Mahila Parishad and Digitally Right Limited with support from the Embassy of Sweden. The results were presented in Dhaka by Abdullah Titir, head of research at Digitally Right Limited, and Afroja Arman, senior training and research officer at Bangladesh Mahila Parishad. The study also cited 2025 data from the Bangladesh Bureau of Statistics (BBS) and UNFPA, which indicated that 8.3 percent of women surveyed had experienced TFGBV at some point in their lives."
+              },
+              {
+                "text": "The mixed-method study was conducted from January 7 to 13, surveying 521 women and girls aged 15 and above across Dhaka, Chattogram, Barishal, Rajshahi, and Sylhet. The respondent group included four key-informant interviews and eight in-depth interviews with survivors. Age demographics included those aged 15 to 24 (29 percent), 25 to 34 (27.8 percent), 35 to 44 (20.3 percent), 45 to 54 (14.8 percent), and 55 and above (8.1 percent). Among active internet users surveyed, 63.7 percent reported experiencing TFGBV, with 57.4 percent reporting such violence within the previous 12 months. The study noted that 67 percent of the 71 percent of respondents who were active internet users had never received formal online safety guidance or training."
+              },
+              {
+                "text": "The study identified specific types of abuse: harassment and gender-based abuse affected 52.7 percent, economic exploitation and fraud affected 37.1 percent, sexual and image-based abuse affected 24.5 percent, and identity misuse or abuse involving fake IDs affected 17.3 percent. Vulnerability varied by demographic, with 49 percent of respondents aged 15 to 24 reporting TFGBV and 76.7 percent of university-educated women reporting the violence."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1980,
+            "completion_tokens": 599,
+            "total_tokens": 2579,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 34.33636474609375
+          },
+          "latencyMs": 9557,
+          "safeHeaders": {
+            "cf-ray": "a526d70b1b4df6b1-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:1a3c91409f59edc9",
+      "title": "Floods displace hundreds of families in Syria, kill one in Raqqa",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "5c32b31c41845f3e109f8a4bf4f4a120183de6949cb5de88462e938a613ae524",
+      "allowedExactDates": [
+        "2026-10-28"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 28, 2026",
+            "date": "2026-10-28"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-28"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 191,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:north-press:f46464b34cd9504d1c82463f",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:north-press:f46464b34cd9504d1c82463f",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:arab-news:97f7e9f9c6e4f620b0eb5698",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:arab-news:97f7e9f9c6e4f620b0eb5698",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:arab-news:97f7e9f9c6e4f620b0eb5698",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:arab-news:97f7e9f9c6e4f620b0eb5698",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:arab-news:97f7e9f9c6e4f620b0eb5698",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:arab-news:97f7e9f9c6e4f620b0eb5698",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:arab-news:97f7e9f9c6e4f620b0eb5698",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:arab-news:97f7e9f9c6e4f620b0eb5698",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:arab-news:97f7e9f9c6e4f620b0eb5698",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:arab-news:97f7e9f9c6e4f620b0eb5698",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:arab-news:97f7e9f9c6e4f620b0eb5698",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:arab-news:97f7e9f9c6e4f620b0eb5698",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:north-press:f46464b34cd9504d1c82463f",
+          "publisher": "North Press Agency",
+          "url": "https://npasyria.com/en/143182",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:arab-news:97f7e9f9c6e4f620b0eb5698",
+          "publisher": "Arab News",
+          "url": "https://arabnews.com/middle-east/floods-kill-5-in-syria-force-hundreds-of-families-from-camps-3008862",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://npasyria.com/en/wp-content/uploads/2026/10/867268782_1518076120160428_6285784906118184521_n-750x430-1.jpg",
+        "alt": "Floods displace hundreds of families in Syria, kill one in Raqqa",
+        "status": "event-specific",
+        "source_url": "https://npasyria.com/en/143182",
+        "attribution": "North Press Agency",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-30T02:02:59.000Z",
+          "finishedAt": "2026-10-30T02:03:04.293Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Floods in Syria kill five and displace hundreds of families across six provinces\", \"pages\": [{\"text\": \"Heavy rainfall and flash floods across six provinces in Syria killed five people, including four children, and left five others missing, according to the Syrian Ministry of Emergency and Disaster Management. The ministry reported that the flooding affected Aleppo, Raqqa, Deir Ezzor, Hama, Homs, and Latakia provinces. As of 11:30 p.m. on October 28, 2026, emergency response teams had carried out 165 operations after receiving more than 350 reports of weather-related incidents. Syrian Civil Defense teams rescued 25 people who were trapped by floodwaters or stranded in vehicles in Raqqa, Deir Ezzor, and Homs. In rural Raqqa, crews evacuated approximately 375 families from the Sahlat Al-Banat, Al-Younani, and Al-Maqass displacement camps after floodwaters entered the sites. Additionally, the collapse of an earthen drainage crossing in Kasrat Surour left an estimated 100-plus families surrounded by water. The floods damaged roads, bridges, and public facilities, disrupting transport and access to communities. In Raqqa, seven bridges, culverts, and unpaved roads were rendered unusable. Emergency crews used engineering equipment to secure the area around Ratla Bridge to reopen the road and responded to damage at the Al-Kantari and Al-Salmani bridges and the Kasrat Surour crossing.\"}]}",
+          "parsed": {
+            "headline": "Floods in Syria kill five and displace hundreds of families across six provinces",
+            "pages": [
+              {
+                "text": "Heavy rainfall and flash floods across six provinces in Syria killed five people, including four children, and left five others missing, according to the Syrian Ministry of Emergency and Disaster Management. The ministry reported that the flooding affected Aleppo, Raqqa, Deir Ezzor, Hama, Homs, and Latakia provinces. As of 11:30 p.m. on October 28, 2026, emergency response teams had carried out 165 operations after receiving more than 350 reports of weather-related incidents. Syrian Civil Defense teams rescued 25 people who were trapped by floodwaters or stranded in vehicles in Raqqa, Deir Ezzor, and Homs. In rural Raqqa, crews evacuated approximately 375 families from the Sahlat Al-Banat, Al-Younani, and Al-Maqass displacement camps after floodwaters entered the sites. Additionally, the collapse of an earthen drainage crossing in Kasrat Surour left an estimated 100-plus families surrounded by water. The floods damaged roads, bridges, and public facilities, disrupting transport and access to communities. In Raqqa, seven bridges, culverts, and unpaved roads were rendered unusable. Emergency crews used engineering equipment to secure the area around Ratla Bridge to reopen the road and responded to damage at the Al-Kantari and Al-Salmani bridges and the Kasrat Surour crossing."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1726,
+            "completion_tokens": 329,
+            "total_tokens": 2055,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 24.66363525390625
+          },
+          "latencyMs": 5293,
+          "safeHeaders": {
+            "cf-ray": "a526d746dde2f6b1-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:bd230a8a238e5352",
+      "title": "Tokyo inflation exceeds BOJ’s 2% target before rate decision",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "f454ab138ef02b1277c5cd9e6f32cb50bac71c63f7aee14bbb1c87ac610c15ea",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 133,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:japan-times:0d571a900286b583edeba3f4",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:japan-times:0d571a900286b583edeba3f4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:japan-times:0d571a900286b583edeba3f4",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:japan-times:0d571a900286b583edeba3f4",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:japan-times:0d571a900286b583edeba3f4",
+          "publisher": "The Japan Times",
+          "url": "https://japantimes.co.jp/business/2026/10/30/economy/tokyo-cpi-october",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://www.japantimes.co.jp/japantimes/uploads/images/2026/10/30/571350.jpg",
+        "alt": "Tokyo inflation exceeds BOJ’s 2% target before rate decision",
+        "status": "event-specific",
+        "source_url": "https://japantimes.co.jp/business/2026/10/30/economy/tokyo-cpi-october",
+        "attribution": "The Japan Times",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-30T02:03:04.294Z",
+          "finishedAt": "2026-10-30T02:03:08.233Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"Tokyo consumer inflation rises 2.6% in October\",\n  \"pages\": [\n    {\n      \"text\": \"Consumer prices in Tokyo rose 2.6% in October from a year earlier, according to data reported by the Ministry of Internal Affairs and Communications on Friday. This figure, which excludes fresh food, remains above the Bank of Japan’s 2% target and follows a 2.7% increase recorded in September. The 2.6% reading matched the median forecast from economists, who had predicted 2.7% gains for both the core and underlying measures. Overall inflation in the capital was reported at 2.8%, while prices excluding both fresh food and energy climbed 2.6%. The inflation data in Tokyo serves as a leading indicator for nationwide trends, though the relationship can be distorted by localized measures to cap living costs. The report was released hours before the Bank of Japan's board is expected to hold its policy settings steady.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "Tokyo consumer inflation rises 2.6% in October",
+            "pages": [
+              {
+                "text": "Consumer prices in Tokyo rose 2.6% in October from a year earlier, according to data reported by the Ministry of Internal Affairs and Communications on Friday. This figure, which excludes fresh food, remains above the Bank of Japan’s 2% target and follows a 2.7% increase recorded in September. The 2.6% reading matched the median forecast from economists, who had predicted 2.7% gains for both the core and underlying measures. Overall inflation in the capital was reported at 2.8%, while prices excluding both fresh food and energy climbed 2.6%. The inflation data in Tokyo serves as a leading indicator for nationwide trends, though the relationship can be distorted by localized measures to cap living costs. The report was released hours before the Bank of Japan's board is expected to hold its policy settings steady."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1235,
+            "completion_tokens": 218,
+            "total_tokens": 1453,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 17.172725677490234
+          },
+          "latencyMs": 3939,
+          "safeHeaders": {
+            "cf-ray": "a526d767f96af6b1-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:fe1d33e532bac3e1",
+      "title": "No clear winner in Israel's first election since the 2023 Hamas attack",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "ef527054b267502786839459a5a7dc75abfeded3d895256123fdd07f1cd77a00",
+      "allowedExactDates": [
+        "2026-10-28",
+        "2026-10-23"
+      ],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [
+          {
+            "raw": "October 28, 2026",
+            "date": "2026-10-28"
+          },
+          {
+            "raw": "October 23, 2026",
+            "date": "2026-10-23"
+          }
+        ],
+        "allowed_exact_dates": [
+          "2026-10-28",
+          "2026-10-23"
+        ],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": true,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 234,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:africanews:d989b6a213d7cce2954084fe",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:africanews:d989b6a213d7cce2954084fe",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:africanews:d989b6a213d7cce2954084fe",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:africanews:d989b6a213d7cce2954084fe",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:africanews:d989b6a213d7cce2954084fe",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:africanews:d989b6a213d7cce2954084fe",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:africanews:d989b6a213d7cce2954084fe",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:africanews:d989b6a213d7cce2954084fe",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:africanews:d989b6a213d7cce2954084fe",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:africanews:d989b6a213d7cce2954084fe",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:africanews:d989b6a213d7cce2954084fe",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:africanews:d989b6a213d7cce2954084fe",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:africanews:d989b6a213d7cce2954084fe",
+          "publisher": "Africanews",
+          "url": "https://africanews.com/2026/10/28/no-clear-winner-in-israels-first-election-since-the-2023-hamas-attack",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://images.euronews.com/articles/stories/09/97/01/12/1024x538_cmsv2_f17d5203-b512-5251-badf-d6e12096dfd6-9970112.jpg",
+        "alt": "No clear winner in Israel's first election since the 2023 Hamas attack",
+        "status": "event-specific",
+        "source_url": "https://africanews.com/2026/10/28/no-clear-winner-in-israels-first-election-since-the-2023-hamas-attack",
+        "attribution": "Africanews",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-30T02:03:08.233Z",
+          "finishedAt": "2026-10-30T02:03:16.745Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\"headline\": \"Partial results show no clear winner in Israel's first election since October 2023 Hamas attack\", \"pages\": [{\"text\": \"Partial results from Israel's first election since the October 2023 Hamas attack showed no clear winner on the morning of October 28, 2026, according to Africanews. As vote counting continued, neither Prime Minister Benjamin Netanyahu’s Likud party and its right-wing allies nor a rival alliance led by former military chief Gadi Eisenkot appeared to be on a route to a clear win. Turnout was reported as the highest in at least a quarter of a century. The vote has been widely viewed as a referendum on Netanyahu’s handling of the conflict. Because a majority in the 120-seat parliament requires 61 seats, the results suggest a period of gridlock and weeks of coalition negotiations. After 51.8 per cent of ballots were counted, Netanyahu's bloc was shown to have 55 seats, Eisenkot's opposition bloc had 49 seats, and Arab parties had 16 seats. While the opposition group would have enough seats for a majority if a coalition agreement were reached with the Arab parties, Eisenkot stated during his campaign that he would not govern with Israeli Arab lawmakers, a position echoed by Netanyahu. Exit polls projected an historically large number of seats for Arab parties, which could provide significant leverage in forming a government. A stalemate in government formation could allow Netanyahu to remain caretaker prime minister until a new government is formed. Full results are expected by Thursday evening or on October 23, 2026 morning.\"}]}",
+          "parsed": {
+            "headline": "Partial results show no clear winner in Israel's first election since October 2023 Hamas attack",
+            "pages": [
+              {
+                "text": "Partial results from Israel's first election since the October 2023 Hamas attack showed no clear winner on the morning of October 28, 2026, according to Africanews. As vote counting continued, neither Prime Minister Benjamin Netanyahu’s Likud party and its right-wing allies nor a rival alliance led by former military chief Gadi Eisenkot appeared to be on a route to a clear win. Turnout was reported as the highest in at least a quarter of a century. The vote has been widely viewed as a referendum on Netanyahu’s handling of the conflict. Because a majority in the 120-seat parliament requires 61 seats, the results suggest a period of gridlock and weeks of coalition negotiations. After 51.8 per cent of ballots were counted, Netanyahu's bloc was shown to have 55 seats, Eisenkot's opposition bloc had 49 seats, and Arab parties had 16 seats. While the opposition group would have enough seats for a majority if a coalition agreement were reached with the Arab parties, Eisenkot stated during his campaign that he would not govern with Israeli Arab lawmakers, a position echoed by Netanyahu. Exit polls projected an historically large number of seats for Arab parties, which could provide significant leverage in forming a government. A stalemate in government formation could allow Netanyahu to remain caretaker prime minister until a new government is formed. Full results are expected by Thursday evening or on October 23, 2026 morning."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1689,
+            "completion_tokens": 345,
+            "total_tokens": 2034,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 24.763635635375977
+          },
+          "latencyMs": 8512,
+          "safeHeaders": {
+            "cf-ray": "a526d7808ab2f6b1-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:7c4d695c2846c1b3",
+      "title": "BNP’s Mirza Faisal wins Thakurgaon-1 by-election",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "56a171e8cbfa14c54d8a555c6da3221f3525703bcbf8a06687a7ca20dc2d9ca3",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 93,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:financial-express-bd:69a4b13a02aa4836f8fac27c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:financial-express-bd:69a4b13a02aa4836f8fac27c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:financial-express-bd:69a4b13a02aa4836f8fac27c",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:financial-express-bd:69a4b13a02aa4836f8fac27c",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:financial-express-bd:69a4b13a02aa4836f8fac27c",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:financial-express-bd:69a4b13a02aa4836f8fac27c",
+          "publisher": "The Financial Express Bangladesh",
+          "url": "https://thefinancialexpress.com.bd/national/bnps-mirza-faisal-wins-thakurgaon-1-by-election-by-131336-votes",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://thefe-bd.sgp1.cdn.digitaloceanspaces.com/posts/179462/mirza.jpg",
+        "alt": "BNP’s Mirza Faisal wins Thakurgaon-1 by-election",
+        "status": "event-specific",
+        "source_url": "https://thefinancialexpress.com.bd/national/bnps-mirza-faisal-wins-thakurgaon-1-by-election-by-131336-votes",
+        "attribution": "The Financial Express Bangladesh",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-30T02:03:16.746Z",
+          "finishedAt": "2026-10-30T02:03:21.966Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"BNP candidate Mirza Faisal Amin wins Thakurgaon-1 by-election in Bangladesh\",\n  \"pages\": [\n    {\n      \"text\": \"Mirza Faisal Amin, a candidate for the Bangladesh Nationalist Party (BNP), won the Thakurgaon-1 by-election, defeating the closest rival, Jamaat-e-Islami candidate Delawar Hosen, by 131,336 votes. Kamrul Islam, the Returning Officer and Thakurgaon District Election Officer, declared Faisal the winner around 9:30 p.m. on Thursday. Faisal, who is the younger brother of BNP Secretary General Mirza Fakhrul Islam Alamgir, received 227,789 votes, while Hosen secured 96,453 votes. Voter turnout for the by-election was 64.77 percent. Election and administrative officials from various levels of the district were present during the announcement of the results.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "BNP candidate Mirza Faisal Amin wins Thakurgaon-1 by-election in Bangladesh",
+            "pages": [
+              {
+                "text": "Mirza Faisal Amin, a candidate for the Bangladesh Nationalist Party (BNP), won the Thakurgaon-1 by-election, defeating the closest rival, Jamaat-e-Islami candidate Delawar Hosen, by 131,336 votes. Kamrul Islam, the Returning Officer and Thakurgaon District Election Officer, declared Faisal the winner around 9:30 p.m. on Thursday. Faisal, who is the younger brother of BNP Secretary General Mirza Fakhrul Islam Alamgir, received 227,789 votes, while Hosen secured 96,453 votes. Voter turnout for the by-election was 64.77 percent. Election and administrative officials from various levels of the district were present during the announcement of the results."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 1671,
+            "completion_tokens": 214,
+            "total_tokens": 1885,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 21.027271270751953
+          },
+          "latencyMs": 5220,
+          "safeHeaders": {
+            "cf-ray": "a526d7b5ca16f6b1-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    },
+    {
+      "eventId": "event:c0dfb3c4b1370c48",
+      "title": "Europe’s central bank chief, Christine Lagarde, steps down for ‘freedom of speech’",
+      "finalStatus": "accepted",
+      "previousMatch": null,
+      "contentVersion": 1,
+      "evidenceFingerprint": "67f55932c16919fb344b4ef61aa8a13414ace2f8894147913363cd99e2760bc2",
+      "allowedExactDates": [],
+      "dateValidation": {
+        "valid": true,
+        "generated_exact_dates": [],
+        "allowed_exact_dates": [],
+        "unsupported_exact_dates": [],
+        "weekday_date_pairs": [],
+        "invalid_weekday_date_pairs": [],
+        "status": "pass"
+      },
+      "writerExposureAudit": {
+        "raw_publication_timestamp_exposed": false,
+        "raw_update_timestamp_exposed": false,
+        "resolved_relative_expressions_exposed": [],
+        "normalized_event_date_exposed": false,
+        "passes": true
+      },
+      "contentValidation": {
+        "valid": true,
+        "reasons": [],
+        "wordCount": 261,
+        "pageCount": 1
+      },
+      "scope": {
+        "fragments": [
+          {
+            "fragmentId": "F01",
+            "sourceId": "news:guardian:e1b04d92f42e71678c6b9bdd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F02",
+            "sourceId": "news:guardian:e1b04d92f42e71678c6b9bdd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F03",
+            "sourceId": "news:guardian:e1b04d92f42e71678c6b9bdd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F04",
+            "sourceId": "news:guardian:e1b04d92f42e71678c6b9bdd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F05",
+            "sourceId": "news:guardian:e1b04d92f42e71678c6b9bdd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F06",
+            "sourceId": "news:guardian:e1b04d92f42e71678c6b9bdd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F07",
+            "sourceId": "news:guardian:e1b04d92f42e71678c6b9bdd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F08",
+            "sourceId": "news:guardian:e1b04d92f42e71678c6b9bdd",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F09",
+            "sourceId": "news:guardian:e1b04d92f42e71678c6b9bdd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F10",
+            "sourceId": "news:guardian:e1b04d92f42e71678c6b9bdd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F11",
+            "sourceId": "news:guardian:e1b04d92f42e71678c6b9bdd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F12",
+            "sourceId": "news:guardian:e1b04d92f42e71678c6b9bdd",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          },
+          {
+            "fragmentId": "F13",
+            "sourceId": "news:dw:d8175f91bbc24ed6634116d7",
+            "membership": "central",
+            "reason": "shares selected event actors/action or multiple high-specificity title terms"
+          },
+          {
+            "fragmentId": "F14",
+            "sourceId": "news:dw:d8175f91bbc24ed6634116d7",
+            "membership": "supporting_context",
+            "reason": "contiguous context within the selected event section and no deterministic separate-event transition"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "sourceId": "news:guardian:e1b04d92f42e71678c6b9bdd",
+          "publisher": "The Guardian World",
+          "url": "https://theguardian.com/world/2026/oct/29/european-central-bank-chief-christine-lagarde-to-step-down-nine-months-early",
+          "wireOrigin": null,
+          "sourceType": "independent_reporting"
+        },
+        {
+          "sourceId": "news:dw:d8175f91bbc24ed6634116d7",
+          "publisher": "DW World",
+          "url": "https://dw.com/en/european-central-bank-ecb-head-christine-lagarde-to-step-down-in-february-before-her-term-ends/a-79794353?maca=en-rss-en-all-1573-rdf",
+          "wireOrigin": null,
+          "sourceType": "public_service_reporting"
+        }
+      ],
+      "image": {
+        "url": "https://i.guim.co.uk/img/media/f13bea6725d5657471b22b4820dbfdc9fbc83e68/0_0_4583_3667/master/4583.jpg?width=140&quality=85&auto=format&fit=max&s=b40ab61b8b9558ade1428e94d084fb92",
+        "alt": "Europe’s central bank chief, Christine Lagarde, steps down for ‘freedom of speech’",
+        "status": "event-specific",
+        "source_url": "https://theguardian.com/world/2026/oct/29/european-central-bank-chief-christine-lagarde-to-step-down-nine-months-early",
+        "attribution": "The Guardian World",
+        "rights_basis": "Publisher-hosted remote reference; no image bytes are copied and no reuse rights are asserted."
+      },
+      "attempts": [
+        {
+          "timestamp": "2026-10-30T02:03:21.966Z",
+          "finishedAt": "2026-10-30T02:03:30.586Z",
+          "requestedModel": "@cf/google/gemma-4-26b-a4b-it",
+          "returnedModel": "@cf/google/gemma-4-26b-a4b-it-external",
+          "httpStatus": 200,
+          "internalErrors": [],
+          "rawStructuredText": "{\n  \"headline\": \"European Central Bank President Christine Lagarde to step down in March\",\n  \"pages\": [\n    {\n      \"text\": \"Christine Lagarde, the president of the European Central Bank (ECB), has announced she will step down from her role in March, nine months earlier than her scheduled October departure. Lagarde stated her decision is driven by a desire for freedom of speech and expression, noting that the rules of neutrality governing her position prevent her from influencing debates regarding financial and economic affairs or engaging on matters outside of monetary policy. She expressed a wish to confront the “misrepresentation of the truth.”<br><br>Lagarde, a former managing director of the International Monetary Fund and former finance minister of France, made the announcement at the conclusion of a press conference regarding the ECB's decision to maintain its key deposit rate at 2.5%, despite inflation reaching 3.8% last month—the highest level since September 2023. <br><br>The European Council, composed of EU heads of state, is responsible for appointing the head of the ECB. European Council President Antonio Costa has stated that the process to find a successor is underway. Potential candidates mentioned include former Dutch central bank president Klaas Knot, Spanish banker Pablo Hernández de Cos, German central bank president Joachim Nagel, and Nadia Calviño, the president of the European Investment Bank. <br><br>Speculation has arisen regarding Lagarde's future roles, including her being tipped as a candidate to lead the World Economic Forum. Additionally, there has been speculation that French President Emmanuel Macron may have encouraged her early departure to ensure a successor is appointed before potential shifts in the French presidency, though this remains unconfirmed. Lagarde will also be eligible to participate in elections next April.\"\n    }\n  ]\n}",
+          "parsed": {
+            "headline": "European Central Bank President Christine Lagarde to step down in March",
+            "pages": [
+              {
+                "text": "Christine Lagarde, the president of the European Central Bank (ECB), has announced she will step down from her role in March, nine months earlier than her scheduled October departure. Lagarde stated her decision is driven by a desire for freedom of speech and expression, noting that the rules of neutrality governing her position prevent her from influencing debates regarding financial and economic affairs or engaging on matters outside of monetary policy. She expressed a wish to confront the “misrepresentation of the truth.”<br><br>Lagarde, a former managing director of the International Monetary Fund and former finance minister of France, made the announcement at the conclusion of a press conference regarding the ECB's decision to maintain its key deposit rate at 2.5%, despite inflation reaching 3.8% last month—the highest level since September 2023. <br><br>The European Council, composed of EU heads of state, is responsible for appointing the head of the ECB. European Council President Antonio Costa has stated that the process to find a successor is underway. Potential candidates mentioned include former Dutch central bank president Klaas Knot, Spanish banker Pablo Hernández de Cos, German central bank president Joachim Nagel, and Nadia Calviño, the president of the European Investment Bank. <br><br>Speculation has arisen regarding Lagarde's future roles, including her being tipped as a candidate to lead the World Economic Forum. Additionally, there has been speculation that French President Emmanuel Macron may have encouraged her early departure to ensure a successor is appointed before potential shifts in the French presidency, though this remains unconfirmed. Lagarde will also be eligible to participate in elections next April."
+              }
+            ]
+          },
+          "parseError": null,
+          "providerParseError": null,
+          "schemaAudit": {
+            "valid": true,
+            "unknownProperties": [],
+            "missingProperties": [],
+            "misplacedProperties": [],
+            "pageProblems": [],
+            "uncertaintyProblem": false
+          },
+          "finishReason": "stop",
+          "usage": {
+            "prompt_tokens": 2227,
+            "completion_tokens": 380,
+            "total_tokens": 2607,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "neurons": 30.60909080505371
+          },
+          "latencyMs": 8620,
+          "safeHeaders": {
+            "cf-ray": "a526d7d66ef6f6b1-LAX"
+          },
+          "complete": true,
+          "structuralStatus": "valid_card",
+          "dateRetry": false
+        }
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "stage": "evidence",
+      "eventId": "event:1e1da3e037fff37c",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:6f0a3386bb682c8e",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:3577fa15b8343163",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:d77771aef042444e",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:a1f6a5cf3a45bfd7",
+      "reason": "too little complete accessible reporting; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:2657fa9546868002",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:563640bad0eb30a9",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:868457495d9d39bd",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:dfa3c89de8e42f4c",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:d48e6a4481e817a6",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:8fff5c0048eddb82",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:fe6e7f7ee1af007d",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:880bfd7f72780c13",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:30c60576d8d4b939",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; principal actor or institution is unclear; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f91cb8f88e8caf72",
+      "reason": "too little complete accessible reporting; evidence does not clearly support the central headline; central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:c411af804df563d5",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:0672f16fd0daf147",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:a1b3aa7dd67a07ce",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:2017a3687e8b581f",
+      "reason": "too little complete accessible reporting"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:f2a09ce598536bb1",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:d2ab4b96428be30b",
+      "reason": "evidence does not clearly support the central headline"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:40a461d2a164709c",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:8f3c217d7b66c8ea",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "stage": "evidence",
+      "eventId": "event:4a858d93d3986021",
+      "reason": "central action or development is unclear"
+    },
+    {
+      "eventId": "event:c569b38703420111",
+      "title": "Toronto City Clerk certifies 2026 Toronto municipal election results",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:9348f9f2cace7286",
+      "title": "Netanyahu bloc leads Israel election but falls short of majority as Likud claims vote was ‘stolen’",
+      "stage": "writer-safety",
+      "reason": "unsafe temporal metadata exposure"
+    },
+    {
+      "eventId": "event:1886825e678c73e2",
+      "title": "Trump’s cuts have exposed US to ‘cascade’ of El Niño dangers, experts warn",
+      "stage": "unchanged",
+      "reason": "evidence fingerprint unchanged from published card"
+    },
+    {
+      "eventId": "event:4e91034b7b528338",
+      "title": "Ghana targets $1.2bn investment and 150,000 jobs under new textile policy",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 27.1 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:28d3ead786541eb6",
+      "title": "Toronto's voter turnout numbers are in. Here's what they show",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 22.84 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:5964f88099572f04",
+      "title": "Ukraine: 14 killed in Russian drone strike on crowded Dnipro train station",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 20.38 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:2510a9f05ade62e0",
+      "title": "Florida teen accused of making bombs for ISIS",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 15.16 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:4dbb6d830d827ee5",
+      "title": "GDP report to give insight before Election Day. And, Israel's election is deadlocked",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 7.39 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:3a5a6f095c105fb4",
+      "title": "Carney, top EU official push Canada associate membership, wider alliance against Trump threats",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 6.25 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:9332625907f8c9c7",
+      "title": "Nov 17-18 Dialogue: Dhaka to seek Hasina, Kamal’s extradition at talks with India",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score 1.99 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:51ffb5c450d11655",
+      "title": "Ghanaian neuroscientist honoured at Millennium Excellence Awards USA for Alzheimer’s blood test discovery",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -2.16 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:a8b66c43ad33aa13",
+      "title": "Libya’s central bank targeted in overnight raid raising fresh concerns",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -3.75 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:2216026e77c63d64",
+      "title": "Putin hails Elon Musk’s ‘genius’ amid plans for Russian version of Starlink",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -11.87 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:b59a09ce162901bc",
+      "title": "Ontario education minister will allow trustees to be sworn in at supervised boards after all",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -18.75 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:a0b848e200ba2e4a",
+      "title": "China’s record-breaking exports of clean tech are making a big dent in emissions, report says",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -21.54 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:1092354b4ce67ba6",
+      "title": "Netanyahu accused of smearing Arab voters to hold on to power",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -22.7 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:c5c3f20ca7f044c1",
+      "title": "NCP to demonstrate at Shahbagh on Friday, calling on at least 3 ministers to resign",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -27.07 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:ef27392a18ae8951",
+      "title": "Houthi forces claim six attacks on Saudi airports, oil facilities",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -31.46 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:9790f46724a3d01c",
+      "title": "Trinity Theological Seminary gets first female President",
+      "stage": "editorial-quality",
+      "reason": "adjusted selection score -32.55 is below the 30-point generation floor"
+    },
+    {
+      "eventId": "event:254ce4d37e2d53fa",
+      "title": "Edmonton and Calgary rejected her referendum. Does Danielle Smith have a city problem?",
+      "stage": "content-structure",
+      "reason": "summary is too thin for a self-contained beta card; page 1 ends mid-sentence; page 2 is too thin; page 2 ends mid-sentence; page 3 is too thin; page 3 ends mid-sentence"
+    }
+  ],
+  "outcome": {
+    "writerRequests": 11,
+    "retries": 0,
+    "acceptedCards": 10,
+    "retainedCards": 118,
+    "skippedCards": 44,
+    "totalNeurons": 262.46363067626953,
+    "inputTokens": 19808,
+    "outputTokens": 3021,
+    "meanNeuronsPerAcceptedCard": 26.25,
+    "datasetBytes": 321103,
+    "thirdPartyCostUsd": 0,
+    "imageStatus": {
+      "event-specific": 117,
+      "fallback": 3
+    },
+    "geographicDistribution": {
+      "Bangladesh": 28,
+      "Middle East": 28,
+      "Syria": 13,
+      "Ghana": 25,
+      "GTA": 6,
+      "Canada": 16
+    }
+  },
+  "integrity": {
+    "datasetSha256": "a371679ee2a98d55ee6399246290ca98f0a26d1dd8eacabf145ccbb50992aa76"
+  }
+}
