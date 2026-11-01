@@ -2,12 +2,47 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { rankFrontPage } from './final-edition-ranker.mjs'
-import { candidatesDescribeSameThread, headlinesShareNamedLocationAndEvent } from './select-five-lane-edition.mjs'
+import { candidatesDescribeSameThread, headlinesExplicitlyConflict, headlinesShareNamedLocationAndEvent } from './select-five-lane-edition.mjs'
 
 const STOP = new Set('the a an and or of to in on for with as at by from is are was were be been this that it its their they he she his her have has had will would could should after before amid into over under about'.split(' '))
 const tokens = value => new Set(String(value || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/ +/).filter(word => word.length > 3 && !STOP.has(word)))
 const cardText = card => [card.headline, ...(card.pages || []).map(page => page.text)].join(' ')
 const canonical = value => { try { const url = new URL(value); url.hash = ''; for (const key of [...url.searchParams.keys()]) if (/^(?:utm_|at_|traffic_source|fbclid)/i.test(key)) url.searchParams.delete(key); return url.toString() } catch { return String(value || '') } }
+const THREAD_STOP = new Set(['after', 'against', 'amid', 'central', 'during', 'following', 'from', 'into', 'people', 'report', 'says', 'their', 'with', 'world'])
+const THREAD_EQUIVALENTS = new Map([
+  ['spanish', 'spain'], ['collision', 'crash'], ['collide', 'crash'], ['crashed', 'crash'],
+  ['evacuee', 'evacuate'], ['evacuees', 'evacuate'], ['evacuation', 'evacuate'],
+  ['truce', 'ceasefire'], ['reunited', 'reunite'], ['returns', 'return'],
+])
+const threadTokens = value => new Set(String(value || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/ +/)
+  .filter(word => word.length > 4 && !THREAD_STOP.has(word))
+  .map(word => THREAD_EQUIVALENTS.get(word) || word.replace(/(?:ies|ing|ed|es|s)$/i, match => match === 'ies' ? 'y' : '')))
+const TRANSPORT = new Set(['train', 'plane', 'aircraft', 'bus', 'ferry', 'ship'])
+const ACCIDENT = new Set(['crash', 'derail', 'wreck'])
+const HUMANITARIAN_THREAD = new Set(['ceasefire', 'evacuate', 'humanitarian', 'reunite', 'return'])
+const GENERIC_THREAD_SUBJECT = new Set([
+  'canadian', 'council', 'election', 'family', 'government', 'israeli', 'official',
+  'palestinian', 'people', 'police', 'protest', 'resident', 'russian', 'ukrainian', 'worker',
+])
+
+function sharesConcept(a, b, concepts) {
+  return [...concepts].some(term => a.has(term) && b.has(term))
+}
+
+function sameSpecificThread(a, b, similarity) {
+  if (headlinesExplicitlyConflict({ title: a.headline }, { title: b.headline })) return false
+  const headlineA = threadTokens(a.headline), headlineB = threadTokens(b.headline)
+  const bodyA = threadTokens(cardText(a)), bodyB = threadTokens(cardText(b))
+  const sharedHeadline = [...headlineA].filter(term => headlineB.has(term))
+  const specificSubject = sharedHeadline.some(term => term.length >= 7 && !GENERIC_THREAD_SUBJECT.has(term))
+  const sameTransportAccident = sharesConcept(bodyA, bodyB, TRANSPORT)
+    && sharesConcept(bodyA, bodyB, ACCIDENT)
+    && sharedHeadline.length >= 2
+  const sameHumanitarianThread = specificSubject
+    && sharesConcept(bodyA, bodyB, HUMANITARIAN_THREAD)
+    && similarity >= 0.07
+  return sameTransportAccident || sameHumanitarianThread
+}
 
 export function auditEditorialOverlap(cards, threshold = 0.16) {
   const pairs = []
@@ -19,7 +54,8 @@ export function auditEditorialOverlap(cards, threshold = 0.16) {
     const similarity = intersection / Math.max(1, aTerms.size + bTerms.size - intersection)
     const headlineThreadMatch = headlinesShareNamedLocationAndEvent({ title: a.headline }, { title: b.headline })
     const eventThreadMatch = candidatesDescribeSameThread({ title: a.headline }, { title: b.headline })
-    if (sharedUrls.length || similarity >= threshold || headlineThreadMatch || eventThreadMatch) pairs.push({
+    const specificThreadMatch = sameSpecificThread(a, b, similarity)
+    if (sharedUrls.length || similarity >= threshold || headlineThreadMatch || eventThreadMatch || specificThreadMatch) pairs.push({
       leftEventId: a.eventId,
       rightEventId: b.eventId,
       leftHeadline: a.headline,
@@ -28,6 +64,7 @@ export function auditEditorialOverlap(cards, threshold = 0.16) {
       similarity: Number(similarity.toFixed(3)),
       headlineThreadMatch,
       eventThreadMatch,
+      specificThreadMatch,
       requiresReview: true,
     })
   }

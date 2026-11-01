@@ -28,12 +28,19 @@ const CONCRETE_DEVELOPMENT_CUE = /\b(?:signed|enacted|approved|adopted|passed|la
 const DETERMINISTIC_LOW_VALUE = /\b(?:innovation fair|trade fair|study delegation|delegation (?:studies|visits|tours)|seeks? (?:cooperation|collaboration|partnership|support) to (?:establish|build|develop|launch)|agree(?:s|d)? to (?:(?:continue|hold|resume) (?:talks|dialogue|discussions)|more talks)|ballon d['’]or|wins? (?:the )?(?:men['’]s|women['’]s)? award|friendly match|league table)\b/i
 const EXPLICIT_STALE_FINDING = /\b(?:study|research|paper|findings?|discovery|report)\b[^\n.]{0,140}\b(?:published|released|announced|unveiled|reported)\b[^\n.]{0,140}\b(?:in|on)\s+(?:january|february|march|april|may|june|july|august|september|october|november|december)\s+20(?:0\d|1\d|2[0-5])\b/i
 const DISCOVERY_HEADLINE = /\b(?:archaeolog|fossil|scientists? (?:find|found|discover|map|develop|document)|researchers? (?:find|found|discover|document)|study finds?|new (?:x-ray|telescope|genetic|neuroscience) method|terra-?cotta|exoplanet|asteroids?|ancient (?:human|animal|site|settlement))\b/i
+const ROUTINE_LOCAL_MAJOR = /\b(?:dozens? (?:of )?(?:people )?(?:protest|rally)|bike lanes?|city council|municipal council|community meeting)\b/i
 
-function isStatementOnlyPossible(score) {
+function isStatementOnly(score) {
   const evaluation = score?.evaluation
-  if (evaluation?.recommendation !== 'possible') return false
+  if (!evaluation) return false
   const strongestFact = String(evaluation.strongest_fact || '')
   return STATEMENT_ONLY_CUE.test(strongestFact) && !CONCRETE_DEVELOPMENT_CUE.test(strongestFact)
+}
+
+function contradictsEvidence(evaluation) {
+  if (evaluation?.headline_evidence_consistent === false) return true
+  return /\b(?:headline|title|candidate)\b[^.]{0,100}\b(?:incorrect(?:ly)?|mismatch(?:es|ed)?|contradict(?:s|ed|ory)?|wrong)\b|\bevidence\b[^.]{0,100}\b(?:instead|rather than|different)\b/i
+    .test(String(evaluation?.reason || ''))
 }
 
 function editorialRejectionReason(score, card) {
@@ -44,11 +51,12 @@ function editorialRejectionReason(score, card) {
   if (EXPLICIT_STALE_FINDING.test(evidence)) return 'deterministic freshness gate found an explicitly old underlying finding'
   if (evaluation.underlying_event_fresh === false) return 'the underlying event or finding predates the edition window without a material new development'
   if (evaluation.single_coherent_event === false) return 'candidate combines unrelated developments that must not become one card'
+  if (contradictsEvidence(evaluation)) return 'headline, event identity or geography contradicts the verified evidence'
   if (evaluation.publicity_or_commentary === true) return 'routine publicity, commentary or ceremonial material should not consume edition space'
   if (evaluation.future_or_conditional_only === true) return 'proposal, preparedness assurance, planned action or conditional future event has no separate material development yet'
   if (evaluation.concrete_new_development === false) return 'no concrete new action, consequence, finding or documented change is supported'
   if (evaluation.recommendation === 'reject' || score.editorialScore < 45) return evaluation.reason
-  if (isStatementOnlyPossible(score)) return 'the strongest fact is political or institutional messaging without a concrete new development'
+  if (isStatementOnly(score)) return 'the strongest fact is political or institutional messaging without a concrete new development'
   if (evaluation.recommendation === 'possible' && (
     score.editorialScore < 70
     || evaluation.substantive_value < 3
@@ -69,7 +77,10 @@ export function applyEditorialScores(edition, scoreReport) {
       continue
     }
     const evidence = (card.pages || []).map(page => page.text).join(' ')
-    const independentlyRoutedLane = DISCOVERY_HEADLINE.test(card.headline || '') ? 'discovery' : destinationLane(card, score.evaluation)
+    let independentlyRoutedLane = DISCOVERY_HEADLINE.test(card.headline || '') ? 'discovery' : destinationLane(card, score.evaluation)
+    if (independentlyRoutedLane.endsWith('major') && ROUTINE_LOCAL_MAJOR.test(card.headline || '')) {
+      independentlyRoutedLane = independentlyRoutedLane === 'priority-major' ? 'priority-interesting' : 'world-interesting'
+    }
     const routed = normalizeGeneratedRouting(independentlyRoutedLane, card.priorityRegions, card.headline, card.headline, evidence)
     retained.push({
       ...card,

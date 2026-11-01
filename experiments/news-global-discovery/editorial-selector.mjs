@@ -154,11 +154,12 @@ Use recommendation "strong" only when you would actively choose the story; "poss
 
 Set major_qualification true only for a concrete fresh development with broad consequence, urgency, serious human harm, major institutional change or substantial public impact. Priority-region relevance alone never qualifies a story as major. Scientific, archaeological, wildlife and historical findings belong in discovery even when unusually fascinating. Set future_or_conditional_only true for an ordinary proposal, planned protest, threatened strike, projected completion, appeal, preparedness assurance or urged boycott when no separate material action or consequence has happened yet. A binding decision or leadership resignation announcement can itself be a concrete development and is not automatically future-only.
 
-Also make four explicit integrity judgments. These are gates, not stylistic preferences:
+Also make five explicit integrity judgments. These are gates, not stylistic preferences:
 - concrete_new_development: true only when the evidence contains a new action, consequence, finding or documented change—not merely a speech, opinion, appeal, publicity partnership, planned ceremony, fair, anniversary or institutional self-promotion.
 - underlying_event_fresh: true only when the event/finding itself is fresh for the supplied edition time. First identify when the central action actually happened and compare that time with edition_window; do not substitute the article publication time. An election result, attack, ruling, discovery or other completed event that happened before the window is false even when an article about it was published inside the window, unless the evidence contains a separate material development that occurred inside the window and the candidate is centrally about that update. A newly posted article recycling an old study or describing an event that already occurred outside the window is likewise false.
 - single_coherent_event: false when the candidate bundles unrelated developments or organizations that should be separate cards.
 - publicity_or_commentary: true for generic commentary, advocacy without a new event, routine partnership publicity, ceremonial announcements and promotional event notices. Humanly revealing local culture, livelihood and community reporting is not publicity merely because it is small.
+- headline_evidence_consistent: true only when the headline's central event, place, people and organization agree with the supplied evidence. Set false for wrong-country or wrong-event search results, contaminated extracts, or a headline whose central claim is not what the evidence describes.
 
 Return exactly one evaluation for every supplied candidate. Copy each supplied candidate ID exactly once; never invent, omit, or repeat an ID.`
 
@@ -173,7 +174,7 @@ export function scoreSchema(maxItems = 10) {
           type: 'array', minItems: 1, maxItems,
           items: {
             type: 'object', additionalProperties: false,
-            required: ['id', 'recommended_lane', 'major_qualification', 'future_or_conditional_only', 'lane_fit', 'substantive_value', 'intrinsic_interest', 'distinctiveness', 'clarity', 'freshness_specificity', 'concrete_new_development', 'underlying_event_fresh', 'single_coherent_event', 'publicity_or_commentary', 'recommendation', 'strongest_fact', 'reason'],
+            required: ['id', 'recommended_lane', 'major_qualification', 'future_or_conditional_only', 'lane_fit', 'substantive_value', 'intrinsic_interest', 'distinctiveness', 'clarity', 'freshness_specificity', 'concrete_new_development', 'underlying_event_fresh', 'single_coherent_event', 'publicity_or_commentary', 'headline_evidence_consistent', 'recommendation', 'strongest_fact', 'reason'],
             properties: {
               id: { type: 'string' },
               recommended_lane: { type: 'string', enum: RECOMMENDED_LANES },
@@ -189,6 +190,7 @@ export function scoreSchema(maxItems = 10) {
               underlying_event_fresh: { type: 'boolean' },
               single_coherent_event: { type: 'boolean' },
               publicity_or_commentary: { type: 'boolean' },
+              headline_evidence_consistent: { type: 'boolean' },
               recommendation: { type: 'string', enum: ['strong', 'possible', 'reject'] },
               strongest_fact: { type: 'string', maxLength: 240 },
               reason: { type: 'string', maxLength: 240 },
@@ -223,7 +225,7 @@ export function auditBatch(parsed, expectedIds) {
   const scoresValid = evaluations.every(value => ['lane_fit', 'substantive_value', 'intrinsic_interest', 'distinctiveness', 'clarity', 'freshness_specificity']
     .every(key => Number.isInteger(value[key]) && value[key] >= 0 && value[key] <= 5))
   if (!scoresValid) return { valid: false, reason: 'score outside integer 0-5 range' }
-  const integrityValid = evaluations.every(value => ['concrete_new_development', 'underlying_event_fresh', 'single_coherent_event', 'publicity_or_commentary'].every(key => typeof value[key] === 'boolean'))
+  const integrityValid = evaluations.every(value => ['concrete_new_development', 'underlying_event_fresh', 'single_coherent_event', 'publicity_or_commentary', 'headline_evidence_consistent'].every(key => typeof value[key] === 'boolean'))
   if (!integrityValid) return { valid: false, reason: 'integrity judgment missing' }
   if (!evaluations.every(value => RECOMMENDED_LANES.includes(value.recommended_lane) && typeof value.major_qualification === 'boolean' && typeof value.future_or_conditional_only === 'boolean')) return { valid: false, reason: 'independent lane judgment missing' }
   if (!evaluations.every(value => ['strong', 'possible', 'reject'].includes(value.recommendation) && value.strongest_fact && value.reason)) return { valid: false, reason: 'recommendation or explanation missing' }

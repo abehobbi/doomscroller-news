@@ -4,7 +4,7 @@ import test from 'node:test'
 import { applyEditorialScores } from './apply-editorial-scores.mjs'
 
 const card = (eventId, lane, rank) => ({ eventId, lane, headline: eventId, frontPageRank: rank, pages: [{ text: 'Verified evidence.' }], priorityRegions: [], acceptedSources: [] })
-const scored = (eventId, editorialScore, recommendation = 'strong', laneFit = 5, recommendedLane = 'world-interesting') => ({ eventId, editorialScore, evaluation: { recommendation, recommended_lane: recommendedLane, major_qualification: recommendedLane.endsWith('major'), future_or_conditional_only: false, lane_fit: laneFit, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, concrete_new_development: true, underlying_event_fresh: true, single_coherent_event: true, publicity_or_commentary: false, strongest_fact: 'Fact', reason: 'Reason' } })
+const scored = (eventId, editorialScore, recommendation = 'strong', laneFit = 5, recommendedLane = 'world-interesting') => ({ eventId, editorialScore, evaluation: { recommendation, recommended_lane: recommendedLane, major_qualification: recommendedLane.endsWith('major'), future_or_conditional_only: false, lane_fit: laneFit, substantive_value: 4, intrinsic_interest: 4, distinctiveness: 4, clarity: 4, freshness_specificity: 4, concrete_new_development: true, underlying_event_fresh: true, single_coherent_event: true, publicity_or_commentary: false, headline_evidence_consistent: true, strongest_fact: 'Fact', reason: 'Reason' } })
 
 test('editorial gate rejects weak finalists, demotes false major labels and orders peers by score', () => {
   const edition = { createdAt: 'before', cards: [card('weak', 'world-interesting', 1), card('museum', 'world-major', 2), card('best', 'world-interesting', 3), card('good', 'world-interesting', 4)] }
@@ -39,6 +39,34 @@ test('possible statement-only stories are rejected while statements reporting co
   const result = applyEditorialScores(edition, { complete: true, candidateCount: 2, results: [willingness, signedLaw] })
   assert.deepEqual(result.cards.map(value => value.eventId), ['signed-law'])
   assert.deepEqual(result.editorialScoring.rejected.map(value => value.eventId), ['willingness'])
+})
+
+test('statement-only diplomacy is rejected even when the model calls it strong', () => {
+  const cardValue = card('diplomatic-hope', 'priority-major', 1)
+  const score = scored('diplomatic-hope', 88, 'strong', 5, 'priority-major')
+  score.evaluation.strongest_fact = 'Officials said they hope negotiations will produce a diplomatic breakthrough.'
+  const result = applyEditorialScores({ createdAt: 'before', cards: [cardValue] }, { complete: true, candidateCount: 1, results: [score] })
+  assert.equal(result.cards.length, 0)
+  assert.match(result.editorialScoring.rejected[0].reason, /messaging without a concrete new development/)
+})
+
+test('routine small local protests are demoted from major without being discarded', () => {
+  const protest = card('bike-protest', 'priority-major', 1)
+  protest.priorityRegions = ['Canada', 'GTA']
+  protest.headline = 'Dozens protest Ontario decision to remove Toronto bike lanes'
+  const result = applyEditorialScores({ createdAt: 'before', cards: [protest] }, { complete: true, candidateCount: 1, results: [scored('bike-protest', 86, 'strong', 5, 'priority-major')] })
+  assert.equal(result.cards[0].lane, 'priority-interesting')
+})
+
+test('headline and evidence contradictions fail closed', () => {
+  const mismatch = card('country-mismatch', 'priority-interesting', 1)
+  mismatch.headline = 'Hundreds displaced by fighting in Congo'
+  const score = scored('country-mismatch', 80, 'possible')
+  score.evaluation.headline_evidence_consistent = false
+  score.evaluation.reason = 'The headline incorrectly mentions Congo while the evidence discusses Yemen.'
+  const result = applyEditorialScores({ createdAt: 'before', cards: [mismatch] }, { complete: true, candidateCount: 1, results: [score] })
+  assert.equal(result.cards.length, 0)
+  assert.match(result.editorialScoring.rejected[0].reason, /contradicts the verified evidence/)
 })
 
 test('independent lane judgment routes research to discovery and demotes false major stories', () => {

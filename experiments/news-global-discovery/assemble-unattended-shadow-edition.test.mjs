@@ -47,6 +47,36 @@ test('quarantines same-event headlines with a shared action and distinctive subj
   assert.deepEqual(edition.cards.map(card => card.eventId), ['a'])
 })
 
+test('quarantines different angles on the same named humanitarian thread', () => {
+  const shortlist = { selected: [
+    input('a', 'world-major', 'Zelenskyy cites Oleshky ceasefire as evidence of de-escalation'),
+    input('b', 'world-major', 'Ukrainian evacuees from occupied Oleshky reunite with families'),
+  ] }
+  const report = { expected: 2, resultCount: 2, totalNeurons: 90, results: [
+    accepted('a', 'world-major', 'Zelenskyy cites Oleshky ceasefire as evidence of de-escalation', 'The humanitarian ceasefire in Oleshky allowed displaced residents to evacuate and return to their families safely.', 'https://source-a.test/oleshky'),
+    accepted('b', 'world-major', 'Ukrainian evacuees from occupied Oleshky reunite with families', 'The Oleshky humanitarian ceasefire allowed residents to evacuate, return and reunite with displaced family members.', 'https://source-b.test/oleshky'),
+  ] }
+  const edition = assembleUnattendedShadowEdition(report, shortlist)
+  assert.equal(edition.overlaps.length, 1)
+  assert.equal(edition.overlaps[0].specificThreadMatch, true)
+  assert.equal(edition.cards.length, 1)
+})
+
+test('quarantines a named victim angle from the same transport disaster', () => {
+  const shortlist = { selected: [
+    input('a', 'world-major', 'University researcher killed in Spanish high-speed train crash'),
+    input('b', 'world-major', '69 bodies recovered after high-speed train collision in Spain'),
+  ] }
+  const report = { expected: 2, resultCount: 2, totalNeurons: 90, results: [
+    accepted('a', 'world-major', 'University researcher killed in Spanish high-speed train crash', 'The researcher was among the victims of the high-speed passenger train crash in central Spain.', 'https://source-a.test/spain-train'),
+    accepted('b', 'world-major', '69 bodies recovered after high-speed train collision in central Spain', 'Emergency workers recovered bodies after two high-speed passenger trains crashed in central Spain.', 'https://source-b.test/spain-train'),
+  ] }
+  const edition = assembleUnattendedShadowEdition(report, shortlist)
+  assert.equal(edition.overlaps.length, 1)
+  assert.equal(edition.overlaps[0].specificThreadMatch, true)
+  assert.equal(edition.cards.length, 1)
+})
+
 test('does not merge similar events whose headlines identify different locations', () => {
   const shortlist = { selected: [
     input('a', 'world-major', 'Ceasefire begins in Oleshky'),
@@ -55,6 +85,34 @@ test('does not merge similar events whose headlines identify different locations
   const report = { expected: 2, resultCount: 2, totalNeurons: 90, results: [
     accepted('a', 'world-major', 'Ceasefire begins in Oleshky after talks', 'Local officials described a temporary pause so displaced families could collect medicine and leave damaged neighbourhoods safely.', 'https://source-a.test/ceasefire'),
     accepted('b', 'world-major', 'Ceasefire begins in Khartoum after talks', 'Aid convoys crossed the capital while negotiators monitored compliance and reopened several roads for commercial traffic.', 'https://source-b.test/ceasefire'),
+  ] }
+  const edition = assembleUnattendedShadowEdition(report, shortlist)
+  assert.equal(edition.overlaps.length, 0)
+  assert.equal(edition.cards.length, 2)
+})
+
+test('does not merge unrelated humanitarian stories merely because they share a demonym', () => {
+  const shortlist = { selected: [
+    input('a', 'world-major', 'Ukrainian evacuees from Oleshky reunite with families'),
+    input('b', 'world-interesting', 'Ukrainian family returns to Kherson during humanitarian truce'),
+  ] }
+  const report = { expected: 2, resultCount: 2, totalNeurons: 90, results: [
+    accepted('a', 'world-major', 'Ukrainian evacuees from Oleshky reunite with families', 'A humanitarian ceasefire allowed residents of Oleshky to evacuate and reunite with relatives.', 'https://source-a.test/oleshky'),
+    accepted('b', 'world-interesting', 'Ukrainian family returns to Kherson during humanitarian truce', 'A separate family returned to Kherson during a weeklong humanitarian truce.', 'https://source-b.test/kherson'),
+  ] }
+  const edition = assembleUnattendedShadowEdition(report, shortlist)
+  assert.equal(edition.overlaps.length, 0)
+  assert.equal(edition.cards.length, 2)
+})
+
+test('does not merge unrelated municipal stories on the generic word council', () => {
+  const shortlist = { selected: [
+    input('a', 'priority-interesting', 'Pickering city council returns to in-person meetings'),
+    input('b', 'priority-interesting', 'Election defeat changes opposition on Toronto city council'),
+  ] }
+  const report = { expected: 2, resultCount: 2, totalNeurons: 90, results: [
+    accepted('a', 'priority-interesting', 'Pickering city council returns to in-person meetings', 'Pickering councillors approved a return to the chamber after security changes.', 'https://source-a.test/pickering'),
+    accepted('b', 'priority-interesting', 'Election defeat changes opposition on Toronto city council', 'Toronto election results changed the balance of opposition at city hall.', 'https://source-b.test/toronto'),
   ] }
   const edition = assembleUnattendedShadowEdition(report, shortlist)
   assert.equal(edition.overlaps.length, 0)
