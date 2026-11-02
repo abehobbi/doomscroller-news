@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { auditWriterTemporalExposure, buildWriterSafeTemporalPacket, normalizeTemporalFact } from '../../artifacts/summary-feasibility/writer-safe-temporal-input-fix/writer-safe-temporal.mjs'
-import { auditCard, bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, futureCompletedEventAudit, geographyAudit, isProviderQuotaDeferral, LANES, normalizeExplicitToday, numericAudit, partitionWriterExposure, providerDeferredResult, relativeTimeAudit, uncertaintyAudit, writerEvidencePreflight, writerMetadataAudit } from './writer-shortlist-trial.mjs'
+import { auditCard, bindLeadingCoreferences, buildContextIndex, buildTrialItem, buildVerificationIndex, chooseTrialCandidates, expiredFutureClaimAudit, futureCompletedEventAudit, geographyAudit, isProviderQuotaDeferral, LANES, normalizeExplicitToday, numericAudit, partitionWriterExposure, providerDeferredResult, relativeTimeAudit, uncertaintyAudit, writerEvidencePreflight, writerMetadataAudit } from './writer-shortlist-trial.mjs'
 
 test('quota circuit breaker recognizes provider signals and preserves untouched finalists', () => {
   assert.equal(isProviderQuotaDeferral({ httpStatus: 429 }), true)
@@ -24,8 +24,16 @@ test('contested central claims require an explicit uncertainty note', () => {
 test('completed events cannot be assigned dates after their source was published', () => {
   const item = { temporalPacket: { internal_audit: { publication_timestamp: '2026-10-28T12:00:00Z' } } }
   assert.equal(futureCompletedEventAudit({ headline: 'Candidate lost election on November 1, 2026', pages: [] }, item).valid, false)
+  assert.equal(futureCompletedEventAudit({ headline: 'OPEC+ kept production targets steady on November 8, 2026', pages: [] }, item).valid, false)
   assert.equal(futureCompletedEventAudit({ headline: 'Voting will begin on November 1, 2026', pages: [] }, item).valid, true)
   assert.equal(futureCompletedEventAudit({ headline: 'Candidate lost election on October 25, 2026', pages: [] }, item).valid, true)
+})
+
+test('expired future claims cannot remain written as current predictions', () => {
+  const item = { temporalPacket: { internal_audit: { publication_timestamp: '2026-11-01T12:00:00Z' } } }
+  assert.equal(expiredFutureClaimAudit({ headline: 'Official results are expected on October 26, 2026', pages: [] }, item).valid, false)
+  assert.equal(expiredFutureClaimAudit({ headline: 'Officials said results had been expected on October 26, 2026', pages: [] }, item).valid, true)
+  assert.equal(expiredFutureClaimAudit({ headline: 'Official results are expected on November 2, 2026', pages: [] }, item).valid, true)
 })
 
 test('trial chooses one multi-source candidate from every lane and prefers Syria in a priority tie', () => {

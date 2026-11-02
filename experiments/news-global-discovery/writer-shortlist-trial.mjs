@@ -390,7 +390,7 @@ export function futureCompletedEventAudit(card, item) {
   const text = [card?.headline, ...(card?.pages || []).map(page => page.text)].filter(Boolean).join(' ')
   const monthNames = 'January|February|March|April|May|June|July|August|September|October|November|December'
   const matches = [...text.matchAll(new RegExp(`\\b(${monthNames})\\s+(\\d{1,2}),\\s+(\\d{4})\\b`, 'gi'))]
-  const completed = /\b(?:arrived|began|cancelled|canceled|closed|defeated|died|ended|fled|happened|injured|killed|landed|left|lost|occurred|opened|resigned|returned|shot|signed|struck|won)\b/i
+  const completed = /\b(?:arrived|began|cancelled|canceled|closed|confirmed|defeated|died|ended|fled|happened|held|injured|kept|killed|landed|left|lost|occurred|opened|passed|resigned|returned|shot|signed|struck|voted|won)\b/i
   const violations = matches.flatMap(match => {
     const parsed = new Date(`${match[1]} ${match[2]}, ${match[3]} UTC`)
     if (!Number.isFinite(parsed.getTime()) || parsed.toISOString().slice(0, 10) <= publicationDay) return []
@@ -399,6 +399,25 @@ export function futureCompletedEventAudit(card, item) {
     const sentenceEnd = nextPeriod < 0 ? text.length : nextPeriod + 1
     const sentence = text.slice(sentenceStart, sentenceEnd).trim()
     return completed.test(sentence) ? [{ date: parsed.toISOString().slice(0, 10), publicationDay, sentence }] : []
+  })
+  return { valid: violations.length === 0, violations }
+}
+
+export function expiredFutureClaimAudit(card, item) {
+  const publication = Date.parse(item?.temporalPacket?.internal_audit?.publication_timestamp || '')
+  if (!Number.isFinite(publication)) return { valid: true, violations: [] }
+  const publicationDay = new Date(publication).toISOString().slice(0, 10)
+  const text = [card?.headline, ...(card?.pages || []).map(page => page.text)].filter(Boolean).join(' ')
+  const monthNames = 'January|February|March|April|May|June|July|August|September|October|November|December'
+  const futureClaim = /\b(?:is|are)\s+(?:due|expected|scheduled|set)\b|\b(?:will|plans? to|is to|are to)\b/i
+  const violations = [...text.matchAll(new RegExp(`\\b(${monthNames})\\s+(\\d{1,2}),\\s+(\\d{4})\\b`, 'gi'))].flatMap(match => {
+    const parsed = new Date(`${match[1]} ${match[2]}, ${match[3]} UTC`)
+    if (!Number.isFinite(parsed.getTime()) || parsed.toISOString().slice(0, 10) >= publicationDay) return []
+    const sentenceStart = Math.max(text.lastIndexOf('.', match.index) + 1, 0)
+    const nextPeriod = text.indexOf('.', match.index + match[0].length)
+    const sentenceEnd = nextPeriod < 0 ? text.length : nextPeriod + 1
+    const sentence = text.slice(sentenceStart, sentenceEnd).trim()
+    return futureClaim.test(sentence) ? [{ date: parsed.toISOString().slice(0, 10), publicationDay, sentence }] : []
   })
   return { valid: violations.length === 0, violations }
 }
@@ -417,8 +436,9 @@ export function auditCard(item, card) {
   const metadata = writerMetadataAudit(card)
   const uncertainty = uncertaintyAudit(card, item)
   const futureCompletedEvent = futureCompletedEventAudit(card, item)
-  const audits = { content, dates, numbers, relativeTime, headline, geography, metadata, uncertainty, futureCompletedEvent, writerExposure: auditWriterTemporalExposure(item.temporalPacket) }
-  return { audits, valid: content.valid && dates.valid && numbers.valid && relativeTime.valid && headline.valid && geography.valid && metadata.valid && uncertainty.valid && futureCompletedEvent.valid && audits.writerExposure.passes }
+  const expiredFutureClaim = expiredFutureClaimAudit(card, item)
+  const audits = { content, dates, numbers, relativeTime, headline, geography, metadata, uncertainty, futureCompletedEvent, expiredFutureClaim, writerExposure: auditWriterTemporalExposure(item.temporalPacket) }
+  return { audits, valid: content.valid && dates.valid && numbers.valid && relativeTime.valid && headline.valid && geography.valid && metadata.valid && uncertainty.valid && futureCompletedEvent.valid && expiredFutureClaim.valid && audits.writerExposure.passes }
 }
 
 function reportFor(items, results, options, complete) {
