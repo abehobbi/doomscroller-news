@@ -13,12 +13,27 @@ const readiness = { strongDailySuccess: true, checks: { exactDailyWindow: true, 
 
 test('publication stays locked without explicit release authority', () => assert.throws(() => buildReleaseDataset(edition, readiness), /lock/))
 test('every strong-readiness check is required', () => assert.throws(() => buildReleaseDataset(edition, { ...readiness, checks: { ...readiness.checks, recurringBudgetSafe: false } }, { releaseAuthorized: true }), /did not pass/))
+test('suggested lane minimums never force rejected filler into an otherwise accepted edition', () => {
+  const accepted = { ...readiness, strongDailySuccess: false, checks: { ...readiness.checks, categoryMinimums: false } }
+  const dataset = buildReleaseDataset(edition, accepted, { releaseAuthorized: true })
+  assert.equal(dataset.cards.length, 30)
+  assert.equal(dataset.policy.strongDailySuccess, false)
+  assert.equal(dataset.policy.categoryMinimumsMet, false)
+})
+test('hard lane maximums remain a release gate', () => assert.throws(() => buildReleaseDataset(edition, { ...readiness, checks: { ...readiness.checks, categoryMaximums: false } }, { releaseAuthorized: true }), /did not pass/))
 test('a strongly ready edition converts in exact rank order', () => {
   const dataset = buildReleaseDataset(edition, readiness, { releaseAuthorized: true })
   assert.equal(dataset.cards.length, 30)
   assert.deepEqual(dataset.feed.eventIds, dataset.cards.map(card => card.event_id))
   assert.equal(dataset.policy.strongDailySuccess, true)
   assert.equal(dataset.cards[0].sources[0].name, 'Example')
+})
+
+test('pipeline event IDs are converted to the stable hosted schema', () => {
+  const legacyEdition = { ...edition, cards: cards.map((card, index) => ({ ...card, eventId: `event-${String(index + 1).padStart(3, '0')}` })) }
+  const dataset = buildReleaseDataset(legacyEdition, readiness, { releaseAuthorized: true })
+  assert.equal(dataset.cards[0].event_id, 'event:001')
+  assert.equal(dataset.feed.eventIds[29], 'event:030')
 })
 
 test('evening major updates replace matching events and retain the morning edition', () => {

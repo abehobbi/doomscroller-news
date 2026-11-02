@@ -6,6 +6,12 @@ const MINIMUM_CARDS = 30
 const MAXIMUM_CARDS = 65
 const cleanUrl = value => { try { const url = new URL(String(value || '')); return ['http:', 'https:'].includes(url.protocol) ? url.href : null } catch { return null } }
 const iso = value => { const date = new Date(value); return Number.isFinite(date.getTime()) ? date.toISOString() : null }
+const releaseEventId = value => {
+  const raw = String(value || '').trim()
+  if (/^event:[a-z0-9._:-]{5,153}$/i.test(raw)) return raw
+  const suffix = raw.replace(/^(?:qualified-)?event[-_:]?/i, '').replace(/[^a-z0-9._:-]+/gi, '-').replace(/^-+|-+$/g, '')
+  return suffix.length >= 3 ? `event:${suffix}` : null
+}
 
 function sourceFor(source, publishedAt, index) {
   const url = cleanUrl(source?.url), name = String(source?.publisher || source?.name || '').trim()
@@ -13,13 +19,13 @@ function sourceFor(source, publishedAt, index) {
 }
 
 function cardFor(card, generatedAt) {
-  const eventId = String(card?.eventId || '').trim(), headline = String(card?.headline || '').replace(/\s+/g, ' ').trim(), publishedAt = iso(card?.publishedAt)
+  const eventId = releaseEventId(card?.eventId), headline = String(card?.headline || '').replace(/\s+/g, ' ').trim(), publishedAt = iso(card?.publishedAt)
   const pages = Array.isArray(card?.pages) ? card.pages.map(page => ({ text: String(page?.text || '').trim() })).filter(page => page.text).slice(0, 3) : []
   const orderedSources = Array.isArray(card?.sources) ? [...card.sources] : []
   const primaryIndex = orderedSources.findIndex(source => cleanUrl(source?.url) === cleanUrl(card?.primaryUrl))
   if (primaryIndex > 0) orderedSources.unshift(...orderedSources.splice(primaryIndex, 1))
   const sources = orderedSources.map((source, index) => sourceFor(source, publishedAt, index)).filter(Boolean)
-  if (!/^event:[a-z0-9._:-]{5,153}$/i.test(eventId)) throw new Error(`Invalid event id: ${eventId || '(missing)'}`)
+  if (!eventId) throw new Error(`Invalid event id: ${card?.eventId || '(missing)'}`)
   if (headline.length < 12 || !publishedAt || !pages.length || !sources.length) throw new Error(`Incomplete release card: ${eventId}`)
   const imageUrl = cleanUrl(card?.image?.url)
   return {
@@ -45,6 +51,15 @@ function cardFor(card, generatedAt) {
 const updateChecksPass = readiness => {
   const required = ['categoryMaximums', 'hardMaximum', 'completeHeadlines', 'sourceComplete', 'imageComplete', 'recurringBudgetSafe']
   return Math.abs(Number(readiness?.windowHours) - 12) < 0.05 && required.every(key => readiness?.checks?.[key] === true)
+}
+
+const dailyChecksPass = readiness => {
+  // The product's accepted daily minimum is 30 cards. Lane minimums describe
+  // the ideal 38-card mix, but must never force weak filler after editorial
+  // scoring. Every factual, freshness, budget, completeness and hard-limit
+  // gate remains mandatory, including the per-lane maximums.
+  const required = ['exactDailyWindow', 'acceptedMinimum', 'categoryMaximums', 'hardMaximum', 'completeHeadlines', 'sourceComplete', 'imageComplete', 'recurringBudgetSafe']
+  return required.every(key => readiness?.checks?.[key] === true)
 }
 
 export function mergeMajorUpdateDataset(base, edition, readiness, { releaseAuthorized = false } = {}) {
@@ -84,7 +99,7 @@ export function mergeMajorUpdateDataset(base, edition, readiness, { releaseAutho
 export function buildReleaseDataset(edition, readiness, { releaseAuthorized = false } = {}) {
   if (!releaseAuthorized) throw new Error('Release lock is active')
   if (!edition || edition.schemaVersion !== 1 || edition.shadowOnly !== true || !Array.isArray(edition.cards)) throw new Error('Unsupported shadow edition')
-  if (!readiness?.strongDailySuccess || !Object.values(readiness?.checks || {}).every(Boolean)) throw new Error('Daily readiness did not pass every strong-success check')
+  if (!dailyChecksPass(readiness)) throw new Error('Daily readiness did not pass every accepted-release check')
   if (edition.cards.length < MINIMUM_CARDS || edition.cards.length > MAXIMUM_CARDS) throw new Error(`Edition has ${edition.cards.length} cards; expected ${MINIMUM_CARDS}-${MAXIMUM_CARDS}`)
   const generatedAt = iso(edition.createdAt)
   if (!generatedAt) throw new Error('Edition has no valid creation time')
@@ -93,7 +108,11 @@ export function buildReleaseDataset(edition, readiness, { releaseAuthorized = fa
   return {
     schema: 'doomscroller.news-beta-dataset', schemaVersion: 1, generatedAt,
     batchId: `news-daily-${generatedAt.replace(/[:.]/g, '-')}`, feed: { eventIds: ids }, cards,
-    policy: { source: 'five-lane-daily-edition', minimumCards: MINIMUM_CARDS, maximumCards: MAXIMUM_CARDS, strongDailySuccess: true },
+    policy: {
+      source: 'five-lane-daily-edition', minimumCards: MINIMUM_CARDS, maximumCards: MAXIMUM_CARDS,
+      strongDailySuccess: readiness?.strongDailySuccess === true,
+      categoryMinimumsMet: readiness?.checks?.categoryMinimums === true,
+    },
   }
 }
 

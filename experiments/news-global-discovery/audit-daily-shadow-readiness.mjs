@@ -54,7 +54,7 @@ export function auditDailyShadowReadiness(edition, discovery, budget) {
     laneGaps,
     laneOverages,
     checks,
-    viableDailyEdition: checks.exactDailyWindow && checks.acceptedMinimum && checks.hardMaximum && checks.completeHeadlines && checks.sourceComplete && checks.imageComplete && checks.recurringBudgetSafe,
+    viableDailyEdition: checks.exactDailyWindow && checks.acceptedMinimum && checks.categoryMaximums && checks.hardMaximum && checks.completeHeadlines && checks.sourceComplete && checks.imageComplete && checks.recurringBudgetSafe,
     strongDailySuccess: Object.values(checks).every(Boolean),
     problems: { malformedHeadlines, missingSources, missingImages },
   }

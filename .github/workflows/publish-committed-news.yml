@@ -1,0 +1,49 @@
+name: Publish validated committed News data
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: doomscroller-news-publish
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Validate the committed daily edition
+        run: node scripts/news-beta/validate-news-beta.mjs public/news/beta-feed.json
+      - name: Verify the release control points at the validated edition
+        shell: bash
+        run: |
+          node -e "const fs=require('fs');const feed=JSON.parse(fs.readFileSync('public/news/beta-feed.json'));const control=JSON.parse(fs.readFileSync('public/news/beta-control.json'));if(!control.enabled||control.datasetUrl!=='beta-feed.json'||control.updatedAt!==feed.generatedAt)process.exit(1)"
+      - name: Stage stable News endpoints
+        shell: bash
+        run: |
+          mkdir -p news-site/news
+          cp public/news/feed.json news-site/news/feed.json
+          cp public/news/beta-feed.json news-site/news/beta-feed.json
+          cp public/news/beta-control.json news-site/news/beta-control.json
+          printf '%s\n' '<!doctype html><title>Doomscroller News data</title><a href="news/feed.json">Stage 1 JSON</a> · <a href="news/beta-feed.json">Daily edition JSON</a>' > news-site/index.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: news-site
+      - name: Publish stable data files
+        id: deployment
+        uses: actions/deploy-pages@v4
