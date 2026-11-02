@@ -23,9 +23,13 @@ on:
   schedule:
     # 08:30 and 20:30 America/Toronto. The plan job admits only DST-correct jobs.
     - cron: '30 0 * * *'
+    - cron: '45 0 * * *'
     - cron: '30 1 * * *'
+    - cron: '45 1 * * *'
     - cron: '30 12 * * *'
+    - cron: '45 12 * * *'
     - cron: '30 13 * * *'
+    - cron: '45 13 * * *'
 
 concurrency:
   group: news-daily-edition
@@ -45,6 +49,12 @@ jobs:
       edition_mode: ${{ steps.plan.outputs.editionMode }}
     steps:
       - uses: actions/checkout@v4
+      - id: latest
+        name: Read latest published edition timestamp
+        shell: bash
+        run: |
+          value="$(curl --fail --silent --show-error --max-time 15 https://abehobbi.github.io/doomscroller-news/news/beta-control.json 2>/dev/null | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{try{process.stdout.write(JSON.parse(s).updatedAt||'')}catch{}})" || true)"
+          printf 'publishedAt=%s\n' "$value" >> "$GITHUB_OUTPUT"
       - id: plan
         name: Resolve Toronto schedule and release lock
         run: >-
@@ -55,6 +65,7 @@ jobs:
           --manual-window "${{ inputs.window_hours }}"
           --manual-publish "${{ inputs.publish_dataset }}"
           --production-enabled "${{ vars.NEWS_PRODUCTION_ENABLED }}"
+          --last-published-at "${{ steps.latest.outputs.publishedAt }}"
           --output "$GITHUB_OUTPUT"
 
   shadow:

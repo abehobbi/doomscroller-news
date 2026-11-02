@@ -19,6 +19,22 @@ test('scheduled publication is locked until the production variable is enabled',
   assert.equal(result.publish, false)
 })
 
+test('retry cron runs when the primary trigger was dropped', () => {
+  const result = resolveNewsRun({ event: 'schedule', cron: '45 13 * * *', productionEnabled: true, now: new Date('2026-12-01T13:45:00Z') })
+  assert.equal(result.run, true)
+  assert.equal(result.scan, 'full')
+  assert.match(result.reason, /retry/)
+})
+
+test('retry cron cannot repeat an edition already published in its Toronto slot', () => {
+  const morning = resolveNewsRun({ event: 'schedule', cron: '45 13 * * *', productionEnabled: true,
+    lastPublishedAt: '2026-12-01T13:35:00Z', now: new Date('2026-12-01T13:45:00Z') })
+  assert.equal(morning.run, false)
+  const evening = resolveNewsRun({ event: 'schedule', cron: '45 1 * * *', productionEnabled: true,
+    lastPublishedAt: '2026-12-02T01:35:00Z', now: new Date('2026-12-02T01:45:00Z') })
+  assert.equal(evening.run, false)
+})
+
 test('manual runs remain available and publish only when explicitly requested', () => {
   assert.deepEqual(resolveNewsRun({ event: 'workflow_dispatch', manualScan: 'depth', manualWindow: '72', manualPublish: false }), {
     run: true, scan: 'depth', windowHours: '72', publish: false, editionMode: 'daily', reason: 'manual dispatch',
