@@ -206,10 +206,24 @@ jobs:
           --prepare-fixture ${{ env.RUN_ROOT }}/editorial/EDITORIAL_FIXTURE.json
           --include-major --selected-only
       - name: Score every verified finalist under the product rubric
-        run: >-
-          node experiments/news-global-discovery/editorial-selector.mjs
-          --fixture ${{ env.RUN_ROOT }}/editorial/EDITORIAL_FIXTURE.json
-          --output-dir ${{ env.RUN_ROOT }}/editorial/scored
+        shell: bash
+        run: |
+          scores="$RUN_ROOT/editorial/scored/EDITORIAL_SCORES.json"
+          set +e
+          node experiments/news-global-discovery/editorial-selector.mjs \
+            --fixture "$RUN_ROOT/editorial/EDITORIAL_FIXTURE.json" \
+            --output-dir "$RUN_ROOT/editorial/scored"
+          status=$?
+          for attempt in 2 3; do
+            if [ "$status" -eq 0 ]; then break; fi
+            echo "Editorial scoring incomplete; resuming validated batches (attempt $attempt of 3)."
+            node experiments/news-global-discovery/editorial-selector.mjs \
+              --fixture "$RUN_ROOT/editorial/EDITORIAL_FIXTURE.json" \
+              --resume "$scores" \
+              --output-dir "$RUN_ROOT/editorial/scored"
+            status=$?
+          done
+          exit "$status"
       - name: Apply complete editorial scores without weakening evidence gates
         run: >-
           node experiments/news-global-discovery/apply-editorial-scores.mjs
