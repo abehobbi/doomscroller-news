@@ -29,6 +29,12 @@ export function expectedCron(localTime, date = new Date()) {
 
 export const expectedDailyCron = (date = new Date()) => expectedCron(MORNING_LOCAL_TIME, date)
 
+export function cliValue(args, flag) {
+  const index = args.indexOf(flag)
+  if (index < 0 || index + 1 >= args.length || args[index + 1].startsWith('--')) return undefined
+  return args[index + 1]
+}
+
 function retryCron(cron) {
   return cron.replace(/^30 /, '45 ')
 }
@@ -73,7 +79,7 @@ export function resolveNewsRun({ event, cron = '', manualScan = 'full', manualWi
 
 async function main() {
   const args = process.argv.slice(2)
-  const value = flag => args[args.indexOf(flag) + 1]
+  const value = flag => cliValue(args, flag)
   const result = resolveNewsRun({
     event: value('--event'),
     cron: value('--cron') || '',

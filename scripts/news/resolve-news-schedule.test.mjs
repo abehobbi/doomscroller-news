@@ -1,6 +1,14 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { EVENING_LOCAL_TIME, MORNING_LOCAL_TIME, expectedCron, expectedDailyCron, resolveNewsRun } from './resolve-news-schedule.mjs'
+import { EVENING_LOCAL_TIME, MORNING_LOCAL_TIME, cliValue, expectedCron, expectedDailyCron, resolveNewsRun } from './resolve-news-schedule.mjs'
+
+test('CLI parsing never aliases a missing optional flag to the first argument', () => {
+  const args = ['--event', 'schedule', '--cron', '30 13 * * *']
+  assert.equal(cliValue(args, '--event'), 'schedule')
+  assert.equal(cliValue(args, '--now'), undefined)
+  assert.equal(cliValue([...args, '--now'], '--now'), undefined)
+  assert.equal(cliValue([...args, '--now', '--output'], '--now'), undefined)
+})
 
 test('Toronto schedule follows daylight saving without running both UTC crons', () => {
   assert.equal(expectedDailyCron(new Date('2026-07-01T12:00:00Z')), '30 12 * * *')
