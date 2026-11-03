@@ -8,6 +8,7 @@ export const EVENING_LOCAL_TIME = '20:30'
 export const DAILY_UTC_CRONS = Object.freeze([
   '30 0 * * *', '45 0 * * *', '30 1 * * *', '45 1 * * *',
   '30 12 * * *', '45 12 * * *', '30 13 * * *', '45 13 * * *',
+  '17 * * * *',
 ])
 
 function utcOffsetHours(date) {
@@ -47,14 +48,26 @@ function torontoParts(date) {
   }).formatToParts(date).filter(part => part.type !== 'literal').map(part => [part.type, part.value]))
 }
 
+function localDateKey(parts) {
+  return `${parts.year}-${parts.month}-${parts.day}`
+}
+
 function alreadyPublished(slot, lastPublishedAt, now) {
   const published = new Date(lastPublishedAt || '')
   if (!Number.isFinite(published.getTime())) return false
   const current = torontoParts(now)
   const previous = torontoParts(published)
-  if (`${current.year}-${current.month}-${current.day}` !== `${previous.year}-${previous.month}-${previous.day}`) return false
+  if (localDateKey(current) !== localDateKey(previous)) return false
   const publishedMinutes = Number(previous.hour) * 60 + Number(previous.minute)
   return publishedMinutes >= (slot === 'morning' ? 8 * 60 : 20 * 60)
+}
+
+function dueSlot(now) {
+  const current = torontoParts(now)
+  const minutes = Number(current.hour) * 60 + Number(current.minute)
+  if (minutes >= 20 * 60 + 30) return 'evening'
+  if (minutes >= 8 * 60 + 30) return 'morning'
+  return null
 }
 
 export function resolveNewsRun({ event, cron = '', manualScan = 'full', manualWindow = '24', manualPublish = false, productionEnabled = false, lastPublishedAt = '', now = new Date() }) {
@@ -64,17 +77,16 @@ export function resolveNewsRun({ event, cron = '', manualScan = 'full', manualWi
   const idle = reason => ({ run: false, scan: 'full', windowHours: '24', publish: false, editionMode: 'daily', reason })
   if (event !== 'schedule') return idle('unsupported event')
   if (!productionEnabled) return idle('NEWS_PRODUCTION_ENABLED is not true')
-  const morningCron = expectedCron(MORNING_LOCAL_TIME, now)
-  const eveningCron = expectedCron(EVENING_LOCAL_TIME, now)
-  if (cron === morningCron || cron === retryCron(morningCron)) {
+  const slot = dueSlot(now)
+  if (!slot) return idle('next Toronto edition is not due yet')
+  if (slot === 'morning') {
     if (alreadyPublished('morning', lastPublishedAt, now)) return idle('today’s morning edition is already published')
-    return { run: true, scan: 'full', windowHours: '24', publish: true, editionMode: 'daily', reason: `daily ${MORNING_LOCAL_TIME} Toronto edition${cron === morningCron ? '' : ' retry'}` }
+    const scheduled = cron === expectedCron(MORNING_LOCAL_TIME, now)
+    return { run: true, scan: 'full', windowHours: '24', publish: true, editionMode: 'daily', reason: `daily ${MORNING_LOCAL_TIME} Toronto edition${scheduled ? '' : ' recovery'}` }
   }
-  if (cron === eveningCron || cron === retryCron(eveningCron)) {
-    if (alreadyPublished('evening', lastPublishedAt, now)) return idle('today’s evening update is already published')
-    return { run: true, scan: 'major', windowHours: '12', publish: true, editionMode: 'major-update', reason: `major-news ${EVENING_LOCAL_TIME} Toronto update${cron === eveningCron ? '' : ' retry'}` }
-  }
-  return idle(`DST guard skipped ${cron}; expected ${morningCron} or ${eveningCron}`)
+  if (alreadyPublished('evening', lastPublishedAt, now)) return idle('today’s evening update is already published')
+  const scheduled = cron === expectedCron(EVENING_LOCAL_TIME, now)
+  return { run: true, scan: 'major', windowHours: '12', publish: true, editionMode: 'major-update', reason: `major-news ${EVENING_LOCAL_TIME} Toronto update${scheduled ? '' : ' recovery'}` }
 }
 
 async function main() {

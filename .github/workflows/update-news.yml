@@ -21,7 +21,8 @@ on:
         type: boolean
         default: false
   schedule:
-    # 08:30 and 20:30 America/Toronto. The plan job admits only DST-correct jobs.
+    # 08:30 and 20:30 America/Toronto, with exact retries plus an hourly
+    # off-peak watchdog. The plan job admits only a missing edition that is due.
     - cron: '30 0 * * *'
     - cron: '45 0 * * *'
     - cron: '30 1 * * *'
@@ -30,6 +31,7 @@ on:
     - cron: '45 12 * * *'
     - cron: '30 13 * * *'
     - cron: '45 13 * * *'
+    - cron: '17 * * * *'
 
 concurrency:
   group: news-daily-edition
