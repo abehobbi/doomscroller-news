@@ -8,7 +8,6 @@ export const EVENING_LOCAL_TIME = '20:30'
 export const DAILY_UTC_CRONS = Object.freeze([
   '30 0 * * *', '45 0 * * *', '30 1 * * *', '45 1 * * *',
   '30 12 * * *', '45 12 * * *', '30 13 * * *', '45 13 * * *',
-  '17 * * * *',
 ])
 
 function utcOffsetHours(date) {

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { EVENING_LOCAL_TIME, MORNING_LOCAL_TIME, cliValue, expectedCron, expectedDailyCron, resolveNewsRun } from './resolve-news-schedule.mjs'
+import { DAILY_UTC_CRONS, EVENING_LOCAL_TIME, MORNING_LOCAL_TIME, cliValue, expectedCron, expectedDailyCron, resolveNewsRun } from './resolve-news-schedule.mjs'
 
 test('CLI parsing never aliases a missing optional flag to the first argument', () => {
   const args = ['--event', 'schedule', '--cron', '30 13 * * *']
@@ -36,34 +36,8 @@ test('retry cron runs when the primary trigger was dropped', () => {
   assert.match(result.reason, /recovery/)
 })
 
-test('hourly watchdog recovers a delayed morning or evening edition', () => {
-  const morning = resolveNewsRun({ event: 'schedule', cron: '17 * * * *', productionEnabled: true, now: new Date('2026-12-01T15:17:00Z') })
-  assert.equal(morning.run, true)
-  assert.equal(morning.scan, 'full')
-  assert.equal(morning.editionMode, 'daily')
-  assert.match(morning.reason, /recovery/)
-
-  const evening = resolveNewsRun({ event: 'schedule', cron: '17 * * * *', productionEnabled: true, now: new Date('2026-12-02T03:17:00Z') })
-  assert.equal(evening.run, true)
-  assert.equal(evening.scan, 'major')
-  assert.equal(evening.editionMode, 'major-update')
-  assert.match(evening.reason, /recovery/)
-})
-
-test('watchdog stays idle before the morning slot instead of publishing overnight', () => {
-  const result = resolveNewsRun({ event: 'schedule', cron: '17 * * * *', productionEnabled: true, now: new Date('2026-12-01T05:17:00Z') })
-  assert.equal(result.run, false)
-  assert.equal(result.publish, false)
-  assert.match(result.reason, /not due yet/)
-})
-
-test('watchdog cannot duplicate a completed morning or evening edition', () => {
-  const morning = resolveNewsRun({ event: 'schedule', cron: '17 * * * *', productionEnabled: true,
-    lastPublishedAt: '2026-12-01T14:05:00Z', now: new Date('2026-12-01T15:17:00Z') })
-  assert.equal(morning.run, false)
-  const evening = resolveNewsRun({ event: 'schedule', cron: '17 * * * *', productionEnabled: true,
-    lastPublishedAt: '2026-12-02T02:10:00Z', now: new Date('2026-12-02T03:17:00Z') })
-  assert.equal(evening.run, false)
+test('the schedule has no hourly provider watchdog', () => {
+  assert.equal(DAILY_UTC_CRONS.includes('17 * * * *'), false)
 })
 
 test('retry cron cannot repeat an edition already published in its Toronto slot', () => {
