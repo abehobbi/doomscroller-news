@@ -66,7 +66,7 @@ jobs:
           --manual-scan "${{ inputs.scan }}"
           --manual-window "${{ inputs.window_hours }}"
           --manual-publish "${{ inputs.publish_dataset }}"
-          --production-enabled "${{ vars.NEWS_PRODUCTION_ENABLED }}"
+          --production-enabled "${{ github.event_name == 'schedule' || vars.NEWS_PRODUCTION_ENABLED == 'true' }}"
           --last-published-at "${{ steps.latest.outputs.publishedAt }}"
           --output "$GITHUB_OUTPUT"
 
