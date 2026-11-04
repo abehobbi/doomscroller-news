@@ -20,17 +20,17 @@ on:
         required: true
         type: boolean
         default: false
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/update-news.yml'
+      - '.github/news-watchdog'
   schedule:
-    # 08:30 and 20:30 America/Toronto, each with one bounded retry. The plan
-    # job admits only a missing edition that is due; no hourly provider reruns.
-    - cron: '30 0 * * *'
-    - cron: '45 0 * * *'
-    - cron: '30 1 * * *'
-    - cron: '45 1 * * *'
-    - cron: '30 12 * * *'
-    - cron: '45 12 * * *'
-    - cron: '30 13 * * *'
-    - cron: '45 13 * * *'
+    # A cheap watchdog runs away from the top of the hour. The plan job exits
+    # before provider use unless a Toronto edition is genuinely due and absent.
+    # Frequent triggers tolerate GitHub scheduler delays; the release lock and
+    # workflow concurrency prevent duplicate paid discovery runs.
+    - cron: '7,22,37,52 * * * *'
 
 concurrency:
   group: news-daily-edition
@@ -60,12 +60,12 @@ jobs:
         name: Resolve Toronto schedule and release lock
         run: >-
           node scripts/news/resolve-news-schedule.mjs
-          --event "${{ github.event_name }}"
-          --cron "${{ github.event.schedule }}"
+          --event "${{ github.event_name == 'push' && 'schedule' || github.event_name }}"
+          --cron "${{ github.event.schedule || 'watchdog' }}"
           --manual-scan "${{ inputs.scan }}"
           --manual-window "${{ inputs.window_hours }}"
           --manual-publish "${{ inputs.publish_dataset }}"
-          --production-enabled "${{ github.event_name == 'schedule' || vars.NEWS_PRODUCTION_ENABLED == 'true' }}"
+          --production-enabled "${{ github.event_name == 'schedule' || github.event_name == 'push' || vars.NEWS_PRODUCTION_ENABLED == 'true' }}"
           --last-published-at "${{ steps.latest.outputs.publishedAt }}"
           --output "$GITHUB_OUTPUT"
 
