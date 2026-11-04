@@ -18,6 +18,7 @@ test('scheduled editions cannot be silently disabled by a missing repository var
 
 test('validated publication happens before the generation job can become stranded at handoff', async () => {
   const workflow = await readFile('.github/workflows/update-news.yml', 'utf8')
+  assert.match(workflow, /group: news-daily-edition-v2/)
   assert.match(workflow, /Read latest committed edition timestamp/)
   assert.match(workflow, /--input \$\{\{ env\.RUN_ROOT \}\}\/final\/UNATTENDED_SHADOW_EDITION\.json/)
   assert.match(workflow, /git push origin "HEAD:\$\{GITHUB_REF_NAME\}"/)

@@ -32,7 +32,10 @@ on:
     - cron: '7,22,37,52 * * * *'
 
 concurrency:
-  group: news-daily-edition
+  # v2 retires the lock held by the pre-handoff workflow. A completed runner
+  # can occasionally remain stale in GitHub's run metadata after every step
+  # has succeeded; that old status must not block the repaired watchdog.
+  group: news-daily-edition-v2
   cancel-in-progress: false
 
 permissions:
