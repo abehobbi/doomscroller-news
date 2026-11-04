@@ -16,14 +16,13 @@ on:
         default: '24'
         options: ['12', '24', '72']
       publish_dataset:
-        description: Publish only after every strong-readiness check passes
+        description: Publish only after every mandatory release-safety check passes
         required: true
         type: boolean
         default: false
   push:
     branches: [main]
     paths:
-      - '.github/workflows/update-news.yml'
       - '.github/news-watchdog'
   schedule:
     # A cheap watchdog runs away from the top of the hour. The plan job exits
@@ -51,10 +50,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: latest
-        name: Read latest published edition timestamp
+        name: Read latest committed edition timestamp
         shell: bash
         run: |
-          value="$(curl --fail --silent --show-error --max-time 15 https://abehobbi.github.io/doomscroller-news/news/beta-control.json 2>/dev/null | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{try{process.stdout.write(JSON.parse(s).updatedAt||'')}catch{}})" || true)"
+          value="$(node -e "const fs=require('fs');try{process.stdout.write(JSON.parse(fs.readFileSync('public/news/beta-control.json','utf8')).updatedAt||'')}catch{}")"
           printf 'publishedAt=%s\n' "$value" >> "$GITHUB_OUTPUT"
       - id: plan
         name: Resolve Toronto schedule and release lock
@@ -74,6 +73,8 @@ jobs:
     if: needs.plan.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    permissions:
+      contents: write
     env:
       EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
       TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
@@ -89,7 +90,7 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Verify isolated News tests
-        run: npm run news:test && npm run news:adaptive:test && npm run news:comparison:test
+        run: npm run news:test && npm run news:schedule:test && npm run news:adaptive:test && npm run news:comparison:test
       - name: Verify saved free-tier credentials
         shell: bash
         run: |
@@ -257,59 +258,28 @@ jobs:
           path: ${{ env.RUN_ROOT }}
           retention-days: 14
           if-no-files-found: error
-
-  publish:
-    needs: [plan, shadow]
-    if: needs.plan.outputs.publish == 'true' && needs.shadow.result == 'success'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: write
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
-        with:
-          name: news-unattended-shadow-${{ github.run_id }}
-          path: downloaded-run
-      - name: Convert only a strongly ready edition
+      - name: Convert only a release-ready edition
+        if: needs.plan.outputs.publish == 'true'
         run: >-
           node scripts/news/promote-shadow-edition.mjs
-          --input downloaded-run/final/UNATTENDED_SHADOW_EDITION.json
-          --readiness downloaded-run/DAILY_READINESS.json
+          --input ${{ env.RUN_ROOT }}/final/UNATTENDED_SHADOW_EDITION.json
+          --readiness ${{ env.RUN_ROOT }}/DAILY_READINESS.json
           --output public/news/beta-feed.json
           --control public/news/beta-control.json
           --mode ${{ needs.plan.outputs.edition_mode }}
           --base public/news/beta-feed.json
           --release-authorized
       - name: Validate hosted dataset schema
+        if: needs.plan.outputs.publish == 'true'
         run: node scripts/news-beta/validate-news-beta.mjs public/news/beta-feed.json
       - name: Preserve the exact hosted edition
+        if: needs.plan.outputs.publish == 'true'
         shell: bash
         run: |
           git config user.name doomscroller-news-bot
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add public/news/beta-feed.json public/news/beta-control.json
           if ! git diff --cached --quiet; then
-            git commit -m "Publish strongly ready News daily edition"
+            git commit -m "Publish release-ready News daily edition"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
-      - name: Stage stable News endpoints
-        shell: bash
-        run: |
-          mkdir -p news-site/news
-          cp public/news/feed.json news-site/news/feed.json
-          cp public/news/beta-feed.json news-site/news/beta-feed.json
-          cp public/news/beta-control.json news-site/news/beta-control.json
-          printf '%s\n' '<!doctype html><title>Doomscroller News data</title><a href="news/feed.json">Stage 1 JSON</a> · <a href="news/beta-feed.json">Daily edition JSON</a>' > news-site/index.html
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: news-site
-      - name: Publish stable data files
-        id: deployment
-        uses: actions/deploy-pages@v4

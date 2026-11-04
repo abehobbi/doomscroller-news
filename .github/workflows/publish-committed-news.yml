@@ -2,6 +2,11 @@ name: Publish validated committed News data
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'public/news/beta-feed.json'
+      - 'public/news/beta-control.json'
 
 concurrency:
   group: doomscroller-news-publish
