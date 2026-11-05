@@ -16,13 +16,18 @@ test('scheduled editions cannot be silently disabled by a missing repository var
   assert.match(workflow, /Enforce recurring-free provider budget/)
 })
 
-test('validated publication happens before the generation job can become stranded at handoff', async () => {
+test('validated publication is committed and deployed inside the originating workflow', async () => {
   const workflow = await readFile('.github/workflows/update-news.yml', 'utf8')
   assert.match(workflow, /group: news-daily-edition-v2/)
   assert.match(workflow, /Read latest committed edition timestamp/)
   assert.match(workflow, /--input \$\{\{ env\.RUN_ROOT \}\}\/final\/UNATTENDED_SHADOW_EDITION\.json/)
   assert.match(workflow, /git push origin "HEAD:\$\{GITHUB_REF_NAME\}"/)
-  assert.doesNotMatch(workflow, /^  publish:\s*$/m)
+  assert.match(workflow, /^  publish:\s*$/m)
+  assert.match(workflow, /needs: \[plan, shadow\]/)
+  assert.match(workflow, /if: needs\.plan\.outputs\.publish == 'true' && needs\.shadow\.result == 'success'/)
+  assert.match(workflow, /ref: \$\{\{ github\.ref_name \}\}/)
+  assert.match(workflow, /Validate the committed daily edition before deployment/)
+  assert.match(workflow, /actions\/deploy-pages@v4/)
 })
 
 test('committed News data deploys through an independent small workflow', async () => {

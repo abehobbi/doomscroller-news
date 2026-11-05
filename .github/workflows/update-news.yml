@@ -286,3 +286,49 @@ jobs:
             git commit -m "Publish release-ready News daily edition"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
+
+  publish:
+    needs: [plan, shadow]
+    if: needs.plan.outputs.publish == 'true' && needs.shadow.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # The shadow job commits with GITHUB_TOKEN. GitHub intentionally does not
+      # emit another push workflow from that commit, so deploy the committed
+      # edition inside this original run instead of relying on a second trigger.
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Validate the committed daily edition before deployment
+        run: node scripts/news-beta/validate-news-beta.mjs public/news/beta-feed.json
+      - name: Verify release control matches the committed edition
+        shell: bash
+        run: |
+          node -e "const fs=require('fs');const feed=JSON.parse(fs.readFileSync('public/news/beta-feed.json'));const control=JSON.parse(fs.readFileSync('public/news/beta-control.json'));if(!control.enabled||control.datasetUrl!=='beta-feed.json'||control.updatedAt!==feed.generatedAt)process.exit(1)"
+      - name: Stage stable News endpoints
+        shell: bash
+        run: |
+          mkdir -p news-site/news
+          cp public/news/feed.json news-site/news/feed.json
+          cp public/news/beta-feed.json news-site/news/beta-feed.json
+          cp public/news/beta-control.json news-site/news/beta-control.json
+          printf '%s\n' '<!doctype html><title>Doomscroller News data</title><a href="news/feed.json">Stage 1 JSON</a> · <a href="news/beta-feed.json">Daily edition JSON</a>' > news-site/index.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: news-site
+      - name: Publish stable data files
+        id: deployment
+        uses: actions/deploy-pages@v4
