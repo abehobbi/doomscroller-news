@@ -240,6 +240,19 @@ export function shouldRetryStructuralFailure(result, attempt, maxRetries = SELEC
       || (!result.parseError && ['duplicate candidate id', 'candidate ids do not exactly match batch'].includes(result.audit?.reason)))
 }
 
+export function shouldRetryProviderFailure(result, attempt, maxRetries = SELECTOR_CONFIGURATION.structuralRetries) {
+  if (attempt >= maxRetries) return false
+  if (result?.state === 'provider_network_failure') return true
+  const status = Number(result?.httpStatus || 0)
+  return status === 408 || status === 425 || status === 429 || status >= 500
+}
+
+function providerRetryDelayMs(result) {
+  const retryAfter = Number(result?.safeHeaders?.['retry-after'])
+  if (Number.isFinite(retryAfter) && retryAfter > 0) return Math.min(10_000, retryAfter * 1000)
+  return 2_000
+}
+
 export function resumableEvaluations(report, candidateIds) {
   return (report?.calls || [])
     .filter(call => call.complete === true)
@@ -273,8 +286,11 @@ export async function scoreBatch(candidates, batchIndex) {
       })
       raw = await response.text()
     } catch (error) {
-      attempts.push({ attempt: attempt + 1, timestamp, complete: false, state: 'provider_network_failure', error: error.name, latencyMs: Math.round(performance.now() - started), evaluations: [] })
-      break
+      const attemptResult = { attempt: attempt + 1, timestamp, complete: false, state: 'provider_network_failure', error: error.name, latencyMs: Math.round(performance.now() - started), evaluations: [] }
+      attempts.push(attemptResult)
+      if (!shouldRetryProviderFailure(attemptResult, attempt)) break
+      await new Promise(resolve => setTimeout(resolve, providerRetryDelayMs(attemptResult)))
+      continue
     }
     let body = null, providerParseError = null
     try { body = parseStrict(raw) } catch (error) { providerParseError = error.message }
@@ -292,7 +308,11 @@ export async function scoreBatch(candidates, batchIndex) {
       providerParseError, parseError, audit, evaluations: parsed?.evaluations ?? [],
     }
     attempts.push(attemptResult)
-    if (complete || !shouldRetryStructuralFailure(attemptResult, attempt)) break
+    if (complete) break
+    const retryProvider = shouldRetryProviderFailure(attemptResult, attempt)
+    const retryStructural = shouldRetryStructuralFailure(attemptResult, attempt)
+    if (!retryProvider && !retryStructural) break
+    if (retryProvider) await new Promise(resolve => setTimeout(resolve, providerRetryDelayMs(attemptResult)))
   }
   const finalAttempt = attempts.at(-1)
   const usage = {
@@ -301,7 +321,10 @@ export async function scoreBatch(candidates, batchIndex) {
     completion_tokens: attempts.reduce((sum, value) => sum + Number(value.usage?.completion_tokens || value.usage?.output_tokens || 0), 0),
   }
   return {
-    ...finalAttempt, batchIndex, attempts, structuralRetryCount: Math.max(0, attempts.length - 1),
+    ...finalAttempt, batchIndex, attempts,
+    retryCount: Math.max(0, attempts.length - 1),
+    providerRetryCount: attempts.slice(0, -1).filter(value => shouldRetryProviderFailure(value, 0)).length,
+    structuralRetryCount: attempts.slice(0, -1).filter(value => shouldRetryStructuralFailure(value, 0)).length,
     latencyMs: attempts.reduce((sum, value) => sum + Number(value.latencyMs || 0), 0), usage,
   }
 }
