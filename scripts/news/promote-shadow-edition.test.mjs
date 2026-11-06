@@ -49,9 +49,14 @@ test('evening major updates replace matching events and retain the morning editi
   assert.equal(merged.cards.length, base.cards.length + 1)
 })
 
-test('evening promotion rejects non-major cards and weak update readiness', () => {
+test('evening promotion extracts only major cards and rejects weak update readiness', () => {
   const base = buildReleaseDataset(edition, readiness, { releaseAuthorized: true })
   const updateReadiness = { windowHours: 12, checks: { categoryMaximums: true, hardMaximum: true, completeHeadlines: true, sourceComplete: true, imageComplete: true, recurringBudgetSafe: true } }
-  assert.throws(() => mergeMajorUpdateDataset(base, { ...edition, cards: [cards[0]] }, updateReadiness, { releaseAuthorized: true }), /non-major/)
-  assert.throws(() => mergeMajorUpdateDataset(base, { ...edition, cards: [{ ...cards[0], lane: 'world-major' }] }, { ...updateReadiness, checks: { ...updateReadiness.checks, sourceComplete: false } }, { releaseAuthorized: true }), /readiness/)
+  const major = { ...cards[1], eventId: 'event:evening-major', lane: 'world-major', headline: 'A verified evening major development' }
+  const merged = mergeMajorUpdateDataset(base, { ...edition, cards: [cards[0], major, cards[2]] }, updateReadiness, { releaseAuthorized: true })
+  assert.equal(merged.policy.updateCards, 1)
+  assert.equal(merged.cards[0].event_id, 'event:evening-major')
+  assert.equal(merged.cards.some(card => card.event_id === 'event:test-1' && card.content_version === 2), false)
+  assert.equal(mergeMajorUpdateDataset(base, { ...edition, cards: [cards[0]] }, updateReadiness, { releaseAuthorized: true }), base)
+  assert.throws(() => mergeMajorUpdateDataset(base, { ...edition, cards: [major] }, { ...updateReadiness, checks: { ...updateReadiness.checks, sourceComplete: false } }, { releaseAuthorized: true }), /readiness/)
 })

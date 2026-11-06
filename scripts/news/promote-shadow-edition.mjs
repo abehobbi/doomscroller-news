@@ -67,12 +67,18 @@ export function mergeMajorUpdateDataset(base, edition, readiness, { releaseAutho
   if (base?.schema !== 'doomscroller.news-beta-dataset' || !Array.isArray(base?.cards) || !Array.isArray(base?.feed?.eventIds)) throw new Error('A valid morning edition is required')
   if (!edition || edition.schemaVersion !== 1 || edition.shadowOnly !== true || !Array.isArray(edition.cards)) throw new Error('Unsupported major-update edition')
   if (!updateChecksPass(readiness)) throw new Error('Major-update readiness did not pass every required check')
-  if (edition.cards.length > 30 || edition.cards.some(card => !['world-major', 'priority-major'].includes(card?.lane))) throw new Error('Evening update contains non-major or excessive cards')
-  if (!edition.cards.length) return base
+  // The shared research pipeline intentionally audits all five lanes even for
+  // an evening run. Only verified Major cards belong in the published update;
+  // non-major cards remain in the artifact for editorial analysis and must not
+  // make an otherwise valid Major update fail at the final handoff.
+  const majorCards = edition.cards
+    .filter(card => ['world-major', 'priority-major'].includes(card?.lane))
+    .slice(0, 30)
+  if (!majorCards.length) return base
   const generatedAt = iso(edition.createdAt)
   if (!generatedAt || Date.parse(generatedAt) < Date.parse(base.generatedAt || '')) throw new Error('Evening update is older than the morning edition')
   const priorById = new Map(base.cards.map(card => [card.event_id, card]))
-  const updates = edition.cards.map(card => {
+  const updates = majorCards.map(card => {
     const converted = cardFor(card, generatedAt)
     const prior = priorById.get(converted.event_id)
     return prior ? {
