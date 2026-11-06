@@ -52,6 +52,11 @@ jobs:
       edition_mode: ${{ steps.plan.outputs.editionMode }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Scheduled runs are created from an event SHA that can predate a
+          # recently published edition. Always read the latest branch state so
+          # redundant watchdog triggers see the current release lock.
+          ref: ${{ github.ref_name }}
       - id: latest
         name: Read latest committed edition timestamp
         shell: bash
@@ -87,6 +92,10 @@ jobs:
       RUN_ROOT: artifacts/news-unattended-shadow/${{ github.run_id }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Match the plan job's current branch state instead of rebuilding an
+          # older scheduled-event snapshot after a delayed runner starts.
+          ref: ${{ github.ref_name }}
       - uses: actions/setup-node@v4
         with:
           node-version: 24

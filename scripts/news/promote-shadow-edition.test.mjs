@@ -29,6 +29,28 @@ test('a strongly ready edition converts in exact rank order', () => {
   assert.equal(dataset.cards[0].sources[0].name, 'Example')
 })
 
+test('daily handoff removes cards outside the final rolling 24-hour window', () => {
+  const expanded = [...cards, {
+    ...cards[0], eventId: 'event:stale-card', headline: 'A stale card that must not reach the hosted feed',
+    publishedAt: '2026-10-29T20:29:59Z',
+  }, {
+    ...cards[1], eventId: 'event:future-card', headline: 'A future-dated card that must not reach the hosted feed',
+    publishedAt: '2026-10-30T20:30:01Z',
+  }]
+  const dataset = buildReleaseDataset({ ...edition, cards: expanded }, readiness, { releaseAuthorized: true })
+  assert.equal(dataset.cards.length, 30)
+  assert.equal(dataset.cards.some(card => card.event_id === 'event:stale-card'), false)
+  assert.equal(dataset.cards.some(card => card.event_id === 'event:future-card'), false)
+})
+
+test('daily handoff fails closed when freshness filtering leaves fewer than 30 cards', () => {
+  const stale = cards.map((card, index) => index === 0 ? { ...card, publishedAt: '2026-10-29T20:29:59Z' } : card)
+  assert.throws(
+    () => buildReleaseDataset({ ...edition, cards: stale }, readiness, { releaseAuthorized: true }),
+    /29 fresh cards/,
+  )
+})
+
 test('pipeline event IDs are converted to the stable hosted schema', () => {
   const legacyEdition = { ...edition, cards: cards.map((card, index) => ({ ...card, eventId: `event-${String(index + 1).padStart(3, '0')}` })) }
   const dataset = buildReleaseDataset(legacyEdition, readiness, { releaseAuthorized: true })

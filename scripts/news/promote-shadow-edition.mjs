@@ -4,6 +4,7 @@ import { pathToFileURL } from 'node:url'
 
 const MINIMUM_CARDS = 30
 const MAXIMUM_CARDS = 65
+const DAILY_WINDOW_HOURS = 24
 const cleanUrl = value => { try { const url = new URL(String(value || '')); return ['http:', 'https:'].includes(url.protocol) ? url.href : null } catch { return null } }
 const iso = value => { const date = new Date(value); return Number.isFinite(date.getTime()) ? date.toISOString() : null }
 const releaseEventId = value => {
@@ -106,10 +107,17 @@ export function buildReleaseDataset(edition, readiness, { releaseAuthorized = fa
   if (!releaseAuthorized) throw new Error('Release lock is active')
   if (!edition || edition.schemaVersion !== 1 || edition.shadowOnly !== true || !Array.isArray(edition.cards)) throw new Error('Unsupported shadow edition')
   if (!dailyChecksPass(readiness)) throw new Error('Daily readiness did not pass every accepted-release check')
-  if (edition.cards.length < MINIMUM_CARDS || edition.cards.length > MAXIMUM_CARDS) throw new Error(`Edition has ${edition.cards.length} cards; expected ${MINIMUM_CARDS}-${MAXIMUM_CARDS}`)
   const generatedAt = iso(edition.createdAt)
   if (!generatedAt) throw new Error('Edition has no valid creation time')
-  const cards = edition.cards.map(card => cardFor(card, generatedAt)), ids = cards.map(card => card.event_id)
+  const cutoff = Date.parse(generatedAt) - DAILY_WINDOW_HOURS * 60 * 60 * 1000
+  const freshEditionCards = edition.cards.filter(card => {
+    const publishedAt = Date.parse(card?.publishedAt || '')
+    return Number.isFinite(publishedAt) && publishedAt >= cutoff && publishedAt <= Date.parse(generatedAt)
+  })
+  if (freshEditionCards.length < MINIMUM_CARDS || freshEditionCards.length > MAXIMUM_CARDS) {
+    throw new Error(`Edition has ${freshEditionCards.length} fresh cards after final 24-hour filtering; expected ${MINIMUM_CARDS}-${MAXIMUM_CARDS}`)
+  }
+  const cards = freshEditionCards.map(card => cardFor(card, generatedAt)), ids = cards.map(card => card.event_id)
   if (new Set(ids).size !== ids.length) throw new Error('Edition contains duplicate event ids')
   return {
     schema: 'doomscroller.news-beta-dataset', schemaVersion: 1, generatedAt,
