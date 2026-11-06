@@ -12,7 +12,7 @@ test('production workflow resumes validated editorial batches without bypassing 
 
 test('scheduled editions cannot be silently disabled by a missing repository variable', async () => {
   const workflow = await readFile('.github/workflows/update-news.yml', 'utf8')
-  assert.match(workflow, /--production-enabled "\$\{\{ github\.event_name == 'schedule' \|\| github\.event_name == 'push' \|\| vars\.NEWS_PRODUCTION_ENABLED == 'true' \}\}"/)
+  assert.match(workflow, /inputs\.external_clock == true \|\| github\.event_name == 'schedule'/)
   assert.match(workflow, /Enforce recurring-free provider budget/)
 })
 
@@ -36,4 +36,18 @@ test('committed News data deploys through an independent small workflow', async 
   assert.match(workflow, /public\/news\/beta-feed\.json/)
   assert.match(workflow, /public\/news\/beta-control\.json/)
   assert.match(workflow, /Validate the committed daily edition/)
+})
+
+test('Cloudflare supplies a primary Toronto clock while GitHub remains the watchdog', async () => {
+  const [worker, config, deploy] = await Promise.all([
+    readFile('cloudflare/news-scheduler/src/index.js', 'utf8'),
+    readFile('cloudflare/news-scheduler/wrangler.toml', 'utf8'),
+    readFile('.github/workflows/deploy-news-scheduler.yml', 'utf8'),
+  ])
+  assert.match(worker, /update-news\.yml\/dispatches/)
+  assert.match(worker, /publish_dataset: 'true'/)
+  assert.match(worker, /external_clock: 'true'/)
+  assert.match(worker, /editionAlreadyPublished/)
+  assert.match(config, /30,45 0,1,12,13/)
+  assert.match(deploy, /NEWS_SCHEDULER_GITHUB_TOKEN/)
 })

@@ -20,6 +20,11 @@ on:
         required: true
         type: boolean
         default: false
+      external_clock:
+        description: Trusted scheduler dispatch; keep false for ordinary manual runs
+        required: true
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths:
@@ -67,12 +72,12 @@ jobs:
         name: Resolve Toronto schedule and release lock
         run: >-
           node scripts/news/resolve-news-schedule.mjs
-          --event "${{ github.event_name == 'push' && 'schedule' || github.event_name }}"
+          --event "${{ inputs.external_clock == true && 'schedule' || github.event_name == 'push' && 'schedule' || github.event_name }}"
           --cron "${{ github.event.schedule || 'watchdog' }}"
           --manual-scan "${{ inputs.scan }}"
           --manual-window "${{ inputs.window_hours }}"
           --manual-publish "${{ inputs.publish_dataset }}"
-          --production-enabled "${{ github.event_name == 'schedule' || github.event_name == 'push' || vars.NEWS_PRODUCTION_ENABLED == 'true' }}"
+          --production-enabled "${{ inputs.external_clock == true || github.event_name == 'schedule' || github.event_name == 'push' || vars.NEWS_PRODUCTION_ENABLED == 'true' }}"
           --last-published-at "${{ steps.latest.outputs.publishedAt }}"
           --output "$GITHUB_OUTPUT"
 

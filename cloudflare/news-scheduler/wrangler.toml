@@ -1,0 +1,13 @@
+name = "doomscroller-news-scheduler"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+
+[vars]
+GITHUB_OWNER = "abehobbi"
+GITHUB_REPOSITORY = "doomscroller-news"
+
+[triggers]
+# Cloudflare cron is UTC. Both possible UTC hours cover Toronto daylight and
+# standard time; the Worker dispatches only when local Toronto time is 08:30,
+# 08:45, 20:30, or 20:45. The :45 invocation is a safe retry.
+crons = ["30,45 0,1,12,13 * * *"]

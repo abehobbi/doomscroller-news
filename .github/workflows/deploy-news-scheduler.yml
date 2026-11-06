@@ -1,0 +1,31 @@
+name: Deploy reliable News scheduler
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Validate scheduler behavior
+        run: node --test cloudflare/news-scheduler/news-scheduler.test.mjs
+      - name: Deploy Cloudflare scheduler
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: cloudflare/news-scheduler
+          command: deploy
+          secrets: |
+            NEWS_GITHUB_TOKEN
+        env:
+          NEWS_GITHUB_TOKEN: ${{ secrets.NEWS_SCHEDULER_GITHUB_TOKEN }}
