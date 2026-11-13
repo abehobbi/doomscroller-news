@@ -55,3 +55,19 @@ test('manual runs remain available and publish only when explicitly requested', 
   })
   assert.equal(resolveNewsRun({ event: 'workflow_dispatch', manualPublish: true }).publish, true)
 })
+
+test('November 13 automatic runs are skipped once and resume the next morning', () => {
+  const primary = resolveNewsRun({ event: 'schedule', cron: '30 1 * * *', productionEnabled: true, now: new Date('2026-11-14T01:30:00Z') })
+  assert.equal(primary.run, false)
+  assert.equal(primary.publish, false)
+  assert.match(primary.reason, /paused for 2026-11-13 Toronto/)
+
+  const retry = resolveNewsRun({ event: 'schedule', cron: '45 1 * * *', productionEnabled: true, now: new Date('2026-11-14T01:45:00Z') })
+  assert.equal(retry.run, false)
+  assert.equal(retry.publish, false)
+
+  const tomorrowMorning = resolveNewsRun({ event: 'schedule', cron: '30 13 * * *', productionEnabled: true, now: new Date('2026-11-14T13:30:00Z') })
+  assert.equal(tomorrowMorning.run, true)
+  assert.equal(tomorrowMorning.publish, true)
+  assert.equal(tomorrowMorning.editionMode, 'daily')
+})
