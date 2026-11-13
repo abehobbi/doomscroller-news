@@ -5,6 +5,7 @@ import { pathToFileURL } from 'node:url'
 export const TORONTO_ZONE = 'America/Toronto'
 export const MORNING_LOCAL_TIME = '08:30'
 export const EVENING_LOCAL_TIME = '20:30'
+export const AUTOMATIC_SKIP_LOCAL_DATES = Object.freeze(['2026-11-13'])
 export const DAILY_UTC_CRONS = Object.freeze([
   '30 0 * * *', '45 0 * * *', '30 1 * * *', '45 1 * * *',
   '30 12 * * *', '45 12 * * *', '30 13 * * *', '45 13 * * *',
@@ -76,6 +77,8 @@ export function resolveNewsRun({ event, cron = '', manualScan = 'full', manualWi
   const idle = reason => ({ run: false, scan: 'full', windowHours: '24', publish: false, editionMode: 'daily', reason })
   if (event !== 'schedule') return idle('unsupported event')
   if (!productionEnabled) return idle('NEWS_PRODUCTION_ENABLED is not true')
+  const localDate = localDateKey(torontoParts(now))
+  if (AUTOMATIC_SKIP_LOCAL_DATES.includes(localDate)) return idle(`automatic News runs are paused for ${localDate} Toronto`)
   const slot = dueSlot(now)
   if (!slot) return idle('next Toronto edition is not due yet')
   if (slot === 'morning') {
