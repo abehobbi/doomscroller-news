@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url'
 export const TORONTO_ZONE = 'America/Toronto'
 export const MORNING_LOCAL_TIME = '08:30'
 export const EVENING_LOCAL_TIME = '20:30'
-export const AUTOMATIC_SKIP_LOCAL_DATES = Object.freeze(['2026-11-13'])
+export const AUTOMATIC_SKIP_LOCAL_DATES = Object.freeze(['2026-11-13', '2026-11-14'])
 export const DAILY_UTC_CRONS = Object.freeze([
   '30 0 * * *', '45 0 * * *', '30 1 * * *', '45 1 * * *',
   '30 12 * * *', '45 12 * * *', '30 13 * * *', '45 13 * * *',
