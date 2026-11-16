@@ -20,6 +20,20 @@ function immediateEventText(card) {
   return [card.headline, opening].join(' ')
 }
 
+function recencyValue(card) {
+  const values = [card.updatedAt, card.updated_at, card.publishedAt, card.firstSeen, card.createdAt]
+    .map(Date.parse).filter(Number.isFinite)
+  return values.length ? Math.max(...values) : 0
+}
+
+function diversityKey(card) {
+  return {
+    lane: card.lane || '',
+    region: (card.priorityRegions || card.geography || [])[0] || '',
+    topic: (card.topics || [])[0] || '',
+  }
+}
+
 function largestExplicitCasualty(text) {
   const values = []
   const pattern = /\b(\d{1,3}(?:,\d{3})*)\s+(?:people\s+)?(?:were\s+)?(?:killed|dead|deaths?|wounded|injured)\b/gi
@@ -48,13 +62,33 @@ export function scoreFrontPageCard(card) {
   if (ROUTINE_SUBNATIONAL_POLITICS.test(immediateText) && !MASS_CASUALTY.test(immediateText) && !LARGE_HUMAN_SCALE.test(immediateText)) { score -= 12; reasons.push('routine subnational political process') }
   if (isMajor && PROSPECTIVE.test(card.headline)) { score -= 14; reasons.push('development remains prospective') }
   if (isMajor && isRetrospective) { score -= 18; reasons.push('retrospective or anniversary framing') }
+  const firstSeen = Date.parse(card.firstSeen || card.first_seen || '')
+  const updatedAt = Date.parse(card.updatedAt || card.updated_at || '')
+  if ((Number.isFinite(firstSeen) && Number.isFinite(updatedAt) && updatedAt - firstSeen >= 30 * 60 * 1000) || Number(card.contentVersion || card.content_version) > 1) {
+    score += isMajor ? 8 : 4
+    reasons.push('materially updated story')
+  }
   return { score, reasons }
 }
 
 export function rankFrontPage(cards) {
-  return cards.map((card, originalIndex) => ({ ...card, frontPageRanking: { ...scoreFrontPageCard(card), originalIndex: originalIndex + 1 } }))
-    .sort((left, right) => right.frontPageRanking.score - left.frontPageRanking.score || left.frontPageRanking.originalIndex - right.frontPageRanking.originalIndex)
-    .map((card, index) => ({ ...card, frontPageRank: index + 1 }))
+  const scored = cards.map((card, originalIndex) => ({ ...card, frontPageRanking: { ...scoreFrontPageCard(card), originalIndex: originalIndex + 1 } }))
+    .sort((left, right) => right.frontPageRanking.score - left.frontPageRanking.score || recencyValue(right) - recencyValue(left) || left.frontPageRanking.originalIndex - right.frontPageRanking.originalIndex)
+  const ranked = scored.splice(0, Math.min(5, scored.length))
+  while (scored.length) {
+    const recent = ranked.slice(-3).map(diversityKey)
+    let bestIndex = 0, bestAdjusted = -Infinity
+    scored.forEach((card, index) => {
+      const key = diversityKey(card)
+      const laneRepeats = recent.filter(item => item.lane && item.lane === key.lane).length
+      const regionRepeats = recent.filter(item => item.region && item.region === key.region).length
+      const topicRepeats = recent.filter(item => item.topic && item.topic === key.topic).length
+      const adjusted = card.frontPageRanking.score - laneRepeats * 5 - regionRepeats * 7 - topicRepeats * 5 - index * 0.08
+      if (adjusted > bestAdjusted) { bestAdjusted = adjusted; bestIndex = index }
+    })
+    ranked.push(scored.splice(bestIndex, 1)[0])
+  }
+  return ranked.map((card, index) => ({ ...card, frontPageRank: index + 1 }))
 }
 
 function render(cards) {
