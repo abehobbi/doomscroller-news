@@ -31,3 +31,15 @@ test('a category over its product maximum cannot earn strong daily success', () 
   assert.deepEqual(result.laneOverages, { discovery: 1 })
   assert.equal(result.strongDailySuccess, false)
 })
+
+test('one publisher cannot dominate a supposedly healthy daily edition', () => {
+  const cards = Object.entries(DAILY_LANE_MINIMUMS).flatMap(([lane, count]) => Array.from({ length: count }, (_, index) => ({
+    headline: `${lane} ${index} complete headline`, lane, primaryUrl: `https://example.com/${lane}/${index}`,
+    sources: [{ publisher: 'dominant.test', url: `https://dominant.test/${lane}/${index}` }], acceptedSources: [{ domain: 'dominant.test' }],
+    image: { url: `https://images.test/${lane}/${index}.jpg` },
+  })))
+  const edition = { cards, audit: { laneCounts: Object.fromEntries(Object.entries(DAILY_LANE_MINIMUMS)) } }
+  const result = auditDailyShadowReadiness(edition, { requestedWindow: { start: '2026-11-13T16:00:00Z', end: '2026-11-14T16:00:00Z' } }, { safeForDailyFullRun: true })
+  assert.equal(result.checks.sourceDiversity, false)
+  assert.equal(result.viableDailyEdition, false)
+})

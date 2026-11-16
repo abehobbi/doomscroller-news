@@ -34,6 +34,13 @@ export function auditDailyShadowReadiness(edition, discovery, budget) {
   const malformedHeadlines = cards.filter(card => !String(card.headline || '').trim() || INCOMPLETE_HEADLINE.test(String(card.headline).trim())).map(card => card.headline)
   const missingSources = cards.filter(card => !card.primaryUrl || !(card.sources || []).length).map(card => card.headline)
   const missingImages = cards.filter(card => !card.image?.url && !card.imageException?.granted).map(card => card.headline)
+  const publisherCounts = {}
+  for (const card of cards) {
+    const publisher = card.acceptedSources?.[0]?.domain || card.sources?.[0]?.publisher || null
+    if (publisher) publisherCounts[publisher] = Number(publisherCounts[publisher] || 0) + 1
+  }
+  const largestPublisherCount = Math.max(0, ...Object.values(publisherCounts))
+  const largestPublisherShare = cards.length ? largestPublisherCount / cards.length : 0
   const checks = {
     exactDailyWindow: windowHours !== null && Math.abs(windowHours - 24) < 0.05,
     acceptedMinimum: cards.length >= 30,
@@ -43,6 +50,7 @@ export function auditDailyShadowReadiness(edition, discovery, budget) {
     completeHeadlines: malformedHeadlines.length === 0,
     sourceComplete: missingSources.length === 0,
     imageComplete: missingImages.length === 0,
+    sourceDiversity: largestPublisherCount <= 7 && largestPublisherShare <= 0.25,
     recurringBudgetSafe: budget?.safeForDailyFullRun === true,
   }
   return {
@@ -54,8 +62,10 @@ export function auditDailyShadowReadiness(edition, discovery, budget) {
     laneGaps,
     laneOverages,
     checks,
-    viableDailyEdition: checks.exactDailyWindow && checks.acceptedMinimum && checks.categoryMaximums && checks.hardMaximum && checks.completeHeadlines && checks.sourceComplete && checks.imageComplete && checks.recurringBudgetSafe,
+    viableDailyEdition: checks.exactDailyWindow && checks.acceptedMinimum && checks.categoryMinimums && checks.categoryMaximums && checks.hardMaximum && checks.completeHeadlines && checks.sourceComplete && checks.imageComplete && checks.sourceDiversity && checks.recurringBudgetSafe,
     strongDailySuccess: Object.values(checks).every(Boolean),
+    publisherCounts,
+    largestPublisherShare: Number(largestPublisherShare.toFixed(3)),
     problems: { malformedHeadlines, missingSources, missingImages },
   }
 }

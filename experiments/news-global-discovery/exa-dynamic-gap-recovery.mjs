@@ -6,18 +6,23 @@ import { FIVE_LANE_QUERIES } from './five-lane-queries.mjs'
 const API_URL = 'https://api.exa.ai/search'
 const EXCLUDE_DOMAINS = ['facebook.com', 'instagram.com', 'linkedin.com', 'pinterest.com', 'tiktok.com', 'tripadvisor.com', 'youtube.com', 'x.com']
 
-export function selectGapQueries(edition, maximum = 8, strictShape = false, previouslyRunIds = []) {
+export function selectGapQueries(edition, maximum = 8, strictShape = false, previouslyRunIds = [], minimumRecallQueries = 5) {
   const laneGaps = edition.audit?.laneGaps || {}
   const regionGaps = edition.audit?.regionGaps || {}
   const previouslyRun = new Set(previouslyRunIds)
+  const hasMeasuredGaps = Object.values(laneGaps).some(Number) || Object.values(regionGaps).some(Number)
   const candidates = [...new Map(FIVE_LANE_QUERIES.filter(query => strictShape
     ? Number(laneGaps[query.lane] || 0) > 0 && (!query.region || Number(regionGaps[query.region] || 0) > 0)
-    : Number(laneGaps[query.lane] || 0) > 0 || (query.region && Number(regionGaps[query.region] || 0) > 0)).map(query => [query.id, query])).values()]
+    : hasMeasuredGaps
+      ? Number(laneGaps[query.lane] || 0) > 0 || (query.region && Number(regionGaps[query.region] || 0) > 0)
+      : !query.recoveryOnly).map(query => [query.id, query])).values()]
   const remainingLane = { ...laneGaps }, remainingRegion = { ...regionGaps }, selected = [], selectedLanes = new Set(), selectedRegions = new Set()
-  while (candidates.length && selected.length < maximum) {
+  const target = hasMeasuredGaps ? maximum : Math.min(maximum, minimumRecallQueries)
+  while (candidates.length && selected.length < target) {
     const ranked = candidates.map((query, index) => ({ query, score:
       Number(!selectedLanes.has(query.lane)) * 1000
       + Number(!previouslyRun.has(query.id)) * 500
+      + Number(!hasMeasuredGaps && query.lane.endsWith('major')) * 120
       + Number(Boolean(query.region) && !selectedRegions.has(query.region)) * 80
       + Number(remainingRegion[query.region] || 0) * 30
       + Number(remainingLane[query.lane] || 0) * 10

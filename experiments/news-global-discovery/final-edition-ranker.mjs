@@ -8,6 +8,9 @@ const MASS_CASUALTY = /\b(?:attacks?|strikes?|bomb(?:ing|ings)?|earthquakes?|flo
 const LARGE_HUMAN_SCALE = /\b(?:million|hundreds? of thousands?|thousands?|\d{3,})\b[\s\S]{0,100}\b(?:affected|displaced|detained|evacuated|without|stranded|injured|wounded|dead|killed|facing|hunger|food insecurity|malnutrition|famine)\b|\b(?:affected|displaced|detained|evacuated|without|stranded|injured|wounded|dead|killed|facing|hunger|food insecurity|malnutrition|famine)\b[\s\S]{0,100}\b(?:million|hundreds? of thousands?|thousands?|\d{3,})\b/i
 const ESCALATION = /\b(?:invasion|aggression|cross-border|troops?|military escalation|(?:wider|regional) war|joins? (?:the )?war|deploy(?:ment|s|ed)?|missiles?|drone attack|airport attack)\b/i
 const SYSTEMIC = /\b(?:election|international criminal court|supreme court|constitutional|sanctions?|ceasefire|trade deal|central bank|unemployment|public health|national strike)\b/i
+const GLOBAL_DISRUPTION = /\b(?:nationwide ground stop|air traffic control|major airport|strait of hormuz|shipping lane|oil tankers?|internet outage|cloud outage|global outage|starshield|starlink|submarine cable|power grid)\b/i
+const GEOPOLITICAL_DECISION = /\b(?:summit|peace talks?|restraint|military drills?|troop withdrawal|arms embargo|international criminal court|icc ruling|trade sanctions?)\b/i
+const ROUTINE_SUBNATIONAL_POLITICS = /\b(?:provincial|state|municipal)\b[\s\S]{0,100}\b(?:lawsuit|leadership|party|referendum|sovereignty)\b|\b(?:lawsuit|leadership|party|referendum|sovereignty)\b[\s\S]{0,100}\b(?:provincial|state|municipal)\b/i
 const PROSPECTIVE = /\b(?:considers?|weighs?|may|might|could|potential|plans? to|proposal|proposed|explores?|expected to)\b/i
 const RETROSPECTIVE = /\b(?:anniversary|(?:a|one) year after|years? after|looks back|retrospective)\b/i
 
@@ -40,6 +43,9 @@ export function scoreFrontPageCard(card) {
   if (isMajor && !isRetrospective && LARGE_HUMAN_SCALE.test(immediateText)) { score += 20; reasons.push('large directly affected population') }
   if (isMajor && !isRetrospective && ESCALATION.test(immediateText)) { score += 18; reasons.push('security escalation risk') }
   if (isMajor && SYSTEMIC.test(immediateText)) { score += 10; reasons.push('systemic institutional or national consequence') }
+  if (isMajor && GLOBAL_DISRUPTION.test(immediateText)) { score += 18; reasons.push('major cross-border or infrastructure disruption') }
+  if (isMajor && GEOPOLITICAL_DECISION.test(immediateText)) { score += 12; reasons.push('material geopolitical consequence') }
+  if (ROUTINE_SUBNATIONAL_POLITICS.test(immediateText) && !MASS_CASUALTY.test(immediateText) && !LARGE_HUMAN_SCALE.test(immediateText)) { score -= 12; reasons.push('routine subnational political process') }
   if (isMajor && PROSPECTIVE.test(card.headline)) { score -= 14; reasons.push('development remains prospective') }
   if (isMajor && isRetrospective) { score -= 18; reasons.push('retrospective or anniversary framing') }
   return { score, reasons }

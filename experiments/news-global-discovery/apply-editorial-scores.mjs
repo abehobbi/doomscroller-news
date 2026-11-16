@@ -29,6 +29,8 @@ const DETERMINISTIC_LOW_VALUE = /\b(?:innovation fair|trade fair|study delegatio
 const EXPLICIT_STALE_FINDING = /\b(?:study|research|paper|findings?|discovery|report)\b[^\n.]{0,140}\b(?:published|released|announced|unveiled|reported)\b[^\n.]{0,140}\b(?:in|on)\s+(?:january|february|march|april|may|june|july|august|september|october|november|december)\s+20(?:0\d|1\d|2[0-5])\b/i
 const DISCOVERY_HEADLINE = /\b(?:archaeolog|fossil|scientists? (?:find|found|discover|map|develop|document)|researchers? (?:find|found|discover|document)|study finds?|new (?:x-ray|telescope|genetic|neuroscience) method|terra-?cotta|exoplanet|asteroids?|ancient (?:human|animal|site|settlement))\b/i
 const ROUTINE_LOCAL_MAJOR = /\b(?:dozens? (?:of )?(?:people )?(?:protest|rally)|bike lanes?|city council|municipal council|community meeting)\b/i
+const ROUTINE_LOCAL_INCIDENT = /\b(?:sentencing (?:is )?(?:delayed|postponed)|charged (?:after|with) (?:a )?(?:stabbing|assault)|fatal (?:boat|car|road) (?:accident|crash)|police (?:deploy|deployed|deployment) (?:for|ahead of) (?:a )?(?:party|internal) election|warning signs? (?:will be )?(?:installed|placed) (?:before|ahead of) speed cameras?|calls? for .*portrait.*(?:banknote|currency))\b/i
+const INCREMENTAL_DISCOVERY = /\b(?:biological ag(?:e|ing)|brain-building cells?|robotic extra arms?|single[- ]patient|one patient|mouse model|mice|named protein|protein pathway|new sensor|novel material)\b/i
 
 function isStatementOnly(score) {
   const evaluation = score?.evaluation
@@ -48,6 +50,8 @@ function editorialRejectionReason(score, card) {
   if (!evaluation) return 'missing complete editorial score'
   const evidence = `${card?.headline || ''} ${(card?.pages || []).map(page => page.text).join(' ')}`
   if (DETERMINISTIC_LOW_VALUE.test(card?.headline || '')) return 'deterministic editorial gate rejected routine sport, publicity, delegation or aspirational cooperation'
+  if (ROUTINE_LOCAL_INCIDENT.test(evidence)) return 'deterministic editorial gate rejected a routine local incident or administrative update without wider consequence'
+  if (card?.lane === 'discovery' && INCREMENTAL_DISCOVERY.test(evidence)) return 'discovery gate rejected incremental or highly preliminary research without a clear general-reader payoff'
   if (EXPLICIT_STALE_FINDING.test(evidence)) return 'deterministic freshness gate found an explicitly old underlying finding'
   if (evaluation.underlying_event_fresh === false) return 'the underlying event or finding predates the edition window without a material new development'
   if (evaluation.single_coherent_event === false) return 'candidate combines unrelated developments that must not become one card'
@@ -62,6 +66,18 @@ function editorialRejectionReason(score, card) {
     || evaluation.substantive_value < 3
     || evaluation.distinctiveness < 3
   )) return 'replaceable finalist did not meet the minimum substance and distinctiveness floor'
+  if (evaluation.recommendation === 'strong' && (
+    score.editorialScore < 65
+    || evaluation.substantive_value < 3
+    || evaluation.intrinsic_interest < 3
+    || evaluation.distinctiveness < 3
+  )) return 'strong label was not supported by the minimum substance, interest and distinctiveness scores'
+  if (card?.lane === 'discovery' && (
+    score.editorialScore < 78
+    || evaluation.substantive_value < 4
+    || evaluation.intrinsic_interest < 4
+    || evaluation.distinctiveness < 4
+  )) return 'discovery finalist lacked the clear, distinctive non-specialist payoff required for the feed'
   return null
 }
 

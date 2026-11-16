@@ -11,8 +11,11 @@ test('selects only queries that address measured lane or region gaps', () => {
   assert.equal(new Set(queries.map(item => item.id)).size, queries.length)
 })
 
-test('does not search when the verified edition has no gaps', () => {
-  assert.deepEqual(selectGapQueries({ audit: { laneGaps: {}, regionGaps: {} } }), [])
+test('runs a bounded recall-insurance sweep when numeric minimums hide omissions', () => {
+  const queries = selectGapQueries({ audit: { laneGaps: {}, regionGaps: {} } })
+  assert.equal(queries.length, 5)
+  assert.equal(new Set(queries.map(item => item.lane)).size, 5)
+  assert.ok(queries.every(item => !item.recoveryOnly))
 })
 
 test('strict replacement shape excludes a region query from the wrong lane', () => {

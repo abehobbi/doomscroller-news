@@ -20,14 +20,23 @@ test('editorial gate fails closed on incomplete scoring', () => {
   assert.throws(() => applyEditorialScores({ cards: [] }, { complete: false }), /incomplete/)
 })
 
-test('replaceable possible stories need real substance while strong niche stories remain eligible', () => {
+test('replaceable possible stories need real substance and unsupported strong labels do not bypass the floor', () => {
   const edition = { createdAt: 'before', cards: [card('routine-school', 'world-interesting', 1), card('local-craft', 'priority-interesting', 2), card('strong-low-score', 'world-interesting', 3)] }
   const routine = scored('routine-school', 59, 'possible'); routine.evaluation.substantive_value = 2; routine.evaluation.distinctiveness = 2
   const craft = scored('local-craft', 78, 'possible'); craft.evaluation.substantive_value = 3; craft.evaluation.distinctiveness = 4
   const strong = scored('strong-low-score', 58, 'strong'); strong.evaluation.substantive_value = 3; strong.evaluation.distinctiveness = 3
   const result = applyEditorialScores(edition, { complete: true, candidateCount: 3, results: [routine, craft, strong] })
-  assert.deepEqual(result.cards.map(value => value.eventId), ['local-craft', 'strong-low-score'])
-  assert.deepEqual(result.editorialScoring.rejected.map(value => value.eventId), ['routine-school'])
+  assert.deepEqual(result.cards.map(value => value.eventId), ['local-craft'])
+  assert.deepEqual(result.editorialScoring.rejected.map(value => value.eventId), ['routine-school', 'strong-low-score'])
+})
+
+test('routine administrative local updates and incremental science cannot pass on an optimistic model score', () => {
+  const sentencing = card('sentencing', 'priority-interesting', 1); sentencing.headline = 'Sentencing delayed again in local assault case'
+  const cells = card('cells', 'discovery', 2); cells.headline = 'Researchers identify brain-building cells in a mouse model'
+  const result = applyEditorialScores({ createdAt: 'before', cards: [sentencing, cells] }, { complete: true, candidateCount: 2, results: [scored('sentencing', 92), scored('cells', 94, 'strong', 5, 'discovery')] })
+  assert.equal(result.cards.length, 0)
+  assert.match(result.editorialScoring.rejected.find(item => item.eventId === 'sentencing').reason, /routine local incident/)
+  assert.match(result.editorialScoring.rejected.find(item => item.eventId === 'cells').reason, /incremental or highly preliminary/)
 })
 
 test('possible statement-only stories are rejected while statements reporting concrete action survive', () => {

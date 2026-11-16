@@ -80,3 +80,33 @@ test('plural attack wording and kill-at-least casualty phrasing receive urgency 
   assert.match(ranked[0].headline, /kill at least 10/)
   assert.match(ranked[0].frontPageRanking.reasons.join(' '), /immediate casualties \(10 explicitly reported\)/)
 })
+
+test('keeps the urgent front page strict then interweaves similarly ranked sections', () => {
+  const cards = Array.from({ length: 10 }, (_, index) => ({
+    eventId: `story-${index}`,
+    headline: index < 5 ? `Major breaking development ${index}` : `Worthwhile report ${index}`,
+    lane: index < 8 ? 'world-major' : 'priority-interesting',
+    priorityRegions: index < 8 ? ['World'] : [index === 8 ? 'Ghana' : 'Canada'],
+    topics: [index < 8 ? 'conflict' : 'local-life'],
+    pages: [{ text: index < 5 ? 'A systemic national consequence was confirmed.' : 'A concrete worthwhile development was reported.' }],
+  }))
+  const ranked = rankFrontPage(cards)
+  assert.deepEqual(ranked.slice(0, 5).map(item => item.eventId), cards.slice(0, 5).map(item => item.eventId))
+  assert.ok(ranked.slice(5, 9).some(item => item.lane === 'priority-interesting'))
+})
+
+test('material updates receive a restrained ranking boost', () => {
+  const updated = scoreFrontPageCard({ ...card('Developing court ruling', 'world-interesting'), firstSeen: '2026-11-13T12:00:00Z', updatedAt: '2026-11-13T14:00:00Z' })
+  const original = scoreFrontPageCard(card('Developing court ruling', 'world-interesting'))
+  assert.ok(updated.score > original.score)
+  assert.match(updated.reasons.join(' '), /materially updated/)
+})
+
+test('national infrastructure disruption outranks routine provincial political litigation', () => {
+  const ranked = rankFrontPage([
+    card('Alberta launches provincial sovereignty lawsuit', 'priority-major', 'The provincial government filed a lawsuit over a proposed referendum.'),
+    card('Nationwide ground stop disrupts United States aviation', 'world-major', 'An air traffic control communications failure halted departures for hours at major airports.'),
+  ])
+  assert.match(ranked[0].headline, /ground stop/)
+  assert.match(ranked[0].frontPageRanking.reasons.join(' '), /infrastructure disruption/)
+})

@@ -213,6 +213,12 @@ test('foreign event location in central evidence defeats publisher-location infe
   assert.deepEqual(normalizeGeneratedRouting('discovery', ['Middle East'], 'Ancient lizard tail reveals a survival trick', 'A 99-million-year-old lizard tail', 'The amber specimen was discovered in northern Myanmar. The study was led by Tel Aviv University.'), { lane: 'discovery', priorityRegions: [] })
 })
 
+test('Bank of England stories cannot inherit Middle East geography from incidental context', () => {
+  const result = normalizeGeneratedRouting('priority-major', ['Middle East'], 'Bank of England holds interest rates', 'Bank of England holds interest rates', 'The London-based central bank held rates. The report later compared inflation with Iran.')
+  assert.equal(result.lane, 'world-major')
+  assert.deepEqual(result.priorityRegions, [])
+})
+
 test('distinguishes provider quota deferrals from editorial rejection', () => {
   assert.equal(rejectionCategory({ provider: { httpStatus: 429, internalErrors: [{ code: 4006 }] } }), 'provider-deferred')
   assert.equal(rejectionCategory({ status: 'deferred', provider: { structuralStatus: 'provider_deferred' } }), 'provider-deferred')
