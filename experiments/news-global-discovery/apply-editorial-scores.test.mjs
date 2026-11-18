@@ -23,7 +23,7 @@ test('editorial gate fails closed on incomplete scoring', () => {
 test('replaceable possible stories need real substance and unsupported strong labels do not bypass the floor', () => {
   const edition = { createdAt: 'before', cards: [card('routine-school', 'world-interesting', 1), card('local-craft', 'priority-interesting', 2), card('strong-low-score', 'world-interesting', 3)] }
   const routine = scored('routine-school', 59, 'possible'); routine.evaluation.substantive_value = 2; routine.evaluation.distinctiveness = 2
-  const craft = scored('local-craft', 78, 'possible'); craft.evaluation.substantive_value = 3; craft.evaluation.distinctiveness = 4
+  const craft = scored('local-craft', 78, 'possible'); craft.evaluation.substantive_value = 4; craft.evaluation.distinctiveness = 4
   const strong = scored('strong-low-score', 58, 'strong'); strong.evaluation.substantive_value = 3; strong.evaluation.distinctiveness = 3
   const result = applyEditorialScores(edition, { complete: true, candidateCount: 3, results: [routine, craft, strong] })
   assert.deepEqual(result.cards.map(value => value.eventId), ['local-craft'])
@@ -43,7 +43,7 @@ test('possible statement-only stories are rejected while statements reporting co
   const edition = { createdAt: 'before', cards: [card('willingness', 'priority-interesting', 1), card('signed-law', 'priority-major', 2)] }
   const willingness = scored('willingness', 65, 'possible')
   willingness.evaluation.strongest_fact = 'President Mahama stated he is open to foreign security assistance in the Sahel.'
-  const signedLaw = scored('signed-law', 72, 'possible')
+  const signedLaw = scored('signed-law', 82, 'possible')
   signedLaw.evaluation.strongest_fact = 'The president said the newly enacted labour law was signed on Tuesday.'
   const result = applyEditorialScores(edition, { complete: true, candidateCount: 2, results: [willingness, signedLaw] })
   assert.deepEqual(result.cards.map(value => value.eventId), ['signed-law'])
@@ -57,6 +57,15 @@ test('statement-only diplomacy is rejected even when the model calls it strong',
   const result = applyEditorialScores({ createdAt: 'before', cards: [cardValue] }, { complete: true, candidateCount: 1, results: [score] })
   assert.equal(result.cards.length, 0)
   assert.match(result.editorialScoring.rejected[0].reason, /messaging without a concrete new development/)
+})
+
+test('quality over quantity rejects merely fine possible cards below the stricter floor', () => {
+  const edition = { createdAt: 'before', cards: [card('fine-but-replaceable', 'world-interesting', 1), card('substantial-possible', 'world-interesting', 2)] }
+  const replaceable = scored('fine-but-replaceable', 77, 'possible')
+  const substantial = scored('substantial-possible', 80, 'possible')
+  const result = applyEditorialScores(edition, { complete: true, candidateCount: 2, results: [replaceable, substantial] })
+  assert.deepEqual(result.cards.map(value => value.eventId), ['substantial-possible'])
+  assert.match(result.editorialScoring.rejected[0].reason, /quality-over-quantity/)
 })
 
 test('routine small local protests are demoted from major without being discarded', () => {
@@ -139,3 +148,4 @@ test('deterministic gate catches old findings with journal attribution and talk-
   assert.match(result.editorialScoring.rejected.find(item => item.eventId === 'old-journal').reason, /old underlying finding/)
   assert.match(result.editorialScoring.rejected.find(item => item.eventId === 'talks-only').reason, /routine sport, publicity, delegation or aspirational cooperation/)
 })
+
