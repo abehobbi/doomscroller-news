@@ -62,10 +62,10 @@ function editorialRejectionReason(score, card) {
   if (evaluation.recommendation === 'reject' || score.editorialScore < 45) return evaluation.reason
   if (isStatementOnly(score)) return 'the strongest fact is political or institutional messaging without a concrete new development'
   if (evaluation.recommendation === 'possible' && (
-    score.editorialScore < 70
-    || evaluation.substantive_value < 3
+    score.editorialScore < 78
+    || evaluation.substantive_value < 4
     || evaluation.distinctiveness < 3
-  )) return 'replaceable finalist did not meet the minimum substance and distinctiveness floor'
+  )) return 'replaceable finalist did not meet the quality-over-quantity floor'
   if (evaluation.recommendation === 'strong' && (
     score.editorialScore < 65
     || evaluation.substantive_value < 3
@@ -138,3 +138,4 @@ async function main() {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) main().catch(error => { console.error(error.message); process.exitCode = 1 })
+
