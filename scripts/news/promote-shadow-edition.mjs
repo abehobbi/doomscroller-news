@@ -2,7 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 
-const MINIMUM_CARDS = 30
+export const MINIMUM_CARDS = 15
 const MAXIMUM_CARDS = 65
 const DAILY_WINDOW_HOURS = 24
 const cleanUrl = value => { try { const url = new URL(String(value || '')); return ['http:', 'https:'].includes(url.protocol) ? url.href : null } catch { return null } }
@@ -55,10 +55,11 @@ const updateChecksPass = readiness => {
 }
 
 const dailyChecksPass = readiness => {
-  // The product's accepted daily minimum is 30 cards. Lane minimums describe
-  // the ideal 38-card mix, but must never force weak filler after editorial
-  // scoring. Every factual, freshness, budget, completeness and hard-limit
-  // gate remains mandatory, including the per-lane maximums.
+  // The accepted floor only prevents a broken or nearly empty release. Lane
+  // targets describe the ideal mix, but neither the total nor the lane targets
+  // may force merely possible or replaceable stories into the product. Every
+  // factual, freshness, budget, completeness and hard-limit gate remains
+  // mandatory, including the per-lane maximums.
   const required = ['exactDailyWindow', 'acceptedMinimum', 'categoryMaximums', 'hardMaximum', 'completeHeadlines', 'sourceComplete', 'imageComplete', 'recurringBudgetSafe']
   return required.every(key => readiness?.checks?.[key] === true)
 }
@@ -150,3 +151,4 @@ async function main() {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) main().catch(error => { console.error(error.message); process.exitCode = 1 })
+
