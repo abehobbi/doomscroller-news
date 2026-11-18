@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { buildReleaseDataset, mergeMajorUpdateDataset } from './promote-shadow-edition.mjs'
+import { buildReleaseDataset, mergeMajorUpdateDataset, MINIMUM_CARDS } from './promote-shadow-edition.mjs'
 
 const cards = Array.from({ length: 30 }, (_, index) => ({
   eventId: `event:test-${index + 1}`, headline: `Complete worthwhile headline number ${index + 1}`, publishedAt: '2026-10-30T12:00:00Z',
@@ -15,8 +15,8 @@ test('publication stays locked without explicit release authority', () => assert
 test('every strong-readiness check is required', () => assert.throws(() => buildReleaseDataset(edition, { ...readiness, checks: { ...readiness.checks, recurringBudgetSafe: false } }, { releaseAuthorized: true }), /did not pass/))
 test('suggested lane minimums never force rejected filler into an otherwise accepted edition', () => {
   const accepted = { ...readiness, strongDailySuccess: false, checks: { ...readiness.checks, categoryMinimums: false } }
-  const dataset = buildReleaseDataset(edition, accepted, { releaseAuthorized: true })
-  assert.equal(dataset.cards.length, 30)
+  const dataset = buildReleaseDataset({ ...edition, cards: cards.slice(0, MINIMUM_CARDS) }, accepted, { releaseAuthorized: true })
+  assert.equal(dataset.cards.length, MINIMUM_CARDS)
   assert.equal(dataset.policy.strongDailySuccess, false)
   assert.equal(dataset.policy.categoryMinimumsMet, false)
 })
@@ -43,11 +43,11 @@ test('daily handoff removes cards outside the final rolling 24-hour window', () 
   assert.equal(dataset.cards.some(card => card.event_id === 'event:future-card'), false)
 })
 
-test('daily handoff fails closed when freshness filtering leaves fewer than 30 cards', () => {
-  const stale = cards.map((card, index) => index === 0 ? { ...card, publishedAt: '2026-10-29T20:29:59Z' } : card)
+test('daily handoff fails closed when freshness filtering leaves fewer than the safety floor', () => {
+  const stale = cards.slice(0, MINIMUM_CARDS).map((card, index) => index === 0 ? { ...card, publishedAt: '2026-10-29T20:29:59Z' } : card)
   assert.throws(
     () => buildReleaseDataset({ ...edition, cards: stale }, readiness, { releaseAuthorized: true }),
-    /29 fresh cards/,
+    new RegExp(`${MINIMUM_CARDS - 1} fresh cards`),
   )
 })
 
@@ -82,3 +82,4 @@ test('evening promotion extracts only major cards and rejects weak update readin
   assert.equal(mergeMajorUpdateDataset(base, { ...edition, cards: [cards[0]] }, updateReadiness, { releaseAuthorized: true }), base)
   assert.throws(() => mergeMajorUpdateDataset(base, { ...edition, cards: [major] }, { ...updateReadiness, checks: { ...updateReadiness.checks, sourceComplete: false } }, { releaseAuthorized: true }), /readiness/)
 })
+
