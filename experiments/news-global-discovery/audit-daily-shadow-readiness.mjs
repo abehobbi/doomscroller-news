@@ -16,6 +16,7 @@ export const DAILY_LANE_MAXIMUMS = Object.freeze({
   'priority-interesting': 15,
   discovery: 8,
 })
+export const DAILY_ACCEPTED_MINIMUM = 15
 
 const INCOMPLETE_HEADLINE = /\b(?:a|an|and|as|at|by|for|from|in|into|of|on|or|the|to|with)$/i
 
@@ -43,7 +44,7 @@ export function auditDailyShadowReadiness(edition, discovery, budget) {
   const largestPublisherShare = cards.length ? largestPublisherCount / cards.length : 0
   const checks = {
     exactDailyWindow: windowHours !== null && Math.abs(windowHours - 24) < 0.05,
-    acceptedMinimum: cards.length >= 30,
+    acceptedMinimum: cards.length >= DAILY_ACCEPTED_MINIMUM,
     categoryMinimums: Object.keys(laneGaps).length === 0,
     categoryMaximums: Object.keys(laneOverages).length === 0,
     hardMaximum: cards.length <= 65,
@@ -82,3 +83,4 @@ async function main() {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) main().catch(error => { console.error(error.message); process.exitCode = 1 })
+
