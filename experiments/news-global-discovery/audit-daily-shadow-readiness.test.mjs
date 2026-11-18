@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { auditDailyShadowReadiness, DAILY_LANE_MINIMUMS } from './audit-daily-shadow-readiness.mjs'
+import { auditDailyShadowReadiness, DAILY_ACCEPTED_MINIMUM, DAILY_LANE_MINIMUMS } from './audit-daily-shadow-readiness.mjs'
 
 const cards = Object.entries(DAILY_LANE_MINIMUMS).flatMap(([lane, count]) => Array.from({ length: count }, (_, index) => ({
   lane, headline: `${lane} worthwhile event number ${index + 1}`, primaryUrl: `https://example.com/${lane}/${index}`,
@@ -23,6 +23,14 @@ test('thirty cards cannot hide category deficits or a three-day window', () => {
   assert.deepEqual(result.laneGaps, { 'priority-interesting': 4, discovery: 4 })
 })
 
+test('a smaller high-quality edition can pass the release floor without pretending lane targets were met', () => {
+  const compact = cards.slice(0, DAILY_ACCEPTED_MINIMUM)
+  const result = auditDailyShadowReadiness({ cards: compact, audit: { laneCounts: { 'world-major': compact.length } } }, discovery, { safeForDailyFullRun: true })
+  assert.equal(result.checks.acceptedMinimum, true)
+  assert.equal(result.checks.categoryMinimums, false)
+  assert.equal(result.viableDailyEdition, false)
+})
+
 test('a category over its product maximum cannot earn strong daily success', () => {
   const laneCounts = { 'world-major': 10, 'priority-major': 8, 'world-interesting': 10, 'priority-interesting': 6, discovery: 9 }
   const cards = Array.from({ length: 43 }, (_, index) => ({ headline: `Complete headline ${index}`, primaryUrl: `https://example.com/${index}`, sources: [{ url: `https://example.com/${index}` }], image: { url: `https://example.com/${index}.jpg` } }))
@@ -43,3 +51,4 @@ test('one publisher cannot dominate a supposedly healthy daily edition', () => {
   assert.equal(result.checks.sourceDiversity, false)
   assert.equal(result.viableDailyEdition, false)
 })
+
