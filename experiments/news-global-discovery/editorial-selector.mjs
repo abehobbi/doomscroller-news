@@ -150,7 +150,7 @@ Score every dimension from 0 (absent/bad) to 5 (exceptional):
 - clarity: the central fact and why it matters are understandable from the evidence.
 - freshness_specificity: a specific recent report/development/finding, rather than generic background or recycled material.
 
-Use recommendation "strong" only when you would actively choose the story; "possible" when worthwhile but replaceable; "reject" when it should not consume scarce feed space. Identify the single strongest supported fact. Keep reasons concise.
+Use recommendation "strong" only when you would actively choose the story; "possible" when worthwhile but replaceable; "reject" when it should not consume scarce feed space. Quality always outranks quantity: lane targets and card-count goals are discovery diagnostics only and must never make a merely fine or routine story look stronger. A short edition of worthwhile stories is better than a full edition padded with marginal cards. Do not underrate a geographically small investigation when it concretely reveals exploitation, appropriation of public or Indigenous land, a serious public-service gap, or a lasting environmental burden imposed on a community; those are strong when a curious reader would genuinely be glad to have seen them. Identify the single strongest supported fact. Keep reasons concise.
 
 Set major_qualification true only for a concrete fresh development with broad consequence, urgency, serious human harm, major institutional change or substantial public impact. Priority-region relevance alone never qualifies a story as major. Scientific, archaeological, wildlife and historical findings belong in discovery even when unusually fascinating. Set future_or_conditional_only true for an ordinary proposal, planned protest, threatened strike, projected completion, appeal, preparedness assurance or urged boycott when no separate material action or consequence has happened yet. A binding decision or leadership resignation announcement can itself be a concrete development and is not automatically future-only.
 
@@ -422,3 +422,4 @@ async function main() {
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
   main().catch(error => { console.error(error); process.exitCode = 1 })
 }
+
