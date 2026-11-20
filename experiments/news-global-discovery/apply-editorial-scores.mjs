@@ -25,12 +25,22 @@ function destinationLane(card, evaluation) {
 
 const STATEMENT_ONLY_CUE = /\b(?:says?|said|states?|stated|declares?|declared|calls?\s+for|urges?|warns?|welcomes?|open\s+to|wants?|backs?|supports?|opposes?|pledges?|promises?|aims?|expects?|predicts?|believes?|questions?|criticises?|criticizes?)\b/i
 const CONCRETE_DEVELOPMENT_CUE = /\b(?:signed|enacted|approved|adopted|passed|launched|opened|began|started|deployed|allocated|released|awarded|funded|filed|ordered|arrested|charged|resigned|appointed|elected|won|killed|injured|displaced|discovered|identified|published|recorded|confirmed|cancelled|canceled|closed|reopened|delivered|arrived|completed|broke\s+ground)\b/i
-const DETERMINISTIC_LOW_VALUE = /\b(?:innovation fair|trade fair|study delegation|delegation (?:studies|visits|tours)|seeks? (?:cooperation|collaboration|partnership|support) to (?:establish|build|develop|launch)|agree(?:s|d)? to (?:(?:continue|hold|resume) (?:talks|dialogue|discussions)|more talks)|ballon d['’]or|wins? (?:the )?(?:men['’]s|women['’]s)? award|friendly match|league table)\b/i
+const DETERMINISTIC_LOW_VALUE = /\b(?:innovation fair|trade fair|study delegation|delegation (?:studies|visits|tours)|seeks? (?:cooperation|collaboration|partnership|support) to (?:establish|build|develop|launch)|agree(?:s|d)? to (?:(?:continue|hold|resume) (?:talks|dialogue|discussions)|more talks)|departments? (?:will |to )?move into \d+ [^.!?]{0,60}stores?|ballon d['’]or|wins? (?:the )?(?:men['’]s|women['’]s)? award|friendly match|league table)\b/i
 const EXPLICIT_STALE_FINDING = /\b(?:study|research|paper|findings?|discovery|report)\b[^\n.]{0,140}\b(?:published|released|announced|unveiled|reported)\b[^\n.]{0,140}\b(?:in|on)\s+(?:january|february|march|april|may|june|july|august|september|october|november|december)\s+20(?:0\d|1\d|2[0-5])\b/i
 const DISCOVERY_HEADLINE = /\b(?:archaeolog|fossil|scientists? (?:find|found|discover|map|develop|document)|researchers? (?:find|found|discover|document)|study finds?|new (?:x-ray|telescope|genetic|neuroscience) method|terra-?cotta|exoplanet|asteroids?|ancient (?:human|animal|site|settlement))\b/i
 const ROUTINE_LOCAL_MAJOR = /\b(?:dozens? (?:of )?(?:people )?(?:protest|rally)|bike lanes?|city council|municipal council|community meeting)\b/i
-const ROUTINE_LOCAL_INCIDENT = /\b(?:sentencing (?:is )?(?:delayed|postponed)|charged (?:after|with) (?:a )?(?:stabbing|assault)|fatal (?:boat|car|road) (?:accident|crash)|police (?:deploy|deployed|deployment) (?:for|ahead of) (?:a )?(?:party|internal) election|warning signs? (?:will be )?(?:installed|placed) (?:before|ahead of) speed cameras?|calls? for .*portrait.*(?:banknote|currency))\b/i
-const INCREMENTAL_DISCOVERY = /\b(?:biological ag(?:e|ing)|brain-building cells?|robotic extra arms?|single[- ]patient|one patient|mouse model|mice|named protein|protein pathway|new sensor|novel material)\b/i
+const ROUTINE_LOCAL_INCIDENT = /\b(?:sentencing (?:is )?(?:delayed|postponed)|judge (?:stays?|dismisses?) (?:an? )?(?:impaired[- ]driving|traffic|assault) charges?|judge orders? (?:the )?government to disclose (?:who|why)|charged (?:after|with) (?:a )?(?:stabbing|assault)|fatal (?:boat|car|road) (?:accident|crash)|police (?:deploy|deployed|deployment) (?:for|ahead of) (?:a )?(?:party|internal) election|warning signs? (?:will be )?(?:installed|placed) (?:before|ahead of) speed cameras?|calls? for .*portrait.*(?:banknote|currency))\b/i
+const INCREMENTAL_DISCOVERY = /\b(?:biological ag(?:e|ing)|brain-building cells?|robotic extra arms?|single[- ]patient|one patient|single[- ]cell atlas|whole-body (?:single[- ]cell )?atlas|mouse model|mice|named protein|protein pathway|new sensor|novel material)\b/i
+
+function materialThreadKey(card) {
+  const headline = String(card?.headline || '').toLowerCase().replace(/[’']/g, "'")
+  const usVenezuela = /\b(?:united states|u\.?s\.?)\b/.test(headline)
+    && /\bvenezuela/.test(headline)
+    && /\bmilitary\b/.test(headline)
+    && /\b(?:agreement|cooperation|partnership)\b/.test(headline)
+  if (usVenezuela) return 'bilateral:us-venezuela:military-cooperation'
+  return null
+}
 
 function isStatementOnly(score) {
   const evaluation = score?.evaluation
@@ -108,8 +118,13 @@ export function applyEditorialScores(edition, scoreReport) {
   }
   retained.sort((left, right) => right.selectionScore - left.selectionScore || Number(left.frontPageRank || 999) - Number(right.frontPageRank || 999))
   const laneCounts = Object.fromEntries(Object.keys(LANE_MAXIMUMS).map(lane => [lane, 0]))
-  const withinMaximums = []
+  const withinMaximums = [], seenThreads = new Map()
   for (const card of retained) {
+    const threadKey = materialThreadKey(card)
+    if (threadKey && seenThreads.has(threadKey)) {
+      rejected.push({ eventId: card.eventId, headline: card.headline, reason: `same material event as ${seenThreads.get(threadKey).headline}`, editorialScore: card.selectionScore })
+      continue
+    }
     const maximum = LANE_MAXIMUMS[card.lane]
     if (maximum !== undefined && laneCounts[card.lane] >= maximum) {
       rejected.push({ eventId: card.eventId, headline: card.headline, reason: `${card.lane} reached its hard category maximum of ${maximum}`, editorialScore: card.selectionScore })
@@ -117,6 +132,7 @@ export function applyEditorialScores(edition, scoreReport) {
     }
     laneCounts[card.lane] = Number(laneCounts[card.lane] || 0) + 1
     withinMaximums.push(card)
+    if (threadKey) seenThreads.set(threadKey, card)
   }
   const cards = rankFrontPage(withinMaximums), audit = auditEdition(cards)
   return {
