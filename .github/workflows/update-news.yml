@@ -30,6 +30,18 @@ on:
     paths:
       - '.github/news-watchdog'
   schedule:
+    # Exact Toronto release opportunities for both UTC offsets, plus a
+    # fifteen-minute retry. Keeping both standard/daylight variants means a
+    # missed or heavily delayed GitHub trigger still has another independent
+    # schedule entry capable of claiming the release slot.
+    - cron: '30 0 * * *'
+    - cron: '45 0 * * *'
+    - cron: '30 1 * * *'
+    - cron: '45 1 * * *'
+    - cron: '30 12 * * *'
+    - cron: '45 12 * * *'
+    - cron: '30 13 * * *'
+    - cron: '45 13 * * *'
     # A cheap watchdog runs away from the top of the hour. The plan job exits
     # before provider use unless a Toronto edition is genuinely due and absent.
     # Frequent triggers tolerate GitHub scheduler delays; the release lock and
@@ -340,3 +352,4 @@ jobs:
       - name: Publish stable data files
         id: deployment
         uses: actions/deploy-pages@v4
+
