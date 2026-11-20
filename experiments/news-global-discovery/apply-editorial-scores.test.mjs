@@ -39,6 +39,29 @@ test('routine administrative local updates and incremental science cannot pass o
   assert.match(result.editorialScoring.rejected.find(item => item.eventId === 'cells').reason, /incremental or highly preliminary/)
 })
 
+test('retail reshuffles, individual local court administration and dataset-only science are rejected', () => {
+  const retail = card('retail', 'priority-interesting', 1); retail.headline = "Toys departments to move into 300 Staples Canada stores"
+  const driving = card('driving', 'priority-interesting', 2); driving.headline = 'Manitoba judge stays impaired driving charges after disclosure failure'
+  const disclosure = card('disclosure', 'priority-interesting', 3); disclosure.headline = 'Judge orders government to disclose why Tesla was excluded from rebate program'
+  const atlas = card('atlas', 'discovery', 4); atlas.headline = 'Scientists create first whole-body single-cell atlas of an adult vertebrate'
+  const cards = [retail, driving, disclosure, atlas]
+  const scores = cards.map(value => scored(value.eventId, 96, 'strong', 5, value.lane))
+  const result = applyEditorialScores({ createdAt: 'before', cards }, { complete: true, candidateCount: cards.length, results: scores })
+  assert.equal(result.cards.length, 0)
+})
+
+test('materially identical bilateral military agreement headlines collapse to one card', () => {
+  const signed = card('signed', 'world-major', 1); signed.headline = 'United States and Venezuela sign military cooperation agreement'
+  const announced = card('announced', 'world-major', 2); announced.headline = "US Defence Secretary announces military partnership with Venezuela's interim government"
+  const result = applyEditorialScores({ createdAt: 'before', cards: [signed, announced] }, {
+    complete: true,
+    candidateCount: 2,
+    results: [scored('signed', 92, 'strong', 5, 'world-major'), scored('announced', 88, 'strong', 5, 'world-major')],
+  })
+  assert.deepEqual(result.cards.map(value => value.eventId), ['signed'])
+  assert.match(result.editorialScoring.rejected[0].reason, /same material event/)
+})
+
 test('possible statement-only stories are rejected while statements reporting concrete action survive', () => {
   const edition = { createdAt: 'before', cards: [card('willingness', 'priority-interesting', 1), card('signed-law', 'priority-major', 2)] }
   const willingness = scored('willingness', 65, 'possible')
